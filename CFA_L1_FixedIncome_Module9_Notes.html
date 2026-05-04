@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 9: The Term Structure of Interest Rates</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --spot-bg: #111a16; --spot-border: #4cc98a;
+    --par-bg: #1a1020; --par-border: #4c8bc9;
+    --fwd-bg: #1a1510; --fwd-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .spot-card { background: var(--spot-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .spot-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .par-card { background: var(--par-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .par-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .fwd-card { background: var(--fwd-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fwd-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 9</div>
+  <h1>The Term Structure of Interest Rates: <span>Spot, Par, and Forward Curves</span></h1>
+  <p>Exam-ready notes: spot rates and the spot curve, bond pricing with spot rates (no-arbitrage pricing), par rates derived from spot rates, implied forward rates (IFR), forward rate notation (AxBy), spot rates from forward rates, bond pricing with forward rates, and the three-curve relationship under upward-sloping, flat, and inverted term structures.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Term Structure — Overview</a>
+  <a class="toc-item" href="#s2">02 · Spot Rates &amp; the Spot Curve</a>
+  <a class="toc-item" href="#s3">03 · Bond Pricing Using Spot Rates</a>
+  <a class="toc-item" href="#s4">04 · Par Rates from Spot Rates</a>
+  <a class="toc-item" href="#s5">05 · Forward Rates from Spot Rates</a>
+  <a class="toc-item" href="#s6">06 · Spot Rates from Forward Rates</a>
+  <a class="toc-item" href="#s7">07 · Bond Pricing with Forward Rates</a>
+  <a class="toc-item" href="#s8">08 · The Three-Curve Relationship</a>
+  <a class="toc-item" href="#s9">09 · All Three Curves — Master Table</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: TERM STRUCTURE OVERVIEW        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Term Structure of Interest Rates — Overview</h2>
+    </div>
+
+    <div class="card">
+      <p>Prior modules priced bonds using a <strong>single discount rate</strong> (e.g., YTM or MRR + DM) for all future cash flows. This module relaxes that assumption: in reality, interest rates <strong>vary by maturity</strong>. The relationship between interest rates and time-to-maturity is called the <strong>term structure of interest rates</strong> (also: maturity structure of interest rates).</p>
+      <p style="margin-top:10px;">The same issuer's 1-year bond and 30-year bond will typically have different yields — not due to credit risk or currency differences, but purely because the time horizon differs. To isolate the maturity effect, term structure analysis uses bonds that are identical in every way except time-to-maturity.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>The ideal dataset for term structure analysis:</strong> yields on <strong>default-risk-free zero-coupon bonds</strong> across the full maturity spectrum. These are called <strong>spot rates</strong>. Zero-coupon bonds are ideal because they have:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>No coupon reinvestment risk (no intermediate cash flows to reinvest)</li>
+        <li>Same currency, credit risk, liquidity, and tax treatment (if from the same sovereign issuer)</li>
+        <li>Purely maturity-dependent return — isolates the term structure effect perfectly</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>In practice:</strong> Most government bonds pay coupons (not zero-coupon). The spot curve is estimated from coupon-bearing bonds using bootstrapping and interpolation. Only recently issued, on-the-run bonds are used (similar liquidity; priced near par → fewer tax effects).</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Why this module matters:</strong> The spot curve is the foundation from which two other critical yield curves are derived:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Par curve:</strong> the yield at which a hypothetical bond would be priced at exactly par (100) — used for term structure analysis and benchmarking (e.g., the published US Treasury yield curve)</li>
+        <li><strong>Forward curve:</strong> the set of implied future short-term rates — used for investment decisions, hedging, and pricing derivatives</li>
+      </ul>
+      <p style="margin-top:10px;">All three curves are <strong>default-risk-free rates</strong>. To price risky bonds (e.g., corporate bonds), a credit spread is added to the spot rates.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Use Zero-Coupon Bonds for Term Structure?</div>
+      <p>A coupon bond's YTM is a single "blended" rate that averages across all its cash flow dates. It cannot tell you the precise rate for any specific maturity. A zero-coupon bond, however, has exactly one cash flow at exactly one date — so its yield is a pure, unambiguous rate for that specific maturity. This is why the "zero curve" or "strip curve" (where coupons are stripped off bonds) is the fundamental building block of term structure analysis.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: SPOT RATES & THE SPOT CURVE    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Spot Rates &amp; the Spot Curve</h2>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-title">Spot Rate (Zero Rate / Zero-Coupon Yield)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>The market discount rate for a <strong>default-risk-free zero-coupon bond</strong> maturing at a specific future date</li>
+        <li>Also called: zero rate, zero-coupon yield, or strip rate</li>
+        <li>Denoted: Z₁ (1-year spot), Z₂ (2-year spot), Z₃ (3-year spot), etc.</li>
+        <li>Each spot rate is the appropriate discount rate for a cash flow occurring at that specific point in the future</li>
+        <li>Annual rates stated on a <strong>semiannual bond basis</strong> to facilitate comparison with coupon bonds</li>
+        <li>Collectively, the set of spot rates across all maturities = the <strong>spot curve</strong> (also: zero curve, strip curve)</li>
+      </ul>
+    </div>
+
+    <h3>Building the Spot Curve in Practice</h3>
+
+    <div class="card">
+      <p><strong>Practical constraints:</strong> Governments issue bonds at specific maturities (e.g., 2, 3, 5, 7, 10, 30 years) — not for every maturity from 1 to 30 years. To build a complete spot curve:</p>
+      <ol style="padding-left:22px; margin-top:8px;">
+        <li>Use <strong>on-the-run (most recently issued)</strong> government bonds only — best liquidity, closest to par pricing, minimal tax distortions</li>
+        <li>For short maturities (1m, 3m, 6m, 12m): use money market instruments, converted from discount rates to <strong>bond equivalent yields (BEY)</strong></li>
+        <li>For all instruments: convert to the <strong>same periodicity</strong> for consistent comparison</li>
+        <li>Use <strong>linear interpolation</strong> between known maturities to fill in the curve for maturities where no bond is issued</li>
+        <li>Use <strong>bootstrapping</strong> (a sequential calculation technique) to extract zero rates from coupon bond prices</li>
+      </ol>
+    </div>
+
+    <h3>Shapes of the Spot Curve</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Shape</th><th>Description</th><th>Market Conditions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Upward Sloping (Normal)</td>
+            <td>Longer-term spot rates &gt; shorter-term spot rates. Curve rises and flattens at longer maturities.</td>
+            <td>Most common under normal economic conditions. Reflects term premium — investors demand higher rates for longer commitments. Expectations of rising future rates OR just compensation for maturity risk.</td>
+          </tr>
+          <tr>
+            <td>Flat</td>
+            <td>Spot rates are the same (or nearly the same) across all maturities.</td>
+            <td>Unusual. Implies no expectations of rate changes and no term premium. In flat curve: spot = par = forward rates at all maturities.</td>
+          </tr>
+          <tr>
+            <td>Downward Sloping (Inverted)</td>
+            <td>Shorter-term spot rates &gt; longer-term spot rates. Curve slopes downward.</td>
+            <td>Often signals expectations of sharply lower future rates (typically ahead of or during recessions). Associated historically with economic slowdowns. Relatively rare.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ "On-the-run" vs. "Off-the-run" in Spot Curve Construction</div>
+      <p>Only on-the-run (most recently issued) bonds are used to build the yield/spot curve. Off-the-run (older, seasoned) bonds are excluded because: (1) they are less liquid — owned by buy-and-hold investors; (2) older bonds may have been issued at higher/lower coupon rates, making them trade at large premiums/discounts → different tax treatment in jurisdictions that distinguish capital gains from interest income; (3) liquidity premiums differ between on- and off-the-run bonds. Using a mix would introduce these distortions into the term structure analysis.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: BOND PRICING USING SPOT RATES  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Bond Pricing Using Spot Rates — No-Arbitrage Pricing</h2>
+    </div>
+
+    <div class="card">
+      <p>When a bond has multiple cash flows at different future dates, the correct approach is to discount <strong>each cash flow at the spot rate corresponding to its maturity date</strong> — not a single YTM. This produces the bond's <strong>no-arbitrage price</strong>: the price at which no risk-free profit can be made by stripping or reconstituting the bond's cash flows.</p>
+      <p style="margin-top:10px;"><strong>Why "no-arbitrage"?</strong> If the bond's market price differs from the present value calculated using spot rates, a trader could strip the bond into individual zero-coupon components (or reconstitute individual zero-coupon bonds into a synthetic coupon bond) and earn a risk-free profit. Market forces ensure that actual prices converge to the no-arbitrage value.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Bond Pricing Using Spot Rates</div>
+      <div class="f">
+        PV = PMT/(1+Z₁)¹ + PMT/(1+Z₂)² + ... + (PMT+FV)/(1+Zₙ)ᴺ
+      </div>
+      <div class="note">
+        <strong>Z₁, Z₂, ..., Zₙ</strong> = spot rates for periods 1, 2, ..., N (each cash flow discounted at its maturity-matched spot rate)<br>
+        <strong>PMT</strong> = coupon per period | <strong>FV</strong> = face value | <strong>N</strong> = total periods to maturity<br><br>
+        <strong>Key difference from YTM pricing:</strong> In YTM pricing, ONE rate discounts ALL cash flows. In spot rate pricing, EACH cash flow gets its own maturity-specific rate. The total price is the same, but the contribution of individual cash flows differs.<br><br>
+        <strong>For corporate bonds (credit risk):</strong> Add a credit spread to each spot rate: discount at (Zₙ + spread) at each maturity. This is the foundation of the Z-spread concept from Module 7.
+      </div>
+    </div>
+
+    <h3>Worked Example — 3-Year Bond Priced with Spot Rates</h3>
+
+    <div class="auction-box">
+      <div class="label">3-Year Bond | 5% Annual Coupon | Spot Rates: Z₁=2%, Z₂=3%, Z₃=4%</div>
+      <div class="f">
+        PV = 5/(1.02)¹ + 5/(1.03)² + 105/(1.04)³<br>
+           = 4.902 + 4.713 + 93.345<br>
+           = 102.960<br><br>
+        Bond is at PREMIUM (102.960 &gt; 100) → YTM must be LESS than 5% coupon rate<br><br>
+        Verify: solve for YTM using standard formula:<br>
+        102.960 = 5/(1+r)¹ + 5/(1+r)² + 105/(1+r)³  →  YTM = 3.935%<br><br>
+        Check at YTM = 3.935%:<br>
+        = 5/(1.03935)¹ + 5/(1.03935)² + 105/(1.03935)³<br>
+        = 4.811 + 4.629 + 93.520 = 102.960 ✓ (same price, different individual PVs)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Spot Rate Pricing vs. YTM Pricing — Same Total, Different Components</div>
+      <p>Both approaches give the SAME total bond price. However, the individual cash flow PVs differ:
+      <br>• First coupon: PV = 4.902 (discounted at 2% spot) vs. 4.811 (discounted at 3.935% YTM)
+      <br>• Final cash flow: PV = 93.345 (discounted at 4% spot) vs. 93.520 (discounted at 3.935% YTM)
+      <br>The YTM overweights early cash flows (discounts them at too high a rate — 3.935% vs. 2% spot) and underweights late cash flows (discounts them at too low a rate — 3.935% vs. 4% spot). The errors cancel out exactly to give the same total. YTM is essentially a "weighted average" of the spot rates, weighted by the PV of each cash flow.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ YTM is the "Internal" Rate — Spot Rates are the "True" Rates</div>
+      <p>YTM is convenient but theoretically imprecise — it uses one rate for all maturities. Spot rates are theoretically correct — they use the market's actual rate for each future date. In arbitrage-free pricing, spot rates are the foundation. The YTM is derived FROM the no-arbitrage spot-rate price, not the other way around. Always think of spot rates as primary and YTM as derived.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: PAR RATES FROM SPOT RATES      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Par Rates from Spot Rates</h2>
+    </div>
+
+    <div class="par-card">
+      <div class="par-title">Par Rate — Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li>The coupon rate (= YTM) for a <strong>hypothetical bond that would be priced at exactly par (100)</strong>, given the current spot curve</li>
+        <li>Also: the yield-to-maturity at which the bond prices at par, derived from the spot rates up to and including the bond's maturity date</li>
+        <li>Par rates are derived for <strong>hypothetical</strong> bonds — not actual market bonds (though on-the-run bonds are close to par rates)</li>
+        <li>The <strong>US Treasury yield curve</strong> published daily is composed of par rates (not YTMs of actual bonds)</li>
+        <li>Par rates control for tax, trading, and other distortions from actual bonds priced at discounts or premiums</li>
+        <li>Par rate = the coupon rate that makes the price exactly 100, using the spot curve for discounting</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Par Rate Formula — Solve for PMT Given Spot Rates</div>
+      <div class="f">
+        100 = PMT/(1+Z₁)¹ + PMT/(1+Z₂)² + ... + (PMT+100)/(1+Zₙ)ᴺ
+      </div>
+      <div class="note">
+        Same as Equation 1, except <strong>PV = FV = 100</strong> (the bond prices at par by definition).<br>
+        Solve for PMT → this gives you both the coupon rate AND the YTM (since coupon = YTM at par).<br>
+        PMT/100 = par rate per period.<br><br>
+        <strong>Key insight:</strong> On each maturity, you solve one equation for one unknown (PMT). The spot rates for all periods 1 through N are already known inputs.
+      </div>
+    </div>
+
+    <h3>Worked Example — Par Rates from Spot Rates</h3>
+
+    <div class="auction-box">
+      <div class="label">Spot Rates: Z₁=5.263%, Z₂=5.616%, Z₃=6.359%, Z₄=7.008% (effective annual)</div>
+      <div class="f">
+        1-year par rate: 100 = (PMT+100)/(1.05263)¹  →  PMT = 5.263% ✓ (equals Z₁, as expected)<br><br>
+        2-year par rate: 100 = PMT/(1.05263)¹ + (PMT+100)/(1.05616)²<br>
+        Solve: PMT = 5.606%  →  2-year par rate = 5.606%<br><br>
+        3-year par rate: 100 = PMT/(1.05263)¹ + PMT/(1.05616)² + (PMT+100)/(1.06359)³<br>
+        Solve: PMT = 6.306%  →  3-year par rate = 6.306%<br><br>
+        4-year par rate: 100 = PMT/(1.05263)¹ + PMT/(1.05616)² + PMT/(1.06359)³ + (PMT+100)/(1.07008)⁴<br>
+        Solve: PMT = 6.899%  →  4-year par rate = 6.899%<br><br>
+        Verify (4-year): 6.899/(1.06899)¹ + 6.899/(1.06899)² + 6.899/(1.06899)³ + 106.899/(1.06899)⁴ = 100 ✓
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 One-Year Par Rate Always Equals One-Year Spot Rate</div>
+      <p>The 1-year par bond has only ONE cash flow (coupon + par at maturity in 1 year). Since PV = FV = 100, the coupon = the discount rate = Z₁. So the 1-year par rate ALWAYS equals the 1-year spot rate. This is a useful check: if your par rate calculation for year 1 doesn't equal Z₁, something went wrong.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Par Rate vs. Spot Rate — Direction in Upward-Sloping Curve</div>
+      <p>In an upward-sloping curve: <strong>par rates are BELOW spot rates</strong> (especially at longer maturities). Why? A par bond pays coupons throughout its life — some of those early coupons are discounted at low short-term spot rates, boosting their PV above what the single par rate would predict. To keep the bond at par, the par rate must be lower than the long-term spot rate. The longer the maturity, the larger this gap becomes.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: FORWARD RATES FROM SPOT RATES       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Forward Rates from Spot Rates — Implied Forward Rates (IFR)</h2>
+    </div>
+
+    <div class="fwd-card">
+      <div class="fwd-title">Implied Forward Rate (IFR) — Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+        <li>The <strong>future interest rate implied by today's spot curve</strong> for a specific future period</li>
+        <li>Also called: forward yield, implied forward yield</li>
+        <li>Interpreted as the <strong>breakeven reinvestment rate</strong> — the rate at which reinvesting in a shorter-term bond and rolling over would give the same total return as investing in a longer-term bond</li>
+        <li>Interpreted as the <strong>incremental (marginal) return</strong> for extending maturity by an additional period</li>
+        <li>If an investor expects actual future rates to be HIGHER than the forward rate → prefer the shorter bond (reinvest at better rate)</li>
+        <li>If an investor expects actual future rates to be LOWER than the forward rate → prefer the longer bond now</li>
+      </ul>
+    </div>
+
+    <h3>Forward Rate Notation — AyBy ("A-into-B")</h3>
+
+    <div class="card">
+      <p>Forward rates follow a standard naming convention: <strong>AyBy</strong> (pronounced "A-year into B-year rate") or written as IFR<sub>A,B</sub>.</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>First number (A)</strong> = how far into the future the forward period STARTS (years from today)</li>
+        <li><strong>Second number (B)</strong> = the tenor (length) of the forward period (years)</li>
+        <li>Example: <strong>3y1y</strong> = a 1-year rate starting 3 years from today (the "3-year into 1-year" rate)</li>
+        <li>Example: <strong>2y3y</strong> = a 3-year rate starting 2 years from today</li>
+        <li>Example: <strong>0y1y</strong> = the current 1-year spot rate (starts today — same as Z₁)</li>
+        <li>In money markets: forward periods expressed in months (e.g., 6m3m = 3-month rate starting in 6 months)</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Implied Forward Rate Formula</div>
+      <div class="f">
+        (1 + Zₐ)ᴬ × (1 + IFRₐ,B₋ₐ)^(B-A)  =  (1 + Z_B)^B
+      </div>
+      <div class="note">
+        <strong>Zₐ</strong> = spot rate for the near maturity (A years)<br>
+        <strong>Z_B</strong> = spot rate for the far maturity (B years)<br>
+        <strong>IFRₐ,B₋ₐ</strong> = the implied forward rate starting at year A for a period of (B−A) years<br>
+        <strong>A</strong> = start of the forward period | <strong>B</strong> = end of the forward period | <strong>B−A</strong> = tenor of forward period<br><br>
+        <strong>Solving for the IFR:</strong><br>
+        IFRₐ,B₋ₐ = [(1 + Z_B)^B / (1 + Zₐ)^A]^(1/(B-A)) − 1<br><br>
+        <strong>Intuition:</strong> Investing for B years at Z_B must give the same total return as investing for A years at Zₐ and then rolling over for (B−A) more years at the forward rate. The IFR is the rate that makes these two strategies equivalent — hence it's the breakeven reinvestment rate.
+      </div>
+    </div>
+
+    <h3>Worked Example — Calculating IFR 3y1y</h3>
+
+    <div class="auction-box">
+      <div class="label">3-year spot rate (Z₃) = 3.65% | 4-year spot rate (Z₄) = 4.18%</div>
+      <div class="f">
+        Solve for 3y1y (IFR₃,₁ — 1-year rate starting in 3 years):<br><br>
+        (1 + 0.0365)³ × (1 + IFR₃,₁)¹ = (1 + 0.0418)⁴<br><br>
+        (1.0365)³ × (1 + IFR₃,₁) = (1.0418)⁴<br>
+        1.11334 × (1 + IFR₃,₁) = 1.17944<br>
+        (1 + IFR₃,₁) = 1.17944 / 1.11334 = 1.05940<br>
+        IFR₃,₁ = 5.79%<br><br>
+        Interpretation: A bond investor who locks in the 4-year spot rate (4.18%) earns the same total return as<br>
+        investing in the 3-year spot rate (3.65%) and then reinvesting for 1 more year at 5.79%.<br><br>
+        → If investor expects actual 1-year rate in 3 years to be &gt; 5.79% → choose 3-year bond (roll over at better rate)<br>
+        → If investor expects actual 1-year rate in 3 years to be &lt; 5.79% → choose 4-year bond (lock in now)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward Rate = Incremental Return for Extending Maturity</div>
+      <p>Think of the forward rate as the "price of waiting one more year." The 3y1y (5.79%) tells you: if you already committed to a 3-year investment (getting 3.65% annually), what additional annual return do you get for committing one more year? Answer: 5.79% for that incremental year. Since 5.79% &gt; 4.18% (the 4-year spot rate), the marginal return for year 4 is higher than the average return for all four years — consistent with an upward-sloping spot curve.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: SPOT RATES FROM FORWARD RATES      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Spot Rates from Forward Rates — The Geometric Average</h2>
+    </div>
+
+    <div class="card">
+      <p>The relationship between spot rates and forward rates is fully reversible: you can derive spot rates FROM forward rates just as easily as deriving forward rates from spot rates. The key relationship is:</p>
+      <p style="margin-top:10px;"><strong>A spot rate is the geometric average of all the one-period forward rates up to that maturity.</strong> This is the fundamental link between spot and forward curves — they encode exactly the same information about future rates, just presented differently.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Spot Rate from Sequence of One-Year Forward Rates</div>
+      <div class="f">
+        (1 + Z_N)^N  =  (1 + 0y1y) × (1 + 1y1y) × (1 + 2y1y) × ... × (1 + (N-1)y1y)
+      </div>
+      <div class="note">
+        The N-year spot rate = geometric average of the 1-year forward rates from year 0 to year N-1.<br>
+        This is simply rearranging Equation 3 repeatedly — each step builds on the previous spot rate.<br><br>
+        <strong>Note:</strong> 0y1y = the current 1-year spot rate (same as Z₁ — no "forward" element, since it starts today).
+      </div>
+    </div>
+
+    <h3>Worked Example — Building Spot Rates from Forward Rates</h3>
+
+    <div class="auction-box">
+      <div class="label">Forward Rates: 0y1y=1.88%, 1y1y=2.77%, 2y1y=3.54%, 3y1y=4.12%</div>
+      <div class="f">
+        1-year spot rate (Z₁): Z₁ = 0y1y = 1.88% (spot rate = first forward rate, trivially)<br><br>
+        2-year spot rate (Z₂):<br>
+        (1 + Z₂)² = (1.0188) × (1.0277)<br>
+        (1 + Z₂)² = 1.04700<br>
+        Z₂ = (1.04700)^(1/2) − 1 = 2.324%<br><br>
+        3-year spot rate (Z₃):<br>
+        (1 + Z₃)³ = (1.0188) × (1.0277) × (1.0354)<br>
+        (1 + Z₃)³ = 1.08393<br>
+        Z₃ = (1.08393)^(1/3) − 1 = 2.728%<br><br>
+        4-year spot rate (Z₄):<br>
+        (1 + Z₄)⁴ = (1.0188) × (1.0277) × (1.0354) × (1.0412)<br>
+        (1 + Z₄)⁴ = 1.12889<br>
+        Z₄ = (1.12889)^(1/4) − 1 = 3.074%
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Spot Rate = Compound Return Across All Forward Rates</div>
+      <p>The N-year spot rate is the rate that, compounded annually for N years, gives the same total return as a sequence of 1-year investments at each successive forward rate. The 2-year spot rate of 2.324% means: investing at 2.324% annually for 2 years gives the same return as investing at 1.88% for year 1 and then at 2.77% for year 2. This is why spot and forward rates always contain identical information — they're just different presentations of the same term structure.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: BOND PRICING WITH FORWARD RATES    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Bond Pricing with Forward Rates</h2>
+    </div>
+
+    <div class="card">
+      <p>Since spot rates and forward rates contain the same information, bonds can be priced using EITHER approach. Both produce identical no-arbitrage prices. The forward rate method discounts each cash flow by the <strong>product of all applicable one-period forward rates</strong> up to that cash flow's date.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Bond Pricing Using Forward Rates</div>
+      <div class="f">
+        PV =    CF₁/(1+0y1y)<br>
+             + CF₂/[(1+0y1y)(1+1y1y)]<br>
+             + CF₃/[(1+0y1y)(1+1y1y)(1+2y1y)]<br>
+             + CF₄/[(1+0y1y)(1+1y1y)(1+2y1y)(1+3y1y)]<br>
+             + ...
+      </div>
+      <div class="note">
+        Each denominator is the product of all one-year forward rates from year 0 to year N−1.<br>
+        This is equivalent to (1 + Z_N)^N in the spot rate formula — because the spot rate IS the geometric mean of the forward rates.<br>
+        Both approaches (spot rates and forward rates) give exactly the same bond price.
+      </div>
+    </div>
+
+    <h3>Worked Example — 4-Year Bond Priced with Forward Rates</h3>
+
+    <div class="auction-box">
+      <div class="label">4-year, 3.75% annual coupon | Forward rates: 0y1y=1.88%, 1y1y=2.77%, 2y1y=3.54%, 3y1y=4.12%</div>
+      <div class="f">
+        Implied spot rates (from Section 6): Z₁=1.88%, Z₂=2.324%, Z₃=2.728%, Z₄=3.074%<br><br>
+        Using SPOT RATES:<br>
+        PV = 3.75/(1.0188)¹ + 3.75/(1.02324)² + 3.75/(1.02728)³ + 103.75/(1.03074)⁴<br>
+           = 3.681 + 3.583 + 3.457 + 91.916 = 102.637<br><br>
+        Using FORWARD RATES:<br>
+        PV = 3.75/(1.0188)<br>
+           + 3.75/[(1.0188)(1.0277)]<br>
+           + 3.75/[(1.0188)(1.0277)(1.0354)]<br>
+           + 103.75/[(1.0188)(1.0277)(1.0354)(1.0412)]<br>
+           = 102.637 ✓ (identical answer)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Bother with Two Methods if They Give the Same Answer?</div>
+      <p>Spot rates and forward rates are used in different contexts. <strong>Spot rates</strong> are most natural for pricing bonds (each cash flow discounted at its maturity-matched rate — clean and direct). <strong>Forward rates</strong> are most natural for investment decisions, hedging, and derivative pricing — they directly show the implied future rates for each period, making it easy to compare expected future returns to the forward breakeven. Knowing both approaches and their equivalence is tested on the CFA exam.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: THE THREE-CURVE RELATIONSHIP       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>The Three-Curve Relationship — Spot, Par &amp; Forward</h2>
+    </div>
+
+    <div class="card">
+      <p>Because spot, par, and forward rates are derived from each other, the <strong>shape of the spot curve determines the relationship between all three curves</strong>. These relationships are among the most heavily tested concepts in this module.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Spot Curve Shape</th><th>Par Curve vs. Spot Curve</th><th>Forward Curve vs. Spot Curve</th><th>Key Intuition</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-green">Upward Sloping (Normal)</span></td>
+            <td>Par curve is <strong>BELOW</strong> spot curve (par rates &lt; spot rates, especially at long end)</td>
+            <td>Forward curve is <strong>ABOVE</strong> spot curve (forward rates &gt; spot rates)</td>
+            <td>Low short-term rates pull bond prices up → par rate must be lower than the long spot rate to price at par. Each marginal year earns more than the average → forward rates exceed spot rates.</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Flat</span></td>
+            <td>Par curve <strong>EQUALS</strong> spot curve</td>
+            <td>Forward curve <strong>EQUALS</strong> spot curve</td>
+            <td>No term structure difference → spot = par = forward at all maturities. Implies no expected rate changes, no term premium. Government bonds price at par (coupon = YTM = spot rate).</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-red">Downward Sloping (Inverted)</span></td>
+            <td>Par curve is <strong>ABOVE</strong> spot curve (par rates &gt; spot rates)</td>
+            <td>Forward curve is <strong>BELOW</strong> spot curve (forward rates &lt; spot rates)</td>
+            <td>High short-term rates inflate early-coupon PVs → par rate must be higher than the long spot rate to keep price at par. Each marginal year earns less than the average → forward rates fall below spot rates. Implies expected sharp rate declines.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Three-Curve Rule — Memorize This Table</div>
+      <div class="f">
+        UPWARD SLOPING SPOT CURVE:<br>
+        Forward curve  &gt;  Spot curve  &gt;  Par curve<br><br>
+        FLAT SPOT CURVE:<br>
+        Forward curve  =  Spot curve  =  Par curve<br><br>
+        DOWNWARD SLOPING (INVERTED) SPOT CURVE:<br>
+        Par curve  &gt;  Spot curve  &gt;  Forward curve
+      </div>
+      <div class="note">
+        <strong>Memory trick:</strong><br>
+        Upward slope → "Forward is Furthest" (forward &gt; spot &gt; par — forward at top)<br>
+        Inverted slope → "Par is Paramount" (par &gt; spot &gt; forward — par at top, forward at bottom)<br>
+        Flat → all three equal<br><br>
+        The forward curve is the most "extreme" — it amplifies the shape of the spot curve in the same direction. The par curve is the most "muted" — it dampens the shape relative to the spot curve.
+      </div>
+    </div>
+
+    <h3>Detailed Intuition for Each Relationship</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Why Par &lt; Spot (Upward-Sloping)</div>
+        <p>In an upward-sloping curve, short-term spot rates are low. When computing the par rate for a long-term bond, the early coupons are discounted at these low short-term rates → those early coupon PVs are high. To keep the total PV equal to 100 (par), the coupon (= par rate) must be set LOWER than the long-term spot rate. The low early rates "subsidize" pricing the bond at par with a lower coupon.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Why Forward &gt; Spot (Upward-Sloping)</div>
+        <p>Forward rates are incremental returns for extending maturity. In an upward-sloping curve, longer-term spot rates are higher than shorter-term spot rates. This means each additional year of investing generates a HIGHER marginal return than the overall average. The marginal return (forward rate) must exceed the average return (spot rate) to pull the average up — a purely mathematical property of geometric averaging.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Math Behind "Forward &gt; Spot" in Upward-Sloping Curves</div>
+      <p>Think of it like a grade average: if your running average (spot rate) is rising each semester (upward-sloping curve), your most recent semester grade (forward rate) MUST be above your running average — otherwise the average couldn't be rising. Similarly: if the 4-year spot rate (4.18%) exceeds the 3-year spot rate (3.65%), the 4th year's marginal rate (3y1y = 5.79%) must be above the 4-year average (4.18%). The forward rate is the "marginal" that drives the average up.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: ALL THREE CURVES — MASTER TABLE    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>All Three Curves — Complete Comparison &amp; Master Reference</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Spot Curve (Zero Curve)</th><th>Par Curve</th><th>Forward Curve</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Definition</td>
+            <td>Yields on default-risk-free zero-coupon bonds at each maturity</td>
+            <td>Coupon rates (= YTMs) on hypothetical bonds priced at exactly par at each maturity</td>
+            <td>Implied future rates for periods starting at specific future dates</td>
+          </tr>
+          <tr>
+            <td>What it measures</td>
+            <td>Return on a zero-coupon investment from today to maturity N</td>
+            <td>The coupon rate that makes a bond price at 100, using the spot curve</td>
+            <td>Return on an investment for a specific future period (breakeven reinvestment rate)</td>
+          </tr>
+          <tr>
+            <td>Key formula</td>
+            <td>PV = PMT/(1+Z₁)¹ + ... + (PMT+FV)/(1+Zₙ)ᴺ</td>
+            <td>100 = PMT/(1+Z₁)¹ + ... + (PMT+100)/(1+Zₙ)ᴺ, solve for PMT</td>
+            <td>(1+Zₐ)ᴬ × (1+IFRₐ,B₋ₐ)^(B-A) = (1+Z_B)^B</td>
+          </tr>
+          <tr>
+            <td>Notation</td>
+            <td>Z₁, Z₂, Z₃, ... Zₙ</td>
+            <td>Par rate₁, par rate₂, ... par rateₙ</td>
+            <td>0y1y, 1y1y, 2y1y, 3y1y; or IFRₐ,B₋ₐ (AyBy)</td>
+          </tr>
+          <tr>
+            <td>Derived from</td>
+            <td>Prices of zero-coupon government bonds (or bootstrapped from coupon bonds)</td>
+            <td>Spot rates (solve Eq. 1 with PV=FV=100)</td>
+            <td>Spot rates (solve Eq. 3 for the incremental rate)</td>
+          </tr>
+          <tr>
+            <td>Pricing bonds</td>
+            <td>Yes — each cash flow discounted at its maturity-matched Zₙ</td>
+            <td>Used as benchmark yields; not directly used to discount cash flows</td>
+            <td>Yes — each cash flow discounted by product of forward rates to that date</td>
+          </tr>
+          <tr>
+            <td>vs. each other (upward slope)</td>
+            <td>Middle curve</td>
+            <td>BELOW spot curve</td>
+            <td>ABOVE spot curve</td>
+          </tr>
+          <tr>
+            <td>vs. each other (flat)</td>
+            <td>All three equal</td>
+            <td>Equal to spot</td>
+            <td>Equal to spot</td>
+          </tr>
+          <tr>
+            <td>vs. each other (inverted)</td>
+            <td>Middle curve</td>
+            <td>ABOVE spot curve</td>
+            <td>BELOW spot curve</td>
+          </tr>
+          <tr>
+            <td>Real-world example</td>
+            <td>Government zero-coupon bond yields; estimated via bootstrapping</td>
+            <td>US Treasury yield curve (published daily by US Dept. of Treasury)</td>
+            <td>SOFR forward rates; interest rate swap pricing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ All Key Formulas — Complete Quick Reference</div>
+      <div class="f">
+        ── BOND PRICING WITH SPOT RATES (Eq. 1) ──<br>
+        PV = PMT/(1+Z₁)¹ + PMT/(1+Z₂)² + ... + (PMT+FV)/(1+Zₙ)ᴺ<br>
+        No-arbitrage price — each CF discounted at its maturity-matched spot rate<br><br>
+
+        ── PAR RATE FROM SPOT RATES ──<br>
+        100 = PMT/(1+Z₁)¹ + PMT/(1+Z₂)² + ... + (PMT+100)/(1+Zₙ)ᴺ<br>
+        Solve for PMT → PMT = par rate (= coupon rate = YTM at par)<br>
+        1-year par rate always = Z₁ (one cash flow, trivially equal)<br><br>
+
+        ── FORWARD RATE FROM SPOT RATES (Eq. 3) ──<br>
+        (1+Zₐ)ᴬ × (1+IFRₐ,B₋ₐ)^(B-A) = (1+Z_B)^B<br>
+        IFRₐ,B₋ₐ = [(1+Z_B)^B / (1+Zₐ)^A]^(1/(B-A)) − 1<br>
+        Notation: AyBy = "A-year into B-year rate"  (A = start year, B = tenor)<br><br>
+
+        ── SPOT RATE FROM FORWARD RATES ──<br>
+        (1+Zₙ)ᴺ = (1+0y1y) × (1+1y1y) × (1+2y1y) × ... × (1+(N-1)y1y)<br>
+        Spot rate = geometric average of all 1-year forward rates up to that maturity<br><br>
+
+        ── BOND PRICING WITH FORWARD RATES ──<br>
+        CF₁/(1+0y1y) + CF₂/[(1+0y1y)(1+1y1y)] + ... (product of forward rates in denominator)<br>
+        Same result as spot rate pricing — both give no-arbitrage price<br><br>
+
+        ── THREE-CURVE SHAPE RULES ──<br>
+        Upward slope:  Forward &gt; Spot &gt; Par<br>
+        Flat:          Forward = Spot = Par<br>
+        Inverted:      Par &gt; Spot &gt; Forward
+      </div>
+      <div class="note">
+        <strong>IFR as breakeven rate:</strong> If expected future rate &gt; IFR → choose shorter bond + reinvest. If expected &lt; IFR → choose longer bond now.<br>
+        <strong>No-arbitrage pricing:</strong> If market price ≠ spot-rate PV → arbitrage exists (strip or reconstitute bond for risk-free profit).<br>
+        <strong>Spot = primary; par and forward are derived.</strong> All three contain the same information about the term structure.<br>
+        <strong>Par curve ≈ YTMs of on-the-run bonds</strong> but not exactly equal — on-the-run bonds are actual bonds, not hypothetically priced at par.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Term structure of interest rates</strong> = the relationship between yields-to-maturity and times-to-maturity for bonds that are identical in all ways except maturity. Also called maturity structure.</li>
+        <li>✅ <strong>Spot rate (zero rate)</strong> = the market discount rate for a default-risk-free zero-coupon bond at a specific maturity. Denoted Z₁, Z₂, ..., Zₙ. The set of all spot rates = the spot curve (also: zero curve, strip curve).</li>
+        <li>✅ <strong>Why zero-coupon bonds are ideal for term structure:</strong> no coupon reinvestment risk; single cash flow at one date = pure, unambiguous rate for that maturity. Eliminates the "blending" problem of coupon bond YTMs.</li>
+        <li>✅ <strong>In practice:</strong> spot curves are built from on-the-run government coupon bonds (bootstrapping + interpolation). Money market instruments (converted to BEY on 365-day AOR basis) cover the short end. All maturities converted to the same periodicity.</li>
+        <li>✅ <strong>Normal (upward-sloping) spot curve:</strong> longer maturities have higher yields. Typical under normal economic conditions. Inverted (downward-sloping): shorter maturities have higher yields — signals expectations of sharply lower future rates.</li>
+        <li>✅ <strong>Bond pricing with spot rates (Eq. 1):</strong> PV = Σ CFₜ/(1+Zₜ)ᵗ. Each cash flow discounted at its own maturity-matched spot rate. Produces the no-arbitrage price.</li>
+        <li>✅ <strong>No-arbitrage price:</strong> if the market price differs from the spot-rate PV, a risk-free profit can be made by stripping or reconstituting the bond. Market forces keep prices at the no-arbitrage value.</li>
+        <li>✅ <strong>Spot rate pricing vs. YTM pricing:</strong> both give the same total price. But individual cash flow PVs differ — YTM uses one blended rate for all; spot rates use the correct maturity-specific rate for each. YTM is a weighted average of the spot rates.</li>
+        <li>✅ <strong>Par rate</strong> = the coupon rate (= YTM) for a hypothetical bond priced at exactly 100. Formula: 100 = Σ PMT/(1+Zₜ)ᵗ + 100/(1+Zₙ)ᴺ, solve for PMT. 1-year par rate always equals Z₁.</li>
+        <li>✅ <strong>US Treasury yield curve = par rates,</strong> not actual bond YTMs. On-the-run bonds have YTMs close to but not equal to par rates (they are actual bonds, not hypothetical par-priced bonds).</li>
+        <li>✅ <strong>Implied forward rate (IFR)</strong> = a future interest rate implied by today's spot curve. Formula: (1+Zₐ)ᴬ × (1+IFRₐ,B₋ₐ)^(B-A) = (1+Z_B)^B. Solve for IFRₐ,B₋ₐ.</li>
+        <li>✅ <strong>Forward rate notation AyBy:</strong> A = start year (from today), B = tenor of forward period. 3y1y = 1-year rate starting 3 years from now. 0y1y = current 1-year spot rate (starts today).</li>
+        <li>✅ <strong>IFR as breakeven reinvestment rate:</strong> the rate at which reinvesting in a shorter bond + rolling over equals the return on the longer bond. If expected future rate &gt; IFR → choose shorter bond. If expected &lt; IFR → choose longer bond.</li>
+        <li>✅ <strong>IFR as incremental (marginal) return:</strong> the extra return earned for extending maturity by one more period. In an upward-sloping curve, the marginal return (forward rate) exceeds the average return (spot rate) — pulling the average up.</li>
+        <li>✅ <strong>Spot rates from forward rates:</strong> (1+Zₙ)ᴺ = product of all 1-year forward rates up to year N. Spot rate = geometric average of sequential 1-year forward rates.</li>
+        <li>✅ <strong>Bond pricing with forward rates:</strong> discount each cash flow by the product of all one-period forward rates up to that date. Gives the same no-arbitrage price as spot rate pricing.</li>
+        <li>✅ <strong>Upward-sloping spot curve → Forward &gt; Spot &gt; Par.</strong> Par rates are BELOW spot rates (low short-term rates boost early coupon PVs → lower par rate needed). Forward rates are ABOVE spot rates (each marginal year earns more than the average).</li>
+        <li>✅ <strong>Flat spot curve → Forward = Spot = Par.</strong> No term structure differences; no expected rate changes. Government bonds price at par with coupon = YTM = spot rate.</li>
+        <li>✅ <strong>Inverted spot curve → Par &gt; Spot &gt; Forward.</strong> Par rates are ABOVE spot rates (high short-term rates inflate early coupon PVs → higher par rate needed). Forward rates are BELOW spot rates (each marginal year earns less than the average — expected rate declines).</li>
+        <li>✅ <strong>All three curves encode the same information</strong> about the term structure — spot, par, and forward rates are fully derivable from each other. Spot is the primary input; par and forward are derived from it.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ THE THREE CURVES ═══<br>
+        Spot (Zero) curve: Zₙ = yield on default-risk-free zero-coupon bond maturing at year N<br>
+        Par curve: PMT that prices a hypothetical bond at exactly 100 (par rate = coupon rate = YTM at par)<br>
+        Forward curve: IFRₐ,B₋ₐ = rate for a period starting at year A with tenor (B−A) years<br><br>
+
+        ═══ KEY FORMULAS ═══<br>
+        Spot pricing: PV = Σ CFₜ/(1+Zₜ)ᵗ  [each CF at its own spot rate]<br>
+        Par rate:     100 = Σ PMT/(1+Zₜ)ᵗ + 100/(1+Zₙ)ᴺ  [solve for PMT]<br>
+        Forward rate: (1+Zₐ)ᴬ × (1+IFRₐ,B₋ₐ)^(B-A) = (1+Z_B)^B<br>
+        Spot from fwd: (1+Zₙ)ᴺ = (1+0y1y)(1+1y1y)...(1+(N-1)y1y)<br>
+        Fwd pricing:  PV = CF₁/(1+0y1y) + CF₂/[(1+0y1y)(1+1y1y)] + ...<br><br>
+
+        ═══ FORWARD RATE NOTATION ═══<br>
+        AyBy: A = start year from today; B = tenor of forward period<br>
+        0y1y = current 1-year spot rate (starts today, same as Z₁)<br>
+        3y1y = 1-year rate starting 3 years from now (IFR₃,₁)<br>
+        3y1y = [(1+Z₄)⁴ / (1+Z₃)³]^1 − 1<br><br>
+
+        ═══ THREE-CURVE SHAPE RULES ═══<br>
+        Upward slope:   Forward &gt; Spot &gt; Par<br>
+        Flat:           Forward = Spot = Par<br>
+        Inverted:       Par &gt; Spot &gt; Forward<br><br>
+
+        ═══ KEY INSIGHTS ═══<br>
+        IFR = breakeven reinvestment rate AND incremental return for extending maturity<br>
+        Spot rate = geometric average of all 1-year forward rates to that maturity<br>
+        No-arbitrage: market price ≠ spot PV → arbitrage opportunity exists<br>
+        Par ≈ on-the-run bond YTMs, but not exactly (par = hypothetical; OTR = actual bonds)<br>
+        1-year par rate always = 1-year spot rate (trivially — one cash flow)
+      </div>
+      <div class="note">
+        <strong>Upward slope intuition:</strong> Low short-term rates → high early-coupon PVs → lower par rate needed to keep price = 100 → par &lt; spot. And marginal year earns more than average → forward &gt; spot.<br>
+        <strong>Inverted slope intuition:</strong> High short-term rates → high early-coupon PVs → higher par rate needed → par &gt; spot. And marginal year earns less than average → forward &lt; spot.<br>
+        <strong>Both spot and forward rate methods give the same no-arbitrage bond price</strong> — they encode identical term structure information.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 9: The Term Structure of Interest Rates — Spot, Par, and Forward Curves · Exam Prep Notes
+</footer>
+
+</body>
+</html>

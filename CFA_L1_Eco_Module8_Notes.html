@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 8: Exchange Rate Calculations</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;
+    --accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;
+    --purple:#9a7fdc;--teal:#4cb8c9;
+    --text:#e8eaf0;--muted:#8892a4;
+    --tip-bg:#1a2218;--tip-border:#4cc98a;
+    --warn-bg:#221a18;--warn-border:#c94c4c;
+    --formula-bg:#12151f;--formula-border:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0d1a10 40%,#0a0f1a 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);border-radius:50%;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--accent);border:1px solid rgba(201,168,76,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header p{color:var(--muted);font-size:14px;max-width:640px;}
+
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+  .toc-item:hover{color:var(--accent);border-color:var(--accent);}
+
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin:24px 0 12px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px;}
+  .card p,.card li{color:var(--text);font-size:15px;}
+  .card ul,.card ol{padding-left:20px;}
+  .card ul li,.card ol li{margin-bottom:6px;}
+
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .formula-box .f{color:#e8c97a;font-size:15px;font-weight:600;font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.65;}
+
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .tip .tip-label{font-weight:700;color:var(--accent3);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .tip p{color:#c8e8d4;}
+
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .warn .warn-label{font-weight:700;color:var(--danger);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .warn p{color:#e8c8c8;}
+
+  .mnemonic{background:#1a1628;border:1px solid #3d2f6e;border-radius:6px;padding:16px 20px;margin:14px 0;}
+  .mnemonic .m-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#a98adc;margin-bottom:6px;}
+  .mnemonic p{color:#d8ccf0;font-size:14px;margin:0;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  thead th{background:rgba(201,168,76,0.1);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--accent);}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  tbody td{padding:10px 14px;color:var(--text);vertical-align:top;}
+  tbody td:first-child{font-weight:700;color:var(--accent2);}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mini-card .mc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .mini-card ul{padding-left:18px;}
+  .mini-card ul li{font-size:14px;margin-bottom:5px;color:var(--text);}
+
+  /* Worked examples */
+  .worked{background:#121820;border:1px solid #1e2a40;border-radius:6px;padding:18px 22px;margin:14px 0;}
+  .worked .w-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+  .worked p{font-size:14px;color:var(--text);margin-bottom:8px;}
+  .worked .result{color:var(--accent3);font-weight:700;font-size:15px;font-family:'JetBrains Mono',monospace;}
+  .worked .f{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:14px;display:block;margin-bottom:4px;}
+
+  /* Arbitrage steps */
+  .steps{margin:12px 0;}
+  .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:10px;}
+  .step-num{min-width:28px;height:28px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:2px;}
+  .step-content{font-size:14px;color:var(--text);}
+
+  /* Forward points table */
+  .fwd-table{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:16px 0;}
+  .fwd-row{display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid var(--border);}
+  .fwd-row:last-child{border-bottom:none;}
+  .fwd-cell{padding:10px 14px;font-size:14px;}
+  .fwd-header .fwd-cell{background:rgba(201,168,76,0.1);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;}
+  .fwd-cell:first-child{font-weight:700;color:var(--accent2);font-family:'JetBrains Mono',monospace;}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  p{margin-bottom:12px;}
+  strong{color:#fff;font-weight:700;}
+  em{color:var(--accent2);font-style:normal;font-weight:600;}
+
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 48px;font-size:12px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 8: <span>Exchange Rate</span><br>Calculations</h1>
+  <p>Exam-ready notes covering cross-rate calculations (including inversions), triangular arbitrage, covered interest rate parity, forward points, forward premiums/discounts, and all key formulas with worked examples.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Cross-Rates</a>
+  <a href="#s2" class="toc-item">02 · Inversion Method</a>
+  <a href="#s3" class="toc-item">03 · Triangular Arbitrage</a>
+  <a href="#s4" class="toc-item">04 · Covered Interest Rate Parity</a>
+  <a href="#s5" class="toc-item">05 · Forward Points</a>
+  <a href="#s6" class="toc-item">06 · Forward Premium/Discount</a>
+  <a href="#s7" class="toc-item">07 · Formula Summary</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: CROSS-RATES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Cross-Rate Calculations</h2>
+    </div>
+
+    <h3>What Is a Cross-Rate?</h3>
+    <div class="card">
+      <p>A <strong>cross-rate</strong> is an exchange rate between two currencies that are NOT directly quoted in the market, derived by using a third (intermediate) currency. Given any two exchange rates involving three currencies, you can always back out the third cross-rate.</p>
+      <p>The key principle: <em>the intermediate currency must cancel out</em>. You set up the multiplication so that the currency you want to eliminate appears once in the numerator and once in the denominator.</p>
+    </div>
+
+    <h3>Method 1 — Direct Multiplication (No Inversion Needed)</h3>
+    <div class="card">
+      <p>Use this when the two given quotes can be directly multiplied so that the intermediate currency cancels.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cross-Rate: CAD/EUR (Euro–Canada)</div>
+      <div class="f">CAD/USD × USD/EUR = CAD/EUR</div>
+      <div class="note">USD cancels in the middle. Given: CAD/USD = 1.3020 and USD/EUR = 1.1701</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — CAD/EUR Cross Rate</div>
+      <p><strong>Given:</strong> Dollar-Canada (CAD/USD) = 1.3020 &nbsp;|&nbsp; Euro-Dollar (USD/EUR) = 1.1701</p>
+      <span class="f">CAD/EUR = 1.3020 × 1.1701 = 1.5235</span>
+      <p class="result">→ 1 Euro buys 1.5235 Canadian Dollars</p>
+      <p style="font-size:13px;color:var(--muted);">Note how USD appears as numerator (in CAD/USD) and denominator (in USD/EUR) → USD cancels → left with CAD/EUR ✓</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: INVERSION METHOD -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Cross-Rate with Inversion</h2>
+    </div>
+
+    <h3>When You Need to Invert</h3>
+    <div class="card">
+      <p>Sometimes the two available market quotes have the intermediate currency in the <em>same position</em> (both numerators or both denominators). You must invert one quote first so the intermediate currency appears on both top and bottom and can cancel.</p>
+      <p>To invert a rate A/B → B/A, simply take the reciprocal: 1 ÷ (A/B).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cross-Rate: JPY/CAD (Canada–Yen) — Requires Inversion</div>
+      <div class="f">Market quotes available: CAD/USD = 1.3020 &nbsp;&amp;&nbsp; JPY/USD = 111.94</div>
+      <div class="f" style="margin-top:6px;">Need: JPY/CAD</div>
+      <div class="f" style="margin-top:6px; color:var(--accent3);">Invert CAD/USD → USD/CAD = 1/1.3020 = 0.7680</div>
+      <div class="f" style="margin-top:6px;">Then: USD/CAD × JPY/USD = JPY/CAD (USD cancels) ✓</div>
+      <div class="note">Rule: You must invert until the intermediate currency appears once on each side so it cancels cleanly.</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — JPY/CAD Cross Rate (Canada–Yen)</div>
+      <p><strong>Given:</strong> CAD/USD = 1.3020 &nbsp;|&nbsp; JPY/USD = 111.94 &nbsp;|&nbsp; Target: JPY/CAD</p>
+      <span class="f">Step 1: Invert CAD/USD → USD/CAD = 1/1.3020 = 0.7680</span>
+      <span class="f">Step 2: JPY/CAD = USD/CAD × JPY/USD = 0.7680 × 111.94</span>
+      <p class="result">→ JPY/CAD = 85.97 (1 CAD buys 85.97 Japanese Yen)</p>
+      <p style="font-size:13px;color:var(--muted);">JPY is quoted to 2 decimal places (not 4) because the value per unit is much larger. Forward points for JPY are scaled by 100 (not 10,000).</p>
+    </div>
+
+    <h3>Step-by-Step Cross-Rate Method</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Identify the target cross-rate</strong> you need (e.g., JPY/CAD)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Find two market quotes</strong> involving the same intermediate currency (e.g., CAD/USD and JPY/USD both involve USD)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Check if USD cancels directly</strong>. If USD appears in the same position in both quotes (e.g., denominator of both), invert one.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Multiply</strong> the two rates. The intermediate currency cancels, leaving the desired cross-rate.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Verify the answer makes sense</strong> — check decimal places (JPY: 2 places; most others: 4 places).</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Quick Check — Does the Math Work?</div>
+      <p>Write out the rate fractions like fractions in algebra. The intermediate currency should appear once in the numerator and once in the denominator so it cancels, leaving you with the ratio you want. If it doesn't cancel, invert one of the quotes. This is the same as unit conversion in physics or chemistry.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: TRIANGULAR ARBITRAGE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Triangular Arbitrage</h2>
+    </div>
+
+    <h3>The Concept</h3>
+    <div class="card">
+      <p>If the quoted cross-rate is <em>inconsistent</em> with the underlying exchange rate quotes, a <strong>riskless triangular arbitrage</strong> opportunity exists. The arbitrage involves three currencies (hence "triangular") and exploits the mispricing.</p>
+      <p>In practice, these discrepancies are extremely rare because both human traders and automatic trading algorithms continuously monitor for pricing inefficiencies.</p>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — Triangular Arbitrage (JPY/CAD)</div>
+      <p><strong>Given:</strong> CAD/USD = 1.3020 &nbsp;|&nbsp; JPY/USD = 111.94</p>
+      <p><strong>Correctly calculated:</strong> JPY/CAD = 85.97</p>
+      <p><strong>Misquoted dealer rate:</strong> JPY/CAD = 86.20</p>
+      <p style="margin-top:8px;">The dealer is quoting <em>too many JPY per CAD</em> — CAD is overpriced in the cross market.</p>
+      <span class="f">Arbitrage: Buy CAD1 at the cheap rate of 85.97 JPY/CAD</span>
+      <span class="f">Immediately sell CAD1 at the misquoted rate of 86.20 JPY/CAD</span>
+      <p class="result">→ Riskless profit = 86.20 − 85.97 = JPY 0.23 per CAD1</p>
+      <p style="font-size:13px;color:var(--muted);">This arbitrage continues until the price discrepancy is eliminated by the market. In modern electronic markets, this happens nearly instantaneously.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Point — Triangular Arbitrage Is Rare</div>
+      <p>The exam may ask you to <em>identify</em> whether an arbitrage opportunity exists by comparing the calculated cross-rate with a quoted cross-rate. If they differ, arbitrage exists. The profit = quoted rate − correct calculated rate (or vice versa), per unit of the base currency. In practice, electronic systems eliminate these instantly.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: COVERED INTEREST RATE PARITY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Covered Interest Rate Parity (CIP) & Forward Rate Formula</h2>
+    </div>
+
+    <h3>The Arbitrage Logic</h3>
+    <div class="card">
+      <p>Forward exchange rates are determined by an <strong>arbitrage relationship</strong> that equates the return on two equivalent risk-free investments over the same period:</p>
+      <ol style="padding-left:20px;font-size:14.5px;margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Path 1 (Domestic):</strong> Invest 1 unit of domestic currency at the domestic risk-free rate rd → get (1 + rd) at maturity</li>
+        <li style="margin-bottom:6px;"><strong>Path 2 (Foreign, FX-hedged):</strong> Convert domestic to foreign at spot rate Sf/d → invest at foreign risk-free rate rf → convert back to domestic at the pre-contracted forward rate Ff/d (eliminating FX risk)</li>
+      </ol>
+      <p style="margin-top:8px;">Both paths are risk-free. They must earn the same return — otherwise riskless arbitrage exists. This is called <strong>"swap financing."</strong></p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Covered Interest Rate Parity (CIP) — Core Arbitrage Equation</div>
+      <div class="f">(1 + rd) = Sf/d × (1 + rf) × (1/Ff/d)</div>
+      <div class="note">
+        f/d convention: Sf/d = spot (foreign currency per 1 domestic currency unit)<br>
+        Ff/d = forward rate (same convention)<br>
+        rd = domestic risk-free rate &nbsp;|&nbsp; rf = foreign risk-free rate<br><br>
+        <strong>Alternatively, if quotes are in d/f form:</strong><br>
+        (1 + rd) = (1/Sd/f) × (1 + rf) × Fd/f
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward Rate Formula (rearranged from CIP)</div>
+      <div class="f">Ff/d = Sf/d × [(1 + rf) / (1 + rd)]</div>
+      <div class="note">
+        If rf &gt; rd → Ff/d &gt; Sf/d → foreign currency at FORWARD PREMIUM (worth more in forward market)<br>
+        If rf &lt; rd → Ff/d &lt; Sf/d → foreign currency at FORWARD DISCOUNT<br><br>
+        General rule (regardless of quoting convention): <strong>Currency with higher interest rate trades at a DISCOUNT in the forward market</strong>
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — 12-Month Forward Rate</div>
+      <p><strong>Given:</strong> Spot Sf/d = 1.6535 &nbsp;|&nbsp; rd = 3.50% &nbsp;|&nbsp; rf = 5.00%</p>
+      <span class="f">Ff/d = 1.6535 × (1.0500/1.0350) = 1.6535 × 1.01449 = 1.6775</span>
+      <p class="result">→ 12-month forward rate = 1.6775</p>
+      <p style="margin-top:8px;font-size:13.5px;">Since rf (5%) &gt; rd (3.5%), the foreign currency (f) trades at a forward PREMIUM — the forward rate (1.6775) is higher than the spot (1.6535). The foreign currency is "worth more" in the future market.</p>
+    </div>
+
+    <h3>Detecting Arbitrage from a Misquoted Forward Rate</h3>
+    <div class="worked">
+      <div class="w-title">Worked Example — Misquoted Forward Rate Arbitrage</div>
+      <p><strong>Given:</strong> Spot Sf/d = 1.6535 &nbsp;|&nbsp; rd = 3.50% &nbsp;|&nbsp; rf = 5.00% &nbsp;|&nbsp; Misquoted Ff/d = 1.6900</p>
+      <p><strong>Correct forward should be:</strong> 1.6775 (from above). Misquoted is 1.6900 → foreign currency overpriced in forward market.</p>
+      <span class="f">Return on hedged foreign investment at misquoted rate:</span>
+      <span class="f">= Sf/d × (1 + rf) × (1/Ff/d) = 1.6535 × 1.05 × (1/1.6900) = 1.0273</span>
+      <p>Return on domestic: 1.0350 (3.50%). Return on hedged foreign: 1.0273 (2.73%).</p>
+      <p>Arbitrage profit: Borrow at foreign rate (5%), sell foreign at spot, hedge at misquoted forward, invest domestically at 3.5% → profit of ~77 bps per unit with no upfront capital.</p>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — CIP "3-Step Swap Financing" (Right Side of Equation)</div>
+      <p>Step 1: Convert domestic → foreign at spot (×Sf/d)<br>
+      Step 2: Invest at foreign risk-free rate (×(1+rf))<br>
+      Step 3: Convert back domestic at forward rate (×1/Ff/d)<br>
+      This equals the domestic investment (1+rd). Set equal, solve for any unknown.</p>
+    </div>
+
+    <h3>Forward Rate as Expected Future Spot Rate (With Caution)</h3>
+    <div class="card">
+      <p>If forward rates are interpreted as expected future spot rates (Ft = S(t+1)), then the expected % change in the spot rate is approximately (rf − rd) / (1 + rd) ≈ rf − rd.</p>
+      <p><strong>Counterintuitive result:</strong> Higher domestic rate (rd) → implies <em>expected depreciation</em> of domestic currency (in f/d convention). In practice, higher rates often attract capital and cause appreciation. This is the "forward rate bias" puzzle in FX markets.</p>
+      <p><strong>Key warning:</strong> Forward rates are <em>poor predictors</em> of future spot rates — large margins of error. Do NOT interpret forward rates as the "market forecast." They are simply the product of the arbitrage equation (CIP).</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: FORWARD POINTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Forward Points (Pips/Swap Points)</h2>
+    </div>
+
+    <h3>Definition & Scaling</h3>
+    <div class="card">
+      <p><strong>Forward points</strong> (also called <em>pips</em> or <em>swap points</em>) = Forward rate − Spot rate, scaled to the last decimal place of the spot quote.</p>
+      <ul style="padding-left:20px;font-size:14.5px;margin-top:8px;">
+        <li style="margin-bottom:6px;">Most currencies quoted to <strong>4 decimal places</strong> → multiply difference by <strong>10,000</strong> to get points</li>
+        <li style="margin-bottom:6px;">Japanese Yen quoted to <strong>2 decimal places</strong> → multiply difference by <strong>100</strong> to get points</li>
+        <li style="margin-bottom:6px;">Forward points are quoted to one or more decimal places → forward rate has 5+ decimal places</li>
+        <li style="margin-bottom:6px;">Called "swap points" because FX swaps = simultaneous spot + forward transactions</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward Points Calculation</div>
+      <div class="f">Forward Points = (Forward Rate − Spot Rate) × 10,000 (for 4dp currencies)</div>
+      <div class="f">Forward Points = (Forward Rate − Spot Rate) × 100 (for JPY)</div>
+      <div class="note">Positive points → base currency at FORWARD PREMIUM (forward &gt; spot)<br>
+      Negative points → base currency at FORWARD DISCOUNT (forward &lt; spot)</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — USD/EUR Forward Points</div>
+      <p><strong>Given:</strong> Spot USD/EUR = 1.15885 &nbsp;|&nbsp; 1-year forward USD/EUR = 1.19532</p>
+      <span class="f">Forward Points = (1.19532 − 1.15885) × 10,000 = 0.03647 × 10,000 = +364.7</span>
+      <p class="result">→ One-year forward points = +364.7 (base currency EUR at forward PREMIUM)</p>
+    </div>
+
+    <h3>Sample Forward Quote Table (USD/EUR)</h3>
+    <div class="fwd-table">
+      <div class="fwd-row fwd-header">
+        <div class="fwd-cell">Maturity</div>
+        <div class="fwd-cell">Forward Points</div>
+        <div class="fwd-cell">Forward Rate</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">Spot</div>
+        <div class="fwd-cell">1.15885 (rate, not points)</div>
+        <div class="fwd-cell">1.15885</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">1 week</div>
+        <div class="fwd-cell">+5.6</div>
+        <div class="fwd-cell">1.15885 + 5.6/10,000 = 1.15941</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">1 month</div>
+        <div class="fwd-cell">+27.1</div>
+        <div class="fwd-cell">1.15885 + 0.00271 = 1.16156</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">3 months</div>
+        <div class="fwd-cell">+80.9</div>
+        <div class="fwd-cell">1.15885 + 0.00809 = 1.16694</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">6 months</div>
+        <div class="fwd-cell">+175.6</div>
+        <div class="fwd-cell">1.15885 + 0.01756 = 1.17641</div>
+      </div>
+      <div class="fwd-row">
+        <div class="fwd-cell">12 months</div>
+        <div class="fwd-cell">+364.7</div>
+        <div class="fwd-cell">1.15885 + 0.03647 = 1.19532</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Converting Forward Points → Forward Rate</div>
+      <div class="f">Forward Rate = Spot Rate + (Forward Points / 10,000) &nbsp; [for 4dp currencies]</div>
+      <div class="f">Forward Rate = Spot Rate + (Forward Points / 100) &nbsp; [for JPY]</div>
+      <div class="note">Example: 3-month forward = 1.15885 + (80.9/10,000) = 1.15885 + 0.00809 = 1.16694</div>
+    </div>
+
+    <h3>What Determines the Magnitude of Forward Points?</h3>
+    <div class="card">
+      <p>Forward points are <strong>proportional to</strong> three things:</p>
+      <ol style="padding-left:20px;font-size:14.5px;margin-top:6px;">
+        <li style="margin-bottom:6px;"><strong>The spot exchange rate</strong> (Sf/d) — larger spot rates → more pips</li>
+        <li style="margin-bottom:6px;"><strong>The interest rate differential</strong> (rf − rd) — wider spread → more pips</li>
+        <li style="margin-bottom:6px;"><strong>The term to maturity</strong> (τ) — longer horizon → more pips (approximately proportional, not exactly)</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward Points (Swap Points) Formula with Maturity</div>
+      <div class="f">Ff/d − Sf/d = Sf/d × [(rf − rd) / (1 + rd × τ)] × τ</div>
+      <div class="note">τ = fraction of year (e.g., 30/360 for 30-day forward using Libor day count actual/360)<br>
+      Approximately: Forward Points ≈ Sf/d × (rf − rd) × τ &nbsp; (simplified approximation)<br>
+      Doubling τ → approximately doubles forward points. Doubling (rf − rd) → approximately doubles forward points.</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — 30-day and 180-day Forward Rates</div>
+      <p><strong>Given:</strong> Sf/d = 1.6555 &nbsp;|&nbsp; rd = 2.00%/year &nbsp;|&nbsp; rf = 3.00%/year &nbsp;|&nbsp; Day count: actual/360</p>
+      <span class="f">30-day forward: Ff/d = 1.6555 × (1 + 0.03 × 30/360) / (1 + 0.02 × 30/360) = 1.6569</span>
+      <span class="f">→ Forward premium of 14 pips (1.6569 − 1.6555 = 0.0014 × 10,000 = 14)</span>
+      <span class="f">180-day forward: swap points = 0.0082 → 82 pips (approx 6× the 30-day, not exactly)</span>
+      <p class="result">Note: 180-day has 6× the maturity but only ~5.86× the pips — not exactly proportional due to compounding.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: FORWARD PREMIUM/DISCOUNT -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Forward Premium & Discount</h2>
+    </div>
+
+    <h3>Definitions</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Forward Premium</div>
+        <ul>
+          <li>Forward rate &gt; Spot rate</li>
+          <li>Forward points are <strong>positive</strong></li>
+          <li>Base currency is worth MORE in the future (forward market)</li>
+          <li>Occurs when foreign interest rate (rf) &gt; domestic interest rate (rd) in f/d convention</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Forward Discount</div>
+        <ul>
+          <li>Forward rate &lt; Spot rate</li>
+          <li>Forward points are <strong>negative</strong></li>
+          <li>Base currency is worth LESS in the future (forward market)</li>
+          <li>Occurs when foreign interest rate (rf) &lt; domestic interest rate (rd) in f/d convention</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward Premium/Discount as % of Spot</div>
+      <div class="f">% Forward Premium/Discount = (Forward Rate − Spot Rate) / Spot Rate</div>
+      <div class="note">Equivalently: % Premium/Discount = (Forward Points / 10,000) / Spot Rate<br><br>
+      Example: 3-month USD/EUR: (1.16694 − 1.15885) / 1.15885 = 0.00809 / 1.15885 = +0.698%<br>
+      Converting spot to forward using %: 1.15885 × (1 + 0.00698) = 1.16694</div>
+    </div>
+
+    <h3>The Critical Rule — Higher Rate = Forward Discount</h3>
+    <div class="formula-box">
+      <div class="label">Universal Rule (Regardless of Quoting Convention)</div>
+      <div class="f">Currency with HIGHER interest rate → trades at FORWARD DISCOUNT</div>
+      <div class="f">Currency with LOWER interest rate → trades at FORWARD PREMIUM</div>
+      <div class="note">
+        Intuition: The forward rate compensates for the interest rate differential. If you can earn more in foreign country, the FX market prices the forward so that your total return (FX-hedged) equals the domestic rate.<br><br>
+        In f/d convention: rf &gt; rd → Ff/d &gt; Sf/d → foreign currency at PREMIUM, domestic at DISCOUNT<br>
+        In d/f convention: rd &gt; rf → Fd/f &gt; Sd/f → domestic at PREMIUM, foreign at DISCOUNT<br>
+        Both statements say: the <em>high-rate currency</em> is at a forward <em>discount</em> ← this is always true.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — "Premium" vs. "Discount" Direction</div>
+      <p>If the USD has a higher interest rate than the EUR → USD trades at a forward DISCOUNT vs. EUR. This seems counterintuitive (higher rate → currency "cheaper" in forward market) but is required for no-arbitrage. The forward discount exactly offsets the interest rate advantage, equating total returns. Remember: <strong>High rate = forward discount. Low rate = forward premium.</strong></p>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "High-Rate Currency = Discounted Forward"</div>
+      <p>Think of it as the market "charging you" for the higher yield. If a currency offers higher interest, the forward market marks it down — otherwise everyone would borrow in the low-rate currency and invest in the high-rate currency at zero risk, creating unlimited arbitrage profits.</p>
+    </div>
+
+    <h3>Forward Rates vs. Expected Future Spot Rates</h3>
+    <div class="card">
+      <p>Although it is tempting to interpret the forward rate as the market's expectation of the future spot rate, <strong>historical data shows forward rates are poor predictors of future spot rates</strong>. The margin of error is very large. FX markets are influenced by many factors — risk premia, market sentiment, capital flows, central bank policy — beyond just interest rate differentials. FX traders do not base trading strategies solely on forward rates.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: FORMULA SUMMARY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Master Formula Summary</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Formula</th><th>Expression</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cross-Rate (direct)</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">A/C = (A/B) × (B/C)</td>
+            <td>Intermediate currency B cancels directly</td>
+          </tr>
+          <tr>
+            <td>Cross-Rate (with inversion)</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">A/C = (1/(B/A)) × (B/C)</td>
+            <td>Invert B/A to get A/B, then multiply</td>
+          </tr>
+          <tr>
+            <td>CIP Arbitrage Equation (f/d)</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">(1+rd) = Sf/d × (1+rf) × (1/Ff/d)</td>
+            <td>No-arbitrage condition for forward rates</td>
+          </tr>
+          <tr>
+            <td>Forward Rate (f/d)</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Ff/d = Sf/d × [(1+rf)/(1+rd)]</td>
+            <td>Calculate forward rate given spot and rates</td>
+          </tr>
+          <tr>
+            <td>Forward Rate with Maturity</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Ff/d = Sf/d × [(1+rf×τ)/(1+rd×τ)]</td>
+            <td>τ = days/360 (Libor convention)</td>
+          </tr>
+          <tr>
+            <td>Forward Points</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">(Ff/d − Sf/d) × 10,000 (or ×100 for JPY)</td>
+            <td>Express forward premium/discount in pips</td>
+          </tr>
+          <tr>
+            <td>Swap Points (approximate)</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Ff/d − Sf/d ≈ Sf/d × [(rf−rd)/(1+rd×τ)] × τ</td>
+            <td>Shows proportionality to spread and maturity</td>
+          </tr>
+          <tr>
+            <td>Forward Rate → Forward %</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Ff/d / Sf/d − 1 = (1+rf)/(1+rd) − 1</td>
+            <td>Forward premium/discount as % of spot</td>
+          </tr>
+          <tr>
+            <td>Spot × (1+%) → Forward</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Ff/d = Sf/d × (1 + %premium)</td>
+            <td>Convert % premium to forward rate</td>
+          </tr>
+          <tr>
+            <td>Triangular Arbitrage Profit</td>
+            <td style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">Profit = |Quoted Cross − Calculated Cross|</td>
+            <td>Per unit of base currency, riskless profit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;line-height:2.1;">
+        <li>✅ Cross-rate: set up fractions so intermediate currency cancels. If needed, invert one quote (take reciprocal) first.</li>
+        <li>✅ CAD/EUR = CAD/USD × USD/EUR (USD cancels directly). JPY/CAD requires inverting CAD/USD first.</li>
+        <li>✅ JPY quoted to 2 decimal places; all others 4 decimal places. Scale forward points accordingly (÷100 for JPY; ÷10,000 for others).</li>
+        <li>✅ Triangular arbitrage: if quoted cross-rate ≠ calculated cross-rate → arbitrage profit = |difference| per unit base currency. Rare in practice due to algorithmic monitoring.</li>
+        <li>✅ CIP: (1+rd) = Sf/d × (1+rf) × (1/Ff/d) → rearranges to Ff/d = Sf/d × (1+rf)/(1+rd).</li>
+        <li>✅ Forward rate with maturity: Ff/d = Sf/d × [(1+rf×τ)/(1+rd×τ)] where τ = days/360 (Libor actual/360 convention).</li>
+        <li>✅ Forward points = (Forward − Spot) × 10,000 (or ×100 for JPY). Positive points = forward premium. Negative points = forward discount.</li>
+        <li>✅ Forward premium → Forward rate &gt; Spot rate → base currency more expensive in future.</li>
+        <li>✅ Forward discount → Forward rate &lt; Spot rate → base currency cheaper in future.</li>
+        <li>✅ CRITICAL RULE: Currency with HIGHER interest rate trades at a FORWARD DISCOUNT. Currency with LOWER rate trades at FORWARD PREMIUM. True regardless of quoting convention.</li>
+        <li>✅ Forward points are proportional to: (1) spot rate, (2) interest rate differential (rf−rd), and (3) maturity — approximately proportional to each (not exactly due to compounding).</li>
+        <li>✅ Doubling the maturity → approximately doubles forward points. Doubling the interest rate differential → approximately doubles forward points.</li>
+        <li>✅ Converting % premium to forward rate: Spot × (1 + %premium). Converting forward rate to %: (Forward/Spot) − 1.</li>
+        <li>✅ Forward rates are poor predictors of future spot rates — do NOT treat them as the "market forecast." They are simply a product of the CIP arbitrage equation.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 8: Exchange Rate Calculations · Exam Prep Notes
+</footer>
+</body>
+</html>

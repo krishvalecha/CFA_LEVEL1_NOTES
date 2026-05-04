@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 6: Analysis of Inventories</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'INV'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 7rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .num { font-family: 'JetBrains Mono', monospace; }
+  .pos { color: var(--accent3) !important; }
+  .neg { color: var(--danger) !important; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  .fifo-card { background: #111a16; border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fifo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .lifo-card { background: #14111a; border: 1px solid rgba(155,127,212,0.2); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .lifo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #9b7fd4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .wavg-card { background: #12141f; border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .wavg-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .worked { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .worked table { font-size: 13px; }
+  .worked thead th { background: #141926; font-size: 10px; }
+  .worked .total-row td { border-top: 2px solid var(--accent); font-weight: 700; color: var(--accent); }
+  .worked .result-row td { background: rgba(201,168,76,0.08); font-weight: 700; font-size: 14px; color: #e8c97a; }
+  .worked .hi { color: var(--accent3) !important; font-weight: 700; }
+  .worked .lo { color: var(--danger) !important; font-weight: 700; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 6</div>
+  <h1>Analysis of <span>Inventories</span></h1>
+  <p class="subtitle">Complete module replacement: lower of cost and NRV (IFRS vs. US GAAP write-downs and reversals), FIFO vs. weighted average vs. LIFO — effects of inflation and deflation on income statement and balance sheet, ratio impact analysis, LIFO reserve and LIFO liquidation, inventory disclosures, and key inventory ratios (turnover, days on hand, gross profit margin) with full Jollof worked example.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Inventory Cost Methods</a>
+  <a class="toc-item" href="#s2">02 · Lower of Cost and NRV</a>
+  <a class="toc-item" href="#s3">03 · Inflation Effects — FIFO vs. LIFO vs. WAVG</a>
+  <a class="toc-item" href="#s4">04 · Deflation Effects</a>
+  <a class="toc-item" href="#s5">05 · LIFO Reserve &amp; LIFO Liquidation</a>
+  <a class="toc-item" href="#s6">06 · Ratio Impact Analysis</a>
+  <a class="toc-item" href="#s7">07 · Inventory Ratios</a>
+  <a class="toc-item" href="#s8">08 · Disclosures &amp; Analyst Issues</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 1: INVENTORY COST METHODS      -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Inventory Cost Methods — Overview</h2>
+    </div>
+
+    <div class="card">
+      <p>When a company sells goods, it must decide which costs to assign to the goods sold (→ Cost of Goods Sold on the income statement) and which costs remain in ending inventory (→ Balance Sheet). In practice, goods often arrive at different prices over time. The <strong>cost flow assumption</strong> (inventory valuation method) determines how those costs are allocated — and significantly affects both the income statement and balance sheet.</p>
+      <p>The key insight: <strong>Cost of Goods Available for Sale = COGS + Ending Inventory.</strong> This is a fixed total — how you split it between COGS and ending inventory is what changes across methods.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Fundamental Inventory Identity</div>
+      <div class="f">
+        Beginning Inventory + Purchases = Goods Available for Sale<br>
+        Goods Available for Sale − Ending Inventory = Cost of Goods Sold (COGS)<br><br>
+        → COGS ↑ implies Ending Inventory ↓ (and vice versa) — they always sum to Goods Available
+      </div>
+      <div class="note">This identity is the key to understanding how all inventory methods work. Every dollar of cost must end up in either COGS (income statement) or ending inventory (balance sheet). The choice of cost flow assumption determines which costs go where — it does NOT change the total pool of costs.</div>
+    </div>
+
+    <h3>The Three Cost Flow Methods</h3>
+
+    <div class="fifo-card">
+      <div class="fifo-title">FIFO — First-In, First-Out</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Assumes the <strong>oldest inventory is sold first</strong>. The first units purchased are the first to leave as COGS.</li>
+        <li><strong>COGS</strong> reflects the oldest (earliest) prices purchased</li>
+        <li><strong>Ending Inventory</strong> reflects the most recently purchased (newest) prices — closest to current replacement cost</li>
+        <li>Permitted under both <strong>IFRS and US GAAP</strong></li>
+        <li>In rising price environment: COGS is lower → higher gross profit → higher net income → higher tax burden</li>
+        <li>Balance sheet inventory is most current (realistic) — higher asset values than LIFO</li>
+        <li>Most common globally; required under IFRS (LIFO not permitted)</li>
+      </ul>
+    </div>
+
+    <div class="lifo-card">
+      <div class="lifo-title">LIFO — Last-In, First-Out</div>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li>Assumes the <strong>most recently purchased inventory is sold first</strong>. Newest units go to COGS.</li>
+        <li><strong>COGS</strong> reflects the most recent (newest) prices — more relevant economically in rising prices</li>
+        <li><strong>Ending Inventory</strong> reflects the oldest prices — potentially very stale (far from current replacement cost)</li>
+        <li>Permitted only under <strong>US GAAP</strong> — <strong>PROHIBITED under IFRS</strong></li>
+        <li>In rising price environment: COGS is higher → lower gross profit → lower net income → lower taxes (main US tax motivation for using LIFO)</li>
+        <li>Often chosen by US companies for the <strong>tax advantage</strong> (higher COGS → lower taxable income → lower taxes payable in rising price environment)</li>
+        <li>Can result in <strong>LIFO layers</strong> of old, low-cost inventory on the balance sheet — severely understating current value</li>
+      </ul>
+    </div>
+
+    <div class="wavg-card">
+      <div class="wavg-title">Weighted Average Cost</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li>Assigns the <strong>average cost</strong> of all units available for sale to both COGS and ending inventory</li>
+        <li>Weighted average cost per unit = Total cost of goods available ÷ Total units available</li>
+        <li>Results typically fall <strong>between FIFO and LIFO</strong> for both COGS and ending inventory in a rising price environment</li>
+        <li>Permitted under both <strong>IFRS and US GAAP</strong></li>
+        <li>Also called the "average cost method." Smooths out price fluctuations over time.</li>
+        <li>Most commonly used internationally alongside FIFO; practical for companies with large volumes of interchangeable goods</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 LIFO Not Permitted Under IFRS — Critical Exam Fact</div>
+      <p>IFRS prohibits the LIFO method entirely. This is one of the most tested IFRS vs. US GAAP differences in FSA. Under IFRS, only FIFO and weighted average cost are permitted (plus specific identification for unique items). Under US GAAP, all three (FIFO, LIFO, weighted average) are permitted. This means any cross-border comparison between a US company using LIFO and a non-US company using FIFO requires adjustments before the comparison is meaningful.</p>
+    </div>
+
+    <h3>Specific Identification — The Fourth Method</h3>
+
+    <div class="card">
+      <p><strong>Specific identification</strong> assigns the actual cost of each specific item sold to COGS. Each unit is tracked individually. Used when inventory items are unique or of high value and individually distinguishable — e.g., luxury automobiles, fine art, custom jewelry, real estate. Permitted under both IFRS and US GAAP. Provides the most accurate cost assignment but is impractical for homogeneous, high-volume inventory.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 2: LOWER OF COST AND NRV       -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Lower of Cost and Net Realizable Value (NRV)</h2>
+    </div>
+
+    <div class="card">
+      <p>Inventory can decline in value due to <strong>obsolescence, damage, physical deterioration, declining selling prices, or estimation errors</strong>. Accounting standards require inventory to be written down when its market value falls below its carrying cost — applying a conservatism principle. The write-down rules differ between IFRS and US GAAP.</p>
+    </div>
+
+    <h3>IFRS — Lower of Cost and NRV</h3>
+
+    <div class="fifo-card">
+      <div class="fifo-title">IFRS: Lower of Cost and NRV (IAS 2)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>NRV</strong> = Estimated selling price in the ordinary course of business − Estimated costs of completion − Estimated costs necessary to make the sale</li>
+        <li>If carrying value &gt; NRV → write down to NRV; recognize loss as expense (in COGS or separately)</li>
+        <li>Assessment done item-by-item or by groups of similar/related items</li>
+        <li><strong>Reversals ARE permitted under IFRS</strong> (limited to the amount of the original write-down). If NRV subsequently recovers → reverse prior write-down → recognize as a reduction in cost of sales</li>
+        <li>Does NOT apply to producers of agricultural products, forest products, mineral products, or commodity broker-traders (these may use fair value less costs to sell)</li>
+      </ul>
+    </div>
+
+    <h3>US GAAP — Lower of Cost, Market, or NRV</h3>
+
+    <div class="lifo-card">
+      <div class="lifo-title">US GAAP: Two-Track System</div>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li><strong>Non-LIFO / Non-Retail inventories (effective 2017):</strong> Lower of cost or NRV — broadly consistent with IFRS. NRV = estimated selling price − costs of completion and disposal.</li>
+        <li><strong>LIFO and Retail Inventory Method:</strong> Lower of cost or <em>market value</em>. Market value = current replacement cost, subject to:
+          <ul style="margin-top:6px;">
+            <li>Upper limit: NRV (cannot exceed selling price − costs to sell)</li>
+            <li>Lower limit: NRV − Normal profit margin</li>
+          </ul>
+        </li>
+        <li><strong>Reversals are PROHIBITED under US GAAP</strong> — once written down, inventory stays at the lower value. No recovery allowed even if prices recover.</li>
+        <li>Write-downs are generally reflected in COGS on the income statement</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>IFRS</th><th>US GAAP (non-LIFO)</th><th>US GAAP (LIFO)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Write-down basis</td><td>Lower of cost and NRV</td><td>Lower of cost or NRV</td><td>Lower of cost or Market (bounded NRV)</td></tr>
+          <tr><td>NRV definition</td><td>Selling price − completion costs − selling costs</td><td>Same as IFRS</td><td>Market = replacement cost (bounded by NRV and NRV − normal profit)</td></tr>
+          <tr><td>Reversals permitted?</td><td class="pos">YES — up to original write-down amount</td><td class="neg">NO</td><td class="neg">NO</td></tr>
+          <tr><td>Where loss recognized</td><td>COGS or separately on IS</td><td>COGS</td><td>COGS</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Impact of an Inventory Write-Down on Financial Statements</h3>
+
+    <div class="card">
+      <p>An inventory write-down reduces both inventory on the balance sheet and increases COGS (or is separately expensed) on the income statement. The ripple effects across financial statements and ratios:</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Negative Effects of Write-Down</div>
+        <ul>
+          <li>COGS ↑ → Gross profit ↓ → Net income ↓</li>
+          <li>Inventory ↓ → Current assets ↓ → Total assets ↓</li>
+          <li>Net income ↓ → Retained earnings ↓ → Equity ↓</li>
+          <li>Current ratio ↓ (current assets decrease)</li>
+          <li>Return on assets ↓ (lower NI, smaller denominator benefit doesn't fully offset)</li>
+          <li>Gross profit margin ↓</li>
+          <li>Debt-to-equity ratio ↑ (lower equity)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Positive Effects of Write-Down (Counterintuitive)</div>
+        <ul>
+          <li>Inventory turnover ↑ (lower denominator: avg inventory down)</li>
+          <li>Days of inventory on hand ↓ (inverse of turnover)</li>
+          <li>Total asset turnover ↑ (lower denominator: total assets down)</li>
+          <li>Future COGS will be lower → future gross profit will be higher (asset already written down)</li>
+          <li>Activity ratios improve because the asset base (denominator) shrinks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Write-Downs and Reversals</div>
+      <p>The exam loves asking about the IFRS vs. US GAAP reversal difference: <strong>IFRS allows reversals; US GAAP prohibits them.</strong> This is the single most important rule in this area. Also tested: the effect of write-downs on ratios. Common trap: students think write-downs always hurt all ratios. In fact, activity ratios (inventory turnover, asset turnover) <em>improve</em> after a write-down because the asset base shrinks. Profitability ratios and liquidity ratios deteriorate. The exam will often say "A company writes down inventory. Which ratio is MOST LIKELY to improve?" — answer: inventory turnover (lower average inventory → higher turnover).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: INFLATION EFFECTS — FIFO vs. LIFO   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Inflation Effects on Inventory Methods</h2>
+    </div>
+
+    <div class="card">
+      <p>The choice of inventory method matters most when prices are changing. In a <strong>rising price (inflationary) environment</strong> with stable or growing inventory quantities, the three methods produce significantly different income statement and balance sheet results. Understanding the direction of impact is the core testable content for this section.</p>
+    </div>
+
+    <h3>Rising Prices + Stable/Growing Quantities — The Key Scenario</h3>
+
+    <div class="worked">
+      <div class="worked-title">Illustrative Example — Inflation: 4 units purchased at $10, $12, $14, $16 (oldest to newest). 3 units sold.</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Goods available for sale: 4 units, total cost = $10+$12+$14+$16 = $52</p>
+      <table>
+        <thead><tr><th>Item</th><th>FIFO</th><th>Weighted Average</th><th>LIFO</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Units sold (COGS)</td>
+            <td class="num">3 oldest: $10+$12+$14 = $36</td>
+            <td class="num">Avg cost = $52÷4 = $13. 3×$13 = $39</td>
+            <td class="num">3 newest: $16+$14+$12 = $42</td>
+          </tr>
+          <tr class="total-row">
+            <td>COGS</td>
+            <td class="num hi">$36 (LOWEST)</td>
+            <td class="num">$39 (middle)</td>
+            <td class="num lo">$42 (HIGHEST)</td>
+          </tr>
+          <tr>
+            <td>Ending Inventory (1 unit remaining)</td>
+            <td class="num hi">$16 (newest = HIGHEST)</td>
+            <td class="num">$13 (average)</td>
+            <td class="num lo">$10 (oldest = LOWEST)</td>
+          </tr>
+          <tr>
+            <td>Gross Profit (Revenue − COGS)</td>
+            <td class="num hi">Highest</td>
+            <td class="num">Middle</td>
+            <td class="num lo">Lowest</td>
+          </tr>
+          <tr>
+            <td>Net Income (pre-tax)</td>
+            <td class="num hi">Highest</td>
+            <td class="num">Middle</td>
+            <td class="num lo">Lowest</td>
+          </tr>
+          <tr>
+            <td>Taxes Paid</td>
+            <td class="num lo">Highest (most income)</td>
+            <td class="num">Middle</td>
+            <td class="num hi">Lowest (tax benefit)</td>
+          </tr>
+          <tr>
+            <td>Cash Flow from Operations</td>
+            <td class="num lo">Lowest (more taxes paid)</td>
+            <td class="num">Middle</td>
+            <td class="num hi">Highest (less taxes paid)</td>
+          </tr>
+          <tr>
+            <td>Inventory on Balance Sheet</td>
+            <td class="num hi">Highest (current prices)</td>
+            <td class="num">Middle</td>
+            <td class="num lo">Lowest (old prices — stale)</td>
+          </tr>
+          <tr>
+            <td>Current Ratio</td>
+            <td class="num hi">Highest (higher inv. asset)</td>
+            <td class="num">Middle</td>
+            <td class="num lo">Lowest</td>
+          </tr>
+          <tr>
+            <td>Inventory Turnover</td>
+            <td class="num lo">Lowest (lower COGS, higher avg inv)</td>
+            <td class="num">Middle</td>
+            <td class="num hi">Highest (higher COGS, lower avg inv)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:12px;"><strong>Note:</strong> LIFO gives the highest CFO under inflation — this is the primary reason US companies choose LIFO. More of the cost goes to COGS → lower taxable income → lower taxes actually paid → more cash retained. FIFO companies show higher book profits but pay more in taxes. Total pre-tax profit over the full life of the inventory is identical under all methods — only timing differs.</p>
+    </div>
+
+    <h3>Summary Table — Rising Prices (Inflation), Stable/Increasing Quantities</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>FIFO vs. LIFO</th><th>FIFO vs. WAVG</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>COGS</td><td class="neg">FIFO lower / LIFO higher</td><td>FIFO lower / WAVG middle</td></tr>
+          <tr><td>Gross Profit</td><td class="pos">FIFO higher / LIFO lower</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Net Income</td><td class="pos">FIFO higher / LIFO lower</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Income Tax</td><td class="neg">FIFO higher taxes / LIFO lower taxes</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>CFO (after-tax)</td><td class="neg">FIFO lower CFO / LIFO higher CFO</td><td>FIFO lower / WAVG middle</td></tr>
+          <tr><td>Ending Inventory (B/S)</td><td class="pos">FIFO higher / LIFO lower (stale)</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Total Assets</td><td class="pos">FIFO higher / LIFO lower</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Equity (Retained Earnings)</td><td class="pos">FIFO higher / LIFO lower</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Debt-to-Equity Ratio</td><td>FIFO lower / LIFO higher</td><td>FIFO lower / WAVG middle</td></tr>
+          <tr><td>Current Ratio</td><td class="pos">FIFO higher / LIFO lower</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Inventory Turnover</td><td>FIFO lower / LIFO higher</td><td>FIFO lower / WAVG middle</td></tr>
+          <tr><td>ROA (net income ÷ avg assets)</td><td class="pos">FIFO higher / LIFO lower*</td><td>FIFO higher / WAVG middle</td></tr>
+          <tr><td>Balance Sheet Reality (Inventory)</td><td class="pos">FIFO = current prices (realistic) / LIFO = old prices (distorted)</td><td>FIFO better / WAVG middle</td></tr>
+          <tr><td>P&amp;L Reality (COGS)</td><td>LIFO = current prices (economically relevant) / FIFO = old prices</td><td>WAVG is compromise</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Core Trade-Off — FIFO vs. LIFO in Inflation</div>
+      <p>Under inflation: <strong>FIFO gives a better balance sheet</strong> (inventory at current prices = realistic asset value) but a <strong>worse income statement</strong> match (COGS is stale old prices, not current replacement cost). <strong>LIFO gives a better income statement match</strong> (COGS reflects current replacement cost) but a <strong>worse balance sheet</strong> (inventory is stale old prices). Neither method is perfect — they each excel on one dimension and fail on the other. This is the economic logic behind the LIFO reserve adjustment (discussed next section).</p>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin-top:4px;">*ROA: FIFO has higher net income (numerator) AND higher assets (denominator), but the proportional increase in numerator exceeds the increase in denominator → FIFO ROA &gt; LIFO ROA in rising prices.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 4: DEFLATION EFFECTS          -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Deflation Effects — When Prices Fall</h2>
+    </div>
+
+    <div class="card">
+      <p>In a <strong>falling price (deflationary) environment</strong> with stable or growing inventory quantities, the relationships between FIFO, LIFO, and weighted average <strong>completely reverse</strong>. What FIFO does in inflation, LIFO does in deflation — and vice versa.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Inflation (Rising Prices)</th><th>Deflation (Falling Prices)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>COGS: which method is higher?</td><td>LIFO (newest = most expensive)</td><td>FIFO (oldest = most expensive)</td></tr>
+          <tr><td>Gross Profit: which method is higher?</td><td class="pos">FIFO</td><td class="pos">LIFO</td></tr>
+          <tr><td>Net Income: which method is higher?</td><td class="pos">FIFO</td><td class="pos">LIFO</td></tr>
+          <tr><td>Ending Inventory: which is higher?</td><td class="pos">FIFO (newest = most expensive)</td><td class="pos">LIFO (newest = cheapest — wait, opposite)</td></tr>
+          <tr><td>CFO after-tax: which is higher?</td><td class="pos">LIFO (lower taxes)</td><td class="pos">FIFO (lower taxes in deflation)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Deflation Reversal — Don't Get Tripped Up</div>
+      <p>In deflation: oldest prices are HIGHER than newest prices. So FIFO (which assigns oldest prices to COGS) now produces HIGHER COGS and LOWER profits than LIFO. The exam can ask about deflation specifically to test whether you understand the reversal. Always think: "oldest prices vs. newest prices — which is higher given the price environment?" Then apply FIFO (oldest to COGS) and LIFO (newest to COGS) accordingly.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Shortcut — The Two Key "Match" Rules</div>
+      <p><strong>FIFO balance sheet matches current reality</strong> (ending inventory = most recent prices) regardless of whether prices are rising or falling. <strong>LIFO income statement matches current reality</strong> (COGS = most recent prices) regardless of direction. Weighted average always produces results between the two extremes. Under <strong>stable prices</strong>: all three methods produce the same results — differences only emerge when prices change.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: LIFO RESERVE & LIFO LIQUIDATION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>LIFO Reserve and LIFO Liquidation</h2>
+    </div>
+
+    <div class="card">
+      <p>Because LIFO is used by many US companies but not permitted under IFRS, cross-border comparisons require analytical adjustments. US GAAP requires LIFO companies to disclose the <strong>LIFO reserve</strong> — the cumulative difference between what inventory would be under FIFO and what it actually is under LIFO. This disclosure allows analysts to convert LIFO statements to FIFO-equivalent for comparison.</p>
+    </div>
+
+    <h3>The LIFO Reserve</h3>
+
+    <div class="formula-box">
+      <div class="label">LIFO Reserve — Definition and Adjustments</div>
+      <div class="f">
+        LIFO Reserve = FIFO Inventory − LIFO Inventory<br>
+        (the cumulative difference — always positive in a rising price environment)<br><br>
+        Converting LIFO Balance Sheet → FIFO Equivalent:<br>
+        FIFO Inventory = LIFO Inventory + LIFO Reserve<br>
+        FIFO Total Assets = LIFO Total Assets + LIFO Reserve × (1 − tax rate)<br>
+        Wait — more precisely:<br>
+        FIFO Equity = LIFO Equity + LIFO Reserve × (1 − tax rate)<br>
+        (because if inventory were higher, retained earnings would be higher, but taxes would have been paid)<br><br>
+        Converting LIFO COGS → FIFO Equivalent:<br>
+        FIFO COGS = LIFO COGS − ∆LIFO Reserve (decrease in reserve → lower FIFO COGS)<br>
+        FIFO COGS = LIFO COGS − (Ending LIFO Reserve − Beginning LIFO Reserve)
+      </div>
+      <div class="note">The LIFO reserve is disclosed in US GAAP footnotes. In a rising price environment with growing inventory quantities, the LIFO reserve grows over time. An analyst can use the LIFO reserve to convert a LIFO company's balance sheet and income statement to FIFO-equivalent, enabling comparison with FIFO companies (including all IFRS companies).</div>
+    </div>
+
+    <h3>LIFO Liquidation</h3>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ LIFO Liquidation — The Earnings Quality Trap</div>
+      <p>A <strong>LIFO liquidation</strong> occurs when a LIFO company's inventory quantities decline (sells more than it purchases in a period). This forces the company to dip into older, lower-cost LIFO inventory layers. The old low-cost inventory goes to COGS — which is much lower than current replacement cost — creating an artificial boost to gross profit and net income. This is a transitory, non-recurring source of earnings that does NOT reflect current operating performance. Under US GAAP, companies must disclose the <strong>material income impact of LIFO liquidations</strong>. Analysts should strip out this effect when assessing sustainable earnings. Key signal: LIFO company with rising gross margins + declining inventory quantities = likely LIFO liquidation effect.</p>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">LIFO Reserve Adjustment — Converting LIFO to FIFO (Illustrative)</div>
+      <table>
+        <thead><tr><th>Item</th><th>As Reported (LIFO)</th><th>FIFO Equivalent</th><th>Adjustment</th></tr></thead>
+        <tbody>
+          <tr><td>Ending Inventory (B/S)</td><td class="num">$800</td><td class="num hi">$1,100</td><td class="num">+LIFO Reserve $300</td></tr>
+          <tr><td>Total Assets (B/S)</td><td class="num">$5,000</td><td class="num hi">$5,300</td><td class="num">+LIFO Reserve $300</td></tr>
+          <tr><td>Pretax Income</td><td class="num">$500</td><td class="num hi">$560</td><td class="num">+∆LIFO Reserve $60 (reserve grew $60)</td></tr>
+          <tr><td>Tax payable (40%)</td><td class="num">$200</td><td class="num lo">$224</td><td class="num">+$24 (more tax on higher income)</td></tr>
+          <tr><td>Net Income</td><td class="num">$300</td><td class="num hi">$336</td><td class="num">+$60 × (1−0.40) = +$36</td></tr>
+          <tr><td>Equity (Retained Earnings adj.)</td><td class="num">$2,000</td><td class="num hi">$2,180</td><td class="num">+LIFO Reserve × (1−t) = $300×0.60=$180</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Note: The ∆LIFO Reserve (change in LIFO reserve during the year) converts COGS: FIFO COGS = LIFO COGS − ∆LIFO Reserve. The cumulative LIFO Reserve (times 1−tax rate) adjusts equity from LIFO to FIFO equivalent.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: RATIO IMPACT ANALYSIS              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Ratio Impact — Method Comparison</h2>
+    </div>
+
+    <div class="card">
+      <p>Since inventory valuation method affects COGS, gross profit, net income, and inventory carrying value, virtually every key ratio is affected. This is highly testable — the exam will give you a scenario and ask which direction a ratio moves when switching from one method to another.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>FIFO vs. LIFO (Rising Prices)</th><th>FIFO vs. WAVG (Rising Prices)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gross Profit Margin</td>
+            <td class="num">Gross Profit ÷ Revenue</td>
+            <td class="pos">FIFO higher (lower COGS)</td>
+            <td class="pos">FIFO higher (lower COGS)</td>
+          </tr>
+          <tr>
+            <td>Net Profit Margin</td>
+            <td class="num">Net Income ÷ Revenue</td>
+            <td class="pos">FIFO higher</td>
+            <td class="pos">FIFO higher</td>
+          </tr>
+          <tr>
+            <td>Return on Assets (ROA)</td>
+            <td class="num">Net Income ÷ Avg Total Assets</td>
+            <td class="pos">FIFO higher (NI↑ more than assets↑)</td>
+            <td class="pos">FIFO higher</td>
+          </tr>
+          <tr>
+            <td>Return on Equity (ROE)</td>
+            <td class="num">Net Income ÷ Avg Equity</td>
+            <td class="pos">FIFO higher (NI↑ more than equity↑)</td>
+            <td class="pos">FIFO higher</td>
+          </tr>
+          <tr>
+            <td>Current Ratio</td>
+            <td class="num">Current Assets ÷ Current Liabilities</td>
+            <td class="pos">FIFO higher (inventory asset higher)</td>
+            <td class="pos">FIFO higher</td>
+          </tr>
+          <tr>
+            <td>Inventory Turnover</td>
+            <td class="num">COGS ÷ Avg Inventory</td>
+            <td class="neg">FIFO lower (lower COGS, higher avg inv)</td>
+            <td class="neg">FIFO lower</td>
+          </tr>
+          <tr>
+            <td>Days Inventory on Hand</td>
+            <td class="num">365 ÷ Inventory Turnover</td>
+            <td class="neg">FIFO higher (lower turnover)</td>
+            <td class="neg">FIFO higher</td>
+          </tr>
+          <tr>
+            <td>Debt-to-Equity Ratio</td>
+            <td class="num">Total Debt ÷ Total Equity</td>
+            <td class="pos">FIFO lower (higher retained earnings → higher equity)</td>
+            <td class="pos">FIFO lower</td>
+          </tr>
+          <tr>
+            <td>Cash Flow from Operations</td>
+            <td class="num">Operating Cash Flow</td>
+            <td class="neg">FIFO lower (higher taxes paid)</td>
+            <td class="neg">FIFO lower</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Shortcut for Inflation Scenario</div>
+      <p>In rising prices: <strong>FIFO = Better Income Statement, Better Balance Sheet appearance (except CFO).</strong> FIFO shows higher profits, higher assets, higher equity, lower D/E, higher current ratio. BUT pays more taxes → lower actual CFO. <strong>LIFO = Better Tax Position, Better COGS Reality.</strong> LIFO shows lower profits (but closer to true economic cost), lower assets, lower equity, higher D/E, higher inventory turnover. The exam often asks: "Which method gives a more realistic COGS in rising prices?" → LIFO. "Which gives a more realistic balance sheet inventory?" → FIFO.</p>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Jollof Inc. — Key Ratios (FIFO, 2017 vs. 2016)</div>
+      <table>
+        <thead><tr><th>Ratio</th><th>Formula</th><th>2017</th><th>2016</th><th>Direction</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Inventory Turnover</td>
+            <td class="num">COGS ÷ Avg Inventory</td>
+            <td class="num">9,400÷[(1,845+1,877)/2] = <strong>5.05×</strong></td>
+            <td class="num">10,150÷[(1,877+1,898)/2] = <strong>5.38×</strong></td>
+            <td class="neg">↓ Deteriorating</td>
+          </tr>
+          <tr>
+            <td>Days Inventory</td>
+            <td class="num">365 ÷ Turnover</td>
+            <td class="num"><strong>72.3 days</strong></td>
+            <td class="num"><strong>67.8 days</strong></td>
+            <td class="neg">↑ More days = slower</td>
+          </tr>
+          <tr>
+            <td>Gross Profit Margin</td>
+            <td class="num">Gross Profit ÷ Revenue</td>
+            <td class="num">4,867÷14,267 = <strong>34.1%</strong></td>
+            <td class="num">4,795÷14,945 = <strong>32.1%</strong></td>
+            <td class="pos">↑ Improving</td>
+          </tr>
+          <tr>
+            <td>Current Ratio</td>
+            <td class="num">CA ÷ CL</td>
+            <td class="num">12,238÷9,817 = <strong>1.25</strong></td>
+            <td class="num">11,504÷9,117 = <strong>1.26</strong></td>
+            <td>≈ Stable</td>
+          </tr>
+          <tr>
+            <td>Debt-to-Equity</td>
+            <td class="num">Total Debt ÷ Equity</td>
+            <td class="num">(3,302+56+921)÷4,388 = <strong>0.98×</strong></td>
+            <td class="num">(3,794+40+406)÷9,830 = <strong>0.43×</strong></td>
+            <td class="neg">↑ Sharply worse</td>
+          </tr>
+          <tr>
+            <td>Return on Assets</td>
+            <td class="num">NI ÷ Avg Total Assets</td>
+            <td class="num">−4,345÷25,679 = <strong>−16.9%</strong></td>
+            <td class="num">−2,921÷31,803 = <strong>−9.2%</strong></td>
+            <td class="neg">↓ Sharply worse</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;"><strong>Jollof context:</strong> The company was in serious distress. Net losses deepened significantly in 2017 (impairment charges of €3,969m). The gross margin improvement (34.1% vs. 32.1%) is misleading — it's partly driven by lower revenues in 2017 with relatively less proportional COGS reduction. Debt-to-equity nearly doubled as equity collapsed due to losses. Inventory turnover worsened slightly — goods moving slower. The valuation allowance grew from €432m to €549m — write-downs accelerating.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 7: INVENTORY RATIOS            -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Inventory Ratios — Calculation and Interpretation</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Three Core Inventory Ratios</div>
+      <div class="f">
+        Inventory Turnover     = COGS ÷ Average Inventory<br>
+        Days Inventory on Hand = 365 ÷ Inventory Turnover<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(or: Ending Inventory ÷ COGS × 365)<br><br>
+        Gross Profit Margin    = Gross Profit ÷ Revenue<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= (Revenue − COGS) ÷ Revenue<br><br>
+        Note: Inventory turnover uses AVERAGE inventory in denominator;<br>
+        Days on hand sometimes uses ENDING inventory — check which is specified.
+      </div>
+      <div class="note">Important: COGS (not revenue) is the numerator for inventory turnover. A common error is using revenue instead of COGS. Revenue ÷ inventory gives total asset intensity, not inventory efficiency. The standard formula uses COGS because that's what was consumed from inventory.</div>
+    </div>
+
+    <h3>Interpreting Inventory Turnover and Days on Hand</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">High Turnover / Low Days — Could Mean:</div>
+        <ul>
+          <li><strong>Efficient inventory management</strong> — lean, just-in-time operations. Positive interpretation.</li>
+          <li><strong>Inadequate inventory levels</strong> — company doesn't carry enough stock → stockouts, lost sales, production disruptions. Negative.</li>
+          <li><strong>Inventory write-downs</strong> — written-down inventory reduces the denominator artificially, boosting the ratio. Negative quality signal.</li>
+          <li>Distinguish by: comparing with industry peers + examining sales growth. Turnover ↑ + sales growth in line with peers → efficient. Turnover ↑ + sales growth lagging → inadequate inventory.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Low Turnover / High Days — Could Mean:</div>
+        <ul>
+          <li><strong>Slow-moving or obsolete inventory</strong> — goods not selling, piling up. Major concern.</li>
+          <li><strong>Strategic build-up</strong> — company building inventory ahead of expected demand surge or supply disruption. Positive.</li>
+          <li><strong>Luxury/specialty goods</strong> — inherently low turnover (e.g., fine jewelers vs. grocery stores). Not necessarily bad — compare within industry.</li>
+          <li>Always benchmark against industry norms and historical trend. Never interpret in isolation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Gross profit margin</strong> measures how much of each revenue dollar remains after covering COGS. Higher = better (more pricing power, lower input costs, or more value-added products). Key considerations:</p>
+      <ul>
+        <li>Highly competitive industries → lower gross margins (commoditized). Fewer competitors → higher margins.</li>
+        <li>Luxury goods: high gross margins but low turnover. Staples: low gross margins but high turnover. Both can be profitable — compare within sector.</li>
+        <li>Inventory method choice significantly affects gross margin. FIFO in inflation → higher gross margin. LIFO → lower. Cross-company comparison requires same method or adjustment.</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Inventory Ratio Interpretation</div>
+      <p>The exam frequently presents a scenario where turnover increases and asks for the most likely explanation. The answer depends on context: if sales are also growing → efficient management. If sales are flat or declining → possibly inadequate inventory OR write-downs. Another common question: "Which method produces a higher inventory turnover in rising prices?" → LIFO (higher COGS in numerator AND lower avg inventory in denominator = higher turnover). The exam also tests: write-down → turnover ↑ (artificially, via lower inventory denominator) — an activity ratio improvement that actually signals a problem, not a success.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 8: DISCLOSURES & ANALYST ISSUES -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Inventory Disclosures and Analyst Issues</h2>
+    </div>
+
+    <div class="card">
+      <p>Inventory disclosures in the footnotes to financial statements provide critical information that goes beyond the balance sheet and income statement figures. Reading the notes on inventory is essential for understanding the accounting policies and any quality concerns.</p>
+    </div>
+
+    <h3>Required Disclosures Under IFRS (IAS 2)</h3>
+
+    <div class="fifo-card">
+      <div class="fifo-title">IFRS Required Disclosures</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Accounting policies adopted (cost formula used — FIFO or weighted average)</li>
+        <li>Total carrying amount and breakdown by classification (raw materials, WIP, finished goods, merchandise)</li>
+        <li>Carrying amount of inventories at fair value less costs to sell</li>
+        <li>Amount of inventories recognized as expense (COGS) during the period</li>
+        <li>Amount of any write-downs recognized in the period</li>
+        <li><strong>Amount of any reversal</strong> of write-downs (IFRS unique — US GAAP does not have this)</li>
+        <li>Circumstances/events leading to reversal of write-down</li>
+        <li>Carrying amount of inventories pledged as collateral</li>
+      </ul>
+    </div>
+
+    <h3>Additional US GAAP Disclosures</h3>
+
+    <div class="wavg-card">
+      <div class="wavg-title">US GAAP Additional Requirements</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li>Same as IFRS except no reversal disclosures (prohibited)</li>
+        <li><strong>Significant estimates</strong> applicable to inventories</li>
+        <li><strong>Material income from LIFO liquidation</strong> must be disclosed — a key alert for analysts</li>
+        <li>LIFO reserve disclosure (allows FIFO conversion)</li>
+      </ul>
+    </div>
+
+    <h3>Key Analyst Issues When Examining Inventory</h3>
+
+    <div class="card">
+      <ul>
+        <li><strong>Compare inventory method across peers.</strong> Before comparing ratios, identify whether companies use FIFO, LIFO, or weighted average. Adjust using the LIFO reserve for US GAAP LIFO companies when comparing to FIFO or IFRS companies.</li>
+        <li><strong>Examine changes in inventory classifications.</strong> Changes in the mix of raw materials, WIP, and finished goods can signal future business trends. Rising WIP relative to finished goods may signal production issues. Rising finished goods relative to sales may signal demand weakness.</li>
+        <li><strong>Track the valuation allowance (write-down trend).</strong> Growing write-down reserves signal worsening inventory quality or obsolescence risk (see Jollof — allowance grew from €318m to €432m to €549m over three years while revenues were falling).</li>
+        <li><strong>Watch for LIFO liquidation signals.</strong> LIFO company + declining inventory quantities + unusual gross margin improvement = potential LIFO liquidation boosting reported profits. Check the US GAAP footnote disclosure.</li>
+        <li><strong>Assess inventory as % of current assets over time.</strong> Rising concentration of current assets in inventory (less liquid than cash or receivables) can worsen effective liquidity even if the current ratio holds steady.</li>
+        <li><strong>Consider debt covenant implications.</strong> Companies with tight debt covenants (financial ratio requirements) may be reluctant to write down inventory — even when warranted — because write-downs hurt profitability and equity ratios. Analysts should be especially skeptical of companies that have NOT taken write-downs in industries with obvious obsolescence risk (e.g., tech hardware, fashion, seasonal goods).</li>
+        <li><strong>Tangible book value from notes:</strong> Historical cost of inventory = Reported inventory + Valuation allowance (from the notes). This tells you the gross cost before write-downs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST              -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 6: Analysis of Inventories</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>Three permitted methods:</strong> FIFO (both standards), Weighted Average (both), LIFO (US GAAP only — PROHIBITED under IFRS). Specific identification for unique items (both).</li>
+        <li>✅ <strong>LIFO is NOT permitted under IFRS.</strong> This is the most important IFRS/US GAAP difference in this module.</li>
+        <li>✅ <strong>The fundamental identity:</strong> Beg. Inventory + Purchases = Goods Available. COGS + End. Inventory = Goods Available. Higher COGS always means lower ending inventory (and vice versa).</li>
+        <li>✅ <strong>FIFO in rising prices:</strong> Oldest (cheaper) costs → COGS. Newest (pricier) costs → ending inventory. Result: lower COGS, higher gross profit, higher NI, higher taxes, lower CFO, higher inventory on B/S.</li>
+        <li>✅ <strong>LIFO in rising prices:</strong> Newest (pricier) costs → COGS. Oldest (cheaper) costs → ending inventory. Result: higher COGS, lower gross profit, lower NI, lower taxes (tax advantage!), higher CFO, lower (stale) inventory on B/S.</li>
+        <li>✅ <strong>WAVG in rising prices:</strong> Results always fall between FIFO and LIFO for all measures.</li>
+        <li>✅ <strong>Deflation: all relationships reverse.</strong> FIFO COGS becomes highest (oldest = most expensive). LIFO profit becomes highest.</li>
+        <li>✅ <strong>FIFO gives better balance sheet;</strong> inventory at current (replacement) prices. <strong>LIFO gives better income statement match;</strong> COGS reflects current replacement cost.</li>
+        <li>✅ <strong>Inflation, FIFO vs. LIFO direction of ratios:</strong> FIFO → higher gross margin, higher ROA, higher current ratio, lower D/E, lower inventory turnover. LIFO → lower gross margin, lower ROA, lower current ratio, higher D/E, HIGHER inventory turnover.</li>
+        <li>✅ <strong>IFRS write-down basis:</strong> Lower of cost and NRV. NRV = selling price − completion costs − selling costs. Write-downs ARE reversible (up to original write-down). Reversal = reduction in COGS.</li>
+        <li>✅ <strong>US GAAP write-down basis (non-LIFO):</strong> Lower of cost or NRV. Write-downs are NOT reversible.</li>
+        <li>✅ <strong>US GAAP LIFO:</strong> Lower of cost or Market (bounded NRV). Market = replacement cost, bounded above by NRV and below by NRV − normal profit. No reversals.</li>
+        <li>✅ <strong>Write-down effects:</strong> Inventory ↓, COGS ↑, NI ↓, equity ↓, total assets ↓. Current ratio ↓, ROA ↓, gross margin ↓. BUT: inventory turnover ↑ and asset turnover ↑ (lower denominator). Activity ratios IMPROVE.</li>
+        <li>✅ <strong>LIFO Reserve = FIFO inventory − LIFO inventory.</strong> Positive in rising prices. Disclosed in US GAAP footnotes. Used by analysts to convert LIFO → FIFO.</li>
+        <li>✅ <strong>FIFO adjustment from LIFO:</strong> FIFO Inventory = LIFO Inventory + LIFO Reserve. FIFO COGS = LIFO COGS − ∆LIFO Reserve. FIFO Equity = LIFO Equity + LIFO Reserve × (1 − tax rate).</li>
+        <li>✅ <strong>LIFO liquidation:</strong> When inventory quantities fall, old low-cost layers emerge in COGS → artificially low COGS → inflated gross profit. Transitory, non-recurring. Must be disclosed under US GAAP. Analyst should strip out when assessing sustainable earnings.</li>
+        <li>✅ <strong>Inventory turnover = COGS ÷ Average Inventory.</strong> Days on hand = 365 ÷ Turnover. Higher turnover is usually good — but check for write-downs or inadequate inventory as alternative explanations.</li>
+        <li>✅ <strong>Gross profit margin = Gross Profit ÷ Revenue.</strong> Directly affected by inventory method. Always compare within same inventory method group.</li>
+        <li>✅ <strong>Valuation allowance</strong> (IFRS term) = cumulative write-downs on gross inventory. Gross inventory = Net inventory + Valuation allowance. Growing allowance trend = worsening inventory quality.</li>
+        <li>✅ <strong>Debt covenant risk:</strong> Companies may resist taking write-downs to avoid ratio deterioration that could breach covenants. Skepticism warranted in high-obsolescence industries with no write-downs taken.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 6 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ INVENTORY METHODS ═══<br>
+        FIFO:   Oldest → COGS  |  Newest → Ending Inv  |  IFRS &amp; US GAAP ✓<br>
+        LIFO:   Newest → COGS  |  Oldest → Ending Inv  |  US GAAP only (IFRS PROHIBITED)<br>
+        WAVG:   Average cost for both COGS and Ending Inv  |  IFRS &amp; US GAAP ✓<br><br>
+
+        ═══ RISING PRICES (Inflation), stable/growing quantities ═══<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIFO        WAVG        LIFO<br>
+        COGS:             LOWEST      Middle      HIGHEST<br>
+        Gross Profit:     HIGHEST     Middle      LOWEST<br>
+        Net Income:       HIGHEST     Middle      LOWEST<br>
+        Taxes Paid:       HIGHEST     Middle      LOWEST (tax advantage)<br>
+        CFO:              LOWEST      Middle      HIGHEST (less taxes paid)<br>
+        Ending Inv (B/S): HIGHEST     Middle      LOWEST (stale!)<br>
+        Current Ratio:    HIGHEST     Middle      LOWEST<br>
+        Inv Turnover:     LOWEST      Middle      HIGHEST<br>
+        D/E Ratio:        LOWEST      Middle      HIGHEST<br>
+        ROA:              HIGHEST     Middle      LOWEST<br><br>
+
+        ═══ DEFLATION: All relationships REVERSE ═══<br><br>
+
+        ═══ WRITE-DOWN EFFECTS ═══<br>
+        Inventory ↓, COGS ↑, NI ↓, Equity ↓, Total Assets ↓<br>
+        Current ratio ↓, Gross margin ↓, ROA ↓<br>
+        BUT: Inventory turnover ↑, Total asset turnover ↑ (lower denominators)<br>
+        IFRS: write-down reversals PERMITTED (up to original amount)<br>
+        US GAAP: write-down reversals PROHIBITED<br><br>
+
+        ═══ LIFO RESERVE ADJUSTMENTS ═══<br>
+        FIFO Inventory  = LIFO Inventory + LIFO Reserve<br>
+        FIFO COGS       = LIFO COGS − ∆LIFO Reserve (change in reserve during year)<br>
+        FIFO Equity     = LIFO Equity + LIFO Reserve × (1 − tax rate)<br><br>
+
+        ═══ INVENTORY RATIOS ═══<br>
+        Inventory Turnover  = COGS ÷ Average Inventory<br>
+        Days on Hand        = 365 ÷ Inventory Turnover<br>
+        Gross Profit Margin = (Revenue − COGS) ÷ Revenue
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 6:</strong><br>
+        (1) LIFO is PROHIBITED under IFRS. Any question asking about IFRS companies using LIFO is a trap — they can't.<br>
+        (2) Rising prices: FIFO → higher NI, lower CFO (more taxes). LIFO → lower NI, higher CFO (tax advantage). Both have same total lifetime income/CF — only timing differs.<br>
+        (3) Write-down → activity ratios IMPROVE (turnover, asset turnover) because denominator shrinks. Profitability and liquidity ratios deteriorate.<br>
+        (4) IFRS allows reversals; US GAAP prohibits them. If inventory price recovers: IFRS reverses write-down → reduces COGS (increases profit). US GAAP: no change — inventory stays at written-down value.<br>
+        (5) LIFO liquidation: inventory quantities fall → old cheap layers hit COGS → artificially high gross profit. Transitory and must be disclosed under US GAAP. Strip from sustainable earnings analysis.<br>
+        (6) FIFO ending inventory = current (realistic) prices. LIFO ending inventory = old stale prices. For balance sheet realism: FIFO wins. For income statement (COGS) realism in rising prices: LIFO wins.<br>
+        (7) Converting LIFO COGS to FIFO: subtract the CHANGE (∆) in LIFO reserve, NOT the total LIFO reserve. The total LIFO reserve adjusts the balance sheet (inventory and equity). The annual change adjusts the income statement (COGS).<br>
+        (8) Inventory turnover uses COGS (not revenue) as numerator. Revenue/inventory is a different ratio.<br>
+        (9) High turnover could mean efficiency OR inadequate inventory OR write-downs. Always check context and compare to peers and sales growth.<br>
+        (10) Gross profit margin is directly affected by inventory method — never compare across methods without adjustment.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 6: Analysis of Inventories · Exam Prep Notes
+</footer>
+
+</body>
+</html>

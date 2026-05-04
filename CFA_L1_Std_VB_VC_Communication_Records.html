@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard V(B): Communication with Clients & V(C): Record Retention</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'V(B/C)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:7rem;font-weight:900;color:rgba(76,201,138,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(76,201,138,0.12);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent3);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent3);border-color:var(--accent3);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent3);background:rgba(76,201,138,0.1);border:1px solid rgba(76,201,138,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent3);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(76,201,138,0.3);border-left:4px solid var(--accent3);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent3);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#c8dfd0;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#90e4b4;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-source{font-size:10px;color:var(--accent3);font-family:'JetBrains Mono',monospace;background:rgba(76,201,138,0.1);padding:2px 7px;border-radius:3px;border:1px solid rgba(76,201,138,0.2);}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#90e4b4;}
+  .ex-key{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#ddd0a8;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#c9a84c;margin-bottom:5px;}
+  .divider{border:none;border-top:2px solid var(--border);margin:56px 0;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD V · MODULE 3</div>
+  <h1>Standards <span>V(B)</span>: Communication with Clients &amp; <span>V(C)</span>: Record Retention</h1>
+  <p class="subtitle">V(B) requires five categories of disclosure to clients and prospective clients: nature of services and costs, investment process, significant risks and limitations, important analytical factors, and fact vs. opinion. V(C) requires maintaining appropriate records to support investment analyses, recommendations, and actions. Both sources fully synthesised — all LES and Handbook examples cross-referenced.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#b1">V(B) Standard</a>
+  <a class="toc-item" href="#b2">Five Requirements</a>
+  <a class="toc-item" href="#b3">Services &amp; Costs</a>
+  <a class="toc-item" href="#b4">Investment Process</a>
+  <a class="toc-item" href="#b5">Risks &amp; Limitations</a>
+  <a class="toc-item" href="#b6">Fact vs Opinion</a>
+  <a class="toc-item" href="#b7">V(B) Examples</a>
+  <a class="toc-item" href="#c1">V(C) Standard</a>
+  <a class="toc-item" href="#c2">What to Retain</a>
+  <a class="toc-item" href="#c3">V(C) Examples</a>
+  <a class="toc-item" href="#checklist">★ Checklists</a>
+</div>
+<div class="container">
+
+<!-- ═══════════ V(B) ═══════════ -->
+<div class="section" id="b1">
+  <div class="section-header"><span class="section-num">V(B)</span><h2>Standard V(B): Communication with Clients — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard V(B) — Communication with Clients and Prospective Clients</div>
+    <p>Members and Candidates must: 1. Disclose to clients and prospective clients the nature of the services provided, along with information about the cost to the client associated with those services. 2. Disclose to clients and prospective clients the basic format and general principles of the investment processes they use to analyze investments, select securities, and construct portfolios and must promptly disclose any changes that might materially affect those processes. 3. Disclose to clients and prospective clients significant limitations and risks associated with the investment process. 4. Use reasonable judgment in identifying which factors are important to their investment analyses, recommendations, or actions and include those factors in communications with clients and prospective clients. 5. Distinguish between fact and opinion in the presentation of investment analyses and recommendations.</p>
+  </div>
+</div>
+
+<div class="section" id="b2">
+  <div class="section-header"><span class="section-num">B2</span><h2>Five Requirements — Overview and Scope</h2></div>
+  <div class="card">
+    <p>V(B) applies to any form of communication — not just written research reports. Covered channels: in-person recommendations, telephone conversations, media broadcasts, electronic communications, social media posts. The nature of communications ranges from a single word ("buy" or "sell") to a 100-page report.</p>
+    <p>Key scope rules: (1) primarily affects <strong>client-facing members</strong> — non-client-facing members (e.g., model developers) are not required to ensure client disclosures are made; (2) sophisticated clients are NOT exempt — may not rely on client sophistication as a reason to skip required disclosures, though information may be tailored to client knowledge; (3) disclosures are <strong>ongoing</strong> — initial disclosures at relationship inception do not satisfy future obligations when things change.</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Social Media Considerations</div>
+    <p>When providing information through electronic or digital format, members must take reasonable steps to ensure delivery treats all clients fairly — social media may not be available to all clients, creating a fair dealing concern (see III(B)). The standard itself does not specify how disclosures must be made; manner is at the member's discretion as long as disclosures are appropriate, accurate, timely, and complete. Best practice: written form.</p>
+  </div>
+</div>
+
+<div class="section" id="b3">
+  <div class="section-header"><span class="section-num">B3</span><h2>Requirement 1: Nature of Services and Information about Costs</h2></div>
+  <div class="card">
+    <p>This is a relatively new addition to the standard. Clients must understand <em>what services will be provided</em> AND <em>what services will NOT be provided</em> — to set appropriate expectations. Best practice: clearly set out the service scope in written form at the outset of the engagement.</p>
+    <p>Cost disclosure requirements:</p>
+    <ul>
+      <li>Must disclose costs expected to be charged to and paid by the client</li>
+      <li>Must provide reasonable detail about costs — but does NOT require specific dollar amounts in advance (e.g., AUM-based fees cannot be specified in advance)</li>
+      <li>Does NOT require disclosure of the firm's internal cost of providing services</li>
+      <li><strong>Must cover costs from ALL sources</strong>: direct fees, affiliate fees, third-party fees embedded in products used by the firm, related entity costs — not just costs charged by the direct relationship entity</li>
+      <li>Disclosures are ongoing — must update clients when services or costs change</li>
+    </ul>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Alphonso (ABC Capital): Client Sophistication Is Not an Excuse</div>
+    <p>ABC Capital routinely provides structuring advice to portfolio companies and charges fees — retaining them when investments succeed and remitting them to the fund when investments fail. The CEO views this as common industry practice and doesn't disclose it in the private placement memorandum, reasoning that sophisticated private equity investors understand how the industry works. <strong>Violation of V(B).</strong> The standard explicitly states: "Members and candidates may not rely on the sophistication of clients and their supposed understanding of the nature and details of the investment process as a reason for not providing the information required by this standard." Investor benefit from the arrangement (when it works in their favour) also doesn't excuse the non-disclosure.</p>
+    <p>The Maalouf example adds another dimension: <strong>fee methodology changes must also be disclosed</strong> — even if the change results in lower fees. Disclosure obligations apply to both the level and the calculation methodology of fees.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Inadequate Firm Disclosures — Member's Responsibility</div>
+    <p>If a member's firm generates disclosures that the member considers insufficient to meet V(B) requirements, the member must: (1) alert the firm to the deficiency, (2) where possible, supplement the firm's insufficient disclosures, and (3) if unable to rectify or supplement, document objections and take steps to dissociate from the activity. Members cannot simply defer to firm-generated disclosures and ignore the inadequacy — they remain personally responsible.</p>
+  </div>
+</div>
+
+<div class="section" id="b4">
+  <div class="section-header"><span class="section-num">B4</span><h2>Requirement 2: Disclosing the Investment Process and Changes</h2></div>
+  <div class="card">
+    <p>Must adequately describe the <strong>basic format and general principles</strong> of the investment decision-making process — not necessarily in complete technical detail, but enough that clients can understand the basis for recommendations and evaluate their limitations.</p>
+    <p>Must disclose:</p>
+    <ul>
+      <li>Both positive and negative influences on recommendations, including significant risks and limitations</li>
+      <li>Use of external advisers as part of the investment process — including the specialisation or diversification they provide</li>
+      <li>Material changes to the investment process promptly — including new significant risks and limitations identified</li>
+    </ul>
+  </div>
+
+  <h3>What Constitutes a Material Change Requiring Disclosure</h3>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Clear Material Changes (Both Sources)</div>
+      <ul>
+        <li>Lifting market-cap ceiling for a small-cap manager (May & Associates — affects client multi-manager strategies)</li>
+        <li>Extending universe to include non-US companies (style change)</li>
+        <li>Replacing a simple valuation model with a new DDM (hard data → forecasting-dependent model) (RJZ Capital)</li>
+        <li>Loss of key investment staff (CIO, portfolio managers)</li>
+        <li>Redirecting the firm's entire strategy from active to passive (RJZ Capital)</li>
+        <li>Shifting stock selection from analysts to committee (Fundamental Asset Management)</li>
+        <li>Moving from in-house management to external managers for specific asset classes (Diversified AM)</li>
+        <li>Changing fee calculation methodology — even if resulting fees are lower (Maalouf)</li>
+        <li>Material errors in the investment process (Smith/Dupont)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">LES-Specific Examples</div>
+      <ul>
+        <li>Williamson's investment advice newsletter that omits the valuation models and portfolio construction rules — violates V(B); clients need the basic process and logic even if not full technical detail</li>
+        <li>Thomas's structured product report that omits how the structure was created, the leverage embedded, and what happens if interest rates rise (the contrary scenario) — violates V(B); must address both favourable and unfavourable scenarios</li>
+        <li>Yakovlev's capacity limitation — fund is far from the threshold but the limitation is material enough that current and prospective investors must be informed about it</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Handbook-Specific Details</div>
+      <ul>
+        <li>The Handbook explicitly states: the disclosure obligation for external advisers goes beyond their specialisation to include "insight into the capabilities of the investment manager and the manager's reliance on other investment professionals"</li>
+        <li>Handbook explicitly requires follow-up communication of significant changes in reports or recommendations</li>
+        <li>Papis example: changing real estate adviser disclosed only in next annual report = inadequate; plan recipients and trustees need timely notice of operational changes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ "Merely Refining" vs. "Material Change"</div>
+    <p>The RJZ Capital example makes the key distinction: replacing a price-to-earnings model (based on hard historical data) with a dividend discount model (based on projected inflation, earnings growth, and interest rates) is a material change — not a "mere refinement" — because it moves the firm from data-based analysis to forecasting-dependent analysis. Clients who selected RJZ for its data-based approach need to know about this. Not every model tweak requires disclosure — but a change in the fundamental nature of what drives the process does.</p>
+  </div>
+</div>
+
+<div class="section" id="b5">
+  <div class="section-header"><span class="section-num">B5</span><h2>Requirements 3–5: Risks, Limitations, Factors, and Fact vs. Opinion</h2></div>
+
+  <h3>Significant Risks and Limitations (Requirement 3)</h3>
+  <div class="card">
+    <ul>
+      <li>Must disclose risks known at the time — cannot be expected to disclose unknown risks</li>
+      <li>In general, the use of <strong>leverage is a significant risk and must always be disclosed</strong></li>
+      <li>Other significant risks to consider: counterparty risk, country risk, sector/industry risk, security-specific risk, credit risk</li>
+      <li>Limiting factors that must be disclosed: liquidity (ability to liquidate on timely basis at reasonable cost) and capacity (investment amount beyond which returns will be negatively affected)</li>
+      <li>Assessed on an <em>ex ante</em> basis — risks are judged based on what was known at the time of disclosure, not with hindsight</li>
+      <li>Having no knowledge of a risk that subsequently triggers a loss may reveal a V(A) deficiency, but may not constitute a breach of V(B)</li>
+      <li>Capacity limitations must be disclosed even when the fund is far from the threshold if the limitation would materially affect returns once reached (Yakovlev example)</li>
+    </ul>
+  </div>
+
+  <h3>Important Factors in Analysis (Requirement 4)</h3>
+  <div class="card">
+    <p>Members must use reasonable judgment to identify which factors are important to their investment analysis and include those in communications. A report writer who has done adequate investigation may emphasise certain areas, touch briefly on others, and omit aspects deemed unimportant — but must clearly stipulate the limits to the scope of the report. If recommendations are in capsule form (e.g., a stock list), must notify clients that additional information is available.</p>
+  </div>
+
+  <h3>Fact vs. Opinion (Requirement 5)</h3>
+  <div class="card">
+    <ul>
+      <li>Opinions must be clearly distinguished from facts — especially earnings estimates, dividend outlook changes, and future market price information (these are opinions subject to future circumstances, not facts)</li>
+      <li>In quantitative analyses: must separate fact from statistical conjecture and identify known limitations of the analysis</li>
+      <li>Cannot promote the perceived accuracy of any model — output is an estimate, not a certainty</li>
+      <li>Assumptions underlying models and processes must be explicitly discussed with clients</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="b7">
+  <div class="section-header"><span class="section-num">B7</span><h2>V(B) Worked Examples — All (LES + Handbook)</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">Alphonso/ABC Capital — Fee Arrangement Not Disclosed Because "Common Industry Practice"</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">ABC Capital charges portfolio companies structuring fees, retaining them when investments succeed and remitting them to the fund when investments fail. This creates a financial interest misalignment. Alphonso doesn't disclose it in the PPM, reasoning it's a common industry practice and benefits investors anyway.</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Compensation received by ABC Capital that creates a financial interest must be disclosed. Client sophistication and investor benefit from the arrangement do not excuse non-disclosure. All costs associated with the investment services — including embedded fee arrangements with portfolio companies — must be disclosed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div>(1) "Common industry practice" is not a substitute for disclosure. (2) "Clients benefit from it" is not a substitute for disclosure. (3) Client sophistication is not a substitute for disclosure. (4) Costs from all sources (including third-party and affiliate arrangements embedded in the investment structure) must be disclosed.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">James/Jones — Gross-of-Fee Performance with Full Fee Comparison</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">James/Jones conducts a manager search and notices her top-ranked manager has significantly higher fees. She creates a fee comparison chart showing gross-of-fee performance, total fees paid during each period, and each manager's full fee schedule including additional fees. She explains final fee proposals will be required before selection.</div>
+      <div class="ex-verdict"><strong>Compliant with V(B).</strong> Providing a uniform comparison of manager services including all fee information — allowing the client to assess net-of-fee implications — meets the disclosure requirement for costs associated with services.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Fee disclosure should allow clients to make fully informed comparisons between alternatives. Gross-of-fee performance presented with a clear fee breakdown enables the client to calculate net-of-fee returns independently. This is a model approach to cost disclosure in manager search contexts.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Maalouf — Fee Calculation Methodology Change Without Disclosure</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Maalouf's firm changes fee calculation from (1) average daily balance to end-of-cycle market value, and (2) now includes cash and cash equivalents previously excluded. These changes affect what clients pay — Maalouf does not communicate the changes to clients.</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Advisory fees are critical client information. Changes to fee calculation methodology must be disclosed to clients — even when the change results in lower fees.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>V(B) fee disclosure obligations are ongoing — not a one-time event at relationship inception. Any change to the fee structure or calculation methodology must be communicated. The direction of the fee change (higher or lower) is irrelevant — the obligation is to inform clients of material changes to costs they will incur.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-source">Both</div><div class="ex-title">Williamson — Investment Advice Letter with No Process Disclosure</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Williamson creates an investment newsletter that only includes top 5 "buy" and "sell" recommendations each week, deliberately omitting details of the valuation models and portfolio structuring scheme because they are complex.</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Clients don't need full technical detail — but they need the basic process and logic. Without understanding the basis for a recommendation, clients cannot evaluate its limitations or inherent risks.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>"Basic format and general principles" — not a full technical specification. But the process must be communicated at a sufficient level that clients can evaluate the recommendations and understand their limitations. A list of buy/sell recommendations with no context = insufficient. If brevity is necessary, at minimum notify clients that additional information is available.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-source">Both</div><div class="ex-title">Dox — Reserve Estimate Presented as Fact</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Dox calculates gold reserve estimates from core samples and concludes the property has 500,000+ ounces of gold. His research report states: "Based on the fact that the company has 500,000 ounces of gold to be mined, I recommend a strong buy."</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> The reserve estimate derived from core samples is a quantitative opinion — not a fact. Presenting it as a "fact" in the report violates the requirement to distinguish fact from opinion. The conclusion-generating assumption (that the estimate equals the actual reserve) is not disclosed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The word "fact" has specific meaning in V(B). Analytical outputs derived from models, samples, or estimates are opinions — they must be labelled as such. Future-oriented information (earnings estimates, production projections, price targets) is always opinion, regardless of how confidently the analyst holds the view. Misrepresenting an opinion as a fact = V(B) violation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6</div><div class="ex-source">Both</div><div class="ex-title">Thomas — Structured Product Report Omits Contrary Scenario and Leverage Disclosure</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Thomas's report on an interest rate strategy shows high returns in declining rate scenarios but doesn't describe how the structure was created, the leverage embedded in it, or how the strategy would perform if rates rise instead of fall. The firm cites proprietary nature of the product as justification for omissions.</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Must describe basic risk characteristics including how the structure was created, the degree of embedded leverage, and performance under both favourable (rates fall) and unfavourable (rates rise) scenarios. Proprietary nature of the product does not excuse failure to disclose significant risks.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div>(1) Must disclose leverage — always. (2) Reports must address both favourable and contrary scenarios for investment strategies. (3) Proprietary product status does not override V(B) disclosure obligations. (4) Liquidity issues in the valuation of underlying securities must also be addressed if relevant.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 7+8</div><div class="ex-source">Both</div><div class="ex-title">May & Associates — Lifting Market-Cap Ceiling + Adding Non-US Stocks</div><div class="ex-tag"><span class="tag tag-red">VIOLATION (EXISTING CLIENTS ONLY)</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">May's CIO updates marketing literature and informs prospective clients and consultants of: (1) lifting the small-cap ceiling and (2) adding non-US companies. But existing clients are not separately notified.</div>
+      <div class="ex-verdict"><strong>Violation of V(B) for existing clients.</strong> Informing prospective clients and consultants is correct — but existing clients must also be notified. They may have retained May specifically as a small-cap US manager in a multi-manager strategy, and May's style drift could distort their overall asset allocations in ways they didn't anticipate.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Investment process change notifications must reach ALL interested parties — not just prospective clients and consultants. Existing clients have the greatest stake in process changes. Note the Handbook uses different numbers (US$2B → US$8B, AUM >US$20B) vs. LES (US$250M → US$500M, AUM >US$3B) but the principle is identical.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 9+10</div><div class="ex-source">Both</div><div class="ex-title">RJZ Capital + Fundamental AM — Replacing Model / Shifting Stock Selection Process</div><div class="ex-tag"><span class="tag tag-red">BOTH: VIOLATIONS</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>RJZ:</strong> replaces trailing P/E model with a DDM based on projected inflation/earnings/interest rates without informing clients. Then redirects entirely from active equity to passive index management without informing clients. <strong>Fundamental AM:</strong> shifts stock selection from individual analysts to a committee of research director + portfolio managers without informing clients.</div>
+      <div class="ex-verdict"><strong>Both violate V(B).</strong> RJZ: moving from hard-data-based to forecasting-dependent model = material change in investment process. Moving from active to passive = fundamental change in strategy requiring disclosure. Fundamental AM: changing who makes stock selection decisions (analysts vs. committee) = fundamental process change that clients need to know about.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Any change that could materially affect clients' investment objectives or that changes the fundamental nature of the investment process requires prompt notification. "Not important enough to communicate" is not a valid judgment call for changes like shifting from analysts to committee — clients might question the committee's stock-picking track record or worry about analyst morale.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 11 (Handbook) / Example 12 (LES)</div><div class="ex-source">Both</div><div class="ex-title">Chinn — Disclosing Shift from In-House to External Managers</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Chinn (investment director) writes to the charity client explaining the planned shift from managing all asset classes in-house to using external managers for small/mid-cap while retaining in-house management of large-cap. The letter explains reasons, manager characteristics required, and oversight arrangements.</div>
+      <div class="ex-verdict"><strong>Compliant with V(B).</strong> The shift to external managers represents a material change in how the endowment's assets are managed. Chinn's letter provides the charity with sufficient information to make a reasonable decision about whether to retain Diversified Asset Management as the appropriate manager.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Clients must be informed about the use of external advisers as part of the investment process — including what specialisation they provide and how the overall mix will affect the client's investment objectives. This disclosure allows clients to assess whether the overall strategy still meets their needs.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 12+13 (Handbook) / Examples 15+16 (LES)</div><div class="ex-source">Both</div><div class="ex-title">Yakovlev + Ramon — Capacity Limitation and VaR Limitations</div><div class="ex-tag"><span class="tag tag-red">BOTH: VIOLATIONS</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Yakovlev:</strong> strategy has a capacity limitation of US$100M/US$3B (LES/Handbook) beyond which returns would be negatively affected. Fund is far from this level. Marketing team says it "muddies the message." <strong>Ramon:</strong> tells clients VaR analysis is "extremely effective" and the firm has never had losses greater than those predicted — without disclosing input sensitivity and model limitations.</div>
+      <div class="ex-verdict"><strong>Both violate V(B).</strong> Yakovlev: capacity limitations are significant and must be disclosed even when the fund is far from the threshold. Ramon: assuring clients that a VaR model is "extremely effective" without disclosing how inputs were selected and the potential limitations of the methodology = misrepresenting the model's accuracy.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div><strong>Yakovlev:</strong> "Currently far from the threshold" doesn't remove the disclosure obligation — investors who invest now and stay invested will eventually face the capacity issue. If the limitation is complicated to grasp, educate clients or assess suitability. <strong>Ramon:</strong> Promoting the perceived accuracy of a model without disclosing its known limitations = V(B) violation. "Never had losses greater than predicted" is a historical observation, not a guarantee of model accuracy.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 13 (LES) / Example 13 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Papis — Changing Real Estate Adviser; Only Disclosed in Annual Report</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Papis changes the state retirement fund's real estate adviser to his business school classmate's new firm. The only disclosure of the change appears in the next annual report's listing of associated advisers — not a separate, timely notification to plan recipients and trustees.</div>
+      <div class="ex-verdict"><strong>Violation of V(B)</strong> (and V(A), IV(C), VI(A)). Papis attempted to hide the nature of the decision by limiting disclosure. Plan recipients and trustees need to be aware when operational changes are made — an annual report listing is not timely or prominent enough to constitute adequate notification of a material process change.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Material changes to who manages client assets must be disclosed promptly and clearly — not buried in annual report listings. Timing and prominence matter. This example also implicates VI(A) (personal relationship with the new adviser = conflict of interest) and V(A) (inadequate due diligence in the selection decision).</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 14 (LES) / V(A) Ex 12 (Handbook)</div><div class="ex-source">Both (different standard framing)</div><div class="ex-title">Dupont + Smith — Model Error Not Disclosed to Clients</div><div class="ex-tag"><span class="tag tag-red">V(B) VIOLATION BY SMITH</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Smith discovers model errors caused some prior trades. He rebalances the portfolio to remove the securities purchased on the basis of questionable results — but does not disclose the error or the corrective actions to clients.</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Clients should have been informed about the error and the corrective actions the firm was undertaking on their behalf. Quietly correcting errors without client notification is not compliant with V(B)'s requirement to keep clients informed about material changes in the investment process.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Material errors in the investment process are material changes that clients have a right to know about. Self-correcting without disclosure is not an option — clients need to understand what happened, what trades were affected, and what steps were taken to remedy the situation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 17 (LES-Only)</div><div class="ex-source">LES Only</div><div class="ex-title">Smith — Recommending Manager Based on Conference Reputation</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Smith recommends adding Baker Associates to the approved manager platform based on: (1) knowledge of Baker's reputation and (2) the observation that many conference participants were talking with him. Her recommendation states: "John Baker is well respected in the industry, and his insights are consistently sought after by investors."</div>
+      <div class="ex-verdict"><strong>Violation of V(B).</strong> Smith is not appropriately separating facts from opinions in her recommendation. Reputation and conference popularity are opinions — not objective evidence of manager quality. Also implicates V(A) (reasonable basis requires more than reputation).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>In recommending investment managers (or in any recommendation), members must identify which elements are factual (e.g., performance data, AUM, strategy characteristics) and which are opinions (e.g., "well respected," "insights are sought after"). Reputation-based assessments must be clearly labelled as opinions and supplemented with objective analysis to meet V(A)'s reasonable basis requirement.</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ V(C) ═══════════ -->
+<div class="section" id="c1">
+  <div class="section-header"><span class="section-num">V(C)</span><h2>Standard V(C): Record Retention — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard V(C) — Record Retention</div>
+    <p>Members and Candidates must develop and maintain appropriate records to support their investment analyses, recommendations, actions, and other investment-related communications with clients and prospective clients.</p>
+  </div>
+  <div class="card">
+    <p>The retention requirement covers: decisions to buy or sell securities AND reviews that do NOT lead to a change in position. Both positive and negative decisions require supporting documentation. Records may be maintained in hard copy or electronic form. The responsibility generally rests with the firm — but members must maintain their own records to the extent required.</p>
+  </div>
+</div>
+
+<div class="section" id="c2">
+  <div class="section-header"><span class="section-num">C2</span><h2>What to Retain and Key Principles</h2></div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Examples of Supporting Documentation</div>
+      <ul>
+        <li>Personal notes from meetings with covered companies</li>
+        <li>Press releases or presentations issued by covered companies</li>
+        <li>Computer-based model outputs and analyses</li>
+        <li>Computer-based model input parameters</li>
+        <li>Risk analyses of securities' impacts on a portfolio</li>
+        <li>Selection criteria for external advisers</li>
+        <li>Notes from client meetings (IPS reviews, etc.)</li>
+        <li>Outside research reports used</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Electronic and New Media Records</div>
+      <ul>
+        <li>Emails</li>
+        <li>Text messages</li>
+        <li>Blog posts</li>
+        <li>Social media posts</li>
+        <li>Format doesn't remove the retention obligation — the nature of the medium doesn't matter, only whether the information was used in analysis or communicated to clients</li>
+        <li>Regulatory/firm policies for new media may lag — places greater responsibility on the individual</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Records Are Property of the Firm</h3>
+  <div class="card">
+    <ul>
+      <li>Records created as part of professional activity on behalf of an employer = property of the firm</li>
+      <li>When leaving: cannot take original records or copies of supporting records without express consent of previous employer</li>
+      <li>Cannot use historical recommendations or research reports created at the previous firm if supporting documentation is unavailable</li>
+      <li>For future use at a new employer: must re-create supporting records from public sources or directly from covered companies — <strong>not from memory or sources obtained at the previous employer</strong></li>
+      <li>Note: this is the V(C) equivalent of the IV(A) records rule — both prohibit taking records without permission, but V(C) specifically addresses re-creation requirements for research documentation</li>
+    </ul>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Retention Period — Seven Years in the Absence of Other Guidance</div>
+    <p>Local regulators may impose specific record retention periods that must be followed. Firms may also have their own retention policies. Where neither exists, CFA Institute recommends maintaining records for at least seven years. Members must be aware of both regulatory and firm requirements — which may lag behind new communication technologies, placing greater individual responsibility on members for retaining digital records.</p>
+  </div>
+</div>
+
+<div class="section" id="c3">
+  <div class="section-header"><span class="section-num">C3</span><h2>V(C) Worked Examples</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">Lindstrom — Records to Defend Benchmark-Mandated Technology Allocation</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT IF RECORDS EXIST</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Lindstrom's client complains about losses in technology stocks, which had a 35% benchmark weighting in the IPS. The IPS mandated the benchmark-oriented approach — the allocation was appropriate under the agreed mandate.</div>
+      <div class="ex-verdict"><strong>Compliant if Lindstrom maintained appropriate records</strong>: the IPS itself, records showing the benchmark's 35% tech allocation, records showing the investment process was explained to the client, and records of regular IPS updates. These records would substantiate that the allocation was per the agreed mandate, not a discretionary over-concentration.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Records serve a defensive function — they allow members to demonstrate that their actions were appropriate given the mandated investment objectives. Without records, a member may be unable to refute client complaints even when their actions were correct. Record-keeping is not just administrative — it's a core professional protection.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Young — Multiple Source Research Reports</div><div class="ex-tag"><span class="tag tag-yellow">MUST MAINTAIN</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Young writes research reports using: company management interviews, manufacturer interviews, economist interviews, on-site visits, customer surveys, and secondary research from other analysts covering related industries.</div>
+      <div class="ex-verdict"><strong>Young must retain all of this documentation</strong> — including the secondary and third-party research used. Failure to maintain such files would violate V(C).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>All sources that feed into research must be retained — not just the primary sources the member generated directly. Third-party research reports, interview notes, and survey data must all be documented and retained. The breadth of source retention reflects the breadth of the research process.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Blank — Taking Model Documentation to New Employer</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Blank develops and documents an analytical model at Green Partners/Buku Investment Management. After being hired as head of research at a competitor, he takes copies of the model documentation to his new employer. (LES: firm is GPIM; Handbook: firm is Buku)</div>
+      <div class="ex-verdict"><strong>Violation of V(C).</strong> Records supporting the research model are the records of the former employer — Blank cannot take them without GPIM's/Buku's permission. To use the model at the new firm, he must re-create the supporting records from scratch at the new firm using publicly available or directly obtained sources.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>V(C) and IV(A) both establish that firm records belong to the firm — but V(C) specifically addresses research documentation. Even if Blank built the model himself, the documentation supporting it was created in the course of his employment and belongs to the former employer. Re-creation from public sources (not from memory of the proprietary details) is the compliant path forward.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMBINED CHECKLISTS ═══════════ -->
+<div class="section" id="checklist">
+  <div class="section-header"><span class="section-num">★</span><h2>Combined Exam Checklists — V(B) and V(C)</h2></div>
+  <div class="card" style="border-color:rgba(76,201,138,0.3);">
+    <h3 style="margin-top:0;">Standard V(B): Communication with Clients and Prospective Clients</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Five requirements:</strong> (1) Nature of services + costs; (2) Investment process + material changes; (3) Significant risks and limitations; (4) Important factors in analysis; (5) Fact vs. opinion.</li>
+      <li>✅ <strong>Covers all communication channels</strong> — not just written reports. In-person, phone, broadcast, electronic, social media.</li>
+      <li>✅ <strong>Primarily affects client-facing members.</strong> Non-client-facing members not required to ensure client disclosures are made by others.</li>
+      <li>✅ <strong>Client sophistication ≠ excuse for non-disclosure.</strong> Required disclosures must be made regardless of how sophisticated investors are — information may be tailored but not omitted. (Alphonso)</li>
+      <li>✅ <strong>Cost disclosures:</strong> Must cover costs from all sources — direct, affiliate, third-party embedded. Not required to provide specific dollar amounts in advance or to disclose the firm's own cost of providing services.</li>
+      <li>✅ <strong>Fee methodology changes must be disclosed</strong> — even if resulting fees are lower. (Maalouf)</li>
+      <li>✅ <strong>Process disclosures:</strong> Basic format and general principles — not full technical detail. Must allow clients to evaluate limitations and risks. (Williamson)</li>
+      <li>✅ <strong>Material changes require prompt notification to ALL existing clients</strong> — not just prospective clients and consultants. (May & Associates)</li>
+      <li>✅ <strong>Leverage must always be disclosed</strong> as a significant risk. (Thomas)</li>
+      <li>✅ <strong>Both favourable and contrary scenarios must be addressed</strong> in reports on investment strategies. (Thomas)</li>
+      <li>✅ <strong>Capacity limitations must be disclosed</strong> even when the fund is far from the threshold — if they would materially affect returns once reached. (Yakovlev)</li>
+      <li>✅ <strong>VaR/model limitations must be disclosed</strong> — promoting model accuracy without disclosing limitations violates V(B). (Ramon)</li>
+      <li>✅ <strong>Material errors in the investment process must be disclosed to clients</strong> with the corrective actions taken. Quiet self-correction is not compliant. (Smith/Dupont)</li>
+      <li>✅ <strong>Opinions must be clearly labelled as opinions</strong> — earnings estimates, reserve estimates, production projections = opinions, not facts. (Dox)</li>
+      <li>✅ <strong>If inadequate firm disclosures:</strong> Alert firm → supplement where possible → if unable to remedy, document objections and dissociate.</li>
+      <li>✅ <strong>Disclosures are ongoing</strong> — initial disclosures at relationship inception do not satisfy future obligations when circumstances change.</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard V(C): Record Retention</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Must retain records</strong> supporting investment analyses, recommendations, actions, and communications — including decisions NOT to act (reviews that don't lead to position changes).</li>
+      <li>✅ <strong>Hard copy or electronic form</strong> — both acceptable. New media (email, text, blog, social media posts) must also be retained.</li>
+      <li>✅ <strong>New media policies may lag</strong> — places greater individual responsibility for retaining digital records.</li>
+      <li>✅ <strong>Records are property of the firm.</strong> Cannot take originals or copies without express consent of previous employer when leaving.</li>
+      <li>✅ <strong>Cannot use historical recommendations/research</strong> from a previous firm if supporting documentation is unavailable.</li>
+      <li>✅ <strong>Re-creation requirement:</strong> Must re-create supporting records at the new firm from public sources or directly from covered companies — NOT from memory of proprietary details obtained at the previous employer.</li>
+      <li>✅ <strong>Retention period:</strong> Follow regulatory requirements, then firm policy. In the absence of both: at least 7 years (CFA Institute recommendation).</li>
+      <li>✅ <strong>Primary responsibility with the firm</strong> — but members must maintain their own research notes and other documents supporting current investment-related communications.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ V(B) + V(C) QUICK REFERENCE</div>
+    <div class="f">
+      ══ V(B): COMMUNICATION WITH CLIENTS ══<br>
+      FIVE REQUIREMENTS:    Services+costs | Process+changes | Risks+limitations | Important factors | Fact vs. opinion<br>
+      ALL CHANNELS:         Written, verbal, electronic, social media, broadcast<br>
+      CLIENT-FACING ONLY:   Non-client-facing members not required to ensure client disclosures<br>
+      SOPHISTICATION:       Never excuses non-disclosure; information may be tailored, not omitted<br><br>
+      COST DISCLOSURES:     All sources (direct + affiliate + third-party embedded); no dollar amount required in advance<br>
+      FEE CHANGES:          Must disclose even if fees go DOWN (Maalouf)<br>
+      PROCESS DISCLOSURE:   Basic format and general principles; enough to evaluate limitations<br>
+      MATERIAL CHANGES:     Prompt notification to ALL existing clients<br><br>
+      LEVERAGE:             Always a significant risk; always disclose<br>
+      SCENARIOS:            Both favourable AND contrary; not just the optimistic case<br>
+      CAPACITY:             Disclose even if currently far from the threshold<br>
+      MODEL ACCURACY:       Cannot promote perceived accuracy without disclosing limitations<br>
+      ERRORS:               Disclose material errors + corrective actions to clients<br>
+      FACT VS OPINION:      Estimates, projections, analyst calculations = opinions; label accordingly<br>
+      INADEQUATE FIRM DISC: Alert firm → supplement → if unable: document objections + dissociate<br>
+      ONGOING:              Disclosures must be updated when services/costs/process change<br><br>
+      ══ V(C): RECORD RETENTION ══<br>
+      SCOPE:                Analyses + recommendations + actions + client communications; incl. no-action decisions<br>
+      FORMAT:               Hard copy or electronic; new media (email/text/blog/social) all included<br>
+      OWNERSHIP:            Firm property; cannot take without express employer consent<br>
+      PRIOR FIRM RECORDS:   Cannot use if supporting docs unavailable; must re-create from public sources<br>
+      RE-CREATION:          From public sources or directly from covered companies; NOT from memory of proprietary details<br>
+      RETENTION PERIOD:     Regulatory requirement → firm policy → CFA Institute minimum: 7 years
+    </div>
+    <div class="note">
+      <strong>Top V(B) exam traps:</strong><br>
+      (1) "Investors in this fund are sophisticated, so detailed disclosure isn't necessary" — sophistication never excuses non-disclosure<br>
+      (2) "We lowered fees so we don't need to tell clients about the methodology change" — any fee change (including decreases) must be disclosed<br>
+      (3) "The fund is only at US$12M and the capacity limit is US$100M, so no need to disclose now" — material limitations must be disclosed regardless of current distance from the threshold<br>
+      (4) "The estimate was based on rigorous analysis, so presenting it as a fact is fine" — analytical outputs derived from models/samples are always opinions<br>
+      (5) "She quietly corrected the model error so clients weren't harmed" — material errors must be disclosed even when subsequently corrected<br><br>
+      <strong>Top V(C) exam traps:</strong><br>
+      (1) "He developed the model himself, so he can take the documentation" — created in the course of employment = firm property<br>
+      (2) "She can re-create the records from memory of the prior firm's approach" — must re-create from public sources, not from memory of proprietary details<br>
+      (3) "Social media posts don't need to be retained since they're informal" — format doesn't remove the retention obligation
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standards V(B): Communication with Clients &amp; V(C): Record Retention · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

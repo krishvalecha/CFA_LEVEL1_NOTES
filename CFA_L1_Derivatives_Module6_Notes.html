@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 6: Pricing and Valuation of Futures Contracts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fwd-bg: #1a1510; --fwd-border: #c9a84c;
+    --fut-bg: #111a16; --fut-border: #4cc98a;
+    --rate-bg: #1a1020; --rate-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fwd-card { background: var(--fwd-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fwd-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .fut-card { background: var(--fut-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fut-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rate-card { background: var(--rate-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .rate-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 6</div>
+  <h1>Pricing &amp; Valuation of <span>Futures Contracts</span></h1>
+  <p>Exam-ready notes: futures pricing at inception (same formula as forwards), MTM valuation vs. forward MTM (daily settlement resets futures value to zero), forward vs. futures key differences, interest rate futures (100−yield convention, BPV, long/short exposure), forward vs. futures price conditions (when equal, when different, correlation effect), convexity bias (FRA vs. futures), and central clearing effects on margin requirements.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Futures Pricing at Inception</a>
+  <a class="toc-item" href="#s2">02 · Forward vs. Futures — MTM Comparison</a>
+  <a class="toc-item" href="#s3">03 · Daily Settlement Mechanics (Step-by-Step)</a>
+  <a class="toc-item" href="#s4">04 · Forward vs. Futures — Master Comparison Table</a>
+  <a class="toc-item" href="#s5">05 · Interest Rate Futures — (100−Yield) Convention</a>
+  <a class="toc-item" href="#s6">06 · Basis Point Value (BPV)</a>
+  <a class="toc-item" href="#s7">07 · When Forward = Futures Price (and When Not)</a>
+  <a class="toc-item" href="#s8">08 · Convexity Bias — FRA vs. Futures</a>
+  <a class="toc-item" href="#s9">09 · Central Clearing — Effect on Margin</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- SECTION 1: FUTURES PRICING AT INCEPTION        -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Futures Pricing at Inception — Same Formula as Forwards</h2>
+    </div>
+
+    <div class="card">
+      <p>At initiation, futures contracts are priced using the <strong>same no-arbitrage formula as forward contracts</strong>. The futures price f₀(T) equals the spot price compounded at the risk-free rate over the contract's life — incorporating any cost of carry (storage costs, income benefits). The initial value of a futures contract is zero, just like a forward.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Futures Pricing Formulas — At Inception (Equations 2, 3, 4)</div>
+      <div class="f">
+        Equation 2 (Discrete — individual assets):<br>
+        f₀(T) = S₀ × (1 + r)ᵀ<br><br>
+        Equation 3 (Continuous — indexes, FX):<br>
+        f₀(T) = S₀ × e^(rT)<br><br>
+        Equation 4 (With Cost of Carry — Discrete):<br>
+        f₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1 + r)ᵀ<br><br>
+        Initial value: V₀(T) = 0
+      </div>
+      <div class="note">
+        <strong>Same rules as forwards:</strong> Discrete compounding for individual assets. Continuous for indexes and FX.<br>
+        PV₀(I) = PV of income/benefits (subtract). PV₀(C) = PV of storage costs (add).<br>
+        A futures price f₀(T) significantly below the no-arbitrage price → implies a convenience yield (as for forwards).<br><br>
+        <strong>Gold Example (Procam):</strong><br>
+        S₀ = $1,770/oz, r = 2%, T = 91/365 = 0.24932<br>
+        f₀(T) = $1,770 × (1.02)⁰·²⁴⁹³² = $1,778.76/oz<br>
+        Contract price = $1,778.76 × 100 oz = $177,876<br><br>
+        With $2/oz storage cost: PV₀(C) = $2 × (1.02)⁻⁰·²⁴⁹³² = $1.99<br>
+        f₀(T) = ($1,770 + $1.99) × (1.02)⁰·²⁴⁹³² = $1,780.78/oz
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Futures Price = Forward Price at Inception (Under Simplifying Assumptions)</div>
+      <p>At inception, f₀(T) = F₀(T) using the same no-arbitrage formula. The two prices diverge over time due to different cash flow patterns (futures = daily settlement; forward = single settlement at maturity). The conditions under which they remain equal are covered in Section 7. For the exam: use the same pricing formula for both at t=0.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- SECTION 2: FORWARD vs. FUTURES — MTM COMPARISON -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Forward vs. Futures MTM — The Critical Difference</h2>
+    </div>
+
+    <div class="card">
+      <p>Both forward and futures contracts start with a price of f₀(T) = F₀(T) and zero initial value. But as time passes, the MTM value behaves completely differently due to one feature: <strong>futures contracts are marked-to-market daily; forward contracts are not.</strong></p>
+    </div>
+
+    <div class="two-col">
+      <div class="fwd-card">
+        <div class="fwd-title">Forward Contract — MTM Behavior</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>Forward price F₀(T) stays <strong>FIXED</strong> for the entire life</li>
+          <li>MTM value accumulates: Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</li>
+          <li><strong>No daily cash settlement</strong> — MTM builds up</li>
+          <li>Can accumulate a large MTM value over time (e.g., −$5,683 in 71 days)</li>
+          <li>All settled in a SINGLE payment at maturity</li>
+          <li>Creates counterparty credit risk (no cash exchanged until T)</li>
+          <li>No margin account required (unless credit support agreed)</li>
+        </ul>
+      </div>
+      <div class="fut-card">
+        <div class="fut-title">Futures Contract — MTM Behavior</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Futures price ft(T) changes <strong>DAILY</strong> based on market</li>
+          <li>Daily MTM settled via margin account → contract value RESETS to zero each day</li>
+          <li>The "accumulated" MTM at any time = only today's daily gain/loss (small)</li>
+          <li>Cannot reach the large MTM values of a comparable forward</li>
+          <li>Cumulative realized MTM ≈ comparable forward contract settlement</li>
+          <li>Eliminates buildup of credit risk (daily cash settlement)</li>
+          <li>Requires initial margin + maintenance margin throughout</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Key Difference — Where the MTM Goes</div>
+      <div class="f">
+        FORWARD: MTM accumulates in the contract value → settled at maturity<br>
+        Vt(T) ≠ 0 during the life; grows with time and spot price movement<br><br>
+        FUTURES: MTM settled in cash DAILY → contract resets to zero each day<br>
+        After each day's settlement: Vt(T) = 0 (reset to current futures price)<br>
+        The "current MTM" of a futures is only today's gain/loss (before the next reset)<br><br>
+        NET RESULT: Both approaches yield approximately the same cumulative gain/loss<br>
+        (timing of cash flows differs, but final economic outcome is the same)
+      </div>
+      <div class="note">
+        <strong>Why "approximately" the same cumulative payoff?</strong><br>
+        The time value of money means that receiving (or paying) cash daily is not identical to a single lump sum at maturity. For short maturities and low interest rates, the difference is trivial. For longer maturities or high-rate environments, the timing can matter — this gives rise to the forward/futures price difference (Section 7).
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: DAILY SETTLEMENT MECHANICS (STEP-BY-STEP) -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Daily Settlement Mechanics — Step-by-Step Gold Example</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Setup:</strong> Procam buys 100-oz gold futures at f₀(T) = $1,778.76/oz. Initial margin = $4,950. Maintenance margin = $4,500. Forward comparison: F₀(T) = $1,778.76 (same price at inception).</p>
+    </div>
+
+    <h3>Day 1 — Futures Price Falls $5</h3>
+
+    <div class="auction-box">
+      <div class="label">Day 1: f₀(T) = $1,778.76 → f₁(T) = $1,773.76 (−$5/oz)</div>
+      <div class="f">
+        FUTURES CONTRACT:<br>
+        MTM loss = $5/oz × 100 oz = $500<br>
+        Margin account: $4,950 − $500 = $4,450 ← Below maintenance ($4,500)<br>
+        Margin call: Must deposit $500 to restore to $4,950<br>
+        Futures contract MTM RESETS to zero at new price f₁(T) = $1,773.76<br><br>
+        FORWARD CONTRACT (same underlying, same initial price):<br>
+        S₁ = $1,765.12 (no-arbitrage: $1,773.76 × (1.02)⁻⁹⁰/³⁶⁵)<br>
+        Vt(T) = $1,765.12 − $1,778.76 × (1.02)⁻⁰·²⁴⁶⁵⁷ = −$4.98/oz<br>
+        Total forward MTM loss = −$4.98 × 100 = −$498<br>
+        NO cash settlement — loss accumulates in contract value
+      </div>
+    </div>
+
+    <h3>Day 2 Comparison Table</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Contract</th><th>Futures Contract</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Contract Price</td><td>F₀(T) = $177,876 (FIXED — unchanged)</td><td>f₁(T) = $177,376 (updated daily)</td></tr>
+          <tr><td>Contract MTM Value</td><td>−$498 (accumulated, not settled)</td><td>$0 (reset after yesterday's settlement)</td></tr>
+          <tr><td>Realized MTM (Settled)</td><td>$0 (no cash exchanged yet)</td><td>−$500 (already paid via margin)</td></tr>
+          <tr><td>Margin Deposit</td><td>None required</td><td>$4,950 on deposit</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Day 3 Comparison Table (additional $4 fall on Day 2)</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Contract</th><th>Futures Contract</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Contract Price</td><td>F₀(T) = $177,876 (FIXED)</td><td>f₂(T) = $176,976 (fell another $400)</td></tr>
+          <tr><td>Contract MTM Value</td><td>−$895 (cumulative, still not settled)</td><td>$0 (reset again after Day 2 settlement)</td></tr>
+          <tr><td>Realized MTM (Settled)</td><td>$0</td><td>−$400 (Day 2 loss settled via margin)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Cumulative Effect — Forward and Futures Give Approximately Same Total Loss</div>
+      <p>After multiple days: Forward total accumulated MTM loss ≈ Futures cumulative daily MTM losses. The economic result is similar — if the gold price falls $9/oz cumulatively (from $1,778.76 to $1,769.76), both the forward and futures lose approximately $900. But: the forward collects it in one lump sum at maturity; the futures collects/pays it day by day via the margin account. The timing difference causes a small but theoretically important pricing difference between the two (covered in Section 7).</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: FORWARD vs. FUTURES MASTER TABLE         -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Forward vs. Futures — Complete Master Comparison Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Contract</th><th>Futures Contract</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Market type</td><td>OTC — customized, bilateral</td><td>ETD — standardized, exchange-traded</td></tr>
+          <tr><td>Price at inception</td><td>F₀(T) = S₀(1+r)ᵀ (+ carry)</td><td>f₀(T) = S₀(1+r)ᵀ (+ carry) — SAME formula</td></tr>
+          <tr><td>Value at inception</td><td>V₀(T) = 0</td><td>V₀(T) = 0 — SAME</td></tr>
+          <tr><td>Price over time</td><td>F₀(T) stays FIXED for life of contract</td><td>ft(T) changes DAILY based on market prices</td></tr>
+          <tr><td>MTM settlement</td><td>No daily settlement; MTM accumulates until maturity</td><td>Daily settlement via margin account; MTM resets to zero each day</td></tr>
+          <tr><td>MTM value during life</td><td>Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾ (grows over time)</td><td>Always zero after each day's settlement (daily price × notional settled)</td></tr>
+          <tr><td>Final settlement</td><td>Single payment at maturity: S_T − F₀(T)</td><td>Cumulative daily MTM ≈ same as forward's final settlement</td></tr>
+          <tr><td>Counterparty credit risk</td><td>Higher — MTM accumulates, no daily cash exchange</td><td>Lower — daily settlement eliminates buildup; clearinghouse guarantee</td></tr>
+          <tr><td>Margin requirements</td><td>None required (unless credit support negotiated)</td><td>Initial margin + maintenance margin required throughout</td></tr>
+          <tr><td>Liquidity risk</td><td>Lower — no daily margin calls</td><td>Higher — daily margin calls may force closeout if margin can't be met</td></tr>
+          <tr><td>Flexibility</td><td>High — custom terms (size, maturity, underlying)</td><td>Low — standardized terms set by exchange</td></tr>
+          <tr><td>Price vs. forward</td><td>F₀(T) — baseline</td><td>f₀(T) ≈ F₀(T) if rates constant or prices/rates uncorrelated; differs otherwise</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Three-Phase Forward Value Summary</div>
+      <div class="f">
+        FORWARD:                        FUTURES:<br>
+        t=0: V₀(T) = 0                 t=0: V₀(T) = 0<br>
+        t (mid): Vt(T) = S_t−PV(F₀)   t (mid): Vt(T) = 0 (resets daily)<br>
+        t=T: VT(T) = S_T−F₀(T)        t=T: VT(T) = f_T(T)−f_{T-1}(T) (last day's change)<br><br>
+        CUMULATIVE REALIZED P&L:<br>
+        Forward: S_T − F₀(T) at maturity (single payment)<br>
+        Futures: Σ daily MTM changes ≈ f_T(T) − f₀(T) = S_T − f₀(T)
+      </div>
+      <div class="note">
+        <strong>At futures contract maturity:</strong> The futures price converges to the spot price (f_T(T) = S_T). This convergence ensures that the cumulative futures MTM ≈ the forward settlement, maintaining no-arbitrage between the two markets.
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: INTEREST RATE FUTURES                   -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Interest Rate Futures — The (100 − Yield) Convention</h2>
+    </div>
+
+    <div class="card">
+      <p>Interest rate futures offer a highly liquid, standardized alternative to FRAs. The underlying is the MRR (market reference rate) on a hypothetical deposit for a specific future period. But unlike FRAs (which are quoted as rates), interest rate futures trade on a <strong>price basis using a special convention: price = 100 − yield</strong>.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 5 — Interest Rate Futures Price Convention</div>
+      <div class="f">
+        f_A,B-A = 100 − (100 × MRR_A,B-A)<br><br>
+        OR: MRR_A,B-A = (100 − f_A,B-A) / 100
+      </div>
+      <div class="note">
+        <strong>f_A,B-A</strong> = futures price for MRR starting in A periods with tenor B−A<br>
+        <strong>MRR_A,B-A</strong> = the implied market reference rate for period B−A starting at A<br><br>
+        <strong>Example:</strong> Interest rate futures price = 98.25<br>
+        MRR = (100 − 98.25) / 100 = 1.75%<br><br>
+        <strong>Example:</strong> MRR₃ₘ,₃ₘ = 1.75% → futures price = 100 − 1.75 = 98.25<br><br>
+        <strong>Important:</strong> This (100−yield) convention creates an INVERSE price/yield relationship — when MRR rises, futures price falls. But it is NOT the same as the price of a zero-coupon bond at the contract rate.
+      </div>
+    </div>
+
+    <h3>Long vs. Short Interest Rate Futures — Exposure Direction</h3>
+
+    <div class="two-col">
+      <div class="fut-card">
+        <div class="fut-title">Long Futures (= Lender Position)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Earns or receives MRR in the future</li>
+          <li><strong>Gains when futures PRICE RISES</strong> (= MRR falls)</li>
+          <li>Benefits from FALLING interest rates</li>
+          <li>Equivalent to: FRA short position (floating-rate payer = FRA seller = fixed-rate receiver)</li>
+          <li>Example: A bank with floating-rate assets (lending at MRR) benefits when MRR falls</li>
+        </ul>
+      </div>
+      <div class="fwd-card">
+        <div class="fwd-title">Short Futures (= Borrower Position)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>Pays MRR in the future</li>
+          <li><strong>Gains when futures PRICE FALLS</strong> (= MRR rises)</li>
+          <li>Benefits from RISING interest rates</li>
+          <li>Equivalent to: FRA long position (fixed-rate payer = FRA buyer = floating-rate receiver)</li>
+          <li>Example: Baywhite borrows at MRR; sells futures to hedge against rising MRR</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Position</th><th>Gains from Rising MRR</th><th>Gains from Falling MRR</th><th>FRA Equivalent</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Short futures contract</td><td><span class="tag tag-green">YES (price falls → gain)</span></td><td>No</td><td>Long FRA (fixed-rate payer)</td></tr>
+          <tr><td>Long futures contract</td><td>No</td><td><span class="tag tag-green">YES (price rises → gain)</span></td><td>Short FRA (floating-rate payer)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Direction Trap — Interest Rate Futures vs. Other Futures</div>
+      <p>For most futures (equity, commodity): <strong>Long = benefits from price rising</strong>. For interest rate futures priced at (100−yield): when MRR rises, the futures PRICE FALLS → the LONG position LOSES. So for interest rate futures: <strong>Short futures benefits from rising MRR</strong> (price falls → short gains). This is counterintuitive and frequently tested. Always remember: short interest rate futures = hedging a liability (like Baywhite — borrower hedges rising MRR by selling futures).</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Remembering Long/Short Interest Rate Futures Direction</div>
+      <p>Think of it from the price perspective first: Long futures → profits when PRICE rises. For interest rate futures: price rises when MRR FALLS. So: <strong>Long futures → profits when MRR falls → "lender" position</strong>.<br>
+      Conversely: <strong>Short futures → profits when MRR rises → "borrower" position</strong>.<br>
+      The mnemonic: "Lenders love low rates (Long long-futures). Borrowers hate high rates (Sell short-futures to hedge)."</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 6: BASIS POINT VALUE (BPV)                 -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Basis Point Value (BPV) — Interest Rate Futures</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Basis Point Value (BPV)</div>
+      <div class="def-body">The dollar change in a futures contract's value for a <strong>one basis point (0.01%) change in the MRR</strong>. Interest rate futures have a fixed, linear relationship between price and yield changes — a constant BPV for any given notional and period. This linearity is a key feature distinguishing futures from FRAs (which have non-linear, convex settlement).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 6 — Futures Contract BPV</div>
+      <div class="f">Futures Contract BPV = Notional Principal × 0.01% × Period</div>
+      <div class="note">
+        <strong>Period</strong> = tenor of the underlying MRR expressed as a fraction of a year (e.g., 3 months = 1/4, 1 month = 1/12)<br>
+        <strong>0.01%</strong> = one basis point = 0.0001<br><br>
+        <strong>Example — 3-month MRR, $1,000,000 notional:</strong><br>
+        BPV = $1,000,000 × 0.01% × (90/360) = $1,000,000 × 0.0001 × 0.25 = <strong>$25</strong><br>
+        Every 1 bp change in the 3-month MRR changes the contract value by $25 — regardless of direction.<br><br>
+        <strong>Baywhite Example — 1-month MRR, $50,000,000 notional:</strong><br>
+        BPV = $50,000,000 × 0.01% × (1/12) = $50,000,000 × 0.0001 × 0.0833 = <strong>$416.67</strong><br>
+        If MRR moves 100 bps: Gain/Loss = $416.67 × 100 = $41,667
+      </div>
+    </div>
+
+    <h3>BPV in Practice — Baywhite Financial Hedge</h3>
+
+    <div class="auction-box">
+      <div class="label">Baywhite: Sells f₁,₁ at 98.75 (MRR₁,₁ = 1.25%), settles at 97.75 (MRR₁,₁ = 2.25%)</div>
+      <div class="f">
+        MRR rose by 100 bps (1.25% → 2.25%)<br>
+        Futures price fell from 98.75 to 97.75 (by 1.00 point = 100 bps)<br><br>
+        Gain on short futures = BPV × bps change = $416.67 × 100 = $41,667<br><br>
+        This gain offsets the higher MRR cost on Baywhite's floating-rate borrowing.<br>
+        Without the hedge: borrowing cost rises by ~$41,667 per month for $50M<br>
+        With the hedge: the futures gain compensates for the higher MRR payment
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 BPV Is Linear — Constant for All Rate Changes</div>
+      <p>Unlike FRA settlement (which involves discounting and is therefore non-linear/convex), the futures contract BPV is CONSTANT — a fixed $25 per basis point regardless of whether MRR moves from 2% to 2.01% or from 5% to 5.01%. Every single basis point change always causes the same dollar move in the futures margin account. This linearity makes futures easy to use for hedging: number of contracts needed = target BPV / futures contract BPV.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 7: WHEN FORWARD = FUTURES PRICE (AND WHEN NOT) -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>When Forward = Futures Price — and When They Differ</h2>
+    </div>
+
+    <div class="card">
+      <p>Despite their similar payoff profiles at maturity, the different cash flow timing (daily settlement for futures vs. single settlement at maturity for forwards) can create a pricing difference between the two contracts. Understanding when prices are equal — and when they differ — is a key exam topic.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Conditions for Forward Price = Futures Price</div>
+      <div class="f">
+        CONDITION 1: Interest rates are CONSTANT<br>
+        → No reinvestment advantage/disadvantage to receiving daily vs. lump-sum cash flows<br>
+        → Daily margin gains/losses reinvested at the same rate as lump-sum settlement<br>
+        → f₀(T) = F₀(T)<br><br>
+        CONDITION 2: Futures prices and interest rates are UNCORRELATED<br>
+        → The reinvestment rate for daily futures gains/losses is independent of whether prices rose or fell<br>
+        → No systematic advantage to one settlement pattern vs. the other<br>
+        → f₀(T) = F₀(T) (on average)<br><br>
+        WHEN THESE CONDITIONS ARE VIOLATED:<br>
+        Positive correlation (futures prices ↑ when rates ↑):<br>
+        → Long futures more attractive (gains reinvested at HIGH rates; losses occur at LOW rates)<br>
+        → Futures price HIGHER than forward price: f₀(T) &gt; F₀(T)<br><br>
+        Negative correlation (futures prices ↑ when rates ↓):<br>
+        → Long forward more attractive (avoid the disadvantage of gains at low rates)<br>
+        → Futures price LOWER than forward price: f₀(T) &lt; F₀(T)
+      </div>
+      <div class="note">
+        <strong>General rule:</strong> The more desirable (attractive) contract tends to trade at a HIGHER price. If long futures is more attractive than long forward (positive correlation case), futures price will be bid up above forward price.<br><br>
+        <strong>The price differential also depends on interest rate VOLATILITY:</strong> Higher rate volatility → larger potential reinvestment advantage/disadvantage → larger futures/forward price difference.<br><br>
+        <strong>In practice:</strong> For most short-maturity contracts (under 1 year) and typical market conditions, the futures/forward price difference is very small. The main exception: the convexity bias in interest rate futures (Section 8).
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Positive Correlation (Prices ↑ when Rates ↑)</div>
+        <p>Example: Equity futures — when stock markets rally (prices rise), the economy is strong and rates tend to rise. Daily MTM gains are reinvested at higher rates. Daily losses occur when rates are falling.</p>
+        <p style="margin-top:8px;"><strong>Result: Long futures preferred → f₀(T) &gt; F₀(T)</strong></p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Negative Correlation (Prices ↑ when Rates ↓)</div>
+        <p>Example: Treasury bond futures — when bond prices rise, rates are falling (flight to safety). Daily gains occur when rates are low (poor reinvestment). Daily losses occur when rates are high.</p>
+        <p style="margin-top:8px;"><strong>Result: Long forward preferred → f₀(T) &lt; F₀(T)</strong></p>
+      </div>
+    </div>
+
+    <div name="warn" class="warn">
+      <div class="warn-label">⚠️ Interest Rate Futures — Always: f₀(T) &lt; F₀(T) (Convexity Bias)</div>
+      <p>Interest rate futures have a systematic NEGATIVE correlation between futures prices and interest rates — when rates rise, bond/interest rate futures prices fall. This makes long forward positions more attractive than long futures (the negative correlation disadvantages the long futures holder). Therefore: <strong>interest rate futures prices are BELOW comparable FRA prices</strong>. The magnitude of this convexity bias grows with the tenor and maturity of the instrument. This is covered in detail in Section 8.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 8: CONVEXITY BIAS — FRA vs. FUTURES        -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Convexity Bias — Interest Rate Futures vs. FRAs</h2>
+    </div>
+
+    <div class="card">
+      <p>Even when the underlying rate and forward period are identical, <strong>interest rate futures and FRA contracts have different payoffs</strong> due to a feature unique to FRAs: the settlement is discounted at the prevailing MRR. Futures contracts have NO discounting — their settlement is a fixed linear function of the rate change. This creates a non-linear (convex) relationship for FRAs vs. a linear one for futures — known as <strong>convexity bias</strong>.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Difference in Settlement — FRA vs. Futures</div>
+      <div class="f">
+        FUTURES settlement (for 1 bp change, fixed linear):<br>
+        ΔValue = BPV = Notional × 0.01% × Period = CONSTANT<br>
+        Example: Always $25 per bp change (for $1M notional, 3-month period)<br><br>
+        FRA settlement (discounted, non-linear):<br>
+        Net Payment (end) = (MRR − IFR) × Notional × Period<br>
+        PV = Net Payment / (1 + MRR × Period/Year)<br>
+        → PV changes non-linearly with MRR because the discount rate ALSO changes
+      </div>
+      <div class="note">
+        <strong>The discounting feature of FRAs</strong> creates the convexity property:<br>
+        When MRR FALLS: FRA gains MORE (both numerator rises AND denominator shrinks → double benefit)<br>
+        When MRR RISES: FRA loses LESS (both numerator falls AND denominator grows → partial offset)<br>
+        This asymmetry (larger gains when MRR falls, smaller losses when MRR rises) is CONVEXITY.<br><br>
+        For futures: symmetric. Every 1 bp move = exactly the same dollar amount regardless of direction.
+      </div>
+    </div>
+
+    <h3>Side-by-Side Comparison Table (from the module)</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>MRR at Settlement</th><th>Short FRA Cash Settlement (PV)</th><th>Long Futures Settlement</th><th>Difference</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2.01% (−20 bps)</td><td>+$497.50</td><td>+$500</td><td>FRA receives LESS when MRR falls</td></tr>
+          <tr><td>2.11% (−10 bps)</td><td>+$248.69</td><td>+$250</td><td>FRA receives LESS when MRR falls</td></tr>
+          <tr><td>2.21% (0 bps)</td><td>$0</td><td>$0</td><td>Equal at the IFR breakeven</td></tr>
+          <tr><td>2.31% (+10 bps)</td><td>−$248.56</td><td>−$250</td><td>FRA pays LESS when MRR rises</td></tr>
+          <tr><td>2.41% (+20 bps)</td><td>−$497.01</td><td>−$500</td><td>FRA pays LESS when MRR rises</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>Key observation:</strong> The FRA settlement values are smaller in absolute terms than the futures settlement values — both when MRR rises AND falls. This asymmetry is the convexity property: the FRA benefits from larger gains on rate declines and smaller losses on rate increases RELATIVE to futures. The futures has a perfectly linear (symmetric) payoff — each 1 bp always = exactly $25.</p>
+      <p style="margin-top:10px;"><strong>Implication for pricing:</strong> The FRA's convexity is a valuable feature — the FRA is worth slightly MORE than the futures due to this non-linear advantage. Therefore, to be equivalent in no-arbitrage terms, the futures PRICE must be set LOWER than the FRA rate → <strong>futures price &lt; FRA rate</strong> (or equivalently: <strong>futures implied rate &gt; FRA implied forward rate</strong>). This is the convexity bias adjustment.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Convexity Bias — Key Direction Rule</div>
+      <div class="f">
+        FRA has CONVEXITY (non-linear, curved price/yield relationship)<br>
+        → FRA gains more when rates fall, loses less when rates rise<br>
+        → FRA is more VALUABLE than futures for the same rate<br><br>
+        To compensate: Interest rate futures price is SET LOWER than FRA<br>
+        Equivalently: Interest rate futures IMPLIED RATE &gt; FRA fixed rate<br><br>
+        f₀(T) &lt; FRA price → futures implied MRR &gt; FRA implied forward rate<br><br>
+        The convexity bias is LARGER for:<br>
+        → Longer forward periods (more time for MRR to change)<br>
+        → Longer underlying tenor (larger BPV per bp change)<br>
+        → Higher interest rate volatility
+      </div>
+      <div class="note">
+        <strong>Interest rate futures vs. FRA — price/yield relationships:</strong><br>
+        Interest rate futures: LINEAR price/yield (fixed BPV per bp, symmetric) — like a straight line<br>
+        FRA (and bonds): NON-LINEAR, CONVEX price/yield — like the convex curve from Fixed Income Module 6<br><br>
+        This is the SAME convexity concept from fixed income applied to derivatives! The FRA is essentially a short-duration bond equivalent, and bonds have convexity.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Convexity Bias — The Fixed Income Connection</div>
+      <p>Convexity in derivatives = exact same concept as convexity in fixed income (Module 6):<br>
+      <strong>Fixed income convexity:</strong> Price rises more than duration predicts when yields fall; falls less than duration predicts when yields rise. Convexity is valuable → convex bonds have higher prices.<br>
+      <strong>FRA convexity:</strong> FRA gains more when MRR falls; loses less when MRR rises. Convexity is valuable → FRAs have higher value than linear-payoff futures for the same rate.<br>
+      The FRA's discounting mechanism creates this convexity, just as the discounting mechanism creates convexity in bond pricing.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 9: CENTRAL CLEARING — EFFECT ON MARGIN     -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Central Clearing — Effect on Forward/Futures Price Difference</h2>
+    </div>
+
+    <div class="card">
+      <p>The post-2008 central clearing mandate (covered in Module 1) has created <strong>futures-like margining requirements for OTC derivatives</strong> — including forward contracts. This has narrowed the practical difference between forwards and futures in terms of cash flow patterns.</p>
+    </div>
+
+    <div class="rate-card">
+      <div class="rate-title">Central Clearing's Effect on OTC vs. ETD</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li><strong>OTC dealers</strong> (who sell forwards to end users) are now required to post margin to the CCP — cash or highly liquid securities</li>
+        <li><strong>Dealers pass this requirement on</strong> to their derivatives end users — requiring end users to also post collateral similar to futures margin</li>
+        <li>Result: OTC forwards now have SIMILAR cash flow patterns to exchange-traded futures (both require daily-like collateral management)</li>
+        <li>This <strong>reduces the cash flow difference</strong> between ETDs and OTC derivatives that previously gave rise to the forward/futures price difference</li>
+        <li>In practice: the forward/futures price difference has become even smaller after central clearing mandates</li>
+        <li><strong>Market stress scenario:</strong> During periods of large price movements + counterparty stress, futures may be FORCED CLOSED (clearinghouse can't accept failed margin call), while OTC forwards with more flexible credit terms may remain outstanding</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Practical implication for portfolio managers:</strong> Investors using both ETD futures AND OTC forwards must maintain sufficient cash or eligible collateral to fulfill margin/collateral requirements on both. Additional costs to consider:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Financing costs:</strong> Cost of borrowing cash to post as margin/collateral</li>
+        <li><strong>Transaction costs:</strong> Exchange fees, bid-offer spreads for ETD; dealer bid-offer for OTC</li>
+        <li><strong>Administrative costs:</strong> Compliance reporting, margin management infrastructure</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Central Clearing Reduces (but Doesn't Eliminate) Forward/Futures Price Difference</div>
+      <p>Before central clearing: forwards had NO margin requirements → pure credit risk → very different cash flow patterns from futures → larger forward/futures price differences.<br>
+      After central clearing: forwards require margin-like collateral → similar cash flow patterns to futures → smaller price differences.<br>
+      However, the difference is NOT completely eliminated because: (1) collateral terms for OTC may still differ from futures (eligible collateral types, haircuts); (2) the convexity bias in interest rates remains a structural feature; (3) in stress periods, the practical behavior still differs (OTC may remain open while futures are forcibly closed).</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE       -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Futures pricing at inception = forward pricing:</strong> f₀(T) = S₀(1+r)ᵀ (discrete) or S₀e^(rT) (continuous). Same cost-of-carry adjustments. V₀(T) = 0 for both. Same rules: discrete for individual assets; continuous for indexes and FX.</li>
+        <li>✅ <strong>Futures price f₀(T) = forward price F₀(T) at inception.</strong> The divergence occurs over time due to different settlement cash flow patterns.</li>
+        <li>✅ <strong>Forward vs. futures key difference: settlement timing.</strong> Forward: MTM accumulates, settled as lump sum at maturity. Futures: MTM settled DAILY via margin account → contract value resets to zero each day.</li>
+        <li>✅ <strong>Forward contract MTM = Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾.</strong> Forward price F₀(T) stays FIXED. MTM accumulates throughout the contract's life without cash exchange.</li>
+        <li>✅ <strong>Futures contract MTM = 0 after each daily settlement.</strong> The futures price ft(T) changes daily. Daily gain/loss = (ft(T) − ft-1(T)) × notional. This is settled in the margin account and the contract resets.</li>
+        <li>✅ <strong>Cumulative futures MTM ≈ forward MTM at maturity.</strong> Both produce approximately the same economic outcome over the life of the contract (same total P&L). The timing difference (daily vs. lump sum) creates a small theoretical pricing difference.</li>
+        <li>✅ <strong>Forward counterparty credit risk &gt; futures.</strong> Forward MTM accumulates without daily cash exchange → credit exposure builds. Futures have daily settlement → no buildup of credit exposure; clearinghouse guarantees.</li>
+        <li>✅ <strong>Futures liquidity risk &gt; forward (in some scenarios).</strong> Daily margin calls can force a futures position to close early if margin cannot be met. A forward contract with flexible credit terms may survive market stress conditions that would close a futures position.</li>
+        <li>✅ <strong>Interest rate futures price = 100 − (100 × MRR).</strong> Price of 98.25 → MRR = 1.75%. Inverse price/yield relationship. This is NOT the price of a zero-coupon bond.</li>
+        <li>✅ <strong>Long interest rate futures = lender = gains when MRR falls (price rises).</strong> Short interest rate futures = borrower = gains when MRR rises (price falls).</li>
+        <li>✅ <strong>Interest rate futures vs. FRA equivalence:</strong> Short futures ↔ Long FRA (fixed-rate payer). Long futures ↔ Short FRA (floating-rate payer).</li>
+        <li>✅ <strong>BPV = Notional × 0.01% × Period.</strong> For $1M, 3-month MRR: BPV = $1M × 0.0001 × 0.25 = $25. FIXED and LINEAR — same dollar amount per bp regardless of MRR level or direction of move.</li>
+        <li>✅ <strong>Forward price = Futures price when:</strong> (1) interest rates are constant, OR (2) futures prices and interest rates are uncorrelated.</li>
+        <li>✅ <strong>Positive correlation (prices ↑ when rates ↑):</strong> Long futures more attractive (gains reinvested at high rates). Futures price HIGHER than forward price: f₀(T) &gt; F₀(T).</li>
+        <li>✅ <strong>Negative correlation (prices ↑ when rates ↓):</strong> Long forward more attractive. Futures price LOWER than forward price: f₀(T) &lt; F₀(T). THIS IS THE CASE FOR INTEREST RATE FUTURES (bond/rate futures prices fall when rates rise).</li>
+        <li>✅ <strong>Convexity bias:</strong> FRA settlement involves discounting at the prevailing MRR → non-linear (convex) payoff. Futures settlement is LINEAR (fixed BPV per bp). FRA gains MORE when MRR falls; FRA loses LESS when MRR rises (vs. futures) → FRA has convexity advantage → FRA is more valuable → to equilibrate: <strong>futures implied MRR &gt; FRA implied forward rate</strong> (or equivalently: interest rate futures price &lt; comparable FRA price).</li>
+        <li>✅ <strong>Convexity bias is LARGER for:</strong> longer forward periods, longer underlying tenor, higher interest rate volatility. It is a structural feature of interest rate derivatives — not eliminated by market efficiency.</li>
+        <li>✅ <strong>Central clearing mandate post-2008:</strong> OTC dealers must post margin to CCP → pass similar requirements to end users → forward contracts now have futures-like margin requirements → reduces (but doesn't eliminate) the forward/futures price difference.</li>
+        <li>✅ <strong>Market stress:</strong> Futures may be forcibly closed if margin call not met; OTC forwards with flexible credit terms may remain open. This surviving ability of forwards is a practical advantage in stress scenarios.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ FUTURES PRICING (SAME AS FORWARDS AT INCEPTION) ═══<br>
+        f₀(T) = S₀(1+r)ᵀ [discrete] | f₀(T) = S₀e^(rT) [continuous]<br>
+        f₀(T) = [S₀ − PV₀(I) + PV₀(C)](1+r)ᵀ [with carry]<br>
+        V₀(T) = 0 | Converges: f_T(T) = S_T at maturity<br><br>
+
+        ═══ FORWARD vs. FUTURES MTM ═══<br>
+        Forward: F₀(T) fixed; Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾; settled at maturity only<br>
+        Futures: ft(T) changes daily; Vt(T) = 0 after each daily settlement; margin mechanism<br>
+        Cumulative P&L: approximately equal for both<br><br>
+
+        ═══ INTEREST RATE FUTURES ═══<br>
+        Price = 100 − (100 × MRR)  ← inverse price/yield<br>
+        Long futures → lender → gains when MRR falls (price rises)<br>
+        Short futures → borrower → gains when MRR rises (price falls)<br>
+        Short futures ≡ Long FRA (fixed payer) | Long futures ≡ Short FRA (floating payer)<br>
+        BPV = Notional × 0.01% × Period ← fixed, linear, symmetric<br><br>
+
+        ═══ FORWARD vs. FUTURES PRICE DIFFERENCE ═══<br>
+        Equal when: rates constant OR prices uncorrelated with rates<br>
+        f₀ &gt; F₀ when: positive correlation (prices ↑ with rates ↑)<br>
+        f₀ &lt; F₀ when: negative correlation (prices ↑ with rates ↓)<br>
+        Interest rate futures: always f₀ &lt; FRA price (negative correlation → convexity bias)<br><br>
+
+        ═══ CONVEXITY BIAS ═══<br>
+        FRA: non-linear payoff (discounted settlement) → convex → more valuable<br>
+        Futures: linear payoff (fixed BPV) → no convexity<br>
+        Result: Futures implied MRR &gt; FRA implied forward rate<br>
+        Bias grows with: longer period, longer tenor, higher rate volatility
+      </div>
+      <div class="note">
+        <strong>Memory shortcut — interest rate futures direction:</strong> "Short = Sell = Borrower = Hedges rising MRR." Long position benefits from falling MRR. Same as owning a floating-rate asset (lender).<br>
+        <strong>Convexity bias = same concept as bond convexity from Fixed Income:</strong> FRA is like a bond with convexity; futures is like a linear (duration-only) instrument. Convex instruments are worth more → futures must be priced lower.<br>
+        <strong>Central clearing reduced</strong> (but didn't eliminate) the forward/futures cash flow difference — hence also reduced (but didn't eliminate) the price difference.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 6: Pricing and Valuation of Futures Contracts · Exam Prep Notes
+</footer>
+
+</body>
+</html>

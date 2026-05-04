@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 9: Parametric and Non-Parametric Tests of Independence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1214 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.06) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p + p { margin-top: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .clt-box { background: #121a20; border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .clt-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .clt-box .f { color: #a8d4f0; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .clt-box .note { color: #7eaacf; font-size: 12.5px; margin-top: 10px; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .num { font-family: 'JetBrains Mono', monospace; color: #e8c97a !important; font-weight: 600 !important; font-size: 13px !important; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,201,138,0.1); color: var(--accent3); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent3); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent3); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .vs-side { padding: 18px 20px; }
+  .vs-side:first-child { background: rgba(76,139,201,0.06); border-right: 1px solid var(--border); }
+  .vs-side:last-child { background: rgba(76,201,138,0.06); }
+  .vs-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .vs-title.blue { color: var(--accent2); }
+  .vs-title.green { color: var(--accent3); }
+  .vs-side ul { padding-left: 16px; }
+  .vs-side li { font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+
+  /* contingency table styling */
+  .ctable { border-radius: 6px; overflow: hidden; border: 1px solid var(--border); margin: 16px 0; }
+  .ctable table { font-size: 13px; }
+  .ctable thead th { background: #1e2330; color: var(--accent2); }
+  .ctable tbody td { text-align: center; }
+  .ctable tbody td:first-child { color: var(--accent); font-weight: 700; text-align: left; font-size: 13px; }
+  .ctable .total-row { background: rgba(76,139,201,0.08); font-weight: 700; }
+  .ctable .total-col { font-weight: 700; color: var(--accent2) !important; }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 9</div>
+  <h1>Tests of <span>Independence</span></h1>
+  <p>Pearson correlation t-test · Spearman rank correlation · Chi-square test of independence on contingency tables · Parametric vs. nonparametric approach. Every formula, every step, every trap.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Module Overview</a>
+  <a class="toc-item" href="#s2">02 · Pearson Correlation</a>
+  <a class="toc-item" href="#s3">03 · t-test for Correlation</a>
+  <a class="toc-item" href="#s4">04 · Sample Size &amp; Power Effect</a>
+  <a class="toc-item" href="#s5">05 · Spearman Rank Correlation</a>
+  <a class="toc-item" href="#s6">06 · Contingency Tables</a>
+  <a class="toc-item" href="#s7">07 · Chi-Square Test of Independence</a>
+  <a class="toc-item" href="#s8">08 · Pearson vs. Spearman</a>
+  <a class="toc-item" href="#s9">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════ SECTION 1: MODULE OVERVIEW ══════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Module Overview &amp; Key Concepts</h2>
+    </div>
+
+    <div class="card">
+      <p>This module answers one fundamental question: <span class="hl-green">Is there a statistically significant relationship between two variables?</span> Two different scenarios require two different approaches:</p>
+      <ul style="padding-left:20px; margin-top:10px; line-height:2.0;">
+        <li><strong>Continuous / numerical variables</strong> → test the correlation coefficient using a t-test (parametric: Pearson) or rank-based t-test (nonparametric: Spearman).</li>
+        <li><strong>Categorical / discrete variables</strong> → test independence using a chi-square test on a contingency table (always nonparametric).</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="def-block">
+        <div class="def-term">Parametric Test of Correlation</div>
+        <div class="def-body">Uses the Pearson (bivariate) correlation coefficient r. Requires that both variables are normally distributed. Test statistic is t-distributed with n−2 degrees of freedom. Tests H₀: ρ = 0 (no linear relationship).</div>
+      </div>
+      <div class="def-block">
+        <div class="def-term">Nonparametric Test of Correlation</div>
+        <div class="def-body">Uses the Spearman rank correlation coefficient rₛ. Calculated on ranks of observations, not raw values. Used when normality assumption is violated, data has outliers, or data is ordinal. Same t-test formula as Pearson for large samples (n &gt; 30).</div>
+      </div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Test of Independence (Contingency Table)</div>
+      <div class="def-body">Uses a chi-square test statistic on a contingency (two-way) table. For categorical/discrete data where correlation is not applicable. Tests whether two categorical classifications are independent of each other. Always a right-tail test. Degrees of freedom = (r−1)(c−1).</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Big Picture: When to Use What</div>
+      <p><strong>Pearson (parametric):</strong> Two continuous variables, both approximately normal. <strong>Spearman (nonparametric):</strong> Two variables with non-normal distribution, outliers, or ordinal/ranked data. <strong>Chi-square contingency test:</strong> Two categorical/discrete variables — e.g., fund size (small/medium/large) × investment type (value/growth/blend). You CANNOT use correlation when data is categorical.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 2: PEARSON CORRELATION ══════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Pearson Correlation — The Parametric Approach</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Sample Pearson Correlation Coefficient</div>
+      <div class="f">
+        r_XY = s_XY / (s_X × s_Y)<br><br>
+        where:<br>
+        s_XY = sample covariance between X and Y<br>
+        s_X  = sample standard deviation of X<br>
+        s_Y  = sample standard deviation of Y
+      </div>
+      <div class="note">
+        Also called pairwise correlation, bivariate correlation, or simply "the correlation." Often written as just r.<br>
+        Range: −1 ≤ r ≤ +1. A value of +1 = perfect positive linear relationship; −1 = perfect negative; 0 = no linear relationship.<br>
+        The <strong>covariance drives the sign</strong> of the correlation — positive covariance → positive r; negative covariance → negative r.<br>
+        Each observation is compared to its respective variable mean — how much each observation differs from its mean matters.<br>
+        This formula applies when both X and Y are approximately <strong>normally distributed</strong>.
+      </div>
+    </div>
+
+    <h3>Hypotheses for Correlation Tests</h3>
+    <div class="card">
+      <p>Let ρ = population correlation coefficient. The three possible hypothesis set-ups:</p>
+      <ul style="padding-left:20px; margin-top:10px; line-height:2.2; font-family:'JetBrains Mono', monospace; font-size:13.5px; color:#e8c97a;">
+        <li>Two-sided:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H₀: ρ = 0 &nbsp;&nbsp;vs.&nbsp; Hₐ: ρ ≠ 0 &nbsp;&nbsp;&nbsp;← most common; tests if ANY relationship exists</li>
+        <li>Right-sided:&nbsp;&nbsp;&nbsp;&nbsp;H₀: ρ ≤ 0 &nbsp;&nbsp;vs.&nbsp; Hₐ: ρ &gt; 0 &nbsp;&nbsp;&nbsp;← tests positive relationship specifically</li>
+        <li>Left-sided:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H₀: ρ ≥ 0 &nbsp;&nbsp;vs.&nbsp; Hₐ: ρ &lt; 0 &nbsp;&nbsp;&nbsp;← tests negative relationship specifically</li>
+      </ul>
+      <p style="margin-top:12px;">We use the <em>sample</em> statistic r to test hypotheses about the <em>population</em> parameter ρ.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 3: t-TEST FOR CORRELATION ══════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>t-test for the Correlation Coefficient</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">t-Statistic for Testing H₀: ρ = 0 (Parametric — Pearson)</div>
+      <div class="f">
+        t = r × √(n − 2) / √(1 − r²)<br><br>
+        Degrees of freedom: df = n − 2
+      </div>
+      <div class="note">
+        <strong>r</strong> = sample correlation coefficient (Pearson or Spearman — same formula for both with large n).<br>
+        <strong>n</strong> = number of paired observations (pairs of X, Y values).<br>
+        The −2 in degrees of freedom: we estimate two parameters (mean of X, mean of Y) from the data, costing 2 degrees of freedom.<br>
+        Under H₀: ρ = 0, this statistic follows a t-distribution with n−2 df, assuming both variables are normally distributed.<br>
+        Reject H₀ at significance level α: if |t| &gt; t_critical (two-tailed) or t &gt; t_critical / t &lt; −t_critical (one-tailed).
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example: Testing Correlation — Two Funds</div>
+      <p><strong>Setup:</strong> Analyst tests whether returns of Fund A and Fund B are correlated over n = 35 years. Uses Spearman rank correlation (non-normal data). Finds rₛ = 0.6916. Test at α = 5%, two-tailed.</p>
+      <p><strong>H₀: rₛ = 0 &nbsp;vs.&nbsp; Hₐ: rₛ ≠ 0.</strong> &nbsp;&nbsp; df = 35 − 2 = 33. &nbsp;&nbsp; Critical values: ±2.0345.</p>
+      <div class="calc">
+        t = 0.6916 × √(35 − 2) / √(1 − 0.6916²)<br>
+        t = 0.6916 × √33 / √(1 − 0.4783)<br>
+        t = 0.6916 × 5.7446 / √0.5217<br>
+        t = 3.9727 / 0.7223<br>
+        t = 5.5005
+      </div>
+      <div class="result">|5.5005| &gt; 2.0345 → REJECT H₀</div>
+      <p>Conclusion: Sufficient evidence that the Spearman rank correlation between Fund A and Fund B returns is significantly different from zero — the funds' returns are correlated.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Always df = n − 2 for Correlation Tests</div>
+      <p>For testing correlation (both Pearson and Spearman with large n), degrees of freedom = <strong>n − 2</strong>, NOT n − 1. This is a common mistake. The −2 comes from estimating two means from the data. Contrast with the single-mean t-test where df = n−1.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 4: SAMPLE SIZE AND POWER ══════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Effect of Sample Size on Correlation Tests</h2>
+    </div>
+
+    <div class="card">
+      <p>The magnitude of r needed to reject H₀: ρ = 0 <span class="hl-green">decreases as sample size n increases</span>. Two reasons:</p>
+      <ul style="padding-left:20px; margin-top:10px; line-height:2.0;">
+        <li><strong>Reason 1:</strong> As n increases → df = n−2 increases → the t-distribution becomes narrower → the absolute value of the critical t-value <em>decreases</em> → easier to exceed it.</li>
+        <li><strong>Reason 2:</strong> As n increases → the numerator r√(n−2) increases in absolute value (for the same r) → the calculated t-statistic is <em>larger</em> in magnitude.</li>
+      </ul>
+    </div>
+
+    <div class="clt-box">
+      <div class="label">Numerical Example — Same r = 0.35, Different Sample Sizes</div>
+      <div class="f">
+        n = 12, r = 0.35:  t = 0.35×√10 / √(1−0.35²) = 1.182  &lt;  critical ±2.228  → NOT significant<br>
+        n = 32, r = 0.35:  t = 0.35×√30 / √(1−0.35²) = 2.046  &gt;  critical ±2.042  → JUST significant
+      </div>
+      <div class="note">
+        Same sample correlation (r = 0.35), but significance changes purely because of sample size. This illustrates why statistical significance must always be interpreted alongside practical/economic significance — with very large datasets, even tiny correlations become statistically significant but may be meaningless in practice.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Big Data Problem — Spurious Significance</div>
+      <p>As datasets grow very large, the null hypothesis of zero correlation is <strong>almost always rejected</strong>, even for economically trivial relationships. A correlation of r = 0.02 could be statistically significant with n = 10,000 observations but is likely meaningless in practice. The exam may test whether you understand that statistical significance ≠ economic significance, and that with large samples, additional analytical tools must be applied beyond simple hypothesis testing of correlation.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Higher r → Reaches Significance Faster</div>
+      <p>As you increase sample size, higher correlations achieve statistical significance at smaller n than lower correlations do. A correlation of r = 0.8 requires far fewer observations to be declared significant than r = 0.2. The rate at which significance is achieved as n grows depends on the magnitude of r — this is about the power of the test increasing with both n and the true effect size.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 5: SPEARMAN RANK CORRELATION ══════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Spearman Rank Correlation — The Nonparametric Approach</h2>
+    </div>
+
+    <div class="card">
+      <p>The <span class="hl-green">Spearman rank correlation coefficient (rₛ)</span> is the nonparametric alternative to Pearson correlation. It is essentially the Pearson correlation calculated on the <em>ranks</em> of the observations rather than their actual values. It measures the strength of the <em>monotonic</em> (not just linear) relationship between two variables.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Spearman Rank Correlation Formula</div>
+      <div class="f">
+        rₛ = 1 − [ 6 × Σᵢ dᵢ² ] / [ n × (n² − 1) ]<br><br>
+        where dᵢ = difference in ranks of the i-th pair (rank of Xᵢ minus rank of Yᵢ)
+      </div>
+      <div class="note">
+        <strong>dᵢ</strong> = rank(Xᵢ) − rank(Yᵢ) for each paired observation i.<br>
+        <strong>n</strong> = number of paired observations.<br>
+        Range: −1 ≤ rₛ ≤ +1, same interpretation as Pearson r.<br>
+        If all pairs have identical ranks on both variables → all dᵢ = 0 → Σdᵢ² = 0 → rₛ = 1 (perfect positive monotonic relationship).<br>
+        If ranks are perfectly reversed → rₛ = −1.
+      </div>
+    </div>
+
+    <h3>Step-by-Step: How to Calculate rₛ</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Rank variable X</strong> from largest to smallest: assign rank 1 to the largest, rank 2 to the second largest, etc. <strong>Handle ties:</strong> assign the average of the ranks they jointly occupy. E.g., if the 3rd and 4th largest values are tied → both get rank 3.5 (average of 3 and 4). Repeat for variable Y independently.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Calculate dᵢ</strong> = rank(Xᵢ) − rank(Yᵢ) for each paired observation. Then calculate dᵢ² (squared difference in ranks) for each pair.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Sum the squared differences:</strong> compute Σdᵢ². Substitute into the formula: rₛ = 1 − [6 × Σdᵢ²] / [n(n²−1)].</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Test significance:</strong> For <em>large samples (n &gt; 30)</em>, use the same t-statistic as Pearson: t = rₛ√(n−2) / √(1−rₛ²) with df = n−2. For <em>small samples (n ≤ 30)</em>, use specialized Spearman critical value tables.</div>
+      </div>
+    </div>
+
+    <h3>When to Use Spearman Instead of Pearson</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">Use Spearman When…</div>
+        <ul>
+          <li>Population departs meaningfully from normality (non-normal distribution).</li>
+          <li>Data contains extreme values or outliers that would distort Pearson r.</li>
+          <li>Data is measured on an ordinal/ranked scale (e.g., analyst ratings, credit quality rankings).</li>
+          <li>You want to detect a <em>monotonic</em> (not necessarily linear) relationship.</li>
+          <li>Small sample from unknown distribution.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">Use Pearson When…</div>
+        <ul>
+          <li>Both variables are approximately normally distributed.</li>
+          <li>Data is on interval or ratio scale (continuous).</li>
+          <li>You want to detect a specifically <em>linear</em> relationship.</li>
+          <li>No significant outliers in the data.</li>
+          <li>Parametric assumptions are met — Pearson is more powerful when valid.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: Spearman vs. Pearson</div>
+      <p><strong>Pearson = "Pure" data</strong> — works on raw values, requires pure normality assumption. <strong>Spearman = "Safe" choice</strong> — works on ranks, safer when normality is questionable. Both use the same t-test formula (t = r√(n−2)/√(1−r²)) for large n — the only difference is whether r is the raw correlation or the rank correlation. Spearman with n ≤ 30 → need special tables.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 6: CONTINGENCY TABLES ══════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Contingency Tables — Setup &amp; Terminology</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Contingency Table (Two-Way Table)</div>
+      <div class="def-body">A table that displays frequencies (counts) of observations classified by two categorical variables simultaneously. Rows represent categories of one variable; columns represent categories of another. Used when correlation methods are not applicable (categorical/discrete data).</div>
+    </div>
+
+    <div class="card">
+      <p>Example from the module: 1,594 ETFs classified by two dimensions — <strong>Size</strong> (small, medium, large) and <strong>Investment Type</strong> (value, growth, blend). We cannot compute a correlation between "size category" and "investment type" because these are categorical labels, not numeric values. Instead, we use a chi-square test of independence.</p>
+    </div>
+
+    <h3>The ETF Contingency Table (from the Module)</h3>
+    <div class="ctable table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Investment Type</th>
+            <th>Small Cap</th>
+            <th>Medium Cap</th>
+            <th>Large Cap</th>
+            <th>Row Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Value</td>
+            <td class="num">50</td>
+            <td class="num">110</td>
+            <td class="num">343</td>
+            <td class="num total-col">503</td>
+          </tr>
+          <tr>
+            <td>Growth</td>
+            <td class="num">42</td>
+            <td class="num">122</td>
+            <td class="num">202</td>
+            <td class="num total-col">366</td>
+          </tr>
+          <tr>
+            <td>Blend</td>
+            <td class="num">56</td>
+            <td class="num">149</td>
+            <td class="num">520</td>
+            <td class="num total-col">725</td>
+          </tr>
+          <tr class="total-row">
+            <td>Column Total</td>
+            <td class="num">148</td>
+            <td class="num">381</td>
+            <td class="num">1,065</td>
+            <td class="num">1,594</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Expected Frequency Under Independence</div>
+      <div class="f">
+        Eᵢⱼ = (Row i Total × Column j Total) / Overall Total<br><br>
+        Example: E(Value, Small) = (503 × 148) / 1,594 = 74,444 / 1,594 = 46.70
+      </div>
+      <div class="note">
+        <strong>Eᵢⱼ</strong> = expected count in cell (i, j) <em>if the two variables were completely independent</em>.<br>
+        Logic: if size and investment type are independent, the proportion of ETFs in each cell should simply equal the product of the marginal proportions (row proportion × column proportion × total).<br>
+        The test statistic compares these expected frequencies to the actual (observed) frequencies Oᵢⱼ.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 7: CHI-SQUARE TEST OF INDEPENDENCE ══════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Chi-Square Test of Independence</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Chi-Square Test Statistic for Independence (Equation 4)</div>
+      <div class="f">
+        χ² = Σᵢ Σⱼ (Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ<br><br>
+        Degrees of freedom: df = (r − 1) × (c − 1)<br><br>
+        r = number of rows (categories of first variable)<br>
+        c = number of columns (categories of second variable)
+      </div>
+      <div class="note">
+        <strong>Oᵢⱼ</strong> = observed frequency in cell (i, j) — what we actually count in the data.<br>
+        <strong>Eᵢⱼ</strong> = expected frequency in cell (i, j) = (row i total × column j total) / overall total.<br>
+        <strong>m</strong> = total number of cells = r × c (summation runs over all m cells).<br>
+        If Oᵢⱼ = Eᵢⱼ for all cells → χ² = 0 (perfect independence). Larger deviations → larger χ² → stronger evidence of dependence.<br>
+        Differences are SQUARED → χ² is always ≥ 0 → <strong>always a right-tail test only</strong> (one rejection region on the right).
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Hypotheses for the Chi-Square Test of Independence:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px; line-height:2.0; font-family:'JetBrains Mono', monospace; font-size:13.5px; color:#e8c97a;">
+        <li>H₀: The two categorical variables ARE independent (no relationship).</li>
+        <li>Hₐ: The two categorical variables are NOT independent (a relationship exists).</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Decision rule:</strong> Reject H₀ if χ² &gt; χ²_critical (right tail, df = (r−1)(c−1), significance level α).</p>
+    </div>
+
+    <h3>Full Six-Step Worked Example: ETF Size vs. Investment Type</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>State the hypotheses:</strong> H₀: ETF size and investment type are independent (not related). Hₐ: ETF size and investment type are dependent (related).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Test statistic:</strong> χ² = Σ (Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ — chi-square distributed.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Level of significance:</strong> α = 5%.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Decision rule:</strong> df = (3−1) × (3−1) = 2 × 2 = 4. Critical value at 5% with 4 df = 9.4877. <em>Reject H₀ if χ² &gt; 9.4877</em> (right-tail only).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Calculate:</strong> First compute all 9 expected frequencies Eᵢⱼ = (row total × column total) / 1,594. Then sum (Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ across all 9 cells. Calculated χ² = 32.08025.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Decision:</strong> 32.08 &gt; 9.4877 → <strong>Reject H₀</strong>. Sufficient evidence that ETF size and investment type are related (not independent) at the 5% level.</div>
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 How to Compute Expected Frequencies — Key Examples</div>
+      <p>Using the ETF table: Overall total = 1,594. Row totals: Value=503, Growth=366, Blend=725. Column totals: Small=148, Medium=381, Large=1,065.</p>
+      <div class="calc">
+        E(Value, Small)  = (503 × 148)  / 1,594 = 74,444  / 1,594 = 46.70<br>
+        E(Value, Medium) = (503 × 381)  / 1,594 = 191,643 / 1,594 = 120.23<br>
+        E(Value, Large)  = (503 × 1065) / 1,594 = 535,695 / 1,594 = 336.07<br>
+        E(Growth, Small) = (366 × 148)  / 1,594 = 54,168  / 1,594 = 33.98<br>
+        E(Blend, Large)  = (725 × 1,065)/ 1,594 = 772,125 / 1,594 = 484.40
+      </div>
+      <div class="result">Then: χ² = Σ (O−E)²/E across all 9 cells = 32.08025</div>
+    </div>
+
+    <h3>Standardized Residual (Pearson Residual)</h3>
+    <div class="formula-box">
+      <div class="label">Standardized Residual for Cell (i,j)</div>
+      <div class="f">
+        Standardized residual = (Oᵢⱼ − Eᵢⱼ) / √Eᵢⱼ
+      </div>
+      <div class="note">
+        Also called the Pearson residual. Measures how much each individual cell contributes to the overall chi-square statistic, standardized for comparison across cells.<br>
+        <strong>Positive residual:</strong> Observed &gt; Expected — more observations in this cell than independence would predict (dark shading in mosaic plots).<br>
+        <strong>Negative residual:</strong> Observed &lt; Expected — fewer observations than expected under independence (light shading).<br>
+        Note: (Standardized residual)² = the contribution of cell (i,j) to the χ² statistic. This helps identify WHICH cells are driving the departure from independence.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Chi-Square Independence Test — Always Right-Tail Only</div>
+      <p>Unlike chi-square tests for a single variance (which can be left-tail, right-tail, or two-tailed), the chi-square test of independence is <strong>always right-tailed only</strong>. This is because (O−E)² is always positive — if observed and expected are equal, χ² = 0; any deviation (in either direction) increases χ². We can only reject H₀ when χ² is sufficiently large.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 8: PEARSON VS. SPEARMAN ══════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Complete Comparison: All Three Tests</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Pearson (Parametric)</th>
+            <th>Spearman (Nonparametric)</th>
+            <th>Chi-Square Independence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data type</td>
+            <td>Continuous, numerical</td>
+            <td>Continuous or ordinal</td>
+            <td>Categorical / discrete only</td>
+          </tr>
+          <tr>
+            <td>Distribution assumption</td>
+            <td>Both variables approximately normal</td>
+            <td>Minimal — no normality required</td>
+            <td>None (nonparametric)</td>
+          </tr>
+          <tr>
+            <td>Works on</td>
+            <td>Raw values (actual data)</td>
+            <td>Ranks of observations</td>
+            <td>Frequency counts in cells</td>
+          </tr>
+          <tr>
+            <td>Measures</td>
+            <td>Strength of LINEAR relationship</td>
+            <td>Strength of MONOTONIC relationship</td>
+            <td>Independence vs. dependence</td>
+          </tr>
+          <tr>
+            <td>Test statistic</td>
+            <td>t = r√(n−2) / √(1−r²)</td>
+            <td>Same t formula (large n &gt; 30); specialized table (small n ≤ 30)</td>
+            <td>χ² = Σ(O−E)²/E</td>
+          </tr>
+          <tr>
+            <td>Distribution</td>
+            <td>t with df = n−2</td>
+            <td>t with df = n−2 (large n)</td>
+            <td>Chi-square with df = (r−1)(c−1)</td>
+          </tr>
+          <tr>
+            <td>Rejection region</td>
+            <td>Two-tailed or one-tailed</td>
+            <td>Two-tailed or one-tailed</td>
+            <td>Right-tail ONLY (always)</td>
+          </tr>
+          <tr>
+            <td>Outlier sensitivity</td>
+            <td>HIGH — outliers heavily distort r</td>
+            <td>LOW — ranks are robust to outliers</td>
+            <td>Not applicable</td>
+          </tr>
+          <tr>
+            <td>Formula coefficient</td>
+            <td>Uses raw covariance and SDs</td>
+            <td>Uses 6Σdᵢ² / n(n²−1)</td>
+            <td>Uses (row total × col total) / grand total for expected values</td>
+          </tr>
+          <tr>
+            <td>Finance use cases</td>
+            <td>Testing if two return series are linearly correlated; portfolio diversification analysis</td>
+            <td>Fund ranking comparison; non-normal return distributions; ordinal credit ratings</td>
+            <td>Testing if fund style (growth/value/blend) is related to fund size; categorical factor analysis</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="vs-box">
+      <div class="vs-side">
+        <div class="vs-title blue">Pearson r — Pros &amp; Cons</div>
+        <ul>
+          <li>✅ More statistically powerful when normality holds.</li>
+          <li>✅ Standard, widely used, easy to interpret.</li>
+          <li>❌ Sensitive to outliers — one extreme value can flip the sign of r.</li>
+          <li>❌ Requires normality — invalid for heavily skewed data.</li>
+          <li>❌ Only detects LINEAR relationships; misses curved/monotonic patterns.</li>
+        </ul>
+      </div>
+      <div class="vs-side">
+        <div class="vs-title green">Spearman rₛ — Pros &amp; Cons</div>
+        <ul>
+          <li>✅ Robust to outliers and non-normality.</li>
+          <li>✅ Works for ordinal/ranked data.</li>
+          <li>✅ Detects any monotonic relationship (not just linear).</li>
+          <li>❌ Less powerful than Pearson when normality holds.</li>
+          <li>❌ Small samples (n ≤ 30) require specialized tables.</li>
+          <li>❌ Loses information by converting to ranks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 9: EXAM CHECKLIST ══════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>ρ = population correlation;</strong> r = sample correlation (Pearson) or rₛ (Spearman). We test hypotheses about ρ using r.</li>
+        <li>✅ <strong>Most common hypothesis: H₀: ρ = 0 vs. Hₐ: ρ ≠ 0</strong> (two-sided). Tests whether any linear relationship exists at all. Can also be one-sided if testing direction.</li>
+        <li>✅ <strong>t-test for correlation:</strong> t = r√(n−2) / √(1−r²), df = n−2. Used for BOTH Pearson (parametric) and Spearman (nonparametric, large n only).</li>
+        <li>✅ <strong>df = n−2 for correlation tests</strong> — not n−1. This is the most common degree-of-freedom mistake on this topic.</li>
+        <li>✅ <strong>Pearson correlation formula:</strong> r = s_XY / (s_X × s_Y). The covariance drives the sign. Requires both variables to be approximately normally distributed.</li>
+        <li>✅ <strong>Larger n → easier to reject H₀: ρ = 0</strong> for the same sample r. Two reasons: (1) df increases → critical t decreases; (2) numerator r√(n−2) increases. With very large datasets, even tiny correlations become statistically significant — always also assess economic significance.</li>
+        <li>✅ <strong>Spearman rank correlation:</strong> rₛ = 1 − [6Σdᵢ²] / [n(n²−1)] where dᵢ = rank(Xᵢ) − rank(Yᵢ).</li>
+        <li>✅ <strong>Spearman is used when:</strong> non-normal population, outliers present, data is ordinal/ranked, or when checking monotonic (not just linear) relationships.</li>
+        <li>✅ <strong>Ranking ties:</strong> assign the average of the ranks they jointly occupy. E.g., if 3rd and 4th are tied → both get rank 3.5.</li>
+        <li>✅ <strong>Small samples (n ≤ 30):</strong> Spearman requires specialized critical value tables — NOT the standard t-table. Large samples (n &gt; 30): use the standard t-test.</li>
+        <li>✅ <strong>Contingency table:</strong> Used when data is categorical/discrete. You CANNOT use correlation for categorical variables.</li>
+        <li>✅ <strong>Chi-square independence test:</strong> χ² = Σ(Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ. Always right-tail only (squared differences → always positive).</li>
+        <li>✅ <strong>Expected frequency formula:</strong> Eᵢⱼ = (Row i total × Column j total) / Overall total. This is the count you'd expect if the two variables were completely independent.</li>
+        <li>✅ <strong>Chi-square independence df:</strong> (r−1)(c−1) where r = number of row categories, c = number of column categories. ETF example: (3−1)(3−1) = 4.</li>
+        <li>✅ <strong>Decision rule:</strong> Reject H₀ of independence if calculated χ² &gt; right-tail critical value.</li>
+        <li>✅ <strong>Standardized residual = (Oᵢⱼ − Eᵢⱼ) / √Eᵢⱼ</strong>. Positive = more than expected; negative = less than expected. Squaring gives each cell's contribution to χ².</li>
+        <li>✅ <strong>When to use which test:</strong> Continuous + normal → Pearson t-test. Continuous + non-normal or ordinal → Spearman t-test. Categorical → chi-square contingency test.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ PEARSON CORRELATION ═══<br>
+        r = s_XY / (s_X × s_Y)<br>
+        → Requires normality; measures linear relationship; sensitive to outliers<br><br>
+
+        ═══ t-TEST FOR CORRELATION (Pearson AND Spearman large n) ═══<br>
+        t = r × √(n−2) / √(1−r²)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n − 2<br>
+        H₀: ρ = 0 &nbsp;|&nbsp; Reject if |t| &gt; t_critical (two-tailed)<br><br>
+
+        ═══ SPEARMAN RANK CORRELATION ═══<br>
+        rₛ = 1 − [6 × Σdᵢ²] / [n × (n² − 1)]<br>
+        dᵢ = rank(Xᵢ) − rank(Yᵢ) for each pair i<br>
+        → Rank 1 = largest value; ties get average rank<br>
+        → Small n (≤ 30): use special Spearman table; Large n (&gt; 30): use t-formula above<br><br>
+
+        ═══ CHI-SQUARE TEST OF INDEPENDENCE ═══<br>
+        χ² = Σᵢ Σⱼ (Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = (r−1)(c−1)<br>
+        Eᵢⱼ = (Row i total × Column j total) / Overall total<br>
+        H₀: variables are independent (no relationship)<br>
+        → ALWAYS right-tail test only; reject if χ² &gt; critical value<br><br>
+
+        ═══ STANDARDIZED RESIDUAL ═══<br>
+        Standardized residual = (Oᵢⱼ − Eᵢⱼ) / √Eᵢⱼ<br>
+        (Positive = observed &gt; expected; negative = observed &lt; expected)<br><br>
+
+        ═══ KEY RULES ═══<br>
+        Correlation df = n−2 (NOT n−1)<br>
+        Larger n → smaller r needed for significance (harder to retain H₀: ρ = 0)<br>
+        Categorical data → use chi-square, NOT correlation<br>
+        Pearson: linear relationship only; Spearman: monotonic relationship<br>
+        Chi-square independence: right-tail only (differences always positive after squaring)
+      </div>
+      <div class="note">
+        <strong>Pearson:</strong> parametric, continuous, normal, linear. <strong>Spearman:</strong> nonparametric, ranked, non-normal safe, monotonic. <strong>Chi-square contingency:</strong> nonparametric, categorical, independence test, always right-tail.<br>
+        <strong>Same t-formula</strong> for both Pearson and Spearman (large n): t = r√(n−2)/√(1−r²), df = n−2.<br>
+        <strong>Expected frequency:</strong> (row total × column total) / grand total — what you'd expect if categories were independent.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 9: Parametric and Non-Parametric Tests of Independence · Exam Prep Notes
+</footer>
+</body>
+</html>

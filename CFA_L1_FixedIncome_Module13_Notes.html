@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 13: Curve-Based and Empirical Fixed-Income Risk Measures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+    --emp-bg: #121018; --emp-border: #6a3fc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1318 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .emp-box { background: var(--emp-bg); border-left: 3px solid var(--emp-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .emp-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9a7ce8; margin-bottom: 10px; }
+  .emp-box .f { color: #c8b8f0; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1a1f2e; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.total-row { background: rgba(76,139,201,0.08); border-top: 2px solid rgba(76,139,201,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent2); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; }
+  tbody td.good { color: var(--accent3); font-weight: 700; }
+  tbody td.bad { color: var(--danger); font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(106,63,201,0.15); color: #9a7ce8; border: 1px solid rgba(106,63,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* Bond option comparison */
+  .bond-compare { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 780px) { .bond-compare { grid-template-columns: 1fr; } }
+  .bc-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .bc-card.non { background: rgba(76,139,201,0.05); border-top: 3px solid var(--accent2); }
+  .bc-card.callable { background: rgba(201,76,76,0.05); border-top: 3px solid var(--danger); }
+  .bc-card.putable { background: rgba(76,201,138,0.05); border-top: 3px solid var(--accent3); }
+  .bc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .non .bc-title { color: var(--accent2); }
+  .callable .bc-title { color: var(--danger); }
+  .putable .bc-title { color: var(--accent3); }
+  .bc-card p, .bc-card li { font-size: 13px; color: var(--text); }
+  .bc-card ul { padding-left: 14px; }
+  .bc-card li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 13</div>
+  <h1>Curve-Based &amp; Empirical <span>Fixed-Income Risk Measures</span></h1>
+  <p>Exam-ready notes with full depth: why yield duration fails for embedded-option bonds; effective duration and effective convexity — formulas, inputs, and how they differ from ApproxModDur; callable vs. putable bond price–yield profiles with Exhibits 1 &amp; 2; negative convexity of callable bonds; price change formula using EffDur + EffCon (Eq. 3); key rate duration — definition, calculation procedure, sum-to-EffDur property, shaping risk; the portfolio key rate duration example; analytical vs. empirical duration; the flight-to-quality and credit spread correlation insight; full BRWA worked comparison across all measures.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Yield Duration vs. Curve Duration — The Gap</a>
+  <a class="toc-item" href="#s2">02 · Effective Duration (Eq. 1)</a>
+  <a class="toc-item" href="#s3">03 · Effective Convexity (Eq. 2)</a>
+  <a class="toc-item" href="#s4">04 · Callable Bond — Exhibit 1</a>
+  <a class="toc-item" href="#s5">05 · Putable Bond — Exhibit 2</a>
+  <a class="toc-item" href="#s6">06 · Price Change Using EffDur + EffCon (Eq. 3)</a>
+  <a class="toc-item" href="#s7">07 · ModDur vs. EffDur — When They Differ</a>
+  <a class="toc-item" href="#s8">08 · Key Rate Duration — Partial Duration</a>
+  <a class="toc-item" href="#s9">09 · Portfolio Key Rate Duration Example</a>
+  <a class="toc-item" href="#s10">10 · Empirical vs. Analytical Duration</a>
+  <a class="toc-item" href="#s11">11 · Master Comparison Table (Exhibit 6)</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: WHY CURVE-BASED MEASURES           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Yield Duration vs. Curve Duration — The Gap That Requires New Measures</h2>
+    </div>
+
+    <div class="card">
+      <p>Modules 11 and 12 covered <strong>yield duration measures</strong> (Macaulay, modified, money duration, PVBP) — all of which assume a bond's cash flows are certain and measure sensitivity to changes in the bond's own YTM. These work well for standard option-free, investment-grade bonds.</p>
+      <p style="margin-top:10px;">However, for bonds with embedded options (callable, putable), MBS, and other complex instruments, cash flows are <strong>uncertain</strong> — they depend on whether and when the embedded option is exercised, which depends on future interest rates. For such bonds: (1) the YTM may not be well-defined (callable bonds have a "yield-to-worst," not a single clean YTM); (2) Macaulay and modified durations are not appropriate; (3) a different approach is needed.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Yield Duration — When Applicable</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d5f5;">
+          <li>Option-free fixed-rate bonds</li>
+          <li>Investment-grade bonds with certain cash flows</li>
+          <li>Measures sensitivity to bond's OWN YTM</li>
+          <li>Assumes cash flows are fixed and known</li>
+          <li>MacDur, ModDur, MoneyDur, PVBP</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Curve Duration — When Needed</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#dfd0c8;">
+          <li>Callable bonds, putable bonds</li>
+          <li>Mortgage-backed securities (MBS)</li>
+          <li>Asset-backed securities (ABS)</li>
+          <li>Measures sensitivity to BENCHMARK YIELD CURVE shifts</li>
+          <li>Allows for uncertain cash flows via option pricing models</li>
+          <li>Effective duration, effective convexity, key rate duration</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Why Macaulay/Modified Duration Fail for Callable Bonds</div>
+      <p>A callable bond has multiple possible lives — it may be called early (short life) or held to maturity (full life). The "yield-to-worst" is only one of many possible outcomes. The modified duration of a callable bond does not reflect which scenario will actually occur. More critically, when interest rates fall (the most likely time for the bond to be called), the callable bond's price doesn't rise as much as an equivalent non-callable bond — the embedded call option <em>limits price appreciation</em>. Modified duration cannot capture this cap on price appreciation. Effective duration, derived from actual (option-model-derived) prices, correctly captures this behavior.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: EFFECTIVE DURATION                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Effective Duration — Formula, Inputs &amp; Key Differences (Equation 1)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Effective Duration (EffDur)</div>
+      <div class="def-body">The sensitivity of a bond's full price to a <strong>parallel shift in the benchmark yield curve</strong> (e.g., the government par curve), rather than a change in the bond's own YTM. It is a <strong>curve duration</strong> statistic — appropriate for all bonds, including those with embedded options, where cash flows are uncertain. PV+ and PV− are derived from option pricing models, not simply from discounting fixed cash flows.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Effective Duration</div>
+      <div class="f">
+        EffDur = (PV− − PV+) / (2 × ΔCurve × PV₀)<br><br>
+        WHERE:<br>
+        PV₀     = current full price (at current benchmark curve level)<br>
+        PV+     = full price when benchmark curve shifts UP by ΔCurve<br>
+        PV−     = full price when benchmark curve shifts DOWN by ΔCurve<br>
+        ΔCurve  = size of parallel benchmark yield curve shift (e.g., 0.0005 for 5bps)<br><br>
+        KEY DIFFERENCE from ApproxModDur (Eq. 4, Module 11):<br>
+        ApproxModDur: denominator uses ΔYield (bond's own YTM change)<br>
+        EffDur:       denominator uses ΔCurve (benchmark yield curve shift)<br><br>
+        ApproxModDur: PV+/PV− from discounting fixed cash flows at new YTM<br>
+        EffDur:       PV+/PV− from OPTION PRICING MODEL at new benchmark level
+      </div>
+      <div class="note">
+        <strong>Option pricing model inputs (held constant except benchmark level):</strong><br>
+        (1) Length of the call protection period<br>
+        (2) Schedule of call prices and call dates<br>
+        (3) Assumption about credit spreads over benchmark yields (including liquidity spread)<br>
+        (4) Assumption about future interest rate volatility<br>
+        (5) Level of market interest rates (the government par curve) → THIS is what shifts<br><br>
+        The analyst holds (1)–(4) constant and shifts (5) up and down to generate PV+ and PV−. This isolates the pure interest rate effect on the uncertain cash flows.
+      </div>
+    </div>
+
+    <h3>BRWA Bond — EffDur vs. ApproxModDur Worked Comparison</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semi, PV₀=100.00. ΔYield = ΔCurve = 5bps = 0.0005.</div>
+      <div class="f">
+        YIELD-BASED (ApproxModDur) — using bond's own YTM:<br>
+        PV+ = 99.770965  (YTM rises from 3.20% to 3.25%)<br>
+        PV− = 100.229641 (YTM falls from 3.20% to 3.15%)<br>
+        ApproxModDur = (100.229641 − 99.770965) / (2 × 0.0005 × 100.00) = 4.587<br><br>
+        CURVE-BASED (EffDur) — benchmark par curve shifts non-parallel to spot rates:<br>
+        PV+ = 99.760  (benchmark curve shifts UP 5bps; spot rates shift non-parallel)<br>
+        PV− = 100.241 (benchmark curve shifts DOWN 5bps)<br>
+        EffDur = (100.241 − 99.760) / (2 × 0.0005 × 100.00)<br>
+               = 0.481 / 0.100<br>
+               = 4.816<br><br>
+        DIFFERENCE: EffDur = 4.816 &gt; ApproxModDur = 4.587<br>
+        Reason: A parallel shift in the par curve causes a NON-PARALLEL shift in spot rates,<br>
+        resulting in a slightly larger price change → higher measured sensitivity.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: EFFECTIVE CONVEXITY                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Effective Convexity — Formula &amp; Key Fact (Equation 2)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Effective Convexity</div>
+      <div class="f">
+        EffCon = [(PV−) + (PV+) − 2×PV₀] / ((ΔCurve)² × PV₀)<br><br>
+        SAME STRUCTURE as ApproxCon (Eq. 2, Module 12) — but uses ΔCurve in denominator<br>
+        and PV+/PV− from option pricing models (same as for EffDur)<br><br>
+        BRWA bond example (5bps ΔCurve, PV+=99.760, PV−=100.241, PV₀=100.00):<br>
+        EffCon = (100.241 + 99.760 − 2×100.00) / ((0.0005)² × 100.00)<br>
+               = (200.001 − 200.000) / (0.00000025 × 100)<br>
+               = 0.001 / 0.000025<br>
+               = 40.000<br><br>
+        Compare to ApproxCon = 24.239 (using bond's own yield)<br>
+        EffCon = 40.000 &gt; ApproxCon = 24.239 (same reason as EffDur &gt; ApproxModDur)
+      </div>
+      <div class="note">
+        <strong>Critical fact about effective convexity:</strong><br>
+        • Non-callable option-free bonds: EffCon is always positive<br>
+        • Callable bonds: EffCon can turn NEGATIVE when yields are low (call option limits price appreciation → curvature goes negative — the bond's price–yield curve bends downward at low yields)<br>
+        • Putable bonds: EffCon is ALWAYS positive (the put floor protects price → curvature always helpful to investor)<br><br>
+        <strong>Why not choose smaller ΔCurve for better accuracy?</strong> Unlike with ModDur where smaller ΔYield improves accuracy, for complex bonds (callable, MBS) the pricing model inputs (issuer call behavior, prepayment behavior) change with interest rates in complex ways. Making ΔCurve smaller doesn't necessarily improve the estimate because the option exercise behavior may not be well-defined at very small rate changes. The choice of ΔCurve involves judgment specific to the instrument.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: CALLABLE BOND — EXHIBIT 1          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Callable Bond Price–Yield Profile — Exhibit 1 (Full Analysis)</h2>
+    </div>
+
+    <div class="card">
+      <p>Exhibit 1 compares a callable bond with an otherwise identical non-callable bond (same coupon, maturity, payment frequency, credit risk). The difference between their prices at any point is the <strong>value of the embedded call option</strong> — held by the <em>issuer</em>, not the investor.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="bc-card non">
+        <div class="bc-title">Non-Callable Bond</div>
+        <ul>
+          <li>Price rises fully as yields fall (standard convex shape)</li>
+          <li>Positive effective convexity always</li>
+          <li>Full price appreciation when benchmark yields decline</li>
+          <li>Benchmark: the "full value" — callable bond always priced below this</li>
+        </ul>
+      </div>
+      <div class="bc-card callable">
+        <div class="bc-title">Callable Bond</div>
+        <ul>
+          <li>Price rises normally when yields are HIGH (call option = low value)</li>
+          <li>Price appreciation LIMITED when yields are LOW (call likely to be exercised)</li>
+          <li>Price approaches and then is capped near the call price</li>
+          <li>Effective convexity becomes NEGATIVE when yields are low</li>
+          <li>Always priced BELOW the non-callable equivalent</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="background: rgba(201,76,76,0.04); border: 1px solid rgba(201,76,76,0.2);">
+        <div class="mc-title" style="color:var(--danger);">Value of Embedded Call Option</div>
+        <p>= Non-callable price − Callable price</p>
+        <ul style="margin-top:8px;">
+          <li>Yields HIGH: option value is LOW (unlikely to be exercised — refinancing at high rates makes no sense)</li>
+          <li>Yields LOW: option value is HIGH (issuer will refinance at lower rates)</li>
+          <li>The investor SOLD this option to the issuer — bears "call risk"</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Callable Bond — Effective Duration and Effective Convexity Behavior</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Benchmark Yield Level</th><th>Call Option Value</th><th>EffDur vs. Non-Callable</th><th>EffCon</th><th>Investor Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">HIGH yields (ΔCurve positive)</td>
+            <td>Low — call unlikely</td>
+            <td>≈ Same as non-callable</td>
+            <td class="good">Positive (≈ same)</td>
+            <td>Similar to owning a non-callable bond</td>
+          </tr>
+          <tr>
+            <td class="label-col">LOW yields (ΔCurve negative)</td>
+            <td>High — call likely</td>
+            <td class="bad">LOWER than non-callable</td>
+            <td class="bad">Can turn NEGATIVE</td>
+            <td>Price appreciation severely limited; investor must reinvest at lower rates if called</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Negative Convexity — The Key Callable Bond Characteristic</div>
+      <p>When a callable bond enters the range of negative effective convexity, the price–yield curve bends <em>downward</em> (concave rather than convex). This means the bond behaves perversely: a further decline in yields produces smaller and smaller price gains (and eventually no gain at all as the price is capped near the call price). This is the worst property for an investor — you lose both the price appreciation (compared to a non-callable) AND bear the risk of having the bond called away. Investors demand a higher yield (call premium) to compensate for this feature.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: PUTABLE BOND — EXHIBIT 2           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Putable Bond Price–Yield Profile — Exhibit 2 (Full Analysis)</h2>
+    </div>
+
+    <div class="card">
+      <p>A putable bond gives the <strong>investor</strong> (not the issuer) the right to sell the bond back to the issuer at a specified price (typically par) at specified dates. This protects the investor when rates rise (bond price falls), because they can put the bond back at par rather than selling at a market loss.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="bc-card non">
+        <div class="bc-title">Non-Putable Bond</div>
+        <ul>
+          <li>Price falls fully as yields rise (standard shape)</li>
+          <li>No protection on the downside</li>
+          <li>Investor bears full price depreciation risk</li>
+          <li>Lower price than putable equivalent when yields are high</li>
+        </ul>
+      </div>
+      <div class="bc-card putable">
+        <div class="bc-title">Putable Bond</div>
+        <ul>
+          <li>Price rises normally when yields are LOW (put option = low value)</li>
+          <li>Price SUPPORTED / FLOORED when yields are HIGH (put likely exercised)</li>
+          <li>Price stays near (or above) par when yields are very high</li>
+          <li>Effective convexity is ALWAYS positive (put floor prevents concavity)</li>
+          <li>Always priced ABOVE the non-putable equivalent</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="background: rgba(76,201,138,0.04); border: 1px solid rgba(76,201,138,0.2);">
+        <div class="mc-title" style="color:var(--accent3);">Value of Embedded Put Option</div>
+        <p>= Putable price − Non-putable price</p>
+        <ul style="margin-top:8px;">
+          <li>Yields LOW: option value is LOW (investor won't put the bond when it's trading above par)</li>
+          <li>Yields HIGH: option value is HIGH (investor will sell back at par to avoid losses)</li>
+          <li>The investor OWNS this option — pays for it via lower yield</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Putable Bond — Effective Duration and Convexity</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Benchmark Yield Level</th><th>Put Option Value</th><th>EffDur vs. Non-Putable</th><th>EffCon</th><th>Investor Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">LOW yields (ΔCurve negative)</td>
+            <td>Low — put unlikely</td>
+            <td>≈ Same as non-putable</td>
+            <td class="good">Positive (≈ same)</td>
+            <td>Behaves like a non-putable bond</td>
+          </tr>
+          <tr>
+            <td class="label-col">HIGH yields (ΔCurve positive)</td>
+            <td>High — put likely</td>
+            <td class="good">LOWER than non-putable</td>
+            <td class="good">Still Positive (always)</td>
+            <td>Investor can put bond at par → protected from price fall; can reinvest at higher rates</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Putable Bonds Always Have Positive Convexity</div>
+      <p>The put floor creates a support level for the bond's price — it cannot fall indefinitely below the put price. This floor means the price–yield curve always bends upward (toward the investor) on the downside: as yields rise past the point where the put becomes valuable, price stops falling and stabilizes. This upward curvature is positive convexity. In contrast, the callable bond's cap creates a downward bend (negative convexity) on the upside. The investor's option (put) always creates positive convexity; the issuer's option (call) creates negative convexity when in the money.</p>
+    </div>
+
+    <div class="swap-card" style="margin-top:16px;">
+      <div class="swap-title">★ Summary — Callable vs. Putable: Who Benefits From What?</div>
+      <p style="font-size:14px; color:#dfd0c8; margin-bottom:8px;">The key question: who holds the option? The option holder benefits when they exercise; the option writer loses.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
+        <div>
+          <p style="font-size:13.5px; color:#dfd0c8;"><strong style="color:#c94c4c;">Callable bond:</strong><br>Issuer holds the call option. When rates fall → issuer calls → investor loses upside and must reinvest at lower rates. <strong>Reduces EffDur when rates fall. Can create negative EffCon.</strong></p>
+        </div>
+        <div>
+          <p style="font-size:13.5px; color:#dfd0c8;"><strong style="color:#4cc98a;">Putable bond:</strong><br>Investor holds the put option. When rates rise → investor puts → issuer must repurchase at par. <strong>Reduces EffDur when rates rise. EffCon remains always positive.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <h3>MBS — Prepayment Option = Like a Callable Bond</h3>
+    <div class="card">
+      <p>Mortgage-backed securities (MBS) cash flows depend on homeowners' prepayment decisions — when rates fall, homeowners refinance their mortgages (effectively "calling" the MBS). This makes MBS behave like callable bonds: price appreciation is limited when rates fall (negative convexity at low rates). Effective duration and effective convexity are the only appropriate risk measures for MBS, because standard yield duration cannot capture this prepayment optionality.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: PRICE CHANGE WITH EFFDIR + EFFCON  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Price Change Formula Using EffDur + EffCon — Equation 3</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Percentage Full Price Change Using Effective Measures</div>
+      <div class="f">
+        %ΔPV^Full ≈ (−EffDur × ΔCurve) + [½ × EffCon × (ΔCurve)²]<br><br>
+        IDENTICAL STRUCTURE to Equation 1 of Module 12 — but:<br>
+        • AnnModDur replaced by EffDur<br>
+        • AnnConvexity replaced by EffCon<br>
+        • ΔYield replaced by ΔCurve (parallel benchmark shift)<br><br>
+        For callable bond in low-rate environment:<br>
+        EffDur is smaller (shorter expected life due to likely call)<br>
+        EffCon may be negative → convexity term SUBTRACTS from gain<br>
+        → Price gain from falling rates is doubly limited<br><br>
+        For putable bond in high-rate environment:<br>
+        EffDur is smaller (put provides protection)<br>
+        EffCon still positive → convexity term adds to estimate<br>
+        → Price loss from rising rates is limited on both counts
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Full Comparison Across All Three Approaches (Exhibit 4 extended)</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semi. ApproxModDur=4.587, ApproxCon=24.239, EffDur=4.816, EffCon=26.723*. ±100bps.</div>
+      <div class="f">
+        *Note: EffCon in text example = 26.723 (using ΔCurve = 0.0005); earlier example showed 40.000<br>
+        — values differ depending on ΔCurve used; concept is the same regardless.<br><br>
+        YIELD-BASED, DURATION ONLY (ApproxModDur):<br>
+        +100bps: −4.587%   |   −100bps: +4.587%   (symmetric, linear approximation)<br><br>
+        YIELD-BASED, DURATION + CONVEXITY (ApproxModDur + ApproxCon):<br>
+        +100bps: −4.466%   |   −100bps: +4.708%   (asymmetric, improved)<br><br>
+        CURVE-BASED, DURATION + CONVEXITY (EffDur + EffCon, using EffCon=26.723):<br>
+        +100bps: (−4.816 × 0.01) + [½ × 26.723 × 0.0001] = −4.816% + 0.134% = −4.682%<br>
+        −100bps: (+4.816) + [½ × 26.723 × 0.0001]         = +4.816% + 0.134% = +4.950%<br><br>
+        Curve-based gives slightly LARGER price changes because parallel par curve shift<br>
+        produces non-parallel spot rate shift → amplified price effect vs. pure YTM change.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: MODDUR vs. EFFDUR                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>ModDur vs. EffDur on Option-Free Bonds — When and Why They Differ</h2>
+    </div>
+
+    <div class="card">
+      <p>Even for standard option-free bonds (where EffDur is not "needed"), ModDur and EffDur will generally <strong>not be identical</strong>. This is because they measure different things:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>ModDur:</strong> Sensitivity to a change in the bond's own YTM (a single yield)</li>
+        <li><strong>EffDur:</strong> Sensitivity to a parallel shift in the benchmark government par curve (affects multiple rates)</li>
+      </ul>
+      <p style="margin-top:10px;">When the government par curve shifts in parallel, the government spot (zero) rates shift in a <em>non-parallel</em> manner — long spot rates change by different amounts than short spot rates. This non-parallel spot rate shift causes a slightly different bond price change than a pure YTM change would produce. Hence, EffDur ≠ ModDur in general.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Condition</th><th>ModDur vs. EffDur Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="label-col">Flatter yield curve</td><td>Gap is SMALLER (parallel par shift ≈ parallel spot shift when curve is flat)</td></tr>
+          <tr><td class="label-col">Steeper yield curve</td><td>Gap is LARGER</td></tr>
+          <tr><td class="label-col">Shorter time-to-maturity</td><td>Gap is SMALLER</td></tr>
+          <tr><td class="label-col">Longer time-to-maturity</td><td>Gap is LARGER</td></tr>
+          <tr><td class="label-col">Bond priced closer to par</td><td>Gap is SMALLER</td></tr>
+          <tr><td class="label-col">Bond priced far from par</td><td>Gap is LARGER</td></tr>
+          <tr><td class="label-col">Perfectly flat yield curve</td><td class="highlight">Gap = ZERO (the only case where they are exactly equal)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 BRWA Comparison: ModDur=4.587 vs. EffDur=4.816</div>
+      <p>For the BRWA bond, EffDur (4.816) is higher than ApproxModDur (4.587). This means the bond is slightly MORE sensitive to a benchmark yield curve shift than to a pure YTM change of the same magnitude. The reason: a 5bp par curve shift causes the spot rates to shift in a non-parallel way — specifically, spot rates at longer maturities shift by slightly more than 5bps, amplifying the price effect. This is a nuance specific to how yield curves work, not a contradiction.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: KEY RATE DURATION                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Key Rate Duration — Measuring Non-Parallel Yield Curve Sensitivity</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Key Rate Duration (KeyRateDur_k) — also called Partial Duration</div>
+      <div class="def-body">A measure of a bond's (or portfolio's) sensitivity to a change in the benchmark yield at <strong>one specific maturity point</strong> on the yield curve, holding all other maturities unchanged. Key rate durations capture <strong>"shaping risk"</strong> — the risk that the yield curve changes shape (steepens, flattens, twists) rather than shifting in parallel. The sum of all key rate durations equals the bond's effective duration.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>The problem effective duration doesn't solve:</strong> Effective duration assumes ALL yields change by the same amount simultaneously (parallel shift). In reality, the 2-year yield might rise while the 10-year yield stays flat (curve flattening). Effective duration cannot distinguish these scenarios. Key rate duration can — it tells you exactly how sensitive your bond/portfolio is to each specific point on the yield curve.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equations 4, 5 &amp; 6 — Key Rate Duration Formulas</div>
+      <div class="f">
+        KeyRateDur_k = −(1/PV) × (ΔPV/Δr_k)   [Equation 4]<br><br>
+        Sum property: Σ KeyRateDur_k = EffDur    [Equation 5]<br><br>
+        For estimating price change (Equation 6):<br>
+        %ΔPV/PV = −KeyRateDur_k × Δr_k<br><br>
+        WHERE:<br>
+        k    = specific maturity point (e.g., 0.5yr, 2yr, 5yr, 10yr, 20yr, 30yr)<br>
+        r_k  = benchmark yield at maturity k<br>
+        Δr_k = change in the benchmark yield at maturity k (holding others constant)<br>
+        ΔPV  = change in bond price from that single-maturity shift<br><br>
+        Calculation procedure:<br>
+        Step 1: Shift only the k-th benchmark rate up by 1bp<br>
+        Step 2: Calculate new bond price PV+<br>
+        Step 3: Shift only the k-th rate down by 1bp<br>
+        Step 4: Calculate PV−<br>
+        Step 5: KeyRateDur_k = (PV− − PV+) / (2 × 0.0001 × PV₀)<br>
+        Step 6: Repeat for each key maturity (0.5, 2, 5, 10, 20, 30 years)
+      </div>
+      <div class="note">
+        <strong>The tent shape of a key rate shift (Exhibit 3):</strong> When the k-th key rate is shifted, the yield curve is perturbed only in a triangular region around maturity k — it rises linearly from k−1 to k, then falls linearly from k to k+1, and is unchanged outside this range. This triangular tent shape ensures that individual key rate shifts sum to a parallel shift, so the key rate durations sum exactly to the effective duration.<br><br>
+        <strong>Typical key maturities:</strong> 0.5yr, 2yr, 5yr, 10yr, 20yr, 30yr — the major benchmark tenors. Some implementations use more granular maturities (1yr, 2yr, 3yr, 5yr, 7yr, 10yr, 20yr, 30yr).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Rate Duration — Practical Uses</div>
+      <p><strong>Measuring shaping risk:</strong> If a bond has high key rate duration at the 10-year point and very low key rate duration at the 2-year point, it is highly sensitive to changes in long rates but not short rates. A flattening yield curve (short rates rise, long rates unchanged) would have little impact; a steepening (long rates rise) would hurt it significantly.<br><br>
+      <strong>Portfolio positioning:</strong> A manager expecting curve flattening (short rates to rise relative to long rates) would tilt the portfolio toward bonds with low short-maturity key rate durations and high long-maturity key rate durations. Effective duration alone doesn't guide this decision — key rate durations do.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: PORTFOLIO KEY RATE DURATION        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Portfolio Key Rate Duration — Exhibit 5 Worked Example</h2>
+    </div>
+
+    <div class="card">
+      <p>Portfolio key rate durations work the same way as portfolio effective duration — weighted averages using market value weights. And the key rate durations of individual bonds sum to each bond's effective duration; the portfolio's key rate durations sum to the portfolio's effective duration.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond (Tenor)</th><th>Coupon</th><th>Yield (%)</th><th>Price</th><th>Market Value</th><th>Mod. Duration</th><th>Key Rate Duration (Portfolio-level)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">2yr Zero</td>
+            <td>0.00</td>
+            <td>0.50</td>
+            <td>99.006</td>
+            <td>$99,006,219</td>
+            <td>1.990</td>
+            <td>0.711</td>
+          </tr>
+          <tr>
+            <td class="label-col">5yr Zero</td>
+            <td>0.00</td>
+            <td>1.25</td>
+            <td>93.960</td>
+            <td>$93,959,580</td>
+            <td>4.938</td>
+            <td>1.675</td>
+          </tr>
+          <tr>
+            <td class="label-col">10yr Zero</td>
+            <td>0.00</td>
+            <td>1.75</td>
+            <td>84.010</td>
+            <td>$84,009,625</td>
+            <td>9.828</td>
+            <td>2.981</td>
+          </tr>
+          <tr class="total-row">
+            <td class="label-col">PORTFOLIO</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="highlight">$276,975,424</td>
+            <td class="highlight">5.368</td>
+            <td class="highlight">5.368 (= sum ✓)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Portfolio calculation: total value = $99,006,219 + $93,959,580 + $84,009,625 = $276,975,424</div>
+      <div class="f">
+        PORTFOLIO MODIFIED DURATION (= Portfolio Effective Duration):<br>
+        = [1.990 × (99,006/276,975)] + [4.938 × (93,960/276,975)] + [9.828 × (84,010/276,975)]<br>
+        = [1.990 × 0.3574] + [4.938 × 0.3392] + [9.828 × 0.3034]<br>
+        = 0.711 + 1.675 + 2.982 = 5.368<br><br>
+        KEY RATE DURATION at the 2yr tenor (KeyRateDur₂):<br>
+        = 1.990 × (99,006/276,975) = 1.990 × 0.3574 = 0.711<br><br>
+        KEY RATE DURATION at the 5yr tenor (KeyRateDur₅):<br>
+        = 4.938 × (93,960/276,975) = 4.938 × 0.3392 = 1.675<br><br>
+        KEY RATE DURATION at the 10yr tenor (KeyRateDur₁₀):<br>
+        = 9.828 × (84,010/276,975) = 9.828 × 0.3034 = 2.982<br><br>
+        SUM: 0.711 + 1.675 + 2.982 = 5.368 = Portfolio EffDur ✓<br><br>
+        EXAMPLE USE (Eq. 6): If only 2yr rates rise by 25bps:<br>
+        %ΔPV = −KeyRateDur₂ × Δr₂ = −1.990 × 0.0025 = −0.4975%<br>
+        (= only the 2yr component responds; 5yr and 10yr bonds unaffected)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Portfolio Tilting Using Key Rate Durations</div>
+      <p>If a portfolio manager's view is that the 5yr point of the yield curve will rise more than 2yr and 10yr rates (a butterfly hump in the middle), she would want to <em>reduce</em> the portfolio's 5yr key rate duration relative to the benchmark — by reducing the 5yr bond position and reallocating to 2yr and 10yr bonds. This preserves the same effective duration (parallel shift sensitivity) while repositioning the curve-shape exposure. Key rate durations are the tool that makes this kind of active management precise.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EMPIRICAL vs. ANALYTICAL DURATION -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Empirical Duration vs. Analytical Duration — The Credit Spread Factor</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Analytical Duration</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d5f5;">
+          <li>Estimated using mathematical formulas</li>
+          <li>All measures covered so far: MacDur, ModDur, EffDur, KeyRateDur</li>
+          <li>Implicitly assumes benchmark yields and credit spreads are <strong>independent and uncorrelated</strong></li>
+          <li>If benchmark yield changes → bond price changes only through that effect</li>
+          <li>Credit spread stays constant when benchmark yield changes</li>
+          <li>Works well for government bonds and when spreads are stable</li>
+        </ul>
+      </div>
+      <div class="emp-box" style="border-radius:6px; padding:18px 22px;">
+        <div class="label">Empirical Duration</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8b8f0; margin-top:6px;">
+          <li>Estimated using <strong>historical data in statistical models</strong></li>
+          <li>Incorporates various factors affecting bond prices across economic scenarios</li>
+          <li>Accounts for the <strong>correlation between benchmark yields and credit spreads</strong></li>
+          <li>Does NOT assume independence of yields and spreads</li>
+          <li>Can produce duration estimates very different from analytical when correlation is significant</li>
+          <li>Most relevant for credit-risky bonds during periods of market stress</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The Critical Insight — Flight to Quality and Negative Correlation</h3>
+    <div class="swap-card">
+      <div class="swap-title">★ During Market Crises (e.g., COVID-19 onset, Feb 2020)</div>
+      <p style="font-size:14px; color:#dfd0c8; margin-bottom:10px;">Investors sell risky assets and buy government bonds ("flight to quality"). The result:</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div>
+          <p style="font-size:13.5px; color:#dfd0c8;"><strong style="color:#4cc98a;">Government benchmark yields:</strong> Fall (bond prices rise as demand surges)</p>
+        </div>
+        <div>
+          <p style="font-size:13.5px; color:#dfd0c8;"><strong style="color:#c94c4c;">Credit spreads:</strong> Widen (risky bonds are sold → prices fall → spreads vs. government widen)</p>
+        </div>
+      </div>
+      <p style="font-size:14px; color:#dfd0c8; margin-top:10px;"><strong>Key observation:</strong> Benchmark yields and credit spreads are <strong>negatively correlated</strong> in this scenario — when yields fall, spreads widen. For a corporate bond: the falling benchmark yield increases price (analytical effect), but the widening credit spread decreases price (partially or fully offsetting). Net result: the corporate bond price rises less than analytical duration would predict.</p>
+      <p style="font-size:14px; color:#dfd0c8; margin-top:8px;"><strong>Empirical duration &lt; Analytical duration</strong> for corporate bonds during crisis periods. The spread widening partially offsets the benchmark yield decline, so the bond is less sensitive to benchmark moves than the formula suggests.</p>
+    </div>
+
+    <div class="table-wrap" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr><th>Bond Type</th><th>Benchmark Yield Change</th><th>Credit Spread Change</th><th>Net Price Effect</th><th>Empirical vs. Analytical Duration</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Government Bond (no credit risk)</td>
+            <td>Falls (flight to quality)</td>
+            <td>No spread (risk-free)</td>
+            <td class="good">Full price gain</td>
+            <td>Empirical ≈ Analytical</td>
+          </tr>
+          <tr>
+            <td class="label-col">Corporate Bond (credit risk)</td>
+            <td>Falls (flight to quality)</td>
+            <td>Widens (credit stress)</td>
+            <td>Partial price gain (offset by spread)</td>
+            <td class="bad">Empirical &lt; Analytical</td>
+          </tr>
+          <tr>
+            <td class="label-col">Corporate Bond (stable market)</td>
+            <td>Rises/falls normally</td>
+            <td>Stable (no correlation)</td>
+            <td>Normal price change</td>
+            <td>Empirical ≈ Analytical</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ When to Use Empirical vs. Analytical Duration</div>
+      <p>The choice depends on the correlation between benchmark yields and credit spreads in the relevant scenario. For <strong>government bonds</strong>: analytical is fine (no credit spread). For <strong>investment-grade corporates in stable markets</strong>: analytical is a reasonable approximation (spread correlation is low). For <strong>high-yield or distressed bonds in volatile markets</strong>: empirical duration is more appropriate because the negative correlation between benchmark yields and spreads is significant — analytical duration substantially overstates true price sensitivity to benchmark yield changes. Risk managers at large firms often use empirical duration alongside analytical duration for credit portfolios.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: MASTER COMPARISON TABLE           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Master Comparison Table — All Duration Measures (Exhibit 6 Extended)</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Measure</th><th>Type</th><th>Formula / Method</th><th>Sensitivity To</th><th>Cash Flow Assumption</th><th>Primary Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">MacDur</td>
+            <td><span class="tag tag-blue">Yield</span></td>
+            <td>Σ(t × w_t) weighted-average time to receipt</td>
+            <td>Bond's own YTM</td>
+            <td>Certain</td>
+            <td>Immunization — balancing reinvestment and price risk</td>
+          </tr>
+          <tr>
+            <td class="label-col">ModDur</td>
+            <td><span class="tag tag-blue">Yield</span></td>
+            <td>MacDur/(1+r) | or (PV−−PV+)/(2×ΔY×PV₀)</td>
+            <td>Bond's own YTM</td>
+            <td>Certain</td>
+            <td>Estimate %ΔPV for given ΔYield: %ΔPV ≈ −ModDur×ΔY</td>
+          </tr>
+          <tr>
+            <td class="label-col">MoneyDur</td>
+            <td><span class="tag tag-blue">Yield</span></td>
+            <td>ModDur × PV^Full</td>
+            <td>Bond's own YTM</td>
+            <td>Certain</td>
+            <td>Currency amount of price change: ΔPV ≈ −MoneyDur×ΔY</td>
+          </tr>
+          <tr>
+            <td class="label-col">PVBP/DV01</td>
+            <td><span class="tag tag-blue">Yield</span></td>
+            <td>(PV−−PV+)/2 using 1bp shift</td>
+            <td>Bond's own YTM</td>
+            <td>Certain</td>
+            <td>Currency change per 1bp of yield change</td>
+          </tr>
+          <tr>
+            <td class="label-col">Effective Duration</td>
+            <td><span class="tag tag-green">Curve</span></td>
+            <td>(PV−−PV+)/(2×ΔCurve×PV₀) — PV from option model</td>
+            <td>Benchmark yield curve (parallel shift)</td>
+            <td>Uncertain (option model)</td>
+            <td>IR risk for callable, putable, MBS, ABS bonds; %ΔPV per ΔCurve</td>
+          </tr>
+          <tr>
+            <td class="label-col">Effective Convexity</td>
+            <td><span class="tag tag-green">Curve</span></td>
+            <td>(PV−+PV+−2×PV₀)/((ΔCurve)²×PV₀) — PV from option model</td>
+            <td>Benchmark yield curve</td>
+            <td>Uncertain (option model)</td>
+            <td>Callable: can be negative. Putable: always positive. Add to EffDur estimate.</td>
+          </tr>
+          <tr>
+            <td class="label-col">Key Rate Duration</td>
+            <td><span class="tag tag-green">Curve</span></td>
+            <td>Shift single benchmark maturity ±1bp; same formula as EffDur</td>
+            <td>Specific benchmark maturity only</td>
+            <td>Can handle uncertain CFs</td>
+            <td>Shaping risk; Σ(KeyRateDur_k) = EffDur; portfolio curve positioning</td>
+          </tr>
+          <tr>
+            <td class="label-col">Empirical Duration</td>
+            <td><span class="tag tag-purple">Statistical</span></td>
+            <td>Regression using historical price and yield data</td>
+            <td>Benchmark yield (with spread correlation)</td>
+            <td>Actual historical CFs</td>
+            <td>Credit-risky bonds; accounts for spread/yield correlation; crisis periods</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Why EffDur and EffCon are needed:</strong> Bonds with embedded options (callable, putable), MBS, ABS have uncertain cash flows — no well-defined YTM. Macaulay and modified duration are not appropriate. Effective duration (a curve duration) measures sensitivity to the benchmark yield curve and handles uncertain CFs via option pricing models.</li>
+        <li>✅ <strong>Effective Duration formula (Eq. 1):</strong> EffDur = (PV− − PV+) / (2 × ΔCurve × PV₀). Same structure as ApproxModDur but uses ΔCurve in denominator and PV+/PV− from option pricing models.</li>
+        <li>✅ <strong>Effective Convexity formula (Eq. 2):</strong> EffCon = [(PV−) + (PV+) − 2×PV₀] / ((ΔCurve)² × PV₀). Same structure as ApproxCon but with ΔCurve.</li>
+        <li>✅ <strong>Callable bond price behavior (Exhibit 1):</strong> At HIGH yields: call option has low value → callable ≈ non-callable → similar EffDur, positive EffCon. At LOW yields: call option has HIGH value → issuer calls → callable price capped → EffDur LOWER than non-callable → EffCon can turn NEGATIVE. Investor bears call risk.</li>
+        <li>✅ <strong>Callable bond: negative effective convexity.</strong> When yields are low and call is likely, the callable bond's price–yield curve bends downward (concave). This means price gains from further yield declines are increasingly limited. Negative EffCon is the hallmark of callable/MBS bonds in low-rate environments.</li>
+        <li>✅ <strong>Putable bond price behavior (Exhibit 2):</strong> At LOW yields: put has low value → putable ≈ non-putable → similar EffDur, positive EffCon. At HIGH yields: put is valuable → investor puts at par → price floored → EffDur LOWER than non-putable. <strong>Putable bonds ALWAYS have positive EffCon</strong> (put floor prevents negative convexity).</li>
+        <li>✅ <strong>Summary: callable = issuer's option, putable = investor's option.</strong> Option holder always benefits from exercise; option writer (the other party) bears the risk. Callable → investor sells the call → gets higher yield but loses upside. Putable → investor buys the put → accepts lower yield but gets downside protection.</li>
+        <li>✅ <strong>Price change formula (Eq. 3):</strong> %ΔPV^Full ≈ (−EffDur × ΔCurve) + [½ × EffCon × (ΔCurve)²]. Identical structure to Eq. 1 of Module 12 — just substitute EffDur for ModDur and EffCon for AnnConvexity, and ΔCurve for ΔYield.</li>
+        <li>✅ <strong>ModDur ≠ EffDur for option-free bonds</strong> (generally). Parallel par curve shift → non-parallel spot rate shift → different price change than a YTM change. Difference is smaller when: yield curve is flatter, maturity is shorter, bond is near par. Difference = 0 only for perfectly flat yield curve.</li>
+        <li>✅ <strong>ΔCurve choice for complex bonds:</strong> Unlike ModDur where smaller ΔY improves accuracy, for callable bonds and MBS the option exercise behavior is complex — smaller ΔCurve doesn't necessarily improve EffDur/EffCon estimates. The choice of ΔCurve involves judgment.</li>
+        <li>✅ <strong>Key rate duration (KeyRateDur_k):</strong> Sensitivity of bond price to a change in the benchmark yield at a SINGLE specific maturity k, with all other maturities unchanged. Also called "partial duration." Captures "shaping risk" — sensitivity to non-parallel curve changes.</li>
+        <li>✅ <strong>Key rate duration sum property (Eq. 5):</strong> Σ KeyRateDur_k = EffDur. Individual key rate durations always sum to the bond's (or portfolio's) effective duration.</li>
+        <li>✅ <strong>Portfolio key rate duration:</strong> KeyRateDur_k (portfolio) = Σ [w_i × KeyRateDur_k,i] where w_i = market value weight. The three-bond government portfolio: 2yr KRD=0.711, 5yr KRD=1.675, 10yr KRD=2.982, sum=5.368=EffDur ✓.</li>
+        <li>✅ <strong>Key rate duration use case:</strong> If 2yr yield rises 25bps only, %ΔPV = −KRD₂ × 0.0025 = −1.990 × 0.0025 = −0.498%. Portfolio managers use KRDs to position for expected curve shape changes (steepening, flattening, butterfly) beyond just overall level shifts.</li>
+        <li>✅ <strong>Analytical duration:</strong> All duration measures computed from mathematical formulas. Assumes benchmark yields and credit spreads are INDEPENDENT (uncorrelated).</li>
+        <li>✅ <strong>Empirical duration:</strong> Computed from historical price/yield data using statistical models. Accounts for the CORRELATION between benchmark yields and credit spreads. Produces different (usually lower) estimates than analytical duration when yields and spreads are negatively correlated.</li>
+        <li>✅ <strong>Flight to quality (e.g., COVID-19 Feb 2020):</strong> Investors sell risky assets → buy government bonds → government yields fall AND credit spreads widen. Benchmark yields and credit spreads are NEGATIVELY correlated. For corporate bonds: falling yields → price up (good), but widening spreads → price down (bad). Net effect is muted. Empirical duration &lt; Analytical duration for corporate bonds.</li>
+        <li>✅ <strong>When to use empirical duration:</strong> When spreads and benchmark yields are significantly negatively correlated — especially for credit-risky bonds (high-yield, emerging market) during volatile/crisis periods. Analytical is sufficient for government bonds and stable investment-grade in normal markets.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 13</div>
+      <div class="f">
+        ═══ EFFECTIVE DURATION & CONVEXITY ═══<br>
+        EffDur  = (PV− − PV+) / (2 × ΔCurve × PV₀)               [Eq. 1]<br>
+        EffCon  = [(PV− + PV+) − 2×PV₀] / ((ΔCurve)² × PV₀)      [Eq. 2]<br>
+        %ΔPV^Full ≈ (−EffDur × ΔCurve) + [½ × EffCon × (ΔCurve)²] [Eq. 3]<br><br>
+        KEY: PV+/PV− from option pricing model (not simple discounting)<br>
+        KEY: ΔCurve = benchmark par curve shift (not bond's own YTM change)<br><br>
+
+        ═══ CALLABLE BOND ═══<br>
+        High yields: EffDur ≈ non-callable; EffCon positive<br>
+        Low yields:  EffDur LOWER than non-callable; EffCon → NEGATIVE<br>
+        Always priced BELOW non-callable (call option held by issuer)<br><br>
+
+        ═══ PUTABLE BOND ═══<br>
+        Low yields:  EffDur ≈ non-putable; EffCon positive<br>
+        High yields: EffDur LOWER than non-putable; EffCon still POSITIVE (always)<br>
+        Always priced ABOVE non-putable (put option held by investor)<br><br>
+
+        ═══ KEY RATE DURATION ═══<br>
+        KeyRateDur_k = −(1/PV) × (ΔPV/Δr_k)                       [Eq. 4]<br>
+        Σ KeyRateDur_k = EffDur                                      [Eq. 5]<br>
+        %ΔPV/PV = −KeyRateDur_k × Δr_k                              [Eq. 6]<br>
+        Portfolio KRD_k = Σ (w_i × KRD_k,i)<br><br>
+
+        ═══ EMPIRICAL vs. ANALYTICAL ═══<br>
+        Analytical: formula-based; assumes yields and spreads uncorrelated<br>
+        Empirical: historical data; accounts for yield-spread correlation<br>
+        Negative correlation (crisis): empirical &lt; analytical for corporate bonds<br>
+        Flight to quality: govt yields fall + credit spreads widen simultaneously<br><br>
+
+        ═══ MODDUR vs. EFFDUR ═══<br>
+        Not equal for option-free bonds (except flat yield curve)<br>
+        BRWA example: ModDur=4.587, EffDur=4.816<br>
+        Gap smaller when: curve flatter, shorter maturity, bond near par
+      </div>
+      <div class="note">
+        <strong>The key exam distinction between yield-based and curve-based measures:</strong><br>
+        Yield-based (ModDur, PVBP): sensitivity to bond's OWN yield. Assumes certain CFs. Not valid for bonds with options.<br>
+        Curve-based (EffDur, KRD): sensitivity to BENCHMARK curve shift. Works with uncertain CFs. Valid for all bonds. Requires ΔCurve (not ΔYield) in denominator and option-model prices for PV+/PV−.<br><br>
+        <strong>The key exam distinction between EffDur and KRD:</strong><br>
+        EffDur: ALL benchmark yields shift simultaneously (parallel). One number characterizes full sensitivity.<br>
+        KRD: ONLY the k-th benchmark yield shifts. A vector of numbers characterizes shape sensitivity. Σ KRD = EffDur always.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 13: Curve-Based and Empirical Fixed-Income Risk Measures · Exam Prep Notes
+</footer>
+
+</body>
+</html>

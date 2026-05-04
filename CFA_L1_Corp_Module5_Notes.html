@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Corporate Issuers | Module 5: Capital Investments and Capital Allocation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --card: #1a1e28;
+    --border: #252a38;
+    --accent: #c9a84c;
+    --accent2: #4c8bc9;
+    --accent3: #4cc98a;
+    --danger: #c94c4c;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tip-bg: #1a2218;
+    --tip-border: #4cc98a;
+    --warn-bg: #221a18;
+    --warn-border: #c94c4c;
+    --formula-bg: #12151f;
+    --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #13161c 40%, #101520 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative; overflow: hidden;
+  }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 680px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; cursor: pointer; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Decision rule boxes */
+  .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+  .decision-box { border-radius: 6px; padding: 14px 18px; text-align: center; }
+  .decision-invest { background: rgba(76,201,138,0.12); border: 1px solid rgba(76,201,138,0.3); }
+  .decision-invest .rule { font-size: 18px; font-weight: 700; color: var(--accent3); font-family: 'JetBrains Mono', monospace; }
+  .decision-invest .cond { font-size: 12px; color: var(--accent3); margin-top: 4px; }
+  .decision-avoid { background: rgba(201,76,76,0.12); border: 1px solid rgba(201,76,76,0.3); }
+  .decision-avoid .rule { font-size: 18px; font-weight: 700; color: var(--danger); font-family: 'JetBrains Mono', monospace; }
+  .decision-avoid .cond { font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · CORPORATE ISSUERS · MODULE 5</div>
+  <h1>Capital Investments &amp;<br><span>Capital Allocation</span></h1>
+  <p>Exam-ready notes covering capital investment types, the 4-step allocation process, NPV/IRR/ROIC formulas and decision rules, allocation principles and pitfalls, and real options.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Capital Investment Types</a>
+  <a class="toc-item" href="#s2">02 · Accounting for Capex</a>
+  <a class="toc-item" href="#s3">03 · Capital Allocation Process</a>
+  <a class="toc-item" href="#s4">04 · NPV</a>
+  <a class="toc-item" href="#s5">05 · IRR</a>
+  <a class="toc-item" href="#s6">06 · NPV vs. IRR</a>
+  <a class="toc-item" href="#s7">07 · ROIC</a>
+  <a class="toc-item" href="#s8">08 · Allocation Principles</a>
+  <a class="toc-item" href="#s9">09 · Cognitive Pitfalls</a>
+  <a class="toc-item" href="#s10">10 · Behavioral Pitfalls</a>
+  <a class="toc-item" href="#s11">11 · Real Options</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: CAPITAL INVESTMENT TYPES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Types of Capital Investments</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Capital Investment (Capital Project)</div>
+      <div class="def-body">An investment with a life of <strong>one year or longer</strong>, typically appearing on the balance sheet as a long-term asset. Not limited to tangible assets (property, equipment) — increasingly includes digital capabilities and other <strong>intangible assets</strong>. All principles apply regardless of asset type because the focus is on <strong>cash flows</strong>.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Purpose</th>
+            <th>Examples</th>
+            <th>Risk Level</th>
+            <th>Key Characteristic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Going Concern (Maintenance)</td>
+            <td>Maintain existing operations / current size</td>
+            <td>Replacing aging equipment, maintaining IT hardware/software, facility improvements</td>
+            <td><span class="tag tag-green">Lower</span></td>
+            <td>Involves replication of existing operations; easier to evaluate; match funding used</td>
+          </tr>
+          <tr>
+            <td>Regulatory / Compliance</td>
+            <td>Meet required rules and standards</td>
+            <td>Pollution reduction equipment, bank reporting systems for regulators</td>
+            <td><span class="tag tag-yellow">Low–Moderate</span></td>
+            <td>Non-discretionary; usually increases costs with no added revenue; can act as barrier to entry for incumbents</td>
+          </tr>
+          <tr>
+            <td>Expansion of Existing Business</td>
+            <td>Increase scale / scope of existing operations</td>
+            <td>New production facility, entering new region, adjacent product launch, pharma R&amp;D, energy exploration</td>
+            <td><span class="tag tag-yellow">Moderate</span></td>
+            <td>Greater uncertainty, time, and capital than going concern; execution risks; early-stage firms use equity</td>
+          </tr>
+          <tr>
+            <td>New Lines of Business / Other</td>
+            <td>Enter entirely new or unrelated business areas</td>
+            <td>Startup-like R&amp;D, acquisition in new industry, novel business model</td>
+            <td><span class="tag tag-red">Highest</span></td>
+            <td>Unfamiliar business; risk of overpaying; unforeseen challenges; special situation opportunities</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Going Concern — Key Details</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Match funding principle:</strong> Finance long-term assets with long-term financing (e.g., 30-year bond for 30-year equipment). Funding long-term assets with short-term debt → <strong>rollover risk</strong> (uncertain financing cost or availability before asset life ends).</li>
+        <li><strong>Maintenance Capex estimation:</strong> Issuers do NOT have to disclose the breakdown between maintenance and expansion capex. Analysts typically estimate: <span class="highlight">Maintenance Capex ≈ Depreciation &amp; Amortization expense</span>. More accurate for shorter-lived assets.</li>
+        <li><strong>Expansion Capex ≈ Total Capex − Depreciation &amp; Amortization</strong></li>
+      </ul>
+    </div>
+
+    <h3>Regulatory / Compliance — Key Details</h3>
+    <div class="card">
+      <ul>
+        <li>Increases expenses but often adds no revenue — required to <strong>avoid fines or continue operations</strong></li>
+        <li><strong>Silver lining:</strong> Can act as a <strong>barrier to entry</strong> for new competitors → protects incumbent profitability</li>
+        <li>Firms working directly with regulators may tailor timing/impact to their advantage</li>
+        <li>Some costs can be passed on to end users as higher prices; otherwise, may make a business unit unviable → potential divestiture</li>
+        <li><strong>Early adoption</strong> of new rules can reduce future uncertainty and create competitive advantage</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Analyst Use — Segmenting Capex</div>
+      <p>By subtracting D&amp;A from total capex (disclosed on the cash flow statement), analysts can <strong>estimate expansion capex</strong> and assess management's growth priorities and investment trends. Examine the level AND trend of expansion capex by segment if disclosed — rising capex with falling returns on investment is a red flag for capital misallocation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: ACCOUNTING FOR CAPEX -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Accounting Treatment of Capital Investments</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">How Capital Investments Flow Through Financial Statements</div>
+      <div class="f">
+        At purchase → Balance Sheet: recorded at COST as Long-term Asset<br>
+        Income Statement: NOT expensed immediately → instead, DEPRECIATION/AMORTIZATION recorded periodically over useful life<br>
+        Cash Flow Statement: Full cash outflow recorded AS INCURRED (in investing activities)<br><br>
+        Over time → Balance Sheet: shown at NET basis = Cost − Accumulated Depreciation<br>
+        Net value declines to ZERO (or salvage value) over the asset's useful life
+      </div>
+      <div class="note">This "smoothing" effect means capital spending impacts the income statement gradually (via D&amp;A) but hits cash flows immediately. This is why analysts use FCF and ROIC — not just net income — to assess capital efficiency.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Capex Is NOT on the Income Statement</div>
+      <p>Capital expenditure is capitalized on the balance sheet and then depreciated over time — it is NOT expensed on the income statement when incurred. Only the periodic depreciation charge flows through the income statement. This is a fundamental accounting distinction tested early and often.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: CAPITAL ALLOCATION PROCESS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The Capital Allocation Process — 4 Steps</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Capital allocation</strong> = the process used by management and the board to make capital investment and return decisions. The goal: deliver <strong>risk-adjusted returns greater than what investors could earn on similarly risky investments elsewhere</strong> (i.e., exceed the opportunity cost of capital).</p>
+      <p style="margin-top:8px;">When value-creative opportunities are exhausted → <strong>return remaining capital to shareholders</strong> so they can redeploy it at their required rate of return.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>What Happens</th>
+            <th>Key Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Idea Generation</td>
+            <td>Investment ideas originate (anywhere — managers, consultants, strategic review)</td>
+            <td>Requires deep understanding of competitive environment, firm capabilities. Ideas often expand existing scale/scope. Capital spending is highly year-to-year correlated (0.92 correlation per McKinsey study) → inertia bias.</td>
+          </tr>
+          <tr>
+            <td>2. Investment Analysis</td>
+            <td>Forecast amount, timing, duration, and volatility of expected cash flows; evaluate using NPV, IRR, ROIC</td>
+            <td>Management uses non-public project-level data; analysts use aggregated financials (ROIC). NPV and IRR are key tools at this stage.</td>
+          </tr>
+          <tr>
+            <td>3. Planning and Prioritization</td>
+            <td>Select and prioritize investments that are most value-enhancing on a risk-adjusted basis</td>
+            <td>Only pursue investments with expected returns &gt; investors' opportunity cost. Some projects attractive in isolation may be less desirable in context of existing operations or other projects.</td>
+          </tr>
+          <tr>
+            <td>4. Monitoring and Post-Investment Review</td>
+            <td>Track actual performance vs. projections; make adjustments (real options)</td>
+            <td>Reveals systematic forecasting errors; enforces operational discipline; generates future investment ideas. Scale down or divest underperforming assets. Most firms do this poorly — one of the biggest sources of long-term value destruction.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Analyst Implication — Track Record Is Everything</div>
+      <p>Analysts cannot access project-level NPV/IRR data. Instead, they must <strong>judge whether an issuer will manage capital wisely over the long term</strong> by: (1) evaluating the capital allocation process itself and adherence to first principles, and (2) assessing the <strong>historical track record of capital allocation</strong> (ROIC vs. required return over multiple years).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: NPV -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Net Present Value (NPV)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Net Present Value (NPV)</div>
+      <div class="def-body">The present value (in currency terms) of all expected future after-tax cash inflows from a project, <strong>less</strong> the investment's costs (cash outflows). It measures the <strong>amount by which investors' wealth increases</strong> from the investment.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ NPV Formula</div>
+      <div class="f">NPV = CF₀ + CF₁/(1+r)¹ + CF₂/(1+r)² + ... + CFₜ/(1+r)ᵀ<br><br>NPV = Σ [CFₜ / (1+r)ᵀ] for t = 0 to T</div>
+      <div class="note">
+        CFₜ = After-tax cash flow at time t (CF₀ is typically negative = initial outlay)<br>
+        r = Required rate of return = rate investors could earn on a similarly risky investment<br>
+        Positive cash flows in later periods are discounted back to present value<br>
+        NPV is expressed in currency (e.g., USD, EUR) — it is an absolute, not relative, measure
+      </div>
+    </div>
+
+    <div class="decision-grid">
+      <div class="decision-box decision-invest">
+        <div class="rule">INVEST if NPV ≥ 0</div>
+        <div class="cond">Positive NPV → increases shareholder wealth<br>NPV = 0 → meets required return (acceptable, but no margin for error)</div>
+      </div>
+      <div class="decision-box decision-avoid">
+        <div class="rule">DO NOT INVEST if NPV &lt; 0</div>
+        <div class="cond">Negative NPV → destroys shareholder wealth</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key NPV properties and nuances:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>NPV is a <strong>necessary but not sufficient</strong> condition — there may be competing projects, intangible factors, strategic considerations</li>
+        <li><strong>Assumes interim cash flows reinvested at r</strong> (the required rate of return) — more economically realistic than IRR's assumption</li>
+        <li>Unconventional cash flows (multiple outflows at different points) → use <strong>XNPV function</strong> in Excel/Sheets (does not assume evenly spaced periods)</li>
+        <li>NPV directly measures wealth creation in <strong>absolute currency terms</strong> — theoretically the most sound metric</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — NPV = 0 Is Acceptable</div>
+      <p>A zero-NPV project <em>theoretically</em> meets the required rate of return and can be accepted — but it leaves no margin for forecasting error. In practice, firms want positive NPV cushion. Do not confuse "NPV = 0 → reject" with "NPV &lt; 0 → reject." Only strictly negative NPV projects should be rejected.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: IRR -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Internal Rate of Return (IRR)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Internal Rate of Return (IRR)</div>
+      <div class="def-body">The discount rate that makes the <strong>NPV of an investment equal to zero</strong>. It is an estimate of the project's rate of return (subject to the reinvestment assumption). The required rate of return used as the comparison is called the <strong>hurdle rate</strong>.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ IRR Formula (Solve for IRR where NPV = 0)</div>
+      <div class="f">Σ [CFₜ / (1+IRR)ᵀ] = 0, for t = 0 to T</div>
+      <div class="note">IRR cannot typically be solved algebraically — requires financial calculator, trial-and-error, or spreadsheet (IRR/XIRR functions). XIRR used when cash flows are not evenly spaced.</div>
+    </div>
+
+    <div class="decision-grid">
+      <div class="decision-box decision-invest">
+        <div class="rule">INVEST if IRR ≥ r</div>
+        <div class="cond">IRR exceeds hurdle rate → project earns more than required return</div>
+      </div>
+      <div class="decision-box decision-avoid">
+        <div class="rule">DO NOT INVEST if IRR &lt; r</div>
+        <div class="cond">Project does not meet the required rate of return</div>
+      </div>
+    </div>
+
+    <h3>Critical IRR Limitations</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">1. Reinvestment Rate Assumption</div>
+        <p>IRR assumes interim cash flows are reinvested at the <strong>IRR itself</strong>. If actual reinvestment rates are lower, the true return will be lower than IRR suggests. NPV's assumption (reinvest at r) is more economically realistic.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">2. Multiple IRRs</div>
+        <p>If cash flow <strong>signs change more than once</strong> (e.g., negative → positive → negative), <strong>multiple valid IRRs</strong> exist. Financial calculators/spreadsheets default to lowest value — misleading. In such cases, use NPV instead.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Multiple IRR Example — Cash Flow Sign Changes Twice</div>
+      <div class="f">
+        t=0: −1,000 | t=1: +5,000 | t=2: −6,000<br><br>
+        Two valid IRRs: 100% and 200% — both satisfy the IRR equation<br>
+        → Cannot use IRR reliably; must use NPV instead
+      </div>
+      <div class="note">Whenever you see cash flows going from negative to positive to negative again (or any pattern with multiple sign changes), default to NPV for the investment decision.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Practitioners Like IRR</div>
+      <p>IRR is expressed as a percentage — easier to communicate. "The project returns 19.5% vs. our 10% hurdle rate" is more intuitive than "NPV = $42,000." But despite its communication advantage, NPV is theoretically superior. In practice: compute both, use NPV for the decision.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: NPV vs. IRR -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>NPV vs. IRR — When They Conflict</h2>
+    </div>
+
+    <div class="card">
+      <p>NPV and IRR usually give the same accept/reject decision. BUT for <strong>mutually exclusive projects</strong> (can only choose one), they can give conflicting rankings.</p>
+      <p style="margin-top:10px;"><strong>Example:</strong> Project A has NPV = $500K, IRR = 12%. Project B has NPV = $300K, IRR = 18%. Hurdle rate = 10%.</p>
+      <p style="margin-top:8px;">IRR says: choose B (higher %). NPV says: choose A (adds more wealth). <strong>Choose A — NPV is correct.</strong></p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>NPV</th>
+            <th>IRR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>What it measures</td>
+            <td>Absolute wealth increase (currency)</td>
+            <td>Rate of return on the project (%)</td>
+          </tr>
+          <tr>
+            <td>Decision rule</td>
+            <td>Invest if NPV ≥ 0</td>
+            <td>Invest if IRR ≥ hurdle rate (r)</td>
+          </tr>
+          <tr>
+            <td>Reinvestment assumption</td>
+            <td>Interim flows reinvested at r (more realistic)</td>
+            <td>Interim flows reinvested at IRR (often unrealistic)</td>
+          </tr>
+          <tr>
+            <td>Multiple sign changes</td>
+            <td><span class="tag tag-green">Handles correctly</span></td>
+            <td><span class="tag tag-red">Multiple IRRs possible → unreliable</span></td>
+          </tr>
+          <tr>
+            <td>Mutually exclusive projects</td>
+            <td><span class="tag tag-green">Always choose higher NPV</span></td>
+            <td>May conflict with NPV — do NOT rely on IRR</td>
+          </tr>
+          <tr>
+            <td>Ease of communication</td>
+            <td>Less intuitive (currency amount)</td>
+            <td>More intuitive (% rate)</td>
+          </tr>
+          <tr>
+            <td>Theoretical soundness</td>
+            <td><span class="tag tag-green">Theoretically superior</span></td>
+            <td>Useful but with key limitations</td>
+          </tr>
+          <tr>
+            <td>Analyst access</td>
+            <td>Not calculable from public data (project-level)</td>
+            <td>Not calculable from public data (project-level)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ CRITICAL — When NPV and IRR Conflict, Always Use NPV</div>
+      <p>This is one of the most tested points in this module. For mutually exclusive projects, <strong>NPV is always the correct decision criterion</strong>. IRR ignores the scale of investment and the period over which returns are earned. A small project with a very high IRR can appear more attractive than a large project with a slightly lower IRR but far greater wealth creation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: ROIC -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Return on Invested Capital (ROIC)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">ROIC (Return on Invested Capital / Return on Capital Employed / ROCE)</div>
+      <div class="def-body">A company-wide profitability measure showing the rate of return the issuer earns across <strong>all its investments</strong>. Measured annually. Can be calculated using <strong>publicly available financial data</strong> — making it the key metric available to independent analysts (unlike project-level NPV/IRR).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ ROIC Formula</div>
+      <div class="f">
+        ROIC = After-tax Operating Profit / Average Invested Capital<br><br>
+        = [(1 − Tax rate) × Operating Profit] / Average Total LT Liabilities and Equity (t−1, t)<br><br>
+        Decomposed:<br>
+        ROIC = (After-tax Operating Profit / Sales) × (Sales / Average Invested Capital)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= After-tax Operating Profit Margin × Capital Turnover
+      </div>
+      <div class="note">
+        Invested Capital = Long-term liabilities + Equity (excludes short-term liabilities/working capital)<br>
+        From balance sheet: Invested Capital = Short-term Assets + Long-term Assets (less Short-term Liabilities)<br>
+        Use AVERAGE invested capital (average of beginning and ending balance)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ROIC Decomposition — Two Paths to Value Creation</div>
+      <p>ROIC = <strong>Profit Margin × Capital Turnover</strong>. A firm can achieve high ROIC through high margins (e.g., luxury brands) OR high turnover (e.g., discount retailers like Walmart). A high-margin firm with low turnover may have low ROIC. A low-margin firm with very high turnover may have excellent ROIC. This decomposition is powerful for comparing business models.</p>
+    </div>
+
+    <h3>ROIC Decision Rule</h3>
+    <div class="decision-grid">
+      <div class="decision-box decision-invest">
+        <div class="rule">ROIC &gt; Required Return</div>
+        <div class="cond">Issuer is creating value for investors — good capital steward</div>
+      </div>
+      <div class="decision-box decision-avoid">
+        <div class="rule">ROIC &lt; Required Return</div>
+        <div class="cond">Investors would have been better off elsewhere → improve margins/turnover, divest, or return capital</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Required return for ROIC comparison:</strong> ROIC measures returns to both debt AND equity investors. Compare to a <strong>blended required return (WACC)</strong> — not just equity's required return (which would overestimate the benchmark). Covered in the next module.</p>
+    </div>
+
+    <h3>ROIC Advantages vs. Limitations</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">ROIC Advantages</div>
+        <ul>
+          <li>Calculable from <strong>public financial data</strong> (unlike project NPV/IRR)</li>
+          <li>Accounts for the <strong>capital needed</strong> to generate returns (unlike operating profit margin alone)</li>
+          <li>Company-wide aggregate → reflects management's overall capital stewardship</li>
+          <li>Can be compared directly to required rate of return (WACC)</li>
+          <li>Decomposes into margin × turnover → reveals business model drivers</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">ROIC Limitations</div>
+        <ul>
+          <li><strong>Accounting-based, not cash-based</strong> — operating profit ≠ cash flows; D&amp;A vs. capex timing differences distort</li>
+          <li><strong>Backward-looking</strong> — can be volatile year-to-year; profitable investments may take years to earn competitive returns</li>
+          <li><strong>Highly aggregated</strong> — may mask profitable OR unprofitable business segments</li>
+          <li>Less consensus on measurement (especially denominator — treatment of intangibles, excess cash, pension liabilities varies)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: ALLOCATION PRINCIPLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Capital Allocation Principles</h2>
+    </div>
+
+    <div class="card">
+      <p>Even with the right tools, capital allocation can fail if key principles are violated. Three fundamental principles must be followed when modeling investment cash flows:</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">1. After-Tax Cash Flows</div>
+        <p>Evaluate investments based on <strong>after-tax cash flows</strong>, not accounting profits. Must include tax benefits from non-cash deductions like depreciation and amortization (D&amp;A creates a tax shield — reduces taxable income → preserves cash).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">2. Incremental Cash Flows Only — But Broadly</div>
+        <p><strong>Ignore sunk costs</strong> (already incurred — irrelevant to future decisions). Include <strong>only incremental</strong> cash flows. BUT examine broadly — capital investments affect the rest of the firm: include <em>positive</em> effects (cost savings) AND <em>negative</em> effects (cannibalization of existing product sales).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">3. Timing of Cash Flows</div>
+        <p>The <strong>timing</strong> of cash flows matters significantly. NPV and IRR can change substantially when cash flows are moved from one period to another. Must carefully forecast the timing, duration, and volatility of all expected flows.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Principle Summary</div>
+      <div class="f">
+        ✓ Use after-tax cash flows (not accounting income)<br>
+        ✓ Ignore sunk costs (already spent — cannot be recovered)<br>
+        ✓ Include ALL incremental effects: positive (savings) AND negative (cannibalization)<br>
+        ✓ Timing matters — when cash flows occur changes NPV and IRR significantly<br>
+        ✓ Nominal CF discounted at nominal rate; real CF discounted at real rate (must be consistent)
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Sunk Cost Trap — The Most Common Mistake</div>
+      <p>Sunk costs are costs <strong>already incurred and unrecoverable</strong>. They must be <strong>completely ignored</strong> in investment decisions. The classic trap: "We've already spent $5M on this project, so we must continue." Wrong. The only question is: do the <em>remaining</em> incremental cash flows justify the remaining incremental investment? Past spending is irrelevant.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: COGNITIVE PITFALLS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Capital Allocation Pitfalls — Cognitive Errors</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Cognitive errors</strong> = calculation mistakes and analytical errors (as opposed to behavioral biases, which are emotional/psychological). Three key cognitive errors in capital allocation:</p>
+    </div>
+
+    <h3>1. Internal Forecasting Errors</h3>
+    <div class="card">
+      <ul>
+        <li>Errors in cost estimates, required return inputs, or other forecasts</li>
+        <li>Overhead costs (management time, IT support, financial systems) are especially difficult to estimate</li>
+        <li>Firms often <strong>fail to incorporate competitor responses</strong> into the analysis of planned investments</li>
+        <li>Hard for external analysts to identify — but will manifest as failed or underperforming investments over time</li>
+      </ul>
+    </div>
+
+    <h3>2. Ignoring the Cost of Internal Financing</h3>
+    <div class="card">
+      <ul>
+        <li>Primary source of large corporate capex = <strong>internally generated cash flows (operating cash flows)</strong></li>
+        <li>Many management teams treat internally generated funds as "free" → allocate them via budgets tied closely to prior-year amounts</li>
+        <li>External financing (debt/equity) treated as "expensive" → used only for larger investments</li>
+        <li><span class="danger-text">This is flawed logic.</span> Internally generated cash is <strong>equity financing</strong> — it could be returned to shareholders as dividends. By retaining it, management incurs shareholders' opportunity cost. <strong>All capital has a cost.</strong></li>
+        <li>Use appropriate risk-adjusted required returns regardless of financing source</li>
+      </ul>
+    </div>
+
+    <h3>3. Inconsistent Treatment of Inflation</h3>
+    <div class="card">
+      <ul>
+        <li>Analysis can be done in <strong>nominal</strong> (includes inflation) or <strong>real</strong> (removes inflation) terms — but must be <strong>consistent</strong></li>
+        <li>Nominal cash flows discounted at <strong>nominal rate</strong>; Real cash flows discounted at <strong>real rate</strong></li>
+        <li>Mixing (e.g., real cash flows with nominal discount rate) produces incorrect NPV</li>
+        <li>Inflation may affect sales prices and input costs differently — if actual inflation differs from expected, after-tax cash flows will differ from projections</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Inflation Consistency Rule</div>
+      <div class="f">
+        Nominal CF → discount at Nominal rate<br>
+        Real CF → discount at Real rate<br><br>
+        Approximate: Real rate ≈ Nominal rate − Inflation rate<br>
+        Exact: (1 + Nominal rate) = (1 + Real rate) × (1 + Inflation rate)
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: BEHAVIORAL PITFALLS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Capital Allocation Pitfalls — Behavioral Biases</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Behavioral biases</strong> = errors in judgment, blind spots, and emotional/psychological distortions (as opposed to calculation mistakes). Four key behavioral biases in capital allocation:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Bias</th>
+            <th>Description</th>
+            <th>How Analysts Detect It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Inertia</td>
+            <td>Capital budgets anchored to prior-year amounts (0.92 correlation year-to-year per McKinsey study of 1,600+ US companies). Management continues investing in the same areas regardless of changing returns.</td>
+            <td>Compare capex by segment/year to prior year AND returns on investment. Rising/static capex + falling ROI = red flag requiring management justification.</td>
+          </tr>
+          <tr>
+            <td>Accounting Measure Focus (EPS-Chasing)</td>
+            <td>Managers optimize for short-term accounting metrics (EPS, net income, ROE) rather than long-term NPV. High-NPV investments can reduce near-term EPS (via D&amp;A); cost cuts and buybacks can boost EPS immediately.</td>
+            <td>Examine management compensation structure (incentives to boost EPS). Compare capex to historical/peer levels — unusually low capex may signal accounting-metric-driven decision-making.</td>
+          </tr>
+          <tr>
+            <td>Pet Project Bias</td>
+            <td>Favored projects receive preferential treatment without rigorous analysis, or analysis is conducted with overly optimistic projections to make the project appear profitable.</td>
+            <td>Examine governance: controlled companies, concentrated ownership, weak board oversight, compensation not aligned with shareholder interests → all increase pet project risk. Hard to detect from financials alone due to aggregation.</td>
+          </tr>
+          <tr>
+            <td>Failure to Consider Alternatives / Scenarios</td>
+            <td>Many viable alternatives never considered; different scenarios (optimistic, base, pessimistic) ignored. No breakeven, scenario, or simulation analysis. Lack of failure experience → management may not be taking enough risk.</td>
+            <td>Assess whether management conducts breakeven and scenario analysis. Check if company has made divestitures or acquisitions (breadth of experience). A track record with no failures may signal insufficient risk-taking.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Inertia — The McKinsey Finding</div>
+      <p>A study of 1,600+ US listed companies found a <strong>0.92 correlation</strong> between capital investment levels from one year to the next. This remarkably high correlation suggests that most firms don't fundamentally rethink their capital allocation annually — they simply anchor to last year's budget. This is one of the largest sources of long-term value destruction in corporate finance.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 No Failures ≠ Good Management</div>
+      <p>A management team with no failed investments may actually be taking <strong>too little risk</strong> — avoiding bold bets that could create substantial shareholder value. Moderate calculated risk-taking with a disciplined post-investment review is healthier than pure loss avoidance.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: REAL OPTIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Real Options</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Real Options</div>
+      <div class="def-body">Rights (but NOT obligations) for management to alter aspects of a capital project in the future, contingent on future economic events or information. Similar to financial options — valuable because they provide flexibility. A company should only <strong>exercise a real option if it is value-enhancing</strong>.</div>
+    </div>
+
+    <div class="card">
+      <p>Real options recognize that capital allocation is often a <strong>series of decisions</strong>, not a single all-or-nothing commitment. Some decisions are made at inception; others can be postponed and based on future information. Real options can <strong>significantly increase project NPV</strong> by adding flexibility value.</p>
+    </div>
+
+    <h3>4 Types of Real Options</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Real Option Type</th>
+            <th>Description</th>
+            <th>Exercise When...</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Timing Option</td>
+            <td>Delay the investment decision to obtain better information. Investing in a project can create the option to make future investments (sequential investment).</td>
+            <td>Future information improves NPV confidence; defer when uncertain.</td>
+            <td>Waiting to build a factory until demand trends are clearer. Phase 1 investment creates the right (not obligation) to proceed to Phase 2.</td>
+          </tr>
+          <tr>
+            <td>Sizing Option — Abandonment</td>
+            <td>Abandon (exit) the investment if financial results disappoint. Exercise when cash flows from abandoning exceed the PV of continuing.</td>
+            <td>PV(cash from abandonment) &gt; PV(cash flows from continuing)</td>
+            <td>Shut down a mine if commodity prices fall below break-even. Terminate a drug development program after failed Phase 2 trials.</td>
+          </tr>
+          <tr>
+            <td>Sizing Option — Growth/Expansion</td>
+            <td>Make additional investments if financial results are strong (i.e., scale up). The initial investment creates the option to expand.</td>
+            <td>Future results exceed expectations → exercise the growth option.</td>
+            <td>Build a pilot plant, then expand to full-scale production if the pilot succeeds. A successful mobile app → invest in international markets.</td>
+          </tr>
+          <tr>
+            <td>Flexibility Option</td>
+            <td>Operational flexibility post-investment: pricing options (raise prices when demand exceeds capacity) or production flexibility (add overtime, extra shifts, change input mix).</td>
+            <td>Demand exceeds capacity (price-setting); demand varies from forecast (production).</td>
+            <td>Raise hotel room prices during peak season. A multi-fuel power plant can switch between gas and oil depending on relative prices.</td>
+          </tr>
+          <tr>
+            <td>Fundamental Option</td>
+            <td>The entire investment value depends on an external variable (often a commodity price) outside the firm's control.</td>
+            <td>Commodity/underlying asset price makes the investment viable.</td>
+            <td>Oil well value depends on oil prices — drill only if prices are high enough. Gold mine value depends on gold prices. R&amp;D value depends on whether a discovery is made.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Valuing Projects with Real Options — 3 Approaches</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:10px;"><strong>Ignore options, accept if NPV &gt; 0:</strong> If the project has positive NPV even without considering options, AND it has real options that could further increase value → the NPV is a <em>minimum</em> return. Safe to accept.</li>
+        <li style="margin-bottom:10px;"><strong>NPV with options formula:</strong>
+          <div style="margin:10px 0; padding:10px 14px; background:var(--formula-bg); border-left:3px solid var(--accent); border-radius:0 4px 4px 0; font-family:'JetBrains Mono',monospace; font-size:13px; color:#e8c97a;">
+            Project NPV = NPV (without options) − Option Cost + Option Value
+          </div>
+          Add option value, subtract option cost. Accept if resulting project NPV &gt; 0.
+        </li>
+        <li style="margin-bottom:10px;"><strong>Decision trees and option pricing models:</strong> Assign probabilities and expected timing to future outcomes → calculate probability-weighted NPV across all scenarios. More complex but more rigorous when future sequential decisions matter.</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Framework — Real Options Add Value = "TSGFF"</div>
+      <p><strong>T</strong>iming · <strong>S</strong>izing (abandon) · <strong>G</strong>rowth (expand) · <strong>F</strong>lexibility · <strong>F</strong>undamental. Each option type adds flexibility in a different dimension: when to invest (timing), whether to exit (abandon), whether to scale (growth), how to operate (flexibility), or whether to proceed at all (fundamental).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>4 capital investment types:</strong> Going Concern (maintenance, low risk), Regulatory/Compliance (mandatory, often cost-only), Expansion of Existing Business (moderate risk), New Lines of Business (highest risk).</li>
+        <li>✅ <strong>Match funding:</strong> Finance long-term assets with long-term debt to avoid rollover risk. Utility example: 30-year bond for 30-year equipment.</li>
+        <li>✅ <strong>Maintenance Capex estimate:</strong> Analysts use D&amp;A ≈ maintenance capex. Expansion capex ≈ Total capex − D&amp;A.</li>
+        <li>✅ <strong>Regulatory projects as barriers to entry:</strong> Can protect incumbent profitability even if they increase costs.</li>
+        <li>✅ <strong>Capex accounting:</strong> Capitalized on balance sheet (NOT expensed immediately). Income statement sees only periodic D&amp;A. Cash flow statement shows full cash outflow when incurred.</li>
+        <li>✅ <strong>4-step capital allocation process:</strong> Idea Generation → Investment Analysis → Planning &amp; Prioritization → Monitoring &amp; Post-Investment Review. Exhausted opportunities → return capital to shareholders.</li>
+        <li>✅ <strong>NPV = Σ [CFₜ / (1+r)ᵀ].</strong> Invest if NPV ≥ 0. Measures WEALTH INCREASE in currency. Theoretically superior metric. Assumes reinvestment at r.</li>
+        <li>✅ <strong>IRR = discount rate where NPV = 0.</strong> Invest if IRR ≥ hurdle rate (r). Assumes reinvestment at IRR (often unrealistic).</li>
+        <li>✅ <strong>Multiple IRRs:</strong> Occur when cash flows change sign more than once. Use NPV in such cases.</li>
+        <li>✅ <strong>Mutually exclusive projects → always pick higher NPV.</strong> IRR can give wrong ranking because it ignores investment scale and duration.</li>
+        <li>✅ <strong>ROIC = After-tax Operating Profit / Average Invested Capital.</strong> Also = Profit Margin × Capital Turnover. Measured annually. Uses public data. Compare to WACC (blended required return).</li>
+        <li>✅ <strong>ROIC &gt; required return → value creation. ROIC &lt; required return → value destruction.</strong></li>
+        <li>✅ <strong>ROIC limitations:</strong> Accounting-based (not cash), backward-looking, highly aggregated (masks segments), no consensus on denominator.</li>
+        <li>✅ <strong>3 capital allocation principles:</strong> (1) After-tax cash flows (2) Incremental cash flows only — ignore sunk costs, but include ALL effects including negative externalities on existing products (3) Timing matters.</li>
+        <li>✅ <strong>Nominal/real consistency:</strong> Nominal CF → nominal rate. Real CF → real rate. Mixing them corrupts NPV.</li>
+        <li>✅ <strong>3 cognitive errors:</strong> Internal forecasting errors · Ignoring cost of internal capital (it IS equity capital — has opportunity cost) · Inconsistent inflation treatment.</li>
+        <li>✅ <strong>4 behavioral biases:</strong> Inertia (0.92 YoY capex correlation) · EPS-chasing · Pet project bias · Failure to consider alternatives/scenarios.</li>
+        <li>✅ <strong>Internal capital is NOT free.</strong> Cash from operations = withheld equity — must be evaluated at the same risk-adjusted required return as external equity.</li>
+        <li>✅ <strong>4 real option types:</strong> Timing (delay) · Sizing — Abandonment (exit if disappointing) · Sizing — Growth (expand if strong) · Flexibility (operational) · Fundamental (contingent on external variable like commodity price).</li>
+        <li>✅ <strong>Real option valuation:</strong> Project NPV = NPV (without options) − Option Cost + Option Value. If NPV already positive without options → accept; options only make it better.</li>
+        <li>✅ <strong>Real options provide the RIGHT, not obligation,</strong> to take an action. Exercise only if value-enhancing.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        NPV = Σ [CFₜ / (1+r)ᵀ] → Invest if NPV ≥ 0<br>
+        IRR: Σ [CFₜ / (1+IRR)ᵀ] = 0 → Invest if IRR ≥ r (hurdle rate)<br>
+        Conflict: NPV wins for mutually exclusive projects<br><br>
+        ROIC = After-tax Operating Profit / Avg Invested Capital<br>
+             = (After-tax Op. Profit / Sales) × (Sales / Avg Invested Capital)<br>
+             = Profit Margin × Capital Turnover<br>
+        ROIC &gt; WACC → value creation | ROIC &lt; WACC → value destruction<br><br>
+        Maintenance Capex ≈ D&amp;A | Expansion Capex ≈ Total Capex − D&amp;A<br><br>
+        Project NPV (with real options) = NPV (base) − Option Cost + Option Value
+      </div>
+      <div class="note">NPV and ROIC are the two most formula-intensive concepts in this module. Know their decision rules, assumptions, and limitations cold.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Corporate Issuers · Module 5: Capital Investments and Capital Allocation · Exam Prep Notes
+</footer>
+
+</body>
+</html>

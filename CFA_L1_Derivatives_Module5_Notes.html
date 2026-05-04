@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 5: Pricing and Valuation of Forward Contracts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --gain-bg: #111a16; --gain-border: #4cc98a;
+    --loss-bg: #1a1010; --loss-border: #c94c4c;
+    --rate-bg: #1a1510; --rate-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .gain-card { background: var(--gain-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .gain-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .loss-card { background: var(--loss-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .loss-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rate-card { background: var(--rate-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .rate-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 5</div>
+  <h1>Pricing &amp; Valuation of Forward Contracts and <span>Underlying with Varying Maturities</span></h1>
+  <p>Exam-ready notes: forward contract value at initiation (zero), at maturity (settlement payoff), and during the life (MTM formula with and without cost of carry); FX forward MTM; bootstrapping spot rates from coupon bonds; discount factors; implied forward rates (IFR); forward rate notation; and Forward Rate Agreements (FRAs) — mechanics, settlement, and uses.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Price vs. Value — The Key Distinction</a>
+  <a class="toc-item" href="#s2">02 · Value at Initiation (V₀ = 0)</a>
+  <a class="toc-item" href="#s3">03 · Value at Maturity</a>
+  <a class="toc-item" href="#s4">04 · MTM Value During the Life (Eq. 5)</a>
+  <a class="toc-item" href="#s5">05 · MTM with Cost of Carry (Eq. 7)</a>
+  <a class="toc-item" href="#s6">06 · FX Forward MTM (Eq. 9)</a>
+  <a class="toc-item" href="#s7">07 · Spot Rates &amp; Bootstrapping</a>
+  <a class="toc-item" href="#s8">08 · Discount Factors</a>
+  <a class="toc-item" href="#s9">09 · Implied Forward Rates (IFR)</a>
+  <a class="toc-item" href="#s10">10 · Forward Rate Agreements (FRAs)</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: PRICE vs. VALUE — THE KEY DISTINCTION     -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Forward Contract Price vs. Value — The Critical Distinction</h2>
+    </div>
+
+    <div class="card">
+      <p>The single most important conceptual distinction in this module is the difference between the <strong>forward price</strong> and the <strong>forward value</strong>. These are related but fundamentally different concepts:</p>
+    </div>
+
+    <div class="two-col">
+      <div class="rate-card">
+        <div class="rate-title">Forward Price — F₀(T)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>The delivery price <strong>agreed at contract initiation (t=0)</strong></li>
+          <li>Set using the no-arbitrage condition: F₀(T) = S₀(1+r)ᵀ (plus any carry adjustments)</li>
+          <li><strong>Fixed for the entire life of the contract</strong> — it never changes once the contract is entered</li>
+          <li>Ensures the contract has zero value at initiation (no cash changes hands)</li>
+          <li>Determines the basis on which the underlying will be exchanged at maturity</li>
+          <li>Analogous to the "coupon rate" on a bond — set once, stays fixed</li>
+        </ul>
+      </div>
+      <div class="gain-card">
+        <div class="gain-title">Forward Value — Vt(T)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>The <strong>current mark-to-market value</strong> of the forward contract AT ANY TIME t</li>
+          <li>Zero at inception (t=0), then changes over the life of the contract</li>
+          <li>Changes as: (a) spot price S_t moves, (b) time passes (T−t decreases), (c) risk-free rate r changes</li>
+          <li>A positive value = gain for the long position; negative = loss for the long</li>
+          <li>MTM gain for buyer = MTM loss for seller (zero-sum)</li>
+          <li>Analogous to the market price of a bond — changes daily</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Core Distinction — Price vs. Value</div>
+      <div class="f">
+        FORWARD PRICE: F₀(T) — Set at t=0 using no-arbitrage. FIXED forever.<br>
+        Formula: F₀(T) = S₀(1+r)ᵀ [or with cost of carry adjustments]<br><br>
+        FORWARD VALUE: Vt(T) — Changes continuously over the contract's life.<br>
+        At t=0: V₀(T) = 0 (zero by construction — no cash changes hands at initiation)<br>
+        At t=T: VT(T) = S_T − F₀(T) [from long/buyer perspective]<br>
+        At t (0&lt;t&lt;T): Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾ [from long perspective]<br><br>
+        KEY: The forward PRICE is the agreed delivery price (fixed).<br>
+             The forward VALUE is the current worth of holding that agreement (variable).
+      </div>
+      <div class="note">
+        For futures contracts: the daily MTM settles the forward value to zero each day (via margin accounts). For OTC forward contracts: the MTM value accumulates until settlement at maturity (or is collateralized via credit support agreements). This is the key difference between futures (daily settlement) and forwards (single settlement at maturity).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward Price vs. Forward Value — Bond Analogy</div>
+      <p><strong>Forward price</strong> is like a bond's coupon rate — fixed at issuance, never changes.<br>
+      <strong>Forward value</strong> is like a bond's market price — changes every day based on market conditions (interest rates, credit risk).<br>
+      A bond's coupon rate stays at 5% even when the bond trades at 95 in the market. Similarly, the forward price F₀(T) stays fixed even when the current value of the forward contract fluctuates between positive and negative as market conditions evolve.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: VALUE AT INITIATION                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Value at Initiation — V₀(T) = 0</h2>
+    </div>
+
+    <div class="card">
+      <p>At contract initiation (t = 0), the forward price is set at F₀(T) = S₀(1+r)ᵀ — the no-arbitrage price. By construction, this forward price makes the contract <strong>neither an asset nor a liability</strong> to either party. No cash changes hands at initiation.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Forward Contract Value at Initiation</div>
+      <div class="f">V₀(T) = 0</div>
+      <div class="note">
+        <strong>Why is it zero?</strong> The forward price F₀(T) is specifically chosen so that the expected gain of one party exactly equals the expected loss of the other party — in present value terms. There is no advantage to either side at initiation, so neither would pay anything to enter the contract.<br><br>
+        <strong>AMY Investments example:</strong> S₀ = €29.70, r = 1%, T = 1 year → F₀(T) = €29.70 × (1.01)¹ = €30. This €30 forward price makes V₀(T) = 0 for both AMY (buyer) and the financial intermediary (seller).<br><br>
+        <strong>Important:</strong> While V₀(T) = 0, the forward price F₀(T) is NOT zero — it is the future value of the spot price.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Common Confusion — Zero Value ≠ Zero Price</div>
+      <p>V₀(T) = 0 means the <strong>value</strong> of the forward CONTRACT is zero at initiation — not the forward PRICE itself. The forward price F₀(T) = $1,792.13 in the gold example — that's definitely not zero. The contract is free to enter (no premium, no payment) but the agreed delivery price is above zero. Never confuse these two: the price (what you'll pay at maturity) and the value (what the contract is worth today).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: VALUE AT MATURITY                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Value at Maturity — VT(T)</h2>
+    </div>
+
+    <div class="card">
+      <p>At maturity (t = T), the forward contract is settled. The value equals the settlement amount — the difference between the spot price and the agreed forward price.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Forward Contract Value at Maturity</div>
+      <div class="f">
+        Long (Buyer): VT(T) = S_T − F₀(T)<br>
+        Short (Seller): VT(T) = F₀(T) − S_T
+      </div>
+      <div class="note">
+        S_T = spot price at maturity | F₀(T) = agreed forward price (fixed at inception)<br><br>
+        Long gains when S_T &gt; F₀(T) — they buy at a below-market price<br>
+        Short gains when S_T &lt; F₀(T) — they sell at an above-market price<br>
+        Zero-sum: Long gain = Short loss (and vice versa)
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Outcome</th><th>Long (Buyer) VT(T)</th><th>Short (Seller) VT(T)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S_T &gt; F₀(T)</td><td><span class="tag tag-green">S_T − F₀(T) &gt; 0 (Gain)</span></td><td><span class="tag tag-red">F₀(T) − S_T &lt; 0 (Loss)</span></td></tr>
+          <tr><td>S_T &lt; F₀(T)</td><td><span class="tag tag-red">S_T − F₀(T) &lt; 0 (Loss)</span></td><td><span class="tag tag-green">F₀(T) − S_T &gt; 0 (Gain)</span></td></tr>
+          <tr><td>S_T = F₀(T)</td><td>Zero</td><td>Zero</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Worked Example — VFO Biomian Forward at Maturity</h3>
+
+    <div class="auction-box">
+      <div class="label">VFO sells Biomian forward at F₀(T) = INR300.84 per share (VFO = short position)</div>
+      <div class="f">
+        Case 1: S_T = INR287<br>
+        Long (Financial Intermediary): VT(T) = 287 − 300.84 = −INR13.84 (loss)<br>
+        Short (VFO): VT(T) = 300.84 − 287 = +INR13.84 (gain) ← VFO sells above market!<br><br>
+        Case 2: S_T = INR312<br>
+        Long (Financial Intermediary): VT(T) = 312 − 300.84 = +INR11.16 (gain)<br>
+        Short (VFO): VT(T) = 300.84 − 312 = −INR11.16 (loss) ← VFO sells below market
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: MTM VALUE DURING THE LIFE (Eq. 5)         -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>MTM Value During the Life of the Contract — Equation 5</h2>
+    </div>
+
+    <div class="card">
+      <p>Between inception and maturity (0 &lt; t &lt; T), the forward contract's MTM value reflects the current spot price minus the present value of the forward price discounted for the remaining time to maturity. As time passes and S_t changes, the MTM value fluctuates continuously.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 5 — Forward Contract MTM Value at Time t (No Additional Carry)</div>
+      <div class="f">
+        Long (Buyer): Vt(T) = S_t − F₀(T) × (1 + r)⁻⁽ᵀ⁻ᵗ⁾<br><br>
+        Short (Seller): Vt(T) = F₀(T) × (1 + r)⁻⁽ᵀ⁻ᵗ⁾ − S_t
+      </div>
+      <div class="note">
+        <strong>S_t</strong> = spot price of underlying at time t (current market price)<br>
+        <strong>F₀(T)</strong> = forward price (FIXED at contract inception — does not change)<br>
+        <strong>(1+r)⁻⁽ᵀ⁻ᵗ⁾</strong> = discount factor for remaining time (T−t) until maturity<br>
+        <strong>F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</strong> = present value of the forward price at time t<br><br>
+        <strong>Intuition:</strong> The long position is "worth" the current spot price (S_t) minus the present value of what they must pay at maturity (PV of F₀(T)). The higher S_t relative to PV(F₀(T)), the more valuable the long position.<br><br>
+        <strong>Note at t=0:</strong> PV of F₀(T) = F₀(T)(1+r)⁻ᵀ = S₀ (by no-arbitrage), so Vt(T) = S₀ − S₀ = 0 ✓<br>
+        <strong>Note at t=T:</strong> (1+r)⁰ = 1, so Vt(T) = S_T − F₀(T) ✓ (reduces to Equation 2)
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Condition at time t</th><th>Long Position MTM</th><th>Short Position MTM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S_t &gt; F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</td><td><span class="tag tag-green">MTM Gain</span></td><td><span class="tag tag-red">MTM Loss</span></td></tr>
+          <tr><td>S_t &lt; F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</td><td><span class="tag tag-red">MTM Loss</span></td><td><span class="tag tag-green">MTM Gain</span></td></tr>
+          <tr><td>S_t = F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</td><td>Zero MTM</td><td>Zero MTM</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Worked Examples — VFO Biomian MTM</h3>
+
+    <div class="auction-box">
+      <div class="label">Setup: F₀(T) = INR300.84, r = 4%, T = 0.5 (6 months). VFO = short position.</div>
+      <div class="f">
+        Example 2: Instantaneous price jump at t=0 to S_t = INR325<br>
+        [At t=0: (T−t) = T = 0.5, so (1+r)⁻⁽ᵀ⁻ᵗ⁾ reduces to (1+r)⁻ᵀ and F₀(T)(1+r)⁻ᵀ = S₀]<br>
+        VFO (Short): Vt(T) = S₀ − S_t = INR295 − INR325 = −INR30 MTM LOSS<br>
+        (Price rose → short position loses)<br><br>
+        Example 3a: 3 months later (t=0.25), S_t = INR285, r = 4%<br>
+        VFO (Short): Vt(T) = F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾ − S_t<br>
+                   = 300.84 × (1.04)⁻⁰·²⁵ − 285<br>
+                   = 300.84 × 0.99020 − 285<br>
+                   = 297.89 − 285<br>
+                   = +INR12.90 MTM GAIN<br><br>
+        Example 3b: Same scenario but r = 8%<br>
+        VFO (Short): Vt(T) = 300.84 × (1.08)⁻⁰·²⁵ − 285<br>
+                   = 300.84 × 0.98148 − 285<br>
+                   = 295.27 − 285<br>
+                   = +INR10.11 MTM GAIN<br><br>
+        Higher r reduces PV(F₀) → reduces short position's MTM gain by INR2.79
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Effect of Risk-Free Rate Change on Forward MTM</div>
+      <p><strong>For the long position (buyer):</strong> Higher risk-free rate → lower PV of F₀(T) → smaller amount to pay in present value terms → MTM value INCREASES (buyer benefits from higher rates).<br>
+      <strong>For the short position (seller):</strong> Higher risk-free rate → lower PV of F₀(T) → smaller amount to receive in present value terms → MTM value DECREASES (seller is hurt by higher rates).<br>
+      Intuition: The short position is "delivering at F₀(T)" — the present value of F₀(T) represents the current worth of what they'll receive. When rates rise, that present value shrinks, reducing the short's gain (or increasing their loss).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: MTM WITH COST OF CARRY (Eq. 7)            -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>MTM Value with Cost of Carry — Equation 7</h2>
+    </div>
+
+    <div class="card">
+      <p>When the underlying has additional costs or benefits of ownership (dividends, storage costs), the MTM formula must be adjusted to reflect the remaining cost of carry between time t and maturity T. The forward price already incorporates these at inception (Eq. 6), but as time passes, the remaining costs/benefits must be updated.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 6 — Forward Price with Cost of Carry (Recap)</div>
+      <div class="f">F₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1 + r)ᵀ</div>
+      <div class="note">PV₀(I) = PV of income/benefits; PV₀(C) = PV of costs. Already established in Module 4.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 7 — MTM Value with Remaining Cost of Carry (Long Position)</div>
+      <div class="f">Vt(T) = [S_t − PVt(I) + PVt(C)] − F₀(T) × (1 + r)⁻⁽ᵀ⁻ᵗ⁾</div>
+      <div class="note">
+        <strong>S_t</strong> = current spot price at time t<br>
+        <strong>PVt(I)</strong> = PV at time t of remaining income/benefits from t to T (e.g., future dividends not yet paid)<br>
+        <strong>PVt(C)</strong> = PV at time t of remaining costs from t to T (e.g., storage costs not yet incurred)<br>
+        <strong>F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾</strong> = PV of the fixed forward price for remaining time<br><br>
+        <strong>Key insight:</strong> Once an income payment is received (dividend paid) or a cost is incurred, it drops out of PVt(I) or PVt(C). The remaining PV only includes future expected carry items from t to T.<br>
+        <strong>Breakeven spot rate St*:</strong> Set Vt(T) = 0 and solve for St → the spot price at which the contract has zero MTM value. This is the "indifference price" for entering or exiting the position.
+      </div>
+    </div>
+
+    <h3>Worked Example — Hightest UL Equity Forward (4 months after inception)</h3>
+
+    <div class="auction-box">
+      <div class="label">Setup: F₀(T) = EUR50.6311/share, quarterly dividend EUR0.30, r=5%, T=0.5 years</div>
+      <div class="f">
+        At t=4 months (T−t = 2 months remaining):<br>
+        First dividend (at t=3 months) already PAID → NOT in PVt(I) anymore<br>
+        Second dividend (at t=6 months = maturity T) still to be paid → included in PVt(I)<br><br>
+        PVt(I) = EUR0.30 × (1.05)⁻²/¹² = EUR0.30 × (1.05)⁻⁰·¹⁶⁷ = EUR0.2976<br><br>
+        Find breakeven St where Vt(T) = 0:<br>
+        0 = (St − 0.2976) − 50.6311 × (1.05)⁻⁰·¹⁶⁷<br>
+        0 = (St − 0.2976) − 50.2202<br>
+        St = EUR50.2202 + EUR0.2976<br>
+        St = EUR50.5178 per share ← breakeven (contract has zero MTM at this spot price)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 How to Handle Dividends Already Paid vs. Still to Be Paid</div>
+      <p>When using Eq. 7 mid-contract: <strong>Only include dividends that have NOT yet been paid</strong> in PVt(I). Dividends already paid between t=0 and t (the current date) are history — they have already been received by the asset holder and are no longer relevant to the remaining contract value. The forward price F₀(T) was set at inception incorporating ALL dividends over the full life — but for the MTM at time t, only remaining dividends matter.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 6: FX FORWARD MTM (Eq. 9)                    -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>FX Forward MTM During the Life — Equation 9</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 8 — FX Forward Price (Recap from Module 4)</div>
+      <div class="f">F₀,f/d(T) = S₀,f/d × e^((rf − rd) × T)</div>
+      <div class="note">rf = foreign currency rate | rd = domestic currency rate</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 9 — FX Forward MTM Value at Time t (Long Position)</div>
+      <div class="f">Vt(T) = S_t,f/d − F₀,f/d(T) × e^(−(rf − rd) × (T − t))</div>
+      <div class="note">
+        <strong>S_t,f/d</strong> = current spot FX rate at time t (units of foreign per unit of domestic)<br>
+        <strong>F₀,f/d(T)</strong> = fixed FX forward price agreed at inception<br>
+        <strong>e^(−(rf−rd)(T−t))</strong> = discount factor for remaining period using the interest rate differential<br><br>
+        <strong>Long FX forward (buyer of domestic, seller of foreign):</strong> Benefits when the domestic currency strengthens (fewer foreign units required per domestic unit → lower exchange rate f/d)<br><br>
+        <strong>Interest rate differential change effect:</strong><br>
+        Increase in (rf−rd) → discounts F₀ more heavily → lower PV of forward price → MTM increases for long position (if S_t,f/d &gt; F₀e^(−(rf−rd)(T−t)))
+      </div>
+    </div>
+
+    <h3>Worked Example — Rook Point FX Forward MTM</h3>
+
+    <div class="auction-box">
+      <div class="label">Rook Point: Long USD/EUR forward. EUR = base/domestic. USD = price/foreign.</div>
+      <div class="f">
+        At inception (t=0):<br>
+        S₀,USD/EUR = 1.192 | F₀,USD/EUR = 1.201 | r_USD (rf) = 0.50% | r_EUR (rd) = −0.25%<br>
+        V₀(T) = 1.192 − 1.201 × e^(−(0.005+0.0025)) = 1.192 − 1.201 × e^(−0.0075) = 0 ✓<br><br>
+        After instantaneous USD rate rise to 0.75% (rf now = 0.75%):<br>
+        New rf − rd = 0.75% − (−0.25%) = 1.00%<br>
+        Vt(T) = 1.192 − 1.201 × e^(−0.01 × 1)<br>
+              = 1.192 − 1.201 × 0.99005<br>
+              = 1.192 − 1.18905<br>
+              = 0.00295 USD/EUR MTM GAIN<br><br>
+        In dollar terms: USD1,192,000 − USD1,201,000 × e^(−0.01)<br>
+                       = USD1,192,000 − USD1,189,049.85<br>
+                       ≈ USD2,950 MTM gain
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Does USD Rate Rise Give Rook Point a Gain?</div>
+      <p>Rook Point has agreed to <strong>buy EUR for USD at F₀</strong> (long EUR/short USD). When the USD interest rate rises, USD becomes more expensive to borrow — making USD relatively "stronger" in terms of interest rate advantage. But also: higher rf raises (rf−rd), which increases the discount on the forward price (lowers PV of F₀). Since S_t &gt; PV(F₀), Rook Point has an MTM gain. Intuitively: the discount on the forward price means Rook Point is effectively "getting a better deal" in present value terms as the discount increases.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 7: SPOT RATES & BOOTSTRAPPING                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Spot Rates &amp; Bootstrapping from Coupon Bonds</h2>
+    </div>
+
+    <div class="card">
+      <p>Interest rates have a <strong>term structure</strong> — different rates exist for different maturities. Unlike equities and commodities, you can't price an interest rate forward using a single constant risk-free rate. Instead, we need zero (spot) rates for each maturity. The process of deriving zero rates from coupon bond prices is called <strong>bootstrapping</strong>.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Bootstrapping</div>
+      <div class="def-body">The process of deriving zero (spot) rates from coupon-bearing bond prices using <strong>sequential (forward) substitution</strong>. Starting with the shortest maturity bond (which may already be a single cash flow), each subsequent zero rate is extracted by plugging previously calculated zero rates into the longer-maturity bond's pricing equation and solving for the new unknown zero rate.</div>
+    </div>
+
+    <h3>Full Bootstrapping Example</h3>
+
+    <div class="auction-box">
+      <div class="label">Three government bonds: 1-year (1.5% coupon, price 99.125), 2-year (2.5%, 98.275), 3-year (3.25%, 98.000)</div>
+      <div class="f">
+        Step 1 — One-year zero rate (z₁):<br>
+        99.125 = 101.5/(1+z₁)¹  →  z₁ = 2.3960%<br>
+        [1-year bond has ONE cash flow → YTM = zero rate exactly]<br><br>
+        Step 2 — Two-year zero rate (z₂): [use z₁ already found]<br>
+        98.275 = 2.5/(1.02396)¹ + 102.5/(1+z₂)²<br>
+        98.275 = 2.4414 + 102.5/(1+z₂)²<br>
+        (1+z₂)² = 102.5/95.8336 = 1.06967<br>
+        z₂ = (1.06967)^0.5 − 1 = 3.4197%<br><br>
+        Step 3 — Three-year zero rate (z₃): [use z₁ and z₂]<br>
+        98.00 = 3.25/(1.02396)¹ + 3.25/(1.034197)² + 103.25/(1+z₃)³<br>
+        98.00 = 3.1732 + 3.0384 + 103.25/(1+z₃)³<br>
+        (1+z₃)³ = 103.25/91.7884 = 1.12478<br>
+        z₃ = (1.12478)^(1/3) − 1 = 4.0005%
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Maturity</th><th>Coupon</th><th>Price</th><th>YTM</th><th>Zero Rate (Bootstrapped)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 year</td><td>1.50%</td><td>99.125</td><td>2.3960%</td><td>z₁ = 2.3960% (same as YTM)</td></tr>
+          <tr><td>2 years</td><td>2.50%</td><td>98.275</td><td>3.4068%</td><td>z₂ = 3.4197% (higher than YTM)</td></tr>
+          <tr><td>3 years</td><td>3.25%</td><td>98.000</td><td>3.9703%</td><td>z₃ = 4.0005% (higher than YTM)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Zero Rate vs. YTM — Why They Differ</div>
+      <p>For a bond with a single cash flow (a zero-coupon bond OR a 1-year bond with one final payment), the YTM equals the zero rate — there's only one cash flow, so there's only one relevant rate. For multi-year coupon bonds, the YTM is a "weighted average" of the zero rates for each year — it blends z₁, z₂, z₃, etc. into a single number. Since the spot curve is typically upward-sloping, the long-term zero rate z₂ &gt; YTM₂ and z₃ &gt; YTM₃ (because the earlier cash flows are discounted at lower rates than the final cash flow, making the "blended" YTM lower than the final-year zero rate).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 8: DISCOUNT FACTORS                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Discount Factors — The Price Equivalent of Zero Rates</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Discount Factor (DF_i)</div>
+      <div class="def-body">The <strong>present value of one unit of currency received at period i</strong>, calculated using the zero rate for that period. The discount factor is the "price equivalent" of a zero rate — it directly gives the current value of a future cash flow without requiring compounding calculations. Also interpretable as the price of a zero-coupon bond paying 1 unit of currency at maturity.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Discount Factor Formula</div>
+      <div class="f">DF_i = 1 / (1 + z_i)^i</div>
+      <div class="note">
+        <strong>From the bootstrapping example:</strong><br>
+        DF₁ = 1/(1 + z₁)¹ = 1/(1.023960) = 0.976601<br>
+        DF₂ = 1/(1 + z₂)² = 1/(1.034197)² = 0.934961<br>
+        DF₃ = 1/(1 + z₃)³ = 1/(1.040005)³ = 0.888982<br><br>
+        <strong>Interpretation:</strong> DF₂ = 0.934961 means that €1 to be received in 2 years is worth €0.9350 today.<br>
+        Equivalently: a zero-coupon bond with face value of €1 maturing in 2 years is priced at €0.9350.<br><br>
+        <strong>No-arbitrage check (GBP example):</strong><br>
+        Zero-coupon bond: FV=£100, z₂=3.42%, observed price=£92.45<br>
+        No-arbitrage price = £100/(1.0342)² = £93.4955<br>
+        Price too low (£92.45 &lt; £93.4955) → Arbitrage: Borrow at 3.42%, buy bond, hold to maturity<br>
+        At T: Receive £100, repay £98.88 (= £92.45 × (1.0342)²) → Riskless profit of £1.12
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Discount Factors Are More Elegant Than Zero Rates</div>
+      <p>When pricing complex instruments (swaps, bonds, structured products), discount factors are often easier to work with than zero rates — you simply multiply each future cash flow by its discount factor and sum. Swaps, FRAs, and other interest rate derivatives are commonly priced as: PV = Σ (Cash Flow_i × DF_i). The discount factor already incorporates compounding for the relevant period, so no additional calculations are needed.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 9: IMPLIED FORWARD RATES (IFR)               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Implied Forward Rates (IFR) — Interest Rate Forwards</h2>
+    </div>
+
+    <div class="card">
+      <p>An implied forward rate (IFR) is the <strong>breakeven reinvestment rate</strong> that links a shorter-term and longer-term zero-coupon bond. It is the interest rate for a future period implied by today's spot (zero) curve. The IFR is the no-arbitrage rate for a one-period interest rate forward contract.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward Rate Notation — AyBy (or F_A,B)</div>
+      <div class="f">
+        IFR_A,B-A = Forward rate on a bond starting at period A and ending at period B<br>
+        Tenor = B − A periods<br><br>
+        Examples:<br>
+        IFR₁,₁ (or 1y1y): 1-year rate starting 1 year from now (years 1→2)<br>
+        IFR₂,₁ (or 2y1y): 1-year rate starting 2 years from now (years 2→3)<br>
+        F₂,₃ (or 2y3y): 3-year rate starting 2 years from now (years 2→5)<br>
+        F₃ₘ,₆ₘ: 6-month MRR starting in 3 months (common for MRR derivatives)
+      </div>
+      <div class="note">The first number = start date (forward period), second = tenor of the rate.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 11 — General Implied Forward Rate Formula</div>
+      <div class="f">(1 + z_A)^A × (1 + IFR_A,B-A)^(B-A) = (1 + z_B)^B</div>
+      <div class="note">
+        <strong>z_A</strong> = zero rate for shorter period (A periods) | <strong>z_B</strong> = zero rate for longer period (B periods)<br>
+        <strong>IFR_A,B-A</strong> = implied forward rate for the period from A to B (tenor = B−A periods)<br><br>
+        <strong>Breakeven condition:</strong> Invest for A periods at z_A, then reinvest at IFR_A,B-A for (B−A) more periods<br>
+        → must give same total return as investing for B periods at z_B<br><br>
+        <strong>Solving for IFR:</strong><br>
+        IFR_A,B-A = [(1+z_B)^B / (1+z_A)^A]^(1/(B-A)) − 1
+      </div>
+    </div>
+
+    <h3>Worked Examples</h3>
+
+    <div class="auction-box">
+      <div class="label">From bootstrapped rates: z₁=2.396%, z₂=3.4197%, z₃=4.0005%</div>
+      <div class="f">
+        IFR₁,₁ (1y1y): 1-year rate starting in 1 year<br>
+        (1.02396) × (1 + IFR₁,₁) = (1.034197)²<br>
+        (1.02396) × (1 + IFR₁,₁) = 1.069564<br>
+        1 + IFR₁,₁ = 1.044536<br>
+        IFR₁,₁ = 4.4536%<br><br>
+        Verification: USD100 × (1.02396) × (1.044536) = USD106.96<br>
+                      USD100 × (1.034197)² = USD100 × 1.06956 = USD106.96 ✓<br><br>
+        IFR₂,₁ (2y1y): 1-year rate starting in 2 years<br>
+        (1.034197)² × (1 + IFR₂,₁) = (1.040005)³<br>
+        1.069564 × (1 + IFR₂,₁) = 1.124783<br>
+        IFR₂,₁ = 5.1719%
+      </div>
+    </div>
+
+    <h3>MRR Forward Rate Example — Periodicity Conversion Required</h3>
+
+    <div class="auction-box">
+      <div class="label">3-month MRR = 1.25% | 6-month MRR = 1.75% | Find: 3-month IFR in 3 months (IFR₃ₘ,₃ₘ)</div>
+      <div class="f">
+        STEP 1: Convert 6-month MRR to quarterly rate (must match periodicity with 3-month rate)<br>
+        (1 + APR₄/4)⁴ = (1 + 0.0175/2)²<br>
+        APR₄ = 1.74619%<br><br>
+        STEP 2: Apply Equation 11 (using quarterly periodicity)<br>
+        (1 + 0.0125/4) × (1 + IFR₃ₘ,₃ₘ/4) = (1 + 0.0174619/4)²<br>
+        1.003125 × (1 + IFR₃ₘ,₃ₘ/4) = (1.00436548)²<br>
+        IFR₃ₘ,₃ₘ = 2.24299%<br><br>
+        Verification:<br>
+        ①: CNY100,000,000 × (1+0.0125/4) × (1+0.0224299/4) = CNY100,875,000<br>
+        ②: CNY100,000,000 × (1+0.0175/2) = CNY100,875,000 ✓
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Always Match Periodicities Before Applying Equation 11</div>
+      <p>When rates have different periods (e.g., 3-month and 6-month MRRs), you CANNOT directly apply Equation 11. First convert all rates to the same periodicity using the APR conversion formula from Module 7 of Fixed Income: (1 + APRm/m)^m = (1 + APRn/n)^n. Only after converting to a common periodicity can you solve for the IFR correctly.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 10: FORWARD RATE AGREEMENTS (FRAs)           -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Forward Rate Agreements (FRAs)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Forward Rate Agreement (FRA)</div>
+      <div class="def-body">An OTC derivative in which <strong>counterparties agree to apply a specific fixed interest rate to a hypothetical notional deposit for a specific future period</strong>. The underlying is a future MRR (market reference rate). The FRA buyer (long) pays the fixed rate and receives the MRR; the FRA seller (short) receives the fixed and pays the MRR. Settlement is cash-based — notional is NOT exchanged.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key features of FRAs:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>FRA is a one-period version of an interest rate swap</strong> — a swap is essentially a series of FRAs with different start dates</li>
+        <li>The implied forward rate (IFR) IS the no-arbitrage fixed rate for the FRA — ensures V₀(T) = 0 at inception</li>
+        <li>Net payment = difference between the MRR and the agreed fixed rate × notional × period fraction</li>
+        <li><strong>Settlement timing:</strong> FRAs settle at the BEGINNING of the interest period (not the end), so the settlement amount must be discounted back by the MRR for the period</li>
+        <li>Used almost exclusively by financial intermediaries to manage rate-sensitive balance sheet positions</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">FRA Settlement Formulas (Yangzi Bank CNY FRA — Buyer = Fixed-Rate Payer)</div>
+      <div class="f">
+        Net Payment (at END of interest period):<br>
+        Net Payment = (MRR_B-A − IFR_A,B-A) × Notional × Period<br><br>
+        Cash Settlement (discounted to BEGINNING of interest period):<br>
+        Cash Settlement (PV) = Net Payment / (1 + MRR_B-A × Period/Year)<br><br>
+        Worked Example: IFR₃ₘ,₃ₘ = 2.24299%, Notional = CNY100,000,000<br>
+        MRR₃ₘ sets at 2.15% (below the fixed rate of 2.24299%)<br><br>
+        Net Payment (end of period):<br>
+        = (0.0215 − 0.0224299) × 100,000,000 × 90/360<br>
+        = −0.000930 × 100,000,000 × 0.25<br>
+        = −CNY23,247.50 ← Yangzi Bank pays (MRR came in below fixed rate)<br><br>
+        Cash Settlement (PV at beginning of period):<br>
+        = −23,247.50 / (1 + 0.0215/4)<br>
+        = −23,247.50 / 1.005375<br>
+        = −CNY23,123.21 ← Yangzi Bank pays at beginning of period
+      </div>
+      <div class="note">
+        <strong>Negative result for Yangzi Bank (buyer/fixed-rate payer):</strong> MRR (2.15%) settled below the agreed fixed rate (2.24299%). Yangzi Bank pays more on the fixed leg than it receives on the floating leg → net payment out. BUT: since Yangzi Bank used the FRA to hedge a liability on which it PAYS MRR, the lower MRR also means it pays LESS on the underlying liability. The two offset each other.<br><br>
+        <strong>Discount at MRR (not the fixed rate):</strong> When discounting the settlement amount back to the start of the period, use the actual MRR (not the FRA fixed rate) as the discount rate.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="gain-card">
+        <div class="gain-title">FRA Buyer (Long / Fixed-Rate Payer)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Pays the fixed IFR rate</li>
+          <li>Receives the actual MRR at settlement date</li>
+          <li>Benefits when actual MRR &gt; fixed rate (floating exceeds fixed)</li>
+          <li>Used to hedge against RISING interest rates</li>
+          <li>Example: Yangzi Bank hedges a floating-rate liability</li>
+        </ul>
+      </div>
+      <div class="loss-card">
+        <div class="loss-title">FRA Seller (Short / Fixed-Rate Receiver)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li>Receives the fixed IFR rate</li>
+          <li>Pays the actual MRR at settlement date</li>
+          <li>Benefits when actual MRR &lt; fixed rate (floating below fixed)</li>
+          <li>Used to hedge against FALLING interest rates (or lock in investment rate)</li>
+          <li>Example: Financial intermediary taking the other side of Yangzi's FRA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 FRA Settlement Timing — Beginning vs. End of Period</div>
+      <p>MRR sets at the <strong>beginning</strong> of the forward period (e.g., at 3 months for a 3×6 FRA). Interest would normally accrue and be paid at the <strong>end</strong> of the interest period (e.g., at 6 months). FRAs settle at the BEGINNING when the MRR is known — the settlement amount is therefore the PV of the end-of-period net payment, discounted at the MRR for the period. This "early settlement" feature distinguishes FRA settlement from a regular forward contract that always settles at maturity.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST & QUICK REFERENCE         -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Forward PRICE F₀(T)</strong> = set at initiation, FIXED for the life of the contract. Set using no-arbitrage: F₀(T) = S₀(1+r)ᵀ (plus carry). Analogous to a bond's coupon rate.</li>
+        <li>✅ <strong>Forward VALUE Vt(T)</strong> = mark-to-market value at any time t. Changes as spot price, time, and interest rates change. Analogous to a bond's market price.</li>
+        <li>✅ <strong>At initiation (t=0): V₀(T) = 0</strong>. The forward contract is neither an asset nor a liability at inception. No cash changes hands (except for futures margin).</li>
+        <li>✅ <strong>At maturity (t=T):</strong> VT(T) = S_T − F₀(T) for long; F₀(T) − S_T for short. Value equals the settlement amount. Zero-sum between buyer and seller.</li>
+        <li>✅ <strong>During the life (Eq. 5, no carry): Vt(T) = S_t − F₀(T) × (1+r)⁻⁽ᵀ⁻ᵗ⁾</strong> for long. The second term is the present value of the forward price for the remaining period. Short position: negate this formula.</li>
+        <li>✅ <strong>Long position gains MTM when S_t &gt; PV_t(F₀).</strong> Short gains when S_t &lt; PV_t(F₀). PV_t(F₀) = F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾.</li>
+        <li>✅ <strong>Rising risk-free rate → lower PV(F₀) → MTM increases for long position; MTM decreases for short position.</strong></li>
+        <li>✅ <strong>With cost of carry (Eq. 7): Vt(T) = [S_t − PVt(I) + PVt(C)] − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾.</strong> Only include REMAINING costs/benefits from t to T (not those already paid/incurred).</li>
+        <li>✅ <strong>FX forward MTM (Eq. 9): Vt(T) = S_t,f/d − F₀,f/d(T) × e^(−(rf−rd)(T−t)).</strong> The discount factor uses the interest rate differential (rf−rd), not a single rate.</li>
+        <li>✅ <strong>Interest rates have a term structure</strong> (different rates for different maturities). Cannot use a single constant risk-free rate for interest rate derivatives — need zero (spot) rates for each maturity.</li>
+        <li>✅ <strong>Bootstrapping:</strong> Process of deriving zero rates from coupon bond prices via forward substitution. Start with shortest maturity, solve for its zero rate, then substitute into the next bond's equation to solve for the next zero rate, and so on sequentially.</li>
+        <li>✅ <strong>1-year bond zero rate = YTM</strong> (one cash flow, so there's only one relevant rate). For multi-year coupon bonds: zero rate ≠ YTM (YTM is a weighted average of spot rates).</li>
+        <li>✅ <strong>Discount factor DF_i = 1/(1+z_i)^i.</strong> Represents the PV of 1 unit of currency to be received at period i. Also: the price of a zero-coupon bond paying 1 unit at maturity. Used to price FRAs and swaps directly.</li>
+        <li>✅ <strong>Implied Forward Rate (IFR) formula (Eq. 11): (1+z_A)^A × (1+IFR_A,B-A)^(B-A) = (1+z_B)^B.</strong> The IFR is the breakeven reinvestment rate — investing A periods at z_A then rolling over at IFR equals investing B periods at z_B directly.</li>
+        <li>✅ <strong>Forward rate notation: IFR_A,B-A or "AyBy"</strong>. A = start year/period, B-A = tenor. Example: IFR₁,₁ = 1y1y = 1-year rate starting in 1 year. F₃ₘ,₃ₘ = 3-month rate starting in 3 months.</li>
+        <li>✅ <strong>When solving IFR for MRR forward rates:</strong> Must first convert all rates to the SAME periodicity using the APR conversion formula before applying Equation 11. Failure to match periodicities gives incorrect answers.</li>
+        <li>✅ <strong>FRA (Forward Rate Agreement):</strong> OTC derivative where counterparties agree on a fixed rate for a future period's MRR. FRA buyer = pays fixed, receives MRR (hedges against rising rates). FRA seller = receives fixed, pays MRR.</li>
+        <li>✅ <strong>FRA fixed rate = IFR (no-arbitrage rate)</strong> → V₀(T) = 0 at inception. Like all forward contracts.</li>
+        <li>✅ <strong>FRA net payment (end of period) = (MRR_actual − FRA fixed rate) × Notional × Period.</strong> Positive = FRA buyer receives; Negative = FRA buyer pays.</li>
+        <li>✅ <strong>FRA settles at the BEGINNING of the interest period</strong> (when MRR is set), not the end. Must discount the end-of-period net payment back to the start of the period using MRR as the discount rate: PV settlement = Net Payment / (1 + MRR × Period/Year).</li>
+        <li>✅ <strong>FRA vs. swap:</strong> FRA is a one-period swap (single exchange). A swap is a series of FRAs with different start dates. FRAs build up to form interest rate swap building blocks.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ FORWARD VALUE AT EACH STAGE ═══<br>
+        At t=0:  V₀(T) = 0<br>
+        At t=T:  VT(T) = S_T − F₀(T)  [long]; F₀(T) − S_T  [short]<br>
+        At t (no carry): Vt(T) = S_t − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾  [long]<br>
+        At t (with carry): Vt(T) = [S_t − PVt(I) + PVt(C)] − F₀(T)(1+r)⁻⁽ᵀ⁻ᵗ⁾  [long]<br>
+        FX forward MTM: Vt(T) = S_t,f/d − F₀,f/d(T) × e^(−(rf−rd)(T−t))<br><br>
+
+        ═══ SPOT RATES &amp; DISCOUNT FACTORS ═══<br>
+        Bootstrapping: extract z₁ first (= YTM for 1-period bond), then z₂, z₃... sequentially<br>
+        DF_i = 1/(1+z_i)^i  ← price of 1 unit of currency at period i<br>
+        Bond PV = Σ(CF_i × DF_i) for all cash flows<br><br>
+
+        ═══ IMPLIED FORWARD RATES ═══<br>
+        (1+z_A)^A × (1+IFR_A,B-A)^(B-A) = (1+z_B)^B<br>
+        IFR = breakeven reinvestment rate | Also = FRA no-arbitrage fixed rate<br>
+        Notation: IFR₁,₁ = 1y1y | IFR₂,₁ = 2y1y | F₃ₘ,₃ₘ = 3m forward 3m rate<br>
+        ALWAYS match periodicities before applying Eq. 11!<br><br>
+
+        ═══ FRA SETTLEMENT ═══<br>
+        FRA buyer: pays fixed (IFR), receives MRR → hedges RISING rates<br>
+        Net payment (end) = (MRR − IFR) × Notional × Period<br>
+        PV settlement = Net payment / (1 + MRR × Period/Year)  ← discounts to START of period<br>
+        MRR &gt; IFR → buyer receives payment | MRR &lt; IFR → buyer makes payment
+      </div>
+      <div class="note">
+        <strong>Forward price vs. forward value:</strong> F₀(T) = fixed at inception (= delivery price). Vt(T) = changes over time (= current market worth of the contract).<br>
+        <strong>MTM effect of rising r:</strong> Higher r → lower PV(F₀) → long position gains MTM; short position loses MTM.<br>
+        <strong>FRA only: settles at START of interest period</strong> (unlike regular forwards which settle at T). Discount back using actual MRR.<br>
+        <strong>IFR₁,₁ = 4.4536%</strong> (from the government bond bootstrapping example) — higher than both z₁ (2.396%) and z₂ (3.4197%), consistent with an upward-sloping spot curve (forward rates exceed spot rates).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 5: Pricing and Valuation of Forward Contracts and for an Underlying with Varying Maturities · Exam Prep Notes
+</footer>
+
+</body>
+</html>

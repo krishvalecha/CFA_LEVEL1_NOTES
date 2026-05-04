@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Ethics | Module 5: Ethics Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'APP'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 13px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+  /* Vignette block */
+  .vignette { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; margin: 20px 0; overflow: hidden; }
+  .vig-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: #12161e; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .vig-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+  .vig-body { padding: 18px 20px; }
+  .vig-facts { font-size: 14px; color: #c8d0dc; line-height: 1.8; margin-bottom: 14px; }
+  .vig-q { font-size: 13px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .vig-verdict { display: flex; align-items: flex-start; gap: 10px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; padding: 14px 16px; margin-bottom: 10px; }
+  .verdict-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .verdict-text { font-size: 14px; color: var(--text); line-height: 1.75; }
+  .verdict-text strong { color: #e8c97a; }
+  .vig-trap { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.2); border-radius: 6px; padding: 12px 16px; margin-top: 10px; }
+  .trap-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .trap-text { font-size: 13.5px; color: #dfc8c8; line-height: 1.7; }
+  .vig-key { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 12px 16px; margin-top: 10px; }
+  .key-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .key-text { font-size: 13.5px; color: #c8dfd0; line-height: 1.7; }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ETHICS · MODULE 5</div>
+  <h1>Ethics <span>Application</span></h1>
+  <p class="subtitle">Every vignette from the LES — analysed for the correct answer, wrong-answer traps, and the precise rule being tested. This module separates candidates who know the standards from those who can apply them under exam pressure. Each scenario: read the verdict, then study the traps — that is where marks are won and lost.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Standard I: Professionalism</a>
+  <a class="toc-item" href="#s2">02 · Standard II: Capital Markets</a>
+  <a class="toc-item" href="#s3">03 · Standard III: Duties to Clients</a>
+  <a class="toc-item" href="#s4">04 · Standard IV: Duties to Employers</a>
+  <a class="toc-item" href="#s5">05 · Standard V: Investment Analysis</a>
+  <a class="toc-item" href="#s6">06 · Standard VI: Conflicts of Interest</a>
+  <a class="toc-item" href="#s7">07 · Standard VII: CFA Membership</a>
+  <a class="toc-item" href="#s8">★ 20 Pattern Master List</a>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════ SECTION 1 ═══════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>Standard I: Professionalism — Applied Vignettes</h2></div>
+  <div class="card"><p>Ten vignettes cover I(A) through I(E). The exam consistently tests edge cases: when dissociation is required vs. escalation, what counts as a misrepresentation by omission, where personal conduct crosses into professional misconduct, and the nuances of the new I(E) Competence standard.</p></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Mandracken</div><span class="tag tag-red">I(A) Knowledge of the Law</span><span class="tag tag-yellow">Inadequate Remedy — Must Dissociate</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">SBS Bank charges custody clients a SWIFT messaging fee higher than actual cost — adding a hidden margin and misrepresenting it as a pass-through. Mandracken (CFA) discovers this, reports to his supervisor. The supervisor's fix: lower rates for new clients only; revisit existing clients at renewal only. No remediation for past overcharges.</div>
+      <div class="vig-q">What must Mandracken do?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Refuse to participate in any client interactions using the current fee schedule</strong> until the bank revises SWIFT fees to reflect actual costs for all clients — past, present, and new. The supervisor's fix is inadequate on three counts: (1) new clients only, (2) existing clients only at renewal, (3) no remedy for past clients.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Implement the supervisor's fix":</strong> Complying with an inadequate partial remedy while continuing to interact with clients under a fraudulent fee schedule = continuing participation in the violation. Under I(A), inaction and continued association = participation. <strong>Trap B — "Report to the board of directors":</strong> This may eventually be necessary but is premature. First: dissociate. Then: escalate through compliance. Only if those fail does escalating to the board or regulators become appropriate. Cannot skip straight to the nuclear option.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Once you identify a violation and escalate it, if the proposed remedy is <em>inadequate</em>, you must <em>dissociate</em> from the activity — not go along with a partial fix. Adequacy of the remedy matters. A partial correction that does not address all affected parties = still a violation you must dissociate from.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Pellie</div><span class="tag tag-red">I(A) Knowledge of the Law</span><span class="tag tag-yellow">AML / Wilful Blindness</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Pellie (CFA, CEO) approves suspicious AML reports without inquiry because the client has a longstanding relationship. The account shows hundreds of transactions ($90M in / $84M out), very few actual investments, transfers to money-laundering-risk jurisdictions, and vague descriptions ("consulting fees"). AML review is required by law.</div>
+      <div class="vig-q">Are Pellie's actions a violation?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of I(A).</strong> I(A) requires compliance with ALL applicable laws, including AML regulations. Rubber-stamping required AML reports without review — justified by personal relationships — violates I(A). The transaction pattern should have triggered deep investigation, not blanket approval.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Protecting client confidentiality":</strong> III(E) confidentiality does not protect illegal client activity. That exception is explicit in the standard. Confidentiality cannot be weaponised to shield clients who may be breaking the law. <strong>Trap C — "Clearing firm will handle it":</strong> KIG's own AML obligation cannot be delegated to a third party. Legal obligations cannot be outsourced.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Wilful blindness = violation. Approving compliance reports without conducting any review is not compliance — it is theatre. Personal relationships cannot override legal duties. And III(E) confidentiality never shields illegal client conduct.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Mwangi</div><span class="tag tag-red">I(A) Knowledge of the Law</span><span class="tag tag-yellow">Forgery — Even With Client Approval</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Clients need to sign new documents to switch insurance products. Documents aren't ready; later Mwangi can't reach clients. Manager threatens cancellation causing overdraft. To prevent harm, Mwangi signs documents on clients' behalf.</div>
+      <div class="vig-q">Are Mwangi's actions a violation?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of I(A).</strong> Signing documents on clients' behalf = forgery, which is illegal regardless of intent, motive, or client consent. The law requires genuine client signatures — no exception for good intentions or practical difficulty.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Clients gave permission for the exchange":</strong> General approval of the transaction ≠ meeting the legal requirement for signatures. Two separate things. <strong>Trap C — "Clients explicitly gave permission to sign on their behalf":</strong> Even explicit client permission cannot override a statutory signature requirement. The law protects clients whether or not they want that protection — clients cannot waive statutory requirements by consenting to the adviser.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Good intentions and client welfare do not override legal requirements. Forging signatures — even with full client knowledge and approval — is still forgery and still a violation. The "I was helping them" defence fails every time under I(A).</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Myers</div><span class="tag tag-blue">I(B) Independence &amp; Objectivity</span><span class="tag tag-yellow">Political Donation / Pay-to-Play / Mixed Motives</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Myers (CFA, hedge fund partner) wants to donate $10,000 to candidate DeFrietas — genuinely for environmental reasons, but also because DeFrietas could influence state pension fund allocations to Corboba.</div>
+      <div class="vig-q">What should Myers do?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Refrain from donating.</strong> Myers has mixed motivations — one legitimate, one that violates I(B). I(B) prohibits offering gifts/benefits that could reasonably compromise another's independence and objectivity. A donation intended partly to influence a hiring decision = prohibited pay-to-play regardless of the co-existing legitimate reason.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Personal funds and insignificant amount":</strong> Source of funds is irrelevant if the intent is to influence. And $10,000 may be significant in the context of the campaign. The test is whether the donation could reasonably compromise independence — Myers himself acknowledged the business angle. <strong>Trap C — "Legitimate environmental reasons justify it":</strong> Having a legitimate reason does not neutralise a prohibited reason. Both motivations exist simultaneously. The improper motive taints the action even when a proper motive also exists.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Mixed motives: when a member has both legitimate and improper motivations, the improper motivation prevails for I(B) purposes. You cannot net off good intent against bad intent. Political donations intended to gain business = explicitly prohibited pay-to-play under I(B).</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Lee</div><span class="tag tag-red">I(C) Misrepresentation</span><span class="tag tag-yellow">Guaranteed Returns on Volatile Investments</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Lee (CFA) advises a couple to move $125,000 retirement funds into AKC large-cap equity fund, incurring a $30,000 penalty. She tells them they will "make up the loss with better investment returns." AKC compensates planners based on products sold.</div>
+      <div class="vig-q">Are Lee's actions a violation?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of I(C).</strong> Promising specific returns on volatile equity investments = misrepresentation. Future equity returns are inherently uncertain. Note also: I(B) concerns (compensation scheme influencing recommendation) and III(C) suitability concerns (is a $30,000 penalty hit in the couple's best interest?)</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Acceptable if product is suitable":</strong> Suitability is separately required but insufficient. A suitable product can still be recommended through misrepresentation. <strong>Trap C — "Full disclosure of penalty makes it acceptable":</strong> Disclosing one negative (the penalty) does not neutralise a separate misrepresentation (the guaranteed return claim). Two separate issues — one does not cure the other.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Guaranteeing returns = misrepresentation, always. Equity returns cannot be guaranteed; any statement that they "will" achieve a specific outcome violates I(C). The presence of legitimate disclosures elsewhere doesn't cure a discrete misrepresentation.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Andersen</div><span class="tag tag-red">I(C) Misrepresentation</span><span class="tag tag-yellow">Omission — Key Personnel Departure</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Andersen (CFA, CEO) submits a pension fund proposal including a key personnel list. Before the decision, one of those listed key personnel — who participated in the in-person presentation — leaves the firm.</div>
+      <div class="vig-q">What should Andersen do?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Immediately inform the pension plan.</strong> The pension plan explicitly requested key personnel details — that information is material to its hiring decision. Withholding the departure = misrepresentation by omission. Must disclose now, not after finding a replacement.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Hiring the firm, not the individual":</strong> The plan's own behaviour (requesting a personnel list) demonstrates individuals matter. Andersen cannot override the client's stated priorities. <strong>Trap C — "Hire replacement first, then inform":</strong> The plan needs this information during its decision process — not after Andersen resolves it internally. Timing is the issue: immediate disclosure required.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Misrepresentation by omission is as prohibited as active misstatement. When material previously-disclosed information changes, and the counterparty clearly considers it material, you must immediately update them. "I'll fix it internally first" is not acceptable.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Brodeur</div><span class="tag tag-red">I(C) Misrepresentation</span><span class="tag tag-yellow">Social Media / "Secure Funding" Was a Joke</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Brodeur (CFA, CEO of LeTour) posts on social media: "Considering taking LeTour private at $420/share. Funding is secure." Reality: no deal agreed, $420 was "a joke," no advisers retained, only a vague general conversation with a sovereign wealth fund. Stock jumps 6%.</div>
+      <div class="vig-q">Are Brodeur's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of I(C).</strong> The post contradicted known facts: no SWF agreement, no price discussed, price was a joke, no advisers retained. Brodeur knew or should have known his statements were false and misleading.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Social media disadvantages some investors":</strong> Social media CAN be a valid disclosure channel — it doesn't need to reach every investor. The problem here is the content being false, not the channel. <strong>Trap C — "Only 'considering' — speculative/nonmaterial":</strong> Source (CEO) + subject matter (major transaction) + investor relevance = material. "Secure funding" when no deal exists is not speculative — the CEO knows the facts and directly contradicted them.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Social media is a valid disclosure platform but honesty requirements are identical to any other channel. Pre-disclosed CEO social media accounts are formal communication channels — false statements violate I(C) regardless of the informal medium.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Hanse</div><span class="tag tag-green">I(D) Misconduct — NOT a Violation</span><span class="tag tag-yellow">Civil Disobedience / Personal Beliefs</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Hanse (CFA, ESG portfolio manager) is arrested multiple times at Extinction Rebellion protests in the financial district, convicted of minor offenses (unlawful assembly, disorderly conduct). Employment contract allows termination for criminal conviction.</div>
+      <div class="vig-q">Do Hanse's actions violate the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — does NOT violate the Code and Standards.</strong> I(D) prohibits acts involving dishonesty, fraud, or deceit, OR acts that reflect adversely on professional reputation. Civil disobedience for personal beliefs generally involves neither dishonesty/fraud nor professional reflection. Location in the financial district alone is insufficient to link personal conduct to professional activity.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Violated employment contract = violated Code":</strong> Employment contract violations and Code violations are separate. The Code is not violated every time an employer's contract is breached — only if the conduct relates to the specific behaviours the Code addresses. <strong>Trap C — "Arrested in financial district = professional context":</strong> Geographic proximity to financial institutions doesn't make personal conduct professional. No dishonesty, fraud, or deceit was involved.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">I(D) is not a blanket "any conviction = violation" rule. The conduct must involve dishonesty, fraud, or deceit, OR must reflect adversely on professional competence/integrity. Civil disobedience for personal beliefs = neither. This is the clearest illustration of the personal conduct line.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Mang</div><span class="tag tag-red">I(D) Misconduct</span><span class="tag tag-yellow">Fraudulent "Error Correction" / Deceiving Clients About Performance</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Mang (CFA) uses the firm's 30-day error correction policy fraudulently: identifies already-risen securities, falsely claims he forgot to buy them at the lower price, uses the error account to cover the difference, nets a guaranteed profit for clients, calls it a "gift" or "no-risk trade." No actual error was made.</div>
+      <div class="vig-q">Are Mang's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of I(D) Misconduct.</strong> Mang is engaging in professional conduct involving dishonesty, fraud, and deceit — misusing a legitimate policy to create fictitious trades and deceiving clients about the nature of his investment performance.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Acting in clients' benefit":</strong> Client benefit does not justify fraudulent means. Lying about trades and deceiving clients about your actual performance = I(D) violation regardless of favourable client outcomes. <strong>Trap C — "Bank not harmed":</strong> Financial harm to the employer is not a prerequisite for an I(D) violation. The conduct is independently dishonest and deceptive — harm to any specific party is irrelevant.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Beneficial outcomes do not cleanse fraudulent processes. Deceiving clients about the nature of your performance (hiding that wins are engineered, not earned) is itself a violation. No-harm-no-foul does not apply — the conduct is the violation, not its consequences.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Mahajan</div><span class="tag tag-blue">I(E) Competence</span><span class="tag tag-yellow">New Role — Covered Sectors But Not Supervisory Responsibility</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Mahajan (CFA, research analyst) moves to a firm covering new sectors (transportation, construction) AND takes on first-time supervisory responsibility. He studies extensively on new sectors but takes no steps to develop supervisory skills.</div>
+      <div class="vig-q">Does Mahajan comply with I(E)?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — fails I(E) on the supervisory dimension.</strong> Mahajan addresses sector competence but ignores supervisory competence. I(E) requires competence for ALL responsibilities of the new role. He needed to develop supervisory skills (management training, compliance credentials, internal training) before assuming that responsibility.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Sufficient because he took courses on new sectors":</strong> Sector competence ≠ total role competence. He missed an entire dimension. <strong>Trap B — "Fails because no formal CE programme":</strong> I(E) does NOT require a specific formal CE programme. The failure is the absence of any effort to develop supervisory competence — not the absence of a formal programme specifically.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Competence must be role-specific and comprehensive. When a role expands, ALL new responsibilities require competence development — not just the comfortable ones. I(E) does not specify how competence is demonstrated; it requires that it IS demonstrated for everything the role demands.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 2 ═══════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>Standard II: Integrity of Capital Markets — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Khatri</div><span class="tag tag-red">II(A) Material Nonpublic Info</span><span class="tag tag-yellow">Overheard MNPI / Public Setting ≠ Public Info</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Khatri (CFA candidate) overhears his brother-in-law Patel (attorney on a ZP acquisition) on the phone at a cricket tournament, hears "GIT" repeatedly, observes Patel and the ZP owner in private huddles. Deduces an acquisition is imminent. Buys 5,000 more ZP shares. ZP is acquired at a 30% premium one week later.</div>
+      <div class="vig-q">Are Khatri's actions a violation?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of II(A).</strong> Khatri came into possession of MNPI by overhearing confidential conversations and observing private interactions. Patel's carelessness does not give Khatri permission to use what he overheard. The information was confidential, nonpublic, and material — he knew or should have known this.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Own speculation":</strong> The required deduction was minimal given his inside knowledge of the situation. Mosaic theory applies to public or non-material nonpublic info combined with public research — not to deductions from clearly confidential communications he overheard. <strong>Trap C — "Information in a public environment":</strong> Physical location does not determine whether information is public. Information is nonpublic until disseminated to the marketplace — being overheard at a cricket match does not make it public.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Public location ≠ public information. MNPI can be received in a public setting — it's the nature of the information, not the location of receipt, that matters. Mosaic theory fails when any piece of the deduction chain is itself material and nonpublic.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Kwame</div><span class="tag tag-red">II(A) Material Nonpublic Info</span><span class="tag tag-yellow">Selective Disclosure to Analysts / Meeting Tenor Is Material</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Kwame (CFA, CFO of PH3D biotech) emails select sell-side analysts that the regulatory meeting was "very positive and productive" and the company was "pleasantly surprised" by the reaction. Does not share the actual preliminary test data. Stock rises 19%.</div>
+      <div class="vig-q">Are Kwame's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of II(A).</strong> Kwame selectively disclosed material nonpublic information to select analysts. The meeting's positive outcome is material (it moved the stock 19%) and nonpublic (shared only with analysts, not the general market). Correct action: public announcement first, then discuss with analysts.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Didn't share the test data":</strong> Sharing the positive tenor of the meeting IS material information — investors would want to know the meeting outcome even without the specific data. Materiality doesn't require sharing the most sensitive detail. <strong>Trap C — "Only responding to questions":</strong> The obligation not to selectively disclose applies regardless of whether communication was initiated by Kwame or the analysts. Being "just responsive" is not a defence.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Selective disclosure to a small group = MNPI violation even if the discloser doesn't initiate it and even if the most sensitive data wasn't shared. The meeting's outcome is itself material. Fix: public announcement first, then discuss with analysts. The channel must reach the general market.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Abbha</div><span class="tag tag-red">II(B) Market Manipulation</span><span class="tag tag-yellow">Fake Shareholders / Subsequent Good Performance Irrelevant</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Abbha (CFA) helps list Superior Energy by filing 31 fake shareholders with false names and addresses to meet the exchange's 300-shareholder minimum. Company later performs well and early investors make money.</div>
+      <div class="vig-q">Do Abbha's actions violate the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of II(B).</strong> Abbha engaged in information-based manipulation — inflating apparent shareholder count to create a false impression of investor interest and liquidity. This misled the exchange and prospective investors about the true level of market interest, enabling a listing that otherwise would not have qualified.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Company proved to be strong":</strong> Outcome does not retroactively legitimise a manipulation scheme. The manipulation occurred at the point of the false filing — subsequent performance is irrelevant. <strong>Trap C — "No investors were harmed":</strong> Harm to investors is not a required element of II(B). The prohibition is on the manipulative practice itself — harm to any party is irrelevant to whether the violation occurred.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Manipulation via false information (not just false trades) = II(B) violation. The outcome-doesn't-matter rule applies: no harm, no financial loss, and subsequent good performance are all irrelevant. The act of creating false impressions is the violation.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 3 ═══════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Standard III: Duties to Clients — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Maste</div><span class="tag tag-red">III(A) Loyalty, Prudence, Care</span><span class="tag tag-yellow">Disclosure Cannot Waive Fiduciary Duty</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Maste (CFA) creates a "Client Protection Policy" that: (1) excuses Dov from liability for failures to act in clients' best interest, (2) removes the obligation to conduct suitability analyses, (3) misleads clients into thinking they cannot make legal claims against the firm.</div>
+      <div class="vig-q">Are Maste's actions a violation?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — multiple violations.</strong> The policy attempts to use disclosure to strip clients of fundamental protections. Disclosure cannot waive core fiduciary obligations. Violations: III(A) (waiving loyalty duty), V(A) (waiving suitability), III(B) (removing fair dealing), I(C) (misrepresenting clients' legal rights).</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Fully disclosed terms = acceptable":</strong> Disclosure is powerful but cannot be weaponised to strip clients of fundamental protections. There are rights clients cannot be made to waive regardless of disclosure. <strong>Trap C — "Free to negotiate advisory agreement terms":</strong> Contract freedom has limits. You cannot negotiate away fundamental ethical obligations — loyalty, prudence, and care — through disclosure in the client agreement. The Code sets a floor below which terms cannot go.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Disclosure is not a magic wand. Core fiduciary duties cannot be contracted away through any mechanism — disclosure, consent, or waiver. Clients must be protected even from their own agreements when those agreements waive non-waivable obligations.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Gaini</div><span class="tag tag-green">III(A) — NOT a Violation</span><span class="tag tag-yellow">Execution-Only Account / Contractual Liquidation</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Laube has a self-directed FX account — Gaini executes but does NOT advise. Client agreement permits Gaini to liquidate all positions without notice if margin is deficient. While Laube is on vacation, pending orders execute, margin requirements exceed account balance. Gaini liquidates all positions per the contract — realising a $37,000 loss.</div>
+      <div class="vig-q">Does Gaini violate the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — Gaini's actions are appropriate.</strong> The relationship is execution-only (no advisory role). The liquidation policy was clearly disclosed in the client agreement. Gaini acted per the contract to protect market integrity. The duty of loyalty is defined by the nature of the relationship — not by a general obligation to maximise client welfare in all circumstances.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Duty to protect Laube's financial position":</strong> In an execution-only account, Gaini is NOT an investment adviser and is NOT obligated to actively monitor or protect her investment interests. Different relationship = different duty. <strong>Trap C — "Should have liquidated only one position":</strong> The contract explicitly authorised full liquidation at Gaini's discretion. A less drastic alternative is not required if the contract doesn't mandate it.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">The scope of III(A) duty depends entirely on the nature of the relationship. Execution-only has different obligations than advisory. A clearly disclosed, negotiated contractual liquidation provision is valid — it is not a waiver of fiduciary duty; it is the definition of a legitimately negotiated relationship.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Braung</div><span class="tag tag-blue">III(A) Loyalty — Expense Billing</span><span class="tag tag-yellow">Weekend Travel May Be OK / Entertainment Never OK</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Braung (CFA) advises a municipality on bond issuance. He books weekend travel to save on fares, brings his wife. They attend sporting events and theater. He also makes travel changes due to other client meetings. Which expenses can be billed to the municipality?</div>
+      <div class="vig-q">Which expenses are billable?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Only weekend accommodation and meals</strong> — IF the total weekend travel cost is less than equivalent weekday travel. Weekend travel saves on flights — the net cost to the client may be lower even with extra hotel/meal nights. This serves the client's interest by minimising total costs.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Entertainment tickets at reasonable amounts":</strong> Theater and sporting events for Braung and his wife = personal entertainment, not business expenses. Charging these to the client = deceptive and unfair under III(A) — no connection to a business meeting with the client. <strong>Trap C — "Travel change fees from other clients":</strong> Costs from changes made to accommodate other clients' schedules = Braung's own overhead. The municipality did not cause those changes and should not bear the cost.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">III(A) loyalty in expense billing: only charge clients for costs genuinely incurred for their benefit. Weekend stay can be justified if it produces a lower total cost to the client. Personal expenses — spouse travel, entertainment, other client's change fees — cannot be passed to this client.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Scherzer</div><span class="tag tag-green">III(B) Fair Dealing — NOT a Violation</span><span class="tag tag-yellow">Premium Tier Service / Fair ≠ Equal</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Scherzer (CFA) sends monthly recommendation reports to all clients simultaneously. She also offers a weekly report (with contextual info that may implicitly signal changes) for a $1,000 annual subscription — available to any client. Monthly report emailed to all clients on Friday; posted publicly on Monday.</div>
+      <div class="vig-q">What is Scherzer required to do?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Nothing — Scherzer's actions comply.</strong> III(B) requires simultaneous dissemination of recommendation changes — she does this. Offering a premium weekly subscription is permissible as long as: all clients are eligible to subscribe, it is disclosed, and no actual recommendation changes occur in the weekly report that disadvantage non-subscribers.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Must post monthly report publicly at the same time as emailing clients":</strong> The Code does not require simultaneous public website posting — clients receive it simultaneously, which is what matters. <strong>Trap C — "Must send weekly reports to all clients free":</strong> Premium service tiers are explicitly permitted. The key constraint: no actual recommendation changes in the premium report before they appear in the free report. Contextual analysis that implicitly signals future changes = acceptable.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Fair ≠ equal. Premium tiers are allowed. The hard line: premium subscribers cannot get a trading advantage from actual recommendation changes before other clients. Simultaneous dissemination of actual changes is the rule — additional contextual analysis in premium tiers is fine.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Marte</div><span class="tag tag-red">III(C) Suitability</span><span class="tag tag-yellow">Tax Benefits Don't Override Suitability + Disclosure Doesn't Cure It</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Marte (CFA) offers clients in Puerto Rico shares in a leveraged (up to 50% of assets) closed-end fund with 67%+ local securities. Clients have modest net worth and conservative/moderate objectives. Marte puts 85%+ of their assets in this fund.</div>
+      <div class="vig-q">Are Marte's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of III(C).</strong> High concentration (85%+) + internal leverage in a single illiquid fund = unsuitable for conservative/moderate investors. Leverage amplifies downside; concentration eliminates diversification; one market event could devastate accounts. Tax benefits are one factor — they do not override a fundamentally unsuitable risk structure.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Tax benefits justify it":</strong> Tax efficiency is one factor, not a trump card. Some allocation to a tax-advantaged fund might be suitable; 85%+ with leverage and concentration is not. <strong>Trap C — "Full disclosure of risks = acceptable":</strong> Disclosure does not cure unsuitability. If the investment is objectively unsuitable, no amount of disclosure makes III(C) compliant. Disclosure and suitability are separate, independent requirements.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Suitability is assessed in total portfolio context: concentration + leverage + illiquidity + client risk profile considered together. One attractive feature (tax benefit) cannot overcome fundamentally unsuitable risk characteristics. Disclosure never cures unsuitability.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Duri</div><span class="tag tag-red">III(C) Suitability + III(A) Loyalty</span><span class="tag tag-yellow">Client Direction Does Not Waive Suitability + Self-Referral Conflict</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Duri (CFA) helps clients move retirement funds into SMSFs investing in direct property — without conducting suitability analysis, just accepting clients' stated reasons. She reclassifies them as "growth" investors and recommends her own accounting firm Tabak prepare their annual accounts.</div>
+      <div class="vig-q">Are Duri's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — multiple violations.</strong> III(C): Duri must conduct proper suitability analysis even when clients request a change — client direction does not waive the obligation. Reclassifying clients as "growth" to superficially justify the investment is manipulating the suitability criteria rather than honestly assessing them. III(A): recommending her own firm Tabak creates an undisclosed conflict of interest.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Following client directives":</strong> Clients can request changes but advisers must still assess suitability. Accepting requests without analysis = failing III(C). Reclassifying the client's objectives to match the investment (rather than vice versa) is a backwards approach explicitly prohibited by the standard. <strong>Trap C — "Acceptable if Tabak's services are competitive":</strong> Cost and quality don't eliminate the conflict. The self-referral conflict must be disclosed regardless of service quality.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Client requests do not waive the suitability obligation. When a client wants to change strategy, the adviser must conduct full independent analysis. Reverse-engineering suitability classifications to fit a chosen investment = exactly what the standard prohibits. Self-referrals without disclosure = III(A) conflict of interest violation.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Jergenn</div><span class="tag tag-red">III(D) Performance Presentation</span><span class="tag tag-yellow">Accurate But Incomplete = Still a Violation</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Jergenn (CFA) presents 2014-2020 performance history in 2022 marketing materials — accurate and correctly calculated. But the history is from a prior composite of separate accounts; the CIS fund itself only started in 2021. No disclosure of this distinction is made.</div>
+      <div class="vig-q">Are Jergenn's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of III(D).</strong> Performance must be fair, accurate, AND complete. The numbers are accurate but presenting 2014-2020 history without disclosing it's from a different entity gives the false impression the CIS fund has a long track record. The omission makes an accurate presentation misleading.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Performance is accurate":</strong> Accuracy is necessary but not sufficient. III(D) requires fair AND complete — not merely technically correct. Accurate data in a misleading context = violation. <strong>Trap C — "Acceptable if net of fees":</strong> Fee presentation is a separate issue — it has nothing to do with whether the historical data's source entity is properly disclosed.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Technically accurate ≠ compliant with III(D). All three conditions required simultaneously: fair + accurate + complete. Predecessor performance histories must be clearly labelled — presenting them without disclosure implies a track record the current entity doesn't actually have.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Giddings &amp; Marsh</div><span class="tag tag-red">III(E) Confidentiality</span><span class="tag tag-yellow">Both Violated — Policy Existence ≠ Adequate Compliance</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Marsh (CFA) downloads client data to his personal home server without permission — server is hacked, client data posted for sale online. Giddings (CFA, compliance officer) had policies in place but had not audited or tested their effectiveness. Marsh was able to download company files despite the policies.</div>
+      <div class="vig-q">Who violated the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>BOTH Marsh AND Giddings violated the Code.</strong> Marsh: misappropriated client data to personal server = III(E) violation. His misconduct facilitated the breach even though he didn't cause the hack. Giddings: compliance policies were insufficient — Marsh was able to download files. Giddings had a duty to implement AND audit/test safeguard effectiveness. Having policies on paper that don't work = inadequate compliance.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Only Marsh violated":</strong> Giddings also violated as compliance officer by failing to audit whether policies actually worked. <strong>Trap B — "Only Giddings violated":</strong> Marsh is primarily at fault — he downloaded data to his personal server. Both violated.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">III(E) responsibility runs in both directions. Employees must follow confidentiality policies; compliance officers must ensure policies actually work (not just exist). Policy existence ≠ adequate implementation. Regular auditing and testing of safeguard effectiveness is part of the compliance officer's obligation.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 4 ═══════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Standard IV: Duties to Employers — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Nickoli</div><span class="tag tag-red">IV(A) Loyalty to Employer</span><span class="tag tag-yellow">Disparaging Employer / Pre-Resignation Client Warming</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Nickoli (CFA) decides to leave HHI weeks before resigning. Before submitting her resignation, she tells clients she is leaving, shares negative views about HHI (leadership, direction, employees leaving), promotes Vesuvius, identifies clients interested in switching. She shares those clients' names with Vesuvius the day after resigning, then solicits them.</div>
+      <div class="vig-q">Is Nickoli's conduct appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of IV(A).</strong> Two violations: (1) Disparaging HHI to clients while still employed = harming employer. (2) Using final weeks to identify and warm up clients for Vesuvius = leveraging employment relationship for a competitor while still being paid by HHI — breach of loyalty even though actual solicitation started post-resignation.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Didn't actually solicit until after leaving":</strong> The violation isn't just in the solicitation — it's in the preparatory activities while still employed. Using employment time to warm up client defections = breach. <strong>Trap C — "Protecting clients' best interests":</strong> Even if Vesuvius is genuinely better for clients, a member cannot harm their current employer to serve those perceived client interests. Clients' relationship is with HHI, not with Nickoli personally.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Loyalty to employer continues until resignation is effective. Disparaging the employer to clients and warming up client defections while still employed both violate IV(A). You may inform clients you're leaving — you may NOT use that opportunity to undermine the employer or identify targets for your new firm.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Kuznetsov</div><span class="tag tag-green">IV(A) — Whistleblowing Protects Clients = NOT a Violation</span><span class="tag tag-yellow">Client Protection Overrides Employer Loyalty</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Kuznetsov (CFA) stops selling his firm's underperforming, expensive products when he realises they harm clients. Supervisor pressures him to resume. He secretly records conversations, copies client records as evidence, files a regulator complaint, and is fired.</div>
+      <div class="vig-q">Are Kuznetsov's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — appropriate.</strong> When the employer conducts business contrary to clients' interests, IV(A) loyalty to employer is overridden by III(A) duty to clients. Reporting to regulators to protect clients = justifiable whistleblowing. Copying client records to give to regulators as evidence is also justified in this context. Note: recording conversations may violate local laws in some jurisdictions.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Copying client records violates III(E)":</strong> In this context, disclosing records to the regulator to expose harm to those clients is a justified exception — legally authorised disclosure to protect clients. <strong>Trap C — "Reporting to regulator violates IV(A) loyalty":</strong> Whistleblowing to protect clients from employer's unethical conduct is explicitly NOT a violation of IV(A). The hierarchy is real: Client &gt; Employer.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Client interests (III) trump employer loyalty (IV) when the employer is actively harming clients. Whistleblowing to regulators to protect clients is justified and does not violate IV(A). When priorities conflict, the higher priority wins.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Clemence</div><span class="tag tag-red">IV(A) Loyalty — Taking Client Data on Departure</span><span class="tag tag-yellow">Good Intentions Don't Override Employer's Property Rights</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Clemence (CFA) leaves DeLaurier on good terms, provides full handover. On her last day, she downloads a spreadsheet of all DeLaurier clients, prospects, and former clients (names, AUM, contact info) to her personal email. Intent: send a "thank you" note — not to compete with DeLaurier.</div>
+      <div class="vig-q">Is Clemence's conduct appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of IV(A).</strong> The client list is DeLaurier's property. Taking it — regardless of intent — violates the duty not to divulge confidential information or cause harm. She also took far more than her own clients' info — she took all of DeLaurier's clients, prospects, and former clients. Better path: ask DeLaurier's permission to send a farewell note before leaving.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Protecting clients' interests":</strong> Benign intent does not authorise taking proprietary data. <strong>Trap C — "Can contact personal friends through personal channels":</strong> Yes — she can contact people she knows through personal means (social media, memory). But she cannot use DeLaurier's property to facilitate even a benign farewell.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Client lists and databases are employer property. Taking them on departure = IV(A) violation regardless of intent. The correct approach: ask permission first. If granted, use only what's needed. If not granted, use personal channels for personal contacts only.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Estevez</div><span class="tag tag-blue">IV(B) Additional Compensation</span><span class="tag tag-yellow">Issuer-Paid Research / Written Employer Consent Required</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Estevez (CFA) helps select which companies get BIR research coverage (issuer-paid model). Some companies offer her a personal bonus if they are selected for coverage. BIR does not know about these bonuses.</div>
+      <div class="vig-q">Are Estevez's actions acceptable?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Acceptable only if BIR gives written approval.</strong> IV(B) requires written consent from the employer before accepting compensation that creates a conflict of interest. Estevez must disclose the bonus to BIR, BIR must consent in writing, and BIR must then disclose to report users both that the company paid Estevez and that it pays for research coverage.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Independence automatically compromised":</strong> Issuer-paid research is NOT automatically unethical. It is a legitimate model with proper safeguards — disclosure, separation of recommendations from payment, strict procedures. <strong>Trap B — "Acceptable if no MNPI used":</strong> Using MNPI is a separate issue (II(A)). Not using MNPI has nothing to do with whether IV(B) written consent is needed. Two separate obligations.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Issuer-paid research is not automatically a violation. Key safeguards: written employer consent, full disclosure of all compensation to report users. IV(B) written consent must come before accepting the bonus — verbal or implicit consent is insufficient.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Duhih</div><span class="tag tag-red">IV(C) Responsibilities of Supervisors</span><span class="tag tag-yellow">Work-From-Home / Occasional Check-Ins = Inadequate</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Duhih (CFA, branch manager) allows Lewes (CFA) to work fully from home with no office access and only occasional check-ins. Unknown to Duhih: Lewes works for a competitor and secretly splits commissions from client accounts he helps open.</div>
+      <div class="vig-q">Has Duhih violated the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>YES — violation of IV(C).</strong> Duhih's supervision was minimal and noticeably ineffective. Allowing an employee to work fully remotely with no office access and only occasional check-ins falls below "reasonable efforts to ensure compliance." Supervisors must detect AND prevent violations through effective compliance systems.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Acceptable if HQ conducts audits":</strong> HQ audits supplement but do not substitute for onsite supervisory oversight. The branch manager cannot outsource supervisory responsibility to HQ. <strong>Trap C — "Acceptable if RCG lacked adequate policies":</strong> If firm policies were inadequate, Duhih's obligation was to: tell management, help develop procedures, or decline supervisory responsibility. A lack of adequate tools is not an excuse for failing to supervise.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Minimal supervision = inadequate supervision. IV(C) requires reasonable efforts to detect AND prevent violations. "Occasional check-ins" for a remote employee with no office access doesn't meet that standard. HQ audits supplement — they do not replace — active supervisory oversight.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Sasha Denikin</div><span class="tag tag-red">IV(C) Supervisors — Cannot Accept Role Without Authority</span><span class="tag tag-yellow">CCO With No Real Power Must Decline the Role</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Sasha (CFA) is made CCO of Galak but has no real authority — his father Franz controls everything, blocks client contact, ignores compliance issues Sasha raises. Sasha has no experience. He raises issues repeatedly but cannot enforce anything. Eventually resigns.</div>
+      <div class="vig-q">Are Sasha's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of IV(C).</strong> Sasha accepted CCO responsibility knowing he had no authority, no experience, and no ability to enforce compliance. IV(C) requires that if you cannot exercise supervisory responsibility, you must decline in writing to accept the role until the firm enables proper supervision. Accepting the title without the authority = violating the standard.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Franz holds real power — can't be supervised by subordinate":</strong> Franz's status as founder does not exempt him from CCO oversight. A CCO has compliance authority over all employees including founders. <strong>Trap C — "Resigning when frustrated = acceptable":</strong> Resignation came too late. Sasha should have declined the CCO role initially — or demanded proper authority before accepting — rather than continuing in a role he was failing to discharge for months.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">If you cannot exercise supervisory responsibility due to inadequate systems, lack of authority, or lack of competence — decline in writing until the firm fixes it. Accepting a CCO title without genuine authority = violation of IV(C). Resignation is not a retroactive cure for months of failing to supervise.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 5 ═══════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>Standard V: Investment Analysis — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Harrel &amp; Chong</div><span class="tag tag-red">V(A) Diligence &amp; Reasonable Basis</span><span class="tag tag-yellow">Both Violated — Must Independently Evaluate Third-Party Research</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Harrel (CFA candidate) writes issuer-paid research on Corix, accepting all management claims without verification — everything was fabricated. Chong (CFA charterholder) incorporates Harrel's report without independent verification, issues a "buy" recommendation. Corix is exposed as fraudulent — clients lose money.</div>
+      <div class="vig-q">Who violated the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>BOTH Harrel AND Chong violated V(A).</strong> Harrel: relied exclusively on management claims without independent investigation. Chong: relied on Harrel's report without independently verifying its conclusions — especially problematic given (1) issuer-paid research warrants heightened scrutiny and (2) Harrel had no firm management structure to enforce due diligence standards.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Only Harrel violated":</strong> Chong independently violated V(A) by failing to critically assess third-party research. Passing through a report without evaluation = V(A) failure. <strong>Trap B — "Only Chong violated":</strong> Harrel's failure to conduct any independent investigation is a clear V(A) violation regardless of the ultimate fraud — diligence is required before publishing.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Using third-party research requires independent evaluation — you cannot pass it through. Issuer-paid research warrants heightened scrutiny. Both the original researcher and the relay analyst bear V(A) responsibility for the quality of the research and analysis they produce and distribute.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Dukis</div><span class="tag tag-red">V(B) Communication with Clients</span><span class="tag tag-yellow">Material Methodology Change Must Be Disclosed Even If It's an Improvement</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Dukis (CFA, credit ratings MD) changes the DSCR calculation methodology for CMBS ratings — more accurately reflecting risk. Publishes new ratings without disclosing the methodology change. New method results in higher ratings than the old method would have given.</div>
+      <div class="vig-q">Are Dukis's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of V(B).</strong> V(B) requires disclosure of material changes to the investment/analytical process. The DSCR change was clearly material — it changed ratings outcomes. Investors rely on methodology consistency to interpret ratings over time. An undisclosed change undermines comparability and transparency even if the new method is better.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "New methodology more accurately reflects risk":</strong> Improvement in accuracy does not eliminate the disclosure obligation. Better methodology + no disclosure = violation. Better methodology + disclosed change = compliant. <strong>Trap C — "DSCR is only one element":</strong> The DSCR was a key quantitative metric — the methodology change materially affected ratings outcomes, proving its materiality. Material components must be disclosed regardless of how many other factors also contribute.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Material changes to investment/analytical processes must be disclosed regardless of whether the change is an improvement. Transparency and comparability are the goals — "we made it better" is not a substitute for "we changed it and here's how."</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Duermott</div><span class="tag tag-red">V(C) Record Retention</span><span class="tag tag-yellow">Personal Knowledge of Clients ≠ Adequate Records</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Duermott (CFA, president) has close personal relationships with all clients, knows their situations intimately, and adjusts portfolios appropriately. But he updates client risk profiles and records only "when he finds the time" — not systematically or promptly.</div>
+      <div class="vig-q">Are Duermott's business practices appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of V(C).</strong> V(C) requires maintaining records to support investment actions and communications. Updating records "when he finds the time" = inadequate record maintenance. Personal knowledge of clients does not substitute for documented records — without records, there is no audit trail, no ability to demonstrate suitability, and no regulatory protection.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Communicates regularly with clients":</strong> Communication and record-keeping are separate obligations. Regular client contact is good — but undocumented = V(C) violation. <strong>Trap C — "Adjusts portfolios appropriately":</strong> Making appropriate investment changes without records documenting why = both a V(C) and potential III(C) documentation problem. Cannot demonstrate suitability was properly assessed.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Personal knowledge and client relationships are valuable but irrelevant to the record-keeping requirement. V(C) is about documentation — if client circumstances change and the record isn't updated promptly, there is no audit trail to demonstrate the account was managed in compliance with the client's current situation.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 6 ═══════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Standard VI: Conflicts of Interest — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Reebh</div><span class="tag tag-red">VI(A) Avoid or Disclose Conflicts</span><span class="tag tag-yellow">Partial Disclosure — Using Subadvisers vs. Being Paid BY Subadvisers</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Reebh (CFA) allocates client assets to third-party subadvisers who pay Lux fees based on assets placed. Clients know subadvisers are used — but don't know Lux receives payments from those subadvisers.</div>
+      <div class="vig-q">Are Reebh's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — not unless the financial arrangement is disclosed.</strong> Clients knowing subadvisers are used ≠ clients knowing Reebh is financially incentivised to select subadvisers who pay him. That financial conflict must be disclosed or the arrangement avoided altogether.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Disclosed use of subadvisers = sufficient":</strong> Disclosing the structural use of subadvisers ≠ disclosing the financial arrangement between Lux and those subadvisers. Two different disclosures — the financial conflict was missing. <strong>Trap B — "Payments are an improper referral fee":</strong> Reebh is not referring clients to subadvisers — he is hiring them on clients' behalf. This is a VI(A) conflict issue, not a VI(C) referral fee issue.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Partial disclosure does not satisfy VI(A). The specific conflict — that Lux receives payments from the subadvisers it hires — must be disclosed. Disclosing that subadvisers are used while concealing the financial incentive structure leaves clients unable to properly evaluate whether Reebh's selection is in their best interest.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Yang</div><span class="tag tag-red">VI(B) Priority of Transactions</span><span class="tag tag-yellow">Front-Running — Personal Before Client / Direction Irrelevant, Timing Is Everything</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Yang (CFA) buys 50,000 Zhongpin shares and call options for his personal account. Shortly after, he directs $29.8M of Prestige client funds to buy 3M+ Zhongpin shares. His personal position benefits from the price impact of the large client purchase.</div>
+      <div class="vig-q">Are Yang's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — front-running = violation of VI(B).</strong> Yang traded personally in the same securities he then directed his clients to buy in much larger quantities. Client transactions must have priority. Yang reversed the order for personal gain.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Personal investments align with clients — no conflict":</strong> Trading in the same direction as clients is not the issue — TIMING is. Personal trade before client trade = front-running regardless of directional alignment. <strong>Trap C — "Prestige clients not negatively affected":</strong> Whether clients were harmed is irrelevant to VI(B). The priority principle requires client-first regardless of actual harm.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Front-running: personal trade before client trade in the same security = VI(B) violation. Direction doesn't matter — timing does. Harm to clients is not a required element. The priority rule is absolute: clients first.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Kapadia</div><span class="tag tag-red">VI(B) Priority — Facilitating Front-Running for Others</span><span class="tag tag-yellow">No Direct Financial Benefit Still = Violation</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Kapadia (CFA, fund trader) tips friends and relatives about upcoming fund trades before executing them. They trade ahead of the fund. Kapadia doesn't personally trade or directly benefit financially — only benefits through relationships.</div>
+      <div class="vig-q">Are Kapadia's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of VI(B).</strong> Kapadia facilitates front-running by others using confidential fund trading information. Personal benefit includes non-financial benefit (relationship benefit). Enabling others to front-run is as prohibited as doing it yourself.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Only inappropriate if clients are harmed":</strong> No-harm-no-foul does not apply. VI(B) is categorical regardless of whether actual trades harmed client returns. <strong>Trap C — "Didn't share individual client info":</strong> Sharing information about the fund itself is sharing confidential information. Fund trading plans are confidential regardless of whether individual client details are disclosed.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Personal benefit includes non-financial benefit (relationship benefit). Enabling others to front-run = prohibited. Confidential fund trading information must not be shared with anyone outside the proper information chain.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Perrkins</div><span class="tag tag-red">VI(B) Priority + III(B) Fair Dealing</span><span class="tag tag-yellow">Cherry-Picking via Omnibus Account + "I'll Fix It Later" Fails</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Perrkins (CFA, CIO) uses omnibus block trades, allocates after market close — assigning 75% of profitable trades to his own/wife's accounts and 82% of losing trades to three largest clients. Wife is the compliance officer.</div>
+      <div class="vig-q">Are Perrkins's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — multiple violations.</strong> VI(B): delaying allocation until intraday performance is observed, then directing winners to personal accounts = front-running via allocation cherry-picking. III(B): systematically allocating losing trades to largest clients = unfair dealing. Disclosure of a fraudulent scheme does not make it acceptable.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap B — "Disclosure makes it acceptable":</strong> Disclosing a fraudulent trade allocation scheme does not cure it. Some conduct is so fundamentally wrong that disclosure cannot sanitise it. <strong>Trap C — "Will reverse it to favour clients later":</strong> Ethics is not a ledger exercise. You cannot temporarily steal from clients intending to give it back later. Compliance is required at all times — not on a net basis over time.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Trade allocation must not be used to benefit personal accounts at clients' expense. Omnibus accounts with post-close allocation create a major conflict risk — pre-established objective allocation methodologies must be set BEFORE trades execute. "I'll make it up later" is never an ethical defence.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Kiang</div><span class="tag tag-red">VI(C) Referral Fees</span><span class="tag tag-yellow">Parties / Gift Cards / Fee Discounts = Referral Fees Requiring Disclosure</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Kiang (CFA) hosts elaborate parties and distributes gift cards to clients who referred others. Offers fee discounts to clients who sent particularly lucrative referrals. No disclosure to prospective clients that referral incentives exist.</div>
+      <div class="vig-q">Are Kiang's actions appropriate?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>NO — violation of VI(C).</strong> Parties, gift cards, and fee discounts given in exchange for referrals constitute referral fees that must be disclosed to prospective clients before engagement. A prospective client needs to know whether the recommendation they received was motivated by genuine satisfaction or by financial incentive.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Reward for client loyalty":</strong> A party or gift for ALL clients regardless of referrals = loyalty reward (acceptable). A party/gift/discount ONLY for clients who provided referrals = referral fee requiring disclosure. The referral condition is what makes it a fee. <strong>Trap B — "Treats all clients fairly":</strong> All clients can access the benefits by making referrals — but fair access to the benefit doesn't replace disclosure of its existence to prospective clients.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Any benefit given in exchange for referrals — cash, gifts, discounts, parties — = referral fee under VI(C) requiring disclosure to prospective clients. Benefits given universally regardless of referral activity do not require disclosure as referral fees.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 7 ═══════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Standard VII: CFA Membership — Applied Vignettes</h2></div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Taveras</div><span class="tag tag-green">VII(A) — General Difficulty OK / Specific Questions NOT OK</span><span class="tag tag-yellow">Post-Exam Discussion Rules</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Taveras (CFA) leads an exam prep course. After the exam, at a celebration, students share their experience — difficulty levels, surprise at untested areas. Taveras asks for opinions on the hardest questions.</div>
+      <div class="vig-q">What is Taveras permitted to do?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>CORRECT: Sharing general difficulty opinions with future candidates is acceptable.</strong> Saying "the exam was harder than expected" = general experience-sharing that doesn't compromise exam security. However: soliciting or passing on specific question content violates VII(A). Asking for "opinions on the most difficult questions" risks eliciting specific content — caution required.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Cannot discuss exam at all post-exam":</strong> A total ban on post-exam discussion is too broad. General experience-sharing is permitted — the restriction is on specific content, not all discussion. <strong>Trap B — "Can pass specific information to future candidates":</strong> Specific exam content = confidential. Sharing with future candidates = compromises exam integrity = VII(A) violation.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">Post-exam: general experience and difficulty opinions = permitted. Specific questions, tested content areas, question formats = prohibited. General impressions don't compromise security; specific details do.</div></div>
+    </div>
+  </div>
+
+  <div class="vignette">
+    <div class="vig-header"><div class="vig-name">Ahmed &amp; Bennett</div><span class="tag tag-red">VII(B) + I(A) — Both Violated</span><span class="tag tag-yellow">Lapsed Membership / Silent Witnessing of Misrepresentation</span></div>
+    <div class="vig-body">
+      <div class="vig-facts">Bennett (CFA) hasn't paid dues for 4 years — membership lapsed. Continues using CFA designation, claims it's permanent like a university degree. In a sales meeting with a prospect who specifically wants CFA charterholders, Bennett falsely says all investment staff are charterholders. Ahmed (CFA, newly hired) knows Bennett's membership has lapsed but says nothing.</div>
+      <div class="vig-q">Who violated the Code?</div>
+      <div class="vig-verdict"><div class="verdict-icon">✅</div><div class="verdict-text"><strong>BOTH Bennett AND Ahmed violated the Code.</strong> Bennett: VII(B) — using a lapsed CFA designation and misrepresenting it as permanent. Dues are required to maintain the right to use the designation. Ahmed: I(A) — knowingly remaining silent while a violation occurs in his presence = participating in and failing to dissociate from the violation.</div></div>
+      <div class="vig-trap"><div class="trap-label">⚠️ Wrong Answer Traps</div><div class="trap-text"><strong>Trap A — "Only Ahmed violated":</strong> Ahmed violated — but so did Bennett (the primary violator). <strong>Trap B — "Only Bennett violated":</strong> Ahmed's silence in a meeting where he knew false information was being given to a prospect = participation in the misrepresentation under I(A). Knowing silence = complicity.</div></div>
+      <div class="vig-key"><div class="key-label">🔑 Core Rule Tested</div><div class="key-text">CFA designation requires annual dues payment — it is NOT permanent like a university degree. Lapsed membership = lapsed right to use the designation. And silence in the face of a known ongoing violation = participation. Ahmed needed to speak up, correct the record, or dissociate from the meeting.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 8: PATTERN MASTER LIST ═══════════════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">★</span><h2>Cross-Vignette Pattern Master List — The 20 Recurring Exam Logic Patterns</h2></div>
+  <div class="card"><p>Ethics Application questions follow recognisable patterns. Once you can identify the pattern, you can solve the question even with unfamiliar facts. Memorise the rule, not just the scenario it came from.</p></div>
+
+  <div class="formula-box">
+    <div class="label">★ MODULE 5 — 20 RECURRING APPLICATION PATTERNS ★</div>
+    <div class="f">
+      ═══ GROUP 1: DISSOCIATION, ADEQUACY, AND INTENT ═══<br>
+      P01: Inadequate remedy → must dissociate, not comply with partial fix [Mandracken]<br>
+      P02: Good intentions + illegal means = violation [Mwangi — forgery even with client approval]<br>
+      P03: Outcome never retroactively justifies a bad process [Abbha — fake shareholders; Mang — fraudulent trades]<br>
+      P04: Harm to any party is NOT required for a violation [Yang, Kapadia, Perrkins — no harm ≠ no violation]<br><br>
+
+      ═══ GROUP 2: DISCLOSURE LIMITS ═══<br>
+      P05: Disclosure cannot waive core fiduciary duties — loyalty, prudence, care, suitability [Maste]<br>
+      P06: Partial disclosure ≠ full disclosure — must disclose THE specific conflict [Reebh]<br>
+      P07: Disclosing a fraudulent scheme does not make the scheme acceptable [Perrkins]<br>
+      P08: "I'll make it up later" is never a valid ethical defence [Perrkins]<br><br>
+
+      ═══ GROUP 3: MNPI AND MANIPULATION ═══<br>
+      P09: Public location ≠ public information [Khatri — overheard at cricket match]<br>
+      P10: Responding to analyst questions ≠ public disclosure — must use proper public channel [Kwame]<br>
+      P11: Mosaic theory fails if ANY element is itself material and nonpublic<br>
+      P12: Good outcome does not cure manipulation [Abbha — well-performing company]<br><br>
+
+      ═══ GROUP 4: CLIENT DUTIES ═══<br>
+      P13: Nature of the relationship defines the duty — execution-only ≠ advisory ≠ discretionary [Gaini]<br>
+      P14: Client direction does not waive suitability obligation — adviser must independently assess [Duri]<br>
+      P15: Accurate but incomplete performance = violation — all three conditions required [Jergenn]<br>
+      P16: Policy existence ≠ adequate compliance — must audit and test effectiveness [Giddings]<br><br>
+
+      ═══ GROUP 5: EMPLOYER DUTIES AND SUPERVISION ═══<br>
+      P17: Loyalty continues until resignation is effective — disparaging or warming up clients before = violation [Nickoli]<br>
+      P18: Whistleblowing to protect clients from employer's unethical conduct = NOT a violation [Kuznetsov]<br>
+      P19: Cannot accept supervisory title without authority — must decline in writing if systems inadequate [Sasha Denikin]<br>
+      P20: Silent witnessing of a known violation = participation under I(A) — must speak, correct, or dissociate [Ahmed]
+    </div>
+    <div class="note">
+      <strong>The three questions to ask for any ethics application scenario:</strong><br>
+      (1) What STANDARD is being tested? Identify the standard and sub-section from the facts.<br>
+      (2) What is the SPECIFIC RULE being applied? (e.g., "adequacy of the remedy" under I(A); "simultaneous dissemination" under III(B))<br>
+      (3) What are the WRONG ANSWER TRAPS? Identify the trap type before selecting your answer.<br><br>
+      <strong>The five most common wrong answer trap types across all Ethics Application questions:</strong><br>
+      TRAP TYPE A — "No harm was done / clients weren't harmed" → irrelevant; conduct is the violation regardless of outcome<br>
+      TRAP TYPE B — "The outcome was good / company performed well" → retroactive justification never works<br>
+      TRAP TYPE C — "Full disclosure was made" → disclosure cannot cure fiduciary waivers or fundamentally unethical conduct<br>
+      TRAP TYPE D — "The client approved / directed it" → client approval cannot override legal requirements or suitability obligations<br>
+      TRAP TYPE E — "Good intentions / acting in clients' benefit" → beneficial motive does not neutralise a fraudulent or prohibited process
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<footer>CFA Level 1 · Ethics · Module 5: Ethics Application · Exam Prep Notes</footer>
+</body>
+</html>

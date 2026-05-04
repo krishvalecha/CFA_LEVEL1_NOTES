@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 4: Overview of Equity Securities</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d140f 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent3); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent3); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .pref-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .pref-cum { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); }
+  .pref-part { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); }
+  .pref-conv { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); }
+  .pref-callput { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); }
+  .pref-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .pref-cum .pref-label { color: var(--accent3); }
+  .pref-part .pref-label { color: var(--accent2); }
+  .pref-conv .pref-label { color: var(--accent); }
+  .pref-callput .pref-label { color: var(--danger); }
+  .pref-card p { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 4</div>
+  <h1>Overview of <span>Equity Securities</span></h1>
+  <p>Exam-ready notes: common vs. preference shares, voting rights, private equity types, depository receipts (ADR/GDR), risk and return characteristics, book vs. market vs. intrinsic value, ROE formulas, and cost of equity vs. required return.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Equity vs. Debt — Core Difference</a>
+  <a class="toc-item" href="#s2">02 · Common Shares &amp; Voting Rights</a>
+  <a class="toc-item" href="#s3">03 · Preference Shares</a>
+  <a class="toc-item" href="#s4">04 · Preference Shares Master Table</a>
+  <a class="toc-item" href="#s5">05 · Public vs. Private Equity</a>
+  <a class="toc-item" href="#s6">06 · Non-Domestic Equity Securities</a>
+  <a class="toc-item" href="#s7">07 · ADR Types — Detail Table</a>
+  <a class="toc-item" href="#s8">08 · Risk &amp; Return of Equity Securities</a>
+  <a class="toc-item" href="#s9">09 · Book Value vs. Market Value vs. Intrinsic Value</a>
+  <a class="toc-item" href="#s10">10 · ROE &amp; Cost of Equity</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: EQUITY VS DEBT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Equity vs. Debt — Core Difference</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Debt Securities</div>
+        <ul>
+          <li>A <strong>liability</strong> of the issuing company</li>
+          <li>Company is <strong>contractually obligated</strong> to repay principal at maturity</li>
+          <li>Company is <strong>contractually obligated</strong> to pay interest periodically</li>
+          <li>Investors seek <strong>interest income</strong></li>
+          <li>Creditors have priority claim over equity in liquidation</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Equity Securities</div>
+        <ul>
+          <li><strong>NOT a liability</strong> — represents ownership</li>
+          <li>Company is <strong>NOT obligated</strong> to repay the amount received from shareholders</li>
+          <li>Company is <strong>NOT obligated</strong> to make periodic payments (dividends are discretionary)</li>
+          <li>Shareholders have a <strong>residual claim</strong> on assets after all liabilities paid</li>
+          <li>Investors seek <strong>total return</strong> = capital appreciation + dividends</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Historical return context (1900–2017, real compounded):</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Government bills: real return &lt;1% per year (barely kept pace with inflation)</li>
+        <li>Government bonds: real return &lt;2% per year in most countries</li>
+        <li>Equities: real return ~3.5% per year in most markets; world average ~5.2%; world ex-US ~5%</li>
+        <li>Best performers: South Africa, Australia, then US, New Zealand, Sweden</li>
+        <li>Reinvested dividends dramatically amplify long-run equity returns: US$1 in US equities (1900) → <strong>US$1,402 real</strong> with reinvested dividends vs. <strong>US$11.9</strong> price appreciation only (6.4% vs. 2.1% real CAGR)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Market Cap / GDP as a Valuation Indicator</div>
+      <p>The ratio of equity market capitalization to GDP is used as a rough indicator of whether a market is over, under, or fairly valued relative to its long-run average. Example: US equity markets = ~51% of global market cap but only ~25% of global GDP → potential over-representation. After 2008 crash, US market cap/GDP fell to 59% vs. long-run average of 79%.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: COMMON SHARES & VOTING RIGHTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Common Shares &amp; Voting Rights</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Common Shares (Ordinary Shares / Common Stock)</div>
+      <div class="def-body">The predominant type of equity security. Represent an ownership interest giving holders: (1) claim on operating performance, (2) participation in governance via voting rights, (3) residual claim on net assets in liquidation. Dividends are discretionary — not contractually obligated.</div>
+    </div>
+
+    <h3>Callable and Putable Common Shares</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Callable Common Shares</div>
+        <p>Give the <strong>issuer</strong> the right to buy back shares from shareholders at a price determined at issuance. <span class="danger-text">Riskier for investors</span> — call price limits upside. Companies pay <strong>higher dividends</strong> to compensate investors for call risk.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Putable Common Shares</div>
+        <p>Give the <strong>shareholder</strong> the right to sell shares back to the issuer at a price specified at issuance. <span class="highlight3">Less risky for investors</span> — put price sets a floor on value. Companies pay <strong>lower dividends</strong> because investors accept less return for the downside protection.</p>
+      </div>
+    </div>
+
+    <h3>Voting Rights</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Voting Type</th>
+            <th>How It Works</th>
+            <th>Who Benefits</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Statutory Voting</td>
+            <td>Each share = one vote per candidate. Votes cannot be concentrated — must be spread evenly across all candidates</td>
+            <td>Majority shareholders — large holders can dominate every seat</td>
+            <td>100 shares, 4 directors → max 100 votes per candidate</td>
+          </tr>
+          <tr>
+            <td>Cumulative Voting</td>
+            <td>Total voting rights = shares owned × number of directors being elected. Shareholder can allocate ALL votes to ONE candidate</td>
+            <td><span class="highlight3">Minority shareholders</span> — can concentrate all votes on one preferred candidate for board representation</td>
+            <td>100 shares, 4 directors → 400 total votes, all 400 can go to 1 candidate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Cumulative vs. Statutory Voting — Quick Memory Trick</div>
+      <p><strong>Statutory</strong> = spread votes like a statute says — equal distribution. <strong>Cumulative</strong> = accumulate all your votes and aim them at one person — better for minorities. The exam will test which benefits minority shareholders: always <strong>cumulative voting</strong>.</p>
+    </div>
+
+    <h3>Dual-Class Share Structures</h3>
+    <div class="card">
+      <p>Companies can issue different classes of common shares (Class A, Class B) with different ownership rights. Common uses:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Viacom example</strong>: Class A = voting stock (1 vote/share); Class B = non-voting stock. Family controls &gt;70% of votes through Class A ownership. Both classes share equally in dividends and liquidation</li>
+        <li><strong>Ford example</strong>: Class A (public) = 60% voting rights; Class B (Ford family) = 40% voting rights. But Class B gets liquidation priority ($0.50, then extra $1.00, then equal)</li>
+        <li>Dual-class structures allow founders/families to maintain control while raising public capital</li>
+        <li><strong>Proxy voting</strong>: shareholders can designate another party to vote on their behalf when unable to attend annual meeting</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Voting Rights ≠ Economic Rights</div>
+      <p>In dual-class structures, voting rights and economic rights can be separated. Class B (non-voting) at Viacom trades close to Class A in price even with no votes — shares are economically equivalent. The exam may ask about which class has more economic value vs. which has more voting control. Also note: dividends are paid equally across classes (in most structures) even when voting rights differ substantially.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: PREFERENCE SHARES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Preference Shares (Preferred Stock)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Preference Shares</div>
+      <div class="def-body">Rank <strong>above common shares</strong> for dividend payments and liquidation distributions. Generally do NOT carry voting rights (unless explicitly granted). Have characteristics of both debt AND equity — fixed dividends (like debt), but dividends are not contractual obligations (like equity). Can be perpetual, callable, or putable.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Preference shares vs. debt:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Like debt: dividends are fixed and generally higher than common dividends</li>
+        <li>Unlike debt: dividends are NOT contractual obligations — company can skip them (subject to accumulation rules)</li>
+        <li>Like equity: can be perpetual (no maturity), can be callable or putable</li>
+        <li>Generally treated as <strong>fixed income</strong> by analysts when dividends are clearly payable in the foreseeable future</li>
+      </ul>
+    </div>
+
+    <h3>Types of Preference Share Features</h3>
+
+    <div class="pref-card pref-cum">
+      <div class="pref-label">Cumulative vs. Non-Cumulative</div>
+      <p><strong>Cumulative</strong>: unpaid dividends <strong>accumulate</strong> and must all be paid before any common dividend can be paid. Provides stronger protection to preferred shareholders. Lower risk → lower dividend yield.<br><br>
+      <strong>Non-cumulative</strong>: unpaid dividends are <strong>forfeited permanently</strong> — they do not accumulate. However, company still cannot pay common dividends in the current period unless preferred dividends have been paid first. Higher risk → higher dividend yield.</p>
+    </div>
+
+    <div class="pref-card pref-part">
+      <div class="pref-label">Participating vs. Non-Participating</div>
+      <p><strong>Participating</strong>: receive standard preferred dividend PLUS additional dividend if company profits exceed a pre-specified level. Can also receive extra assets in liquidation above par value. Effectively shares in company upside. More common for smaller, riskier companies where liquidation is a concern.<br><br>
+      <strong>Non-participating</strong>: entitled only to the fixed dividend and par value in liquidation. No share in excess profits.</p>
+    </div>
+
+    <div class="pref-card pref-conv">
+      <div class="pref-label">Convertible Preference Shares</div>
+      <p>Shareholders can convert preferred shares into a <strong>specified number of common shares</strong> at a predetermined conversion ratio set at issuance.<br><br>
+      <strong>Advantages</strong>: (1) Higher dividend than common shares. (2) Opportunity to share in company profits. (3) Benefits from rise in common share price through conversion option. (4) Less volatile than common shares (known dividend payments provide floor).<br><br>
+      <strong>Why used in VC/private equity</strong>: popular for early-stage, high-risk companies. Provides income (dividends) while waiting for company to go public, then allows conversion to common at IPO to capture upside. Also used when IPO may be years away (longer private equity holding periods of ~10 years).</p>
+    </div>
+
+    <div class="pref-card pref-callput">
+      <div class="pref-label">Callable vs. Putable Preference Shares</div>
+      <p><strong>Callable preference</strong>: issuer can redeem shares at predetermined price. <span class="danger-text">Riskier for investors</span> — limits upside. Pays <strong>higher dividend</strong> to compensate.<br><br>
+      <strong>Putable preference</strong>: investor can sell back to issuer at predetermined price. <span class="highlight3">Less risky for investors</span> — floor on value. Pays <strong>lower dividend</strong> because downside protected.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: PREFERENCE SHARES MASTER TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Preference Shares — Master Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Type A</th>
+            <th>Type B</th>
+            <th>Risk to Investor</th>
+            <th>Dividend Effect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dividend Accrual</td>
+            <td><span class="tag tag-green">Cumulative</span> — unpaid dividends accumulate</td>
+            <td><span class="tag tag-red">Non-cumulative</span> — unpaid dividends forfeited</td>
+            <td>Cumulative = lower risk</td>
+            <td>Cumulative → lower yield; Non-cumulative → higher yield</td>
+          </tr>
+          <tr>
+            <td>Profit Sharing</td>
+            <td><span class="tag tag-green">Participating</span> — fixed dividend + share of excess profits</td>
+            <td><span class="tag tag-red">Non-participating</span> — fixed dividend only</td>
+            <td>Participating = more upside; common in smaller/riskier companies</td>
+            <td>Participating → lower base yield (upside compensates)</td>
+          </tr>
+          <tr>
+            <td>Conversion</td>
+            <td><span class="tag tag-green">Convertible</span> — can convert to common at set ratio</td>
+            <td><span class="tag tag-red">Non-convertible</span> — fixed preferred forever</td>
+            <td>Convertible = less volatile, more upside potential</td>
+            <td>Convertible → lower yield (option has value)</td>
+          </tr>
+          <tr>
+            <td>Issuer Redemption</td>
+            <td><span class="tag tag-red">Callable</span> — issuer can redeem at set price</td>
+            <td><span class="tag tag-green">Non-callable</span> — no issuer call right</td>
+            <td>Callable = higher risk (limits upside)</td>
+            <td>Callable → higher yield (compensate for call risk)</td>
+          </tr>
+          <tr>
+            <td>Investor Put Right</td>
+            <td><span class="tag tag-green">Putable</span> — investor can sell back at set price</td>
+            <td><span class="tag tag-red">Non-putable</span> — no put right</td>
+            <td>Putable = lower risk (price floor)</td>
+            <td>Putable → lower yield (downside protected)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Risk-Yield Relationship Memory Rule</div>
+      <p><strong>More protection for investor → lower risk → lower required dividend yield.</strong> <strong>Less protection (more risk) → higher required dividend yield.</strong> Callable = riskier for investor = higher yield. Putable = safer for investor = lower yield. Cumulative = safer for investor = lower yield. This logic is consistent across all security types in the curriculum.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Common vs. Preference Share Risk</div>
+      <p><strong>Preference shares are LESS risky than common shares</strong> because: (1) dividends are fixed and known, (2) preferred gets paid before common, (3) liquidation claim is above common. BUT preference shares CAN be riskier than other preference shares depending on features (e.g., non-cumulative is riskier than cumulative). The exam may ask you to rank risk — always: secured debt &lt; unsecured debt &lt; preferred &lt; common.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: PUBLIC VS PRIVATE EQUITY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Public vs. Private Equity Securities</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Public Equity</div>
+        <ul>
+          <li>Listed on public exchanges</li>
+          <li>Active secondary market → liquid</li>
+          <li>Market-determined quoted prices</li>
+          <li>Mandatory financial disclosure → transparent</li>
+          <li>More capital-raising opportunities</li>
+          <li>Higher corporate governance scrutiny</li>
+          <li>Costly regulatory/reporting requirements</li>
+          <li>Management pressure for short-term results (quarterly targets)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Private Equity</div>
+        <ul>
+          <li>Not listed on exchanges — no active secondary market</li>
+          <li>Highly <strong>illiquid</strong> — no market-quoted prices</li>
+          <li>Issued primarily to <strong>institutional investors</strong> via private placements</li>
+          <li>Fair value difficult to determine — limited financial disclosure</li>
+          <li>Long holding periods: originally 3–5 yrs; now ~10 years</li>
+          <li>Management can focus on <strong>long-term value creation</strong></li>
+          <li>Eliminates costly public-company requirements</li>
+          <li>Lower corporate governance effectiveness (per some studies)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Three Types of Private Equity Investments</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Stage</th>
+            <th>Exit Strategy</th>
+            <th>Key Features</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Venture Capital (VC)</td>
+            <td>Provides seed/start-up capital, early-stage financing, or mezzanine financing to early-stage companies requiring capital for expansion</td>
+            <td>Pre-IPO, start-up to growth</td>
+            <td>IPO on stock market or sale to other investors. Typical exit: 3–10 years from start-up</td>
+            <td>VC investors include friends/family, wealthy individuals, PE funds. Securities not publicly traded → long-term commitment required. Exit return = price at IPO or sale</td>
+          </tr>
+          <tr>
+            <td>Leveraged Buyout (LBO)</td>
+            <td>Group of investors uses <strong>large amounts of debt</strong> to purchase all outstanding common shares of a publicly traded company → takes it "private"</td>
+            <td>Mature public company → taken private → later re-IPO</td>
+            <td>Re-IPO of restructured company in primary market</td>
+            <td>Target companies: large undervalued assets (sold to reduce debt) + high cash flows (service debt). <strong>MBO</strong> = Management Buyout (management is primary acquirer). Ultimate goal: restructure, then re-IPO</td>
+          </tr>
+          <tr>
+            <td>PIPE (Private Investment in Public Equity)</td>
+            <td>Public company sells sizeable equity stake to private investor(s) quickly to raise capital</td>
+            <td>Already public company needing fast capital</td>
+            <td>Investor holds publicly traded shares after registration</td>
+            <td>Used when company needs rapid capital (expansion, high debt, operational distress). Shares often sold at <strong>significant discount to market price</strong>. Private investor gets a bargain; company gets quick capital</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 LBO vs. MBO — Easy Distinction</div>
+      <p>Both are leveraged buyouts using significant debt to take a company private. The difference: in an <strong>MBO</strong>, the acquiring group is primarily the company's own <em>existing management</em>. In a generic <strong>LBO</strong>, the acquirer is an outside private equity partnership or investor group. All MBOs are LBOs; not all LBOs are MBOs.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Why companies choose private equity over public listing:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Eliminate short-term performance pressure (quarterly analyst targets)</li>
+        <li>Eliminate costly regulatory/exchange filing requirements</li>
+        <li>Eliminate investor relations departments and quarterly conference calls</li>
+        <li>Enable longer-term strategic restructuring and operational improvement</li>
+        <li>Private equity holding periods have lengthened: 3–5 years (1980s–90s) → ~10 years (current)</li>
+        <li>Convertible preference shares increasingly used in longer-duration PE investments → provides income + upside via conversion at eventual IPO</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: NON-DOMESTIC EQUITY SECURITIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Non-Domestic Equity Securities</h2>
+    </div>
+
+    <h3>Why Invest Globally? Why Are There Barriers?</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Benefits of Global Investing</div>
+        <ul>
+          <li>Diversification — add assets with lower correlation to domestic holdings</li>
+          <li>Access to faster-growing markets (emerging economies)</li>
+          <li>Expanded investment universe → better risk/return opportunities</li>
+          <li>Dual listing benefits: more liquid, broader shareholder base, greater transparency, greater investor awareness</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Foreign Ownership Restrictions — 3 Reasons</div>
+        <ol style="padding-left:16px;">
+          <li style="margin-bottom:6px;"><strong>Limit foreign control</strong>: prevent foreigners from acquiring majority interest in domestic companies (strategic/national security concerns)</li>
+          <li style="margin-bottom:6px;"><strong>Protect domestic investors</strong>: give locals opportunity to own shares in foreign companies operating domestically (e.g., IKEA in Asia-Pacific)</li>
+          <li style="margin-bottom:6px;"><strong>Reduce capital flow volatility</strong>: prevent sudden large capital outflows (e.g., 1997–98 Asian Financial Crisis → dramatic equity declines and currency devaluations in Thailand, Indonesia, South Korea)</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>Methods to Invest in Foreign Equity</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Description</th>
+            <th>Advantages</th>
+            <th>Disadvantages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Direct Investing</td>
+            <td>Buy shares directly on foreign exchange in foreign currency</td>
+            <td>Direct ownership; access to full local market</td>
+            <td>Currency risk; must know foreign settlement/clearing rules; less transparency; less liquidity in some markets</td>
+          </tr>
+          <tr>
+            <td>Depository Receipts (DR)</td>
+            <td>Security representing foreign shares, traded on local exchange in local currency</td>
+            <td>No currency conversion needed; familiar market rules; no unfamiliar settlement; dividend payments in local currency</td>
+            <td>May have voting limitations (unsponsored); exchange rate still affects underlying value</td>
+          </tr>
+          <tr>
+            <td>Global Registered Share (GRS)</td>
+            <td>Single common share traded on multiple exchanges worldwide in different currencies</td>
+            <td>Most flexible — same share traded anywhere; no currency conversion needed for purchase/sale; actual ownership interest (not a receipt)</td>
+            <td>Complex to administer; few companies have issued them (Daimler Chrysler 1998, UBS AG 2011)</td>
+          </tr>
+          <tr>
+            <td>BLDR (Basket of Listed DRs)</td>
+            <td>ETF consisting of a portfolio of depository receipts tracking a DR index</td>
+            <td>Diversified DR exposure; trades like a stock; can be bought on margin, sold short, used in hedging/arbitrage</td>
+            <td>ETF expense ratio; tracks index not individual companies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Depository Receipts — Key Mechanics</h3>
+    <div class="card">
+      <ul>
+        <li>A <strong>depository receipt (DR)</strong> = security that trades like an ordinary share on a local exchange but represents an economic interest in a foreign company</li>
+        <li>Created when: foreign shares deposited in a <strong>depository bank</strong> in the local country → bank issues receipts representing those shares</li>
+        <li>DR may represent 1 share, multiple shares, or a fraction of a share (ratio set at creation)</li>
+        <li>Price of DR affected by: company fundamentals, market conditions, analyst recommendations, and <strong>exchange rate movements</strong></li>
+        <li>Short-term price discrepancies between DR and underlying shares = quick <strong>arbitrage opportunity</strong></li>
+        <li>Depository bank responsibilities: custodian + registrar; handles dividends, stock splits, taxable events, transfer agent functions</li>
+        <li>Largest depository banks: <strong>Bank of New York Mellon</strong> (largest), Deutsche Bank, JPMorgan, Citibank</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Sponsored DR</div>
+        <p>Foreign company has <strong>direct involvement</strong> in issuance. Investors retain <strong>voting rights</strong>. Subject to greater reporting requirements. Must be registered with SEC (in US). All investor rights same as direct owners.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Unsponsored DR</div>
+        <p>Foreign company has <strong>NO involvement</strong>. Depository purchases shares in foreign market and issues receipts via brokerage firms. <strong>Depository bank retains voting rights</strong> (not investors). Less regulatory requirements.</p>
+      </div>
+    </div>
+
+    <h3>GDR vs. ADR — Key Differences</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">GDR (Global Depository Receipt)</div>
+        <ul>
+          <li>Issued <strong>outside</strong> the company's home country AND outside the United States</li>
+          <li>NOT subject to foreign ownership/capital flow restrictions of home country</li>
+          <li>Primarily traded on <strong>London and Luxembourg</strong> exchanges (timelier, lower cost)</li>
+          <li>Most denominated in <strong>USD</strong> (some in GBP, EUR)</li>
+          <li>Cannot be listed on US exchanges but CAN be privately placed with US institutional investors</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">ADR (American Depository Receipt)</div>
+        <ul>
+          <li>USD-denominated security trading on <strong>US exchanges</strong></li>
+          <li>Oldest type of DR — first created in <strong>1927</strong></li>
+          <li>Most commonly traded DR type</li>
+          <li>Enable foreign companies to raise capital from US investors</li>
+          <li>An ADR is one form of GDR; NOT all GDRs are ADRs</li>
+          <li><strong>ADS (American Depository Share)</strong> = the underlying share on which the ADR is based; ADR = the certificate trading on US markets</li>
+          <li>Currently: &gt;2,000 DRs from 80+ countries trade on US exchanges; total value ~US$2 trillion (~15% of all US equity trading)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: ADR TYPES TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>ADR Types — Detail Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ADR Level</th>
+            <th>Listed?</th>
+            <th>Can Raise Capital?</th>
+            <th>SEC Registration</th>
+            <th>Trading Venue</th>
+            <th>Listing Fees</th>
+            <th>Size/Earnings Requirements</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Level I (Unlisted)</td>
+            <td><span class="tag tag-red">No</span></td>
+            <td><span class="tag tag-red">No</span></td>
+            <td>Form F-6 only</td>
+            <td>OTC (Over-the-Counter)</td>
+            <td><span class="tag tag-green">Low</span></td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>Level II (Listed)</td>
+            <td><span class="tag tag-green">Yes</span></td>
+            <td><span class="tag tag-red">No</span> (existing shares only)</td>
+            <td>Form F-6</td>
+            <td>NYSE, NASDAQ, AMEX</td>
+            <td><span class="tag tag-red">High</span></td>
+            <td>Yes — must meet size/earnings</td>
+          </tr>
+          <tr>
+            <td>Level III (Listed)</td>
+            <td><span class="tag tag-green">Yes</span></td>
+            <td><span class="tag tag-green">Yes</span> — public offerings (new + existing shares)</td>
+            <td>Forms F-1 and F-6</td>
+            <td>NYSE, NASDAQ, AMEX</td>
+            <td><span class="tag tag-red">High</span></td>
+            <td>Yes — full SEC requirements</td>
+          </tr>
+          <tr>
+            <td>Rule 144A / Reg S (Unlisted)</td>
+            <td><span class="tag tag-red">No</span></td>
+            <td><span class="tag tag-green">Yes</span> — private placements to QIBs (Qualified Institutional Buyers)</td>
+            <td>None required</td>
+            <td>Private offerings via PORTAL (automated linkage)</td>
+            <td><span class="tag tag-green">Low</span></td>
+            <td>None</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ADR Level Memory Trick — "1 = OTC only, 2 = listed no raise, 3 = listed + raise"</div>
+      <p>Think of levels as increasingly demanding: Level I is the easiest (just OTC, minimal filing). Level II is exchange-listed but still can't issue new shares to raise capital. Level III is the full package — listed + capital raising. Rule 144A is the "private back door" — no listing, no SEC, but large institutional investors only. The key exam question: which level can raise capital publicly? <strong>Only Level III.</strong></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: RISK & RETURN OF EQUITY SECURITIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Risk &amp; Return Characteristics of Equity Securities</h2>
+    </div>
+
+    <h3>Sources of Return</h3>
+    <div class="formula-box">
+      <div class="label">★ Equity Total Return Formula</div>
+      <div class="f">Total Return, Rₜ = (Pₜ − Pₜ₋₁ + Dₜ) / Pₜ₋₁</div>
+      <div class="note">
+        Pₜ = sale price at end of period t | Pₜ₋₁ = purchase price at beginning of period t<br>
+        Dₜ = cash or stock dividends received during period t<br><br>
+        Two sources for domestic investors: (1) Price change (capital gain/loss) + (2) Dividend income<br>
+        THREE sources for foreign investors: (1) Price change + (2) Dividend income + (3) <strong>Foreign exchange gain/loss</strong><br><br>
+        FX example: Japanese stock returns 10% in Japan. If yen depreciates 10% vs. USD → US investor's ADR return ≈ 0%<br>
+        If yen appreciates 10% vs. USD → US investor's ADR return ≈ 20%
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Reinvested dividends — the power of compounding:</strong></p>
+      <p>US$1 invested in US equities in 1900 → <strong>US$1,402 real value in 2016</strong> with reinvested dividends (6.4% real CAGR) vs. only <strong>US$11.9</strong> price appreciation only (2.1% real CAGR). For comparison: bonds → US$9.8 (2.0% real); bills → US$2.60 (0.8% real). Reinvested dividends are critical for long-run wealth accumulation.</p>
+    </div>
+
+    <h3>Risk of Equity Securities</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Risk = uncertainty of future cash flows</strong> → greater uncertainty → greater price volatility → higher risk</li>
+        <li>Measured by: standard deviation of expected total return</li>
+        <li>Estimated via: historical returns and standard deviation OR probability-weighted scenario analysis</li>
+      </ul>
+    </div>
+
+    <h3>Risk Ranking: Common vs. Preference Shares</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Preference Shares</th>
+            <th>Common Shares</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dividend certainty</td>
+            <td><span class="tag tag-green">Higher</span> — fixed, known dividend</td>
+            <td><span class="tag tag-red">Lower</span> — discretionary, variable</td>
+          </tr>
+          <tr>
+            <td>Payment priority</td>
+            <td><span class="tag tag-green">Paid first</span> before common</td>
+            <td><span class="tag tag-red">Paid last</span> — residual claim</td>
+          </tr>
+          <tr>
+            <td>Liquidation claim</td>
+            <td><span class="tag tag-green">Known and fixed</span> (par/face value)</td>
+            <td><span class="tag tag-red">Whatever is left</span> (could be nothing)</td>
+          </tr>
+          <tr>
+            <td>Return source</td>
+            <td>Mostly dividends (known and stable)</td>
+            <td>Mostly price appreciation (uncertain) + dividends (discretionary)</td>
+          </tr>
+          <tr>
+            <td>Overall risk</td>
+            <td><span class="tag tag-green">Lower</span></td>
+            <td><span class="tag tag-red">Higher</span></td>
+          </tr>
+          <tr>
+            <td>Expected return</td>
+            <td><span class="tag tag-yellow">Lower</span> (less risk = less return)</td>
+            <td><span class="tag tag-green">Higher</span> (more risk = more return)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Callable vs. Putable Risk (All Equity)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Risk to Investor</th>
+            <th>Dividend/Yield</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Callable (common or preferred)</td>
+            <td><span class="tag tag-red">Higher</span> than non-callable</td>
+            <td><span class="tag tag-red">Higher</span> dividend to compensate</td>
+            <td>Call price caps investor's upside; issuer will call when it's favorable to them (bad for investor)</td>
+          </tr>
+          <tr>
+            <td>Putable (common or preferred)</td>
+            <td><span class="tag tag-green">Lower</span> than non-putable</td>
+            <td><span class="tag tag-green">Lower</span> dividend (investor accepts less)</td>
+            <td>Put price establishes a floor → limits downside; investor pays for this protection through lower yield</td>
+          </tr>
+          <tr>
+            <td>Cumulative preferred</td>
+            <td><span class="tag tag-green">Lower</span> than non-cumulative</td>
+            <td><span class="tag tag-green">Lower</span> dividend</td>
+            <td>Unpaid dividends accumulate → stronger investor protection</td>
+          </tr>
+          <tr>
+            <td>Non-cumulative preferred</td>
+            <td><span class="tag tag-red">Higher</span> than cumulative</td>
+            <td><span class="tag tag-red">Higher</span> dividend</td>
+            <td>Forfeited dividends = more risk for investor</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: BOOK VALUE vs MARKET VALUE vs INTRINSIC VALUE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Book Value vs. Market Value vs. Intrinsic Value</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Book Value of Equity</div>
+        <p>= Total Assets − Total Liabilities (on balance sheet). Represents <strong>historical</strong> operating and financing decisions. Increases when company retains net income. Management can directly influence it. Reflects accounting choices (depreciation method, inventory method). Also called <strong>shareholders' equity</strong>.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Market Value of Equity</div>
+        <p>= Number of shares outstanding × current market price per share (market capitalization). Reflects <strong>collective investor expectations</strong> about amount, timing, and uncertainty of future cash flows. Management can only <strong>indirectly</strong> influence it. Rarely equals book value. Higher market/book ratio = investors expect more future growth opportunities.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Intrinsic Value (Fundamental Value)</div>
+        <p>= Present value of future projected cash flows. Can be estimated (e.g., DDM, DCF) but <strong>never known for certain</strong> — requires judgment on amount, timing, and risk of cash flows. Investors profit by finding gaps between intrinsic value estimate and current market price.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Book Value vs. Market Value — Key Relationship</div>
+      <div class="f">
+        Price-to-Book (P/B) Ratio = Market Price per Share / Book Value per Share<br><br>
+        P/B &gt; 1.0 → market believes company has future growth opportunities above book assets<br>
+        P/B &lt; 1.0 → market values company below its accounting book value (distress signal)<br>
+        High P/B industry (tech): investors expect many profitable future investments<br>
+        Low P/B industry (heavy equipment/mature): fewer growth opportunities expected
+      </div>
+      <div class="note">
+        Do NOT compare P/B ratios across industries — differences reflect industry growth outlooks, not company quality.<br>
+        Compare within same industry only. A higher P/B than industry peers → investors see above-average growth potential.
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why book value and market value rarely equal each other:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Book value = historical cost-based accounting → does not reflect current market values of assets or earning potential</li>
+        <li>Market value = forward-looking → reflects NPV of all future growth opportunities</li>
+        <li>Example: Warren Buffett's observation on Berkshire Hathaway — in 1964, book value overstated value (textile business worth less than book). Today, many businesses worth far more than book value. Intrinsic value = "discounted value of cash that can be taken out of a business during its remaining life"</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — ROE Increase Is Not Always Positive</div>
+      <p>ROE can increase for bad reasons: (1) Net income falls more slowly than equity (both declining — bad). (2) Company takes on debt to repurchase shares → equity decreases → ROE mechanically increases but equity is now <strong>riskier</strong>. Always examine the <em>source</em> of ROE change. The DuPont decomposition (separate reading) is used to analyze ROE components. An increasing ROE is only clearly positive if driven by genuine operational improvement.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: ROE & COST OF EQUITY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>ROE, Cost of Equity &amp; Required Return</h2>
+    </div>
+
+    <h3>Return on Equity (ROE) — Two Formulas</h3>
+    <div class="formula-box">
+      <div class="label">★ ROE Formula 1 — Using Average Book Value (More Common)</div>
+      <div class="f">ROEₜ = NIₜ / Average BVEₜ = NIₜ / [(BVEₜ + BVEₜ₋₁) / 2]</div>
+      <div class="note">NIₜ = net income available to ordinary shareholders in year t (after preferred dividends)<br>
+      Average BVEₜ = average of beginning and ending book value of equity for year t<br>
+      Use when: company experiences volatile year-end book values, or industry convention uses average BVE</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ ROE Formula 2 — Using Beginning Book Value</div>
+      <div class="f">ROEₜ = NIₜ / BVEₜ₋₁</div>
+      <div class="note">BVEₜ₋₁ = book value of equity at the beginning of year t (= end of year t−1)<br>
+      Assumes only beginning equity was used to generate net income during the year<br>
+      Use when: book values are relatively stable over time, or computing ROE annually over a multi-year period</div>
+    </div>
+
+    <div class="card">
+      <p><strong>What ROE measures</strong>: how effectively management uses equity capital invested by shareholders to generate profits. ROE of 32.5% means the company generates $0.325 profit per $1.00 of shareholder equity.</p>
+      <p style="margin-top:8px;"><strong>ROE can increase because:</strong></p>
+      <ul style="margin-top:4px;">
+        <li>Net income increases faster than equity (best outcome)</li>
+        <li>Net income decreases slower than equity (less favorable)</li>
+        <li>Debt-financed share repurchases decrease equity denominator (increases risk)</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>ROE limitations</strong>: affected by accounting method choices (depreciation, inventory) → makes cross-company comparison difficult. Also hard to compare if accounting methods changed over time.</p>
+    </div>
+
+    <h3>Cost of Equity vs. Required Return — Three Key Concepts</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Concept</th>
+            <th>Definition</th>
+            <th>Who Determines It</th>
+            <th>Key Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cost of Equity</td>
+            <td>The minimum expected rate of return a company must offer investors to purchase its shares in the primary market and maintain share price in the secondary market</td>
+            <td>Determined by market forces; estimated using DDM or CAPM</td>
+            <td>Used as proxy for investors' minimum required return. If actual return falls below this, share price drops until yield rises to meet requirement</td>
+          </tr>
+          <tr>
+            <td>Investors' Required Rate of Return</td>
+            <td>The minimum return investors demand for the risk they take. Based on expected future cash flows (uncertain) → may differ across investors</td>
+            <td>Set by individual investors based on risk perception</td>
+            <td>May differ from company's cost of equity because expectations vary. Company uses cost of equity as proxy for this</td>
+          </tr>
+          <tr>
+            <td>Accounting ROE</td>
+            <td>Net income / book value of equity — measures historical accounting efficiency of equity use</td>
+            <td>Determined by accounting results and book equity</td>
+            <td>Backward-looking (historical). Does not directly equal cost of equity or required return. Used to evaluate management effectiveness</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cost of Debt vs. Cost of Equity — Key Contrast</div>
+      <div class="f">
+        Cost of Debt = periodic interest/coupon rate (known and contractual → easy to estimate)<br>
+        Cost of Equity = not contractual → harder to estimate. Common models:<br>
+        → DDM (Dividend Discount Model): Cost of equity based on expected dividends<br>
+        → CAPM (Capital Asset Pricing Model): Cost of equity based on systematic risk (beta)<br><br>
+        WACC = weighted average of after-tax cost of debt + cost of equity<br>
+        WACC = minimum required return company must earn on long-term investments to satisfy all capital providers
+      </div>
+      <div class="note">
+        If investors require a HIGHER return than company's cost of equity → they sell shares → price drops → yield rises → equilibrium restored<br>
+        Cost of equity is always higher than cost of debt (equity is riskier, and interest is tax-deductible)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Cost of Equity May Differ from Investors' Required Return</div>
+      <p>The company's <strong>cost of equity</strong> is a single number used in WACC. But individual investors have <strong>heterogeneous expectations</strong> about future cash flows, so their required returns differ. The company sets its cost of equity as the best estimate of what the market requires — a proxy for the average investor's required return. In equilibrium, cost of equity ≈ market-required return.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Equity vs. debt</strong>: Debt = liability + contractual obligation (principal + interest). Equity = NOT a liability, NOT contractual. Equity = residual claim. Equity investors seek total return; debt investors seek interest income.</li>
+        <li>✅ <strong>Common shares</strong>: ownership interest, voting rights, residual claim in liquidation. Dividends are discretionary (not obligatory). Shareholders vote via proxy when unable to attend meeting.</li>
+        <li>✅ <strong>Statutory voting</strong>: 1 share = 1 vote per candidate; must distribute evenly. Favors majority. <strong>Cumulative voting</strong>: total votes = shares × directors being elected; can concentrate all votes on 1 candidate → favors minority shareholders.</li>
+        <li>✅ <strong>Callable common/preferred</strong>: issuer can redeem at set price → riskier for investor → <strong>higher dividend</strong> to compensate. <strong>Putable common/preferred</strong>: investor can sell back at set price → less risky → <strong>lower dividend</strong>.</li>
+        <li>✅ <strong>Preference shares</strong>: rank above common for dividends and liquidation. Fixed dividend (like debt) but NOT contractual (like equity). Generally NO voting rights unless granted. Generally treated as fixed income when dividends clearly payable.</li>
+        <li>✅ <strong>Cumulative preferred</strong>: unpaid dividends accumulate; must all be paid before common gets any. <strong>Non-cumulative</strong>: forfeited permanently but company still can't pay common until current-period preferred is paid.</li>
+        <li>✅ <strong>Participating preferred</strong>: receives standard dividend PLUS share of excess profits if profits exceed threshold. More common in small/risky companies. <strong>Non-participating</strong>: fixed dividend + par value only.</li>
+        <li>✅ <strong>Convertible preferred</strong>: can convert to common at predetermined ratio. Advantages: higher income than common, participation in upside, less volatility. Popular in VC/PE because provides income while waiting for IPO, then converts at IPO.</li>
+        <li>✅ <strong>Risk ranking</strong>: preference shares &lt; common shares in risk (and in expected return). Fixed dividends, payment priority, known liquidation claim → all reduce uncertainty vs. common shares.</li>
+        <li>✅ <strong>Private equity types</strong>: (1) Venture capital — seed/early-stage capital, exit via IPO or sale (3–10 years). (2) LBO — debt-financed buyout of public company → taken private → restructured → re-IPO. MBO = management is primary acquirer. (3) PIPE — public company sells private stake quickly, often at discount to market price.</li>
+        <li>✅ <strong>LBO target characteristics</strong>: undervalued assets (sold to reduce debt) + high cash flows (service debt). Goal: restructure and re-IPO.</li>
+        <li>✅ <strong>Private vs. public equity</strong>: Private = illiquid, no market price, institutional investors only, long holding periods (~10 years), management focuses on long-term, lower governance. Public = liquid, market-priced, active secondary market, mandatory disclosure, short-term performance pressure.</li>
+        <li>✅ <strong>3 reasons for foreign ownership restrictions</strong>: (1) limit foreign control, (2) protect domestic investors' opportunity to own local companies, (3) reduce capital flow volatility (e.g., 1997–98 Asian crisis).</li>
+        <li>✅ <strong>Depository receipt (DR)</strong>: trades like ordinary share on local exchange; represents economic interest in foreign company. Created: foreign shares deposited in depository bank → bank issues receipts.</li>
+        <li>✅ <strong>Sponsored DR</strong>: foreign company involved; investors retain voting rights; greater disclosure requirements. <strong>Unsponsored DR</strong>: no foreign company involvement; depository bank retains voting rights.</li>
+        <li>✅ <strong>GDR</strong>: issued outside home country AND outside US; not subject to home country restrictions; mainly traded London/Luxembourg; mostly USD-denominated; cannot list on US exchanges but can be privately placed with US institutional investors.</li>
+        <li>✅ <strong>ADR</strong>: USD-denominated, trades on US exchanges, first created 1927. ADR is one form of GDR; not all GDRs are ADRs. ADS = underlying share (trades in domestic market); ADR = certificate (trades on US market).</li>
+        <li>✅ <strong>ADR levels</strong>: Level I = OTC only, no SEC registration, no capital raising. Level II = listed (NYSE/NASDAQ/AMEX), no capital raising, full SEC. Level III = listed + capital raising via public offerings, full SEC. Rule 144A = unlisted, no SEC, private placement to QIBs only. Key: <strong>ONLY Level III can raise capital publicly</strong>.</li>
+        <li>✅ <strong>GRS (Global Registered Share)</strong>: actual common share traded on multiple exchanges in different currencies — no currency conversion needed; most flexible but rare (Daimler Chrysler 1998, UBS 2011).</li>
+        <li>✅ <strong>BLDR</strong>: ETF of depository receipts tracking a DR index. Can be bought on margin, sold short, used in hedging/arbitrage — trades like an individual stock.</li>
+        <li>✅ <strong>Total return formula</strong>: Rₜ = (Pₜ − Pₜ₋₁ + Dₜ) / Pₜ₋₁. Foreign investors add FX component: yen appreciates 10% + stock +10% = ~+20% total. Yen depreciates 10% + stock +10% = ~0% total.</li>
+        <li>✅ <strong>Reinvested dividends</strong>: dramatically amplify long-run returns. 1900–2016: $1 → $1,402 (with reinvested dividends) vs. $11.90 (price only). Never ignore the compounding effect of dividends in long-horizon analysis.</li>
+        <li>✅ <strong>Book value of equity</strong> = Total Assets − Total Liabilities (balance sheet). Management directly controls it (via net income and retained earnings). Historical cost-based.</li>
+        <li>✅ <strong>Market value of equity</strong> = shares outstanding × market price. Reflects collective investor expectations about future cash flows. Management only indirectly influences it. Forward-looking.</li>
+        <li>✅ <strong>Intrinsic value</strong> = PV of future cash flows. Can only be estimated (never known). Warren Buffett: "discounted value of cash that can be taken out of a business during its remaining life." Highly subjective — changes with cash flow estimates and interest rates.</li>
+        <li>✅ <strong>P/B ratio</strong>: Market price / Book value per share. P/B &gt; 1 → investors expect future growth. Compare only within same industry. Higher P/B vs. peers → above-average growth expectations.</li>
+        <li>✅ <strong>ROE Formula 1</strong>: NIₜ / Average BVEₜ = NIₜ / [(BVEₜ + BVEₜ₋₁) / 2]. Use when volatile book values or industry convention. <strong>ROE Formula 2</strong>: NIₜ / BVEₜ₋₁. Use when stable book values. NI = after preferred dividends.</li>
+        <li>✅ <strong>ROE increase is NOT always positive</strong>: debt-financed buybacks reduce equity → ROE rises mechanically but equity is riskier. Net income falling slower than equity → both declining → bad. Must examine source via DuPont analysis.</li>
+        <li>✅ <strong>Cost of equity vs. investors' required return</strong>: Cost of equity = minimum return company must offer to maintain share price; estimated via DDM or CAPM; used as proxy for investors' required return. They may differ due to heterogeneous investor expectations. In equilibrium, cost of equity ≈ market required return.</li>
+        <li>✅ <strong>Cost of debt vs. cost of equity</strong>: Cost of debt = contractual, easy to estimate (coupon rate). Cost of equity = not contractual, must be modeled (DDM, CAPM). Cost of equity &gt; cost of debt always (equity is riskier; interest is tax-deductible).</li>
+        <li>✅ <strong>WACC</strong> = weighted average of after-tax cost of debt + cost of equity = minimum required return company must earn on long-term investments to satisfy all capital providers. Companies invest in projects with expected returns &gt; WACC.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        Total Return: Rₜ = (Pₜ − Pₜ₋₁ + Dₜ) / Pₜ₋₁<br><br>
+        ROE (Average BVE): ROEₜ = NIₜ / [(BVEₜ + BVEₜ₋₁) / 2]<br>
+        ROE (Beginning BVE): ROEₜ = NIₜ / BVEₜ₋₁<br>
+        NI = net income available to ORDINARY (common) shareholders (after preferred dividends)<br><br>
+        Market Cap = Shares Outstanding × Market Price per Share<br>
+        Book Value per Share = Total Shareholders' Equity / Shares Outstanding<br>
+        P/B Ratio = Market Price per Share / Book Value per Share<br><br>
+        Cumulative Voting Rights: Total votes = Shares owned × Number of directors being elected<br>
+        Statutory Voting: Max votes per candidate = Number of shares owned
+      </div>
+      <div class="note">
+        Risk ranking (lowest to highest): Secured debt → Unsecured debt → Preference shares (cumulative &gt; non-cumulative) → Common shares<br>
+        Yield ranking (lowest to highest): Same order (more risk = higher required yield)<br>
+        ADR capital raising: Level I = No | Level II = No | Level III = Yes (public) | Rule 144A = Yes (private QIBs only)
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 4: Overview of Equity Securities · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 4: Monetary Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14; --surface:#13161e; --card:#1a1e28; --border:#252a38;
+    --accent:#c9a84c; --accent2:#4c8bc9; --accent3:#4cc98a; --danger:#c94c4c;
+    --purple:#9a7fdc; --orange:#d4824a;
+    --text:#e8eaf0; --muted:#8892a4;
+    --tip-bg:#1a2218; --tip-border:#4cc98a;
+    --warn-bg:#221a18; --warn-border:#c94c4c;
+    --formula-bg:#12151f; --formula-border:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0d1520 40%,#12100d 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(76,139,201,0.08) 0%,transparent 70%);border-radius:50%;}
+  .badge{display:inline-block;background:rgba(76,139,201,0.12);color:var(--accent2);border:1px solid rgba(76,139,201,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent2);}
+  .page-header p{color:var(--muted);font-size:14px;max-width:640px;}
+
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+  .toc-item:hover{color:var(--accent2);border-color:var(--accent2);}
+
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent2);background:rgba(76,139,201,0.1);border:1px solid rgba(76,139,201,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:24px 0 12px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px;}
+  .card p,.card li{color:var(--text);font-size:15px;}
+  .card ul,.card ol{padding-left:20px;}
+  .card ul li,.card ol li{margin-bottom:6px;}
+
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .formula-box .f{color:#e8c97a;font-size:15px;font-weight:600;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:6px;font-family:'Source Sans 3',sans-serif;line-height:1.65;}
+
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .tip .tip-label{font-weight:700;color:var(--accent3);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .tip p{color:#c8e8d4;}
+
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .warn .warn-label{font-weight:700;color:var(--danger);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .warn p{color:#e8c8c8;}
+
+  .mnemonic{background:#1a1628;border:1px solid #3d2f6e;border-radius:6px;padding:16px 20px;margin:14px 0;}
+  .mnemonic .m-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#a98adc;margin-bottom:6px;}
+  .mnemonic p{color:#d8ccf0;font-size:14px;margin:0;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  thead th{background:rgba(76,139,201,0.1);color:var(--accent2);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--accent2);}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  tbody td{padding:10px 14px;color:var(--text);vertical-align:top;}
+  tbody td:first-child{font-weight:700;color:var(--accent);}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mini-card .mc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .mini-card ul{padding-left:18px;}
+  .mini-card ul li{font-size:14px;margin-bottom:5px;color:var(--text);}
+
+  /* Transmission flow */
+  .transmission{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin:16px 0;}
+  .t-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+  .t-num{min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+  .t-content{font-size:14px;color:var(--text);}
+  .t-content strong{color:#fff;}
+  .t-arrow{color:var(--muted);text-align:center;font-size:18px;margin-left:14px;margin-bottom:8px;}
+
+  /* Policy mix grid */
+  .policy-mix{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+  .pm-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px 16px;}
+  .pm-header{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  .pm-card p{font-size:13.5px;color:var(--text);margin:0;}
+  @media(max-width:640px){.policy-mix{grid-template-columns:1fr;}}
+
+  /* Rate names reference */
+  .rate-ref{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
+  .rr-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:12px 14px;text-align:center;}
+  .rr-country{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;}
+  .rr-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--accent2);}
+  .rr-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+  @media(max-width:580px){.rate-ref{grid-template-columns:1fr 1fr;}}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  p{margin-bottom:12px;}
+  strong{color:#fff;font-weight:700;}
+  em{color:var(--accent2);font-style:normal;font-weight:600;}
+
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 48px;font-size:12px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 4: <span>Monetary Policy</span></h1>
+  <p>Exam-ready notes covering central bank roles, monetary tools, the transmission mechanism, inflation/exchange rate targeting, limitations of monetary policy, and fiscal-monetary interaction.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Central Bank Roles</a>
+  <a href="#s2" class="toc-item">02 · Monetary Tools</a>
+  <a href="#s3" class="toc-item">03 · Transmission Mechanism</a>
+  <a href="#s4" class="toc-item">04 · Inflation Targeting</a>
+  <a href="#s5" class="toc-item">05 · Neutral Rate</a>
+  <a href="#s6" class="toc-item">06 · Limitations & QE</a>
+  <a href="#s7" class="toc-item">07 · Policy Interaction</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: CENTRAL BANK ROLES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Roles & Objectives of Central Banks</h2>
+    </div>
+
+    <h3>Six Core Roles</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:15px;">
+        <li style="margin-bottom:8px;"><strong>Monopoly supplier of the currency</strong> — sole issuer of legal tender (fiat money). Fiat money = not convertible to any commodity; derives value from government decree and acceptance.</li>
+        <li style="margin-bottom:8px;"><strong>Banker to the government and the bankers' bank</strong> — holds government accounts; holds reserves of commercial banks.</li>
+        <li style="margin-bottom:8px;"><strong>Lender of last resort</strong> — can supply liquidity to banks facing crisis. Knowledge of this role helps prevent bank runs.</li>
+        <li style="margin-bottom:8px;"><strong>Regulator and supervisor of the payments system</strong> — ensures robustness, standardization, and international coordination.</li>
+        <li style="margin-bottom:8px;"><strong>Conductor of monetary policy</strong> — the highest profile role. Manages money supply and credit to influence economic activity.</li>
+        <li style="margin-bottom:8px;"><strong>Supervisor of the banking system</strong> — may be shared with or delegated to a separate authority (e.g., US has multiple supervisors; UK's Bank of England regained this role in 2013 after the FSA period).</li>
+      </ol>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "MBLRCS" = 6 Central Bank Roles</div>
+      <p><strong>M</strong>onopoly currency supplier · <strong>B</strong>anker (to govt & banks) · <strong>L</strong>ender of last resort · <strong>R</strong>egulator (payments system) · <strong>C</strong>onductor (monetary policy) · <strong>S</strong>upervisor (banking system)</p>
+    </div>
+
+    <h3>Fiat Money — Key Concept</h3>
+    <div class="card">
+      <p><strong>Fiat money</strong> = money not convertible into any commodity (e.g., gold abandoned in 20th century). Its value comes from government decree + general acceptance as medium of exchange and unit of account.</p>
+      <p>Since fiat money can theoretically be created indefinitely, the central bank's role as <em>guardian of the currency's value</em> becomes paramount — hence the primary objective of <strong>price stability</strong>.</p>
+    </div>
+
+    <h3>Primary Objective of Monetary Policy</h3>
+    <div class="formula-box">
+      <div class="label">Overarching Goal</div>
+      <div class="f">Price Stability → Controlling Inflation</div>
+      <div class="note">Most central banks specify price stability as their primary objective. Some also have secondary mandates: full employment (US Fed — "maximum employment, stable prices, moderate long-term rates"), financial system stability, output growth. The Fed's dual mandate makes it unique among major central banks.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Gold Standard vs. Fiat Money</div>
+      <p>Under the gold standard, currencies were convertible to gold at fixed rates (UK abandoned this in 1931). Under fiat money, no such backing exists. This is why central bank credibility and independence are so critical — without the discipline of convertibility, inflation control relies entirely on institutional commitment.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: MONETARY TOOLS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Tools of Monetary Policy</h2>
+    </div>
+
+    <h3>Three Primary Tools</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>How It Works</th><th>Expansionary Use</th><th>Contractionary Use</th><th>Usage Today</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Open Market Operations (OMO)</td>
+            <td>Central bank buys/sells government bonds to/from commercial banks → changes bank reserves → affects lending capacity</td>
+            <td>Buy bonds → ↑ bank reserves → ↑ lending → ↑ broad money</td>
+            <td>Sell bonds → ↓ bank reserves → ↓ lending → ↓ broad money</td>
+            <td><span class="tag tag-green">Primary tool</span> in developed markets</td>
+          </tr>
+          <tr>
+            <td>Policy Rate (Refinancing/Repo Rate)</td>
+            <td>Sets the rate at which central bank lends to commercial banks. Commercial banks adjust their base rates to match (won't lend below what CB charges them).</td>
+            <td>↓ Policy rate → ↓ borrowing cost → ↑ lending → ↑ AD</td>
+            <td>↑ Policy rate → ↑ borrowing cost → ↓ lending → ↓ AD</td>
+            <td><span class="tag tag-green">Most visible tool</span> — widely watched</td>
+          </tr>
+          <tr>
+            <td>Reserve Requirements</td>
+            <td>Minimum % of deposits banks must hold in reserve. Raising it reduces money multiplier → less lending; lowering it allows more lending.</td>
+            <td>↓ Reserve req. → ↑ money creation</td>
+            <td>↑ Reserve req. → ↓ money creation (disruptive)</td>
+            <td><span class="tag tag-yellow">Rarely used</span> in developed markets (Bank of England no longer sets minimum). Active in emerging markets.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Policy Rate Names by Country</h3>
+    <div class="rate-ref">
+      <div class="rr-card">
+        <div class="rr-country">United States</div>
+        <div class="rr-name">Fed Funds Rate</div>
+        <div class="rr-desc">Interbank overnight lending rate. Target set by FOMC every ~6 weeks. Most important US rate.</div>
+      </div>
+      <div class="rr-card">
+        <div class="rr-country">United States</div>
+        <div class="rr-name">Discount Rate</div>
+        <div class="rr-desc">Rate for member banks borrowing directly from the Fed. Less important than fed funds rate.</div>
+      </div>
+      <div class="rr-card">
+        <div class="rr-country">United Kingdom</div>
+        <div class="rr-name">2-Week Repo Rate</div>
+        <div class="rr-desc">Bank of England's rate for 2-week lending to banking sector.</div>
+      </div>
+      <div class="rr-card">
+        <div class="rr-country">Euro Area</div>
+        <div class="rr-name">Refinancing Rate</div>
+        <div class="rr-desc">ECB's rate for short-term lending to Euro area banking sector.</div>
+      </div>
+      <div class="rr-card">
+        <div class="rr-country">Repo Agreement</div>
+        <div class="rr-name">Repurchase Agreement</div>
+        <div class="rr-desc">CB buys bonds from banks with agreement to sell back. Maturity: overnight to 2 weeks. Rate = repo rate.</div>
+      </div>
+      <div class="rr-card">
+        <div class="rr-country">FOMC</div>
+        <div class="rr-name">Every 6 Weeks</div>
+        <div class="rr-desc">Fed Open Market Committee reviews target rate. Can change between meetings if necessary.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Fed Funds Rate vs. Discount Rate</div>
+      <p>The <strong>Fed Funds Rate</strong> is the interbank overnight lending rate — it is the primary policy instrument. The <strong>Discount Rate</strong> is what banks pay to borrow directly from the Fed. Both are US-specific. The Fed Funds Rate is the more important and widely watched of the two.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: TRANSMISSION MECHANISM -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The Monetary Transmission Mechanism</h2>
+    </div>
+
+    <h3>Definition</h3>
+    <div class="card">
+      <p>The <strong>monetary transmission mechanism</strong> is the process by which a central bank's policy rate change is transmitted through the economy and ultimately affects inflation. Policy rates target very short-term rates (often overnight), but the real economy borrows and lends over much longer horizons — transmission bridges this gap.</p>
+    </div>
+
+    <h3>Four Channels of Transmission</h3>
+    <div class="transmission">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Example: Central bank raises policy rate → works through 4 interconnected channels simultaneously:</p>
+
+      <div class="t-row">
+        <div class="t-num" style="background:rgba(76,139,201,0.15);color:var(--accent2);">1</div>
+        <div class="t-content">
+          <strong>Bank Lending Rates (Short-term interest rates)</strong><br>
+          Commercial banks raise their base rates → borrowing costs rise for households and businesses → less borrowing → less spending on consumption and investment → ↓ Domestic Demand
+        </div>
+      </div>
+      <div class="t-arrow">↓</div>
+
+      <div class="t-row">
+        <div class="t-num" style="background:rgba(201,168,76,0.15);color:var(--accent);">2</div>
+        <div class="t-content">
+          <strong>Asset Prices</strong><br>
+          Higher discount rate lowers present value of future cash flows → bond prices fall, equity prices fall, capital project values fall → ↓ household wealth → ↓ consumption (wealth effect) → ↓ Domestic Demand
+        </div>
+      </div>
+      <div class="t-arrow">↓</div>
+
+      <div class="t-row">
+        <div class="t-num" style="background:rgba(154,127,220,0.15);color:var(--purple);">3</div>
+        <div class="t-content">
+          <strong>Expectations / Confidence</strong><br>
+          Market participants expect slower growth → reduce investment and consumption decisions ahead of actual slowdown → self-fulfilling anticipation → ↓ demand. Also: if rate hike is expected to be followed by more hikes, forward guidance amplifies the effect.
+        </div>
+      </div>
+      <div class="t-arrow">↓</div>
+
+      <div class="t-row" style="margin-bottom:0;">
+        <div class="t-num" style="background:rgba(76,201,138,0.15);color:var(--accent3);">4</div>
+        <div class="t-content">
+          <strong>Exchange Rate</strong><br>
+          Higher interest rates attract foreign capital → domestic currency appreciates → exports become more expensive to foreign buyers → ↓ export demand → ↓ Net External Demand. Also: stronger currency → ↓ import prices → direct downward pressure on inflation.
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Final Outcome of Rate Hike</div>
+      <div class="f">↓ Domestic Demand + ↓ Net External Demand + ↓ Import Prices → ↓ Total Demand → ↓ Inflation</div>
+      <div class="note">All four channels work in the same direction (reinforcing each other) when policy rate rises. For a rate cut, all arrows reverse → ↑ demand → ↑ inflation.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Does Changing Short-Term Rates Affect Long-Term Rates?</div>
+      <p>Long-term interest rates reflect the <em>expected path</em> of future short-term rates. If the market expects a series of rate hikes, long-term yields will rise immediately, even before those hikes occur. This is why central bank communication (forward guidance) is so powerful — credible signals about future policy move long rates today.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: INFLATION TARGETING -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Monetary Policy Objectives & Targeting</h2>
+    </div>
+
+    <h3>Three Qualities of Effective Central Banks</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Independence</div>
+        <ul>
+          <li>Shielded from political pressure → avoid keeping rates too low before elections</li>
+          <li><strong>Operational independence:</strong> CB sets rates; govt sets the target (UK, New Zealand, Sweden)</li>
+          <li><strong>Target + operational independence:</strong> CB sets both the target AND rates (ECB)</li>
+          <li>Heads still appointed by government → perfect independence impossible</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Credibility</div>
+        <ul>
+          <li>Belief that CB will actually hit its target</li>
+          <li>If credible → inflation expectations become self-fulfilling (2% expected = 2% in wage contracts)</li>
+          <li>Governments have lower credibility (incentive to inflate away debt)</li>
+          <li>Critical for anchoring long-run inflation expectations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mini-card" style="margin-bottom:16px;">
+      <div class="mc-title" style="color:var(--accent);">Transparency</div>
+      <ul style="padding-left:18px;">
+        <li>Quarterly <strong>inflation reports</strong> published — review broad money, financial markets, real economy, prices → followed by growth/inflation forecast (2-year horizon)</li>
+        <li>Transparent decision-making builds reputation and credibility</li>
+        <li>Helps CB influence inflation expectations → easier to hit target</li>
+        <li>Monthly interest rate decisions are publicly explained</li>
+      </ul>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "ICT" = Independence, Credibility, Transparency</div>
+      <p>The three pillars of effective central banking. New Zealand pioneered this model in 1989 (Reserve Bank of New Zealand Act) — now widely copied globally.</p>
+    </div>
+
+    <h3>Inflation Targeting Framework</h3>
+    <div class="card">
+      <p><strong>Typical target:</strong> ~2% CPI inflation with a ±1% tolerance band (1%–3% range). Why 2% and not 0%?</p>
+      <ul style="padding-left:20px; font-size:14.5px; margin-top:8px;">
+        <li style="margin-bottom:6px;">0% target risks <em>deflation</em> — which is very hard to escape (Japan example)</li>
+        <li style="margin-bottom:6px;">10% target → price instability and volatility</li>
+        <li style="margin-bottom:6px;">2% = far enough from deflation risk, low enough for price stability</li>
+        <li style="margin-bottom:6px;"><strong>Forward-looking:</strong> CB targets inflation <em>2 years ahead</em>, not current inflation, because policy changes take time to transmit through the economy</li>
+      </ul>
+    </div>
+
+    <h3>Notable Exceptions to Inflation Targeting</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Central Bank</th><th>Approach</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Bank of Japan (BoJ)</td>
+            <td>No explicit inflation target</td>
+            <td>Fighting <strong>deflation</strong> for decades — inflation targeting is a tool to fight inflation, not deflation. Low credibility in achieving positive inflation.</td>
+          </tr>
+          <tr>
+            <td>US Federal Reserve</td>
+            <td>No single explicit inflation target; <strong>dual mandate</strong></td>
+            <td>Statutory goal: maximum employment + stable prices + moderate long-term rates. Watches PCE (personal consumption expenditure) deflator ~2% as informal guide.</td>
+          </tr>
+          <tr>
+            <td>ECB</td>
+            <td>Explicit ~2% target; <strong>target + operational independence</strong></td>
+            <td>Most independent of the major central banks — sets both the definition of inflation and the rate level independently of governments.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Fed's Inflation Gauge</div>
+      <p>The US Federal Reserve monitors the <strong>PCE (Personal Consumption Expenditure) deflator</strong> as its preferred inflation gauge — not the CPI. The informal target is ~2% core PCE. Markets watch this closely to anticipate Fed rate moves.</p>
+    </div>
+
+    <h3>Exchange Rate Targeting (Developing Countries)</h3>
+    <div class="card">
+      <p>Many developing economies target their currency's exchange rate (vs. a major currency like USD) rather than inflation. The logic: by pegging to a low-inflation currency, the domestic economy "imports" the inflation of the target economy.</p>
+      <p><strong>Mechanism when domestic inflation rises above target:</strong> Currency weakens → CB sells foreign reserves and buys domestic currency → ↓ domestic money supply → ↑ domestic interest rates → monetary tightening → inflation falls → currency stabilizes.</p>
+      <p><strong>Key risk:</strong> Must be credible and supported by adequate reserves. If not → speculative attack (e.g., UK sterling forced out of European ERM in 1992; Thai baht crisis 1997 — CB ran out of reserves in July 1997 → debt crisis + Asian contagion).</p>
+      <p><strong>Dollarization:</strong> Stronger than pegging — the domestic currency is completely replaced by USD. No domestic monetary policy possible.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Exchange Rate Targeting Trade-Off</div>
+      <p>When a country fixes its exchange rate, it <strong>loses independent control of monetary policy</strong>. Interest rates must adjust to defend the peg, not to stabilize the domestic economy. This can cause domestic interest rate volatility. The country imports the monetary policy of the anchor economy — good if the anchor is credible, dangerous if domestic conditions diverge.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: NEUTRAL RATE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Neutral Rate & Contractionary / Expansionary Policy</h2>
+    </div>
+
+    <h3>The Neutral Rate of Interest</h3>
+    <div class="card">
+      <p>The <strong>neutral rate</strong> (or natural rate) is the interest rate that neither stimulates nor restrains the economy — it corresponds to the average policy rate over a full business cycle.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Neutral Rate Formula</div>
+      <div class="f">Neutral Rate = Real Trend Growth Rate + Long-Run Expected Inflation</div>
+      <div class="note">Example: Real trend growth = 2.5%, Inflation target = 2.0% → Neutral Rate = 4.5%<br>
+      Policy rate &gt; Neutral Rate → Contractionary monetary policy<br>
+      Policy rate &lt; Neutral Rate → Expansionary monetary policy<br>
+      Policy rate = Neutral Rate → Neutral (neither tightening nor loosening)</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Key Limitation</div>
+      <p>The neutral rate is <strong>unobservable</strong> — it must be estimated. Economists disagree on its value. It changes over time (e.g., post-2008 GFC, many economists revised down trend growth estimates for western economies → neutral rate fell). Policy described as "contractionary" or "expansionary" depends entirely on how the neutral rate is estimated.</p>
+    </div>
+
+    <h3>Demand Shock vs. Supply Shock — Different Policy Response</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Demand Shock (Inflation)</div>
+        <ul>
+          <li>Caused by: excess consumer/business confidence → ↑ consumption & investment</li>
+          <li>Appropriate response: <strong>Tighten monetary policy</strong> (raise rates)</li>
+          <li>Reduces demand pressure → brings inflation down</li>
+          <li>Classic case for contractionary monetary policy</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Supply Shock (Inflation)</div>
+        <ul>
+          <li>Caused by: ↑ oil prices → cost-push inflation</li>
+          <li>Economy already hurting: profits fall, consumption falls, unemployment rises</li>
+          <li>Tightening policy here <strong>would exacerbate the downturn</strong></li>
+          <li>Central bank must identify the shock source before responding</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Exam Insight — Source of Shock Matters</div>
+      <p>Inflation from a demand shock → tighten. Inflation from a supply shock → tightening may make things worse. This distinction is crucial for monetary policy analysis. An oil price spike causes both inflation AND economic weakness simultaneously — a central bank that blindly tightens risks a severe recession.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: LIMITATIONS & QE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Limitations of Monetary Policy & Quantitative Easing</h2>
+    </div>
+
+    <h3>Problems in the Transmission Mechanism</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:8px;"><strong>Long-rate paradox:</strong> CB raises short rates to cool inflation, but bond market participants think it's overdoing it → long-term rates <em>fall</em> (bond vigilantes bid up bonds) → cheaper long-term borrowing actually stimulates rather than contracts. A less credible CB is more vulnerable to this.</li>
+        <li style="margin-bottom:8px;"><strong>Deposit and credit control limits:</strong> CB cannot control how much households and corporations deposit in banks, nor can it force banks to lend. Banks may sit on excess reserves rather than extend credit, especially in difficult economic conditions.</li>
+        <li style="margin-bottom:8px;"><strong>Liquidity trap:</strong> In extreme conditions, demand for money becomes infinitely elastic — people hold any additional money supply without reducing interest rates further (horizontal money demand curve). Further monetary injections have no effect. Associated with deflation.</li>
+      </ol>
+    </div>
+
+    <h3>Deflation — Why It's So Hard to Fight</h3>
+    <div class="card">
+      <p><strong>Deflation</strong> = pervasive, persistent fall in the general price level. Problems:</p>
+      <ul style="padding-left:20px;font-size:14.5px;margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Real debt rises</strong> — deflation increases the real value of outstanding debt → borrowers in distress</li>
+        <li style="margin-bottom:6px;"><strong>Delayed consumption</strong> — consumers wait to buy (prices will be lower tomorrow) → demand falls → further deflation</li>
+        <li style="margin-bottom:6px;"><strong>Zero lower bound:</strong> Nominal interest rates can't easily go much below zero (though some European countries and Japan did cut below zero). At or near zero, conventional monetary stimulus runs out.</li>
+        <li style="margin-bottom:6px;"><strong>Deflationary trap:</strong> weak consumption + falling prices + rising real debt = self-reinforcing spiral. Japan experienced this post-1990 property bubble.</li>
+      </ul>
+    </div>
+
+    <h3>Quantitative Easing (QE)</h3>
+    <div class="card">
+      <p><strong>QE</strong> is an unconventional monetary policy tool used when conventional interest rate cuts are exhausted (near zero nominal rates). Operationally similar to open market operations but on a <em>much larger scale</em>.</p>
+      <p><strong>Mechanism:</strong> Central bank creates money and uses it to purchase assets (government bonds, mortgage-backed securities) from banks, institutions, or the public. This injects reserves into the banking system, hoping to kick-start lending and broad money growth → ↑ economic activity.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>QE Program</th><th>Country</th><th>Assets Purchased</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>QE1 (Bank of England)</td>
+            <td>UK</td>
+            <td>Gilts (3–5 year maturity)</td>
+            <td>Kick-start lending; expand broad money growth</td>
+          </tr>
+          <tr>
+            <td>QE1 (Federal Reserve)</td>
+            <td>US</td>
+            <td>Mortgage bonds (Freddie Mac, Fannie Mae); later interbank/commercial paper</td>
+            <td>Support housing market; restore liquidity to failed markets</td>
+          </tr>
+          <tr>
+            <td>QE2 (Federal Reserve)</td>
+            <td>US</td>
+            <td>$600bn long-dated US Treasuries (Nov 2010)</td>
+            <td>Keep long bond yields low → encourage business/household borrowing</td>
+          </tr>
+          <tr>
+            <td>QE3 (Federal Reserve)</td>
+            <td>US</td>
+            <td>$40bn/month agency MBS (Sep 2012)</td>
+            <td>"Until labor market improved substantially." Tapered Dec 2013; ended Oct 2014.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ QE Risk — Monetization of Deficit</div>
+      <p>If the central bank purchases government securities on a large scale, it effectively <strong>funds the government's budget deficit</strong> — the independence of monetary policy becomes an illusion. This is called the <em>monetization of the government deficit</em>. Many economists fear this as it could lead to uncontrolled inflation if the CB loses credibility. A CB that accumulates bad assets risks a loss of confidence in its fiat currency.</p>
+    </div>
+
+    <h3>Summary of Monetary Policy Limitations</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;">Cannot control how much households/firms deposit in banks</li>
+        <li style="margin-bottom:6px;">Cannot easily control banks' willingness to lend (credit expansion)</li>
+        <li style="margin-bottom:6px;">Transmission mechanism can be disrupted (bond vigilantes, expectations divergence)</li>
+        <li style="margin-bottom:6px;">Liquidity trap: policy becomes ineffective when demand for money is infinitely elastic</li>
+        <li style="margin-bottom:6px;">Near-zero nominal rates limit further conventional easing</li>
+        <li style="margin-bottom:6px;">QE has no guarantee of working if banks prefer to hold excess reserves</li>
+        <li style="margin-bottom:6px;">Developing countries face additional challenges: no liquid bond market, poor credibility, rapid financial innovation, government interference</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: FISCAL-MONETARY INTERACTION -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Interaction of Monetary & Fiscal Policy</h2>
+    </div>
+
+    <h3>Key Principle</h3>
+    <div class="card">
+      <p>Both policies can alter aggregate demand, but through <strong>different channels</strong> with <strong>different impacts on the composition</strong> of AD. They are <em>not interchangeable</em>. Crucially, the <strong>fiscal multiplier is larger when monetary policy is accommodative</strong> (IMF research finding).</p>
+    </div>
+
+    <h3>Four Policy Mix Combinations</h3>
+    <div class="policy-mix">
+      <div class="pm-card">
+        <div class="pm-header" style="color:var(--accent2);">Easy Fiscal + Tight Monetary</div>
+        <p>↑G or ↓T raises output. Tight money (↓money supply) raises interest rates → crowding out private sector. Result: <strong>Higher output, higher interest rates, larger government share of GDP</strong>.</p>
+      </div>
+      <div class="pm-card">
+        <div class="pm-header" style="color:var(--accent3);">Tight Fiscal + Easy Monetary</div>
+        <p>↓G or ↑T shrinks public sector. Low interest rates stimulate private sector. Result: <strong>Private sector rises as % of GDP, public sector shrinks, lower interest rates</strong>. Encourages private investment.</p>
+      </div>
+      <div class="pm-card">
+        <div class="pm-header" style="color:var(--danger);">Easy Fiscal + Easy Monetary</div>
+        <p>Both expansionary simultaneously. Result: <strong>Highly expansionary</strong> — large ↑ AD, lower interest rates (if monetary dominates), growing public AND private sectors. Risk of inflation if at full employment.</p>
+      </div>
+      <div class="pm-card">
+        <div class="pm-header" style="color:var(--accent);">Tight Fiscal + Tight Monetary</div>
+        <p>Both contractionary. ↑ interest rates reduce private demand. ↑ taxes / ↓G reduce aggregate demand from public and private sectors. Result: <strong>Strong overall demand contraction</strong>.</p>
+      </div>
+    </div>
+
+    <h3>Fiscal Multiplier with vs. without Monetary Accommodation (IMF Research)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fiscal Tool</th><th>Multiplier: No Monetary Accommodation</th><th>Multiplier: With Monetary Accommodation</th><th>Key Takeaway</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Government Expenditure</td>
+            <td>1.6</td>
+            <td><strong style="color:var(--accent3);">3.9</strong></td>
+            <td>Accommodation makes multiplier 2.4× larger. Real rates fall → private spending surges.</td>
+          </tr>
+          <tr>
+            <td>Targeted Social Transfers (poorest)</td>
+            <td>0.5</td>
+            <td>1.7</td>
+            <td>High MPC recipients → strong effect when monetary supports it.</td>
+          </tr>
+          <tr>
+            <td>Non-targeted Transfers</td>
+            <td>0.25</td>
+            <td>0.85</td>
+            <td>Not seen as permanent → weaker effect.</td>
+          </tr>
+          <tr>
+            <td>Labor Tax Cuts</td>
+            <td>Moderate</td>
+            <td>Less positive (exception)</td>
+            <td>Supply-side effects weaker; less amplified by monetary accommodation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Does Monetary Accommodation Amplify the Fiscal Multiplier?</div>
+      <p>When the central bank keeps rates unchanged (accommodative) despite the fiscal expansion → rising demand and inflation → <em>real</em> interest rates actually fall (nominal rate fixed, inflation rising) → additional private sector spending on investment and consumption → further multiplier boost. Without accommodation, the CB raises rates to offset the fiscal stimulus → crowds out private spending → smaller multiplier.</p>
+    </div>
+
+    <h3>Fiscal vs. Monetary — Comparative Advantages</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Fiscal Policy</th><th>Monetary Policy</th></tr></thead>
+        <tbody>
+          <tr><td>Speed of action</td><td><span class="tag tag-red">Slow</span> — capital projects take years; political debate needed</td><td><span class="tag tag-green">Faster</span> — CB can act at each meeting; independent of political process</td></tr>
+          <tr><td>Political ease of tightening</td><td><span class="tag tag-red">Hard</span> — politically unpopular to cut spending / raise taxes</td><td><span class="tag tag-green">Easier</span> — independent CB can raise rates without electoral pressure</td></tr>
+          <tr><td>Tightening via automatic stabilizers</td><td><span class="tag tag-green">Automatic</span> — no political decision needed for automatic fiscal tightening</td><td>Requires active decision</td></tr>
+          <tr><td>Composition of AD</td><td>Changes public/private split; affects income distribution</td><td>Works mainly through interest rates and credit; less redistributive</td></tr>
+          <tr><td>Information problem</td><td colspan="2" style="color:var(--muted);">Both suffer from data lags and revision. Fiscal policy has additional implementation lags for capital spending.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Ricardian Equivalence — The Link to Monetary Policy</div>
+      <p>If Ricardian equivalence holds perfectly — tax cuts have no impact on private spending (households save the tax cut to pay future taxes) — fiscal policy becomes ineffective. This strengthens the case for using <strong>monetary policy</strong> instead. In practice, Ricardian equivalence rarely holds fully, but it does weaken the fiscal multiplier.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(76,139,201,0.1);border-color:rgba(76,139,201,0.3);color:var(--accent2);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;line-height:2.1;">
+        <li>✅ 6 central bank roles: Monopoly currency, Banker, Lender of last resort, Payments regulator, Monetary policy conductor, Banking supervisor (<strong>MBLRCS</strong>).</li>
+        <li>✅ Fiat money = not convertible to any commodity; derives value from government decree + acceptance.</li>
+        <li>✅ 3 monetary tools: Open market operations, Policy rate (repo), Reserve requirements.</li>
+        <li>✅ US: <strong>Fed Funds Rate</strong> (interbank overnight, most important) + Discount Rate (direct borrowing from Fed). FOMC reviews every ~6 weeks.</li>
+        <li>✅ 4 transmission channels: Bank lending rates → Asset prices → Expectations → Exchange rate → all affect Demand → affect Inflation.</li>
+        <li>✅ 3 qualities of effective CB: Independence, Credibility, Transparency (<strong>ICT</strong>). Pioneered by New Zealand 1989.</li>
+        <li>✅ Inflation target: typically 2% CPI with ±1% band. Target 2 years ahead (not current). 2% chosen to avoid deflation risk.</li>
+        <li>✅ Fed has <strong>dual mandate</strong> (employment + price stability); watches PCE deflator ~2%.</li>
+        <li>✅ ECB has <strong>target + operational independence</strong> (most independent major CB).</li>
+        <li>✅ Neutral rate = Real trend growth + Expected inflation. Policy rate above → contractionary; below → expansionary.</li>
+        <li>✅ Demand shock inflation → tighten policy. Supply shock inflation → tightening may worsen the situation.</li>
+        <li>✅ Liquidity trap: money demand infinitely elastic → monetary injections have no effect. Associated with deflation.</li>
+        <li>✅ Deflation is harder to fight than inflation because nominal rates can't go far below zero.</li>
+        <li>✅ QE = unconventional; large-scale asset purchases; similar to OMO but massive scale. Used when interest rates near zero.</li>
+        <li>✅ QE risk: large-scale CB purchase of govt bonds = monetization of deficit = threatens CB independence and could cause inflation.</li>
+        <li>✅ Fiscal multiplier is much larger with monetary accommodation (IMF: govt spending multiplier 1.6 without vs. 3.9 with).</li>
+        <li>✅ Easy fiscal + tight money → higher output + higher rates + larger govt share of GDP.</li>
+        <li>✅ Tight fiscal + easy money → lower rates + larger private sector share of GDP (best for private investment growth).</li>
+        <li>✅ Ricardian equivalence → if tax cuts don't stimulate spending → favors using monetary tools instead.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 4: Monetary Policy · Exam Prep Notes
+</footer>
+</body>
+</html>

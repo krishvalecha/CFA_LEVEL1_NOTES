@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 11: Yield-Based Bond Duration Measures and Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1318 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1a1f2e; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.total-row { background: rgba(76,139,201,0.08); border-top: 2px solid rgba(76,139,201,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent2); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; }
+  tbody td.muted-col { color: var(--muted); }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* Bond type comparison cards */
+  .bond-type-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin: 16px 0; }
+  @media (max-width: 860px) { .bond-type-grid { grid-template-columns: 1fr 1fr; } }
+  .bt-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; text-align: center; }
+  .bt-card.premium { border-top: 3px solid var(--accent2); }
+  .bt-card.discount { border-top: 3px solid var(--danger); }
+  .bt-card.zerocoupon { border-top: 3px solid var(--accent3); }
+  .bt-card.perpetuity { border-top: 3px solid var(--accent); }
+  .bt-type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+  .premium .bt-type { color: var(--accent2); }
+  .discount .bt-type { color: var(--danger); }
+  .zerocoupon .bt-type { color: var(--accent3); }
+  .perpetuity .bt-type { color: var(--accent); }
+  .bt-card p { font-size: 12.5px; color: var(--text); line-height: 1.7; }
+
+  /* Properties table */
+  .prop-row { display: grid; grid-template-columns: 1.5fr 1fr 2fr; gap: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 5px 0; }
+  .prop-row.header { background: #1a1f2e; }
+  .prop-row > div { padding: 10px 16px; font-size: 13px; border-right: 1px solid var(--border); }
+  .prop-row > div:last-child { border-right: none; }
+  .prop-row.header > div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); }
+  .prop-row.alt { background: rgba(255,255,255,0.015); }
+  .prop-row .arrow-up { color: var(--accent3); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .prop-row .arrow-down { color: var(--danger); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 11</div>
+  <h1>Yield-Based Bond <span>Duration Measures</span> &amp; Properties</h1>
+  <p>Exam-ready notes with full depth: modified duration — derivation from MacDur and from first principles; percentage price change formula; approximate modified duration (two-price method); money duration and dollar duration; PVBP/DV01/PV01; duration of zero-coupon bonds, perpetuities, and floating-rate notes; Exhibit 4 properties table fully explained; the saw-tooth pattern; discount bond anomaly; BRWA bond fully worked at issuance and 57 days later.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Yield Duration vs. Curve Duration</a>
+  <a class="toc-item" href="#s2">02 · Modified Duration — Derivation &amp; Formula</a>
+  <a class="toc-item" href="#s3">03 · Using ModDur to Estimate Price Change</a>
+  <a class="toc-item" href="#s4">04 · Approximate Modified Duration</a>
+  <a class="toc-item" href="#s5">05 · Money Duration &amp; Dollar Duration</a>
+  <a class="toc-item" href="#s6">06 · Price Value of a Basis Point (PVBP/DV01)</a>
+  <a class="toc-item" href="#s7">07 · Duration of Special Bond Types</a>
+  <a class="toc-item" href="#s8">08 · Properties of Duration — Exhibit 4</a>
+  <a class="toc-item" href="#s9">09 · Duration vs. Time-to-Maturity — Exhibit 5</a>
+  <a class="toc-item" href="#s10">10 · The Saw-Tooth Pattern — Exhibit 6</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: YIELD DURATION vs CURVE DURATION   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Yield Duration vs. Curve Duration — Two Families</h2>
+    </div>
+
+    <div class="card">
+      <p>Duration is the umbrella concept for measuring interest rate risk. But not all duration measures are the same — they differ in <strong>what yield change they measure sensitivity to</strong> and <strong>what assumption they make about cash flow certainty</strong>.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Yield Duration Measures (This Module)</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d5f5;">
+          <li>Measure sensitivity to changes in the bond's <strong>own YTM</strong></li>
+          <li>Assume underlying cash flows are <strong>certain</strong> (no default risk)</li>
+          <li>Used for option-free, investment-grade bonds</li>
+          <li>Measures: <strong>Macaulay duration, Modified duration, Money duration, PVBP</strong></li>
+          <li>Also called "yield-based duration" statistics</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Curve Duration Measures (Later Modules)</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#dfd0c8;">
+          <li>Measure sensitivity to changes in a <strong>benchmark yield curve</strong></li>
+          <li>Allow for the possibility of <strong>default</strong> — less certain cash flows</li>
+          <li>Used for bonds with credit risk, options, or complex features</li>
+          <li>Key measure: <strong>Effective duration</strong></li>
+          <li>Required when cash flows change if yields change (e.g., callable bonds)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 This Module's Scope</div>
+      <p>All four yield duration measures — Macaulay duration (Module 10), modified duration, money duration, and PVBP — assume certain cash flows and measure sensitivity to the bond's own YTM. They are linked to each other through simple formulas. Know all four, their formulas, their uses, and the relationships between them.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: MODIFIED DURATION                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Modified Duration — Definition, Derivation &amp; Formula</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Modified Duration (ModDur / AnnModDur)</div>
+      <div class="def-body">The first derivative of the bond's price with respect to its yield-to-maturity, expressed as a percentage of price. It is the <strong>slope of the price–yield curve</strong> at any given point, measuring how sensitively the bond's full price changes for a small change in its YTM. It is Macaulay duration divided by (1 + yield per period). Modified duration gives the approximate <strong>percentage price change</strong> for a given change in yield.</div>
+    </div>
+
+    <h3>Derivation from First Principles — The Logic</h3>
+    <div class="card">
+      <p>Starting from the bond price formula PV = Σ PMT/(1+r)^t + FV/(1+r)^N, taking the derivative dPV/dr gives the sensitivity of price to yield. After factoring out −1/(1+r) and dividing by PV to get percentage change, the bracketed term equals Macaulay duration. The result:</p>
+      <p style="margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:14px; color:#e8c97a;">(dPV/dr) / PV = −MacDur / (1+r)</p>
+      <p style="margin-top:8px;">Removing the negative sign (since we want a positive duration number), we get Modified Duration = MacDur / (1+r). The negative sign is then re-introduced when using ModDur to estimate price changes — capturing the inverse price–yield relationship.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Modified Duration — Core Formula (Equation 2)</div>
+      <div class="f">
+        ModDur (per period) = MacDur / (1 + r)<br><br>
+        WHERE:<br>
+        MacDur = Macaulay duration in periods<br>
+        r      = yield-to-maturity per period (e.g., semiannual YTM for semiannual bonds)<br><br>
+        To annualize ModDur for a bond paying m coupons per year:<br>
+        AnnModDur = ModDur (per period) / m<br><br>
+        OR equivalently (working entirely in annual terms):<br>
+        AnnModDur = AnnMacDur / (1 + r_annual/m)<br><br>
+        WHERE r_annual/m = yield per period (e.g., annual YTM / 2 for semiannual bonds)<br><br>
+        EXCEL: =MDURATION(Settlement, Maturity, Coupon, Yld, Frequency, [Basis])
+      </div>
+      <div class="note">
+        <strong>For a semiannual bond:</strong> MacDur is in semiannual periods. Divide by (1 + semiannual YTM) to get ModDur per period. Then divide by 2 to get AnnModDur in years. In practice: AnnModDur = (MacDur in periods / (1 + r_per_period)) / m.<br><br>
+        <strong>Example (BRWA at issuance):</strong> MacDur = 9.3203 semiannual periods. r per period = 3.20%/2 = 1.60% = 0.016. ModDur = 9.3203/1.016 = 9.17351 periods. AnnModDur = 9.17351/2 = 4.58676 years.<br><br>
+        <strong>Key relationship:</strong> AnnModDur is always slightly LESS than AnnMacDur because we divide by (1+r) > 1. The difference is small at low yields and larger at high yields.
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Full Calculation at Issuance (Example 1)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:4px;">5-year BRWA bond. 3.20% semiannual coupon. Priced at par. YTM = 3.20%. Settlement: 15 Oct 2025. Maturity: 15 Oct 2030.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Period</th><th>Time to Receipt (semi-periods)</th><th>Cash Flow</th><th>PV</th><th>Weight</th><th>Time × Weight</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1.0000</td><td>1.6</td><td>1.5748</td><td>0.0157</td><td>0.0157</td></tr>
+          <tr><td>2</td><td>2.0000</td><td>1.6</td><td>1.5500</td><td>0.0155</td><td>0.0310</td></tr>
+          <tr><td>3</td><td>3.0000</td><td>1.6</td><td>1.5256</td><td>0.0153</td><td>0.0458</td></tr>
+          <tr><td>4</td><td>4.0000</td><td>1.6</td><td>1.5016</td><td>0.0150</td><td>0.0601</td></tr>
+          <tr><td>5</td><td>5.0000</td><td>1.6</td><td>1.4779</td><td>0.0148</td><td>0.0739</td></tr>
+          <tr><td>6</td><td>6.0000</td><td>1.6</td><td>1.4546</td><td>0.0145</td><td>0.0873</td></tr>
+          <tr><td>7</td><td>7.0000</td><td>1.6</td><td>1.4317</td><td>0.0143</td><td>0.1002</td></tr>
+          <tr><td>8</td><td>8.0000</td><td>1.6</td><td>1.4092</td><td>0.0141</td><td>0.1127</td></tr>
+          <tr><td>9</td><td>9.0000</td><td>1.6</td><td>1.3870</td><td>0.0139</td><td>0.1248</td></tr>
+          <tr><td>10</td><td>10.0000</td><td>101.6</td><td>86.6875</td><td>0.8669</td><td>8.6688</td></tr>
+          <tr class="total-row">
+            <td class="label-col">TOTAL</td><td>—</td><td>—</td>
+            <td class="highlight">100.0000</td>
+            <td class="highlight">1.0000</td>
+            <td class="highlight">9.3203 (MacDur, semi-periods)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="auction-box">
+      <div class="label">Converting to Modified Duration (at issuance)</div>
+      <div class="f">
+        r per period = 3.20% / 2 = 1.60% = 0.016<br>
+        ModDur (per period) = 9.3203 / (1 + 0.016) = 9.3203 / 1.016 = 9.17351<br>
+        AnnModDur = 9.17351 / 2 = 4.58676 years<br><br>
+        Interpretation: A 1% (100bp) change in YTM → ≈ 4.587% change in full price<br>
+        A 1bp change in YTM → ≈ 0.04587% change in full price
+      </div>
+    </div>
+
+    <h3>BRWA Bond — 57 Days after Issuance (Example 1 continued)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:4px;">Settlement: 11 Dec 2025. t/T = 57/180 = 0.3167 (semiannual period). Each period's time to receipt = k − 0.3167.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Period</th><th>Time to Receipt (k − t/T)</th><th>Cash Flow</th><th>PV</th><th>Weight</th><th>Time × Weight</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>0.6833</td><td>1.6</td><td>1.5827</td><td>0.0157</td><td>0.0108</td></tr>
+          <tr><td>2</td><td>1.6833</td><td>1.6</td><td>1.5578</td><td>0.0155</td><td>0.0261</td></tr>
+          <tr><td>3</td><td>2.6833</td><td>1.6</td><td>1.5333</td><td>0.0153</td><td>0.0409</td></tr>
+          <tr><td>4</td><td>3.6833</td><td>1.6</td><td>1.5091</td><td>0.0150</td><td>0.0553</td></tr>
+          <tr><td>5</td><td>4.6833</td><td>1.6</td><td>1.4854</td><td>0.0148</td><td>0.0692</td></tr>
+          <tr><td>6</td><td>5.6833</td><td>1.6</td><td>1.4620</td><td>0.0145</td><td>0.0827</td></tr>
+          <tr><td>7</td><td>6.6833</td><td>1.6</td><td>1.4390</td><td>0.0143</td><td>0.0957</td></tr>
+          <tr><td>8</td><td>7.6833</td><td>1.6</td><td>1.4163</td><td>0.0141</td><td>0.1083</td></tr>
+          <tr><td>9</td><td>8.6833</td><td>1.6</td><td>1.3940</td><td>0.0139</td><td>0.1204</td></tr>
+          <tr><td>10</td><td>9.6833</td><td>101.6</td><td>87.1244</td><td>0.8669</td><td>8.3942</td></tr>
+          <tr class="total-row">
+            <td class="label-col">TOTAL</td><td>—</td><td>—</td>
+            <td class="highlight">100.5039</td>
+            <td class="highlight">1.0000</td>
+            <td class="highlight">9.0036 (MacDur, semi-periods)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="auction-box">
+      <div class="label">Converting to Modified Duration (57 days later)</div>
+      <div class="f">
+        ModDur (per period) = 9.0036 / 1.016 = 8.86184<br>
+        AnnModDur = 8.86184 / 2 = 4.43092 years<br><br>
+        Full price = 100.5039 (includes accrued interest for 57 days)<br>
+        Note: AnnModDur fell from 4.58676 → 4.43092 as 57 days elapsed → bond is less risky now
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: USING MODDUR TO ESTIMATE PRICE     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Using Modified Duration to Estimate Percentage Price Change</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Percentage Price Change Estimate</div>
+      <div class="f">
+        %ΔPV^Full ≈ −AnnModDur × ΔAnnYield<br><br>
+        WHERE:<br>
+        %ΔPV^Full = approximate percentage change in full price (as decimal)<br>
+        AnnModDur  = annualized modified duration (in years)<br>
+        ΔAnnYield  = change in annualized YTM (as decimal, e.g., +0.01 for +100bps)<br><br>
+        NEGATIVE SIGN captures the inverse price–yield relationship:<br>
+        Yield ↑ → Price ↓  (ΔAnnYield &gt; 0 → %ΔPV &lt; 0)<br>
+        Yield ↓ → Price ↑  (ΔAnnYield &lt; 0 → %ΔPV &gt; 0)
+      </div>
+      <div class="note">
+        <strong>This is a LINEAR approximation of a NONLINEAR relationship.</strong> The "≈" sign is crucial — the price–yield relationship is curved (convex), not straight. For small yield changes (a few bps), the approximation is very accurate. For large yield changes (100bps+), the linear approximation understates the actual price gain and overstates the actual price loss (due to convexity). A "convexity adjustment" (covered later) improves the estimate for larger moves.<br><br>
+        <strong>The price change refers to the FULL price</strong> (flat price + accrued interest) — not just the flat/clean price.<br><br>
+        <strong>Key insight:</strong> For a bond with AnnModDur = 5, a 1% (100bp) increase in yield → approximately 5% decrease in price. A 1bp change → approximately 0.05% price change. Modified duration tells you how many percent the price changes per unit change in yield.
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Price Change Estimates (at Issuance, AnnModDur = 4.58676)</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semiannual bond. Yield changes instantaneously right after issuance.</div>
+      <div class="f">
+        Yield RISES by 80bps (+0.0080):  → 3.20% to 4.00%<br>
+        %ΔPV^Full ≈ −4.58676 × (+0.0080) = −0.03669 = −3.67%<br>
+        Price falls from 100.000 to approximately 96.33<br><br>
+        Yield FALLS by 80bps (−0.0080):  → 3.20% to 2.40%<br>
+        %ΔPV^Full ≈ −4.58676 × (−0.0080) = +0.03669 = +3.67%<br>
+        Price rises from 100.000 to approximately 103.67<br><br>
+        NOTE: Both estimates are equal in absolute value (±3.67%).<br>
+        In reality, the price RISES by slightly more than 3.67% when yields fall<br>
+        and falls by slightly LESS than 3.67% when yields rise — convexity effect.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Symmetry Trap — ModDur Gives Equal Estimates Up and Down</div>
+      <p>Because modified duration is a linear approximation, it gives the same absolute percentage change for equal upward and downward yield moves. In reality (due to the bond's convexity), price increases are larger than price decreases for equal yield changes. The linear ModDur estimate is a first-order approximation — accurate for small changes. For large changes, always note that the actual gain &gt; ModDur estimate (convexity helps) and actual loss &lt; ModDur estimate (convexity cushions). This will be corrected when the convexity adjustment is covered.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: APPROXIMATE MODIFIED DURATION      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Approximate Modified Duration — The Two-Price Method (Equation 4)</h2>
+    </div>
+
+    <div class="card">
+      <p>When Macaulay duration is not known (e.g., for bonds with contingency features, embedded options, or default risk), modified duration can be <strong>approximated numerically</strong> by estimating the slope of the price–yield curve using two bond prices computed at slightly different yields. This is the same principle as a numerical first derivative.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Approximate Annualized Modified Duration</div>
+      <div class="f">
+        AnnModDur ≈ (PV− − PV+) / (2 × ΔYield × PV₀)<br><br>
+        WHERE:<br>
+        PV₀     = current full price of the bond (at the current YTM)<br>
+        PV+     = full price if YTM is increased by ΔYield<br>
+        PV−     = full price if YTM is decreased by ΔYield<br>
+        ΔYield  = the yield change used in the approximation (e.g., 0.0001 for 1bp, 0.0050 for 50bps)<br><br>
+        STEPS:<br>
+        Step 1: Start with current YTM. Compute PV₀.<br>
+        Step 2: Increase YTM by ΔYield. Compute PV+.<br>
+        Step 3: Decrease YTM by ΔYield. Compute PV−.<br>
+        Step 4: Apply formula above → AnnModDur<br><br>
+        OPTIONAL: Approximate AnnMacDur = AnnModDur × (1 + yield per period)
+      </div>
+      <div class="note">
+        <strong>Why PV− minus PV+?</strong> When yield falls, price rises (PV−); when yield rises, price falls (PV+). So PV− &gt; PV+. The difference (PV− − PV+) is positive, and we divide by 2×ΔYield×PV₀ to get the percentage slope — giving a positive duration number.<br><br>
+        <strong>Choosing ΔYield:</strong> Small enough to accurately capture the local slope, but not so small as to cause numerical errors. Typically 1bp (0.0001) to 10bps (0.001) for standard bonds. The result is the same approximation regardless of ΔYield chosen, as long as it's reasonably small.<br><br>
+        <strong>Why this works for complex bonds:</strong> For callable bonds, bonds with default risk, or floating-rate notes, cash flows themselves change when yields change — so Macaulay duration is undefined. The numerical approximation using PV+, PV−, PV₀ captures the actual price sensitivity without needing to know the individual cash flows' timing.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Relationship Between Approximate and Exact ModDur</div>
+      <p>For a standard option-free fixed-rate bond where Macaulay duration is known, the approximate method (Eq. 4) produces the same result as the exact formula (MacDur/(1+r)). They should agree closely — if they don't, something went wrong in the calculation. For the exam, know when each method is appropriate: exact formula when MacDur is known; approximation when it isn't.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: MONEY DURATION                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Money Duration — Price Risk in Currency Units (Equation 6 &amp; 7)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Money Duration (MoneyDur) — also called Dollar Duration in the US</div>
+      <div class="def-body">The estimated change in the full price of a bond position in <strong>currency units</strong> (not percentage) for a given change in yield. It equals annualized modified duration multiplied by the full price of the bond (or the total market value of the position). Where modified duration tells you the percentage price change, money duration tells you the actual dollar/currency amount of that change.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equations 6 &amp; 7 — Money Duration and Currency Price Change</div>
+      <div class="f">
+        MoneyDur = AnnModDur × PV^Full                    [Equation 6]<br><br>
+        Can be stated:<br>
+        (a) Per 100 of par value → PV^Full = full price per 100 par<br>
+        (b) For entire position → PV^Full = market value of position<br><br>
+        Estimated change in full price (currency units):    [Equation 7]<br>
+        ΔPV^Full ≈ −MoneyDur × ΔYield<br><br>
+        WHERE ΔYield = change in annualized YTM (as decimal)
+      </div>
+      <div class="note">
+        <strong>Comparison to ModDur:</strong><br>
+        Modified duration: %ΔPV^Full ≈ −AnnModDur × ΔYield (percentage change)<br>
+        Money duration: ΔPV^Full ≈ −MoneyDur × ΔYield (currency change)<br><br>
+        They are related: MoneyDur × ΔYield = PV^Full × AnnModDur × ΔYield = PV^Full × %ΔPV^Full. So money duration simply scales the percentage change by the portfolio size.<br><br>
+        <strong>Also called:</strong> Dollar duration (US), dollar value of an 01 (DV01 for 1bp change). Note: the PVBP is actually a different formula — see Section 6.
+      </div>
+    </div>
+
+    <h3>Worked Example — BRWA Bond Position (57 days after issuance)</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semi. Full price = 100.504 per 100 par. AnnModDur = 4.43092. Position = USD 100,000,000 par.</div>
+      <div class="f">
+        Market value of position = 100.504/100 × USD 100,000,000 = USD 100,503,921<br><br>
+        MoneyDur = AnnModDur × Market value<br>
+                 = 4.43092 × USD 100,503,921<br>
+                 = USD 445,324,719<br><br>
+        If YTM rises by 100bps (+1.00% = +0.0100):<br>
+        ΔPV^Full ≈ −USD 445,324,719 × 0.0100 = −USD 4,453,247<br><br>
+        Interpretation: A 100bp rise in yield → lose approximately USD 4.45 million<br>
+        on a USD 100.5 million position (~4.43% of market value, consistent with ModDur)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Money Duration Scales with Position Size</div>
+      <p>Two investors holding the same bond with the same AnnModDur will have different money durations if their position sizes differ. Money duration is critical for risk management at the portfolio or desk level — it tells you the actual dollar loss (or gain) from a rate move, not just the percentage. A large institution with $1 billion in a bond with ModDur of 5 has a MoneyDur of $5 billion — a 1bp move costs $500,000. This is why large fixed-income desks manage money duration (or DV01) carefully as their primary risk metric.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: PVBP / DV01                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Price Value of a Basis Point — PVBP / DV01 / PV01 (Equation 8)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">PVBP (Price Value of a Basis Point) — also DV01 / PV01 / BPV</div>
+      <div class="def-body">The estimated change in the <strong>full price of a bond</strong> for a <strong>1 basis point (0.01%) change</strong> in its yield-to-maturity. It is computed directly from two bond prices bracketing a 1bp yield change — making it more accurate than the approximation derived from money duration for most practical purposes.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 8 — PVBP Formula</div>
+      <div class="f">
+        PVBP = (PV− − PV+) / 2<br><br>
+        WHERE:<br>
+        PV− = full price if YTM decreases by 1 basis point (−0.0001)<br>
+        PV+ = full price if YTM increases by 1 basis point (+0.0001)<br><br>
+        Note: PV− &gt; PV+ always (price falls when yield rises) → PVBP &gt; 0<br><br>
+        RELATIONSHIP to Money Duration:<br>
+        BPV = MoneyDur × 0.0001  [Basis Point Value]<br>
+        PVBP ≈ BPV (they are approximately equal; PVBP is computed directly from prices)<br><br>
+        Equivalent relationships:<br>
+        PVBP ≈ AnnModDur × PV₀ × 0.0001<br>
+        PVBP per 100 par ≈ AnnModDur × PV₀ / 10,000
+      </div>
+      <div class="note">
+        <strong>Alternative names — all the same concept:</strong><br>
+        PVBP = Price Value of a Basis Point<br>
+        DV01 = Dollar Value of 01 (US usage) — the same calculation<br>
+        PV01 = Present Value of 01 — same<br>
+        BPV  = Basis Point Value = MoneyDur × 0.0001 (approximately the same)<br><br>
+        <strong>When to use PVBP vs. ModDur:</strong> PVBP is particularly useful for bonds with uncertain cash flows (e.g., callable bonds) because it is computed directly from prices without needing to decompose into MacDur — same as the approximate ModDur approach, but focused on 1bp specifically. Standard in derivatives and swap markets.<br><br>
+        <strong>PVBP is symmetric:</strong> The 1bp increase and 1bp decrease price changes are averaged, canceling out the small convexity effect at 1bp. This makes PVBP a very clean measure for hedging small rate moves.
+      </div>
+    </div>
+
+    <h3>Master Summary — All Four Yield Duration Measures (Exhibit 3)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Measure</th><th>Formula / Calculation</th><th>Output</th><th>Primary Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Macaulay Duration</td>
+            <td>Σ (time × PV weight) | MacDur = AnnModDur × (1+r per period)</td>
+            <td>Years (periods)</td>
+            <td>Immunization — holding period that balances reinvestment and price risk</td>
+          </tr>
+          <tr>
+            <td class="label-col">Modified Duration</td>
+            <td>MacDur / (1+r per period) | Or: (PV−−PV+)/(2×ΔYield×PV₀)</td>
+            <td>Percentage per yield unit</td>
+            <td>Estimate %ΔPV^Full for a given ΔYield: %ΔPV ≈ −AnnModDur × ΔYield</td>
+          </tr>
+          <tr>
+            <td class="label-col">Money Duration</td>
+            <td>AnnModDur × PV^Full (market value)</td>
+            <td>Currency amount per yield unit</td>
+            <td>Estimate ΔPV in currency units: ΔPV ≈ −MoneyDur × ΔYield</td>
+          </tr>
+          <tr>
+            <td class="label-col">PVBP / DV01</td>
+            <td>(PV− − PV+) / 2 [1bp shift] | ≈ MoneyDur × 0.0001</td>
+            <td>Currency per 1bp</td>
+            <td>Estimate ΔPV for exactly 1bp change; useful for complex bonds and hedging</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: SPECIAL BOND TYPES                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Duration of Special Bond Types — Zero-Coupon, Perpetuity &amp; Floating Rate</h2>
+    </div>
+
+    <div class="bond-type-grid">
+      <div class="bt-card zerocoupon">
+        <div class="bt-type">Zero-Coupon Bond</div>
+        <p><strong>MacDur = time-to-maturity</strong><br>Only one cash flow at T → weight = 1.0 → weighted average = T<br><br><strong>ModDur = T / (1+r)</strong><br>Always exactly maturity for MacDur. Highest duration for a given maturity. No reinvestment risk.</p>
+      </div>
+      <div class="bt-card perpetuity">
+        <div class="bt-type">Perpetuity (Perpetual Bond)</div>
+        <p><strong>MacDur = (1+r) / r</strong><br>No maturity → infinite cash flows, but the PV-weighted average converges.<br><br>At r = 5%: MacDur = 1.05/0.05 = 21 years. As r → 0, MacDur → ∞. Upper bound for any bond's MacDur at a given yield.</p>
+      </div>
+      <div class="bt-card premium">
+        <div class="bt-type">Fixed-Rate Coupon Bond</div>
+        <p>MacDur between zero-coupon and perpetuity bounds.<br><br>Premium (c&gt;r): MacDur below (1+r)/r, approaches from below as maturity ↑<br>Discount (c&lt;r): MacDur can exceed (1+r)/r, peaks and then falls for very long maturities<br>Par (c=r): MacDur = [(1+r)/r] × [1 − 1/(1+r)^N]</p>
+      </div>
+      <div class="bt-card discount">
+        <div class="bt-type">Floating-Rate Note (FRN)</div>
+        <p><strong>MacDur = (T−t) / T</strong><br>Time remaining in current coupon period. Interest rate risk only exists until the NEXT reset date — after which coupon adjusts to new MRR.<br><br>Example: 180-day period, 57 days elapsed: MacDur = (180−57)/180 = 0.683 periods. Very low duration → used to reduce portfolio duration.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Duration Formulas for Special Bond Types</div>
+      <div class="f">
+        ZERO-COUPON BOND:<br>
+        MacDur = N (periods to maturity)  →  AnnMacDur = N/m (if m coupons/year)<br>
+        AnnModDur = AnnMacDur / (1 + r_annual/m)<br><br>
+        PERPETUITY (non-callable):<br>
+        MacDur = (1 + r) / r   [where r = yield per period]<br>
+        Note: For an annual perpetuity at r = 6%: MacDur = 1.06/0.06 = 17.67 years<br><br>
+        FLOATING-RATE NOTE:<br>
+        MacDur_Floating = (T − t) / T<br>
+        T = days in coupon period; t = days since last coupon<br>
+        Maximum duration = 1 period (just after reset); Minimum = 0 (exactly at reset date)
+      </div>
+      <div class="note">
+        <strong>Why floating-rate notes have low duration:</strong> At the next reset date, the coupon will be adjusted to match the current MRR. So yield risk (the risk that the cash flows are mispriced relative to current yields) exists only for the fraction of the period remaining. This is why FRNs are used to shorten portfolio duration — they have near-zero interest rate risk.<br><br>
+        <strong>Why zero-coupon bonds have the highest duration for their maturity:</strong> All their cash flow comes at maturity (weight = 1.0). There's no earlier coupon to pull the weighted average forward. A 10-year zero-coupon bond has MacDur = 10 years, while a 10-year 6% coupon bond has MacDur ≈ 7–8 years. The coupon payments reduce the weighted-average time.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Rank by Duration: Zero-Coupon &gt; Low Coupon &gt; High Coupon; and Longer Maturity &gt; Shorter Maturity</div>
+      <p>For a given maturity, zero-coupon bonds have the highest duration, followed by low-coupon bonds, then high-coupon bonds. Floating-rate notes have the lowest duration of all. For a given coupon structure, longer maturity → higher duration (almost always — with the discount bond exception discussed next). This ranking is important for portfolio duration management.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: PROPERTIES OF DURATION — EXHIBIT 4 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Properties of Duration — Exhibit 4 (All Features with Full Explanations)</h2>
+    </div>
+
+    <div class="card">
+      <p>The four key features that determine a bond's Macaulay and modified duration are: coupon rate (c), yield-to-maturity (r), time-to-maturity (N), and fraction of current period elapsed (t/T). The same relationships hold for modified duration, money duration, and PVBP.</p>
+    </div>
+
+    <div class="prop-row header">
+      <div>Bond Feature (increase in feature →)</div>
+      <div>Effect on Duration</div>
+      <div>Full Explanation</div>
+    </div>
+
+    <div class="prop-row">
+      <div>Coupon rate (c) ↑</div>
+      <div><span class="arrow-down">↓ Decreases</span><br><small style="color:var(--muted);">Inverse relationship</small></div>
+      <div style="font-size:13px; color:var(--text);">Higher coupons → more cash flows arriving early → early cash flows have more PV weight → pull the weighted average of timing earlier → lower MacDur. Think: a bond paying 10% vs. 2% coupons — the 10% bond returns much more of your investment earlier, so you "get your money back" sooner on average.</div>
+    </div>
+
+    <div class="prop-row alt">
+      <div>Yield-to-maturity (r) ↑</div>
+      <div><span class="arrow-down">↓ Decreases</span><br><small style="color:var(--muted);">Inverse relationship</small></div>
+      <div style="font-size:13px; color:var(--text);">Higher YTM → discounts distant cash flows more heavily → reduces their PV weight more than near-term cash flows → shifts the weighted average of timing earlier → lower MacDur. Also: higher yield means the bond price is lower, meaning the final redemption value (par) represents a smaller fraction of the bond's value → less weight on the distant maturity payment.</div>
+    </div>
+
+    <div class="prop-row">
+      <div>Time-to-maturity (N) ↑</div>
+      <div><span class="arrow-up">↑ Increases</span><br><small style="color:var(--muted);">Direct relationship (generally)</small></div>
+      <div style="font-size:13px; color:var(--text);">Longer maturity → cash flows are received further in the future → weighted-average time to receipt rises → higher MacDur. <strong>Always holds for par and premium bonds.</strong> For discount bonds, there is an exception (see Section 9 below). Also: as N → ∞, MacDur approaches the perpetuity ceiling of (1+r)/r.</div>
+    </div>
+
+    <div class="prop-row alt">
+      <div>Fraction elapsed (t/T) ↑</div>
+      <div><span class="arrow-down">↓ Decreases</span><br><small style="color:var(--muted);">Inverse relationship</small></div>
+      <div style="font-size:13px; color:var(--text);">As time passes within a coupon period (t/T rises), each cash flow's time to receipt decreases by the same amount → weighted average of timing falls → MacDur decreases. This is the continuous decay of duration within each coupon period — the saw-tooth pattern (Section 10). At t/T = 0 (coupon just paid), MacDur resets to its highest value for that period; at t/T → 1 (just before next coupon), MacDur is at its lowest for that period.</div>
+    </div>
+
+    <div style="margin-top:16px;" class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>As Feature Increases...</th><th>Duration Changes...</th><th>Memory Aid</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="label-col">Coupon Rate (c)</td><td>Coupons paid earlier are bigger</td><td class="highlight">↓ Decreases</td><td>More early income = less "wait" = lower duration</td></tr>
+          <tr><td class="label-col">YTM (r)</td><td>Distant CFs discounted more</td><td class="highlight">↓ Decreases</td><td>Higher rate = future is worth less = earlier effective receipt</td></tr>
+          <tr><td class="label-col">Time-to-Maturity (N)</td><td>CFs are further away</td><td class="highlight">↑ Increases (usually)</td><td>More time = longer average wait = higher duration</td></tr>
+          <tr><td class="label-col">Fraction Elapsed (t/T)</td><td>All CFs are closer</td><td class="highlight">↓ Decreases</td><td>Time passing = shorter remaining wait = lower duration</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: DURATION vs. MATURITY — EXHIBIT 5  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Duration vs. Time-to-Maturity — Exhibit 5 (Four Bond Types)</h2>
+    </div>
+
+    <div class="card">
+      <p>Exhibit 5 plots Macaulay duration against time-to-maturity for four bond types — premium, discount, zero-coupon, and perpetuity. Each tells a different story. Understanding these patterns is a common exam topic.</p>
+    </div>
+
+    <div class="bond-type-grid">
+      <div class="bt-card premium">
+        <div class="bt-type">Premium Bond (c &gt; r)</div>
+        <p>MacDur rises as maturity increases but is <strong>always below the perpetuity ceiling (1+r)/r</strong>. Approaches the ceiling from below as N → ∞. Relationship is monotonically increasing — no peak or decline. As c−r &gt; 0, the closed-form numerator stays positive, keeping duration below the perpetuity level.</p>
+      </div>
+      <div class="bt-card discount">
+        <div class="bt-type">Discount Bond (c &lt; r)</div>
+        <p>MacDur rises initially, <strong>EXCEEDS the perpetuity ceiling</strong> at some point, <strong>reaches a maximum</strong>, and then <strong>DECLINES</strong> for very long maturities. This is the "discount bond anomaly." Practical implication: for very long-dated discount bonds, interest rate risk is LOWER than for shorter-term discount bonds.</p>
+      </div>
+      <div class="bt-card zerocoupon">
+        <div class="bt-type">Zero-Coupon Bond</div>
+        <p>MacDur = maturity exactly. A <strong>straight line from origin through every point</strong>. The only bond type where duration always equals maturity. Always above premium and par bonds, below perpetuity (at short maturities). The benchmark for "maximum duration at any given maturity."</p>
+      </div>
+      <div class="bt-card perpetuity">
+        <div class="bt-type">Perpetuity</div>
+        <p>MacDur = (1+r)/r = a <strong>horizontal line</strong> (constant regardless of maturity since there is no maturity). This is the <strong>ceiling</strong> that premium and par bonds approach from below. Discount bonds can temporarily exceed this but then fall back toward it as N → ∞.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Discount Bond Anomaly — Why Duration Can Fall for Long Maturities</div>
+      <div class="f">
+        In the closed-form MacDur formula:<br>
+        MacDur = {(1+r)/r − [1+r + N×(c−r)] / [c×((1+r)^N−1) + r]} − t/T<br><br>
+        For DISCOUNT bonds: c &lt; r → (c−r) &lt; 0<br>
+        The numerator of the second term [1+r + N×(c−r)] can become negative<br>
+        when N is very large (many periods × negative c−r).<br><br>
+        When numerator goes negative, the second term becomes negative,<br>
+        so subtracting a negative number ADDS to duration → exceeds (1+r)/r.<br><br>
+        As N → ∞, the second term → 0 (denominator grows faster), so<br>
+        MacDur → (1+r)/r from ABOVE — the perpetuity ceiling.<br><br>
+        RESULT: There exists some N* where MacDur is maximized, and for N &gt; N*,<br>
+        duration falls despite longer maturity. Very long discount bonds can have<br>
+        LESS interest rate risk than shorter-term discount bonds.
+      </div>
+      <div class="note">
+        <strong>Practical exam note:</strong> This anomaly only applies to bonds trading at a significant discount. Investment-grade bonds near par or at a premium do not exhibit this behavior. The exam may test whether you know that the "longer maturity = higher duration" relationship does NOT always hold for discount bonds.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ "Longer Maturity = Higher Duration" — Not Always True</div>
+      <p>This statement is true for par and premium bonds — always. For discount bonds, it is true for shorter maturities but breaks down when maturities become very long. For deeply discounted or zero-coupon-like instruments, be careful. The exception is rare in practice (most bonds don't trade at deep discounts for long maturities) but is frequently tested conceptually on the CFA exam. The correct statement: "Longer maturity generally corresponds to higher duration, except for long-dated discount bonds."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: SAW-TOOTH PATTERN — EXHIBIT 6     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>The Saw-Tooth Pattern — Duration Over Time (Exhibit 6)</h2>
+    </div>
+
+    <div class="card">
+      <p>Exhibit 6 shows what happens to Macaulay duration <em>over time</em> for the BRWA bond, assuming yields remain constant. The pattern is not a smooth curve — it forms a distinctive <strong>saw-tooth shape</strong> due to coupon payments.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">📉 Within a Coupon Period</div>
+        <ul>
+          <li>MacDur falls smoothly and continuously as t/T increases</li>
+          <li>All cash flows are getting closer to receipt → weighted average falls</li>
+          <li>The drop is smooth because t/T changes continuously</li>
+          <li>This is the "slide" part of the saw-tooth</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">📈 At Each Coupon Payment Date</div>
+        <ul>
+          <li>When a coupon is paid, that cash flow <em>disappears</em> from the calculation</li>
+          <li>The early (low-time) cash flow being removed pulls the average LATER</li>
+          <li>MacDur jumps UPWARD by a small amount on each coupon date</li>
+          <li>This is the "jump" part of the saw-tooth</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="swap-card" style="margin-top:16px;">
+      <div class="swap-title">★ The Saw-Tooth Pattern — Full Description</div>
+      <p style="font-size:14px; color:#dfd0c8;">As time passes from one coupon to the next: MacDur declines smoothly (all cash flows getting closer). At the coupon payment date: the next coupon (which was the shortest-duration payment) is removed from the calculation, causing a small upward jump in MacDur. Then the smooth decline resumes until the following coupon date, where another small jump occurs. This cycle repeats with each coupon payment. The overall trend is downward (toward zero as maturity approaches), but the path is a series of downward-sloping segments with small upward jumps at each coupon date.</p>
+      <p style="font-size:14px; color:#dfd0c8; margin-top:10px;"><strong>Implication for immunization:</strong> A duration-matched bond portfolio drifts away from the immunization target between coupon dates (duration falls below target). At each coupon payment, it jumps back up slightly. To maintain immunization, the portfolio must be rebalanced continuously (or at least at each coupon date).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Yield duration vs. curve duration:</strong> Yield duration (this module) uses bond's own YTM, assumes certain CFs. Curve duration uses benchmark curve, allows for default/optionality. Yield duration measures: MacDur, ModDur, MoneyDur, PVBP.</li>
+        <li>✅ <strong>Modified duration definition:</strong> First derivative of bond price w.r.t. yield, as a percentage of price. The slope of the price–yield curve. Measures sensitivity of full price to changes in YTM.</li>
+        <li>✅ <strong>ModDur formula (Eq. 2):</strong> ModDur = MacDur / (1 + r per period). AnnModDur = ModDur / m (where m = coupon frequency). Or use AnnModDur = AnnMacDur / (1 + annual YTM/m).</li>
+        <li>✅ <strong>Percentage price change (Eq. 3):</strong> %ΔPV^Full ≈ −AnnModDur × ΔAnnYield. Negative sign = inverse price–yield relationship. This is a linear approximation; accurate for small yield changes; understates gains and overstates losses for large moves (convexity effect).</li>
+        <li>✅ <strong>Approximate ModDur (Eq. 4):</strong> AnnModDur ≈ (PV− − PV+) / (2 × ΔYield × PV₀). Use when MacDur is unknown or cash flows are uncertain. AnnMacDur ≈ AnnModDur × (1 + r per period).</li>
+        <li>✅ <strong>BRWA 5yr 3.2% semiannual at issuance:</strong> MacDur = 9.3203 periods; AnnModDur = 4.58676 yrs. At 57 days later: MacDur = 9.0036; AnnModDur = 4.43092 yrs. Both fell as time passed.</li>
+        <li>✅ <strong>Price change example:</strong> AnnModDur=4.587; yield +80bps → %ΔPV ≈ −4.587 × 0.008 = −3.67%. Same absolute magnitude for −80bps (+3.67%) — but actual gain is slightly more than 3.67% due to convexity.</li>
+        <li>✅ <strong>Money duration (Eq. 6):</strong> MoneyDur = AnnModDur × PV^Full. Currency change: ΔPV^Full ≈ −MoneyDur × ΔYield. US term: "dollar duration." MoneyDur scales with position size.</li>
+        <li>✅ <strong>PVBP (Eq. 8):</strong> PVBP = (PV− − PV+) / 2. [PV± computed using ±1bp yield shift]. Also called DV01 (US), PV01, BPV. BPV = MoneyDur × 0.0001 ≈ PVBP. Particularly useful for complex/uncertain-CF bonds.</li>
+        <li>✅ <strong>Zero-coupon bond:</strong> MacDur = maturity (periods). AnnMacDur = N/m. Highest duration for any maturity. No reinvestment risk. ModDur = maturity/(1+r).</li>
+        <li>✅ <strong>Perpetuity:</strong> MacDur = (1+r)/r. Constant regardless of "maturity" (no maturity). This is the ceiling that all finite-maturity bonds approach from below (premium bonds) or from above then below (discount bonds).</li>
+        <li>✅ <strong>Floating-rate notes:</strong> MacDur = (T−t)/T = fraction of period remaining to next reset. Very low (max = 1 period). Interest rate risk only exists until the next coupon reset date. Used to shorten portfolio duration.</li>
+        <li>✅ <strong>Properties of Duration (Exhibit 4):</strong> Coupon ↑ → duration ↓ (inverse). YTM ↑ → duration ↓ (inverse). Time-to-maturity ↑ → duration ↑ (direct, usually). Fraction elapsed (t/T) ↑ → duration ↓ (inverse). Same for ModDur, MoneyDur, PVBP.</li>
+        <li>✅ <strong>Why coupon and YTM inversely affect duration:</strong> Higher coupons/yields → more weight on earlier cash flows → lower weighted-average time to receipt → lower duration. Lower coupons/yields → weight shifts to the final principal payment → higher duration.</li>
+        <li>✅ <strong>Discount bond anomaly (Exhibit 5):</strong> For deeply discounted bonds with very long maturities, duration can DECREASE as maturity increases, exceeding the (1+r)/r perpetuity ceiling, reaching a maximum, then declining back toward (1+r)/r. Does NOT apply to par or premium bonds.</li>
+        <li>✅ <strong>Duration vs. maturity by bond type (Exhibit 5):</strong> Zero-coupon = straight line (MacDur=N always). Premium bond = rises toward (1+r)/r ceiling from below. Discount bond = rises above ceiling, peaks, then declines. Perpetuity = horizontal line at (1+r)/r.</li>
+        <li>✅ <strong>Saw-tooth pattern (Exhibit 6):</strong> Within each period, MacDur falls smoothly (all CFs getting closer). At each coupon date, MacDur jumps upward (smallest/earliest CF removed, pulling average later). Overall trend: declining toward zero at maturity. Implication: immunized portfolios drift and require rebalancing.</li>
+        <li>✅ <strong>All four measures are linked:</strong> MacDur → (÷(1+r)) → ModDur → (×PV) → MoneyDur → (×0.0001) → BPV ≈ PVBP. Know the chain and be able to move in both directions.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 11</div>
+      <div class="f">
+        ═══ CORE FORMULAS ═══<br>
+        ModDur      = MacDur / (1 + r_per_period)<br>
+        AnnModDur   = ModDur / m  [m = coupon frequency]<br>
+        %ΔPV^Full  ≈ −AnnModDur × ΔAnnYield              [Eq. 3]<br>
+        Approx ModDur = (PV− − PV+) / (2 × ΔYield × PV₀) [Eq. 4]<br>
+        MoneyDur    = AnnModDur × PV^Full                  [Eq. 6]<br>
+        ΔPV^Full   ≈ −MoneyDur × ΔYield                   [Eq. 7]<br>
+        PVBP        = (PV− − PV+) / 2  [±1bp shift]        [Eq. 8]<br>
+        BPV         = MoneyDur × 0.0001  ≈ PVBP<br><br>
+
+        ═══ SPECIAL BOND TYPES ═══<br>
+        Zero-coupon:    MacDur = N (periods); ModDur = N/(1+r)<br>
+        Perpetuity:     MacDur = (1+r)/r (constant, no maturity)<br>
+        Floating-rate:  MacDur = (T−t)/T (fraction to next reset)<br><br>
+
+        ═══ DURATION PROPERTIES (Exhibit 4) ═══<br>
+        Coupon ↑  → Duration ↓  (inverse — earlier CFs weighted more)<br>
+        YTM ↑     → Duration ↓  (inverse — distant CFs discounted more)<br>
+        Maturity ↑ → Duration ↑  (direct — usually; exception: discount bonds)<br>
+        t/T ↑     → Duration ↓  (inverse — all CFs closer)<br><br>
+
+        ═══ EXHIBIT 5 — DURATION vs. MATURITY ═══<br>
+        Zero-coupon: MacDur = maturity (straight line, always highest)<br>
+        Premium:     Rises toward (1+r)/r ceiling, stays below it<br>
+        Discount:    Rises above ceiling, peaks, then declines back<br>
+        Perpetuity:  Horizontal at (1+r)/r (the universal ceiling)<br><br>
+
+        ═══ EXHIBIT 6 — SAW-TOOTH PATTERN ═══<br>
+        Within period: MacDur declines smoothly (t/T increases)<br>
+        At coupon date: MacDur jumps up (earliest CF removed)<br>
+        Net trend: declining toward 0 as maturity approaches<br><br>
+
+        ═══ BRWA BOND REFERENCE ═══<br>
+        5yr, 3.2% semiannual, at par. At issuance: MacDur=9.3203 periods; AnnModDur=4.587 yrs<br>
+        57 days later: MacDur=9.0036; AnnModDur=4.431; Full price=100.504<br>
+        Yield +80bps: %ΔPV ≈ −3.67%; Yield −80bps: %ΔPV ≈ +3.67% (ModDur symmetric)
+      </div>
+      <div class="note">
+        <strong>Chain of four yield duration measures:</strong><br>
+        MacDur (years) → divide by (1+r per period) → ModDur → multiply by full price → MoneyDur → multiply by 0.0001 → BPV/PVBP<br><br>
+        <strong>Memorize the direction of each property:</strong> The two inverse relationships (coupon ↑ → dur ↓, YTM ↑ → dur ↓) have the same intuition — both reduce the weight on the final large payment and increase the weight on earlier, smaller payments. The direct relationship (maturity ↑ → dur ↑) is straightforward — CFs are further away. The exception (discount bond anomaly) applies only to long-dated, deeply discounted bonds.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 11: Yield-Based Bond Duration Measures and Properties · Exam Prep Notes
+</footer>
+
+</body>
+</html>

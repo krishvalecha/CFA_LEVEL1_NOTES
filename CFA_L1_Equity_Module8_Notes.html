@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity | Module 8: Equity Valuation — Concepts and Basic Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --teal: #4cbdc9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1520 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,189,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,189,201,0.12); color: var(--teal); border: 1px solid rgba(76,189,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--teal); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--teal); border-color: var(--teal); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--teal); background: rgba(76,189,201,0.1); border: 1px solid rgba(76,189,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p + p { margin-top: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .teal-box { background: #0f1a1e; border-left: 3px solid var(--teal); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .teal-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px; }
+  .teal-box .f { color: #a8e0e8; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .teal-box .note { color: #7ec8d0; font-size: 12.5px; margin-top: 10px; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mc-title.teal { color: var(--teal); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--teal); font-weight: 600; font-size: 13px; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,189,201,0.1); color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--teal); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+  .hl-teal { color: var(--teal); font-weight: 600; }
+
+  /* Dividend chronology timeline */
+  .timeline { display: flex; gap: 0; margin: 16px 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .tl-item { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid var(--border); }
+  .tl-item:last-child { border-right: none; }
+  .tl-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .tl-name { font-weight: 700; font-size: 13px; color: var(--teal); margin-bottom: 4px; }
+  .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  @media (max-width: 700px) { .timeline { flex-direction: column; } .tl-item { border-right: none; border-bottom: 1px solid var(--border); } }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY · MODULE 8</div>
+  <h1>Equity <span>Valuation</span>: Concepts and Basic Tools</h1>
+  <p>Intrinsic value vs. market price · DDM / FCFE · Preferred stock · Gordon Growth Model · Two-stage DDM · Price multiples (P/E, P/B, P/S, P/CF) · Enterprise value · Asset-based valuation. Every formula, every model, every trap.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Intrinsic Value vs. Market Price</a>
+  <a class="toc-item" href="#s2">02 · Three Model Categories</a>
+  <a class="toc-item" href="#s3">03 · Dividends &amp; Chronology</a>
+  <a class="toc-item" href="#s4">04 · DDM &amp; FCFE Models</a>
+  <a class="toc-item" href="#s5">05 · Preferred Stock Valuation</a>
+  <a class="toc-item" href="#s6">06 · Gordon Growth Model</a>
+  <a class="toc-item" href="#s7">07 · Two-Stage DDM</a>
+  <a class="toc-item" href="#s8">08 · Price Multiples</a>
+  <a class="toc-item" href="#s9">09 · Justified P/E &amp; Comparables</a>
+  <a class="toc-item" href="#s10">10 · Enterprise Value</a>
+  <a class="toc-item" href="#s11">11 · Asset-Based Valuation</a>
+  <a class="toc-item" href="#s12">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════ SECTION 1: INTRINSIC VALUE ══════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Intrinsic Value vs. Market Price</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Intrinsic Value (Fundamental Value)</div>
+      <div class="def-body">The estimated value of a security based on analysis of investment fundamentals and characteristics. An analyst estimating intrinsic value is <em>implicitly questioning the accuracy of the market price</em> as an estimate of value. Estimated using valuation models with inputs based on economic, industry, and company fundamentals.</div>
+    </div>
+
+    <div class="teal-box">
+      <div class="label">★ The Three Valuation Conclusions</div>
+      <div class="f">
+        Estimated Value &gt; Market Price  → Security is UNDERVALUED  → BUY signal<br>
+        Estimated Value = Market Price  → Security is FAIRLY VALUED → HOLD signal<br>
+        Estimated Value &lt; Market Price  → Security is OVERVALUED   → SELL signal
+      </div>
+      <div class="note">
+        In practice, the conclusion is not mechanical. The analyst must also consider: (1) confidence in the valuation model and inputs, (2) the magnitude of the divergence (small difference may be within the confidence interval — not actionable), and (3) whether the market price will converge to intrinsic value over the relevant investment horizon (if it won't converge, identifying mispricing has no value).
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Top-Down Approach</div>
+        <ul>
+          <li>Start with macro: examine the economic environment.</li>
+          <li>Identify sectors expected to prosper in that environment.</li>
+          <li>Analyze securities from previously identified attractive sectors.</li>
+          <li>Economy → Industry → Company.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">Bottom-Up Approach</div>
+        <ul>
+          <li>Typically follows a specific industry or industries.</li>
+          <li>Forecasts fundamentals for individual companies to determine valuation.</li>
+          <li>Company → Industry → Market.</li>
+          <li>More common in fundamental analysis; focuses on company-specific factors.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mispricing is More Likely in Neglected Securities</div>
+      <p>Markets with many analysts covering a security tend to be more efficiently priced — mispricing is quickly arbitraged away. Securities relatively neglected by analysts may have more persistent mispricing. Analysts typically use multiple models and a range of inputs to increase confidence in intrinsic value estimates, and recognize that even if mispricing exists, it only generates returns if the market price converges to intrinsic value.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 2: THREE MODEL CATEGORIES ══════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Three Major Categories of Equity Valuation Models</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title teal">1. Present Value Models (DCF)</div>
+        <ul>
+          <li>Also called: discounted cash flow (DCF) models.</li>
+          <li>Intrinsic value = PV of expected future cash flows/benefits.</li>
+          <li>Two main types: DDM (dividends) and FCFE (free cash flow to equity).</li>
+          <li><strong>Advantage:</strong> theoretically sound; grounded in fundamentals.</li>
+          <li><strong>Disadvantage:</strong> inputs are uncertain; highly sensitive to assumptions (especially growth rate and discount rate).</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title teal">2. Multiplier Models (Market Multiple)</div>
+        <ul>
+          <li>Based on price multiples (P/E, P/B, P/S, P/CF) or EV multiples (EV/EBITDA).</li>
+          <li>Estimate intrinsic value as a multiple of a fundamental variable.</li>
+          <li>Method of comparables: law of one price — similar assets should have similar multiples.</li>
+          <li><strong>Advantage:</strong> easy to calculate; widely used; facilitates relative comparisons.</li>
+          <li><strong>Disadvantage:</strong> differences in accounting methods; cyclicality affects ratios; no explicit future orientation if using trailing multiples.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title teal">3. Asset-Based Valuation</div>
+        <ul>
+          <li>Intrinsic value = estimated market value of assets minus estimated market value of liabilities and preferred stock.</li>
+          <li>Often starts with balance sheet and adjusts book values to market/fair values.</li>
+          <li><strong>Advantage:</strong> useful for companies with significant tangible assets; provides floor value.</li>
+          <li><strong>Disadvantage:</strong> intangible assets are difficult to value; balance sheet ≠ fair value; impractical for large public companies piece-by-piece.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ All Models Are Simplifications of Reality</div>
+      <p>No matter how complex a model looks, it is still a simplification of the real world. Analysts should apply the <strong>"law of parsimony"</strong>: keep models as simple as possible given the available inputs. Complex models do not automatically yield more accurate valuations. The goal is to minimize forecast inaccuracy, not to maximize model complexity.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 3: DIVIDENDS & CHRONOLOGY ══════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Dividends, Stock Actions &amp; Payment Chronology</h2>
+    </div>
+
+    <h3>Types of Cash Distributions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Effect on Value / Share Count</th><th>Relevance for DDM</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Regular Cash Dividend</td>
+            <td>Cash paid to shareholders at regular known intervals (quarterly in US/Canada, semiannually in Europe/Japan, annually elsewhere).</td>
+            <td>Reduces cash on balance sheet; reduces share price by dividend amount on ex-date.</td>
+            <td>✅ Key input to DDM models.</td>
+          </tr>
+          <tr>
+            <td>Extra (Special) Dividend</td>
+            <td>Dividend paid by company that does not pay on regular schedule, or supplements regular dividend. Common in cyclical industries or during restructuring.</td>
+            <td>Same as regular dividend but non-recurring.</td>
+            <td>⚠️ Careful: not recurring — may not be included in DDM projections.</td>
+          </tr>
+          <tr>
+            <td>Stock Dividend (Bonus Issue)</td>
+            <td>Company distributes additional shares (typically 2–10% of shares outstanding) instead of cash.</td>
+            <td>More shares outstanding; lower share price per share. "Divides the pie into smaller pieces" — no change in total value or proportional ownership.</td>
+            <td>❌ NOT relevant for valuation — no economic effect.</td>
+          </tr>
+          <tr>
+            <td>Stock Split</td>
+            <td>Increase in shares outstanding with proportional decrease in share price. E.g., 2-for-1 split: each share → 2 shares at half the price.</td>
+            <td>No economic effect on total value or proportional ownership.</td>
+            <td>❌ NOT relevant for valuation.</td>
+          </tr>
+          <tr>
+            <td>Reverse Stock Split</td>
+            <td>Decrease in shares outstanding with proportional increase in share price. E.g., 1-for-2: 2 old shares → 1 new share at double the price.</td>
+            <td>No economic effect on total value or proportional ownership.</td>
+            <td>❌ NOT relevant for valuation.</td>
+          </tr>
+          <tr>
+            <td>Share Repurchase (Buyback)</td>
+            <td>Company uses cash to buy back its own shares. Repurchased shares not counted for dividends, voting, or EPS.</td>
+            <td>Equivalent to cash dividend of equal value (all else equal). Reduces shares outstanding → increases EPS.</td>
+            <td>✅ Economically equivalent to cash dividend. Reasons: (1) signals undervaluation, (2) flexibility, (3) tax efficiency, (4) offsets dilution from stock options.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dividend Payment Chronology — Learn These 4 Dates Cold</h3>
+    <div class="timeline">
+      <div class="tl-item" style="background:rgba(76,189,201,0.06);">
+        <div class="tl-num">1st</div>
+        <div class="tl-name">Declaration Date</div>
+        <div class="tl-desc">Board of directors votes to pay a specific dividend. Sets the amount and the other key dates.</div>
+      </div>
+      <div class="tl-item" style="background:rgba(76,189,201,0.04);">
+        <div class="tl-num">2nd</div>
+        <div class="tl-name">Ex-Dividend Date (Ex-Date)</div>
+        <div class="tl-desc">First day a share trades WITHOUT the dividend. Buyer on this date is NOT eligible for the upcoming dividend. Share price drops by approximately the dividend amount.</div>
+      </div>
+      <div class="tl-item" style="background:rgba(76,189,201,0.03);">
+        <div class="tl-num">3rd (1–2 days after ex-date)</div>
+        <div class="tl-name">Holder-of-Record Date</div>
+        <div class="tl-desc">Also: record date. Shareholders listed on company books on this date receive the dividend. Must have purchased BEFORE ex-date to qualify.</div>
+      </div>
+      <div class="tl-item" style="background:rgba(76,189,201,0.06);">
+        <div class="tl-num">4th (Last)</div>
+        <div class="tl-name">Payment Date (Payable Date)</div>
+        <div class="tl-desc">Company actually pays/transfers the dividend to qualifying shareholders.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Ex-Dividend Date and Share Price</div>
+      <p>Buyers on the <strong>ex-dividend date are NOT eligible</strong> for the upcoming dividend. On that day, the share price drops by approximately the foregone dividend amount. To receive a dividend, you must buy <strong>BEFORE</strong> the ex-dividend date. The holder-of-record date is 1–2 business days AFTER the ex-date (linked to the trade settlement cycle).</p>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: Dividend Chronology</div>
+      <p><strong>"Don't Even Hold Payments"</strong> — <strong>D</strong>eclaration date → <strong>E</strong>x-dividend date → <strong>H</strong>older-of-record date → <strong>P</strong>ayment date. The ex-date is the critical one: before it = entitled; on or after it = not entitled.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 4: DDM & FCFE ══════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Dividend Discount Model (DDM) &amp; FCFE Model</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ General DDM — Infinite Holding Period (Equation 1)</div>
+      <div class="f">
+        V₀ = Σₜ₌₁^∞  Dₜ / (1 + r)ᵗ
+      </div>
+      <div class="note">
+        <strong>V₀</strong> = intrinsic value of share today (t = 0).<br>
+        <strong>Dₜ</strong> = expected dividend in year t (paid at end of year).<br>
+        <strong>r</strong> = required rate of return on the stock.<br>
+        Rational: businesses are going concerns set up to operate indefinitely. Stock value today depends on all future dividends — even for an investor with a finite horizon, because their selling price depends on future dividends expected by the next buyer.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">DDM for n-Period Holding Horizon (Equation 3)</div>
+      <div class="f">
+        V₀ = Σₜ₌₁ⁿ  Dₜ / (1+r)ᵗ  +  Pₙ / (1+r)ⁿ
+      </div>
+      <div class="note">
+        <strong>Pₙ</strong> = expected selling price (terminal stock value) at the end of the n-period horizon.<br>
+        Terminal stock value = PV of all dividends received after the investment horizon — it represents what the next buyer will pay based on their own DDM.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Free Cash Flow to Equity (FCFE) Model</div>
+      <div class="f">
+        FCFE = CFO − FCInv + Net borrowing<br><br>
+        V₀ = Σₜ₌₁^∞  FCFEₜ / (1 + r)ᵗ
+      </div>
+      <div class="note">
+        <strong>CFO</strong> = cash flow from operations (net income + non-cash charges − investment in working capital).<br>
+        <strong>FCInv</strong> = fixed capital investment (capital expenditures required to maintain going concern).<br>
+        <strong>Net borrowing</strong> = borrowings minus debt repayments.<br>
+        FCFE = cash flow AVAILABLE for distribution to common shareholders (even if not actually distributed as dividends).<br>
+        Use FCFE when: (a) company doesn't pay dividends, (b) dividends differ significantly from dividend-paying capacity, (c) analyst prefers a free cash flow perspective.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Required Rate of Return — CAPM</div>
+      <div class="f">
+        r = Risk-free rate + β × (Market risk premium)<br>
+        r = Rf + βᵢ × (E[Rₘ] − Rf)
+      </div>
+      <div class="note">
+        <strong>β</strong> = beta (measure of non-diversifiable/systematic risk). <strong>Rf</strong> = risk-free rate (e.g., 10-year Treasury yield). <strong>E[Rₘ]−Rf</strong> = equity risk premium (market return above risk-free rate).<br>
+        Other approaches: (1) Rf + risk premium based on economic judgment, (2) yield on company's bonds + equity risk premium. No uniquely correct required rate of return — inputs differ across analysts.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">DDM Advantages</div>
+        <ul>
+          <li>Theoretically sound and well-established.</li>
+          <li>Easy to apply to dividend-paying companies.</li>
+          <li>Gordon growth model is simple and intuitive.</li>
+          <li>Directly links to fundamental value drivers.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title red">DDM Disadvantages</div>
+        <ul>
+          <li>Not applicable when company pays no dividend.</li>
+          <li>Very sensitive to growth rate and discount rate assumptions.</li>
+          <li>Requires forecasting dividends far into the future.</li>
+          <li>May not reflect dividend-paying capacity well if company retains most earnings.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 5: PREFERRED STOCK VALUATION ══════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Preferred Stock Valuation</h2>
+    </div>
+
+    <div class="card">
+      <p><span class="hl-teal">Preferred stock</span> = equity (generally non-voting) with priority over common stock in dividends and in liquidation. May be: perpetual or with stated maturity; callable (redeemable by issuer) or non-callable; convertible or non-convertible.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Non-Callable, Non-Convertible PERPETUAL Preferred Stock</div>
+      <div class="f">
+        V₀ = D₀ / r<br><br>
+        (present value of a perpetuity)
+      </div>
+      <div class="note">
+        <strong>D₀</strong> = constant dividend per period. <strong>r</strong> = required rate of return (per period).<br>
+        Example: $100 par, annual dividend = $5.50, r = 6%. V₀ = $5.50 / 0.06 = <strong>$91.67</strong>.<br>
+        Note: V₀ &lt; par value here because r &gt; dividend yield (5.50/100 = 5.5% &lt; 6%).
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Non-Callable, Non-Convertible Preferred Stock WITH MATURITY (Equation 7)</div>
+      <div class="f">
+        V₀ = Σₜ₌₁ⁿ  Dₜ / (1+r)ᵗ  +  F / (1+r)ⁿ
+      </div>
+      <div class="note">
+        <strong>F</strong> = par value (face value) paid at maturity. <strong>n</strong> = number of periods to maturity. <strong>r</strong> = required rate of return per period. <strong>D</strong> = dividend per period.<br>
+        Works like valuing a bond: use the actual payment schedule (semiannual or annual). For semiannual payments, use n = 2× years, r = annual rate / 2, D = annual dividend / 2.<br>
+        <strong>Callable preferred:</strong> call option reduces value to investor (issuer redeems when favorable to issuer).<br>
+        <strong>Retractable preferred (put option):</strong> put option increases value to investor (investor sells back when favorable).
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example: Preferred Stock Valuation</div>
+      <p>Non-convertible preferred: par = £20.00, maturity = 6 years, nominal required return = 8.20%, semiannual dividends = £2.00 each.</p>
+      <div class="calc">
+        Semiannual: n = 12, r = 4.10%, D = £2.00, F = £20.00<br>
+        V₀ = Σ[£2.00/(1.041)ᵗ] for t=1 to 12  +  £20/(1.041)¹²<br>
+        V₀ = £19.14 + £11.87 = £31.01
+      </div>
+      <div class="result">Annual equivalent (n=6, r=8.20%, D=£4.00): V₀ = £30.84</div>
+      <p>More precise answer uses semiannual schedule (£31.01 vs. £30.84 with annual simplification).</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 6: GORDON GROWTH MODEL ══════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>The Gordon (Constant) Growth Model</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Gordon Growth Model — Equation 9</div>
+      <div class="f">
+        V₀ = D₀ × (1 + g) / (r − g)  =  D₁ / (r − g)<br><br>
+        where D₁ = D₀ × (1 + g) = next year's expected dividend
+      </div>
+      <div class="note">
+        <strong>D₀</strong> = most recent (current) dividend. <strong>D₁</strong> = next period's dividend. <strong>r</strong> = required rate of return. <strong>g</strong> = constant dividend growth rate FOREVER.<br>
+        Critical requirement: <strong>r &gt; g</strong> (required return must strictly exceed growth rate for formula to be valid).<br>
+        If g = 0, reduces to perpetuity formula: V₀ = D₀/r.<br>
+        The model values a growing perpetuity.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Most Common Exam Error: Using D₀ Instead of D₁</div>
+      <p>The Gordon growth model numerator is <strong>D₁ = D₀ × (1 + g)</strong>, NOT D₀. Always grow the current dividend by one period before dividing by (r − g). Example: D₀ = €5.00, g = 4%, r = 8% → V₀ = €5.00 × 1.04 / (0.08 − 0.04) = €5.20 / 0.04 = <strong>€130</strong>. Using D₀ directly gives €125 — a wrong answer.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Sustainable Growth Rate (Equation 10)</div>
+      <div class="f">
+        g = b × ROE<br><br>
+        b = earnings retention rate = 1 − dividend payout ratio<br>
+        ROE = return on equity
+      </div>
+      <div class="note">
+        Used to estimate the long-term dividend growth rate from fundamentals rather than historical dividend growth rates.<br>
+        Example: payout ratio = 40%, ROE = 15% → b = 60% → g = 0.60 × 0.15 = 9%.<br>
+        Higher retention rate + higher ROE → higher sustainable growth rate.
+      </div>
+    </div>
+
+    <h3>When is the Gordon Growth Model Appropriate?</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">✅ Use Gordon Growth Model When...</div>
+        <ul>
+          <li>Company pays dividends and is expected to continue.</li>
+          <li>Company is in a <strong>mature growth phase</strong> — relatively insensitive to the business cycle.</li>
+          <li>History of increasing dividends at a <strong>stable growth rate</strong>.</li>
+          <li>Examples: electric utility in a slowly growing area, staple food producer (bread, sugar).</li>
+          <li>Analyst believes stable growth rate will persist into the future.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title red">❌ Gordon Growth Model is NOT Appropriate When...</div>
+        <ul>
+          <li>Company <strong>does not pay dividends</strong>.</li>
+          <li>Company is in high-growth phase (growth rate exceeds required return).</li>
+          <li>Growth rate is volatile or uncertain.</li>
+          <li>Growth stages are clearly distinguishable (use multi-stage DDM).</li>
+          <li>Company is highly sensitive to the business cycle (cyclical).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example: Gordon Growth Model</div>
+      <p>D₀ = €5.00, g = 4% per year, r = 8%. Company is a mature dividend-payer.</p>
+      <div class="calc">
+        D₁ = D₀ × (1 + g) = €5.00 × 1.04 = €5.20<br>
+        V₀ = D₁ / (r − g) = €5.20 / (0.08 − 0.04) = €5.20 / 0.04
+      </div>
+      <div class="result">V₀ = €130 per share</div>
+      <p>Value of growth component = €130 − D₀/r = €130 − €5.00/0.08 = €130 − €62.50 = €67.50. A large portion of value depends on the growth assumption — small changes in g have large effects.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Gordon Model for Non-Dividend-Paying Stocks</div>
+      <p>If a company doesn't currently pay dividends but is expected to start at some future point, estimate the terminal value at that future time using Gordon growth model, then discount back to today. Example: first dividend D₅ = $4.00 at t=5, g = 6% thereafter, r = 10%. V₅ = D₅(1+g)/(r−g) = $4.24/0.04 = $106. V₀ = $106/(1.10)⁵ = $65.82. Also add PV of D₅ itself: $4/(1.10)⁵ = $2.48. Total V₀ = $68.30.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 7: TWO-STAGE DDM ══════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Two-Stage Dividend Discount Model</h2>
+    </div>
+
+    <div class="card">
+      <p>The two-stage DDM assumes: an <span class="hl-teal">initial period of high growth (gₛ)</span> followed by a <span class="hl-green">perpetual period of sustainable growth (g_L)</span>. Used for companies transitioning from a high-growth phase to maturity. The terminal value at the end of the high-growth period is estimated using the Gordon growth model.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Two-Stage DDM (Equations 11, 12, 13)</div>
+      <div class="f">
+        V₀ = Σₜ₌₁ⁿ  D₀(1+gₛ)ᵗ / (1+r)ᵗ  +  Vₙ / (1+r)ⁿ<br><br>
+        Terminal value:  Vₙ = Dₙ₊₁ / (r − g_L)<br><br>
+        Next dividend after high-growth: Dₙ₊₁ = D₀(1+gₛ)ⁿ × (1+g_L)
+      </div>
+      <div class="note">
+        <strong>gₛ</strong> = short-term high growth rate (for n years). <strong>g_L</strong> = long-term sustainable growth rate (perpetuity). <strong>n</strong> = length of the high-growth period.<br>
+        Process: (1) Calculate dividends during high-growth period and their PVs. (2) Calculate terminal value Vₙ at end of high-growth period using Gordon model. (3) Discount terminal value back to today. (4) Sum all PVs.
+      </div>
+    </div>
+
+    <h3>Which DDM Model to Use?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Model</th><th>Use When</th><th>Company Characteristics</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Gordon Growth (Constant)</td>
+            <td>Single constant growth rate forever from now</td>
+            <td>Mature, stable dividend-payer; low business cycle sensitivity; electric utilities, staple food producers.</td>
+          </tr>
+          <tr>
+            <td>Two-Stage DDM</td>
+            <td>High growth for initial period, then permanent lower sustainable growth</td>
+            <td>Companies TRANSITIONING from high-growth to maturity. Also: established companies restarting growth (M&A, new markets) or recovering from subnormal period. IBM example.</td>
+          </tr>
+          <tr>
+            <td>Three-Stage DDM</td>
+            <td>Growth → Transition → Maturity (three distinct rates)</td>
+            <td>Young companies just entering the growth phase. Uses three separate growth rates: high → medium → low sustainable.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Two-Stage DDM: IBM Example (from Module)</div>
+      <p>D₂₀₁₈ = $6.21. gₛ = 5% for 1 year (Stage 1). g_L = 2.33% perpetually (Stage 2). r = 6.75% (CAPM: 2% + 0.95×5%).</p>
+      <div class="calc">
+        D₂₀₁₉ = $6.21 × 1.05 = $6.5205<br>
+        D₂₀₂₀ = $6.21 × 1.05 × 1.0233 = $6.6724<br>
+        D₂₀₂₁ = $6.21 × 1.05 × 1.0233² = $6.8279<br><br>
+        V₂₀₂₀ = D₂₀₂₁ / (r − g_L) = $6.8279 / (0.0675 − 0.0233) = $154.477<br>
+        V₂₀₁₈ = $6.5205/(1.0675)¹ + $6.6724/(1.0675)² + $154.477/(1.0675)²
+      </div>
+      <div class="result">V₂₀₁₈ ≈ $147.52 vs. market price $148.56 → IBM approximately fairly valued</div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 8: PRICE MULTIPLES ══════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Price Multiples (P/E, P/B, P/S, P/CF)</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Multiple</th>
+            <th>Formula</th>
+            <th>What It Measures</th>
+            <th>Key Uses &amp; Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P/E (Price-to-Earnings)</td>
+            <td style="font-family:'JetBrains Mono',monospace;color:#e8c97a;font-size:12.5px;">Share price / EPS</td>
+            <td>How much investors pay per dollar of earnings.</td>
+            <td>Most widely used multiple. Trailing P/E (past EPS) vs. Forward P/E (forecasted EPS). Low P/E historically associated with higher future returns. Affected by business cycle. Cannot be computed with negative earnings.</td>
+          </tr>
+          <tr>
+            <td>P/B (Price-to-Book)</td>
+            <td style="font-family:'JetBrains Mono',monospace;color:#e8c97a;font-size:12.5px;">Share price / Book value per share</td>
+            <td>How much investors pay per dollar of book (shareholders' equity) value.</td>
+            <td>P/B inversely related to future returns (Fama &amp; French). Useful for financial companies and asset-intensive companies. Less meaningful for companies with large intangibles.</td>
+          </tr>
+          <tr>
+            <td>P/S (Price-to-Sales)</td>
+            <td style="font-family:'JetBrains Mono',monospace;color:#e8c97a;font-size:12.5px;">Share price / Sales per share</td>
+            <td>How much investors pay per dollar of revenue.</td>
+            <td>Useful during economic slowdowns or extraordinary growth when earnings are volatile. Sales decline less than earnings in recessions (operating/financial leverage effect). Low P/S best predictor of future returns (O'Shaughnessy). Can be used even when earnings are negative.</td>
+          </tr>
+          <tr>
+            <td>P/CF (Price-to-Cash-Flow)</td>
+            <td style="font-family:'JetBrains Mono',monospace;color:#e8c97a;font-size:12.5px;">Share price / Cash flow per share</td>
+            <td>How much investors pay per dollar of cash flow.</td>
+            <td>Uses operating cash flow (OCF) or free cash flow (FCF) per share. Less susceptible to earnings manipulation than P/E. Useful when earnings quality is a concern.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">Trailing vs. Forward Multiples</div>
+        <ul>
+          <li><strong>Trailing (historical):</strong> uses actual past values of the fundamental variable (EPS from last 12 months = TTM).</li>
+          <li><strong>Forward (leading/prospective):</strong> uses forecasted fundamental values (e.g., next year's EPS estimate). May differ markedly from trailing.</li>
+          <li>Must use the SAME basis (trailing or forward) consistently when comparing companies.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Common Criticism of Multiples</div>
+        <ul>
+          <li>Trailing multiples do not consider the future — they are backward-looking.</li>
+          <li>Differences in accounting methods (GAAP vs. IFRS, depreciation methods) make cross-company comparisons difficult.</li>
+          <li>Cyclical companies: earnings and multiples swing wildly with the business cycle.</li>
+          <li>Relative undervaluation vs. a benchmark ≠ absolute undervaluation. A stock can be relatively cheap but still fundamentally overvalued.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 9: JUSTIFIED P/E & COMPARABLES ══════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Justified P/E, Fundamentals &amp; Method of Comparables</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Justified Forward P/E from Gordon Growth Model (Equation 15)</div>
+      <div class="f">
+        P₀/E₁ = (D₁/E₁) / (r − g)  =  p / (r − g)<br><br>
+        where p = dividend payout ratio = D₁/E₁
+      </div>
+      <div class="note">
+        Derived by dividing both sides of the Gordon growth model (P₀ = D₁/(r−g)) by next year's EPS forecast E₁.<br>
+        <strong>P/E is inversely related to r</strong> (higher required return → lower P/E).<br>
+        <strong>P/E is positively related to g</strong> (higher growth rate → higher P/E).<br>
+        P/E and payout ratio APPEAR positively related, but a higher payout → lower retention → lower g → may reduce P/E. This offsetting effect is called <strong>dividend displacement of earnings</strong>.<br>
+        g = b × ROE = (1 − payout ratio) × ROE. Substituting: P/E = p / [r − (1−p)×ROE].
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Justified Forward P/E: Nestlé Example</div>
+      <p>Payout ratio = 68%, long-run ROE = 21.5%, r = 9%.</p>
+      <div class="calc">
+        g = (1 − 0.68) × 0.215 = 0.32 × 0.215 = 0.0688 ≈ 6.9%<br>
+        Justified P/E = p / (r − g) = 0.68 / (0.09 − 0.069) = 0.68 / 0.021
+      </div>
+      <div class="result">Justified Forward P/E = 32.38</div>
+      <p>Very sensitive to inputs: using r = 9.5% gives P/E = 26.2; using ROE = 16.5% gives P/E = 18.4. Always perform sensitivity analysis on the inputs.</p>
+    </div>
+
+    <h3>Method of Comparables</h3>
+    <div class="card">
+      <p>The most widely used approach for valuation based on price multiples. Economic rationale: <span class="hl-teal">law of one price</span> — identical assets should sell for the same price → similar companies should have similar multiples.</p>
+      <p style="margin-top:10px;"><strong>Process:</strong> Compare a stock's price multiple to a benchmark. Benchmark options: (1) closely matched individual comparable stock, (2) industry average or median, (3) historical average of the stock's own multiple (time-series analysis).</p>
+      <p style="margin-top:10px;"><strong>Identifying "comps":</strong> companies should be similar in overall size, product lines, and growth rate. Be careful — many large companies operate in multiple lines of business.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Comparables: Relative ≠ Absolute Undervaluation</div>
+      <p>A stock may look cheap relative to peers but still be fundamentally overvalued (e.g., an entire sector is overvalued). Always look for explanations beyond simple "low multiple = cheap." Low multiples can reflect: lower growth rates, higher risk, worse accounting quality, business model differences, or near-term headwinds — not necessarily mispricing.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 10: ENTERPRISE VALUE ══════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Enterprise Value (EV) Multiples</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Enterprise Value (EV)</div>
+      <div class="f">
+        EV = Market cap of equity<br>
+           + Market value of preferred stock<br>
+           + Market value of debt<br>
+           − Cash and short-term investments<br><br>
+        Common EV Multiple: EV / EBITDA
+      </div>
+      <div class="note">
+        <strong>Why subtract cash:</strong> In a buyout, the acquirer gets the company's cash — it effectively offsets part of the acquisition price. EV represents the cost of acquiring the business independent of capital structure.<br>
+        <strong>EBITDA</strong> = Earnings Before Interest, Taxes, Depreciation, and Amortization — proxy for operating cash flow; excludes D&A (non-cash).<br>
+        <strong>Why EV multiples:</strong> (1) Useful when P/E is problematic (negative earnings). (2) Facilitates comparisons across companies with different capital structures. (3) Widely used in Europe. (4) EV/EBITDA can usually be computed even when EPS is negative (EBITDA is usually positive).
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Common EV multiples:</strong> EV/EBITDA (most common), EV/Operating Income, EV/Revenue (total revenue).</p>
+      <p style="margin-top:10px;"><strong>Equity value from EV:</strong> EV − market value of debt − preferred stock = equity value. Then divide by shares outstanding to get per-share value.</p>
+      <p style="margin-top:10px;"><strong>Key practical issue:</strong> If market quotations for debt are unavailable, book value of debt provides only a rough estimate of market value. Market value of debt can differ significantly from book value when interest rates have changed or issuer's credit risk has changed since issuance.</p>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 EV Calculation: Cameco Corporation Example</div>
+      <div class="calc">
+        Market cap = 395,793 shares × $14.11/share = $5,584,640<br>
+        Market value of total debt = $2,494,270 (estimated by discounting debt cash flows)<br>
+        Cash and equivalents = $591,600<br><br>
+        EV = $5,584,640 + $2,494,270 − $591,600 = $7,487,310<br>
+        EBITDA = $606,000
+      </div>
+      <div class="result">EV/EBITDA = $7,487,310 / $606,000 = 12.4×</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 EV/EBITDA Works Even with Negative EPS</div>
+      <p>P/E is undefined or misleading when EPS is negative (common for early-stage companies, cyclical troughs, or one-time charges). EV/EBITDA is generally computable because EBITDA is almost always positive. This makes it useful for mining, energy, telecom, and other capital-intensive industries where depreciation is large and earnings can swing negative.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 11: ASSET-BASED VALUATION ══════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Asset-Based Valuation</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Asset-Based Valuation — Core Concept</div>
+      <div class="f">
+        Equity Value = Market/Fair Value of Assets<br>
+                     − Market/Fair Value of Liabilities<br>
+                     − Market/Fair Value of Preferred Stock<br><br>
+        Per-share value = Equity Value / Shares outstanding
+      </div>
+      <div class="note">
+        Start with balance sheet and ADJUST book values to fair market values. Assets often carried at historical cost on the balance sheet → adjustments required.<br>
+        Note: liabilities are typically closer to fair value than assets; focus adjustments on the asset side.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">Best Uses for Asset-Based Valuation</div>
+        <ul>
+          <li>Companies with <strong>easily determinable asset market values</strong>.</li>
+          <li>Companies with <strong>high proportion of current assets/liabilities</strong> (easier to value).</li>
+          <li>Companies with <strong>small proportion of intangible assets</strong>.</li>
+          <li>Financial companies, natural resource companies (e.g., oil reserves).</li>
+          <li>Private companies (often used with multiplier models).</li>
+          <li>Liquidation valuations.</li>
+          <li>Provides a <strong>floor (minimum) value</strong> when intangibles are significant.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title red">Limitations of Asset-Based Valuation</div>
+        <ul>
+          <li>Companies with significant <strong>PPE (property, plant &amp; equipment)</strong> are hard to value — market values difficult to determine.</li>
+          <li>Book values ≠ fair values; adjustments can be complex.</li>
+          <li>Does NOT capture intangible assets not on the books (synergies, brand value, business reputation).</li>
+          <li>Large public companies: piece-by-piece asset analysis is impractical.</li>
+          <li>Hyper-inflationary environments: asset values harder to estimate.</li>
+          <li>When intangibles are significant → prefer forward-looking DCF valuation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Asset-Based Valuation Example (from Module)</div>
+      <p>Balance sheet: Cash $5K, AR $15K, Inventory $30K, Net fixed assets $50K (market value = 110% of book). Liabilities: AP $3K, Notes payable $17K, Term loans $25K. Shares: 1,000.</p>
+      <div class="calc">
+        Market value of assets = 5,000 + 15,000 + 30,000 + 1.10×50,000<br>
+                               = 5,000 + 15,000 + 30,000 + 55,000 = $105,000<br>
+        Market value of liabilities = 3,000 + 17,000 + 25,000 = $45,000<br>
+        Adjusted book equity = $105,000 − $45,000 = $60,000
+      </div>
+      <div class="result">Per-share value = $60,000 / 1,000 = $60.00</div>
+      <p>Compare: Gordon growth model → $51.00; Multiplier model → $58.80; Current market price = $50.80. Asset-based and multiplier models suggest undervaluation; Gordon model suggests fair value.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 12: EXAM CHECKLIST ══════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Intrinsic value vs. market price:</strong> Estimated value &gt; price → undervalued (buy). Equal → fairly valued (hold). Estimated value &lt; price → overvalued (sell). Analyst must consider model confidence and time horizon for convergence.</li>
+        <li>✅ <strong>Three model categories:</strong> (1) Present value / DCF (DDM, FCFE), (2) Multiplier / market multiple (P/E, P/B, P/S, P/CF, EV/EBITDA), (3) Asset-based valuation. Analysts often use more than one.</li>
+        <li>✅ <strong>Dividend types:</strong> Regular cash dividend (key DDM input). Stock dividend, stock split, reverse stock split = NO economic effect → NOT relevant for valuation. Share repurchase = economically equivalent to cash dividend of equal value.</li>
+        <li>✅ <strong>Dividend chronology (DEHP):</strong> Declaration → Ex-dividend date → Holder-of-record date → Payment date. Ex-date is key: buy BEFORE ex-date to receive dividend. On ex-date, price drops by approximately the dividend amount.</li>
+        <li>✅ <strong>General DDM:</strong> V₀ = Σ Dₜ/(1+r)ᵗ. For finite horizon: V₀ = Σ Dₜ/(1+r)ᵗ + Pₙ/(1+r)ⁿ. Terminal value Pₙ = expected selling price = PV of dividends beyond horizon.</li>
+        <li>✅ <strong>FCFE = CFO − FCInv + Net borrowing.</strong> FCFE = cash available for distribution. V₀ = Σ FCFEₜ/(1+r)ᵗ. Use when: no dividends paid, dividends ≠ paying capacity, or non-dividend-paying stock.</li>
+        <li>✅ <strong>CAPM for required return:</strong> r = Rf + β × (market risk premium). No uniquely correct answer — inputs differ across analysts.</li>
+        <li>✅ <strong>Perpetual preferred stock:</strong> V₀ = D₀/r. Preferred stock with maturity: V₀ = Σ Dₜ/(1+r)ᵗ + F/(1+r)ⁿ (similar to bond valuation). Use actual payment schedule for precision.</li>
+        <li>✅ <strong>Gordon Growth Model:</strong> V₀ = D₀(1+g)/(r−g) = D₁/(r−g). MUST use D₁ (next period's dividend), NOT D₀. Requirement: r &gt; g. For g = 0: V₀ = D₀/r (perpetuity).</li>
+        <li>✅ <strong>Sustainable growth rate:</strong> g = b × ROE where b = 1 − payout ratio. Use to estimate long-term growth rate from fundamentals.</li>
+        <li>✅ <strong>Gordon model is appropriate:</strong> mature company, stable dividend growth, insensitive to business cycle (utilities, staple food). NOT for: high-growth companies, cyclical companies, non-dividend payers.</li>
+        <li>✅ <strong>Two-stage DDM:</strong> V₀ = Σ D₀(1+gₛ)ᵗ/(1+r)ᵗ + Vₙ/(1+r)ⁿ. Vₙ = Dₙ₊₁/(r−g_L). Use for companies transitioning from high growth to stable growth.</li>
+        <li>✅ <strong>Three-stage DDM:</strong> growth → transition → maturity (three growth rates). Use for young companies entering the growth phase.</li>
+        <li>✅ <strong>Justified forward P/E = p/(r−g)</strong> where p = payout ratio, g = sustainable growth rate. P/E inversely related to r, positively related to g. Dividend displacement: higher payout may reduce g, potentially reducing P/E.</li>
+        <li>✅ <strong>Price multiples:</strong> P/E (most widely used, earnings), P/B (book value, inversely related to future returns), P/S (sales, useful when earnings negative/volatile), P/CF (cash flow, less manipulation). Always use trailing vs. forward consistently.</li>
+        <li>✅ <strong>Method of comparables:</strong> law of one price. Compare multiple to benchmark (comparable company, industry average, historical average). Low multiple = potentially undervalued, but check for legitimate reasons.</li>
+        <li>✅ <strong>Enterprise Value = Market cap + Preferred stock + Debt − Cash.</strong> EV/EBITDA most common EV multiple. Useful when P/E is negative; captures capital structure differences; widely used in Europe.</li>
+        <li>✅ <strong>Asset-based valuation:</strong> Equity = Market value of assets − Market value of liabilities. Best for: tangible-asset-heavy companies, financial firms, natural resources, private companies. Worst for: companies with significant intangibles (use DCF instead). Provides a "floor" value.</li>
+        <li>✅ <strong>All models are simplifications.</strong> Law of parsimony: keep models as simple as possible given available inputs. Use multiple models to increase confidence in intrinsic value estimates.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ GENERAL DDM ═══<br>
+        V₀ = Σ Dₜ/(1+r)ᵗ (infinite) &nbsp;|&nbsp; V₀ = Σ Dₜ/(1+r)ᵗ + Pₙ/(1+r)ⁿ (finite horizon)<br><br>
+
+        ═══ FCFE ═══<br>
+        FCFE = CFO − FCInv + Net borrowing<br>
+        V₀ = Σ FCFEₜ/(1+r)ᵗ<br><br>
+
+        ═══ CAPM ═══<br>
+        r = Rf + β × (E[Rₘ] − Rf)<br><br>
+
+        ═══ PREFERRED STOCK ═══<br>
+        Perpetual: V₀ = D₀/r &nbsp;|&nbsp; With maturity: V₀ = Σ Dₜ/(1+r)ᵗ + F/(1+r)ⁿ<br><br>
+
+        ═══ GORDON GROWTH MODEL ═══<br>
+        V₀ = D₀(1+g)/(r−g) = D₁/(r−g) &nbsp;&nbsp;← ALWAYS use D₁, NOT D₀!<br>
+        Condition: r &gt; g<br>
+        Sustainable growth: g = b × ROE &nbsp;&nbsp;where b = 1 − payout ratio<br><br>
+
+        ═══ TWO-STAGE DDM ═══<br>
+        V₀ = Σₜ₌₁ⁿ D₀(1+gₛ)ᵗ/(1+r)ᵗ + Vₙ/(1+r)ⁿ<br>
+        Vₙ = Dₙ₊₁/(r−g_L) &nbsp;&nbsp;where Dₙ₊₁ = D₀(1+gₛ)ⁿ(1+g_L)<br><br>
+
+        ═══ JUSTIFIED FORWARD P/E ═══<br>
+        P₀/E₁ = p/(r−g) &nbsp;&nbsp;where p = payout ratio, g = sustainable growth<br>
+        P/E ↑ when: r↓ or g↑ &nbsp;&nbsp;|&nbsp;&nbsp; P/E ↓ when: r↑ or g↓<br><br>
+
+        ═══ ENTERPRISE VALUE ═══<br>
+        EV = Market cap + Pref. stock + Debt − Cash<br>
+        Key multiple: EV/EBITDA<br><br>
+
+        ═══ ASSET-BASED VALUATION ═══<br>
+        Equity value = MV of assets − MV of liabilities<br>
+        Per share = Equity value / Shares outstanding<br><br>
+
+        ═══ VALUATION CONCLUSIONS ═══<br>
+        V &gt; Price → Undervalued (BUY) &nbsp;|&nbsp; V = Price → Fair value (HOLD) &nbsp;|&nbsp; V &lt; Price → Overvalued (SELL)
+      </div>
+      <div class="note">
+        <strong>Dividend chronology: Declaration → Ex-date → Record date → Payment date.</strong> Buy BEFORE ex-date to receive dividend. Price drops ~dividend on ex-date.<br>
+        <strong>Gordon model error: D₁ NOT D₀ in numerator.</strong> g = b×ROE for sustainable growth.<br>
+        <strong>EV/EBITDA: useful when earnings negative;</strong> captures capital structure differences.<br>
+        <strong>Asset-based = floor value</strong> when intangibles significant; prefer DCF for intangible-heavy companies.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity · Module 8: Equity Valuation — Concepts and Basic Tools · Exam Prep Notes
+</footer>
+</body>
+</html>

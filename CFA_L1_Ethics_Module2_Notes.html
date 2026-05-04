@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Ethics | Module 2: Code of Ethics & Standards of Professional Conduct</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --std1-bg: #181214; --std1-border: #c94c4c;
+    --std2-bg: #121418; --std2-border: #4c8bc9;
+    --std3-bg: #111a16; --std3-border: #4cc98a;
+    --std4-bg: #181614; --std4-border: #c9a84c;
+    --std5-bg: #14111a; --std5-border: #9b7fd4;
+    --std6-bg: #121618; --std6-border: #e07040;
+    --std7-bg: #141216; --std7-border: #c94c8a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'ETH'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 13.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+  .tag-orange { background: rgba(224,112,64,0.15); color: #e07040; border: 1px solid rgba(224,112,64,0.3); }
+
+  /* Standard-specific colored cards */
+  .std1-card { background: var(--std1-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std1-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std2-card { background: var(--std2-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std2-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std3-card { background: var(--std3-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std3-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std4-card { background: var(--std4-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std4-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std5-card { background: var(--std5-bg); border: 1px solid rgba(155,127,212,0.2); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std5-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #9b7fd4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std6-card { background: var(--std6-bg); border: 1px solid rgba(224,112,64,0.2); border-left: 3px solid #e07040; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std6-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #e07040; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .std7-card { background: var(--std7-bg); border: 1px solid rgba(201,76,138,0.2); border-left: 3px solid #c94c8a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .std7-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c8a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Scenario boxes */
+  .scenario { background: #0e1218; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 6px; padding: 18px 22px; margin: 16px 0; }
+  .scenario-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .scenario p { font-size: 14px; color: #c8d4e0; line-height: 1.75; }
+  .scenario p + p { margin-top: 8px; }
+  .scenario strong { color: #88b8e8; }
+
+  /* OK vs NOT OK comparison */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .ok-card { background: #0f1a12; border: 1px solid rgba(76,201,138,0.3); border-top: 2px solid #4cc98a; border-radius: 6px; padding: 16px 18px; }
+  .ok-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #4cc98a; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .notok-card { background: #1a0f0f; border: 1px solid rgba(201,76,76,0.3); border-top: 2px solid #c94c4c; border-radius: 6px; padding: 16px 18px; }
+  .notok-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #c94c4c; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .ok-card li, .notok-card li { font-size: 13.5px; margin-bottom: 8px; list-style: none; padding-left: 0; }
+  .ok-card li::before { content: '✓ '; color: #4cc98a; font-weight: 700; }
+  .notok-card li::before { content: '✗ '; color: #c94c4c; font-weight: 700; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(201,168,76,0.08); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 16px 14px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content .st-title { font-weight: 700; color: #fff; font-size: 14.5px; margin-bottom: 6px; }
+  .step-content strong { color: var(--accent); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  .hierarchy { background: #0f1218; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .hierarchy-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .h-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .h-item:last-child { border-bottom: none; }
+  .h-num { background: rgba(201,168,76,0.15); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .h-label { font-size: 14px; color: var(--text); flex: 1; }
+  .h-label strong { color: #fff; }
+  .h-arrow { color: var(--muted); font-size: 18px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ETHICS · MODULE 2</div>
+  <h1>Code of Ethics & <span>Standards of Professional Conduct</span></h1>
+  <p class="subtitle">Complete module: The Professional Conduct Program and enforcement process · The six components of the Code of Ethics · All seven Standards of Professional Conduct with sub-sections · 2023 revisions (Standard I(E), V(B), VI(A)) · Why ethics matters and the ethics–law distinction · Extensive exam traps and scenario analysis. Ethics is the highest-weightage subject — master the nuances here.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why Ethics Matters</a>
+  <a class="toc-item" href="#s2">02 · Ethics vs. Law</a>
+  <a class="toc-item" href="#s3">03 · PCP & Enforcement</a>
+  <a class="toc-item" href="#s4">04 · Code of Ethics (6 Components)</a>
+  <a class="toc-item" href="#s5">05 · Standard I: Professionalism</a>
+  <a class="toc-item" href="#s6">06 · Standard II: Capital Markets</a>
+  <a class="toc-item" href="#s7">07 · Standard III: Duties to Clients</a>
+  <a class="toc-item" href="#s8">08 · Standard IV: Duties to Employers</a>
+  <a class="toc-item" href="#s9">09 · Standard V: Investment Analysis</a>
+  <a class="toc-item" href="#s10">10 · Standard VI: Conflicts of Interest</a>
+  <a class="toc-item" href="#s11">11 · Standard VII: CFA Membership</a>
+  <a class="toc-item" href="#s12">12 · 2023 Revisions</a>
+  <a class="toc-item" href="#s13">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: WHY ETHICS MATTERS              -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why Ethics Matters — The Big Picture</h2>
+    </div>
+
+    <div class="card">
+      <p>Ethics = a set of moral principles or rules of conduct that guide behavior when it affects others. Core ethical principles: <strong>honesty, fairness, diligence, care, and respect</strong>. Ethical conduct balances self-interest with both direct and indirect consequences of actions on others.</p>
+      <p>CFA Institute's mission: <em>"to lead the investment profession globally for the ultimate benefit of society."</em> Well-functioning capital markets require trust. Trust requires ethics — not just compliance with laws.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Why Capital Markets Need Ethics</div>
+        <ul>
+          <li>Efficient markets match capital with productive uses → benefits society</li>
+          <li>Investors need to trust markets are fair and transparent</li>
+          <li>Unethical conduct → erosion of trust → investors demand higher risk premium or disinvest</li>
+          <li>Reduced investment → less innovation, fewer jobs, slower growth</li>
+          <li>Each participant's actions affect the whole system — market sustainability</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Consequences of Unethical Behaviour</div>
+        <ul>
+          <li><strong>Individual:</strong> job loss, reputational damage, fines, jail</li>
+          <li><strong>Industry:</strong> reduced public confidence in financial institutions</li>
+          <li><strong>Markets:</strong> impaired capital allocation efficiency</li>
+          <li><strong>Society:</strong> reduced innovation, job creation, economic welfare</li>
+          <li>Examples: accounting frauds, Ponzi schemes, insider trading, market manipulation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Concept — Market Sustainability</div>
+      <p>Investment professionals must consider the <strong>long-term health of markets as a whole</strong>, not just their individual transactions. Isolated decisions that seem innocuous in isolation can collectively precipitate a market crisis in an interconnected global economy. Ethics, sustainability, and properly functioning markets are part of the same concept.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Why Compliance Alone Is Not Enough</div>
+      <p>The exam frequently tests the principle that <strong>legal ≠ ethical</strong>. Regulatory frameworks are insufficient because: (1) regulators lack resources to enforce all rules, (2) some individuals circumvent rules for personal gain, (3) laws cannot anticipate every ethical situation. A "culture of integrity" — not just rule-following — is required. Knowing the rule to apply is necessary but not sufficient; you must also recognize ethical pitfalls and resist situational influences that impair judgment.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: ETHICS vs LAW                   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Ethics–Law Distinction</h2>
+    </div>
+
+    <div class="card">
+      <p>This distinction is one of the most tested conceptual points in CFA Ethics. Understand it cold.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Legal Behaviour</th><th>Ethical Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td>Definition</td><td>What is <em>required</em> — the minimum floor</td><td>What is <em>morally correct</em> — above the floor</td></tr>
+          <tr><td>Scope</td><td>Codified rules; cannot anticipate all situations</td><td>Broader; captures grey areas laws miss</td></tr>
+          <tr><td>Enforcement</td><td>Regulatory agencies, courts</td><td>Professional bodies, reputation, culture</td></tr>
+          <tr><td>Sufficiency</td><td>Not sufficient to guarantee ethical conduct</td><td>Always sufficient — includes legal minimum</td></tr>
+          <tr><td>Overlap</td><td colspan="2" style="color:var(--muted);">Most ethical acts are also legal. Some legal acts are unethical. Some illegal acts are not obviously unethical (e.g., technical violations). Ethical standards set a higher bar.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Classic Exam Trap — "It's Legal So It's Fine"</div>
+      <p>An answer choice that says "the action is acceptable because it complies with local law" is almost always <strong>wrong</strong> in a CFA Ethics question. Compliance with law is the minimum — CFA Standards may impose higher obligations. Always ask: does it comply with the <em>more strict</em> of local law or the Code and Standards?</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — The Ethical Decision-Making Framework</div>
+      <p>When faced with an ethical dilemma, CFA Institute expects investment professionals to use a structured framework: <strong>(1) Identify the relevant facts and stakeholders. (2) Identify the applicable ethical principles and rules. (3) Consider the interests of all affected parties. (4) Choose the course of action that best fulfills ethical obligations.</strong> The exam may present scenarios and ask which action "best reflects" the Code and Standards — the answer is rarely the purely self-serving choice, rarely the "do nothing" choice, and almost always involves some form of disclosure, escalation, or refusal to participate.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: PCP & ENFORCEMENT               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Professional Conduct Program (PCP) & Enforcement</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>CFA Institute Board of Governors</strong> maintains oversight of the Professional Conduct Program (PCP). The <strong>Disciplinary Review Committee (DRC)</strong> — volunteer CFA charterholders — reviews conduct and partners with PCP staff to establish and review policies. The <strong>Rules of Procedure</strong> (from the Bylaws) form the basic structure for enforcement.</p>
+    </div>
+
+    <h3>Who Must Comply</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Mandatory Compliance</div>
+        <ul>
+          <li><strong>All CFA Institute members</strong> (including CFA charterholders)</li>
+          <li><strong>All CFA Program candidates</strong> enrolled in the program</li>
+          <li>Also covers CIPM certificants (professional conduct)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Voluntary Adoption (Firms & Non-Members)</div>
+        <ul>
+          <li>CFA Institute <em>encourages</em> (does not require) firms to adopt Code and Standards</li>
+          <li>If a firm claims compliance, it must use the exact prescribed language: <em>"[Name] claims compliance with the CFA Institute Code of Ethics and Standards of Professional Conduct. This claim has not been verified by CFA Institute."</em></li>
+          <li>CFA Institute does NOT verify firm compliance claims</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Five Sources of PCP Inquiries</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="st-title">Self-Disclosure on Annual Professional Conduct Statement</div>
+          Members and candidates must self-disclose: civil litigation involvement, criminal investigations, or being subject to a written complaint.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="st-title">Written Complaints Received by PCP Staff</div>
+          Third-party complaints can trigger an investigation directly.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="st-title">Media, Regulatory Notices, or Public Sources</div>
+          CFA Institute staff may initiate investigations based on news coverage or regulatory actions — no complaint needed.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="st-title">Proctor Reports on Exam Day</div>
+          Proctors file reports on candidates suspected of violating testing rules during the exam.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="st-title">Post-Exam Analysis & Social Media Monitoring</div>
+          CFA Institute analyzes scores and exam materials after exams and monitors online/social media for disclosure of confidential exam information.
+        </div>
+      </div>
+    </div>
+
+    <h3>Investigation Process & Sanctions</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;">PCP staff investigates: requests written explanation, interviews parties, collects documents</li>
+        <li style="margin-bottom:8px;">Possible outcomes: (a) <strong>No disciplinary sanction</strong>, (b) <strong>Cautionary letter</strong>, (c) <strong>Proceed to discipline</strong></li>
+        <li style="margin-bottom:8px;">If violation believed: member/candidate can <strong>accept or reject</strong> charges and proposed sanctions</li>
+        <li style="margin-bottom:8px;">If rejected: matter goes to a <strong>DRC panel</strong> — panel determines violation and sanctions</li>
+        <li>Sanctions: <strong>public censure</strong>, <strong>suspension</strong> of membership/CFA designation use, <strong>revocation</strong> of CFA charter. Candidates may be suspended/prohibited from the CFA Program.</li>
+      </ol>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — PCP Details That Get Tested</div>
+      <p><strong>The Board of Governors</strong> has oversight — not the DRC. The DRC <em>reviews</em> conduct but it's the Board that has ultimate authority. <strong>Self-disclosure is mandatory</strong> on the annual statement — failing to disclose is itself a violation. <strong>Social media monitoring</strong> is an explicit source of inquiries — discussing exam content online is a violation even after the exam. <strong>The exact firm compliance language</strong> is frequently tested — particularly the phrase "This claim has not been verified by CFA Institute."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: CODE OF ETHICS — 6 COMPONENTS  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>The Code of Ethics — Six Components</h2>
+    </div>
+
+    <div class="card">
+      <p>The Code is <strong>aspirational and high-level</strong> — it sets the overarching ethical principles. The Standards (below) are the <strong>practical and specific</strong> rules. Both work together as an "interwoven tapestry." You must memorize all six components of the Code — they are directly testable.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Mnemonic: <strong>PLACE MI</strong> — The 6 Components of the Code of Ethics</div>
+      <div class="f">
+        P — Place the integrity of the investment profession and clients' interests above own interests<br>
+        L — Lead by practicing and encouraging others to practice ethically (reflect credit on profession)<br>
+        A — Act with integrity, competence, diligence, and respect with all stakeholders<br>
+        C — Care: use reasonable care and exercise independent professional judgment<br>
+        E — Ethics and viability of capital markets: promote integrity for ultimate benefit of society<br>
+        M — Maintain and improve own professional competence and that of other investment professionals
+      </div>
+      <div class="note">The exact six statements: (1) Act with integrity, competence, diligence, and respect. (2) Place integrity of profession and client interests above own interests. (3) Use reasonable care and exercise independent judgment. (4) Practice and encourage ethical conduct that reflects credit on the profession. (5) Promote integrity and viability of global capital markets for the benefit of society. (6) Maintain and improve professional competence and strive to improve others'.</div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Code vs. Standards</div>
+      <p>The exam distinguishes between the <strong>Code</strong> (aspirational, broad) and the <strong>Standards</strong> (specific, practical, enforceable). Violations are adjudicated against the <strong>Standards</strong>, not the Code per se — though the Code informs the spirit. Also testable: the Code applies to <strong>members AND candidates</strong>. A candidate who has not yet earned the CFA designation is still bound by the Code and Standards from the moment they enroll in the CFA Program.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: STANDARD I — PROFESSIONALISM    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Standard I: Professionalism</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard I covers the foundational professional obligations: knowing and following the law, maintaining independence of judgment, not misrepresenting yourself or your work, avoiding dishonest conduct, and maintaining competence. Five sub-standards: <span class="tag tag-red">I(A)</span> <span class="tag tag-red">I(B)</span> <span class="tag tag-red">I(C)</span> <span class="tag tag-red">I(D)</span> <span class="tag tag-red">I(E) [NEW 2023]</span></p>
+    </div>
+
+    <!-- I(A) -->
+    <div class="std1-card">
+      <div class="std1-title">I(A) — Knowledge of the Law</div>
+      <p style="font-size:14px; color:#dfc8c8; margin-bottom:10px;"><em>Must understand and comply with all applicable laws, rules, regulations. In conflict, comply with the MORE STRICT. Must not participate in or assist violations. Must dissociate from violations.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Applies to laws of: government, regulatory organizations, licensing agencies, professional associations, and the CFA Institute Code and Standards</li>
+        <li><strong>More strict rule wins</strong> — always. If local law is stricter than the Code, follow local law. If the Code is stricter than local law, follow the Code.</li>
+        <li>"Knowingly participate or assist" — ignorance of the law is not a defence, but the standard requires <em>knowledge</em> of the violation</li>
+        <li><strong>Dissociation:</strong> if a colleague/employer is violating the law, you must dissociate — remove yourself from the situation. Dissociation alone may not be enough if you had supervisory responsibilities.</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Compliant — I(A)</div>
+        <ul>
+          <li>Reporting a colleague's illegal activity to compliance/supervisor</li>
+          <li>Refusing to sign a research report with misleading statements</li>
+          <li>Following CFAI Standards when stricter than local law</li>
+          <li>Seeking legal counsel when uncertain about applicable law</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Violation — I(A)</div>
+        <ul>
+          <li>Remaining silent when aware a colleague is committing fraud</li>
+          <li>Following firm's instructions to do something you know is illegal</li>
+          <li>Claiming "I didn't know" after ignoring obvious red flags</li>
+          <li>Following the less strict standard when laws conflict</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — I(A) Dissociation & the Conflict Rule</div>
+      <p>The most tested aspect of I(A): <strong>What must you do when you discover a colleague is violating the law?</strong> Steps: (1) First consult compliance/legal. (2) If the firm does not act, escalate. (3) If still unresolved, <strong>dissociate</strong> from the activity — resign from the account, refuse to participate, etc. You are NOT required to report to regulators (though it may be appropriate). You ARE required to dissociate.</p>
+      <p>On the law conflict question: <strong>"more strict" = comply with it, always</strong>. If asked what a member operating in a foreign country must do when local law conflicts with CFAI Standards: follow whichever is more strict. This is a one-line rule that appears in ~1 question every exam.</p>
+    </div>
+
+    <!-- I(B) -->
+    <div class="std1-card" style="margin-top:20px;">
+      <div class="std1-title">I(B) — Independence and Objectivity</div>
+      <p style="font-size:14px; color:#dfc8c8; margin-bottom:10px;"><em>Must not offer, solicit, or accept any gift, benefit, compensation, or consideration that could reasonably compromise independence and objectivity.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Applies to both giving AND receiving — <strong>offering a bribe is as bad as accepting one</strong></li>
+        <li><strong>Modest gifts</strong> (e.g., a business lunch, small token) are generally acceptable as they don't compromise objectivity</li>
+        <li><strong>Issuer-paid research:</strong> analysts may write research paid for by the subject company — permitted only with full disclosure; must not let payment influence conclusions</li>
+        <li><strong>Travel/accommodation paid by a third party:</strong> acceptable if it is the most efficient way to conduct business and does not compromise objectivity</li>
+        <li><strong>Gifts from clients</strong> (after services rendered) differ from gifts from prospective clients (before services — more concerning)</li>
+        <li>The test: could a reasonable person view this as compromising independence? If yes → decline or disclose</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — I(B) The Gift Trap</div>
+      <p>The exam loves scenarios involving gifts. Key distinctions: <strong>gift from a client after services = likely OK</strong> (token of appreciation, not an inducement). <strong>Gift from a client before or contingent on a recommendation = NOT OK</strong> (could influence objectivity). Expensive gifts/lavish entertainment from issuers or brokers = NOT OK regardless of intent. "The gift was small so it doesn't matter" = wrong — it's about whether it <em>could reasonably</em> affect objectivity, not about dollar value alone. Also: <strong>accepting gift must be disclosed to employer</strong> (even if acceptable under I(B)) — connects to Standard IV duties.</p>
+    </div>
+
+    <!-- I(C) -->
+    <div class="std1-card" style="margin-top:20px;">
+      <div class="std1-title">I(C) — Misrepresentation</div>
+      <p style="font-size:14px; color:#dfc8c8; margin-bottom:10px;"><em>Must not knowingly make any misrepresentations relating to investment analysis, recommendations, actions, or other professional activities.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Covers: false statements, omissions of material facts, and misleading statements (even technically true ones)</li>
+        <li><strong>Plagiarism</strong> — using others' work without attribution is a misrepresentation (implying it is your own)</li>
+        <li>Misrepresenting qualifications, credentials, or experience</li>
+        <li>Misrepresenting performance results — cherry-picking time periods, omitting poor-performing accounts</li>
+        <li>Guaranteeing investment returns (virtually always a misrepresentation — returns cannot be guaranteed)</li>
+        <li>"Knowingly" — the standard does require intent; an honest mistake is not a violation, but reasonable diligence is expected</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Misrepresentation Trap — Plagiarism and Model Attribution</div>
+      <p>Using a third-party model, analysis, or database without attribution is plagiarism even if the underlying data is factually accurate. <strong>Exception:</strong> using recognized financial models widely known in the industry (e.g., CAPM, Black-Scholes) does not require attribution — these are standard tools, not proprietary work. But a colleague's proprietary model used without credit = plagiarism.</p>
+    </div>
+
+    <!-- I(D) -->
+    <div class="std1-card" style="margin-top:20px;">
+      <div class="std1-title">I(D) — Misconduct</div>
+      <p style="font-size:14px; color:#dfc8c8; margin-bottom:10px;"><em>Must not engage in any professional conduct involving dishonesty, fraud, or deceit or commit any act that reflects adversely on professional reputation, integrity, or competence.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Broader than I(A) — covers <em>personal</em> conduct (not just professional) if it reflects on professional standing</li>
+        <li>A DUI conviction, personal bankruptcy due to fraudulent behaviour, domestic violence charges — all may violate I(D)</li>
+        <li><strong>Key test:</strong> does the conduct "reflect adversely" on the member's professional reputation, integrity, or competence?</li>
+        <li>Purely personal conduct (e.g., a private dispute with a neighbour over property) that has no connection to professional conduct does NOT violate I(D)</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — I(D) Personal vs. Professional Conduct</div>
+      <p>The exam tests where to draw the line. <strong>Fraud, deceit, theft in a personal context = violation</strong> (reflects on integrity regardless of setting). <strong>Drunk driving (DUI) = may be a violation</strong> (reflects on judgment and professional standing). <strong>Dispute with a neighbour about a fence = no violation</strong> (purely personal, no professional reflection). The question to ask: "Would a reasonable person conclude this reflects badly on the member's fitness to practise as a finance professional?"</p>
+    </div>
+
+    <!-- I(E) -->
+    <div class="std1-card" style="margin-top:20px;">
+      <div class="std1-title">I(E) — Competence <span class="tag tag-yellow" style="margin-left:8px;">NEW 2023</span></div>
+      <p style="font-size:14px; color:#dfc8c8; margin-bottom:10px;"><em>Must act with and maintain the competence necessary to fulfill professional responsibilities.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Codifies what the Code of Ethics already required — makes it an explicit enforceable standard</li>
+        <li>Competence requirements vary by role — there is no single universal definition; context-specific</li>
+        <li><strong>Does NOT mandate</strong> a specific continuing education program or specific courses</li>
+        <li>Members and candidates must continuously maintain or improve required competence</li>
+        <li>If a member's role expands (e.g., takes on new asset class), they must acquire necessary new skills before acting</li>
+        <li>Demonstrating competence: various approaches accepted — reading, courses, peer consultation, supervised practice</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — I(E) The New Standard Nuances</div>
+      <p>Being new (2023), expect this to appear. Key points: <strong>No specific CE program is mandated</strong> — the standard is flexible on how competence is maintained. <strong>Taking on assignments beyond current competence without developing skills = violation.</strong> A member asked to manage a new asset class they have no experience with must either refuse, seek training first, or work under supervision — not just proceed and "figure it out." The standard is continuous — competence is not a one-time achievement.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: STANDARD II — CAPITAL MARKETS   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Standard II: Integrity of Capital Markets</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard II protects the integrity of markets from two critical threats: trading on material nonpublic information (insider trading) and artificially distorting prices or volumes. Two sub-standards: <span class="tag tag-blue">II(A)</span> <span class="tag tag-blue">II(B)</span></p>
+    </div>
+
+    <div class="std2-card">
+      <div class="std2-title">II(A) — Material Nonpublic Information (MNPI)</div>
+      <p style="font-size:14px; color:#c8d4e0; margin-bottom:10px;"><em>Must not act or cause others to act on material nonpublic information that could affect the value of an investment.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d4e0;">
+        <li><strong>Material:</strong> information that would significantly affect the price of the security, or that a reasonable investor would consider important in an investment decision</li>
+        <li><strong>Nonpublic:</strong> not yet disseminated to the general public in a widespread manner</li>
+        <li>Covers: acting on MNPI yourself AND tipping others to act on it ("cause others to act")</li>
+        <li><strong>Mosaic theory:</strong> combining multiple pieces of non-material nonpublic information with public information to reach a material conclusion is <em>permitted</em> — this is fundamental analysis, not insider trading</li>
+        <li>When in possession of MNPI: <strong>stop trading, do not tip others</strong>, consult compliance</li>
+        <li><strong>Firewall / information barriers</strong> (Chinese walls) between departments are a recommended compliance procedure</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Permitted — Mosaic Theory</div>
+        <ul>
+          <li>Combining public filings + industry data + supplier checks</li>
+          <li>Visiting a company's public facilities to observe operations</li>
+          <li>Using satellite data of parking lots (public collection)</li>
+          <li>Piecing together multiple nonmaterial tips into a material conclusion</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Violation — MNPI Traps</div>
+        <ul>
+          <li>Trading on earnings information received from a CFO before announcement</li>
+          <li>Telling a friend about an upcoming merger before public disclosure</li>
+          <li>Acting on board meeting minutes before public release</li>
+          <li>Using nonpublic regulatory decision information to trade</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — The Mosaic Theory & "Cause Others to Act"</div>
+      <p>The exam loves mosaic theory. <strong>Combining nonpublic NON-material info with public info = OK.</strong> The result may be a material conclusion — this is legitimate research. But if any <em>single piece</em> of the mosaic is itself material and nonpublic → stop. Also critical: <strong>"cause others to act"</strong> = tipping. An analyst who tells a portfolio manager about MNPI, even without trading themselves, has violated II(A). It doesn't matter if the tipper benefits financially — the violation is in the disclosure of MNPI.</p>
+    </div>
+
+    <div class="std2-card" style="margin-top:20px;">
+      <div class="std2-title">II(B) — Market Manipulation</div>
+      <p style="font-size:14px; color:#c8d4e0; margin-bottom:10px;"><em>Must not engage in practices that distort prices or artificially inflate trading volume with the intent to mislead market participants.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d4e0;">
+        <li>Two types: <strong>price manipulation</strong> (false/misleading transactions) and <strong>information manipulation</strong> (spreading false rumours)</li>
+        <li><strong>Intent to mislead is required</strong> — legitimate large trades that incidentally move prices are NOT manipulation</li>
+        <li>Wash trading, pump-and-dump schemes, spreading false rumours to move prices — all violations</li>
+        <li>Marking the close (trading near end of day to inflate closing prices) = manipulation</li>
+        <li>High-volume algorithmic trading intended to create false impression of liquidity = manipulation</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Intent in II(B)</div>
+      <p><strong>Intent distinguishes manipulation from legitimate trading.</strong> A fund manager who buys a large position, causing prices to rise, has not manipulated the market if the intent was genuine investment. The same trade done specifically to inflate a valuation for a performance report = manipulation. On the information side: spreading rumours <em>you know to be false</em> = violation. Sharing your genuine (even controversial) investment thesis = fine, even if it moves prices.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: STANDARD III — DUTIES TO CLIENTS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Standard III: Duties to Clients</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard III is the most comprehensive standard and generates the most exam questions. It covers the full range of obligations to clients: loyalty, fair dealing, suitability, performance presentation, and confidentiality. Five sub-standards: <span class="tag tag-green">III(A)</span> <span class="tag tag-green">III(B)</span> <span class="tag tag-green">III(C)</span> <span class="tag tag-green">III(D)</span> <span class="tag tag-green">III(E)</span></p>
+    </div>
+
+    <div class="std3-card">
+      <div class="std3-title">III(A) — Loyalty, Prudence, and Care</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><em>Duty of loyalty; act with reasonable care and prudent judgment; act for benefit of clients; place clients' interests before employer's or own interests.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Client interests &gt; employer interests &gt; own personal interests — this is the priority hierarchy</li>
+        <li><strong>Soft dollar/commission arrangements:</strong> using client brokerage to pay for research that benefits the manager — permissible only if it benefits the <em>client</em></li>
+        <li>Voting proxies in the best interest of clients (not routinely; but when relevant to client interests)</li>
+        <li>Identifying who the client is: in institutional settings, the fund/plan beneficiaries are the ultimate clients</li>
+        <li>Prudent investor rule: act as a prudent investor would; diversify appropriately; manage risk</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Client Priority Hierarchy</div>
+      <p>This hierarchy is tested directly and in scenarios: <strong>Client &gt; Employer &gt; Self.</strong> Scenario: a portfolio manager's employer instructs them to recommend a product that benefits the firm but not the client. The manager must prioritize the client — even if it means conflict with the employer. This is not insubordination; III(A) requires it. The only exception: if following client interests would require breaking the law — in that case, law compliance takes precedence.</p>
+    </div>
+
+    <div class="std3-card" style="margin-top:20px;">
+      <div class="std3-title">III(B) — Fair Dealing</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><em>Must deal fairly and objectively with all clients when providing analysis, recommendations, or taking investment action.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Fair ≠ Equal.</strong> Clients may receive different levels of service. Premium clients may get more analysis, faster communication — this is permitted. What is NOT permitted: giving some clients a <em>trading advantage</em> based on new recommendations before others are informed.</li>
+        <li>All clients must receive investment recommendations <strong>simultaneously</strong> (or as close as possible)</li>
+        <li>No front-running: do not trade personal accounts before executing client orders</li>
+        <li>IPO allocations: must be fair; preferring certain clients (family, friends) over others = violation</li>
+        <li>Recommending a different strategy to different clients based on their needs = fine (suitability). Recommending a trade to some clients before others to give them a price advantage = not fine.</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Fair vs. Equal (III(B))</div>
+      <p>This distinction trips many candidates. <strong>"Fair" does not mean identical treatment.</strong> A high-net-worth client can receive more frequent calls, more detailed reports, access to additional research — this is a premium service level, not unfair dealing. The violation occurs when the preferential treatment involves giving some clients an <em>earlier trading opportunity</em> on a new recommendation. Example: calling your top 5 clients with a "Buy" recommendation before disseminating it more broadly = violation of III(B).</p>
+    </div>
+
+    <div class="std3-card" style="margin-top:20px;">
+      <div class="std3-title">III(C) — Suitability</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><em>Two contexts: (1) Advisory — make reasonable inquiry into client's situation before recommending; judge suitability in context of total portfolio. (2) Portfolio management — only take actions consistent with the portfolio's stated mandate.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Know your client (KYC):</strong> investment experience, risk and return objectives, financial constraints — must inquire AND regularly update</li>
+        <li>Suitability judged in context of the client's <strong>total portfolio</strong>, not just the individual security in isolation</li>
+        <li>A speculative security may be suitable for a portion of a conservative client's overall portfolio — it depends on total allocation</li>
+        <li><strong>IPS (Investment Policy Statement):</strong> the written document defining objectives and constraints — the benchmark for suitability</li>
+        <li>For portfolio managers: must stay within the mandated strategy/style even if they believe another approach would generate higher returns</li>
+        <li>If a client insists on an unsuitable investment: document the client's instruction, inform them of your concerns, but ultimately may comply (it's their money)</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Suitability in the Total Portfolio Context</div>
+      <p>Common exam scenario: a client with a conservative risk profile wants to buy a highly speculative stock. <strong>Wrong answer:</strong> "Refuse and do not execute the trade." <strong>Right answer:</strong> Inform the client it appears inconsistent with their objectives, document your concerns, and if the client insists and it's a small portion of their total portfolio, comply — but document everything. The member must <em>judge suitability in context of the total portfolio</em>. A $5,000 speculative bet within a $2M conservative portfolio may be acceptable as a minor allocation.</p>
+    </div>
+
+    <div class="std3-card" style="margin-top:20px;">
+      <div class="std3-title">III(D) — Performance Presentation</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><em>Must make reasonable efforts to ensure performance information communicated to clients is fair, accurate, and complete.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Cannot cherry-pick time periods that show the best performance</li>
+        <li>Cannot selectively present only the best-performing accounts/funds</li>
+        <li>Must not misrepresent past performance</li>
+        <li>GIPS (Global Investment Performance Standards): recommended but not required by the Standards — however, if a firm claims GIPS compliance, that claim must be accurate</li>
+        <li>Performance must be net of fees unless gross-of-fees presentation is clearly labeled as such</li>
+        <li><strong>Simulated/back-tested performance</strong> must be clearly disclosed as such — presenting back-tested results as actual performance = violation</li>
+      </ul>
+    </div>
+
+    <div class="std3-card" style="margin-top:20px;">
+      <div class="std3-title">III(E) — Preservation of Confidentiality</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><em>Must keep information about current, former, and prospective clients confidential — with three exceptions.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Confidentiality applies to: <strong>current clients, former clients, AND prospective clients</strong></li>
+        <li><strong>Three exceptions — when disclosure IS permitted (or required):</strong>
+          <ol style="margin-top:6px; padding-left:18px;">
+            <li>The information concerns <strong>illegal activities</strong> on the part of the client</li>
+            <li>Disclosure is <strong>required by law</strong></li>
+            <li>The client <strong>permits</strong> disclosure</li>
+          </ol>
+        </li>
+        <li>If a client reveals plans for illegal activity → you may (and likely should) disclose, but must consult legal counsel first</li>
+        <li>Using client information to benefit another client = violation — no cross-pollination of client data</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Confidentiality Exceptions</div>
+      <p>The three exceptions are tested verbatim. Key nuance: <strong>illegal activity by the client is an exception — but only regarding that illegal activity.</strong> You cannot disclose other confidential information about the client just because you've discovered something illegal. Also: the exception is "may disclose" — you are permitted but not always required. When in doubt, consult legal. <strong>Former clients still have confidentiality protections</strong> — this trips candidates who assume that once the relationship ends, information is fair game. It is not.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8: STANDARD IV — DUTIES TO EMPLOYERS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Standard IV: Duties to Employers</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard IV governs the member's obligations to their employer: loyalty, no additional competing compensation without consent, and supervisory responsibility. Three sub-standards: <span class="tag tag-yellow">IV(A)</span> <span class="tag tag-yellow">IV(B)</span> <span class="tag tag-yellow">IV(C)</span></p>
+    </div>
+
+    <div class="std4-card">
+      <div class="std4-title">IV(A) — Loyalty (to Employer)</div>
+      <p style="font-size:14px; color:#dfd8c0; margin-bottom:10px;"><em>Must act for benefit of employer; not deprive employer of skills/abilities; not divulge confidential information; not cause harm to employer.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd8c0;">
+        <li><strong>Note the hierarchy:</strong> Client interests &gt; Employer interests &gt; Own interests. IV(A) is about employer loyalty but does NOT override duties to clients (Standard III)</li>
+        <li><strong>Independent practice:</strong> must obtain employer consent before undertaking work for others that could conflict — even unpaid work</li>
+        <li><strong>Leaving a job:</strong> may plan a competitive business while still employed but cannot: solicit employer clients, take client lists, remove employer's records (even if you created them)</li>
+        <li><strong>Whistleblowing:</strong> reporting employer violations to regulators is NOT a violation of IV(A) — it is a protected/encouraged act</li>
+        <li>Employer's confidential information cannot be taken when departing</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Permitted — Leaving an Employer</div>
+        <ul>
+          <li>Telling clients you are leaving (without soliciting)</li>
+          <li>Planning a new firm while still employed</li>
+          <li>Taking personal contact information you developed independently</li>
+          <li>Recreating public information from memory after leaving</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Violation — Leaving an Employer</div>
+        <ul>
+          <li>Taking client lists or portfolio records</li>
+          <li>Soliciting clients before your last day</li>
+          <li>Sharing employer's proprietary models with new firm</li>
+          <li>Recruiting colleagues to join new firm while still employed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="std4-card" style="margin-top:20px;">
+      <div class="std4-title">IV(B) — Additional Compensation Arrangements</div>
+      <p style="font-size:14px; color:#dfd8c0; margin-bottom:10px;"><em>Must not accept gifts, benefits, compensation that compete with or create a conflict of interest with the employer — without written consent from ALL parties involved.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd8c0;">
+        <li>Must obtain <strong>written consent</strong> from <strong>all parties</strong> (employer AND the other party paying)</li>
+        <li>Covers outside employment, bonuses from clients, gifts contingent on performance — anything that could conflict with employer's interest</li>
+        <li>The test: does the additional compensation <em>compete with</em> or <em>create a conflict of interest</em> with the employer? If yes → written consent required</li>
+        <li>Distinguished from I(B): I(B) is about independence/objectivity; IV(B) is about employer conflict specifically</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — IV(B): The "Written Consent from All Parties" Rule</div>
+      <p>Verbal consent is NOT sufficient under IV(B) — written consent is required. All parties means: <strong>employer must consent AND the outside party must be disclosed to employer.</strong> Scenario: a client offers to pay an analyst a bonus if the analyst's picks outperform over the year. The analyst must get written consent from their employer before accepting — even if they intend to disclose it. Accepting the arrangement and disclosing it later ≠ compliant. Consent must come first.</p>
+    </div>
+
+    <div class="std4-card" style="margin-top:20px;">
+      <div class="std4-title">IV(C) — Responsibilities of Supervisors</div>
+      <p style="font-size:14px; color:#dfd8c0; margin-bottom:10px;"><em>Must make reasonable efforts to ensure that anyone subject to supervision complies with applicable laws, rules, regulations, and the Code and Standards.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd8c0;">
+        <li>A supervisor who <em>knew or should have known</em> of a subordinate's violations may be liable even if they didn't personally commit the violation</li>
+        <li><strong>Reasonable supervision</strong> requires: establishing compliance procedures, monitoring adherence, and acting promptly when violations are detected</li>
+        <li>If a supervisor discovers violations: must investigate promptly, limit the employee's activities if necessary, and report to appropriate authority</li>
+        <li>A supervisor cannot delegate away their supervisory responsibility — delegating to a compliance officer does not eliminate the supervisor's obligation</li>
+        <li>If a supervisor reasonably relies on an adequate compliance system that then fails: not necessarily a violation — but must have actually implemented and monitored the system</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — IV(C) Supervisory Liability Scenarios</div>
+      <p>The exam presents scenarios where a subordinate commits a violation and asks whether the supervisor is also in violation. Answer: <strong>yes, if the supervisor failed to detect a violation they should have caught given reasonable supervision procedures.</strong> Key: if an adequate compliance system was in place and followed, the supervisor may escape liability for the subordinate's undetected violation. But "I didn't know" without any monitoring procedures in place = violation. The size of the firm and nature of the role determine what "reasonable" supervision means.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9: STANDARD V — INVESTMENT ANALYSIS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Standard V: Investment Analysis, Recommendations, and Actions</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard V governs the quality and integrity of investment research and communication. Three sub-standards: <span class="tag tag-purple">V(A)</span> <span class="tag tag-purple">V(B) [REVISED 2023]</span> <span class="tag tag-purple">V(C)</span></p>
+    </div>
+
+    <div class="std5-card">
+      <div class="std5-title">V(A) — Diligence and Reasonable Basis</div>
+      <p style="font-size:14px; color:#d4c8f0; margin-bottom:10px;"><em>Must exercise diligence, independence, and thoroughness; must have a reasonable and adequate basis, supported by research, for any recommendation or action.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li>Research must be <strong>independent</strong> — not merely rubber-stamping a firm's preferred position</li>
+        <li>Using third-party research: must independently evaluate it; cannot just outsource analytical judgement</li>
+        <li>Group research/consensus views: if you disagree with the group conclusion, you may still disseminate it — but you may also note your disagreement. You must not put your name on research you fundamentally disagree with without disclosure.</li>
+        <li>"Reasonable basis" does not require perfection — reasonable diligence given time and resources available</li>
+        <li>Quantitative models: must understand the model and its assumptions; cannot blindly rely on model output</li>
+      </ul>
+    </div>
+
+    <div class="std5-card" style="margin-top:20px;">
+      <div class="std5-title">V(B) — Communication with Clients and Prospective Clients <span class="tag tag-yellow" style="margin-left:8px;">REVISED 2023</span></div>
+      <p style="font-size:14px; color:#d4c8f0; margin-bottom:10px;"><em>Must disclose: (1) nature of services and costs, (2) investment process and any material changes, (3) significant limitations and risks, (4) factors relevant to recommendations, (5) distinguish fact from opinion.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li><strong>New (2023) — Disclose nature of services AND costs to client.</strong> This ensures clients can make fully informed decisions about engaging the member/firm</li>
+        <li>Disclose investment process (format and general principles); promptly disclose any <strong>material changes</strong> to the process</li>
+        <li>Must distinguish between <strong>facts</strong> (verifiable, objective) and <strong>opinions</strong> (judgments, forecasts) in communications</li>
+        <li>Significant limitations and risks of the investment process must be disclosed — not buried in footnotes</li>
+        <li>Applies to both current and <strong>prospective</strong> clients — disclosures must happen before engagement, not just after</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Fact vs. Opinion (V(B))</div>
+      <p>One of the most frequently tested nuances. <strong>"The company's EPS was $2.50 last quarter" = fact.</strong> <strong>"We believe the stock will reach $50 by year-end" = opinion.</strong> The violation occurs when an opinion is presented as a fact, or vice versa — particularly when projections are stated as certainties. CFA Institute expects language like "we believe," "we estimate," "in our view" for forward-looking statements to make clear they are judgments, not facts.</p>
+    </div>
+
+    <div class="std5-card" style="margin-top:20px;">
+      <div class="std5-title">V(C) — Record Retention</div>
+      <p style="font-size:14px; color:#d4c8f0; margin-bottom:10px;"><em>Must develop and maintain appropriate records to support investment analyses, recommendations, actions, and other investment-related communications.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li>Records support the reasonable basis required under V(A)</li>
+        <li>If local regulations don't specify a retention period, CFA Institute recommends <strong>7 years</strong> as a reasonable minimum</li>
+        <li>Electronic records and emails are included — "records" is broadly defined</li>
+        <li>If a member leaves a firm, the records belong to the <strong>employer</strong> — the member cannot take them</li>
+        <li>If records are lost or not kept, the member cannot demonstrate their analytical basis — which creates a V(A) problem as well</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 10: STANDARD VI — CONFLICTS        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Standard VI: Conflicts of Interest</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard VI requires disclosure of conflicts that could impair independence and objectivity. Three sub-standards: <span class="tag tag-orange">VI(A) [REVISED 2023]</span> <span class="tag tag-orange">VI(B)</span> <span class="tag tag-orange">VI(C)</span></p>
+    </div>
+
+    <div class="std6-card">
+      <div class="std6-title">VI(A) — Avoid or Disclose Conflicts <span class="tag tag-yellow" style="margin-left:8px;">REVISED 2023</span></div>
+      <p style="font-size:14px; color:#e8d4c4; margin-bottom:10px;"><em>Must avoid or make full and fair disclosure of all matters that could reasonably impair independence/objectivity. Disclosures must be prominent, plain language, and communicate relevant information effectively.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#e8d4c4;">
+        <li><strong>New (2023) — "Avoid or Disclose."</strong> Previously only required disclosure. Now explicitly requires avoidance where reasonably possible. Avoidance is preferred; disclosure is acceptable when avoidance isn't feasible.</li>
+        <li>Disclosure must be: <strong>prominent</strong> (not buried), <strong>plain language</strong> (not legalese), and <strong>effective</strong> (actually communicate the relevant information)</li>
+        <li>Examples of conflicts: personal ownership of covered stocks, compensation arrangements, board memberships, referral relationships, family/personal relationships with company management</li>
+        <li>Owning shares in a company you cover is not automatically a violation — but must be disclosed</li>
+        <li>A conflict can be with clients, prospective clients, OR employer</li>
+      </ul>
+    </div>
+
+    <div class="std6-card" style="margin-top:20px;">
+      <div class="std6-title">VI(B) — Priority of Transactions</div>
+      <p style="font-size:14px; color:#e8d4c4; margin-bottom:10px;"><em>Investment transactions for clients and employers must have priority over transactions where the member is the beneficial owner.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#e8d4c4;">
+        <li>Client transactions first, then employer proprietary accounts, then personal accounts — this is the priority order</li>
+        <li><strong>Front-running = prohibited:</strong> trading personal account before executing client orders to benefit from the price impact</li>
+        <li><strong>Blackout periods:</strong> members may be required to wait a period after client orders before trading personal accounts — firm policy governs specifics</li>
+        <li>Members who are beneficial owners: shares owned by a spouse, dependent children, or other accounts the member controls count as personal</li>
+        <li>IPO participation: members generally should not participate in IPOs on personal accounts if their firm manages accounts that could participate</li>
+      </ul>
+    </div>
+
+    <div class="std6-card" style="margin-top:20px;">
+      <div class="std6-title">VI(C) — Referral Fees</div>
+      <p style="font-size:14px; color:#e8d4c4; margin-bottom:10px;"><em>Must disclose to employer, clients, and prospective clients any compensation received from or paid to others for recommending products or services.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#e8d4c4;">
+        <li>Applies both ways: receiving referral fees AND paying referral fees</li>
+        <li>Disclosure allows clients to assess whether the referral is in their interest or driven by financial incentive</li>
+        <li>Must disclose: to employer first, and to clients/prospective clients as appropriate</li>
+        <li>Timing: disclosure should be made <strong>before</strong> the referral is acted upon — prospective clients must know before engaging</li>
+        <li>Does not prohibit referral arrangements — just requires transparency about them</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — VI(A) vs. I(B): The Overlap</div>
+      <p>Both I(B) and VI(A) deal with independence and objectivity. <strong>I(B)</strong> is specifically about gifts/benefits/compensation that could compromise objectivity. <strong>VI(A)</strong> is broader — covering any conflict that could impair independence OR objectivity, including personal ownership, board memberships, relationships, and compensation structures. In exam scenarios, if there's a gift → I(B). If there's a broader conflict (stock ownership, board seat, referral fee structure) → VI(A). Both may apply simultaneously in complex scenarios.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 11: STANDARD VII — CFA MEMBERSHIP  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Standard VII: Responsibilities as a CFA Institute Member or CFA Candidate</h2>
+    </div>
+
+    <div class="card">
+      <p>Standard VII covers conduct related to the CFA Program itself and how members represent their CFA status. Two sub-standards: <span class="tag tag-purple">VII(A)</span> <span class="tag tag-purple">VII(B)</span></p>
+    </div>
+
+    <div class="std7-card">
+      <div class="std7-title">VII(A) — Conduct as Participants in CFA Institute Programs</div>
+      <p style="font-size:14px; color:#e4c8d8; margin-bottom:10px;"><em>Must not engage in any conduct that compromises the reputation or integrity of CFA Institute, the CFA designation, or the integrity, validity, or security of CFA Institute programs.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#e4c8d8;">
+        <li>Cheating on the CFA exam — obvious violation</li>
+        <li>Disclosing exam questions after the exam (even weeks/months later) = violation</li>
+        <li>Sharing exam content on social media, online forums, or with study groups = violation</li>
+        <li>Misrepresenting the exam experience (e.g., claiming questions focused on topics they didn't) = violation</li>
+        <li>Candidate confidentiality of exam information is perpetual — not just during the exam window</li>
+        <li>Even cheating behaviours by others that you observe and don't report may be a violation (failing to act)</li>
+      </ul>
+    </div>
+
+    <div class="std7-card" style="margin-top:20px;">
+      <div class="std7-title">VII(B) — Reference to CFA Institute, the CFA Designation, and the CFA Program</div>
+      <p style="font-size:14px; color:#e4c8d8; margin-bottom:10px;"><em>Must not misrepresent or exaggerate the meaning or implications of CFA membership, holding the CFA designation, or candidacy in the CFA Program.</em></p>
+      <ul style="padding-left:18px; font-size:14px; color:#e4c8d8;">
+        <li><strong>"CFA" is an adjective, not a noun.</strong> Correct: "I am a CFA charterholder" or "I hold the CFA designation." Incorrect: "I am a CFA" (implies it's a noun/title like "MD")</li>
+        <li>Cannot say "CFA, Level II" — there is no such designation. You are either a <em>candidate in the CFA Program</em> or a <em>CFA charterholder</em></li>
+        <li>May say "passed Level I of the CFA exam" — but cannot imply this confers any designation</li>
+        <li>Cannot claim to be a "CFA candidate" if not currently enrolled in the program</li>
+        <li>Cannot imply that passing the CFA exam guarantees superior performance or superior skills beyond what the program covers</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Correct Usage</div>
+        <ul>
+          <li>"Jane Smith, CFA" (used as suffix)</li>
+          <li>"I am a CFA charterholder"</li>
+          <li>"I am a candidate in the CFA Program"</li>
+          <li>"I passed Level I of the CFA exam in 2024"</li>
+          <li>"I hold the CFA designation"</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Incorrect Usage</div>
+        <ul>
+          <li>"I am a CFA" (noun usage)</li>
+          <li>"John Smith, CFA Level II"</li>
+          <li>"Our CFA-certified analysts…" (not "certified")</li>
+          <li>"As a CFA candidate, I guarantee…"</li>
+          <li>Claiming candidacy after failing/withdrawing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — VII(B) The "CFA" Usage Rules</div>
+      <p>The noun vs. adjective rule is tested directly. <strong>"I am a CFA" = violation.</strong> The CFA designation can only be used as a noun in the context of "CFA charterholder" or "CFA designation." Writing "CFA" after one's name as a suffix (Jane Smith, CFA) is correct. Also: <strong>partial designation claims are prohibited</strong>. "CFA, Level I" is not a designation — passing one level means you're eligible to sit the next; it confers no title. "Level I passed" or "CFA Program candidate" are the acceptable forms.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 12: 2023 REVISIONS SUMMARY         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h2>2023 Revisions — What Changed and Why It Matters</h2>
+    </div>
+
+    <div class="card">
+      <p>Three changes were made in 2023 — one new standard and two revisions. These are highly testable precisely because they are recent and explicitly flagged in the LES. Know all three cold.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Standard</th><th>Change</th><th>What it Means</th><th>Key Exam Point</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>I(E) Competence <span class="tag tag-green" style="margin-left:4px;">NEW</span></td>
+            <td>Entirely new sub-standard added to Standard I</td>
+            <td>Members must act with AND maintain competence for their professional role. Previously only in the Code of Ethics aspirationally.</td>
+            <td>No specific CE program required. Context-specific. Expanding roles require new skills before acting. Continuous obligation.</td>
+          </tr>
+          <tr>
+            <td>V(B) Communication <span class="tag tag-yellow" style="margin-left:4px;">REVISED</span></td>
+            <td>Added requirement to disclose nature of services AND costs to clients/prospective clients</td>
+            <td>Clients must be informed of what they're getting and what it costs before engaging — enables fully informed decisions.</td>
+            <td>Disclosure must go to BOTH current and prospective clients. Covers cost information — previously not explicitly required in the standard.</td>
+          </tr>
+          <tr>
+            <td>VI(A) Conflicts <span class="tag tag-yellow" style="margin-left:4px;">REVISED</span></td>
+            <td>Name changed from "Disclosure of Conflicts" to "Avoid or Disclose Conflicts." Avoidance added as explicit option.</td>
+            <td>Best practice is now to AVOID conflicts where reasonably possible, not just disclose them. When avoidance isn't feasible, disclosure remains required.</td>
+            <td>Avoidance is PREFERRED over disclosure. Disclosure must be prominent, plain language, effective. Previously, avoidance was guidance — now it's in the standard itself.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Alert — 2023 Changes Are Actively Tested</div>
+      <p>Because these are recent revisions, the CFA exam will specifically test whether candidates know what changed and why. Expect questions like: "Under the revised Standard VI(A), what is the preferred course of action when a member faces a conflict of interest?" Answer: avoid the conflict first; if that is not reasonably possible, then disclose it. The prior version only required disclosure — the distinction between the old and new standard is exactly the type of nuance the exam exploits.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 13: EXAM CHECKLIST                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 2: Code of Ethics & Standards</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>Ethics vs. Law:</strong> Legal = minimum required. Ethical = morally correct, above the minimum. Compliance with law alone is insufficient. Always apply the more strict of local law or CFA Standards.</li>
+        <li>✅ <strong>6 Code of Ethics components (mnemonic PLACE M):</strong> (1) Act with integrity/competence/diligence/respect. (2) Place profession/client interests above own. (3) Use reasonable care and independent judgment. (4) Practice ethically and encourage others. (5) Promote integrity of capital markets for society's benefit. (6) Maintain and improve competence.</li>
+        <li>✅ <strong>7 Standards structure:</strong> I: Professionalism (A-E) | II: Capital Markets (A-B) | III: Duties to Clients (A-E) | IV: Duties to Employers (A-C) | V: Investment Analysis (A-C) | VI: Conflicts of Interest (A-C) | VII: CFA Membership (A-B)</li>
+        <li>✅ <strong>Priority hierarchy: Client &gt; Employer &gt; Self.</strong> Duties to clients (III) take precedence over duties to employer (IV). Personal interests come last always.</li>
+        <li>✅ <strong>PCP oversight:</strong> Board of Governors oversees PCP. DRC = volunteer CFA charterholders. Five sources of inquiries: self-disclosure, complaints, public sources, proctors, post-exam analysis. Sanctions: censure, suspension, revocation.</li>
+        <li>✅ <strong>Firm compliance claim must use exact language:</strong> "[Name] claims compliance with the CFA Institute Code of Ethics and Standards of Professional Conduct. This claim has not been verified by CFA Institute."</li>
+        <li>✅ <strong>I(A) Law conflict rule:</strong> follow the more strict law always. Dissociation required from violations you discover — not just avoidance. Whistleblowing to regulators is NOT a violation.</li>
+        <li>✅ <strong>I(B) Gifts:</strong> Cannot offer, solicit, or accept gifts that could reasonably compromise independence. Modest gifts = generally OK. Large gifts / gifts contingent on actions = not OK. Gifts from clients must be disclosed to employer.</li>
+        <li>✅ <strong>I(C) Misrepresentation includes plagiarism.</strong> Standard financial models (CAPM, Black-Scholes) don't require attribution. Proprietary/colleague models do. Guaranteeing returns = misrepresentation.</li>
+        <li>✅ <strong>I(D) Personal conduct:</strong> Fraud/dishonesty in personal life = potential violation if it "reflects adversely" on professional standing. Purely personal disputes = not a violation.</li>
+        <li>✅ <strong>I(E) NEW 2023 — Competence:</strong> Must act with and continuously maintain competence. No specific CE program mandated. Varies by role. Cannot take on assignments beyond competence without first developing the required skills.</li>
+        <li>✅ <strong>II(A) MNPI:</strong> Material = reasonably would affect price/investor decision. Nonpublic = not yet widely disseminated. Tipping others = "cause others to act" = violation. Mosaic theory (combining nonmaterial nonpublic info with public info) = permitted.</li>
+        <li>✅ <strong>II(B) Market Manipulation requires INTENT to mislead.</strong> Legitimate large trades that move prices = not manipulation. Wash trading, pump-and-dump, false rumours, marking the close = manipulation.</li>
+        <li>✅ <strong>III(A) Soft dollars:</strong> OK only if brokerage used benefits the client. Proxy voting in client's best interest. Identify ultimate client (often plan beneficiaries in institutional context).</li>
+        <li>✅ <strong>III(B) Fair ≠ Equal:</strong> Premium services for premium clients = OK. Earlier trading opportunity on new recommendations for some clients = NOT OK. All clients receive recommendations simultaneously.</li>
+        <li>✅ <strong>III(C) Suitability — total portfolio context.</strong> If client insists on unsuitable investment: document concerns, inform client, may comply. IPS is the benchmark. Portfolio managers: stay within stated mandate even if you'd do it differently.</li>
+        <li>✅ <strong>III(D) Performance — no cherry-picking periods or accounts.</strong> Back-tested results must be clearly labeled. GIPS is recommended, not required — but if claimed, must be accurate.</li>
+        <li>✅ <strong>III(E) Confidentiality: current, former, AND prospective clients.</strong> Three exceptions: illegal activity, required by law, client permits. Former clients retain confidentiality protection. Illegal activity exception = only regarding that illegal activity, not all client info.</li>
+        <li>✅ <strong>IV(A) Leaving a job:</strong> Cannot take client lists, records, or proprietary models. Can plan a new firm. Can tell clients you're leaving (not solicit). Can recreate info from memory that is not proprietary.</li>
+        <li>✅ <strong>IV(B) Additional compensation:</strong> WRITTEN consent required from ALL parties before accepting. Verbal consent insufficient. Prior disclosure, not post-hoc.</li>
+        <li>✅ <strong>IV(C) Supervisory liability:</strong> Supervisor who should have known of subordinate violations may be liable. Reasonable supervision = procedures + monitoring + prompt action. Cannot delegate away supervisory responsibility.</li>
+        <li>✅ <strong>V(A) Reasonable basis — applies to third-party research too.</strong> Must independently evaluate it, not just pass it on. Group research: may disseminate if disagree, but may note disagreement. Quantitative models: must understand, not blindly follow.</li>
+        <li>✅ <strong>V(B) REVISED 2023:</strong> Must disclose nature of services AND costs (new). Must distinguish fact from opinion — forward-looking statements are opinions. Applies to current AND prospective clients. Promptly disclose material changes to process.</li>
+        <li>✅ <strong>V(C) Record retention:</strong> 7 years if no local requirement specified. Records belong to employer, not departing employee. Losing records creates a V(A) basis problem too.</li>
+        <li>✅ <strong>VI(A) REVISED 2023 — Avoid or Disclose:</strong> Avoidance is preferred. Disclosure is acceptable when avoidance not feasible. Disclosure must be prominent, plain language, effective.</li>
+        <li>✅ <strong>VI(B) Transaction priority:</strong> Clients first, then employer proprietary accounts, then personal. Front-running = prohibited. Beneficial owner = includes spouse, dependents, accounts under control.</li>
+        <li>✅ <strong>VI(C) Referral fees:</strong> Disclose to employer AND to client/prospective client. Disclose BEFORE the referral is acted upon. Both receiving AND paying referral fees must be disclosed.</li>
+        <li>✅ <strong>VII(A) CFA exam confidentiality is perpetual.</strong> Sharing exam content = violation. Even post-exam. Social media posts about exam questions = violation. Observed cheating not reported = potential violation.</li>
+        <li>✅ <strong>VII(B) "CFA" is an adjective, not a noun.</strong> "I am a CFA" = violation. "Jane Smith, CFA" = correct. "CFA Level II" designation does not exist. "Passed Level I" is acceptable but confers no designation. "CFA-certified" is incorrect — use "CFA charterholder."</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ ETHICS MODULE 2 — MASTER EXAM TRAP LIST (20 TRAPS) ★</div>
+      <div class="f">
+        ═══ STANDARD I: PROFESSIONALISM ═══<br>
+        TRAP 1: "It's legal locally so it's fine." → WRONG. Must follow the MORE STRICT of local law or CFA Standards.<br>
+        TRAP 2: "I didn't know about my colleague's violation." → If red flags existed, ignorance ≠ defence. I(A) requires knowing, but also reasonable diligence.<br>
+        TRAP 3: "The gift was small, so it doesn't affect objectivity." → Test is whether it COULD REASONABLY compromise — not actual impact. Must disclose.<br>
+        TRAP 4: "I used a standard model so no attribution needed." → Only for widely known industry models (CAPM, etc). Proprietary/colleague models need attribution.<br>
+        TRAP 5: "The conduct was personal, not professional." → If it involves dishonesty, fraud or deceit that reflects on professional standing → I(D) violation regardless.<br>
+        TRAP 6: "I(E) requires a specific CE programme." → FALSE. I(E) is flexible on HOW competence is maintained — no specific programme mandated.<br><br>
+
+        ═══ STANDARD II: CAPITAL MARKETS ═══<br>
+        TRAP 7: "I only told my friend — I didn't trade myself." → Tipping = violation. "Cause others to act" is explicitly covered by II(A).<br>
+        TRAP 8: "Mosaic theory lets me trade on any nonpublic info." → WRONG. Mosaic combines nonmaterial nonpublic with public info. Any piece that is itself material AND nonpublic = stop.<br>
+        TRAP 9: "My large trade moved the market — that's manipulation." → NOT if the intent was legitimate investment. Intent to mislead is required for II(B) violation.<br><br>
+
+        ═══ STANDARD III: DUTIES TO CLIENTS ═══<br>
+        TRAP 10: "Premium clients can get our recommendations early." → NEVER. Simultaneous dissemination required. Premium service levels (more calls, more reports) are fine; earlier trading advantages are not.<br>
+        TRAP 11: "The individual security is unsuitable, so refuse the trade." → Suitability is judged in TOTAL PORTFOLIO context. A speculative pick may be fine as a small slice of a conservative portfolio.<br>
+        TRAP 12: "If the client insists on an unsuitable trade, refuse." → Wrong approach. Document concerns, inform client, and if they persist, comply (they own the assets). Document everything.<br>
+        TRAP 13: "Former clients don't have confidentiality rights." → FALSE. Current, former, AND prospective clients are protected under III(E).<br>
+        TRAP 14: "I can share one client's info to benefit another client." → NEVER. III(E) prohibits cross-use of confidential client information.<br><br>
+
+        ═══ STANDARD IV: DUTIES TO EMPLOYERS ═══<br>
+        TRAP 15: "My employer verbally consented to my outside arrangement." → Not enough. IV(B) explicitly requires WRITTEN consent.<br>
+        TRAP 16: "I told clients I was leaving — that violates IV(A)." → Not a violation. You may inform clients you're leaving. Soliciting them before your last day IS a violation.<br>
+        TRAP 17: "I delegated supervision to compliance — so I'm not liable." → False. You cannot delegate away supervisory responsibility. The obligation to ensure compliance remains with you.<br><br>
+
+        ═══ STANDARDS V, VI, VII ═══<br>
+        TRAP 18: "My projection was wrong — that's misrepresentation." → Not necessarily. An honest forecast that doesn't materialise is an OPINION, not misrepresentation. The violation is stating opinions as facts.<br>
+        TRAP 19: "I disclosed the conflict, so it's fine regardless." → Under revised VI(A): you should first try to AVOID the conflict. Disclosure is acceptable only when avoidance is not reasonably possible.<br>
+        TRAP 20: "I passed Level II — I can put 'CFA Level II' after my name." → NEVER. No partial designations exist. You may say "I passed Level II of the CFA exam" but cannot use it as a credential suffix.
+      </div>
+      <div class="note">
+        <strong>Top conceptual themes in Ethics (what the exam is really testing):</strong><br>
+        (1) The ethics–law distinction — ethical &gt; legal; always apply more strict standard.<br>
+        (2) Priority hierarchy — Client &gt; Employer &gt; Self — this resolves most conflict scenarios.<br>
+        (3) Disclosure vs. avoidance — the 2023 revision makes avoidance the preferred first step for conflicts.<br>
+        (4) Intent matters in some standards (II(B) manipulation, I(C) misrepresentation) but NOT in others (I(A) — you must dissociate even if you didn't intend harm).<br>
+        (5) Simultaneous vs. fair treatment — "fair" is not "equal" — but trading opportunities must be simultaneous.<br>
+        (6) Written vs. verbal — IV(B) requires written consent. Other standards don't always — know the distinction.<br>
+        (7) Total portfolio context — always evaluate investments as part of the whole, not in isolation.<br>
+        (8) Prospective clients — many standards explicitly extend to prospective clients, not just current ones (III(E), III(B), V(B), VI(C)).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Ethics · Module 2: Code of Ethics & Standards of Professional Conduct · Exam Prep Notes
+</footer>
+
+</body>
+</html>

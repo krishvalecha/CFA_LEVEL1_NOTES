@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 19: MBS Instrument and Market Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --rmbs-bg: #111a16; --rmbs-border: #4cc98a;
+    --cmo-bg: #1a1020; --cmo-border: #4c8bc9;
+    --cmbs-bg: #1a1510; --cmbs-border: #c9a84c;
+    --risk-bg: #12141f; --risk-border: #c94c4c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .rmbs-card { background: var(--rmbs-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .rmbs-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cmo-card { background: var(--cmo-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cmo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cmbs-card { background: var(--cmbs-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cmbs-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .risk-card { background: var(--risk-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .risk-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 19</div>
+  <h1>MBS Instrument and <span>Market Features</span></h1>
+  <p>Exam-ready notes: prepayment risk (contraction + extension), time tranching vs. credit tranching, mortgage loan fundamentals (LTV, DTI, recourse, prepayment options), agency vs. non-agency RMBS, WAC and WAM calculations, mortgage pass-through securities, CMO structures (sequential-pay, PAC, Z-tranche, IO/PO, floaters), and CMBS (call protection, balloon risk, DSC ratio).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Prepayment Risk</a>
+  <a class="toc-item" href="#s2">02 · Time Tranching</a>
+  <a class="toc-item" href="#s3">03 · Mortgage Loan Features</a>
+  <a class="toc-item" href="#s4">04 · LTV, DTI &amp; Key Ratios</a>
+  <a class="toc-item" href="#s5">05 · Agency vs. Non-Agency RMBS</a>
+  <a class="toc-item" href="#s6">06 · Mortgage Pass-Through Securities</a>
+  <a class="toc-item" href="#s7">07 · CMO Structures</a>
+  <a class="toc-item" href="#s8">08 · CMBS — Features &amp; Risks</a>
+  <a class="toc-item" href="#s9">09 · Master Comparison Table</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: PREPAYMENT RISK                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Prepayment Risk — Contraction &amp; Extension</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Prepayment risk</strong> is the risk that the principal (or a portion of principal) is repaid at a different pace than the contractually scheduled repayment plan. MBS cash flows are uncertain because borrower behavior — early repayments, delinquencies, refinancing — depends on income, interest rates, loan terms, and property sales.</p>
+      <p>Prepayment risk has <strong>two components</strong>, both driven by changes in the general level of interest rates:</p>
+    </div>
+
+    <div class="two-col">
+      <div class="risk-card">
+        <div class="risk-title">Contraction Risk — Rates Fall</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li><strong>Definition:</strong> Borrower repays principal faster than scheduled — shortening the MBS life.</li>
+          <li><strong>Trigger:</strong> Interest rates decline → homeowners refinance at lower rates. Especially common in the US (few prepayment penalties).</li>
+          <li><strong>Two adverse effects for investors:</strong>
+            <ol style="padding-left:16px; margin-top:6px;">
+              <li>Must reinvest principal proceeds at the new, lower interest rates (reinvestment risk).</li>
+              <li>The embedded prepayment option reduces potential price appreciation — the bond is "called away" from the investor when rates fall, just when its price would have risen most.</li>
+            </ol>
+          </li>
+          <li><strong>Memory:</strong> Rates ↓ → refis ↑ → MBS shortens → you get your money back at the worst time.</li>
+        </ul>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title">Extension Risk — Rates Rise</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li><strong>Definition:</strong> Borrower repays principal more slowly than scheduled — lengthening the MBS life.</li>
+          <li><strong>Trigger:</strong> Interest rates rise → homeowners less likely to refinance. May also delay new home purchases. Prepayments slow or stop.</li>
+          <li><strong>Adverse effect for investors:</strong> Higher discount rates reduce the present value of future cash flows. The investor is locked into receiving below-market cash flows for a longer period than expected — at exactly the time rates are higher.</li>
+          <li><strong>Memory:</strong> Rates ↑ → no refis → MBS lengthens → you're stuck at below-market rates for longer.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Prepayment Risk Paradox — Investors Lose Both Ways</div>
+      <p>MBS investors face a double disadvantage: when rates <strong>fall</strong>, they experience contraction risk (principal returned early, must reinvest at lower rates — price appreciation capped). When rates <strong>rise</strong>, they experience extension risk (stuck with below-market cash flows for longer — duration extends painfully). This is called <strong>negative convexity</strong>: the MBS underperforms a standard bond in both rate directions. This is the fundamental pricing challenge of MBS compared to plain vanilla bonds.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ US vs. Europe — Prepayment Penalty Differences</div>
+      <p>In the <strong>US</strong>: few mortgages have prepayment penalties → refinancing is easy → contraction risk is high when rates fall. This is why US MBS markets need sophisticated structures (CMOs, PAC tranches) to manage prepayment risk. In <strong>Europe</strong>: prepayment penalty mortgages are common → they compensate lenders for the difference between contract rate and prevailing rate → reduces borrower incentive to prepay → lower contraction risk. Know this geographic difference for the exam.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: TIME TRANCHING                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Time Tranching — Redistributing Prepayment Risk</h2>
+    </div>
+
+    <div class="cmo-card">
+      <div class="cmo-title">Time Tranching — Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li><strong>Time tranching</strong> creates bond classes with different expected maturities from the same collateral pool. Principal repayments flow first to one tranche until fully repaid, then to the next tranche sequentially.</li>
+        <li>This redistributes prepayment risk rather than eliminating it — short tranches bear contraction risk protection while long tranches bear extension risk protection, and each tranche insulates others.</li>
+        <li>The classic implementation is the <strong>sequential-pay CMO</strong>: principal goes to Tranche A first (retires it), then to Tranche B, then C, etc.</li>
+        <li>A securitization can have <strong>both credit tranching</strong> (subordination) AND <strong>time tranching</strong> (different maturities) simultaneously — this is quite common.</li>
+      </ul>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">RLT MBS — Time Tranching Example (Residential Loan Trust)</div>
+      <div class="f">
+        Tranche A: EUR 825m | MRR + 0.50% | Maturity: 1 year  (senior + shortest)<br>
+        Tranche B: EUR 100m | MRR + 1.50% | Maturity: 2 years<br>
+        Tranche C: EUR  50m | MRR + 2.50% | Maturity: 3 years<br>
+        Tranche D: EUR  25m | Variable    | Maturity: 4 years (junior + longest)<br><br>
+        PREPAYMENT IMPACT (if rates fall in Year 2 → immediate prepayments):<br>
+        Tranche A: Repaid in 1 year regardless (already shortest — no change)<br>
+        Tranche B: Repaid LESS THAN 2 years (prepayments accelerate principal → contraction risk)<br>
+        Tranche C: Repaid LESS THAN 3 years (same — contraction risk for longer tranches too)<br>
+        Tranche D: Repaid LESS THAN 4 years (same)<br><br>
+        KEY: Each tranche's principal repayment date is uncertain because it depends on actual prepayment rates.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Tranching vs. Time Tranching — Side by Side</div>
+      <p><strong>Credit tranching</strong> (subordination): addresses <em>who bears credit losses first</em>. Junior tranches absorb defaults before senior tranches. Purpose: reduce credit risk for senior investors.<br><br>
+      <strong>Time tranching</strong> (sequential-pay): addresses <em>who receives principal first</em>. Short-maturity tranches are fully retired before long-maturity tranches receive principal. Purpose: redistribute prepayment risk — short tranches get protection from extension risk; long tranches get protection from contraction risk.<br><br>
+      Most real-world MBS combine both — a single securitization can have multiple tranches with different maturities AND different seniority (credit rank).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: MORTGAGE LOAN FEATURES             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Mortgage Loan Fundamentals</h2>
+    </div>
+
+    <div class="rmbs-card">
+      <div class="rmbs-title">Mortgage Loan — Core Definition &amp; Features</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Mortgage loan:</strong> A loan secured by the collateral of a specified real estate property. The lender holds a <strong>first lien</strong> and security interest in the property — the right to seize collateral if the borrower doesn't pay as agreed.</li>
+        <li><strong>Foreclosure:</strong> Upon default, the lender can foreclose on the property and sell it to recover the outstanding loan balance. Proceeds may be insufficient to cover the full outstanding balance.</li>
+        <li><strong>Down payment:</strong> The borrower typically pays a portion of the purchase price upfront. The remainder is the mortgage loan. The ratio of loan amount to property value is the LTV ratio.</li>
+        <li><strong>Fully amortizing mortgages:</strong> Each payment includes both interest AND principal. Over time, the interest portion decreases and the principal portion increases (standard mortgage structure). Total monthly payment remains constant.</li>
+        <li><strong>Prepayment option:</strong> The borrower's right to repay all or part of the outstanding principal before maturity. This creates prepayment risk for the lender/investor.</li>
+      </ul>
+    </div>
+
+    <h3>Recourse vs. Non-Recourse Loans — Critical Distinction</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Recourse Loan</div>
+        <p>Lender has a claim against the borrower <strong>personally</strong> for any shortfall between the outstanding mortgage balance and proceeds from foreclosure sale. Lender can go after the borrower's other assets and income.</p>
+        <p style="margin-top:8px;"><strong>Effect:</strong> Borrower is less likely to strategically default — they remain personally liable for the gap even after losing the property.</p>
+        <p style="margin-top:8px;"><span class="tag tag-green">Common in:</span> Most European countries, and some US states.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Non-Recourse Loan</div>
+        <p>Lender can ONLY look to the property (collateral) for recovery. No personal claim against the borrower for the deficiency. If the property sale proceeds < outstanding balance, lender absorbs the loss.</p>
+        <p style="margin-top:8px;"><strong>Effect:</strong> Creates incentive for <strong>strategic default</strong> when mortgage is "underwater" (LTV > 100%) — borrower may walk away even if they could afford to pay.</p>
+        <p style="margin-top:8px;"><span class="tag tag-red">Common in:</span> Many US states (determined state by state).</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Strategic Default on Underwater Mortgages — GFC Example</div>
+      <p>During the 2008–09 GFC, nearly 10.7 million US residential properties (23%) were underwater (LTV > 100%). The key GFC factors: loose credit underwriting 2004–2006 + inflated home prices + declining prices + high leverage on non-recourse loans. With non-recourse loans, borrowers had an incentive to walk away even if they could pay — strategic default. States with the highest negative equity: Nevada (65%), Arizona (48%), Florida (45%), Michigan (37%), California (35%). Investors default at 2–3% higher rates than owner-occupiers in negative equity — especially in non-recourse states.</p>
+    </div>
+
+    <h3>Prime vs. Subprime Mortgages</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Prime Loans</th><th>Subprime Loans</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Borrower Credit Quality</td>
+            <td>High — strong employment + credit history</td>
+            <td>Lower credit quality</td>
+          </tr>
+          <tr>
+            <td>DTI Ratio</td>
+            <td>Low — manageable debt load relative to income</td>
+            <td>High — may struggle to service debt</td>
+          </tr>
+          <tr>
+            <td>LTV Ratio</td>
+            <td>Lower — substantial equity in property</td>
+            <td>Higher — less equity cushion</td>
+          </tr>
+          <tr>
+            <td>Lien Position</td>
+            <td>First lien on the mortgaged property</td>
+            <td>May include second liens (subordinated to other loans)</td>
+          </tr>
+          <tr>
+            <td>Default Risk</td>
+            <td><span class="tag tag-green">Low</span></td>
+            <td><span class="tag tag-red">High</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: LTV, DTI & KEY RATIOS              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Key Ratios — LTV, DTI, and DSC (CMBS)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Loan-to-Value Ratio (LTV) — Residential &amp; Commercial</div>
+      <div class="f">
+        LTV = Loan Amount ÷ Property Value (or Appraised Value)<br><br>
+        Example: EUR600,000 loan ÷ EUR800,000 property = 75% LTV<br><br>
+        LTV ↓ → Borrower equity ↑ → Less likely to default → More protection for lender<br>
+        LTV ↑ → Less equity cushion → Higher default risk → Less collateral protection<br>
+        LTV > 100% → "Underwater mortgage" → Strategic default risk (especially non-recourse loans)
+      </div>
+      <div class="note">LTV changes over time: as the borrower makes principal payments → outstanding balance ↓ → LTV ↓. But if property value falls → LTV ↑ (can go above 100% = underwater).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Debt-to-Income Ratio (DTI) — Residential</div>
+      <div class="f">
+        DTI = Monthly Debt Payment ÷ Monthly Pre-tax Gross Income<br><br>
+        Example (from LES): Monthly payment = EUR3,795.90 | Annual income = EUR141,000<br>
+        DTI = EUR3,795.90 ÷ (EUR141,000 ÷ 12) = EUR3,795.90 ÷ EUR11,750 = 32.31%<br><br>
+        Low DTI → Good balance of income vs. debt → Can sustain additional debt → Lower default risk<br>
+        High DTI → Too much debt relative to income → Struggling to service debt → Higher default risk<br>
+        Lenders want LOW DTI before extending mortgage loans.
+      </div>
+      <div class="note">DTI uses MONTHLY gross (pre-tax) income in the denominator. It compares ongoing monthly debt obligations to the borrower's earning capacity. Prime loans → low DTI. Subprime loans → high DTI.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Debt Service Coverage Ratio (DSC / DSCR) — Commercial Only</div>
+      <div class="f">
+        DSC = Net Operating Income (NOI) ÷ Debt Service<br><br>
+        NOI = Rental Income − Cash Operating Expenses − Replacement Reserves<br>
+        (NOI excludes: principal + interest payments, capital expenditures, depreciation, amortization)<br>
+        Debt Service = Annual interest payments + principal repayments<br><br>
+        DSC > 1.0× → Property cash flows COVER debt service (property is self-sustaining)<br>
+        DSC < 1.0× → Property cash flows INSUFFICIENT to cover debt → Default risk high<br>
+        Higher DSC → More comfortable coverage → Lower lender/investor risk<br><br>
+        Example (LES): NOI = GBP7,590,000 | Debt Service = GBP4,717,169<br>
+        DSC = 7,590,000 ÷ 4,717,169 = 1.61× ✓ (sufficient coverage)
+      </div>
+      <div class="note">DSC is used for COMMERCIAL mortgages (CMBS). The commercial analog to DTI for residential mortgages. Commercial mortgages are non-recourse → lender can ONLY look to property cash flows → DSC is the primary measure of repayment capacity.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Residential vs. Commercial — Which Ratio to Use?</div>
+      <p><strong>Residential mortgages → LTV + DTI.</strong> Capacity assessment: can the individual borrower service the debt from personal income? DTI measures this. LTV measures collateral cushion.<br><br>
+      <strong>Commercial mortgages → LTV + DSC.</strong> Capacity assessment: can the property itself generate enough cash flow to service the debt? DSC measures this. LTV measures collateral cushion. Critically: commercial mortgages are non-recourse → the property's cash flow IS the repayment source → DSC is paramount.</p>
+    </div>
+
+    <h3>WAC and WAM — Pass-Through Pool Metrics</h3>
+
+    <div class="formula-box">
+      <div class="label">WAC (Weighted Average Coupon) and WAM (Weighted Average Maturity)</div>
+      <div class="f">
+        WAC = Σ [ iₙ × (CBₙ ÷ Σ CB) ]<br>
+        (weight = each mortgage's current balance / total current balance of all mortgages in pool)<br><br>
+        WAM = Σ [ MMₙ × (CBₙ ÷ Σ CB) ]<br>
+        (weight = same as WAC; MMₙ = months to maturity for mortgage n)<br><br>
+        Example (5 mortgages, total current balance = EUR1,149,000):<br>
+        A: 2.50% × (238/1,149)  B: 3.30% × (380/1,149)  C: 2.80% × (87/1,149)<br>
+        D: 4.00% × (132/1,149)  E: 3.70% × (312/1,149)<br>
+        WAC = 3.29%<br><br>
+        WAM: 180×(238/1,149) + 480×(380/1,149) + 240×(87/1,149) + 120×(132/1,149) + 312×(312/1,149)<br>
+        WAM = 313 months
+      </div>
+      <div class="note">
+        <strong>Pass-through rate (coupon to investor) = WAC minus servicing/admin/guarantee fees.</strong> The investor receives the "net coupon" or "net interest" — always lower than the WAC. The difference (servicing spread) covers all pool administration costs.<br>
+        <strong>Weighted average life (WAL)</strong> accounts for both scheduled and unscheduled (prepayment) principal repayments — a better measure of when an MBS will actually be paid off than WAM. WAM uses scheduled maturities only.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: AGENCY vs. NON-AGENCY RMBS         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Agency vs. Non-Agency RMBS</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Issuer Type</th>
+            <th>Government Guarantee?</th>
+            <th>Credit Risk?</th>
+            <th>Collateral Quality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Agency RMBS (Sector 1) — Federal Agency</td>
+            <td>US federal government agencies (e.g., Ginnie Mae / GNMA)</td>
+            <td><span class="tag tag-green">Yes — Full faith and credit of US government</span></td>
+            <td>Virtually none — government backed</td>
+            <td>Conforming mortgages only</td>
+          </tr>
+          <tr>
+            <td>Agency RMBS (Sector 2) — GSEs</td>
+            <td>Government-sponsored enterprises (Fannie Mae / FNMA, Freddie Mac / FHLMC)</td>
+            <td><span class="tag tag-yellow">Partial — GSE guarantee only (not full faith + credit of government). GSE charges a fee for this guarantee.</span></td>
+            <td>Very low — effectively government-backed</td>
+            <td>Conforming mortgages only</td>
+          </tr>
+          <tr>
+            <td>Non-Agency RMBS (Sector 3) — Private Label</td>
+            <td>Banks, financial institutions, private businesses</td>
+            <td><span class="tag tag-red">None — no government backing</span></td>
+            <td>Significant — relies entirely on credit enhancements (pool insurance, letters of credit, guarantees, subordination)</td>
+            <td>Non-conforming mortgages, subprime loans, jumbo loans, home improvement loans</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Non-Agency RMBS Nearly Disappeared After the GFC</div>
+      <p>Due to tighter regulatory standards and increased scrutiny post-GFC, non-agency RMBS (private label MBS) almost completely vanished from the market. Pre-GFC, they securitized subprime and non-conforming mortgages with inadequate credit enhancement. Now returning in small volumes — primarily for non-conforming (jumbo) loans and residential home improvement loans (including subordinated solar ABS liens). Know: non-agency = no government guarantee = dependent on private credit enhancements for investor protection.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: MORTGAGE PASS-THROUGH SECURITIES   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Mortgage Pass-Through Securities</h2>
+    </div>
+
+    <div class="rmbs-card">
+      <div class="rmbs-title">Mortgage Pass-Through — Core Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Created when mortgage lenders <strong>pool mortgages</strong> and sell securities backed by that pool to investors.</li>
+        <li>Cash flows from the pool — monthly <strong>principal, interest, and prepayments</strong> — are passed through to security holders proportionally.</li>
+        <li>A pool can contain several thousand mortgages (large, diversified) or just a few (small, concentrated).</li>
+        <li><strong>Pass-through rate</strong> = coupon rate received by investors. Always LOWER than the WAC of the pool because administrative/servicing/guarantee fees are deducted. The investor receives the "net coupon" or "net interest."</li>
+        <li>Mortgages in the pool are heterogeneous — different rates, balances, maturities. Hence WAC and WAM are used to summarize pool characteristics.</li>
+        <li><strong>Weighted Average Life (WAL):</strong> The measure of when the MBS is expected to be paid off, accounting for both scheduled principal and prepayments. More useful than WAM for MBS valuation since WAM ignores prepayments.</li>
+      </ul>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Pass-Through Structure — Cash Flow Example (from LES, Exhibit 2)</div>
+      <div class="f">
+        Mortgages pool → SPE (Pass-Through Entity)<br><br>
+        ASSETS:  Mortgages  |  WAC = 4.55%<br>
+        LIABILITIES: RMBS pass-through securities  |  Pass-through rate = 4.00%<br>
+        Servicing fees = 0.55% (the spread between WAC and pass-through rate)<br><br>
+        Cash flows from borrowers: Principal + Interest + Prepayments<br>
+        → Less servicing and admin fees (0.55%)<br>
+        → Passed to RMBS investors as: Principal + coupon (4.00%) + prepayments less fees<br><br>
+        The servicing fee covers: collecting monthly payments, forwarding to investors,<br>
+        sending payment notices, maintaining records, initiating foreclosure, tax info,<br>
+        plus any guarantee fees charged by the issuer or financial guarantor.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: CMO STRUCTURES                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Collateralized Mortgage Obligations (CMOs) — All Structures</h2>
+    </div>
+
+    <div class="cmo-card">
+      <div class="cmo-title">CMO — Overview</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li><strong>CMOs</strong> securitize mortgage pass-through securities or multiple pools of loans, and are structured to redistribute cash flows to different tranches — creating securities with different exposures to <strong>prepayment risk</strong>.</li>
+        <li>CMOs <strong>cannot eliminate</strong> prepayment risk — they can only redistribute it. The total prepayment risk of the collateral pool is preserved; it is just shifted across tranches.</li>
+        <li>Key principle: <strong>the more senior a tranche, the less exposure it has to both prepayment risk AND default risk.</strong></li>
+        <li>CMO tranching structures reduce the uncertainty around the size and timing of payments investors receive.</li>
+        <li>Features are designed to meet the specific needs of institutional investors with different duration/risk preferences.</li>
+      </ul>
+    </div>
+
+    <h3>① Sequential-Pay CMO</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">①</div>
+        <div class="step-content"><strong>Mechanism:</strong> All principal payments go to Tranche A first, until Tranche A's principal is fully repaid (retired). Then all principal payments go to Tranche B, then C, etc. All tranches receive interest throughout. This is pure time tranching.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">②</div>
+        <div class="step-content"><strong>Prepayment risk redistribution:</strong> Tranche A (short) is protected against extension risk — it receives all principal first, so even in a slow prepayment environment, it is retired before B and C. Tranches B and C are protected against contraction risk — they don't receive principal until A is fully retired, so fast prepayments only accelerate A's retirement, not theirs.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">③</div>
+        <div class="step-content"><strong>Investor matching:</strong> Pension fund needing long-duration → Tranche C. Endowment financing near-term projects → Tranche A. Long-term risk-tolerant investor → Tranche C (highest prepayment risk, most uncertainty).</div>
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Sequential-Pay CMO — LES Example (Exhibit 6)</div>
+      <div class="f">
+        Collateral: USD100m RMBS pass-through | WAC = 4.55% | WAM = 360 months | Pass-through rate = 4%<br><br>
+        Tranche A: USD50m  | Coupon: 3.75% | Expected maturity: 0–5 years<br>
+        Tranche B: USD30m  | Coupon: 3.95% | Expected maturity: 6–15 years<br>
+        Tranche C: USD20m  | Coupon: 4.05% | Expected maturity: 16–30 years<br><br>
+        Cash flow rules:<br>
+        Years 0–5:    A receives principal+interest; B and C receive interest only<br>
+        Years 6–15:   B receives principal+interest; C receives interest only<br>
+        Years 16–30:  C receives principal+interest<br><br>
+        Note: Higher tranche coupon rates reflect longer maturity + more prepayment risk (term structure).
+      </div>
+    </div>
+
+    <h3>② PAC Tranche (Planned Amortization Class)</h3>
+
+    <div class="cmo-card">
+      <div class="cmo-title">PAC Tranche + Support Tranche</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li><strong>PAC tranche:</strong> Makes scheduled and fixed principal payments over a predetermined period — IF prepayment rates stay within a specified range (minimum and maximum PSA band).</li>
+        <li>If prepayments fall within the PAC band: <strong>all prepayment risk is absorbed by the support tranche</strong> — PAC investors receive their scheduled payments with high certainty.</li>
+        <li>PAC tranches offer <strong>greater predictability and stability</strong> of cash flows — ideal for insurance companies, pension funds, and other liability-matching investors.</li>
+        <li><strong>Support tranche:</strong> Acts as a buffer. If prepayments are faster than the upper PAC band → support tranche absorbs excess (contraction risk). If prepayments are slower than the lower PAC band → support tranche is starved of principal (extension risk). Support tranche investors bear far more prepayment risk in exchange for higher yields.</li>
+        <li>If actual prepayments move outside the PAC band, the PAC tranche itself faces prepayment risk — but this requires extreme market conditions.</li>
+      </ul>
+    </div>
+
+    <h3>③ Other CMO Tranche Types</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tranche Type</th><th>Cash Flow Received</th><th>Key Characteristic</th><th>Who Uses It</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Z-Tranche (Accrual / Accretion Bond)</td>
+            <td>No interest payments until a preset date; then both principal + accrued interest begin.</td>
+            <td>During accrual period, principal value is credited by stated coupon. No reinvestment risk for Z-tranche holder when rates fall (no coupon to reinvest). Typically last tranche; average life often 20+ years → hard to value. Frees up cash for other tranches.</td>
+            <td>Long-term, risk-tolerant investors. Not suitable for most institutional investors due to extreme duration and complexity.</td>
+          </tr>
+          <tr>
+            <td>Principal-Only (PO)</td>
+            <td>Only principal repayments (scheduled + prepayments). No coupon payments.</td>
+            <td>Highly sensitive to prepayment rates and interest rates. Bought at steep discount; gains come from principal redemption. Value ↑ when rates fall (prepayments accelerate → faster return of discounted principal). Negative duration effect.</td>
+            <td>Sophisticated investors hedging interest rate risk or making directional bets on prepayments.</td>
+          </tr>
+          <tr>
+            <td>Interest-Only (IO)</td>
+            <td>Only interest payments. No face value (no return of principal).</td>
+            <td>When prepayments increase → interest cash flows decline (less outstanding principal to earn interest on). Used to hedge portfolios against falling interest rates (IO gains when rates rise → prepayments slow → more interest paid for longer). Opposite of PO behavior.</td>
+            <td>Hedging portfolios. Advanced investors managing interest rate exposure.</td>
+          </tr>
+          <tr>
+            <td>Floating-Rate Tranche</td>
+            <td>Coupon linked to an index/MRR. Subject to a cap and floor.</td>
+            <td>Interest rate is variable. Cap limits upside for investors. Impacted by how rate movements affect prepayment rates (complex interaction). Can also be structured as inverse floaters — coupon moves in the OPPOSITE direction of rates.</td>
+            <td>Investors wanting floating-rate MBS exposure. Inverse floaters used for interest rate hedging.</td>
+          </tr>
+          <tr>
+            <td>Residual Tranche</td>
+            <td>All remaining cash flows after other tranche obligations are met. Equity-like residual.</td>
+            <td>Highly uncertain cash flows. Appropriate only for sophisticated investors who can hedge the risk. Hedge funds, long-term institutional investors. Banks typically avoid due to capital requirements.</td>
+            <td>Hedge funds, long-term institutional investors.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 IO vs. PO — The Rate/Prepayment Relationship Is Opposite</div>
+      <p><strong>PO (Principal-Only):</strong> Rates ↓ → prepayments ↑ → principal returned faster → PO price ↑. Rates ↑ → prepayments slow → PO price ↓.<br>
+      <strong>IO (Interest-Only):</strong> Rates ↓ → prepayments ↑ → less outstanding balance → less interest earned → IO cash flows ↓ → IO price ↓. Rates ↑ → prepayments slow → more interest for longer → IO price ↑.<br>
+      IO has a <strong>positive relationship</strong> with interest rates (unusual for fixed income). IOs are used to HEDGE portfolios against rising rates. POs are used to make a bullish bet on falling rates / accelerating prepayments.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: CMBS — FEATURES & RISKS            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Commercial Mortgage-Backed Securities (CMBS)</h2>
+    </div>
+
+    <div class="cmbs-card">
+      <div class="cmbs-title">CMBS — Core Definition &amp; Collateral</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c97a;">
+        <li>CMBS are backed by a pool of <strong>commercial mortgages</strong> on income-producing properties: apartment buildings (multifamily), office buildings, industrial/warehouse properties, shopping centers, hotels, healthcare facilities.</li>
+        <li>Repayment comes from leases and other property revenue. Commercial loans are originated either to finance property acquisitions or refinance prior mortgages.</li>
+        <li>CMBS securitization process is highly similar to RMBS. However, two critical features distinguish CMBS: <strong>call protection</strong> and <strong>balloon maturity provision</strong>.</li>
+        <li>Commercial mortgages are <strong>non-recourse</strong> → lender can ONLY look to the income-producing property for repayment. This makes DSC the primary underwriting metric.</li>
+        <li><strong>Concentration risk:</strong> CMBS pools may contain only a few loans — one default can significantly impact all CMBS investors (unlike RMBS with thousands of small, diversified loans).</li>
+      </ul>
+    </div>
+
+    <h3>① Call Protection — CMBS vs. RMBS</h3>
+
+    <div class="card">
+      <p>The biggest structural difference from RMBS: CMBS offer <strong>call protection</strong> — protection against early prepayments. This makes CMBS trade more like <strong>corporate bonds</strong> than RMBS. Call protection comes at two levels:</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">A</div>
+        <div class="step-content"><strong>Structural Call Protection (tranche level):</strong> Sequential-pay tranches — a lower-rated tranche cannot be paid down until all higher-rated tranches are completely retired. Principal losses are always borne by junior tranches first. This provides a structural barrier to prepayment affecting senior tranches.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">B1</div>
+        <div class="step-content"><strong>Loan-Level Call Protection — Prepayment Lockout:</strong> A contractual covenant that prohibits ANY prepayments during a specified period. Absolute protection during the lockout window.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">B2</div>
+        <div class="step-content"><strong>Loan-Level Call Protection — Prepayment Penalty Points:</strong> Predetermined penalties the borrower must pay if they want to refinance. One "point" = 1.00% of the outstanding loan balance. Makes prepayment economically unattractive.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">B3</div>
+        <div class="step-content"><strong>Loan-Level Call Protection — Defeasance:</strong> Borrower CAN prepay but must purchase a portfolio of government securities that fully replicates the remaining cash flows (principal + interest + balloon balance) of the loan. When the last obligation is paid off, the portfolio value is zero — no cash left over. The cost of buying this replicating portfolio = cost of defeasing the loan, paid by the issuer. This compensates the lender fully while allowing the borrower to exit.</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Defeasance — The Elegant CMBS Call Protection Mechanism</div>
+      <p>Defeasance is clever: the borrower doesn't just pay a penalty — they must substitute an exact government bond portfolio for the remaining loan cash flows. From the CMBS SPE's perspective, nothing changes — it continues to receive the exact same scheduled payments, now from government bonds instead of the original mortgage. The borrower gets to exit the loan; the CMBS investor gets no cash flow disruption. The cost of assembling the government bond portfolio is the "price" of defeasing.</p>
+    </div>
+
+    <h3>② Balloon Maturity Provision &amp; Balloon Risk</h3>
+
+    <div class="risk-card">
+      <div class="risk-title">Balloon Risk — A Type of Extension Risk Unique to CMBS</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li><strong>Commercial mortgage structure:</strong> Unlike self-amortizing residential mortgages, commercial loans are NOT fully amortizing. They pay interest + some principal throughout the loan term, but the bulk of the principal is due as a large <strong>balloon payment at maturity</strong> (e.g., end of year 5 or year 10).</li>
+        <li><strong>Balloon risk:</strong> The risk that the borrower FAILS to make the balloon payment at maturity and defaults. Three reasons this can happen:
+          <ol style="padding-left:16px; margin-top:6px;">
+            <li>Borrower cannot refinance (deteriorating DSC or LTV ratios make lenders unwilling to extend new credit).</li>
+            <li>Market conditions prevent refinancing (tight credit environment).</li>
+            <li>Borrower cannot sell the property to generate sufficient proceeds.</li>
+          </ol>
+        </li>
+        <li><strong>Workout period:</strong> When balloon payment fails, the lender may extend the loan and modify its terms over a "workout period." This extension of the loan life makes balloon risk a form of <strong>extension risk</strong>.</li>
+        <li><strong>Why balloon risk matters:</strong> CMBS investors (especially junior tranche holders) face significant extension risk that is different in nature from RMBS extension risk — it's triggered by borrower inability to refinance or sell, not just interest rate levels.</li>
+      </ul>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">CMBS Example — BRWA (Bright Wheel Automotive) Properties (Exhibit 7)</div>
+      <div class="f">
+        SPE: Commercial Finance Associates<br>
+        Collateral: 4 commercial properties (GBP123m FMV) → GBP100m mortgages → LTV = 81.3%<br>
+        WAC (WAMP) = 4.66% | WAM = 88 months | No prepayments allowed in first 5 years<br><br>
+        ASSETS (Mortgages on):                    LIABILITIES (Tranches issued):<br>
+        Office Bldg: GBP21m, 4.0%, 5yr mat.  →   Tranche A: GBP25m, 2.50%, matures 3 yrs<br>
+        Factory:     GBP32m, 6.0%, 5yr mat.  →   Tranche B: GBP25m, 4.25%, matures 10 yrs<br>
+        Office Bldg: GBP30m, 3.5%, 10yr mat. →   Tranche C: GBP25m, 4.75%, matures 10 yrs<br>
+        Warehouse:   GBP17m, 5.0%, 10yr mat. →   Tranche D: GBP25m, 5.75%, matures 10 yrs<br><br>
+        OC: GBP123m FMV vs GBP100m mortgage → GBP23m excess collateral<br>
+        Note: Tranche A (3yr) matures BEFORE shortest mortgage (5yr) — pool cash flows suffice for early repayment.
+      </div>
+    </div>
+
+    <h3>CMBS-Specific Risk Considerations</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Risk Factor</th><th>CMBS</th><th>RMBS</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Contraction Risk (Prepayment)</td>
+            <td><span class="tag tag-green">LOW</span> — Call protection (lockout, penalty points, defeasance) makes prepayment uncommon / uneconomical</td>
+            <td><span class="tag tag-red">HIGH</span> — Especially when rates fall; US mortgages have few prepayment penalties</td>
+          </tr>
+          <tr>
+            <td>Extension Risk</td>
+            <td><span class="tag tag-red">HIGH — Balloon Risk</span> — Borrower may fail balloon payment → lender extends via workout → CMBS life extends</td>
+            <td><span class="tag tag-red">HIGH</span> — When rates rise; prepayments slow; MBS life extends</td>
+          </tr>
+          <tr>
+            <td>Concentration Risk</td>
+            <td><span class="tag tag-red">HIGH</span> — Pool may be just a few commercial mortgages; one default = significant impact. Must analyze each loan AND property AND borrower.</td>
+            <td><span class="tag tag-green">LOW</span> — Pool of thousands of small, homogeneous residential loans; any one default = minimal impact</td>
+          </tr>
+          <tr>
+            <td>Credit Risk</td>
+            <td>Depends on: number of loans in pool (fewer = higher), diversification of pool (less = higher)</td>
+            <td>Agency RMBS: virtually none (government backed). Non-agency: significant; managed by credit enhancements</td>
+          </tr>
+          <tr>
+            <td>Interest Rate Type</td>
+            <td>Europe: floating (may be capped). US: typically fixed</td>
+            <td>Either fixed or floating</td>
+          </tr>
+          <tr>
+            <td>Key Credit Metric</td>
+            <td>DSC ratio + LTV</td>
+            <td>DTI + LTV + FICO / credit score</td>
+          </tr>
+          <tr>
+            <td>Recourse</td>
+            <td>Non-recourse — lender limited to property cash flows</td>
+            <td>Varies by country/state — US often non-recourse; Europe typically recourse</td>
+          </tr>
+          <tr>
+            <td>Trades Like</td>
+            <td>Corporate bonds (due to call protection + fixed cash flow predictability)</td>
+            <td>MBS — unique prepayment-sensitive pricing (negative convexity)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: MASTER COMPARISON TABLE           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>MBS Master Reference — Structures &amp; Risk Summary</h2>
+    </div>
+
+    <h3>CMO Tranche Types — Quick Reference</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tranche</th><th>Principal?</th><th>Interest?</th><th>Contraction Risk</th><th>Extension Risk</th><th>Key Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sequential (A) — Shortest</td>
+            <td>First to receive</td>
+            <td>Yes — throughout</td>
+            <td><span class="tag tag-red">High</span></td>
+            <td><span class="tag tag-green">Low (Protected by B, C)</span></td>
+            <td>Short-duration investors</td>
+          </tr>
+          <tr>
+            <td>Sequential (C) — Longest</td>
+            <td>Last to receive</td>
+            <td>Yes — throughout</td>
+            <td><span class="tag tag-green">Low (Protected by A, B)</span></td>
+            <td><span class="tag tag-red">High</span></td>
+            <td>Long-duration, risk-tolerant investors</td>
+          </tr>
+          <tr>
+            <td>PAC Tranche</td>
+            <td>Fixed schedule (within PSA band)</td>
+            <td>Yes</td>
+            <td><span class="tag tag-green">Low (Support absorbs)</span></td>
+            <td><span class="tag tag-green">Low (Support absorbs)</span></td>
+            <td>Liability-matching (insurance, pensions)</td>
+          </tr>
+          <tr>
+            <td>Support Tranche</td>
+            <td>Variable (absorbs PAC shortfall/excess)</td>
+            <td>Yes</td>
+            <td><span class="tag tag-red">High (buffers for PAC)</span></td>
+            <td><span class="tag tag-red">High (buffers for PAC)</span></td>
+            <td>Higher yield seekers, risk tolerant</td>
+          </tr>
+          <tr>
+            <td>Z-Tranche (Accrual)</td>
+            <td>After preset date</td>
+            <td>Deferred — accrues to principal until preset date</td>
+            <td>N/A (deferred)</td>
+            <td><span class="tag tag-red">High (20+ yr avg life)</span></td>
+            <td>No reinvestment risk; very long horizon</td>
+          </tr>
+          <tr>
+            <td>PO (Principal-Only)</td>
+            <td>All of it</td>
+            <td>None</td>
+            <td><span class="tag tag-green">Beneficial</span> (faster = higher return)</td>
+            <td><span class="tag tag-red">Harmful</span></td>
+            <td>Rates-falling bet; price appreciation</td>
+          </tr>
+          <tr>
+            <td>IO (Interest-Only)</td>
+            <td>None (no face value)</td>
+            <td>All of it</td>
+            <td><span class="tag tag-red">Harmful</span> (less balance = less interest)</td>
+            <td><span class="tag tag-green">Beneficial</span> (more interest for longer)</td>
+            <td>Hedge against falling rates; opposite of bonds</td>
+          </tr>
+          <tr>
+            <td>Floating-Rate Tranche</td>
+            <td>Varies</td>
+            <td>Linked to MRR (capped + floored)</td>
+            <td>Depends on rate/prepayment interaction</td>
+            <td>Depends on rate/prepayment interaction</td>
+            <td>Floating-rate MBS exposure</td>
+          </tr>
+          <tr>
+            <td>Residual Tranche</td>
+            <td>Residual</td>
+            <td>Residual (excess after all obligations)</td>
+            <td><span class="tag tag-red">Very High</span></td>
+            <td><span class="tag tag-red">Very High</span></td>
+            <td>Hedge funds; sophisticated investors only</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Prepayment risk</strong> = risk that principal is repaid at a different pace than scheduled. Two components: (1) Contraction risk — repaid faster (rates fall → refinancing). (2) Extension risk — repaid slower (rates rise → no refinancing).</li>
+        <li>✅ <strong>Contraction risk (rates fall):</strong> MBS life shortens. Investor reinvests at lower rates. Price appreciation capped (bond is "called" away). US mortgages especially vulnerable (few prepayment penalties). Europe: prepayment penalties common → lower contraction risk.</li>
+        <li>✅ <strong>Extension risk (rates rise):</strong> MBS life lengthens. Investor locked into below-market cash flows for longer, discounted at higher rates → lower PV. Both risks make MBS exhibit negative convexity.</li>
+        <li>✅ <strong>Time tranching</strong> = bond classes with different expected maturities. Principal payments flow sequentially (shorter tranche first). Redistributes (does NOT eliminate) prepayment risk. Short tranches protected against extension risk by longer tranches. Long tranches protected against contraction risk by short tranches.</li>
+        <li>✅ <strong>Credit tranching vs. time tranching:</strong> Credit tranching = who bears LOSSES first (junior tranches). Time tranching = who receives PRINCIPAL first (short tranches). Both can exist simultaneously in one securitization.</li>
+        <li>✅ <strong>LTV = Loan Amount ÷ Property Value.</strong> Lower LTV → more borrower equity → less default risk. LTV > 100% = underwater mortgage → strategic default risk (especially non-recourse loans).</li>
+        <li>✅ <strong>DTI = Monthly Debt Payment ÷ Monthly Pre-tax Gross Income.</strong> Used for RESIDENTIAL. Low DTI → can service debt. High DTI → overextended. Subprime loans: high LTV + high DTI.</li>
+        <li>✅ <strong>DSC = NOI ÷ Debt Service.</strong> Used for COMMERCIAL (CMBS only). NOI = Rental income − cash operating expenses − replacement reserves. DSC > 1.0× → sufficient cash flow coverage. Commercial mortgages are non-recourse → property cash flow is the ONLY repayment source → DSC is critical.</li>
+        <li>✅ <strong>WAC = Σ[interest_rate_n × (CB_n ÷ total CB)].</strong> Weighted by current balance. WAM = Σ[months_to_maturity_n × (CB_n ÷ total CB)]. Weighted by current balance. Pass-through rate = WAC minus servicing/admin/guarantee fees ("net coupon").</li>
+        <li>✅ <strong>Agency RMBS:</strong> Sector 1 (federal agency — full faith + credit guarantee); Sector 2 (GSEs — GSE guarantee, fee charged, not full government backing). Agency = conforming mortgages, virtually no credit risk. Non-agency RMBS = private label, no government guarantee, subprime/non-conforming collateral, relies on credit enhancements. Largely disappeared after GFC.</li>
+        <li>✅ <strong>Mortgage pass-through security:</strong> Pool of mortgages → SPE → RMBS issued to investors. Monthly principal + interest + prepayments passed through (minus servicing fees). Pass-through rate < WAC (fees deducted). Heterogeneous pool → use WAC and WAM to summarize.</li>
+        <li>✅ <strong>Sequential-pay CMO:</strong> All principal to Tranche A until retired → then B → then C. Interest paid to all throughout. Short tranche: protected against extension risk; long tranche: protected against contraction risk. CMO distributes prepayment risk — doesn't eliminate it.</li>
+        <li>✅ <strong>PAC tranche:</strong> Fixed scheduled principal payments if prepayment rate stays within a specified PSA band. Support tranche absorbs all prepayment variability within the band. PAC = most predictable cash flows of any CMO tranche (good for liability matching). Support tranche = highest prepayment risk.</li>
+        <li>✅ <strong>Z-tranche (accrual bond):</strong> No cash interest until preset date — interest accrues to principal. Then both P+I paid. Avg life 20+ years. No reinvestment risk (no coupon to reinvest). Very hard to value. Last in sequential or PAC structure. Frees up cash for other tranches during accrual period.</li>
+        <li>✅ <strong>PO (Principal-Only):</strong> Receives all principal; no coupon. Value ↑ when rates fall (faster prepayments). Value ↓ when rates rise (slower prepayments). Bought at steep discount; return comes from capital appreciation as principal is received.</li>
+        <li>✅ <strong>IO (Interest-Only):</strong> Receives all interest; no principal (no face value). Value ↑ when rates rise (slower prepayments → more interest for longer). Value ↓ when rates fall (faster prepayments → less interest). IOs HEDGE against falling rates — unusual positive relationship with rates. Used to hedge MBS portfolios against reinvestment risk.</li>
+        <li>✅ <strong>CMBS:</strong> Backed by commercial mortgages on income-producing properties. Non-recourse (lender limited to property). Key metrics: LTV + DSC. Concentration risk: fewer loans than RMBS → one default = significant impact. Must analyze each loan, property, and borrower separately.</li>
+        <li>✅ <strong>CMBS call protection:</strong> Structural (sequential-pay tranches) + Loan-level (prepayment lockout | prepayment penalty points (1 point = 1% of balance) | defeasance (borrower buys govt bonds replicating remaining cash flows)). Result: CMBS trades like a corporate bond (predictable cash flows) rather than RMBS.</li>
+        <li>✅ <strong>Balloon risk:</strong> Commercial loans have balloon payment at maturity (not fully amortizing). Balloon risk = borrower fails balloon payment → lender extends loan via workout period → balloon risk is a form of EXTENSION risk. Causes: can't refinance, tight credit, can't sell property.</li>
+        <li>✅ <strong>CMBS vs. RMBS prepayment risk:</strong> CMBS: low contraction risk (call protection) + high extension/balloon risk. RMBS: high contraction risk (no prepayment penalties, especially US) + high extension risk (when rates rise). Both have extension risk but from different mechanisms.</li>
+        <li>✅ <strong>Recourse distinction:</strong> Recourse (Europe, some US states) — lender claims borrower's other assets for shortfall → reduces strategic default. Non-recourse (many US states) — lender limited to property → enables strategic default when underwater. Commercial mortgages = non-recourse in almost all cases.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ PREPAYMENT RISK ═══<br>
+        Contraction: Rates ↓ → refis ↑ → MBS shortens → reinvest at lower rates + price appreciation capped<br>
+        Extension:   Rates ↑ → refis ↓ → MBS lengthens → locked in below-market rates longer<br>
+        Both cause NEGATIVE CONVEXITY — MBS underperforms plain bonds in both rate directions<br>
+        US: few prepayment penalties → high contraction risk. Europe: penalties common → lower risk.<br><br>
+
+        ═══ KEY RATIOS ═══<br>
+        LTV  = Loan Amount ÷ Property Value  [residential + commercial; lower = safer]<br>
+        DTI  = Monthly Debt Payment ÷ Monthly pre-tax gross income  [residential only]<br>
+        DSC  = NOI ÷ Debt Service  [commercial CMBS only; DSC > 1.0× = sufficient coverage]<br>
+        NOI  = Rental income − cash operating expenses − replacement reserves<br>
+        WAC  = Σ[rate_n × CB_n/ΣCB]  [pool's weighted average coupon]<br>
+        WAM  = Σ[months_n × CB_n/ΣCB]  [pool's weighted average maturity]<br>
+        Pass-through rate = WAC − servicing/admin/guarantee fees  (investor's net coupon)<br><br>
+
+        ═══ CMO TRANCHE CHEAT SHEET ═══<br>
+        Sequential A (short): LOW extension risk | HIGH contraction risk<br>
+        Sequential C (long):  HIGH extension risk | LOW contraction risk<br>
+        PAC:    Fixed schedule within PSA band | Support bears ALL prepayment variability<br>
+        Support: HIGHEST prepayment risk of any tranche (bears both sides for PAC)<br>
+        Z-tranche: No cash until preset date; accrues to principal; 20+ yr avg life; no reinvestment risk<br>
+        PO: Principal only; Value ↑ rates ↓ (faster prepayment); Value ↓ rates ↑<br>
+        IO: Interest only; Value ↑ rates ↑ (slower prepayment = more interest); Value ↓ rates ↓<br>
+        Residual: Excess cash; equity-like; highest risk; hedge funds only<br><br>
+
+        ═══ CMBS CALL PROTECTION (4 TYPES) ═══<br>
+        ① Structural: Sequential-pay (junior not paid until senior retired)<br>
+        ② Lockout: No prepayments allowed during specified period<br>
+        ③ Penalty points: 1 point = 1% of outstanding balance (economic deterrent)<br>
+        ④ Defeasance: Buy govt bonds replicating remaining cash flows (most complete protection)<br>
+        Result: CMBS trades like a corporate bond (low contraction risk)<br><br>
+
+        ═══ BALLOON RISK (CMBS ONLY) ═══<br>
+        Commercial loans NOT fully amortizing → large balloon payment at maturity (yr 5 or 10)<br>
+        Balloon risk = fail balloon payment → workout period (loan extended) → TYPE OF EXTENSION RISK<br>
+        Causes: can't refinance (bad DSC/LTV) | tight credit market | can't sell property<br><br>
+
+        ═══ CMBS vs RMBS — KEY DIFFERENCES ═══<br>
+        CMBS: Low contraction risk | High balloon/extension risk | Concentration risk | Trades like bonds<br>
+        RMBS: High contraction risk (US) | High extension risk (rates rise) | Diversified pool | Negative convexity
+      </div>
+      <div class="note">
+        <strong>Sequential-pay CMO one-liner:</strong> Short tranche protected from extension (longer tranches buffer it). Long tranche protected from contraction (shorter tranches absorb fast prepayments first). CMO redistributes but does NOT eliminate prepayment risk.<br>
+        <strong>PAC one-liner:</strong> PAC is the predictable tranche; support is the shock absorber. Within the PSA band → support takes all variability. Outside the band → PAC itself faces prepayment risk.<br>
+        <strong>IO vs. PO memory:</strong> IO and PO behave OPPOSITE to each other. When rates fall → PO ↑, IO ↓. When rates rise → PO ↓, IO ↑. IOs hedge MBS portfolios; POs are bullish rate bets.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 19: MBS Instrument and Market Features · Exam Prep Notes
+</footer>
+
+</body>
+</html>

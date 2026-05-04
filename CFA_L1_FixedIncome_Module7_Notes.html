@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 7: Yield and Yield Spread Measures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --spread-bg: #111a16; --spread-border: #4cc98a;
+    --option-bg: #1a1020; --option-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* spread cards */
+  .spread-card { background: var(--spread-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .spread-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .option-card { background: var(--option-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .option-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 7</div>
+  <h1>Yield &amp; Yield Spread <span>Measures for Fixed-Rate Bonds</span></h1>
+  <p>Exam-ready notes: periodicity and annualized yields, compounding conversions, current yield vs. YTM, yield conventions (street, true, government equivalent, simple), yields on callable bonds (yield-to-call, yield-to-worst, option-adjusted yield), and yield spread measures (G-spread, I-spread, Z-spread, OAS) with full worked examples.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Periodicity &amp; Annualized Yields</a>
+  <a class="toc-item" href="#s2">02 · Compounding Conversions</a>
+  <a class="toc-item" href="#s3">03 · Current Yield &amp; Other Conventions</a>
+  <a class="toc-item" href="#s4">04 · Yield Conventions Table</a>
+  <a class="toc-item" href="#s5">05 · Bonds with Embedded Options</a>
+  <a class="toc-item" href="#s6">06 · Yield-to-Call &amp; Yield-to-Worst</a>
+  <a class="toc-item" href="#s7">07 · Option-Adjusted Yield &amp; OAS</a>
+  <a class="toc-item" href="#s8">08 · Yield Spread Decomposition</a>
+  <a class="toc-item" href="#s9">09 · G-Spread &amp; I-Spread</a>
+  <a class="toc-item" href="#s10">10 · Z-Spread &amp; OAS</a>
+  <a class="toc-item" href="#s11">11 · All Spreads — Master Table</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: PERIODICITY & ANNUALIZED YIELDS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Periodicity &amp; Annualized Yields</h2>
+    </div>
+
+    <div class="card">
+      <p>Yields are <strong>annualized</strong> to allow direct comparison across bonds with different coupon frequencies and maturities. The <strong>periodicity</strong> of an annual rate is the assumed number of compounding periods per year. It typically matches the bond's coupon payment frequency.</p>
+      <p style="margin-top:10px;"><strong>Why periodicity matters:</strong> A "5% annual yield" means different things depending on how often compounding occurs. More frequent compounding generates more interest — so a 5% annual yield with quarterly compounding produces more total return than 5% with annual compounding.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Coupon Frequency</th><th>Periodicity (m)</th><th>Rate per Period</th><th>Annual Rate Label</th><th>Effective Annual Rate (at 5% stated)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Annual</td><td>1</td><td>5.000%</td><td>Annual bond yield</td><td>5.0000%</td></tr>
+          <tr><td>Semiannual</td><td>2</td><td>2.500%</td><td>Semiannual bond basis yield</td><td>5.0625%</td></tr>
+          <tr><td>Quarterly</td><td>4</td><td>1.250%</td><td>Quarterly bond yield</td><td>5.0945%</td></tr>
+          <tr><td>Monthly</td><td>12</td><td>0.417%</td><td>Monthly bond yield</td><td>5.1162%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Effective Annual Rate (EAR)</div>
+      <div class="def-body">The annualized yield with a <strong>periodicity of 1</strong> — i.e., one compounding period per year. The EAR standardizes yields by removing the effect of different compounding frequencies. It is the true annual return assuming reinvestment of coupons within the year at the periodic rate. EAR is always ≥ the stated annual rate when compounding occurs more than once per year.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Semiannual Bond Basis Yield (SABB) / Semiannual Bond Equivalent Yield</div>
+      <div class="def-body">An annual rate with a periodicity of 2. The most common convention in the US, UK, and many other fixed-income markets. <strong>SABB = periodic semiannual yield × 2.</strong> Example: if a bond yields 2% per semiannual period, its SABB = 4%. Important: "semiannual bond basis yield" ≠ "yield per semiannual period" — do not confuse these two terms.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Excel Functions for Effective Annual Rate</div>
+      <div class="f">
+        =FV(rate, nper, pmt, [pv], [type])<br>
+        =FV(0.0125, 4, 1.25, 0, 0) = 5.0945  ← future value of quarterly coupons for 1 year<br><br>
+        =EFFECT(nominal_rate, npery)  ← converts stated annual rate to EAR<br>
+        =EFFECT(0.05, 4) = 5.0945%  ← EAR for 5% quarterly compounding
+      </div>
+      <div class="note">
+        <strong>Rate per period</strong> = stated annual rate ÷ periodicity m<br>
+        <strong>EAR</strong> = (1 + APRm/m)^m − 1<br>
+        The FV function accumulates periodic coupons through the year, giving the total interest — expressed as % of par, this equals the EAR.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Rule — Compounding Frequency vs. Rate Direction</div>
+      <p><strong>More frequent compounding at a lower annual rate can produce the same return as less frequent compounding at a higher annual rate.</strong> This is the general rule for periodicity conversions. Use it as a sanity check: when converting from quarterly (periodicity 4) to semiannual (periodicity 2), the semiannual equivalent rate must be HIGHER than the quarterly stated rate — because you're compounding less often, you need a higher rate to compensate.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: COMPOUNDING CONVERSIONS        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Compounding (Periodicity) Conversions</h2>
+    </div>
+
+    <div class="card">
+      <p>To compare bonds with different coupon frequencies fairly, their YTMs must be converted to the <strong>same periodicity</strong>. Simply subtracting two YTMs quoted on different periodicities gives a meaningless spread — the periodicity difference alone will distort the comparison.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Periodicity Conversion Formula</div>
+      <div class="f">
+        (1 + APRm / m)^m  =  (1 + APRn / n)^n
+      </div>
+      <div class="note">
+        <strong>APRm</strong> = annual percentage rate for m periods per year (the rate you HAVE)<br>
+        <strong>APRn</strong> = annual percentage rate for n periods per year (the rate you WANT)<br>
+        <strong>m</strong> = original periodicity | <strong>n</strong> = target periodicity<br><br>
+        <strong>Step-by-step:</strong><br>
+        1. Take (1 + APRm/m)^m — this is the annual growth factor for the original rate<br>
+        2. Set equal to (1 + APRn/n)^n<br>
+        3. Solve for APRn: APRn = n × [(1 + APRm/m)^(m/n) − 1]<br><br>
+        <strong>Worked Example from the module:</strong><br>
+        Antelas AG bond: YTM = 4.548%, periodicity = 4 (quarterly). Convert to periodicity 2 (semiannual):<br>
+        (1 + 0.04548/4)^4 = (1 + APR₂/2)^2<br>
+        (1.01137)^4 = (1 + APR₂/2)^2<br>
+        (1 + APR₂/2) = (1.01137)^2 = 1.02287<br>
+        APR₂ = 2 × 0.02287 = 4.574%<br><br>
+        Spread vs. BRWA bond (YTM = 2.780%, periodicity 2): 4.574% − 2.780% = <strong>179 bps</strong><br>
+        (NOT 4.548% − 2.780% = 177 bps — that comparison is wrong without conversion!)
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Never Subtract YTMs of Different Periodicities Directly</div>
+      <p>This is one of the most testable points in Module 7. Comparing a quarterly YTM directly to a semiannual YTM and calling the difference a "spread" is mathematically incorrect. <strong>Always convert both YTMs to the same periodicity before computing any spread or relative value comparison.</strong> The exam will provide bonds with different coupon frequencies and ask you to compare — always convert first.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Conversion Direction Sanity Check</div>
+      <p>Converting from <strong>higher periodicity → lower periodicity</strong> (e.g., quarterly → semiannual, or monthly → annual): the converted rate will be <strong>higher</strong> than the original stated rate. Example: 4.548% quarterly → 4.574% semiannual (higher). This makes sense: compounding less often requires a higher stated rate to generate the same effective return. Use this rule to check your conversion answers on the exam.</p>
+    </div>
+
+    <h3>Periodicity Conversion Summary Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Original Rate (APRm)</th><th>Original Periodicity (m)</th><th>Target Periodicity (n)</th><th>Converted Rate (APRn)</th><th>Direction</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>3.582%</td><td>2 (semiannual)</td><td>4 (quarterly)</td><td>3.566%</td><td>Lower (more frequent compounding)</td></tr>
+          <tr><td>3.582%</td><td>2 (semiannual)</td><td>12 (monthly)</td><td>3.556%</td><td>Lower (more frequent compounding)</td></tr>
+          <tr><td>4.548%</td><td>4 (quarterly)</td><td>2 (semiannual)</td><td>4.574%</td><td>Higher (less frequent compounding)</td></tr>
+          <tr><td>Any rate</td><td>m</td><td>1 (annual / EAR)</td><td>EAR = (1 + APRm/m)^m − 1</td><td>Highest (annual compounding)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: CURRENT YIELD & OTHER MEASURES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Current Yield &amp; Other Yield Measures</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Current Yield (CY)</div>
+      <div class="def-body">A simple return measure equal to the bond's annual coupon payment divided by its current flat (quoted) price. It captures only the income component and completely ignores capital gain/loss, reinvestment income, time value of money, accrued interest, and frequency of coupon payments.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Current Yield Formula</div>
+      <div class="f">CY = Annual Coupon / Flat Price</div>
+      <div class="note">
+        <strong>Example — BRWA bond (3.2% coupon, price = 98.7):</strong><br>
+        CY = 3.2 / 98.7 = 3.242%<br><br>
+        <strong>Example — Antelas AG bond (3.2% coupon, price = 94):</strong><br>
+        CY = 3.20 / 94 = 3.40%<br><br>
+        <strong>Why CY is crude:</strong> A discount bond (price &lt; 100) has CY &lt; YTM because YTM also accounts for the capital gain to par. A premium bond has CY &gt; YTM because YTM also accounts for the capital loss to par. Current yield is just a snapshot of income — it does NOT represent total return.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CY vs. YTM — Direction of Comparison</div>
+      <p>
+        <strong>Discount bond:</strong> CY &lt; YTM (YTM adds capital gain → boosts total return above coupon income)<br>
+        <strong>Par bond:</strong> CY = YTM (no capital gain or loss)<br>
+        <strong>Premium bond:</strong> CY &gt; YTM (YTM subtracts capital loss → drags total return below coupon income)<br><br>
+        This ordering mirrors the coupon-rate vs. YTM comparison: discount bonds have coupon &lt; YTM, so naturally CY &lt; YTM too.
+      </p>
+    </div>
+
+    <h3>Street Convention vs. True Yield</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Street Convention Yield</div>
+        <ul>
+          <li>Assumes cash flows are paid on <strong>scheduled dates</strong> — ignores weekends and bank holidays</li>
+          <li>Standard market practice — used in Bloomberg, Reuters, and most dealer quotations</li>
+          <li>Simplifies calculation; universally accepted convention</li>
+          <li>Always ≥ true yield (because it assumes earlier payment)</li>
+          <li>Most exam contexts assume street convention unless stated otherwise</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">True Yield</div>
+        <ul>
+          <li>Uses <strong>actual payment dates</strong> adjusted for weekends and holidays</li>
+          <li>If a coupon date falls on Saturday → actual payment made the following Monday</li>
+          <li>Delayed payment → lower present value → lower yield than street convention</li>
+          <li><strong>True yield ≤ street convention yield — always</strong></li>
+          <li>Difference is typically only 1–2 basis points</li>
+          <li>Rarely used in practice due to complexity with minimal difference</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Government Equivalent Yield</h3>
+    <div class="card">
+      <p>Corporate bonds typically use the <strong>30/360 day-count convention</strong>, while government bonds use <strong>actual/actual</strong>. To compute a meaningful spread between a corporate bond and a government bond, the corporate yield must be restated using the actual/actual convention. This restated yield is called the <strong>government equivalent yield</strong>.</p>
+      <p style="margin-top:8px;">Government equivalent yield of a corporate bond = the corporate bond's YTM restated on an actual/actual basis → used to compute the spread over the government benchmark yield on the same basis.</p>
+    </div>
+
+    <h3>Simple Yield</h3>
+    <div class="card">
+      <p>Simple yield = (Sum of coupon payments + straight-line amortized gain or loss) ÷ flat price. Used primarily for <strong>Japanese government bonds (JGBs)</strong>. The amortization of gain/loss is on a straight-line basis rather than the constant-yield method used in standard YTM. Not common outside Japan — know it exists and its application.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: YIELD CONVENTIONS TABLE        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Complete Yield Conventions Reference Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Convention</th><th>Definition</th><th>Key Feature</th><th>Used For</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Actual/Actual (Act/Act)</td>
+            <td>Actual calendar days from prior coupon to settlement ÷ actual days in coupon period</td>
+            <td>True calendar-based day count; most accurate</td>
+            <td>US Treasuries; most sovereign government bonds</td>
+          </tr>
+          <tr>
+            <td>30/360</td>
+            <td>Each month = 30 days, each year = 360 days. Simplifies accrued interest calculation.</td>
+            <td>May differ from actual by up to 1–2 days per month</td>
+            <td>US corporate bonds; US agency bonds; US municipal bonds</td>
+          </tr>
+          <tr>
+            <td>Street Convention</td>
+            <td>Assumes payments made on exact scheduled dates; ignores weekends and holidays</td>
+            <td>Always ≥ true yield; universally used in practice</td>
+            <td>Standard market quotation convention; Bloomberg, dealers</td>
+          </tr>
+          <tr>
+            <td>True Yield</td>
+            <td>Adjusts payment dates for weekends and holidays; payments occur on actual business days</td>
+            <td>Always ≤ street convention yield; difference typically ≤ 2 bps</td>
+            <td>Rarely used; academic or specialized regulatory contexts</td>
+          </tr>
+          <tr>
+            <td>Government Equivalent Yield</td>
+            <td>Restates a corporate bond's 30/360-based YTM on an actual/actual day-count basis</td>
+            <td>Allows apples-to-apples spread over government bonds (both actual/actual)</td>
+            <td>Computing corporate-to-government spread; cross-market comparison</td>
+          </tr>
+          <tr>
+            <td>Simple Yield</td>
+            <td>(Coupons + straight-line amortized gain/loss) ÷ flat price</td>
+            <td>Straight-line amortization rather than constant-yield; less precise than YTM</td>
+            <td>Japanese government bonds (JGBs) exclusively</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Day Count + Convention Interaction — Exam Trap</div>
+      <p>Day-count conventions (30/360 vs. actual/actual) affect BOTH accrued interest calculations AND yield-to-maturity calculations. A bond quoted on a 30/360 basis has a different YTM than the same bond restated on actual/actual — even if everything else is identical. This is why the government equivalent yield is needed to compare corporate (30/360) to sovereign (actual/actual) yields properly. The exam will test whether you know to restate before comparing.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 5: BONDS WITH EMBEDDED OPTIONS       -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Bonds with Embedded Options — Why Standard YTM Fails</h2>
+    </div>
+
+    <div class="card">
+      <p>The standard YTM formula (Equation 2) assumes all cash flows occur as promised at their scheduled dates. For bonds with <strong>embedded options</strong> — like callable bonds — the actual cash flows can change depending on whether the option is exercised. This makes the standard YTM misleading, and alternative yield measures are required.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Callable Bond — The Core Problem</div>
+      <div class="def-body">A callable bond gives the <strong>issuer</strong> the right to redeem the bond before maturity at pre-specified call prices on pre-specified call dates (after a call protection period). If the issuer calls the bond, the investor receives the call price rather than par, and coupon payments stop earlier than expected. The investor's actual return depends on whether and when the bond is called — something the standard YTM calculation ignores.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>VIVU (Vivivyu Inc.) Callable Bond — Key Terms:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>7-year bond, 6.5% fixed coupon, semiannual payments, issued at 106.50</li>
+        <li><strong>Call protection period: 3 years</strong> — issuer cannot call for the first 3 years</li>
+        <li>Call price schedule (after protection period):
+          <ul style="padding-left:18px; margin-top:4px;">
+            <li>Years 3–4: 103.25</li>
+            <li>Years 4–5: 102.50</li>
+            <li>Years 5–6: 101.75</li>
+            <li>Years 6–7: 101.00</li>
+          </ul>
+        </li>
+        <li>The issuer calls when it is <strong>economically beneficial</strong> to do so — typically when market interest rates have fallen below the bond's coupon rate, so they can refinance more cheaply</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Who Benefits from the Call Option?</div>
+      <p><strong>The call option benefits the ISSUER, not the investor.</strong> The issuer calls when rates fall (benefiting from cheaper refinancing). The investor then loses the high-coupon bond at the worst time — when reinvestment rates are low. This is <strong>call risk</strong> — the risk that the bond is called when rates fall, forcing reinvestment at lower rates. Investors demand a higher yield (call premium) on callable bonds relative to otherwise identical non-callable bonds to compensate for bearing this risk.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 6: YIELD-TO-CALL & YIELD-TO-WORST    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Yield-to-Call &amp; Yield-to-Worst</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Yield-to-Call (YTC)</div>
+      <div class="def-body">The yield-to-maturity calculated assuming the bond is called on a specific call date at the applicable call price — rather than held to maturity at par. The YTC replaces the face value (FV = par) in the standard formula with the <strong>call price</strong>, and N becomes the number of periods to the call date (not to maturity).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Yield-to-Call Formula</div>
+      <div class="f">
+        PV = PMT/(1+r)¹ + PMT/(1+r)² + ... + (PMT + Call Price)/(1+r)ᴺ
+      </div>
+      <div class="note">
+        <strong>Variables:</strong><br>
+        PV = current bond price<br>
+        PMT = coupon payment per period (unchanged — coupon still paid until call date)<br>
+        Call Price = the specific call price at the assumed call date (e.g., 103.25 for Year 3–4 call)<br>
+        r = yield-to-call per period (solve for this)<br>
+        N = number of periods from settlement to the assumed call date (NOT to maturity)<br><br>
+        <strong>Key difference from YTM formula:</strong> FV = Call Price (not par) AND N = periods to call date (not maturity).<br>
+        All other mechanics are identical. Solve for r using financial calculator or Excel IRR/YIELD function.
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Yield-to-Worst (YTW)</div>
+      <div class="def-body">The <strong>lowest</strong> yield from the full set of: yield-to-first-call, yield-to-second-call, ..., yield-to-last-call, and yield-to-maturity. For the VIVU bond, it is the yield-to-first-call = 5.15%. The YTW provides the most <strong>conservative</strong> return estimate — it represents the worst outcome the investor could receive if the issuer exercises the call at the least favorable time for the investor.</div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">★ Yield-to-Worst — The Decision Rule</div>
+      <div class="f">
+        YTW = MIN(YTM, YTC₁, YTC₂, YTC₃, ..., YTC_last)<br><br>
+        For VIVU: Calculate YTC at each call date → pick the lowest value<br>
+        VIVU YTW = YTC (first call, Year 3) = 5.15% &lt; YTM → YTW = 5.15%<br><br>
+        YTW is the standard yield quoted by dealers for callable bonds<br>
+        It represents the MINIMUM return the investor can expect if no default
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">When YTC &lt; YTM (Most Common)</div>
+        <ul>
+          <li>Bond is trading at a premium (price &gt; par)</li>
+          <li>Market rates have fallen below coupon rate</li>
+          <li>Issuer likely to call — YTC is the binding constraint</li>
+          <li>YTW = YTC (worst case = issuer calls early)</li>
+          <li>Investor's return is capped by the call price &lt; market value of bond</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">When YTM &lt; YTC (Less Common)</div>
+        <ul>
+          <li>Bond is trading at a discount (price &lt; par)</li>
+          <li>Market rates are above coupon rate</li>
+          <li>Issuer unlikely to call — no benefit in calling when rates are high</li>
+          <li>YTW = YTM (worst case = held to maturity)</li>
+          <li>In this scenario, the call option has minimal value</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ YTW Limitation — Conservative but Imprecise</div>
+      <p>YTW assumes the bond will definitely be called on the specific date that produces the lowest yield. In reality, whether and when the issuer calls depends on future interest rate movements — which are uncertain. YTW is a useful conservative estimate but not a precise return measure. A more rigorous approach uses option pricing models (see OAS below). The exam, however, heavily tests YTW as a concept and calculation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 7: OPTION-ADJUSTED YIELD & OAS       -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Option-Adjusted Price, Yield &amp; the Option Value</h2>
+    </div>
+
+    <div class="card">
+      <p>A more precise treatment of callable bonds uses an <strong>option pricing model</strong> with an assumed level of interest rate volatility to explicitly value the embedded call option.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Concept</th><th>Definition</th><th>Key Point</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Call Option Value</td>
+            <td>= Price of option-free (non-callable) bond − Price of callable bond</td>
+            <td>The call option belongs to the ISSUER → reduces the bond's value to the investor. Investor pays LESS for a callable bond than for an otherwise identical non-callable bond.</td>
+          </tr>
+          <tr>
+            <td>Option-Adjusted Price</td>
+            <td>= Callable bond flat price + Value of embedded call option</td>
+            <td>The price "as if" the bond were option-free. Adding back the option value gives the equivalent non-callable bond price.</td>
+          </tr>
+          <tr>
+            <td>Option-Adjusted Yield</td>
+            <td>The market discount rate calculated using the option-adjusted price instead of the callable bond's market price</td>
+            <td>The required yield on the equivalent non-callable bond. Always ≤ YTM of the callable bond (since option-adjusted price &gt; callable bond price).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Call Option Value Relationship</div>
+      <div class="f">
+        Callable bond price  &lt;  Option-free bond price<br><br>
+        Call option value  =  Option-free bond price − Callable bond price<br><br>
+        Option-adjusted price  =  Callable bond flat price + Call option value<br>
+                              =  Option-free bond price<br><br>
+        Option-adjusted yield  =  YTM calculated at the option-adjusted price
+      </div>
+      <div class="note">
+        <strong>Intuition:</strong> The call option is embedded in the bond — you can't strip it out. But you can calculate its value using an option model, then ADD it back to the callable bond price to get what the bond would be worth without the option. The yield computed at this adjusted price is cleaner — it removes the option's distortion and reflects only credit and interest rate risk.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Callable vs. Putable — Who Holds the Option Matters</div>
+      <p>
+        <strong>Callable bond:</strong> Issuer holds the call option → reduces bond value to investor → callable bond price &lt; equivalent non-callable bond price → investor demands higher yield to compensate for call risk.<br><br>
+        <strong>Putable bond:</strong> Investor holds the put option → increases bond value to investor → putable bond price &gt; equivalent non-putable bond price → investor accepts lower yield in exchange for the put protection.<br><br>
+        The exam tests both directions — always identify WHO holds the option before assessing its impact on bond value and yield.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 8: YIELD SPREAD DECOMPOSITION        -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Yield Spread Decomposition — Benchmark + Spread</h2>
+    </div>
+
+    <div class="card">
+      <p>A bond's YTM can be decomposed into two components that reflect fundamentally different types of risk:</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">YTM Decomposition</div>
+      <div class="f">
+        YTM  =  Benchmark Rate  +  Spread
+      </div>
+      <div class="note">
+        <strong>Benchmark Rate:</strong> Captures top-down, macroeconomic factors — monetary policy, inflation expectations, economic growth. Changes when broad market conditions shift. Reflected in government bond yields (especially on-the-run sovereigns). Common to all bonds in that market/currency.<br><br>
+        <strong>Spread:</strong> Captures bottom-up, issuer-specific factors — credit risk (probability of default, loss given default), liquidity risk (ease of trading, bid-offer spreads), and sometimes tax treatment. Unique to each issuer and bond.<br><br>
+        <strong>Why decompose?</strong> Allows an analyst to separately assess whether a yield change was driven by macro conditions (benchmark moved) or by issuer fundamentals (spread widened or tightened). A bond's spread can widen even if its YTM stays flat — if the benchmark rate simultaneously fell.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Benchmark Rate — Top-Down Factors</div>
+        <ul>
+          <li>Monetary policy (central bank rates)</li>
+          <li>Inflation expectations</li>
+          <li>Economic growth outlook</li>
+          <li>Risk appetite (flight to quality)</li>
+          <li>Used: on-the-run government bond yield at matching maturity</li>
+          <li>Affects ALL bonds in the market simultaneously</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Spread — Bottom-Up (Issuer-Specific) Factors</div>
+        <ul>
+          <li>Credit risk (default probability, credit rating, leverage)</li>
+          <li>Liquidity risk (issue size, trading frequency, bid-offer)</li>
+          <li>Tax treatment (taxable vs. tax-exempt)</li>
+          <li>Structural features (callability, seniority, covenants)</li>
+          <li>Unique to each issuer and bond issue</li>
+          <li>Spread analysis used for relative value assessment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>On-the-run vs. Off-the-run benchmark:</strong> The most-used benchmark is the <strong>most recently issued (on-the-run)</strong> government bond. On-the-run bonds trade at slightly <strong>lower yields</strong> than off-the-run bonds of similar maturity because they are more liquid (higher demand, easier repo financing). The on-the-run bond's YTM is priced closest to par since its coupon was set to match the current market rate at issuance.</p>
+      <p style="margin-top:10px;"><strong>Spread-based relative value analysis:</strong> By controlling for the benchmark rate, analysts can compare a bond's current spread to its historical average, its highs/lows, and to other bonds of similar credit quality — to identify whether a bond is relatively cheap (spread wider than normal → potentially undervalued) or expensive (spread narrower than normal → potentially overvalued).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 9: G-SPREAD & I-SPREAD               -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>G-Spread &amp; I-Spread</h2>
+    </div>
+
+    <div class="spread-card">
+      <div class="spread-title">G-Spread (Government Spread)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Yield spread in basis points over an <strong>actual or interpolated government bond yield</strong></li>
+        <li>G-spread = Bond YTM − Government benchmark yield (same or interpolated maturity)</li>
+        <li>Represents compensation for bearing credit and liquidity risk relative to the risk-free sovereign</li>
+        <li>Used in US, UK, Japan, and most developed markets where sovereign benchmarks dominate</li>
+        <li>If no exact-maturity government bond exists → <strong>linearly interpolate</strong> between two government bonds bracketing the target maturity</li>
+        <li>Uses the same YTM discount rate for both bonds (not a spot curve — a limitation)</li>
+      </ul>
+    </div>
+
+    <h3>G-Spread Calculation — Full Worked Example (Russian Federation Bond)</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Calculate target bond's current YTM.</strong><br>
+          Russian Federation 5.25% 30-year bond (issued 6 years ago → 24 years remaining), price = 123.5<br>
+          =YIELD(DATE(2026,3,15), DATE(2050,3,15), 5.25%, 123.5, 100, 2, 0) = <strong>3.756%</strong>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Interpolate the government benchmark at the same maturity (24 years).</strong><br>
+          Available: 20-year US Treasury = 2.00%; 30-year US Treasury = 2.25%<br>
+          w₂₀ = (30 − 24)/(30 − 20) = 6/10 = 60%<br>
+          w₃₀ = 1 − 60% = 40%<br>
+          r₂₄ = (60% × 2.00%) + (40% × 2.25%) = 1.20% + 0.90% = <strong>2.10%</strong>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Calculate G-spread.</strong><br>
+          G-spread = 3.756% − 2.10% = 1.656% = <strong>166 basis points</strong><br>
+          This means investors demand 166 bps over the US Treasury yield to hold the Russian Federation bond — compensation for credit and liquidity risk.
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Interpolation Weight Formula — For Unmatched Maturities</div>
+      <div class="f">
+        w_short = (T_long − T_target) / (T_long − T_short)<br>
+        w_long  = 1 − w_short  =  (T_target − T_short) / (T_long − T_short)<br><br>
+        r_target = (w_short × r_short) + (w_long × r_long)
+      </div>
+      <div class="note">
+        <strong>Intuition for weights:</strong> The closer the target maturity is to the long benchmark, the higher the weight on the long benchmark — and vice versa. A 24-year target between 20-year and 30-year: 24 is 4/10 of the way from 20 to 30 → 40% weight on 30-year (long), 60% on 20-year (short). Check: (60% × 20) + (40% × 30) = 12 + 12 = 24 ✓
+      </div>
+    </div>
+
+    <div class="option-card">
+      <div class="option-title">I-Spread (Interpolated Spread)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li>Yield spread over the <strong>standard interest rate swap rate</strong> in the same currency and same tenor</li>
+        <li>I-spread = Bond YTM − Swap rate at same maturity (interpolated if necessary, hence "interpolated")</li>
+        <li>Most common for <strong>euro-denominated corporate bonds</strong> (priced vs. euro interest rate swap)</li>
+        <li>Example: "mid-swaps plus 30 bps" — mid-swaps = average of bid/offer swap rates</li>
+        <li>Issuers use I-spread to compare cost of fixed-rate bonds vs. floating-rate alternatives (bank loans, commercial paper)</li>
+        <li>Investors use I-spread as a measure of a bond's credit risk relative to the interbank market</li>
+        <li>Like G-spread, uses a single YTM rate for all cash flows (not a spot curve) — same limitation</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Asset Swap</div>
+      <div class="def-body">Converts a bond's fixed coupon cash flows into floating-rate cash flows (market reference rate ± spread). Used to compare fixed-rate bonds to floating-rate instruments. If priced near par, the asset swap spread approximates the bond's credit risk premium over the MRR. Related to — but not identical to — the I-spread.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ G-Spread and I-Spread Share a Common Limitation</div>
+      <p>Both G-spread and I-spread compare a bond's YTM to a single benchmark rate (one number). This uses the <strong>same discount rate for all cash flows</strong> regardless of their timing. In reality, each cash flow should be discounted at the spot rate for that specific maturity. The single-rate approach ignores the term structure of interest rates — this is the fundamental limitation addressed by the Z-spread.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 10: Z-SPREAD & OAS                   -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Z-Spread &amp; Option-Adjusted Spread (OAS)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Z-Spread (Zero-Volatility Spread / Static Spread)</div>
+      <div class="def-body">A <strong>constant spread added to every spot rate on the benchmark yield curve</strong> such that the sum of all discounted cash flows equals the bond's current flat price. Unlike G-spread and I-spread, the Z-spread uses the full spot rate curve — a different discount rate for each cash flow based on its maturity. The Z-spread is the same ("zero volatility" means it does not change across scenarios) for all periods.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Z-Spread Formula</div>
+      <div class="f">
+        PV = PMT/(1+z₁+Z)¹ + PMT/(1+z₂+Z)² + ... + (PMT+FV)/(1+z_N+Z)ᴺ
+      </div>
+      <div class="note">
+        <strong>z₁, z₂, ... z_N</strong> = benchmark spot rates (zero rates) at each period, derived from the government yield curve<br>
+        <strong>Z</strong> = the Z-spread per period — a single constant added to EVERY spot rate<br>
+        <strong>PV</strong> = current flat price of the bond<br><br>
+        <strong>How to solve:</strong> Z cannot be solved algebraically — must use iterative methods (Excel Goal Seek, Solver, or financial software). Find the value of Z that makes the right-hand side equal to the bond's observed flat price.<br><br>
+        <strong>Key difference from G-spread:</strong> Each cash flow is discounted at its own maturity-specific spot rate (z₁, z₂, ...) + Z, rather than one single YTM for all cash flows. This correctly accounts for the term structure of interest rates.<br><br>
+        <strong>Z-spread is also called "static spread"</strong> because Z is constant across all periods (zero volatility — it doesn't change with different interest rate scenarios).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Z-Spread &gt; G-Spread (Usually)</div>
+      <p>The yield curve is typically upward-sloping (short rates lower, long rates higher). The G-spread uses a single benchmark rate at the bond's final maturity. But the Z-spread discounts early coupons at lower short-term spot rates — and since those discounts are lower (lower rates = higher PV), the Z-spread must be HIGHER than the G-spread to still bring the PV down to the observed price. The difference between Z-spread and G-spread is largest for bonds with higher coupons and in steeper yield curve environments.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Option-Adjusted Spread (OAS)</div>
+      <div class="def-body">The Z-spread adjusted for the value of any embedded option, expressed in basis points per year. For a callable bond, the call option belongs to the issuer and reduces the bond's value — so the OAS removes this option component from the spread, leaving only the credit and liquidity risk premium.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">OAS Formula — Equation 5</div>
+      <div class="f">
+        OAS  =  Z-spread  −  Option value (in bps per year)
+      </div>
+      <div class="note">
+        <strong>For a callable bond:</strong><br>
+        Z-spread = OAS + Option value in bps<br>
+        OAS = Z-spread − Option value in bps<br><br>
+        The Z-spread of a callable bond is HIGHER than its OAS because the Z-spread is based on the market price of the callable bond (which is depressed by the call option). The OAS strips out the option component — what remains is the pure credit/liquidity spread.<br><br>
+        <strong>For an option-free bond:</strong> OAS = Z-spread (option value = 0).<br><br>
+        <strong>For a putable bond:</strong> Put option benefits investor → putable bond price HIGHER than option-free → OAS &gt; Z-spread (the put option adds to value, so Z-spread understates the "true" credit spread).
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond Type</th><th>Who Holds Option</th><th>Effect on Price</th><th>OAS vs. Z-Spread</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Option-free</td><td>No option</td><td>—</td><td>OAS = Z-spread</td></tr>
+          <tr><td>Callable bond</td><td>Issuer holds call</td><td>Price LOWER than option-free equivalent</td><td>OAS &lt; Z-spread (subtract option value)</td></tr>
+          <tr><td>Putable bond</td><td>Investor holds put</td><td>Price HIGHER than option-free equivalent</td><td>OAS &gt; Z-spread (add option value)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ OAS Requires an Option Pricing Model — Model Dependent</div>
+      <p>Unlike G-spread and Z-spread, the OAS cannot be calculated from bond prices alone. It requires: (1) an option pricing model (e.g., binomial interest rate tree), and (2) an assumption about future interest rate volatility. Different models and different volatility assumptions will produce different OAS values for the same bond. This model-dependence is a limitation — OAS comparisons across different dealers or models must account for their different assumptions.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 11: ALL SPREADS — MASTER TABLE        -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>All Yield Spread Measures — Master Comparison Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Spread Measure</th><th>Definition</th><th>Benchmark Used</th><th>Discount Rate Method</th><th>Accounts for Options?</th><th>Key Use / Market</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>G-spread</td>
+            <td>Bond YTM − Government bond yield (actual or interpolated)</td>
+            <td>On-the-run government bond</td>
+            <td>Single YTM for all cash flows</td>
+            <td>No</td>
+            <td>US, UK, Japan; sovereign vs. corporate comparison</td>
+          </tr>
+          <tr>
+            <td>I-spread</td>
+            <td>Bond YTM − Standard swap rate (same currency, same tenor)</td>
+            <td>Interest rate swap rate</td>
+            <td>Single YTM for all cash flows</td>
+            <td>No</td>
+            <td>EUR corporate bonds; bank loan comparisons; credit risk</td>
+          </tr>
+          <tr>
+            <td>Z-spread</td>
+            <td>Constant spread added to every spot rate so PV = bond price</td>
+            <td>Government spot rate curve (or swap curve)</td>
+            <td>Different spot rate per cash flow + constant Z</td>
+            <td>No (option-free bonds; or ignores option)</td>
+            <td>Most precise spread for option-free bonds; foundation for OAS</td>
+          </tr>
+          <tr>
+            <td>OAS</td>
+            <td>Z-spread − Option value (bps/year)</td>
+            <td>Government spot rate curve (or swap curve)</td>
+            <td>Spot rate curve + option model</td>
+            <td>Yes — explicitly adjusts for embedded option</td>
+            <td>Callable/putable bonds; cross-bond comparisons removing option distortion</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Spread Hierarchy — From Simplest to Most Precise</div>
+      <div class="f">
+        G-spread  (simplest — single government yield benchmark)<br>
+            ↓<br>
+        I-spread  (uses swap rates instead of government bonds)<br>
+            ↓<br>
+        Z-spread  (uses full spot curve — most precise for option-free bonds)<br>
+            ↓<br>
+        OAS  (Z-spread adjusted for embedded option value — most complete measure)<br><br>
+        For option-free bonds:  G-spread ≈ I-spread &lt; Z-spread (usually, for upward-sloping curves)<br>
+        For callable bonds:  OAS &lt; Z-spread (option value subtracted)<br>
+        For putable bonds:   OAS &gt; Z-spread (put value is a benefit — added to credit spread)
+      </div>
+      <div class="note">
+        <strong>Benchmark rate decomposition:</strong> YTM = Benchmark + Spread. Benchmark moves with macro conditions. Spread moves with issuer-specific risk.<br>
+        <strong>On-the-run vs. off-the-run:</strong> On-the-run bonds have LOWER yields than off-the-run bonds (same maturity) due to higher liquidity and demand.<br>
+        <strong>Spread widening = bond price falling</strong> (more yield demanded for same cash flows). Spread tightening = bond price rising.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST & QUICK REFERENCE  -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Periodicity</strong> = the assumed number of compounding periods per year. Typically matches coupon payment frequency. US/UK: most bonds use periodicity 2 (semiannual).</li>
+        <li>✅ <strong>Effective Annual Rate (EAR)</strong> = annual rate with periodicity 1. Always ≥ stated annual rate when compounding occurs more than once annually. EAR = (1 + APRm/m)^m − 1.</li>
+        <li>✅ <strong>Semiannual Bond Basis Yield (SABB)</strong> = periodic rate per semiannual period × 2. "SABB" and "yield per semiannual period" are NOT the same. SABB for 2% semiannual period = 4% SABB.</li>
+        <li>✅ <strong>Periodicity conversion formula:</strong> (1 + APRm/m)^m = (1 + APRn/n)^n. More frequent compounding → lower stated rate (and vice versa). Converting from quarterly (4) → semiannual (2): converted rate is HIGHER.</li>
+        <li>✅ <strong>Never compare YTMs of different periodicities directly.</strong> Always convert to the same periodicity before computing a spread or relative yield difference. This is a classic exam trap.</li>
+        <li>✅ <strong>Current yield = Annual Coupon ÷ Flat Price.</strong> Crude measure — ignores capital gain/loss, reinvestment, time value of money, accrued interest. For discount bonds: CY &lt; YTM. For premium bonds: CY &gt; YTM.</li>
+        <li>✅ <strong>Street convention yield</strong> = assumes payments on scheduled dates (ignores weekends/holidays). Always ≥ true yield. Standard market quotation. True yield ≤ street convention by ≤ 1–2 bps.</li>
+        <li>✅ <strong>Government equivalent yield</strong> = corporate bond YTM restated from 30/360 to actual/actual. Used to compute corporate-to-government spread on an apples-to-apples basis.</li>
+        <li>✅ <strong>Simple yield</strong> = (coupons + straight-line gain/loss) ÷ flat price. Used for Japanese government bonds (JGBs) only.</li>
+        <li>✅ <strong>Callable bonds:</strong> The call option belongs to the ISSUER. Issuer calls when market rates fall below coupon rate. Investor bears call risk → demands a higher yield than on equivalent non-callable bond.</li>
+        <li>✅ <strong>Yield-to-call (YTC)</strong> = YTM formula but with: FV = call price (not par), N = periods to call date (not maturity). Calculate YTC for each call date in the schedule.</li>
+        <li>✅ <strong>Yield-to-worst (YTW)</strong> = MIN(YTM, all YTCs). The most conservative yield estimate for a callable bond. Standard dealer quotation for callable bonds. For VIVU bond: YTW = yield-to-first-call = 5.15%.</li>
+        <li>✅ <strong>Call option value</strong> = Price of option-free bond − Price of callable bond. Option-adjusted price = callable bond price + call option value = option-free bond price. Option-adjusted yield uses this adjusted price.</li>
+        <li>✅ <strong>YTM decomposition:</strong> YTM = Benchmark rate + Spread. Benchmark = top-down macroeconomic factors (same for all bonds). Spread = bottom-up issuer-specific factors (credit, liquidity, tax).</li>
+        <li>✅ <strong>On-the-run government bonds</strong> = most recently issued; most liquid; trade at slightly LOWER yields than off-the-run bonds (higher demand, easier repo financing). Used as the primary benchmark.</li>
+        <li>✅ <strong>G-spread</strong> = Bond YTM − Government bond yield (actual or interpolated). Compensation for credit and liquidity risk vs. the risk-free sovereign. Uses single YTM → ignores term structure. Used in US, UK, Japan.</li>
+        <li>✅ <strong>G-spread interpolation:</strong> w_short = (T_long − T_target)/(T_long − T_short). r_target = w_short × r_short + w_long × r_long. Example: 24-year target with 20y/30y benchmarks → w₂₀ = 60%, w₃₀ = 40%.</li>
+        <li>✅ <strong>I-spread</strong> = Bond YTM − Swap rate (same currency, same tenor). Standard for EUR corporate bonds. Issuers use it to compare fixed-rate bond cost vs. floating-rate alternatives. Same single-rate limitation as G-spread.</li>
+        <li>✅ <strong>Z-spread</strong> = constant spread added to EVERY spot rate on the benchmark curve so PV = bond price. More precise than G/I-spread: accounts for full term structure (different discount rate per cash flow). Called "static spread" because Z is constant. Calculated iteratively (Excel Goal Seek).</li>
+        <li>✅ <strong>OAS</strong> = Z-spread − Option value (bps/year). For callable bonds: OAS &lt; Z-spread. For putable bonds: OAS &gt; Z-spread. For option-free bonds: OAS = Z-spread. Requires option pricing model + interest rate volatility assumption. The most complete spread measure.</li>
+        <li>✅ <strong>Spread widening</strong> = bond YTM rose relative to benchmark = bond price fell = perceived risk increased. Spread tightening = opposite. Spread analysis controls for macro moves to focus on issuer-specific change.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ PERIODICITY &amp; COMPOUNDING ═══<br>
+        Periodicity (m) = number of compounding periods per year (matches coupon frequency)<br>
+        EAR = (1 + APRm/m)^m − 1  ← standardizes across all periodicities<br>
+        SABB = rate per semiannual period × 2  ← standard US/UK convention<br>
+        Conversion: (1 + APRm/m)^m = (1 + APRn/n)^n<br>
+        Rule: more frequent compounding ↔ lower annual rate (same effective return)<br><br>
+
+        ═══ YIELD MEASURES ═══<br>
+        Current Yield = Annual Coupon ÷ Flat Price  (income only; ignores capital gain/loss)<br>
+        Street Convention: assumes payment on scheduled dates; always ≥ true yield<br>
+        True Yield: adjusts for weekends/holidays; always ≤ street convention (by ≤ 2 bps)<br>
+        Govt Equivalent Yield: restate corporate 30/360 YTM on actual/actual basis<br>
+        Simple Yield: (coupons + straight-line amortized gain/loss) ÷ flat price; JGBs only<br><br>
+
+        ═══ EMBEDDED OPTIONS ═══<br>
+        Callable: issuer holds call → reduces bond value → price &lt; option-free<br>
+        Putable: investor holds put → increases bond value → price &gt; option-free<br>
+        YTC: replace FV=par with FV=call price, replace N=maturity with N=call date<br>
+        YTW = MIN(YTM, all YTCs) ← most conservative yield; standard callable bond quote<br>
+        Call option value = Option-free price − Callable price<br>
+        OAS = Z-spread − Option value (bps/year)<br><br>
+
+        ═══ YIELD SPREADS ═══<br>
+        YTM = Benchmark rate (macro, top-down) + Spread (issuer-specific, bottom-up)<br>
+        G-spread = Bond YTM − Gov't benchmark yield  [single rate; US/UK/Japan]<br>
+        I-spread = Bond YTM − Swap rate  [single rate; EUR corporates; bank loan comparison]<br>
+        Z-spread = constant spread over spot curve so PV = price  [most precise; static]<br>
+        OAS = Z-spread − option value  [option-free credit/liquidity spread; model-dependent]<br><br>
+
+        ═══ OAS DIRECTION RULES ═══<br>
+        Option-free: OAS = Z-spread<br>
+        Callable bond: OAS &lt; Z-spread (call option value subtracted)<br>
+        Putable bond: OAS &gt; Z-spread (put option adds to bond value; reduces apparent spread)
+      </div>
+      <div class="note">
+        <strong>G-spread interpolation formula:</strong> w_short = (T_long − T_target)/(T_long − T_short); r_target = w_short × r_short + w_long × r_long.<br>
+        <strong>On-the-run bonds yield &lt; off-the-run bonds</strong> (same maturity) — more liquid, higher demand, easier repo financing.<br>
+        <strong>Spread widening = risk increasing = bond price falling.</strong> Spread tightening = risk decreasing = bond price rising.<br>
+        <strong>Z-spread vs. G-spread:</strong> Z-spread typically &gt; G-spread in upward-sloping yield curve environment (early coupons discounted at lower spot rates → need higher Z to bring PV down to observed price).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 7: Yield and Yield Spread Measures for Fixed-Rate Bonds · Exam Prep Notes
+</footer>
+
+</body>
+</html>

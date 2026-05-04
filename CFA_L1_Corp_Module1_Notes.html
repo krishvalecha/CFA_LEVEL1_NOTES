@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Corporate Issuers | Module 1: Organizational Forms, Corporate Issuer Features & Ownership</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --card: #1a1e28;
+    --border: #252a38;
+    --accent: #c9a84c;
+    --accent2: #4c8bc9;
+    --accent3: #4cc98a;
+    --danger: #c94c4c;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tip-bg: #1a2218;
+    --tip-border: #4cc98a;
+    --warn-bg: #221a18;
+    --warn-border: #c94c4c;
+    --formula-bg: #12151f;
+    --formula-border: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #151a20 40%, #0d1420 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(76,139,201,0.15);
+    color: var(--accent2);
+    border: 1px solid rgba(76,139,201,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 span { color: var(--accent2); }
+
+  .page-header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 680px;
+  }
+
+  .toc-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .toc-strip::-webkit-scrollbar { display: none; }
+
+  .toc-item {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    padding: 14px 18px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .section { margin-bottom: 56px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent2);
+    background: rgba(76,139,201,0.1);
+    border: 1px solid rgba(76,139,201,0.25);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 24px 0 12px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box {
+    background: var(--formula-bg);
+    border-left: 3px solid var(--formula-border);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .formula-box .label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip {
+    background: var(--tip-bg);
+    border-left: 3px solid var(--tip-border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 20px;
+    margin: 16px 0;
+  }
+
+  .tip-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent3);
+    margin-bottom: 6px;
+  }
+
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn-border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 20px;
+    margin: 16px 0;
+  }
+
+  .warn-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+
+  .mc-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead tr { background: #1e2330; }
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td {
+    padding: 11px 16px;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block {
+    background: #171b26;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent2);
+    border-radius: 0 0 6px 6px;
+    padding: 14px 20px;
+    margin: 12px 0;
+  }
+
+  .def-block .def-term {
+    font-weight: 700;
+    color: var(--accent2);
+    font-size: 14px;
+    margin-bottom: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE HEADER -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · CORPORATE ISSUERS · MODULE 1</div>
+  <h1>Organizational Forms, <span>Corporate Issuer</span><br>Features &amp; Ownership</h1>
+  <p>Exam-ready notes covering business organizational forms, key corporate features, and public vs. private issuers — everything you need without re-reading the LES.</p>
+</div>
+
+<!-- TOC -->
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Org Forms Overview</a>
+  <a class="toc-item" href="#s2">02 · Sole Proprietorship</a>
+  <a class="toc-item" href="#s3">03 · Partnerships</a>
+  <a class="toc-item" href="#s4">04 · Limited Companies</a>
+  <a class="toc-item" href="#s5">05 · Master Comparison Table</a>
+  <a class="toc-item" href="#s6">06 · Corporate Features</a>
+  <a class="toc-item" href="#s7">07 · Taxation</a>
+  <a class="toc-item" href="#s8">08 · Public vs. Private</a>
+  <a class="toc-item" href="#s9">09 · Going Public / Private</a>
+  <a class="toc-item" href="#s10">10 · Types of Owners</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: OVERVIEW -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Organizational Forms — Overview</h2>
+    </div>
+
+    <div class="card">
+      <p>Every business chooses a <strong>legal organizational form</strong> that defines how returns, risks, ownership, and operational responsibilities are distributed. There are <strong>three general forms</strong> common to most jurisdictions:</p>
+      <ol style="padding-left:20px; margin-top:10px;">
+        <li style="margin-bottom:6px;"><strong class="highlight">Sole Proprietorship</strong> — single owner, simplest form</li>
+        <li style="margin-bottom:6px;"><strong class="highlight">Partnership</strong> — multiple owners pool resources (3 subtypes)</li>
+        <li style="margin-bottom:6px;"><strong class="highlight">Limited Company (Corporation)</strong> — most sophisticated; two subtypes: private &amp; public</li>
+      </ol>
+    </div>
+
+    <h3>5 Key Attributes That Differentiate Forms</h3>
+    <div class="formula-box">
+      <div class="label">Mnemonic: "LOLOT" — Remember All 5 Attributes</div>
+      <div class="f">
+        L — Legal identity (separate entity or not?)<br>
+        O — Owner–manager relationship (same or separated?)<br>
+        L — Liability (unlimited or limited?)<br>
+        O — cOst / Taxation (pass-through or double taxed?)<br>
+        T — access To financing (limited or broad?)
+      </div>
+      <div class="note">These 5 attributes are the exam lens for comparing ANY organizational form.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Big Picture — Why This Matters for Analysts</div>
+      <p>The organizational form determines how profits are taxed, how much liability owners bear, how easy it is to raise capital, and ultimately how attractive a business is as an investment target. The <strong>corporation (public limited company)</strong> dominates globally by revenues and assets because it best solves the financing and liability problems of the other forms.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: SOLE PROPRIETORSHIP -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Sole Proprietorship (Sole Trader)</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>simplest</strong> organizational form. One person owns, funds, and manages the business entirely.</p>
+      <ul style="margin-top:10px;">
+        <li><strong>Legal identity:</strong> NOT a separate legal entity — owner and business are the same person legally</li>
+        <li><strong>Owner–manager:</strong> Identical — owner IS the manager</li>
+        <li><strong>Liability:</strong> <span class="danger-text">Unlimited</span> — owner personally responsible for ALL debts and obligations</li>
+        <li><strong>Taxation:</strong> <span class="highlight3">Pass-through</span> — profits taxed as personal income of the owner</li>
+        <li><strong>Access to financing:</strong> <span class="danger-text">Very limited</span> — constrained by owner's personal savings and creditworthiness</li>
+        <li><strong>Formation:</strong> Often default form requiring no formal registration; dissolved on owner's death or cessation</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Advantages</div>
+        <ul>
+          <li>Simplest and cheapest to form</li>
+          <li>Full management control retained by owner</li>
+          <li>All profits go to owner</li>
+          <li>No separate tax filing for entity</li>
+          <li>High flexibility</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Disadvantages</div>
+        <ul>
+          <li>Unlimited personal liability</li>
+          <li>Growth severely limited by financing ability</li>
+          <li>Business ends at owner's death</li>
+          <li>No separation of ownership and management</li>
+          <li>Cannot easily bring in external investors</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap</div>
+      <p>Sole proprietorships comprise the <strong>largest number</strong> of businesses in most economies, but they are the <strong>smallest in terms of revenue and assets</strong>. Don't confuse "most numerous" with "most significant" economically.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: PARTNERSHIPS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Partnerships</h2>
+    </div>
+
+    <div class="card">
+      <p>Partnerships allow <strong>multiple owners</strong> to pool resources, share risk, and share returns. There are three common subtypes.</p>
+      <p style="margin-top:8px; font-size:13.5px; color:var(--muted);">Like sole proprietorships, <strong>all partnership forms are pass-through entities for tax purposes</strong> — no tax at the entity level; profits/losses flow to partners and are taxed personally (even if not distributed).</p>
+    </div>
+
+    <h3>Type 1 — General Partnership (GP)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Partners:</strong> Two or more general partners (GPs)</li>
+        <li><strong>Liability:</strong> <span class="danger-text">Unlimited for ALL partners</span> — if one partner can't pay, others are fully liable</li>
+        <li><strong>Management:</strong> All partners share management responsibilities</li>
+        <li><strong>Governance:</strong> Governed by a written (or verbal/incidental) partnership agreement</li>
+        <li><strong>Taxation:</strong> Pass-through — taxed only at personal level</li>
+        <li><strong>Financing:</strong> Limited to what partners can contribute</li>
+      </ul>
+    </div>
+
+    <h3>Type 2 — Limited Partnership (LP)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Structure:</strong> At least one <span class="highlight">General Partner (GP)</span> + one or more <span class="highlight2">Limited Partners (LPs)</span></li>
+        <li><strong>GP liability:</strong> <span class="danger-text">Unlimited</span> — the GP manages and bears full risk</li>
+        <li><strong>LP liability:</strong> <span class="highlight3">Limited</span> — losses capped at amount invested; personal assets protected</li>
+        <li><strong>Management:</strong> GP manages; LPs typically have no management responsibilities</li>
+        <li><strong>Profit sharing:</strong> All partners share per agreement; GPs typically receive a larger share for their greater risk</li>
+        <li><strong>Taxation:</strong> Pass-through</li>
+        <li><strong>Transferability:</strong> Often restricted by partnership agreement</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — LP Structure</div>
+      <p>Think: <strong>"GPs run it, GPs own it fully. LPs fund it, LPs hide behind it."</strong> The limited partner's liability is literally limited to what they put in — like a passive investor with a liability shield.</p>
+    </div>
+
+    <h3>Type 3 — Limited Liability Partnership (LLP)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Key distinction:</strong> <em>No general partner required</em> — ALL partners have limited liability</li>
+        <li><strong>Management:</strong> Partners share management; typically appoint managing partners</li>
+        <li><strong>Use case:</strong> Professional services firms (law, accounting, engineering, architecture)</li>
+        <li><strong>Restrictions:</strong> In some jurisdictions (e.g., USA), only permitted for professional services; limits on partner count and equity investment</li>
+        <li><strong>Taxation:</strong> Pass-through</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Pass-Through Taxation Timing</div>
+      <p>In ALL partnership forms, income is taxed at the personal level <strong>regardless of whether it was actually distributed</strong>. Partners pay tax on their share of profits even if the money stayed in the business and was reinvested. This is a key disadvantage vs. corporations.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: LIMITED COMPANIES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Limited Companies (Corporations)</h2>
+    </div>
+
+    <div class="card">
+      <p>Limited companies offer all the advantages of limited partnerships <strong>plus additional features</strong> that enable much greater access to financing and growth. Two subtypes exist in most jurisdictions.</p>
+    </div>
+
+    <h3>Private Limited Company</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Liability:</strong> <span class="highlight3">Limited for ALL owners (shareholders/members)</span></li>
+        <li><strong>Ownership:</strong> Divided into shares (more easily tradeable than partnership interests)</li>
+        <li><strong>Management:</strong> Owners (shareholders) elect a <strong>board of directors</strong>; board appoints professional managers</li>
+        <li><strong>Restrictions:</strong> Legal limits on number of owners in many jurisdictions; ownership transfer often requires a vote</li>
+        <li><strong>Taxation:</strong> <span class="highlight3">Pass-through</span> (like partnerships) in many jurisdictions — taxed only at shareholder level</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">
+        <strong>Names by jurisdiction:</strong> LLC / S-Corp (USA) · GmbH (Germany) · SARL (France) · G.K. (Japan) · Company with Limited Liability (China)
+      </p>
+    </div>
+
+    <h3>Public Limited Company (Corporation)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Liability:</strong> <span class="highlight3">Limited for all shareholders</span></li>
+        <li><strong>Ownership restrictions:</strong> <em>None</em> — no legal limit on number of owners or transferability</li>
+        <li><strong>Management:</strong> Full separation — shareholders elect board → board appoints executive management</li>
+        <li><strong>Taxation:</strong> <span class="danger-text">Double taxation</span> — taxed at the corporate level AND again at shareholder level on dividends distributed</li>
+        <li><strong>Best suited for:</strong> Companies seeking to go public, raise large amounts of capital, or retain profits for reinvestment (retained profits avoid the second layer of tax)</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">
+        <strong>Names by jurisdiction:</strong> C-Corp (USA) · Corporation (China) · Société Anonyme / SA (France) · AG (Germany) · K.K. / Stock Company (Japan)
+      </p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Double Taxation Isn't Always a Dealbreaker</div>
+      <p>If profits are <strong>retained and reinvested</strong> (not distributed as dividends), the shareholder-level tax does NOT apply. This makes corporations attractive for growth-oriented firms. Also, in jurisdictions where corporate tax rates are <strong>lower than personal income tax rates</strong>, it can be advantageous to "store" profits in the business.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Critical Exam Distinction — "Public Limited" ≠ "Publicly Listed"</div>
+      <p>A <strong>public limited company</strong> (the legal form) is NOT obligated to list its shares on an exchange. It is simply the form most suitable for doing so. A company can be a public limited company (e.g., a C-Corp in the USA) and still remain privately held (unlisted). The terms "public" and "private" when describing listed vs. unlisted status are SEPARATE from the legal form distinction.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: MASTER COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Master Comparison Table — All Organizational Forms</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Attribute</th>
+            <th>Sole Proprietorship</th>
+            <th>General Partnership</th>
+            <th>Limited Partnership</th>
+            <th>LLP</th>
+            <th>Private Ltd. Co.</th>
+            <th>Public Ltd. Co.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Legal Identity</td>
+            <td>Not separate</td>
+            <td>Not separate</td>
+            <td>Not separate</td>
+            <td>Not separate</td>
+            <td>Separate entity</td>
+            <td>Separate entity</td>
+          </tr>
+          <tr>
+            <td>Owner–Manager</td>
+            <td>Same person</td>
+            <td>Same (all GPs)</td>
+            <td>GP manages; LPs passive</td>
+            <td>Shared; managing partners</td>
+            <td>Board + Mgmt separate</td>
+            <td>Full separation</td>
+          </tr>
+          <tr>
+            <td>Liability</td>
+            <td><span class="tag tag-red">Unlimited</span></td>
+            <td><span class="tag tag-red">Unlimited (all)</span></td>
+            <td>GP: <span class="tag tag-red">Unlimited</span><br>LP: <span class="tag tag-green">Limited</span></td>
+            <td><span class="tag tag-green">Limited (all)</span></td>
+            <td><span class="tag tag-green">Limited (all)</span></td>
+            <td><span class="tag tag-green">Limited (all)</span></td>
+          </tr>
+          <tr>
+            <td>Taxation</td>
+            <td><span class="tag tag-green">Pass-through</span></td>
+            <td><span class="tag tag-green">Pass-through</span></td>
+            <td><span class="tag tag-green">Pass-through</span></td>
+            <td><span class="tag tag-green">Pass-through</span></td>
+            <td><span class="tag tag-green">Pass-through</span> (most)</td>
+            <td><span class="tag tag-red">Double tax</span></td>
+          </tr>
+          <tr>
+            <td>Owner Count</td>
+            <td>One only</td>
+            <td>2+ GPs</td>
+            <td>1+ GP, 1+ LP</td>
+            <td>2+ LPs (no GP)</td>
+            <td>Limited (jurisdiction)</td>
+            <td>Unlimited</td>
+          </tr>
+          <tr>
+            <td>Ownership Transfer</td>
+            <td>Not applicable</td>
+            <td>Very restricted</td>
+            <td>Restricted</td>
+            <td>Restricted</td>
+            <td>Requires vote</td>
+            <td>Freely transferable</td>
+          </tr>
+          <tr>
+            <td>Access to Financing</td>
+            <td><span class="tag tag-red">Very Low</span></td>
+            <td><span class="tag tag-red">Low</span></td>
+            <td><span class="tag tag-yellow">Moderate</span></td>
+            <td><span class="tag tag-yellow">Moderate</span></td>
+            <td><span class="tag tag-yellow">Moderate</span></td>
+            <td><span class="tag tag-green">Highest</span></td>
+          </tr>
+          <tr>
+            <td>Suitable for IPO?</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Not typically</td>
+            <td><span class="tag tag-green">Yes — best suited</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Progression Logic</div>
+      <p>Each form solves a problem with the previous one: Partnership → solves sole prop's capital/risk problem. LP → solves unlimited liability for passive investors. LLP → solves GP's unlimited liability. Private Ltd → adds ownership separation and share transferability. Public Ltd → removes all ownership restrictions and enables the widest capital access. Each step up the ladder trades simplicity for financing power.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: KEY CORPORATE FEATURES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Key Features of Corporate Issuers</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Corporate issuers</strong> = corporations that raise capital in financial markets. They raise more capital from investors than even governments worldwide. Understanding them is essential for financial analysts.</p>
+    </div>
+
+    <h3>1. Legal Identity</h3>
+    <div class="def-block">
+      <div class="def-term">Corporation</div>
+      <div class="def-body">A legal entity separate and distinct from its owners, formed by filing <strong>articles of incorporation</strong> with a regulatory authority. Can enter contracts, hire employees, sue and be sued, borrow and lend money, make investments, and pay taxes — just like an individual.</div>
+    </div>
+
+    <div class="card">
+      <p>Large corporations operate across many jurisdictions and are subject to regulatory requirements wherever:</p>
+      <ul>
+        <li>The company is <strong>incorporated</strong></li>
+        <li>The <strong>business is conducted</strong></li>
+        <li>The company <strong>finances itself</strong></li>
+      </ul>
+      <p style="margin-top:8px;">These requirements cover: registration, financial/non-financial reporting &amp; disclosure, capital market activities (issuance, trading, investment).</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>2. Owner–Manager Separation</h3>
+    <div class="card">
+      <p>The most distinctive feature of the corporate form. <strong>Shareholders ≠ Managers.</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Shareholders <strong>elect a board of directors</strong></li>
+        <li>Board <strong>appoints executive management</strong> (e.g., CEO)</li>
+        <li>CEO is accountable for <em>investing, financing, and operating decisions</em></li>
+        <li>Directors and managers have a primary duty to act in the <strong>best interests of shareholders</strong> and all stakeholders</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Shareholder recourse:</strong> If board/management fails shareholders, they can exercise <strong>voting rights</strong> to replace the board of directors. This is the primary mechanism of shareholder power.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Corporate Governance Chain</div>
+      <div class="f">Shareholders → elect → Board of Directors → appoints → Executive Management (CEO)</div>
+      <div class="note">Shareholders → Board → Management. Each tier is accountable to the one above it. Shareholders are the ultimate principals.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Separation Enables Larger Capital Access</div>
+      <p>Because investors don't need to be involved in management, the universe of potential investors is vastly larger. A retiree in Mumbai can own shares in Apple without knowing anything about chip design or supply chains. This is the fundamental innovation of the corporate form.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>3. Owner / Shareholder Liability</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Limited liability:</strong> Maximum loss = value of shares (can fall to zero, no further)</li>
+        <li>Shareholders are <strong>NOT responsible for corporate debts</strong> unless they separately and specifically guarantee them</li>
+        <li>Risk and return shared in proportion to share ownership (unless charter specifies otherwise)</li>
+        <li>Ownership divided into <strong>shares</strong> of smaller unit size → easy to buy/sell incremental interests</li>
+        <li>Some corporations issue <strong>multiple classes of shares</strong> with different risk/return characteristics</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <h3>4. External Financing</h3>
+    <div class="card">
+      <p>Corporations are financed in <strong>two fundamental ways:</strong></p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Equity Financing</div>
+        <ul>
+          <li>Selling shares to investors</li>
+          <li>Reinvesting profits (retained earnings)</li>
+          <li>Investors = shareholders</li>
+          <li>Returns via <strong>dividends</strong> (distributions of profit)</li>
+          <li>No fixed repayment obligation</li>
+          <li>Residual claim on assets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Debt Financing</div>
+        <ul>
+          <li>Loans, bonds, and leases</li>
+          <li>Must be <strong>repaid on a pre-specified date</strong> with interest</li>
+          <li>Interest is a fixed obligation</li>
+          <li>Senior claim on assets vs. equity</li>
+          <li>Interest tax-deductible (tax shield)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Financial Balance Sheet Structure</div>
+      <div class="f">
+        Assets (Left Side) = Liabilities + Equity (Right Side)<br><br>
+        Assets: Cash | Short-Term Claims | Long-Term Assets<br>
+        Liabilities: Short-Term Obligations | Long-Term Obligations<br>
+        Equity: Shareholders' Equity
+      </div>
+      <div class="note">The "Economic" balance sheet extends this to include intangible/hard-to-quantify items: human capital, supplier/customer relationships, governance structures, and community claims.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Financial vs. Economic Profit</div>
+      <div class="f">
+        Financial Profit (Net Income) = Revenue − All Financial Costs − Taxes<br><br>
+        Economic Profit = Net Income − Required Rate of Return on Equity
+      </div>
+      <div class="note">Economic profit measures return IN EXCESS of what owners could have earned elsewhere (opportunity cost of equity). This is the true wealth-creation metric. Economic profit &gt; 0 means the firm is creating value above the required return.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — Economic vs. Accounting Profit</div>
+      <p>A firm can have positive <strong>accounting (financial) profit</strong> yet zero or negative <strong>economic profit</strong> if returns don't exceed the required rate of return on equity. This distinction is critical for valuation and is the foundation of EVA (Economic Value Added) analysis tested in later CFA topics.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Financing providers include:</strong> Individuals, mutual funds, pension funds, banks, governments, non-profits, and other corporations.</p>
+      <p style="margin-top:8px;"><strong>Forms of financing:</strong> Can be raised as a <em>private contractual agreement</em> between issuer and investor, OR as a <em>security</em> — a standardized, potentially tradeable instrument on a public exchange.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: TAXATION -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Corporate Taxation</h2>
+    </div>
+
+    <h3>Double Taxation of Corporate Profits</h3>
+    <div class="formula-box">
+      <div class="label">Double Taxation Structure — Public Limited Company</div>
+      <div class="f">
+        Step 1: Corporation earns profit → pays CORPORATE TAX on profits<br>
+        Step 2: Remaining after-tax profit distributed as dividends → shareholder pays PERSONAL TAX on dividends<br><br>
+        Result: Same profits taxed TWICE — once at corporate level, once at personal level
+      </div>
+      <div class="note">This applies when profits ARE distributed. If profits are RETAINED and reinvested → no second layer of tax applies.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Important caveats on double taxation:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>In some countries, shareholders get a <strong>personal tax credit</strong> for their share of taxes already paid by the corporation (imputation system)</li>
+        <li>In other countries, shareholders pay <strong>no personal tax on dividends</strong> if the corporation has already paid tax on those earnings</li>
+        <li>In some countries, corporations pay <strong>no corporate tax at all</strong></li>
+        <li>Tax treatment varies greatly by jurisdiction — always jurisdiction-specific</li>
+      </ul>
+    </div>
+
+    <h3>Why Corporations Remain Attractive Despite Double Tax</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Corporate Form Advantages on Tax</div>
+        <ul>
+          <li>Retained earnings NOT distributed → only taxed once (corporate level)</li>
+          <li>If corporate tax rate &lt; personal income tax rate → advantageous to store profits in business</li>
+          <li>Partnerships/sole props taxed on ALL profits regardless of distribution — no deferral option</li>
+          <li>Enables tax-efficient reinvestment of profits for growth</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Corporate Form Tax Disadvantages</div>
+        <ul>
+          <li>Distributed profits taxed twice</li>
+          <li>More complex tax compliance</li>
+          <li>Taxable profits ≠ financial statement profits (tax codes differ from accounting standards)</li>
+          <li>Subject to multiple tax jurisdictions if operating globally</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Pass-Through Timing vs. Corporate Retained Earnings</div>
+      <p>Sole proprietors and partners are taxed on profits <strong>whether or not they are distributed</strong>. Corporate shareholders (public limited companies) are taxed on dividends only <strong>when actually received</strong>. This asymmetry makes corporations more attractive for <strong>growth businesses that reinvest earnings</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 8: PUBLIC VS. PRIVATE ISSUERS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Publicly vs. Privately Owned Corporate Issuers</h2>
+    </div>
+
+    <div class="card">
+      <p>For corporations, <strong>"public"</strong> and <strong>"private"</strong> (or "listed" and "unlisted") are defined by whether the company's shares are <strong>listed and tradeable on an exchange</strong>.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Stock Exchange</div>
+      <div class="def-body">A rules-based, open access market venue where financial instruments are traded, with <strong>price and volume transparency</strong> accessible by issuers, investors, and their intermediaries.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Free Float</div>
+      <div class="def-body">The shares that are <strong>actively traded</strong> on exchanges — not held by insiders, strategic investors, or sponsors. Expressed as a percentage of total shares outstanding. A low free float means most shares are locked up by controlling owners.</div>
+    </div>
+
+    <h3>Comparison: Public vs. Private Companies</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Public (Listed) Company</th>
+            <th>Private (Unlisted) Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Share Trading</td>
+            <td>Listed on exchange; secondary market exists</td>
+            <td>Not listed; no exchange trading</td>
+          </tr>
+          <tr>
+            <td>Price Transparency</td>
+            <td><span class="tag tag-green">High</span> — visible market price</td>
+            <td><span class="tag tag-red">None</span> — no visible valuation</td>
+          </tr>
+          <tr>
+            <td>Liquidity</td>
+            <td><span class="tag tag-green">High</span> (for liquid stocks)</td>
+            <td><span class="tag tag-red">Very Low</span> — investment locked up</td>
+          </tr>
+          <tr>
+            <td>Ownership Transfer</td>
+            <td>Easy — buy/sell order on brokerage</td>
+            <td>Difficult — must find buyer, negotiate price, company may refuse</td>
+          </tr>
+          <tr>
+            <td>Disclosure Requirements</td>
+            <td><span class="tag tag-red">Extensive</span> — audited financials, quarterly filings, SEC/regulator</td>
+            <td><span class="tag tag-green">Minimal</span> — few mandatory disclosures</td>
+          </tr>
+          <tr>
+            <td>Compliance Costs</td>
+            <td><span class="tag tag-red">High</span></td>
+            <td><span class="tag tag-green">Low</span></td>
+          </tr>
+          <tr>
+            <td>Shareholder Count</td>
+            <td>Potentially millions</td>
+            <td>Typically few</td>
+          </tr>
+          <tr>
+            <td>Capital Raising</td>
+            <td>Broad access; primary + secondary market</td>
+            <td>Private placements; accredited/sophisticated investors only</td>
+          </tr>
+          <tr>
+            <td>Investor Exit</td>
+            <td>Sell on exchange anytime</td>
+            <td>Wait for acquisition or IPO — locked up</td>
+          </tr>
+          <tr>
+            <td>Control Retention</td>
+            <td>Harder — subject to shareholder scrutiny</td>
+            <td>Easier — fewer stakeholders to satisfy</td>
+          </tr>
+          <tr>
+            <td>Short-termism Risk</td>
+            <td>Perceived higher (quarterly reporting pressure)</td>
+            <td>Lower (no public earnings pressure)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Stay Private? Benefits of Private Status</div>
+      <p><strong>1.</strong> Fewer shareholders = accountable to fewer stakeholders · <strong>2.</strong> Early-stage investors can earn very high returns if the company succeeds · <strong>3.</strong> No expensive compliance/disclosure requirements · <strong>4.</strong> Preserves control by incumbent owners and management · <strong>5.</strong> Access to private equity/venture capital has grown, reducing need for public markets.</p>
+    </div>
+
+    <h3>Disclosure Requirements — Key Facts</h3>
+    <div class="card">
+      <ul>
+        <li><strong>USA (NYSE/NASDAQ):</strong> Audited financial statements + other info filed <strong>quarterly</strong> with SEC; accessible via EDGAR (Electronic Data Gathering, Analysis, and Retrieval)</li>
+        <li><strong>European Union:</strong> Financial statements in ESEF (European Single Electronic Format) filed at least <strong>semiannually</strong> in registry of domicile</li>
+        <li>Public companies must also disclose: major changes in voting rights, management/director stock transactions</li>
+        <li>Annual reports regularly exceed <strong>100 pages</strong></li>
+        <li>Private companies: generally <strong>not subject</strong> to same disclosure — though anti-fraud rules and tax filing obligations apply to all entities</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Short-Termism Claim</div>
+      <p>It is commonly claimed that public company status causes short-termism (focus on quarterly earnings vs. long-term value). The module notes that <strong>empirical evidence for short-termism among listed companies is thin at best</strong>. Don't take this argument at face value — the CFA curriculum is skeptical of it.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 9: GOING PUBLIC / GOING PRIVATE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Going Public &amp; Going Private — Mechanisms</h2>
+    </div>
+
+    <h3>3 Ways a Private Company Goes Public</h3>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">1. IPO (Initial Public Offering)</div>
+        <ul>
+          <li>Most common method</li>
+          <li>Company meets exchange listing requirements</li>
+          <li>Engages <strong>investment banks</strong> to <strong>underwrite</strong> the sale</li>
+          <li><strong>New shares issued</strong> → proceeds go to the company</li>
+          <li>Shares begin trading on exchange after IPO</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">2. Direct Listing</div>
+        <ul>
+          <li><strong>No underwriter</strong></li>
+          <li><strong>No new shares issued</strong> → no capital raised</li>
+          <li>Existing shares listed; price set by market</li>
+          <li>Shares sold by existing shareholders</li>
+          <li>Faster and cheaper than IPO</li>
+          <li>Only viable for large, established, recognized brands</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">3. Acquisition (SPAC / Reverse Merger)</div>
+        <ul>
+          <li>Private co. acquired by public co. → exposure to private co.</li>
+          <li><strong>SPAC</strong>: "blank check" shell company that IPOs, holds cash in trust, then acquires a private company</li>
+          <li>SPAC has finite time (e.g., 18 months) to complete acquisition; unused proceeds returned</li>
+          <li>Replaces older reverse merger process</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">IPO vs. Direct Listing — Key Differences</div>
+      <div class="f">
+        IPO: Underwriter engaged + New shares issued + Capital raised → Company gets proceeds<br>
+        Direct Listing: No underwriter + No new shares + No new capital → Existing shareholders sell
+      </div>
+      <div class="note">Direct listing suits large, established companies with brand recognition (e.g., Spotify, Coinbase). IPO suits companies actively seeking new capital for growth.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">SPAC (Special Purpose Acquisition Company)</div>
+      <div class="def-body">A shell ("blank check") company that: (1) raises capital via its own IPO, (2) places proceeds in trust, (3) acquires an unspecified private company within a set timeframe (e.g., 18 months). Once acquisition is complete, the private target becomes public. If no acquisition is made → proceeds returned to investors.</div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Going from Public to Private (Take-Private / Go-Private)</h3>
+    <div class="card">
+      <ul>
+        <li>Investors (typically <strong>private equity</strong>) acquire <strong>all publicly traded shares</strong> and delist from the exchange</li>
+        <li>Must pay a <strong>premium above current share price</strong></li>
+        <li>Often financed with <strong>debt</strong> → known as a <strong>Leveraged Buyout (LBO)</strong></li>
+        <li>Motivation: investors believe value-creating actions (management changes, asset sales, restructuring, cost savings) can exceed premium + financing costs</li>
+        <li>After value creation, company may be taken public again several years later</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 LBO Logic — Why Use Debt?</div>
+      <p>Using debt to finance the acquisition amplifies equity returns (financial leverage). If the private equity firm can buy the company, improve it, and sell it at a higher valuation, the debt repayment is manageable and equity returns are magnified. This is the core economics of leveraged buyouts.</p>
+    </div>
+
+    <h3>Public vs. Private Company Trends</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Emerging Economies</div>
+        <ul>
+          <li>Growing number of public companies</li>
+          <li>Higher growth rates → need for public capital</li>
+          <li>Transition to open market structures</li>
+          <li>Foreign capital inflows driving listings</li>
+          <li>State-owned enterprises gradually transferred to private sector via IPO</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Developed Economies</div>
+        <ul>
+          <li>Declining number of listed companies</li>
+          <li>More M&amp;A reducing independent companies</li>
+          <li>More private capital (VC/PE) available</li>
+          <li>Avoiding costly compliance of public listing</li>
+          <li>Founders prefer to preserve control</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 10: TYPES OF CORPORATE OWNERS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>The Varieties of Corporate Owners</h2>
+    </div>
+
+    <div class="card">
+      <p>Corporate shareholders are not just individual investors. They include a wide range of entities, each with different objectives:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Owner Type</th>
+            <th>Examples</th>
+            <th>Key Characteristics</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Individual Investors</td>
+            <td>Retail investors, employees</td>
+            <td>Diverse objectives; vote via shares; may hold directly or through funds</td>
+          </tr>
+          <tr>
+            <td>Institutional Investors</td>
+            <td>Pension funds, mutual funds, insurance companies</td>
+            <td>Hold on behalf of individuals; large AUM; significant voting power; financial return focus</td>
+          </tr>
+          <tr>
+            <td>Other Corporations</td>
+            <td>Strategic investors, parent companies, cross-holdings</td>
+            <td>May have strategic objectives beyond financial return; can be controlling shareholders</td>
+          </tr>
+          <tr>
+            <td>Governments</td>
+            <td>Sovereign wealth funds, state-owned enterprises (SOEs)</td>
+            <td>May have public interest objectives; often in infrastructure, energy, telecoms; common in emerging markets</td>
+          </tr>
+          <tr>
+            <td>Non-Profits</td>
+            <td>Foundations, endowments, universities</td>
+            <td>Financial + societal/non-financial objectives; some grown to significant size</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Government-Owned Corporations (State-Owned Enterprises)</h3>
+    <div class="card">
+      <ul>
+        <li>Governments create legally separate corporations while maintaining 100% or partial ownership</li>
+        <li>Have board of directors, management structure, audited financials for <strong>transparency to taxpayers</strong></li>
+        <li>Profits or losses must be reported; losses financed from government budget</li>
+        <li><strong>Developed economies:</strong> Common in postal systems, railways, airports (infrastructure)</li>
+        <li><strong>Emerging economies:</strong> Dominant in major domestic industries (commodities, energy, banking)</li>
+        <li>As economies seek private sector capital → SOEs gradually transferred via IPO</li>
+        <li>Example: Netherlands (KPN), UK (Royal Mail), Germany (Deutsche Post) — postal services privatized</li>
+        <li>Telecommunications, power generation: shifted from government monopolies to private sector from 1980s onward → greater innovation, diversification, and renewable energy investment</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 USPS — A Useful Exam Example</div>
+      <p>The US Postal Service (USPS) is structured <em>like</em> a government-owned corporation (board governance, audited financials, borrowing authority) but is <strong>legally NOT a corporation</strong>. This distinction matters. It is a government agency with corporate-like features.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Note — Private Placements</div>
+      <p>Private company investors typically invest via <strong>private placements</strong> — shares offered through a legal document to select investors. Investors must usually be <strong>qualified / accredited / sophisticated investors</strong> — those deemed by regulators to be able and willing to assume greater risk of a non-public offering. <em>Public companies can also conduct private placements</em>, subject to regulatory constraints.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>5 attributes of organizational forms:</strong> Legal identity, Owner–manager, Liability, Taxation, Access to financing (LOLOT)</li>
+        <li>✅ <strong>Sole proprietorship:</strong> No separate legal entity. Unlimited liability. Pass-through tax. Simplest but most constrained.</li>
+        <li>✅ <strong>General partnership:</strong> ALL partners have unlimited liability. If one can't pay, others cover the full amount.</li>
+        <li>✅ <strong>Limited partnership:</strong> GP = unlimited liability + management. LP = limited liability, no management. Both pass-through tax.</li>
+        <li>✅ <strong>LLP:</strong> No GP — ALL partners limited liability. Professional services only in some jurisdictions.</li>
+        <li>✅ <strong>Pass-through tax:</strong> Applies to sole props, ALL partnership types, and private limited companies (most jurisdictions). Income taxed at personal level EVEN IF NOT DISTRIBUTED.</li>
+        <li>✅ <strong>Public limited company (corporation):</strong> Double taxation (corporate + dividend level), but retained earnings avoid the second layer.</li>
+        <li>✅ <strong>Public limited company ≠ publicly listed.</strong> A C-Corp can remain private (unlisted). The form is separate from listing status.</li>
+        <li>✅ <strong>Corporate governance chain:</strong> Shareholders → elect Board → Board appoints Management (CEO).</li>
+        <li>✅ <strong>Limited liability:</strong> Max shareholder loss = value of shares. Cannot lose more than invested unless personally guaranteeing debts.</li>
+        <li>✅ <strong>Economic profit</strong> = Net income − Required rate of return on equity. Can be &gt;0 (value creation), =0 (normal return), or &lt;0 (value destruction) even with positive accounting profit.</li>
+        <li>✅ <strong>Free float</strong> = shares actively traded on exchange (excluding insider/strategic holdings).</li>
+        <li>✅ <strong>IPO vs. Direct Listing:</strong> IPO has underwriter + new shares + capital raised. Direct listing: no underwriter, no new shares, no capital raised.</li>
+        <li>✅ <strong>SPAC:</strong> Blank check company, IPOs first, then finds private target within time limit; unused proceeds returned to investors.</li>
+        <li>✅ <strong>Take-private / LBO:</strong> Pay premium + use debt to acquire all public shares → delist → restructure → potentially re-list later.</li>
+        <li>✅ <strong>Developed markets:</strong> Declining listed companies (M&amp;A, private capital, control preference). <strong>Emerging markets:</strong> Growing listed companies (capital needs, SOE privatizations).</li>
+        <li>✅ <strong>Private placement investors</strong> must typically be accredited/sophisticated investors. Public companies can also do private placements.</li>
+        <li>✅ US public companies: file <strong>quarterly</strong> with SEC via EDGAR. EU: at least <strong>semiannually</strong> in ESEF format.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Quick-Fire: International Names for Public Limited Companies</div>
+      <div class="f">
+        USA: C-Corporation<br>
+        Germany: AG (Aktiengesellschaft)<br>
+        France: Société Anonyme (SA)<br>
+        Japan: K.K. or Stock Company<br>
+        China: Corporation<br>
+        Private Ltd. equivalents → LLC/S-Corp (USA), GmbH (Germany), SARL (France), G.K. (Japan)
+      </div>
+      <div class="note">Exams sometimes test jurisdiction-specific names. Know the most commonly tested: AG (Germany), SA (France), C-Corp vs. S-Corp (USA).</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Corporate Issuers · Module 1: Organizational Forms, Corporate Issuer Features &amp; Ownership · Exam Prep Notes
+</footer>
+
+</body>
+</html>

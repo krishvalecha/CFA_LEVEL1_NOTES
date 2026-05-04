@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 3: Investments in Private Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --teal: #4cc9c9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1414 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,201,0.12); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--teal); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--teal); border-color: var(--teal); }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--teal); background: rgba(76,201,201,0.1); border: 1px solid rgba(76,201,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--teal); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+  /* VC stage cards */
+  .vc-card { border-radius: 6px; padding: 14px 18px; margin-bottom: 8px; }
+  .vc-pre  { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); }
+  .vc-seed { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); }
+  .vc-early { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); }
+  .vc-later { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); }
+  .vc-mezz { background: rgba(160,76,201,0.07); border: 1px solid rgba(160,76,201,0.3); }
+  .vc-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .vc-pre .vc-label { color: var(--danger); }
+  .vc-seed .vc-label { color: var(--accent); }
+  .vc-early .vc-label { color: var(--accent2); }
+  .vc-later .vc-label { color: var(--accent3); }
+  .vc-mezz .vc-label { color: #a04cc9; }
+  .vc-card p, .vc-card li { font-size: 14px; color: var(--text); }
+  .vc-card ul { padding-left: 16px; margin-top: 4px; }
+  /* Exit strategy cards */
+  .exit-trade { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); border-radius: 6px; padding: 16px 20px; }
+  .exit-ipo   { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 16px 20px; }
+  .exit-spac  { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 16px 20px; }
+  .exit-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .exit-trade .exit-label { color: var(--accent2); }
+  .exit-ipo   .exit-label { color: var(--accent3); }
+  .exit-spac  .exit-label { color: var(--accent); }
+  .exit-trade p, .exit-ipo p, .exit-spac p, .exit-trade li, .exit-ipo li, .exit-spac li { font-size: 13.5px; color: var(--text); }
+  .exit-trade ul, .exit-ipo ul, .exit-spac ul { padding-left: 16px; margin-top: 6px; }
+  /* Private debt cards */
+  .pdebt-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: 0 6px 6px 0; padding: 14px 18px; margin-bottom: 10px; }
+  .pdebt-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--teal); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .pdebt-card p, .pdebt-card li { font-size: 14px; color: var(--text); }
+  .pdebt-card ul { padding-left: 16px; margin-top: 6px; }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 3</div>
+  <h1>Investments in <span>Private Capital: Equity and Debt</span></h1>
+  <p>Exam-ready notes: private equity strategies (LBO, VC stages, growth capital, PIPE), PE exit strategies (trade sale, IPO, SPAC, recapitalization, secondary sale), private debt categories (direct lending, mezzanine, venture debt, distressed, unitranche), vintage year diversification, and risk-return hierarchy across the capital structure.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Private Equity Overview</a>
+  <a class="toc-item" href="#s2">02 · LBO, MBO, MBI</a>
+  <a class="toc-item" href="#s3">03 · Venture Capital Stages</a>
+  <a class="toc-item" href="#s4">04 · Growth Capital &amp; PIPE</a>
+  <a class="toc-item" href="#s5">05 · PE Exit Strategies</a>
+  <a class="toc-item" href="#s6">06 · PE Risk-Return &amp; Data Issues</a>
+  <a class="toc-item" href="#s7">07 · Private Debt Categories</a>
+  <a class="toc-item" href="#s8">08 · Private Debt Risk-Return</a>
+  <a class="toc-item" href="#s9">09 · Vintage Year &amp; Diversification</a>
+  <a class="toc-item" href="#s10">10 · Risk-Return Hierarchy</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: PE OVERVIEW -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Private Equity — Overview &amp; Key Strategies</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Private Equity</div>
+      <div class="def-body">Capital raised from sources other than public markets and traditional institutions (not from exchanges, bonds, or government/bank sources) in the form of an <strong>equity investment</strong>. Three main strategies: Leveraged Buyout (LBO), Venture Capital (VC), and Growth Capital.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Private equity vs. public equity — similarities:</strong></p>
+      <ul>
+        <li>Both represent direct ownership and control</li>
+        <li>Shareholders have voting rights (AGM: board election, strategy, impactful decisions)</li>
+        <li>All owners have a direct, proportional claim on residual cash flows (dividends)</li>
+        <li>Capital gains are typically the largest return driver (price appreciation or free cash flow from holdings)</li>
+        <li>Unlimited upside potential; downside limited to amount invested</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Private equity — key differences from public equity:</strong></p>
+      <ul>
+        <li>Significant shareholdings allow <strong>more direct control</strong> over day-to-day decisions</li>
+        <li>Requires <strong>specialized knowledge</strong> specific to the industry and sector</li>
+        <li>Distinct entry and exit points; vintage year important for comparative performance</li>
+        <li>Illiquid; no active secondary market</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Investment forms:</strong></p>
+      <ul>
+        <li><strong>Direct:</strong> Investment in a single specific asset</li>
+        <li><strong>Co-investment:</strong> Invest alongside a lead sponsor who sources, structures, and executes the transaction</li>
+        <li><strong>Fund (single PE fund):</strong> Investor places capital in a fund that holds multiple portfolio companies</li>
+        <li><strong>Fund-of-funds:</strong> Indirect vehicle with stakes in multiple other private funds — additional diversification but additional fee layer</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: LBO / MBO / MBI -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Leveraged Buyouts — LBO, MBO, MBI</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Leveraged Buyout (LBO)</div>
+      <div class="def-body">Private equity firm acquires a public or established private company using a <strong>significant percentage of purchase price financed through debt</strong>. Target company's assets serve as collateral; target's cash flows service the debt. The acquired company becomes or remains privately owned ("going private" transaction). Post-acquisition debt becomes part of the target's capital structure.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Management Buyout (MBO)</div>
+        <p>The <strong>current management team participates</strong> in the acquisition. Management becomes part-owner of the newly private company. Aligns management incentives with ownership.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Management Buy-In (MBI)</div>
+        <p>The <strong>current management team is replaced</strong> with the acquiring team, who then manage the company. New management team brings external expertise to restructure.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>How LBO managers add value:</strong> Improve operations, boost revenue, increase profits and cash flows. Cash flow growth contributions, in order:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>Organic revenue growth</li>
+        <li>Cost reductions and restructuring</li>
+        <li>Acquisitions</li>
+        <li>All other sources</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>Returns depend heavily on leverage.</strong> If debt financing is unavailable or costly → LBOs become less attractive and less likely. Private equity managers may shift focus as business conditions and financing availability change.</p>
+      <p style="margin-top:10px;"><strong>Portfolio companies:</strong> Companies owned by a PE fund are called "portfolio companies" — they form the fund's portfolio.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 LBO Target Characteristics</div>
+      <p>Ideal LBO targets have: (1) stable, predictable cash flows to service debt, (2) undervalued or underutilized assets that can serve as collateral, (3) potential for operational improvement or cost reduction, (4) strong management team (or a replaceable one). The target's assets = collateral; target's cash flows = debt service.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: VC STAGES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Venture Capital — Investment Stages</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Venture Capital (VC)</div>
+      <div class="def-body">Investing in or providing financing to <strong>private companies with high growth potential</strong> — typically startups or young companies. Can be injected at various stages from concept creation to just before an IPO. VC investors are active investors directly involved with portfolio companies. Returns required increase with earlier stage (higher risk).</div>
+    </div>
+
+    <div class="vc-card vc-pre">
+      <div class="vc-label">Stage 1 — Pre-Seed (Angel Investing)</div>
+      <p>Capital at the <strong>idea stage</strong>. Used to develop a business plan and assess market potential.</p>
+      <p style="margin-top:4px;"><strong>Investors:</strong> Founders, friends & family, angel investors. <strong>Amount:</strong> USD5k–USD500k. <strong>Source:</strong> Mainly individuals (not VC funds).</p>
+    </div>
+
+    <div class="vc-card vc-seed">
+      <div class="vc-label">Stage 2 — Seed-Stage Financing</div>
+      <p>Supports <strong>product development and marketing</strong> efforts, including market research.</p>
+      <p style="margin-top:4px;"><strong>Investors:</strong> Seed funds, angel investors. <strong>Amount:</strong> USD25k–USD5M. <strong>Note:</strong> This is the <strong>first stage at which VC funds usually invest</strong>.</p>
+    </div>
+
+    <div class="vc-card vc-early">
+      <div class="vc-label">Stage 3 — Early-Stage (Start-Up)</div>
+      <p>For companies <strong>moving toward operation but prior to commercial production or sales</strong>. Financing initiates operations.</p>
+      <p style="margin-top:4px;"><strong>Investors:</strong> Venture capital funds, corporate venture funds. <strong>Amount:</strong> USD5M+.</p>
+    </div>
+
+    <div class="vc-card vc-later">
+      <div class="vc-label">Stage 4 — Later-Stage (Expansion VC)</div>
+      <p>After <strong>commercial production and sales have begun but before an IPO</strong>. Funds support initial growth, major expansion (plant upgrade), product improvements, or major marketing.</p>
+      <p style="margin-top:4px;">Later-stage financing generally involves management <strong>selling control</strong> of the company to the VC investor. Financing via equity AND debt (including convertible bonds or convertible preferred shares). Debt used for asset control in bankruptcy, NOT to generate income.</p>
+      <p style="margin-top:4px;"><strong>Investors:</strong> PE investors, institutional investors, family offices, strategic investors.</p>
+    </div>
+
+    <div class="vc-card vc-mezz">
+      <div class="vc-label">Stage 5 — Mezzanine-Stage Financing</div>
+      <p><strong>Bridge financing</strong> to prepare a company for an IPO or sale as it expands capacity. Infused between private and public company status (hence "mezzanine" = middle). Distinguished by <strong>timing</strong> of financing rather than method.</p>
+      <p style="margin-top:4px;">Financing type: typically equity-like (to capture IPO gains) or short-term debt. May also use mezzanine financing instruments (convertible debt/preferred).</p>
+      <p style="margin-top:4px; font-size:13px; color:var(--muted);"><strong>Important distinction:</strong> Mezzanine-stage financing ≠ Mezzanine financing. "Mezzanine-stage" = timing (between private and public). "Mezzanine financing" = hybrid debt/equity instrument (convertible debt, convertible preferred).</p>
+    </div>
+
+    <h3>Convertible Preferred Shares in VC</h3>
+    <div class="card">
+      <p>Commonly used in startups to raise VC funding:</p>
+      <ul>
+        <li>Option to convert preferred shares into a <strong>fixed number of common shares</strong> after a predetermined date (and sometimes at a predetermined price)</li>
+        <li>Aligns incentives between entrepreneurs and VC investors (conversion value tied to startup valuation)</li>
+        <li>Provides investor protection: in liquidation, <strong>preferred convertible shareholders have seniority over common shareholders</strong> and recover full investment before common shareholders receive anything</li>
+        <li>Also protects investor if startup fails — has claim priority and options on equity if it succeeds</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Stage</th><th>Investors</th><th>Amount</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pre-seed</td><td>Founders, family/friends, angels</td><td>USD5k–500k</td><td>Business plan, market assessment</td></tr>
+          <tr><td>Seed</td><td>Seed funds, angels (first VC stage)</td><td>USD25k–5M</td><td>Product development, marketing, market research</td></tr>
+          <tr><td>Early-stage</td><td>VC funds, corporate venture funds</td><td>USD5M+</td><td>Operations startup; before commercial production</td></tr>
+          <tr><td>Later-stage</td><td>PE investors, institutional, strategic</td><td>USD5M+</td><td>After sales begun; growth, expansion, marketing</td></tr>
+          <tr><td>Mezzanine</td><td>PE/institutional</td><td>Varies</td><td>Bridge to IPO; expand capacity; pre-IPO</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: GROWTH CAPITAL & PIPE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Growth Capital (Growth Equity) &amp; PIPE</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Growth Capital (Growth Equity / Minority Equity Investing)</div>
+      <div class="def-body">A PE firm takes a <strong>less-than-controlling (minority) interest</strong> in more mature companies looking for capital to expand or restructure operations, enter new markets, or finance major acquisitions. Often initiated by the investee company's management — seeking to realize earnings from selling a portion of shares before IPO while <strong>retaining control and participation in future upside</strong>.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">PIPE (Private Investment in Public Equity)</div>
+      <div class="def-body">A <strong>private offering</strong> to select investors with fewer disclosures and lower transaction costs. Allows an already-publicly-traded company to raise capital more quickly and cost-effectively than through regulated, expensive, and lengthy public processes.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>PIPE transaction mechanics:</strong></p>
+      <ul>
+        <li>Newly issued common stock or shares sold by existing stockholders made available to select investors</li>
+        <li>Typical investors: investment firms, mutual funds, other institutional investors</li>
+        <li>Definitive purchase agreement at a <strong>fixed price</strong> (typically at a discount to market)</li>
+        <li>Common in <strong>work-out or rescue situations</strong> where there is a material difference between market price and fundamental valuation</li>
+        <li>Special case: PIPE via <strong>convertible debt or convertible preferred stock</strong></li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Key PIPE considerations:</strong></p>
+      <ul>
+        <li><span class="danger-text">Dilutive to existing shareholders</span> — new shares issued at a discount reduces existing shareholders' proportional ownership and intrinsic per-share value</li>
+        <li>New investors typically require a <strong>discount to market price</strong> as compensation for illiquidity and risk</li>
+        <li>Creates potential <strong>incentive conflicts</strong> between existing shareholders and new (discounted) shareholders</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: PE EXIT STRATEGIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Private Equity Exit Strategies</h2>
+    </div>
+
+    <div class="card">
+      <p>PE firms buy and hold companies for an average of <strong>5 years</strong> (range: &lt;6 months to &gt;10 years). Before deciding on exit, managers assess: industry dynamics, economic cycle, interest rates, and company performance. Goal: sell to the highest bidder to maximize returns.</p>
+      <p style="margin-top:8px;"><strong>PE fund structure:</strong> ~5-year investment period (deploy capital) + subsequent harvesting period (exit investments, return capital to LPs).</p>
+    </div>
+
+    <h3>Two Main Exit Strategies: Trade Sale and Public Listing</h3>
+
+    <div class="exit-trade">
+      <div class="exit-label">Exit 1 — Trade Sale</div>
+      <p>Portion or division of private company sold via <strong>direct sale or auction to a strategic buyer</strong> interested in increasing scale and scope.</p>
+      <div class="two-col" style="margin-top:10px;">
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:4px;">Advantages</p>
+          <ul>
+            <li>Immediate cash exit</li>
+            <li>Strategic buyer pays premium (synergies priced in)</li>
+            <li>Fast and simple execution; lower costs vs. IPO</li>
+            <li>Higher confidentiality (few parties involved)</li>
+            <li>Strategic buyer can evaluate fit without external scrutiny</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--danger); margin-bottom:4px;">Disadvantages</p>
+          <ul>
+            <li>Potential management/employee resistance (job security fears, competitor ownership)</li>
+            <li>Limited set of potential buyers → may reduce price and raise regulatory scrutiny</li>
+            <li>Employees may prefer IPO to monetize share options</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exit-ipo">
+      <div class="exit-label">Exit 2A — IPO (Initial Public Offering)</div>
+      <p>Portfolio company sells shares to public investors using <strong>financial intermediaries to underwrite</strong>. PE firm may sell some or all of its shares.</p>
+      <div class="two-col" style="margin-top:10px;">
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:4px;">Advantages</p>
+          <ul>
+            <li>Potentially highest share price</li>
+            <li>Management approval; job security maintained</li>
+            <li>PE sponsor gains notoriety and visibility</li>
+            <li>PE retains share → still benefits from future price appreciation</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--danger); margin-bottom:4px;">Disadvantages</p>
+          <ul>
+            <li>High transaction fees (banks, lawyers)</li>
+            <li>Long lead time; onerous disclosure requirements</li>
+            <li>Stock market volatility → price uncertainty</li>
+            <li>Post-IPO lockup period limits quick exit</li>
+            <li>Not suitable for smaller companies, out-of-favor industries, or limited operating history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exit-ipo" style="background:rgba(76,201,138,0.04); border-color:rgba(76,201,138,0.2);">
+      <div class="exit-label" style="color:var(--accent3);">Exit 2B — Direct Listing</div>
+      <p>Equity floated on public markets <strong>directly, without underwriters</strong>. Reduces complexity and cost. Less common than IPO.</p>
+    </div>
+
+    <div class="exit-spac">
+      <div class="exit-label">Exit 2C — SPAC (Special Purpose Acquisition Company)</div>
+      <p>A "blank check" company created <strong>solely to acquire an unspecified private company</strong> within a predetermined period; otherwise returns capital to investors.</p>
+      <div class="two-col" style="margin-top:10px;">
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--accent3); margin-bottom:4px;">Advantages</p>
+          <ul>
+            <li>Extended disclosure time; can provide forward guidance to build investor interest</li>
+            <li><strong>Fixed valuation</strong> → lower price volatility and uncertainty</li>
+            <li>Flexible transaction structure</li>
+            <li>High-profile, seasoned SPAC sponsors + their investor networks</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13px; font-weight:700; color:var(--danger); margin-bottom:4px;">Disadvantages</p>
+          <ul>
+            <li>Higher capital costs (warrants, fees → dilution)</li>
+            <li>Valuation spread between SPAC equity value and equity purchased</li>
+            <li>Deal risk (successful execution of merger agreement)</li>
+            <li>Post-merger stockholder overhang → downward share price pressure</li>
+            <li>Increasing regulatory scrutiny (SEC reconsidering SPAC classification)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Other Exit Strategies</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Strategy</th><th>Description</th><th>Key Feature</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Recapitalization</td>
+            <td>PE firm adds leverage to portfolio company → pays itself a dividend from the new capital structure</td>
+            <td>NOT a true exit (PE retains control); extracts money to pay LP investors and improve IRR</td>
+          </tr>
+          <tr>
+            <td>Secondary Sale</td>
+            <td>Sale of company to another PE firm or group of financial buyers</td>
+            <td>Increasing in proportion due to large global PE fund availability; PE-to-PE transfer</td>
+          </tr>
+          <tr>
+            <td>Write-off / Liquidation</td>
+            <td>Investment has not performed; PE firm revises value downward or liquidates portfolio company</td>
+            <td>Represents a failed investment; capital loss recognized</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Recapitalization ≠ Exit</div>
+      <p>A recapitalization allows the PE firm to extract cash (via dividends from new debt) and improve IRR metrics — but it is <strong>NOT a true exit</strong> because the PE firm retains ownership and control of the portfolio company. It's a liquidity event, not a divestiture.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: PE RISK-RETURN & DATA ISSUES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>PE Risk-Return &amp; Data Quality Issues</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Sources of PE's higher return potential:</strong></p>
+      <ul>
+        <li>Ability to invest in <strong>private companies</strong> not available in public markets</li>
+        <li><strong>Greater direct control</strong> and influence over portfolio company management and operations</li>
+        <li><strong>Use of leverage</strong> amplifies returns on invested equity</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>PE is riskier than public equity:</strong> Higher illiquidity risk + leverage risk → investors should demand a higher return premium.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Private Equity Index Data Problems</div>
+      <p>Published PE indexes may be <strong>unreliable measures of performance</strong> due to multiple issues:</p>
+    </div>
+    <div class="card">
+      <ul>
+        <li><strong>Self-reporting bias:</strong> PE returns rely on voluntary self-reporting → same survivorship and backfill biases as hedge funds → overstatement of returns</li>
+        <li><strong>Failure to mark-to-market:</strong> Prior to the 2008 GFC, PE firms didn't always mark investments to market in the absence of a liquidity event → understatement of volatility and correlations</li>
+        <li><strong>Smooth returns artifact:</strong> Illiquidity lag in marking investments causes artificially smooth reported returns → understated measured risk</li>
+        <li><strong>Data adjustments required</strong> to more reliably measure PE benefits. Many investors now require quarterly or annual marking by an <strong>independent party</strong></li>
+        <li><strong>Vintage year comparability:</strong> Performance depends heavily on vintage year — same life cycle phase comparison required</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: PRIVATE DEBT CATEGORIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Private Debt — Four Main Categories</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Private Debt</div>
+      <div class="def-body">Various forms of debt provided by investors <strong>directly to private entities</strong> (not through public bond markets). Investors receive interest payments and return of principal after a designated term. Debt typically <strong>secured</strong> with covenants. Expansion driven by private lending funds filling the gap left by traditional lenders after the 2008 financial crisis.</div>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">1 — Venture Debt</div>
+      <p>Private debt funding for <strong>start-up or early-stage companies</strong> that may have little or negative cash flow. Often a line of credit or term loan. Purpose: obtain additional financing <strong>without further diluting shareholder ownership</strong>.</p>
+      <ul>
+        <li>Complements existing equity financing; allows current shareholders to maintain ownership/control longer</li>
+        <li>May carry features compensating lender for increased default risk (e.g., rights to purchase equity under certain circumstances)</li>
+        <li>Similar to mezzanine debt in structure; may lack substantial assets for collateral</li>
+      </ul>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">2 — Direct Lending</div>
+      <p>Investor provides capital <strong>directly to borrowers</strong> and receives interest + original principal + possible other payments. Typically <strong>senior and secured</strong> with covenants. Provided by a small number of investors to private (and sometimes public) entities.</p>
+      <ul>
+        <li>Similar to bank loans: fixed payment schedule</li>
+        <li>Differs from publicly traded bonds: provided to fewer participants and not publicly tradeable</li>
+        <li>Private debt funds (or PE firms with private debt arms) raise investor capital then seek mid-market lending opportunities or provide loans to other PE funds for acquisitions</li>
+        <li>Target borrowers: entities needing capital but lacking good alternatives to traditional bank lenders</li>
+        <li><strong>Leveraged loans:</strong> Private debt firm borrows money itself, then lends it to a borrower — enhances return on loan portfolio but increases risk</li>
+      </ul>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">3 — Mezzanine Debt</div>
+      <p>Private credit <strong>subordinated to senior secured debt but senior to equity</strong>. Pool of additional capital beyond senior secured debt.</p>
+      <ul>
+        <li>Used for: LBOs, recapitalizations, corporate acquisitions, and similar transactions</li>
+        <li>Riskier than senior secured debt due to junior ranking and typically unsecured status</li>
+        <li>Compensation for higher risk: higher interest rates AND equity participation features</li>
+        <li><strong>Common features:</strong> warrants (right to purchase equity) or conversion rights (option to convert debt to equity)</li>
+        <li>Capital structure position: senior secured debt → mezzanine debt → equity</li>
+      </ul>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">4 — Distressed Debt</div>
+      <p>Buying the debt of <strong>mature companies in financial difficulty</strong> — in bankruptcy, defaulted, or likely to default. Two approaches:</p>
+      <ul>
+        <li><strong>Value investors:</strong> Identify companies with temporary cash flow problems but good business plan → buy debt expecting company and debt to increase in value</li>
+        <li><strong>Turnaround investors:</strong> Buy debt with intent to be active in management and direction → restructure and revive the company</li>
+        <li>Requires specialized knowledge: likelihood of default, recovery rates (distressed debt is <strong>priced to expected recovery rate</strong>), how to restructure companies and debt</li>
+        <li>Bankruptcy procedures: lengthy, complex, capital intensive</li>
+        <li><strong>DIP financing (Debtor-in-Possession):</strong> Provides operating funds to firms already in bankruptcy — common strategy for distressed debt funds</li>
+      </ul>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">5 — Unitranche Debt</div>
+      <p>A <strong>hybrid/blended loan combining different tranches</strong> of secured and unsecured debt into a single loan at a <strong>single blended interest rate</strong>.</p>
+      <ul>
+        <li>Interest rate falls between rates on pure secured and pure unsecured debt</li>
+        <li>Capital structure position: typically between senior and subordinated debt in priority ranking</li>
+        <li>Simplifies deal structure — single loan agreement vs. multiple tranches</li>
+      </ul>
+    </div>
+
+    <div class="pdebt-card">
+      <div class="pdebt-title">6 — Specialty Loans</div>
+      <p>Debt extended to <strong>niche borrowers in specific situations</strong>.</p>
+      <ul>
+        <li>Example: <strong>Litigation finance</strong> — specialist funding company provides debt to plaintiffs for legal fees and expenses in exchange for a share of judgments</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Seniority</th><th>Security</th><th>Target Borrower</th><th>Key Features</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Direct Lending</td><td>Senior</td><td>Secured</td><td>Mid-market companies lacking bank access</td><td>Fixed payment schedule; covenants; may use leverage (leveraged loans)</td></tr>
+          <tr><td>Venture Debt</td><td>Varies</td><td>Often limited</td><td>Early-stage / startup (little/no cash flow)</td><td>Line of credit or term loan; no dilution; may include equity rights</td></tr>
+          <tr><td>Mezzanine Debt</td><td>Subordinated (below senior, above equity)</td><td>Usually unsecured</td><td>LBOs, recaps, acquisitions</td><td>Higher rates; warrants; conversion rights (equity upside)</td></tr>
+          <tr><td>Distressed Debt</td><td>Varies (buying existing debt)</td><td>Varies</td><td>Companies near/in bankruptcy</td><td>Priced to recovery rate; DIP financing; turnaround focus</td></tr>
+          <tr><td>Unitranche</td><td>Between senior and subordinated</td><td>Blended</td><td>Borrowers seeking simplified structure</td><td>Single blended interest rate; combines tranches</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: PRIVATE DEBT RISK-RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Private Debt — Risk &amp; Return</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Sources of higher return potential vs. public bonds:</strong></p>
+      <ul>
+        <li><strong>Illiquidity premium:</strong> Excess return investors require for lack of liquidity</li>
+        <li><strong>Market inefficiencies:</strong> Private debt funds take opportunistic positions in less-efficient markets</li>
+        <li><strong>Diversification benefit:</strong> Different risk/return profile from public fixed income</li>
+        <li><strong>Gap-filling after 2008:</strong> Traditional bank lending contracted → private debt funds stepped in at favorable pricing</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Interest rate structure:</strong> Often expressed as a <strong>floating rate relative to a reference rate</strong> — e.g., SOFR + 375 bps. Coupon varies with changes to the reference rate (market reference rate, MRR). Contrast with fixed-rate public bonds.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Risk-return spectrum within private debt (low to high risk/return):</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>Infrastructure debt (safest, lowest return)</li>
+        <li>Senior real estate debt</li>
+        <li>Senior direct lending</li>
+        <li>Unitranche debt</li>
+        <li>Mezzanine debt</li>
+        <li>Private equity co-investments (highest risk/return)</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>Senior private debt:</strong> Steadier yield, moderate risk. <strong>Mezzanine private debt:</strong> Higher growth potential, equity upside, higher risk.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Private Debt Risk Factors</div>
+      <p>Riskier than traditional bonds: (1) Illiquidity — no active secondary market for most private debt. (2) Heightened default risk — loans extended to riskier borrowers or riskier situations. (3) Specialized knowledge needed — life cycle stage of borrower, debt structure, underlying assets (especially for secured lending). (4) Modeling difficulties — lack of good-quality data + artificially smooth returns.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: VINTAGE YEAR & DIVERSIFICATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Vintage Year &amp; Diversification Benefits</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Vintage Year</div>
+      <div class="def-body">Typically defined as the <strong>year in which the fund makes its first investment</strong>. Critical for comparing private equity performance because the economic and valuation environment at the fund's origin can substantially affect realized returns over the fund's lifespan. The most appropriate performance comparisons are between funds of the same vintage year.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Standard PE fund timeline:</strong></p>
+      <ul>
+        <li>Total fund life: <strong>10–12 years</strong></li>
+        <li><strong>Investment period (first ~5 years):</strong> Capital sourced from LPs and invested in portfolio companies</li>
+        <li><strong>Harvesting period (remaining years):</strong> Fund exits investments and returns capital to LPs</li>
+      </ul>
+    </div>
+
+    <h3>Vintage Year and Business Cycle Effects</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Favorable Vintage Years</div>
+        <p>Funds starting in a <strong>low-valuation, low-risk-appetite, economic recovery phase</strong> can ride the wave of economic recovery → stronger returns.</p>
+        <p style="margin-top:6px;">Expanding business cycle + early-stage companies → excess returns.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Unfavorable Vintage Years</div>
+        <p>Funds investing bulk of capital in a <strong>high-valuation environment preceding a market crash</strong> or prolonged economic contraction → reduced returns.</p>
+        <p style="margin-top:6px;">Contracting business cycle + distressed companies → excess returns if focused on distressed strategies.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Vintage Diversification Strategy</div>
+      <p>To offset the risk of an ill-timed fund launch, investors pursue <strong>vintage year diversification</strong> — investing across funds started in multiple different years. This ensures some funds are started in favorable cycles and others can still generate returns through distressed strategies in downcycles. No single vintage year is universally "best."</p>
+    </div>
+
+    <h3>Portfolio Diversification Benefits</h3>
+    <div class="card">
+      <ul>
+        <li>Private capital can add a <strong>moderate diversification benefit</strong> to a portfolio of publicly traded stocks and bonds</li>
+        <li>Correlations with public market indexes: <strong>0.63 to 0.83</strong> — meaningful but not perfectly correlated (some diversification benefit)</li>
+        <li>Skillful manager selection → potential excess returns from additional leverage, market, and liquidity risk premia</li>
+        <li>Difficult to hedge performance risk of private investments vs. public investments (less hedging flexibility)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: RISK-RETURN HIERARCHY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Risk-Return Hierarchy Across the Capital Structure</h2>
+    </div>
+
+    <div class="card">
+      <p>Private capital risk and return mirrors the <strong>traditional risk-return trade-off across the corporate capital structure</strong>. From lowest to highest risk and expected return:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rank (Risk ↑)</th><th>Asset Class</th><th>Return Level</th><th>Risk Level</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 (Lowest)</td><td>Infrastructure Debt</td><td>Lowest</td><td>Lowest — most secured, essential services, stable CFs</td></tr>
+          <tr><td>2</td><td>Senior Real Estate Debt</td><td>Low-moderate</td><td>Low-moderate — secured by real property</td></tr>
+          <tr><td>3</td><td>Senior Direct Lending</td><td>Moderate</td><td>Moderate — senior secured, covenants</td></tr>
+          <tr><td>4</td><td>Unitranche Debt</td><td>Moderate-high</td><td>Moderate-high — blended tranche risk</td></tr>
+          <tr><td>5</td><td>Mezzanine Debt</td><td>High</td><td>High — subordinated, unsecured, equity-like upside</td></tr>
+          <tr><td>6 (Highest)</td><td>Private Equity / Co-Investments</td><td>Highest</td><td>Highest — residual claim, illiquid, leveraged</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Capital Structure Trade-Off — The Core Principle</div>
+      <p>The more senior the claim in the capital structure → the lower the risk → the lower the expected return. The more junior the claim (closer to equity) → the higher the risk → the higher the expected return. This applies equally to private and public market investments. The difference in private markets: higher illiquidity and concentration risk AND greater uncertainty about underlying businesses AND fewer hedging options → demand a further premium over public equivalents.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Private capital:</strong> Funding NOT from public markets or traditional institutions. Private equity = equity form. Private debt = loan/debt form. Covers entire capital structure.</li>
+        <li>✅ <strong>3 PE strategies:</strong> (1) LBO — mature/declining firms, high leverage, assets as collateral, cash flows service debt. (2) VC — early-stage/startup, high growth potential. (3) Growth capital — minority stake in mature companies seeking expansion capital.</li>
+        <li>✅ <strong>LBO:</strong> Significant % of purchase price = debt. Target assets = collateral. Target cash flows = debt service. Post-buyout = private company ("going private"). MBO = current management participates. MBI = current management replaced by acquiring team.</li>
+        <li>✅ <strong>LBO value creation (in order):</strong> Organic revenue growth → cost reductions/restructuring → acquisitions → other. Returns depend greatly on leverage; if financing unavailable → LBOs less attractive.</li>
+        <li>✅ <strong>VC stages (memorize order):</strong> Pre-seed (idea; individuals; $5k–500k) → Seed (product dev; first VC stage; $25k–5M) → Early-stage (operations startup; before commercial production) → Later-stage (after sales begun; expansion; management may cede control) → Mezzanine-stage (bridge to IPO; equity-like or short-term debt).</li>
+        <li>✅ <strong>Mezzanine-stage financing ≠ mezzanine financing:</strong> Mezzanine-STAGE = timing (between private and public = bridge to IPO). Mezzanine FINANCING = instrument type (subordinated hybrid debt with equity features). The stage can USE mezzanine financing, but they are distinct concepts.</li>
+        <li>✅ <strong>Convertible preferred shares in VC:</strong> Convert to common shares after predetermined date/price. Aligns incentives. In liquidation: preferred convertible shareholders are SENIOR to common shareholders. Protects investor if company fails; provides equity upside if it succeeds.</li>
+        <li>✅ <strong>Growth capital:</strong> Less-than-controlling (minority) stake. Mature company seeks expansion capital. Management-initiated; seller retains control. Common in PIPEs for public companies too.</li>
+        <li>✅ <strong>PIPE:</strong> Private offering to select investors. Fewer disclosures, lower costs. Fixed price (at discount to market). Common in workout/rescue situations. Dilutive to existing shareholders. May use convertible debt or convertible preferred.</li>
+        <li>✅ <strong>PE exit — avg holding period ~5 years</strong> (range: &lt;6 months to &gt;10 years). Fund = ~5-year investment period + harvesting period.</li>
+        <li>✅ <strong>Trade sale:</strong> Sell to strategic buyer. Quick, confidential, synergy premium. BUT: management resistance, limited buyers, regulatory scrutiny.</li>
+        <li>✅ <strong>IPO:</strong> Potentially highest price; management approval; PE retains upside. BUT: high costs, long lead time, disclosure, stock market volatility, post-IPO lockup, only for larger/established companies.</li>
+        <li>✅ <strong>Direct listing:</strong> Public float without underwriters. Simpler and cheaper than IPO.</li>
+        <li>✅ <strong>SPAC:</strong> Blank check company acquires a private company within set period. Fixed valuation (lower uncertainty); extended disclosure period; high-profile sponsors. BUT: dilution from warrants, valuation spread, deal risk, stockholder overhang, regulatory scrutiny.</li>
+        <li>✅ <strong>Recapitalization:</strong> NOT a true exit. PE adds leverage → takes dividend. Retains ownership. Improves IRR by returning capital early.</li>
+        <li>✅ <strong>Secondary sale:</strong> Sell to another PE firm. Increasingly common due to large PE fund pools globally.</li>
+        <li>✅ <strong>Write-off/liquidation:</strong> Failed investment; value revised downward or company liquidated.</li>
+        <li>✅ <strong>PE data problems:</strong> Self-reporting → survivorship + backfill bias (overstated returns). No mark-to-market (pre-2008) → understated volatility. Smooth returns = artificially low measured risk. Data adjustments required; independent quarterly/annual marking preferred.</li>
+        <li>✅ <strong>4 main private debt categories:</strong> Direct lending (senior secured, bank alternative), venture debt (startup, non-dilutive), mezzanine (subordinated, equity features via warrants/conversion), distressed (near-bankrupt; priced to recovery rate; DIP financing).</li>
+        <li>✅ <strong>Mezzanine debt position:</strong> Senior secured debt → mezzanine debt → equity. Unsecured, subordinated. Higher rates + warrants/conversion rights to compensate for risk.</li>
+        <li>✅ <strong>Unitranche:</strong> Blended secured + unsecured → single loan, single blended rate. Between senior and subordinated in priority.</li>
+        <li>✅ <strong>Distressed debt:</strong> Priced to expected recovery rate. DIP financing for companies already in bankruptcy. Bankruptcy = lengthy, complex, capital intensive.</li>
+        <li>✅ <strong>Private debt interest rate:</strong> Often floating = reference rate (SOFR) + spread (e.g., SOFR + 375 bps). Varies with interest rate environment.</li>
+        <li>✅ <strong>Vintage year:</strong> Year fund makes its FIRST investment. Determines economic/valuation environment at origin. Comparable performance = same vintage year funds. Fund life = 10–12 years (investment period ~5 years + harvesting period).</li>
+        <li>✅ <strong>Vintage diversification:</strong> Invest across multiple vintage years to offset risk of ill-timed fund launch. Expanding cycle + early-stage → excess returns. Contracting cycle + distressed companies → excess returns.</li>
+        <li>✅ <strong>Correlation with public markets:</strong> 0.63–0.83 → moderate diversification benefit. Not zero correlation → not a complete diversifier.</li>
+        <li>✅ <strong>Risk-return hierarchy (lowest to highest):</strong> Infrastructure debt → Senior RE debt → Senior direct lending → Unitranche → Mezzanine → Private equity co-investments. Higher claim seniority = lower risk = lower return.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Concepts Quick Reference</div>
+      <div class="f">
+        PRIVATE EQUITY STRATEGIES:<br>
+        LBO → mature/declining firms | MBO = current mgmt | MBI = new mgmt replaces<br>
+        VC → early-stage/startup | Growth capital → minority stake, mature company<br>
+        PIPE → private offering to public company; discounted; dilutive<br><br>
+        VC STAGES (in order):<br>
+        Pre-seed → Seed (first VC stage) → Early → Later → Mezzanine (bridge to IPO)<br><br>
+        PE EXIT STRATEGIES:<br>
+        Trade sale (strategic buyer, synergy premium) | IPO (highest price potential, high cost)<br>
+        Direct listing (no underwriters, simpler) | SPAC (fixed valuation, blank check company)<br>
+        Recapitalization (NOT true exit; retains ownership) | Secondary sale (PE-to-PE)<br>
+        Write-off/liquidation (failed investment)<br><br>
+        PRIVATE DEBT HIERARCHY (risk/return low → high):<br>
+        Infrastructure debt → Senior RE debt → Senior direct lending → Unitranche → Mezzanine → PE equity<br><br>
+        VINTAGE YEAR: First investment year. Fund life = 10–12 years (invest 5 + harvest remaining).<br>
+        Vintage diversification: spread investments across multiple vintage years.<br>
+        Correlations with public markets: 0.63–0.83 (moderate diversification benefit).
+      </div>
+      <div class="note">
+        Mezzanine-STAGE (timing: bridge to IPO) ≠ Mezzanine FINANCING (instrument: subordinated hybrid debt).<br>
+        Convertible preferred: senior to common in liquidation; provides equity upside + downside protection.<br>
+        PE returns overstated by: survivorship bias + backfill bias + failure to mark-to-market.<br>
+        Private debt interest rate: floating = reference rate (SOFR) + spread.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 3: Investments in Private Capital: Equity and Debt · Exam Prep Notes
+</footer>
+
+</body>
+</html>

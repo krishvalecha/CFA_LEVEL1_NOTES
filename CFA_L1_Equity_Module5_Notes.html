@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 5: Company Analysis: Past and Present</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1220 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Profitability cascade */
+  .prof-cascade { display: flex; gap: 16px; margin: 16px 0; flex-wrap: wrap; }
+  .prof-col { flex: 1; min-width: 180px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .prof-col-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; }
+  .prof-col-title.gp { background: rgba(76,201,138,0.15); color: var(--accent3); }
+  .prof-col-title.ebitda { background: rgba(76,139,201,0.15); color: var(--accent2); }
+  .prof-col-title.ebit { background: rgba(201,168,76,0.15); color: var(--accent); }
+  .prof-row { padding: 7px 14px; font-size: 13px; border-top: 1px solid var(--border); }
+  .prof-row.rev { color: var(--accent3); font-weight: 600; }
+  .prof-row.sub { color: var(--danger); }
+  .prof-row.result { font-weight: 700; }
+  .prof-row.result.gp { color: var(--accent3); }
+  .prof-row.result.ebitda { color: var(--accent2); }
+  .prof-row.result.ebit { color: var(--accent); }
+  .prof-row.margin { color: var(--muted); font-size: 11px; font-family: 'JetBrains Mono', monospace; padding-bottom: 12px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 5</div>
+  <h1>Company Analysis: <span>Past &amp; Present</span></h1>
+  <p>Exam-ready notes: research report structure, business model framework, revenue drivers and pricing power, operating cost classifications, profitability measures (gross/EBITDA/EBIT margins), DOL and DFL formulas, working capital, capital investments and capital structure.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Company Research Reports</a>
+  <a class="toc-item" href="#s2">02 · Business Model Framework</a>
+  <a class="toc-item" href="#s3">03 · Revenue Analysis &amp; Drivers</a>
+  <a class="toc-item" href="#s4">04 · Pricing Power</a>
+  <a class="toc-item" href="#s5">05 · Operating Cost Classifications</a>
+  <a class="toc-item" href="#s6">06 · Profitability Measures</a>
+  <a class="toc-item" href="#s7">07 · Operating Leverage (DOL)</a>
+  <a class="toc-item" href="#s8">08 · Economies of Scale &amp; Scope</a>
+  <a class="toc-item" href="#s9">09 · Working Capital Analysis</a>
+  <a class="toc-item" href="#s10">10 · Capital Investments &amp; Capital Structure</a>
+  <a class="toc-item" href="#s11">11 · Financial Leverage (DFL)</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: COMPANY RESEARCH REPORTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Company Research Reports</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Financial Statement Model</div>
+      <div class="def-body">A quantitative expression of an analyst's <strong>forward-looking views</strong> about a company's future earnings, cash flows, and financial position. Structured as projected financial statements. NOT a math problem with a correct answer — it is a justified, evidence-based view.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 3-Layer Company Analysis Framework</div>
+      <p><strong>Layer 1 (this module)</strong>: Company Analysis — Past &amp; Present: business model, revenue drivers, profitability, working capital, capital structure. <strong>Layer 2</strong>: Industry &amp; Competitive Analysis (Porter's Five Forces, PESTLE, market share). <strong>Layer 3</strong>: Company Forecasting: project financials, valuation, risks. Reports present all three layers culminating in a price target and buy/hold/sell recommendation.</p>
+    </div>
+
+    <h3>Initial Research Report — Structure</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Key Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Front Matter</td>
+            <td>Issuer name, security identifiers (ticker, CUSIP), analyst recommendation (buy/hold/sell) and target price, disclosures/disclaimers</td>
+          </tr>
+          <tr>
+            <td>Recommendation</td>
+            <td>Analyst's recommendation + summary of key reasons supporting it</td>
+          </tr>
+          <tr>
+            <td>Company Description</td>
+            <td>Business model and strategy; revenue/profit disaggregation by product, geography, segment</td>
+          </tr>
+          <tr>
+            <td>Industry Overview &amp; Competitive Positioning</td>
+            <td>Industry size, growth rate, key drivers, market share trends, profitability outlook; <strong>Porter's Five Forces</strong>; <strong>PESTLE analysis</strong> (Political, Economic, Social, Technological, Legal, Environmental); company's competitive position and strategy</td>
+          </tr>
+          <tr>
+            <td>Financial Analysis &amp; Model</td>
+            <td>Key revenue, cost, profitability, cash flow drivers; forecasts of drivers with supporting discussion; historical and forecasted financial statements</td>
+          </tr>
+          <tr>
+            <td>Valuation</td>
+            <td>Company and security value estimates with target price; relative and present value approaches; sensitivity and scenario analyses</td>
+          </tr>
+          <tr>
+            <td>ESG Considerations</td>
+            <td>ESG indicators and risks; ownership structure and management composition; executive compensation</td>
+          </tr>
+          <tr>
+            <td>Risks</td>
+            <td>Material downside AND upside risks; how risks are incorporated in the financial analysis and valuation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Subsequent Research Report — Structure</h3>
+    <div class="card">
+      <p>Shorter than initial report. Primary audience = those already familiar with the issuer, needing an update. Typical structure for a post-earnings update:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Front Matter</strong>: analyst names, issuer name, identifier, recommendation, current price, target price, disclosures</li>
+        <li><strong>Recommendation</strong>: current recommendation + summary of changes and support explanations</li>
+        <li><strong>Analysis of New Information</strong>: actual quarterly results vs. expectations; analyst's interpretation; updated forecasts; historical and updated financial statements</li>
+        <li><strong>Valuation</strong>: updated estimates; discussion of changes from prior report</li>
+        <li><strong>Risks</strong>: update of risk factors; discussion of changes</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Sell-Side vs. Internal Reports</div>
+      <p><strong>Sell-side (external distribution)</strong>: comprehensive initial "initiation" report → followed by shorter update reports after earnings/news. Primary audience: those not yet familiar with the issuer. <strong>Internal reports</strong>: can be far shorter, delivered verbally or in a few slides. Audience already knows the company. The exam won't test format details deeply but may test which sections appear in initial vs. subsequent reports.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: BUSINESS MODEL FRAMEWORK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Determining the Business Model</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>first step</strong> in company analysis. Determines key drivers of financial results and position, focuses the analyst on what needs investigation, and sets expectations. Appears in the "Company Description" section of the research report.</p>
+    </div>
+
+    <h3>5 Business Model Elements &amp; Key Questions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Key Question</th>
+            <th>Corollary Questions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Products / Services</td>
+            <td>What is the firm selling?</td>
+            <td>Are products/services differentiated or commoditized? Are they consumable (recurring) or durable (one-time)?</td>
+          </tr>
+          <tr>
+            <td>Customers &amp; Key Groups</td>
+            <td>To whom does the company sell?</td>
+            <td>Are customers few and concentrated (high dependence) or many and diversified? Are they B2B or B2C?</td>
+          </tr>
+          <tr>
+            <td>Sales Channels &amp; Delivery</td>
+            <td>How does the company reach and serve customers?</td>
+            <td>Direct or indirect distribution? Physical stores, digital, agents, wholesalers? High or low customer acquisition cost?</td>
+          </tr>
+          <tr>
+            <td>Pricing &amp; Payment Terms</td>
+            <td>How much does the company charge and how are prices structured?</td>
+            <td>Subscription, per-unit, membership, usage-based? Fixed or variable pricing? Pay upfront or deferred?</td>
+          </tr>
+          <tr>
+            <td>Resources, Suppliers &amp; Partners</td>
+            <td>What does the company buy and rely on?</td>
+            <td>Are suppliers few and specialized (high dependence) or many and interchangeable? Are there critical partnerships or licenses?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Information Sources for Business Model Analysis</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Issuer Sources (Free, Public)</div>
+        <ul>
+          <li>Regulatory filings (annual + quarterly reports)</li>
+          <li>Earnings conference calls</li>
+          <li>Investor presentations and events</li>
+          <li>Press releases</li>
+          <li>Management / investor relations</li>
+          <li>Company website and properties</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Third-Party Sources</div>
+        <ul>
+          <li><em>Public</em>: industry white papers, government economic/industry data, news outlets (general and industry-specific), social media</li>
+          <li><em>Proprietary</em>: sell-side analyst reports, credit ratings, Bloomberg/FactSet, specialist consultancies (Rystad for energy, IQVIA/Evaluate for biopharma, Gartner/IDC for IT)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Proprietary Primary Research</div>
+        <ul>
+          <li>Surveys commissioned by the analyst</li>
+          <li>Conversations with customers, competitors, suppliers</li>
+          <li>Product comparisons (use competitor products firsthand)</li>
+          <li>Other studies conducted directly by the analyst</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: REVENUE ANALYSIS & DRIVERS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Revenue Analysis &amp; Drivers</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Revenue Driver</div>
+      <div class="def-body">A causative factor that explains the level of and changes in an output variable (here, revenue). Analysts identify drivers to understand historical performance and to build forward-looking forecasts.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Bottom-Up Approach</div>
+        <p>Decomposes revenue into <strong>granular drivers</strong>:</p>
+        <ul style="margin-top:8px;">
+          <li>Sales volume × price per unit</li>
+          <li>Revenue by product line, segment, or geography</li>
+          <li>Each sub-segment further broken down into its own drivers</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12px; color:var(--muted);">Example: Retail company → decompose into same-store sales growth + new store openings + average transaction value.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Top-Down Approach</div>
+        <p>Expresses revenue as a function of <strong>macro/market drivers</strong>:</p>
+        <ul style="margin-top:8px;">
+          <li>Market size (total addressable market)</li>
+          <li>Company's market share</li>
+          <li>GDP growth and macroeconomic indicators</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12px; color:var(--muted);">Example: Revenue = Total market size × Company's market share. Used in industry and competitive analysis module.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Bottom-Up and Top-Down Are Complementary</div>
+      <p>Analysts use <strong>both approaches together</strong> — neither replaces the other. Bottom-up gives granularity and helps identify specific product or segment risks. Top-down provides macroeconomic context and a sanity check. A bottom-up forecast that implies implausible market share gains would be caught by a top-down cross-check.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: PRICING POWER -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Pricing Power</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Pricing Power</div>
+      <div class="def-body">A company's ability to set prices and other economic terms with customers <strong>without materially affecting its sales volumes</strong>. Primarily a function of <strong>market structure</strong> and a company's <strong>competitive positioning</strong> in its market.</div>
+    </div>
+
+    <h3>Highly Competitive Markets — Low/No Pricing Power</h3>
+    <div class="card">
+      <ul>
+        <li>Firms are <strong>price takers</strong> — price dictated by supply and demand forces</li>
+        <li>All firms sell at essentially the same price</li>
+        <li>Pricing above market → lose customers; pricing below market → price war (irrational)</li>
+        <li>Long-run returns on capital → approach <strong>cost of capital</strong> as competition forces price down to marginal cost</li>
+        <li>Exception: a <strong>low-cost producer</strong> (below marginal cost) can earn above-cost-of-capital returns long-run, but requires the cost advantage to be <em>sustained</em> over time</li>
+        <li><strong>Attributes</strong>: little/no product differentiation, low barriers to entry, available substitutes, lack of customer loyalty, low switching costs</li>
+        <li><strong>Examples</strong>: retail, oil &amp; gas, bank loans/deposits, insurance, fresh food, off-patent pharma, transportation, some technology hardware</li>
+        <li><strong>Commoditization</strong>: process by which markets become more competitive over time as new entrants arrive, innovation slows, and imitation spreads</li>
+      </ul>
+    </div>
+
+    <h3>Less Competitive Markets — Pricing Power Present</h3>
+    <div class="card">
+      <ul>
+        <li>Monopolistic competition, oligopoly, or monopoly → some ability to raise prices without losing volume</li>
+        <li><strong>Attributes</strong>: product differentiation (visible quality, convenience, wrap-around services, secondary resale market), barriers to entry, lack of economical substitutes, switching costs, high customer loyalty/retention</li>
+        <li><strong>Examples</strong>: branded consumer goods, utilities, patented pharmaceuticals, software, restaurants, payment networks, medical devices, some real estate</li>
+        <li>Firms with pricing power use <strong>value-based pricing</strong>, <strong>cost-based pricing</strong>, and <strong>price discrimination</strong> strategies</li>
+      </ul>
+    </div>
+
+    <h3>How Analysts Evaluate Pricing Power</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;"><strong>Track prices over time</strong> — are prices rising, flat, or falling relative to competitors?</li>
+        <li style="margin-bottom:8px;"><strong>Compare prices to costs (profit margins)</strong> — a company raising prices 3%/yr while costs rise 5%/yr is showing inability to pass on costs AND declining profitability. This is a signal of <em>weak</em> pricing power even if prices are rising</li>
+        <li style="margin-bottom:8px;"><strong>Rising profitability over time</strong> = strongest signal of pricing power — demonstrates ability to retain economics for investors AND that competition is not eroding margins</li>
+        <li style="margin-bottom:8px;"><strong>Movie theater example</strong>: unable to raise prices → streaming video is a cheaper substitute → customers switch. Pricing power constrained by availability of alternatives</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Prices Rising ≠ Pricing Power</div>
+      <p>The exam may describe a scenario where a company is raising prices but costs are rising faster — this is <strong>evidence of WEAK pricing power</strong>, not strong. True pricing power means the company can raise prices faster than costs rise, producing <strong>expanding margins</strong>. Always compare price trends to cost trends, not just price trends in isolation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: OPERATING COST CLASSIFICATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Operating Cost Classifications</h2>
+    </div>
+
+    <h3>Three Types of Costs (High Level)</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Operating Costs</div>
+        <p>Costs incurred in generating or relating to <strong>current period revenue</strong>: acquisition, production, sale, improvement and delivery of goods and services; management of business; regulatory compliance.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Investing Costs</div>
+        <p>Costs related to acquisition and production of <strong>long-term assets</strong>: tangible (property, equipment) and intangible (software, trademarks, patents). Capitalized then amortized.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Financing Costs</div>
+        <p>Payments to <strong>debt and equity investors</strong> as a return on their investment: interest payments, dividends.</p>
+      </div>
+    </div>
+
+    <h3>GAAP Classification Quirks — Must Know</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cost Item</th>
+            <th>Economic Intuition</th>
+            <th>Income Statement Classification</th>
+            <th>Cash Flow Statement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>R&amp;D</td>
+            <td>Investing (builds future value)</td>
+            <td><span class="tag tag-yellow">Operating</span> — expensed immediately</td>
+            <td><span class="tag tag-yellow">Operating</span></td>
+          </tr>
+          <tr>
+            <td>Depreciation &amp; Amortization</td>
+            <td>Investing (cost of using long-term assets)</td>
+            <td><span class="tag tag-yellow">Operating</span> — included in operating costs</td>
+            <td>Non-cash add-back to Operating; <em>Capital expenditures</em> → Investing section</td>
+          </tr>
+          <tr>
+            <td>Interest Expense</td>
+            <td>Financing (cost of debt)</td>
+            <td><span class="tag tag-red">Other (not operating)</span> — below EBIT</td>
+            <td>US GAAP: Operating | IFRS: Operating OR Financing (company choice)</td>
+          </tr>
+          <tr>
+            <td>Income Taxes</td>
+            <td>Separate (not operating/financing)</td>
+            <td><span class="tag tag-red">Other (not operating)</span> — below EBIT and interest</td>
+            <td><span class="tag tag-yellow">Operating</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Three Ways to Classify Operating Costs</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">By Behavior with Output</div>
+        <p><strong>Variable costs</strong>: vary with output level (e.g., merchandise costs, direct labor, raw materials).<br><br><strong>Fixed costs</strong>: do not change within a given output range in the short run (e.g., salaried employee compensation, D&amp;A, software/IT, insurance, certain utilities). Stated as total dollar amount.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">By Nature</div>
+        <p>What the cost <em>is</em> — describes the economic substance:</p>
+        <ul>
+          <li>Compensation of employees</li>
+          <li>Raw materials</li>
+          <li>Merchandise</li>
+          <li>Office supplies</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">By Function</div>
+        <p>The <em>purpose</em> of the cost — required by IFRS/US GAAP for most issuers:</p>
+        <ul>
+          <li>Cost of goods sold (COGS)</li>
+          <li>Sales and marketing (S&amp;M)</li>
+          <li>General and administrative (G&amp;A)</li>
+          <li>Research and development (R&amp;D)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Functional Classification Dominates in Practice</div>
+      <p>IFRS and US GAAP require issuers to classify costs by <strong>function</strong> (not fixed vs. variable). This is why all income statements look similar (COGS, SG&amp;A, R&amp;D) even when business models are very different. The fixed vs. variable breakdown is analytically more useful but <strong>less commonly disclosed</strong> — analysts must infer it from context, footnotes, and management commentary. The functional classification is what drives the standard profitability metrics (gross margin, EBITDA margin, EBIT margin).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: PROFITABILITY MEASURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Profitability Measures — Gross, EBITDA, EBIT</h2>
+    </div>
+
+    <div class="prof-cascade">
+      <div class="prof-col">
+        <div class="prof-col-title gp">Gross Profit</div>
+        <div class="prof-row rev">Revenue</div>
+        <div class="prof-row sub">− Cost of Sales (COGS)</div>
+        <div class="prof-row result gp">= Gross Profit</div>
+        <div class="prof-row margin">Gross Margin = Gross Profit / Revenue</div>
+      </div>
+      <div class="prof-col">
+        <div class="prof-col-title ebitda">EBITDA</div>
+        <div class="prof-row rev">Revenue</div>
+        <div class="prof-row sub">− Cost of Sales</div>
+        <div class="prof-row sub">− Operating Expenses (SG&amp;A, R&amp;D, etc.)</div>
+        <div class="prof-row result ebitda">= EBITDA</div>
+        <div class="prof-row margin">EBITDA Margin = EBITDA / Revenue</div>
+      </div>
+      <div class="prof-col">
+        <div class="prof-col-title ebit">EBIT (Operating Profit)</div>
+        <div class="prof-row rev">Revenue</div>
+        <div class="prof-row sub">− Cost of Sales</div>
+        <div class="prof-row sub">− Operating Expenses</div>
+        <div class="prof-row sub">− Depreciation &amp; Amortization</div>
+        <div class="prof-row result ebit">= EBIT</div>
+        <div class="prof-row margin">EBIT Margin = EBIT / Revenue</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Operating Profit Using Fixed/Variable Classification</div>
+      <div class="f">Operating Profit = [Q × (P − VC)] − FC</div>
+      <div class="note">
+        Q = units of output sold | P = price per unit | VC = variable cost per unit | FC = total fixed costs<br>
+        (P − VC) = Contribution Margin per unit<br>
+        For profitability: contribution margin must be positive AND Q × (P − VC) must exceed FC<br><br>
+        Gross margin ≈ contribution margin (since COGS is largely variable)<br>
+        SG&amp;A, R&amp;D = largely fixed (may have variable components like sales commissions)<br>
+        D&amp;A = fixed (unless units-of-output depreciation method is used)
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>What It Measures</th>
+            <th>What It Excludes</th>
+            <th>Key Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gross Profit / Gross Margin</td>
+            <td>Profitability after direct production costs only</td>
+            <td>SG&amp;A, R&amp;D, D&amp;A, interest, taxes</td>
+            <td>Approximate measure of contribution margin; reveals pricing power vs. variable cost of production</td>
+          </tr>
+          <tr>
+            <td>EBITDA / EBITDA Margin</td>
+            <td>Operating profitability before non-cash charges and financing costs</td>
+            <td>D&amp;A, interest, taxes</td>
+            <td>Proxy for operating cash generation; useful for comparing capital structures and asset intensities across companies; used in leverage ratios (Debt/EBITDA)</td>
+          </tr>
+          <tr>
+            <td>EBIT / Operating Profit Margin</td>
+            <td>Operating profitability after all operating costs including D&amp;A</td>
+            <td>Interest expense, income taxes</td>
+            <td>Measures operating efficiency; not affected by capital structure (pre-interest) or tax rates; most commonly compared across companies</td>
+          </tr>
+          <tr>
+            <td>Net Profit / Net Margin</td>
+            <td>Bottom-line profitability after all costs</td>
+            <td>Nothing — fully loaded</td>
+            <td>Bottom line for shareholders; affected by capital structure and taxes; used in ROE calculation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ EBITDA ≠ Cash Flow from Operations</div>
+      <p>EBITDA is often used as a cash flow proxy, but it is NOT the same as operating cash flow. EBITDA ignores changes in working capital, which can be a significant use or source of cash. A company with positive EBITDA can still have negative operating cash flow if working capital is building rapidly. EBITDA also ignores maintenance capex needed to sustain the business. Use it as a rough proxy, not a substitute for actual cash flow analysis.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: OPERATING LEVERAGE (DOL) -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Degree of Operating Leverage (DOL)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Operating Leverage</div>
+      <div class="def-body">The proportion of <strong>fixed costs</strong> in a company's operating cost structure. Higher fixed costs = higher operating leverage. Amplifies both profits (when revenue rises) and losses (when revenue falls).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Degree of Operating Leverage (DOL)</div>
+      <div class="f">DOL = % Δ Operating Profit / % Δ Sales</div>
+      <div class="note">
+        DOL measures the sensitivity of operating profit to changes in sales revenue.<br>
+        DOL &gt; 1: operating profit changes by more than sales (amplification effect of fixed costs)<br>
+        High DOL: high fixed costs relative to variable costs<br>
+        Low DOL: mostly variable costs<br><br>
+        Example: DOL = 3 means a 10% increase in sales → 30% increase in operating profit.<br>
+        Same DOL = 3 with a 10% decrease in sales → 30% DECREASE in operating profit.<br><br>
+        A firm can increase its DOL by: increasing fixed costs AND decreasing variable costs in its cost base.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">High Operating Leverage</div>
+        <ul>
+          <li>High proportion of fixed costs</li>
+          <li>Operating profit rises rapidly when sales grow (high contribution margin per unit flows through)</li>
+          <li>Operating profit falls rapidly when sales decline (fixed costs don't shrink)</li>
+          <li>Examples: airlines, media companies, software, capital-intensive manufacturers</li>
+          <li>High business risk but high upside potential</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Low Operating Leverage</div>
+        <ul>
+          <li>High proportion of variable costs</li>
+          <li>Operating profit rises more slowly with sales growth (costs also rise proportionally)</li>
+          <li>Operating profit falls more slowly with sales declines</li>
+          <li>Examples: pure retailers, trading companies, staffing firms</li>
+          <li>Lower business risk but lower operating profit sensitivity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 DOL — Operating Leverage vs. Financial Leverage</div>
+      <p><strong>Operating leverage</strong> (DOL) = driven by the proportion of <strong>fixed operating costs</strong> in the cost structure. Amplifies operating profit changes relative to sales changes. <strong>Financial leverage</strong> (DFL) = driven by <strong>fixed financing costs</strong> (interest expense). Amplifies net income changes relative to operating income changes. Both are forms of leverage that magnify volatility — one before EBIT, one after. Together they determine the overall sensitivity of net income to sales.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: ECONOMIES OF SCALE & SCOPE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Economies of Scale &amp; Scope</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Economies of Scale</div>
+        <p>Decline in <strong>costs per unit as output grows</strong>. Generally result from fixed costs being spread over more units of output. Also from increased bargaining power over suppliers as volume grows (drives down variable cost per unit too).</p>
+        <ul style="margin-top:8px;">
+          <li>Evident from the business model (fixed cost structure)</li>
+          <li>Found empirically: compare company size (revenue) with operating costs as % of sales — falling cost ratios as revenue grows = scale economies</li>
+          <li>Example: warehouse retailer — SG&amp;A as % of sales declines as more stores added and membership grows</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Economies of Scope</div>
+        <p>Decline in <strong>costs per unit as number of product/business lines increases</strong>. Result from shared costs between product lines.</p>
+        <ul style="margin-top:8px;">
+          <li>Found empirically: compare profitability of integrated company vs. standalone company</li>
+          <li>Example: financial services — commercial banking, consumer banking, brokerage, asset management, payment processing, investment banking all share: customer relationships, technology/IT, compliance, back-office operations → cost efficiencies drive large diversified financial firms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Scale vs. Scope — Easy Distinction</div>
+      <p><strong>Scale</strong> = doing MORE of the SAME thing → costs per unit fall. <strong>Scope</strong> = doing MORE DIFFERENT things → costs per unit fall due to shared infrastructure. Scale is about volume; scope is about variety. Both lead to cost advantages. Scale is usually a function of fixed costs; scope is usually a function of shared (semi-fixed) overhead.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: WORKING CAPITAL ANALYSIS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Working Capital Analysis</h2>
+    </div>
+
+    <div class="card">
+      <p>Working capital analysis uses <strong>activity ratios</strong> to measure how efficiently a company manages its short-term assets and liabilities. The primary measures are:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Cash Conversion Cycle (CCC)</strong>: the number of days between paying for inventory/inputs and collecting cash from customers</li>
+        <li><strong>Net Working Capital (NWC) to Sales ratio</strong>: measures the minimum level of working capital investment required to support a given level of revenue</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Cash Conversion Cycle</div>
+      <div class="f">CCC = Days Inventory Outstanding + Days Sales Outstanding − Days Payable Outstanding</div>
+      <div class="note">
+        DIO = (Inventory / COGS) × 365 — how many days inventory is held before sale<br>
+        DSO = (Accounts Receivable / Revenue) × 365 — how many days to collect from customers<br>
+        DPO = (Accounts Payable / COGS) × 365 — how many days to pay suppliers<br><br>
+        Short CCC: company collects fast, holds inventory briefly, pays suppliers slowly → needs LESS external financing<br>
+        Long CCC: company needs MORE cash tied up in operations → higher financing need<br>
+        Negative CCC: suppliers finance operations (e.g., large retailers collect cash before paying suppliers)
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Short / Negative CCC (Good)</div>
+        <ul>
+          <li>Requires less external financing</li>
+          <li>Negative NWC = <strong>suppliers are a source of financing</strong> (collect from customers before paying suppliers)</li>
+          <li>Examples: supermarkets, warehouse retailers, online retailers (customer pays upfront; suppliers paid later)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Long CCC (Capital Intensive)</div>
+        <ul>
+          <li>Requires more external financing to fund operations</li>
+          <li>High inventory holdings or slow customer collections tie up cash</li>
+          <li>Examples: construction companies, aerospace manufacturers, distributors with long payment terms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>NWC to Sales Ratio</strong>: Net Working Capital / Revenue</p>
+      <ul style="margin-top:8px;">
+        <li>Determines the minimum level of investment (in addition to capital expenditures) that cannot be distributed to investors</li>
+        <li>High NWC/sales: company needs to invest heavily in working capital as revenue grows → constrains free cash flow</li>
+        <li>Negative NWC/sales: as revenue grows, negative NWC becomes MORE negative → working capital is a <em>source</em> of cash as the business grows (favorable)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: CAPITAL INVESTMENTS & STRUCTURE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Capital Investments &amp; Capital Structure</h2>
+    </div>
+
+    <h3>Sources and Uses of Capital</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Sources of Capital</div>
+        <ul>
+          <li>Cash flows from operations (incl. NWC if negative)</li>
+          <li>Debt issuance</li>
+          <li>Equity issuance</li>
+          <li>Asset disposals</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Uses of Capital</div>
+        <ul>
+          <li>Cash and investments on hand</li>
+          <li>Net working capital (if positive)</li>
+          <li>Capital expenditures and additions to intangibles</li>
+          <li>Acquisitions</li>
+          <li>Debt paydown</li>
+          <li>Dividends and share repurchases</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Evaluating Capital Investments</h3>
+    <div class="card">
+      <ul>
+        <li>Goal: assess whether management has used investors' capital wisely → returns on invested capital (ROIC) vs. investors' required rate of return (WACC) over the long run</li>
+        <li>Independent analysts <strong>cannot access individual project IRRs/NPVs</strong> → must use aggregated measures to identify trends in value creation</li>
+        <li>Key return metrics: <strong>ROIC</strong> (Return on Invested Capital) and <strong>ROA</strong> (Return on Assets) = unlevered returns</li>
+        <li>Financial leverage converts unlevered returns (ROIC, ROA) into levered returns (<strong>ROE</strong>)</li>
+        <li>If ROIC &gt; WACC over time → value creation for investors. If ROIC &lt; WACC → value destruction</li>
+      </ul>
+    </div>
+
+    <h3>Capital Structure Risk Assessment Tools</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Leverage ratios</strong>: Debt/EBITDA, Debt/Equity, Net Debt/EBITDA → measure burden of debt relative to earnings or equity</li>
+        <li><strong>Coverage ratios</strong>: EBIT/Interest, EBITDA/Interest → measure ability to service debt from operating earnings</li>
+        <li><strong>Credit ratings</strong>: third-party assessment of default risk (investment grade = BBB–/Baa3 or better; high yield below that)</li>
+        <li><strong>Degree of Financial Leverage (DFL)</strong>: measures sensitivity of net income to changes in operating income (see Section 11)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ROE Decomposition — Linking Operating Performance to Shareholder Returns</div>
+      <p>ROE = Net Margin × Asset Turnover × Equity Multiplier (DuPont decomposition). This links operating profitability (net margin), asset efficiency (asset turnover), and financial leverage (equity multiplier = Assets/Equity) into one comprehensive measure. Financial leverage (higher equity multiplier) amplifies ROE above the underlying unlevered returns (ROIC/ROA). Analysts use ROE decomposition to identify whether ROE is driven by operating improvement, efficiency gains, or just increased leverage.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: FINANCIAL LEVERAGE (DFL) -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Degree of Financial Leverage (DFL)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Financial Leverage</div>
+      <div class="def-body">The use of debt (with fixed interest payments) in the capital structure. Amplifies net income changes relative to operating income changes. Analogous to operating leverage, but determined by <strong>financing costs</strong> (interest expense) rather than fixed operating costs.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Degree of Financial Leverage (DFL)</div>
+      <div class="f">DFL = % Δ Net Income / % Δ Operating Income</div>
+      <div class="note">
+        DFL measures the sensitivity of net income to changes in operating income (EBIT).<br>
+        Higher interest expense → higher DFL → net income more volatile relative to operating income<br>
+        DFL = 1: no financial leverage (no debt/interest)<br>
+        DFL &gt; 1: interest expense is fixed, so net income swings more than operating income<br><br>
+        Example: DFL = 2 means a 10% increase in EBIT → 20% increase in net income.<br>
+        Same scenario: 10% decrease in EBIT → 20% DECREASE in net income.
+      </div>
+    </div>
+
+    <h3>DOL vs. DFL — Full Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>DOL (Operating Leverage)</th>
+            <th>DFL (Financial Leverage)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Formula</td>
+            <td>% Δ Operating Profit / % Δ Sales</td>
+            <td>% Δ Net Income / % Δ Operating Income</td>
+          </tr>
+          <tr>
+            <td>Driven by</td>
+            <td>Fixed <strong>operating</strong> costs (D&amp;A, salaries, rent)</td>
+            <td>Fixed <strong>financing</strong> costs (interest expense)</td>
+          </tr>
+          <tr>
+            <td>What it amplifies</td>
+            <td>Operating profit changes relative to sales changes</td>
+            <td>Net income changes relative to operating income changes</td>
+          </tr>
+          <tr>
+            <td>Increased by</td>
+            <td>Higher fixed costs, lower variable costs</td>
+            <td>Higher interest expense (more debt)</td>
+          </tr>
+          <tr>
+            <td>Income statement position</td>
+            <td>Above EBIT (operating section)</td>
+            <td>Below EBIT (financing section)</td>
+          </tr>
+          <tr>
+            <td>Risk type</td>
+            <td>Business/operating risk</td>
+            <td>Financial risk (default risk)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Combined Leverage Effect</div>
+      <p>A company with BOTH high DOL and high DFL has extremely volatile net income relative to revenue changes. DOL amplifies operating income from sales changes; DFL then amplifies net income from operating income changes. The combined effect means a moderate sales decline could produce a catastrophic net income drop. High operating leverage PLUS high financial leverage = high overall risk. This combination is particularly dangerous in cyclical industries.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Financial statement model</strong>: a quantitative expression of an analyst's forward-looking views on a company's future financials. NOT a math problem with a single correct answer — a justified, evidence-based projection.</li>
+        <li>✅ <strong>3-layer analysis framework</strong>: (1) Company Analysis: Past &amp; Present → (2) Industry &amp; Competitive Analysis → (3) Company Forecasting. Reports culminate in valuation + recommendation + risks.</li>
+        <li>✅ <strong>Initial research report sections</strong>: Front Matter, Recommendation, Company Description, Industry Overview &amp; Competitive Positioning (Porter's Five Forces, PESTLE), Financial Analysis &amp; Model, Valuation, ESG, Risks.</li>
+        <li>✅ <strong>PESTLE</strong>: Political, Economic, Social, Technological, Legal, Environmental — framework for external industry influences in company research reports.</li>
+        <li>✅ <strong>Subsequent report</strong>: shorter; audience already familiar with issuer; focuses on new information, changes to forecasts, and updated valuation.</li>
+        <li>✅ <strong>Business model = first step</strong>. 5 elements: products/services (what), customers (who), sales channels/delivery (how), pricing/payment (how much/how paid), resources/suppliers/partners (what it buys). Analyzed using issuer, public third-party, proprietary third-party, and proprietary primary research sources.</li>
+        <li>✅ <strong>Bottom-up revenue analysis</strong>: decompose into volume × price by product/segment/geography. <strong>Top-down</strong>: express as market size × market share. Both approaches used together.</li>
+        <li>✅ <strong>Pricing power</strong> = ability to raise prices without losing volume. Primarily determined by market structure and competitive positioning. Key signal: <strong>rising profit margins over time</strong> = strong pricing power. Prices rising but margins falling = WEAK pricing power (costs rising faster).</li>
+        <li>✅ <strong>Highly competitive markets (low pricing power)</strong>: price takers, commoditized products, low barriers to entry, no switching costs, available substitutes. Long-run returns → cost of capital. Examples: oil &amp; gas, retail, off-patent pharma, bank loans.</li>
+        <li>✅ <strong>Markets with pricing power</strong>: monopolistic competition/oligopoly/monopoly. Attributes: product differentiation, barriers to entry, switching costs, customer loyalty, lack of substitutes. Examples: branded consumer goods, software, patented pharma, utilities, payment networks.</li>
+        <li>✅ <strong>Commoditization</strong>: process where markets become more competitive over time (new entrants, slowing innovation, widespread imitation).</li>
+        <li>✅ <strong>3 ways to classify operating costs</strong>: (1) Behavior with output: fixed vs. variable. (2) Nature: what the cost is (materials, compensation). (3) Function: purpose (COGS, SG&amp;A, R&amp;D) — required by IFRS/US GAAP.</li>
+        <li>✅ <strong>GAAP classification quirks</strong>: R&amp;D = operating on income statement despite being economically "investing." D&amp;A = operating on income statement despite being "investing." Interest expense = NOT operating on income statement (below EBIT); US GAAP cash flow = operating; IFRS = operating or financing. Income taxes = NOT operating on income statement; cash flow = operating.</li>
+        <li>✅ <strong>Gross Profit</strong> = Revenue − COGS. Gross Margin = Gross Profit / Revenue. Approximates contribution margin (COGS is mostly variable).</li>
+        <li>✅ <strong>EBITDA</strong> = Revenue − COGS − Operating Expenses (SG&amp;A, R&amp;D). EBITDA = EBIT + D&amp;A. Used as proxy for operating cash generation; used in Debt/EBITDA and interest coverage ratios. NOT equal to operating cash flow (ignores working capital changes).</li>
+        <li>✅ <strong>EBIT (Operating Profit)</strong> = Revenue − COGS − All Operating Expenses including D&amp;A. EBIT Margin = EBIT / Revenue. Excludes interest and taxes → not affected by capital structure or tax rate → most useful for cross-company comparison.</li>
+        <li>✅ <strong>Operating Profit Formula</strong>: Operating Profit = [Q × (P − VC)] − FC. Contribution margin = P − VC. Profitability requires: positive contribution margin AND Q × (P − VC) &gt; FC.</li>
+        <li>✅ <strong>DOL = % Δ Operating Profit / % Δ Sales</strong>. Driven by fixed operating costs. Higher fixed costs → higher DOL. A firm increases DOL by raising fixed costs and reducing variable costs. Amplifies both profits and losses relative to sales changes.</li>
+        <li>✅ <strong>DFL = % Δ Net Income / % Δ Operating Income</strong>. Driven by fixed financing costs (interest expense). Higher debt → higher interest → higher DFL. Amplifies net income changes relative to operating income changes.</li>
+        <li>✅ <strong>High DOL + High DFL = very high overall risk</strong>. Net income is highly sensitive to small changes in revenue. Dangerous in cyclical industries.</li>
+        <li>✅ <strong>Economies of scale</strong>: costs per unit fall as output grows. Result from spreading fixed costs over more units. Detected by falling cost/sales ratios as revenue grows. <strong>Economies of scope</strong>: costs per unit fall as number of product lines grows. Result from shared costs between lines. Detected by comparing integrated vs. standalone profitability. Example: financial services sharing technology/compliance/back-office.</li>
+        <li>✅ <strong>Cash Conversion Cycle</strong> = DIO + DSO − DPO. Short/negative CCC → needs less external financing. Negative CCC → suppliers finance operations. Long CCC → more cash tied up in working capital.</li>
+        <li>✅ <strong>NWC to Sales</strong>: determines minimum working capital investment needed per dollar of revenue. Negative NWC/Sales = working capital is a source of cash as company grows.</li>
+        <li>✅ <strong>Sources of capital</strong>: operating cash flows, debt issuance, equity issuance, asset disposals. <strong>Uses of capital</strong>: cash, NWC (if positive), capex/intangibles, acquisitions, debt repayment, dividends, buybacks.</li>
+        <li>✅ <strong>Capital investment evaluation</strong>: compare ROIC to WACC over time. ROIC &gt; WACC = value creation. ROIC &lt; WACC = value destruction. Analysts use aggregated measures (not individual IRR/NPV which are management-only).</li>
+        <li>✅ <strong>Capital structure risk tools</strong>: leverage ratios (Debt/EBITDA, Debt/Equity), coverage ratios (EBIT/Interest), credit ratings, DFL.</li>
+        <li>✅ <strong>Financial leverage converts ROIC/ROA (unlevered) → ROE (levered)</strong>. DuPont: ROE = Net Margin × Asset Turnover × Equity Multiplier. Higher equity multiplier (more debt) boosts ROE but increases risk.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        Operating Profit = [Q × (P − VC)] − FC<br>
+        Contribution Margin per unit = P − VC<br><br>
+        Gross Profit = Revenue − COGS<br>
+        EBITDA = Revenue − COGS − Operating Expenses (ex D&amp;A)<br>
+        EBIT = Revenue − COGS − All Operating Expenses (incl. D&amp;A)<br>
+        EBITDA = EBIT + D&amp;A<br><br>
+        Gross Margin = Gross Profit / Revenue<br>
+        EBITDA Margin = EBITDA / Revenue<br>
+        EBIT Margin = EBIT / Revenue<br><br>
+        DOL = % Δ Operating Profit / % Δ Sales<br>
+        DFL = % Δ Net Income / % Δ Operating Income<br><br>
+        CCC = DIO + DSO − DPO<br>
+        DIO = (Inventory / COGS) × 365<br>
+        DSO = (Accounts Receivable / Revenue) × 365<br>
+        DPO = (Accounts Payable / COGS) × 365<br><br>
+        ROE = Net Margin × Asset Turnover × Equity Multiplier  [DuPont]<br>
+        Equity Multiplier = Total Assets / Shareholders' Equity
+      </div>
+      <div class="note">
+        DOL driven by: fixed OPERATING costs. DFL driven by: fixed FINANCING costs (interest).<br>
+        High DOL + High DFL = amplified sensitivity of net income to sales changes = high overall risk.<br>
+        ROIC vs. WACC: ROIC &gt; WACC → value creation. ROIC &lt; WACC → value destruction.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 5: Company Analysis: Past and Present · Exam Prep Notes
+</footer>
+
+</body>
+</html>

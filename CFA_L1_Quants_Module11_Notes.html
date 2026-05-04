@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 11: Introduction to Big Data Techniques</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --purple: #9b6fc4;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #120d1a 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(155,111,196,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(155,111,196,0.12); color: var(--purple); border: 1px solid rgba(155,111,196,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--purple); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--purple); border-color: var(--purple); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--purple); background: rgba(155,111,196,0.1); border: 1px solid rgba(155,111,196,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--purple); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p + p { margin-top: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .purple-box { background: #15101e; border-left: 3px solid var(--purple); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .purple-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple); margin-bottom: 8px; }
+  .purple-box .f { color: #d4b8f0; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .purple-box .note { color: #a890cc; font-size: 12.5px; margin-top: 10px; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mc-title.purple { color: var(--purple); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--purple); font-weight: 600; font-size: 13px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--purple); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--purple); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* V-badge pills */
+  .v-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; margin-right: 6px; }
+  .v-vol { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .v-vel { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .v-var { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .v-ver { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+
+  /* ML flow block */
+  .flow-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .flow-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .flow-row:last-child { border-bottom: none; }
+  .flow-icon { background: rgba(155,111,196,0.1); color: var(--purple); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .flow-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .flow-content strong { color: var(--accent); }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 11</div>
+  <h1>Introduction to <span>Big Data</span> Techniques</h1>
+  <p>Fintech · Big Data (4 Vs) · Alternative data sources · AI &amp; Machine Learning · Supervised / Unsupervised / Deep Learning · NLP · Data Science applications for investment management.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Fintech Overview</a>
+  <a class="toc-item" href="#s2">02 · Big Data &amp; The 4 Vs</a>
+  <a class="toc-item" href="#s3">03 · Data Types &amp; Structure</a>
+  <a class="toc-item" href="#s4">04 · Alternative Data Sources</a>
+  <a class="toc-item" href="#s5">05 · AI &amp; Machine Learning</a>
+  <a class="toc-item" href="#s6">06 · ML Types: Supervised / Unsupervised / Deep</a>
+  <a class="toc-item" href="#s7">07 · Overfitting &amp; Underfitting</a>
+  <a class="toc-item" href="#s8">08 · Data Science &amp; Processing</a>
+  <a class="toc-item" href="#s9">09 · NLP &amp; Text Analytics</a>
+  <a class="toc-item" href="#s10">10 · Tools, Languages &amp; Databases</a>
+  <a class="toc-item" href="#s11">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════ SECTION 1: FINTECH ══════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Fintech — The Big Picture</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Fintech</div>
+      <div class="def-body">Technological innovation in the design and delivery of financial services and products. In broader usage, also refers to the companies developing these technologies and the business sector that includes them. Challenging traditional business models of incumbent financial services providers.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Evolution of fintech:</strong> Early fintech = data processing + automation of routine tasks → rule-based execution systems → complex machine learning decision-making → advanced AI surpassing human capabilities in specific tasks.</p>
+    </div>
+
+    <h3>Areas of Fintech Directly Relevant to Investment Analysis</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Analysis of Large Datasets</div>
+        <ul>
+          <li>Traditional data: security prices, corporate financial statements, economic indicators.</li>
+          <li>Alternative data: social media, sensor networks, satellite imagery.</li>
+          <li>Goal: integrate into portfolio manager's decision-making to generate alpha and reduce losses.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">Advanced Analytical Tools</div>
+        <ul>
+          <li>AI techniques better suited for complex, non-linear relationships than traditional methods.</li>
+          <li>Sorting company filings, annual reports, earnings calls to identify important data.</li>
+          <li>Uncovering trends and generating insights on human sentiment and behavior.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 2: BIG DATA & THE 4 VS ══════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Big Data and the 4 Vs</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Big Data</div>
+      <div class="def-body">The vast amount of information being generated by industry, governments, individuals, and electronic devices. Includes both traditional data (stock exchanges, companies, governments) and non-traditional / alternative data (electronic devices, social media, sensor networks, company exhaust). Term in use since the late 1990s.</div>
+    </div>
+
+    <div class="purple-box">
+      <div class="label">★ The 4 Vs of Big Data — Core Characteristics</div>
+      <div class="f">
+        Volume · Velocity · Variety · Veracity
+      </div>
+      <div class="note">
+        The first three Vs (Volume, Velocity, Variety) describe Big Data itself. The fourth V (Veracity) becomes relevant specifically when Big Data is used for inference or prediction.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>V</th>
+            <th>Definition</th>
+            <th>Details</th>
+            <th>Investment Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="v-badge v-vol">Volume</span></td>
+            <td>The amount of data is very large.</td>
+            <td>Millions or even billions of data points. Growing from megabytes/gigabytes to terabytes/petabytes.</td>
+            <td>Traditional analysis methods insufficient; need AI/ML tools. More data → potentially better models if quality is maintained.</td>
+          </tr>
+          <tr>
+            <td><span class="v-badge v-vel">Velocity</span></td>
+            <td>Speed and frequency of data recording/transmission.</td>
+            <td>Real-time or near-real-time data is now the norm. Low-latency (minimal delay) systems required for speed-dependent applications.</td>
+            <td>Critical for high-frequency trading and algorithmic trading strategies. Real-time price feeds, market event data.</td>
+          </tr>
+          <tr>
+            <td><span class="v-badge v-var">Variety</span></td>
+            <td>Data collected from many sources in many formats.</td>
+            <td>Structured (SQL tables), semistructured (HTML code), and unstructured (video, audio, social media) data.</td>
+            <td>Requires specialized tools (NLP, image recognition) to process unstructured data before analysis.</td>
+          </tr>
+          <tr>
+            <td><span class="v-badge v-ver">Veracity</span></td>
+            <td>Credibility and reliability of different data sources.</td>
+            <td>The 4th V — applies specifically when Big Data is used for inference or prediction. Big Data amplifies the "quality vs. quantity" challenge.</td>
+            <td>Selection bias, missing data, outliers, and data quality must be assessed. Legal/ethical issues with alternative data (e.g., privacy, consent).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: The 4 Vs</div>
+      <p><strong>"Very Valuable Ventures Verified"</strong> — <strong>V</strong>olume, <strong>V</strong>elocity, <strong>V</strong>ariety, <strong>V</strong>eracity. The first three describe the DATA itself. Veracity is the fourth V that applies when you USE the data for prediction. It's the quality check — "Can we trust it?"</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 3: DATA TYPES ══════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Data Types: Structured, Semistructured, Unstructured</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Structured Data</div>
+        <ul>
+          <li>Organized in tables (rows and columns).</li>
+          <li>Stored in databases where each field represents the same type of information.</li>
+          <li>Examples: SQL tables, financial databases, trade prices, earnings reports.</li>
+          <li>Traditional analytical tools work directly.</li>
+          <li>Database: SQL, SQLite.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Semistructured Data</div>
+        <ul>
+          <li>Has attributes of both structured and unstructured data.</li>
+          <li>Has some organizational tags or markers but doesn't fit a rigid tabular model.</li>
+          <li>Example: HTML code, XML files, JSON data.</li>
+          <li>Requires some processing before analysis but less than fully unstructured.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">Unstructured Data</div>
+        <ul>
+          <li>Disparate, unorganized — cannot be represented in tabular form.</li>
+          <li>Examples: social media posts, tweets, email, text messages, voice recordings, pictures, videos, blogs, satellite imagery.</li>
+          <li>Requires specialized applications or custom programs before analysis.</li>
+          <li>Database: NoSQL.</li>
+          <li>Most alternative data is unstructured.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Most Big Data / Alternative Data is Unstructured</div>
+      <p>The majority of alternative data is <strong>unstructured</strong> and qualitative in nature (texts, photos, videos, audio). This is why traditional analytical methods cannot always be applied directly — specialized tools (AI, ML, NLP) are needed to process unstructured data before any investment analysis can take place. This is also why data curation (cleaning) is so critical.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 4: ALTERNATIVE DATA SOURCES ══════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Sources of Big Data: Traditional vs. Alternative</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Traditional Data Sources</div>
+        <ul>
+          <li>Corporate: annual reports, regulatory filings, sales/earnings figures, conference calls with analysts.</li>
+          <li>Financial markets: trade prices and volumes, exchange data.</li>
+          <li>Economic: government statistics (trade, employment, payroll data).</li>
+          <li>Typically structured, periodic reporting (quarterly, annual).</li>
+          <li>Lagging indicators of performance — reported after the fact.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">Alternative Data Sources</div>
+        <ul>
+          <li>Non-traditional data from electronic devices, social media, sensor networks, company exhaust.</li>
+          <li>Also called non-traditional data.</li>
+          <li>Mostly unstructured or semi-structured.</li>
+          <li>Can be leading or real-time indicators vs. lagging traditional corporate metrics.</li>
+          <li>Legal/ethical considerations: privacy, consent, regulatory compliance across jurisdictions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Three Main Sources of Alternative Data</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title purple">1. Individuals</div>
+        <ul>
+          <li>Text, video, photo, audio formats.</li>
+          <li>Website clicks, time spent on webpages.</li>
+          <li>Social media posts, product/service reviews.</li>
+          <li>Web search logs, email, e-commerce data.</li>
+          <li>Typically <strong>unstructured</strong>. Growing rapidly with online activity.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">2. Business Processes</div>
+        <ul>
+          <li>Information flows from corporations and public entities.</li>
+          <li>Credit card / transaction data, direct sales data.</li>
+          <li>Corporate exhaust: supply chain info, banking records, retail POS scanner data.</li>
+          <li>Typically <strong>structured</strong>.</li>
+          <li>Can be leading or real-time performance indicators vs. lagging traditional metrics.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">3. Sensors</div>
+        <ul>
+          <li>Smart phones, cameras, RFID chips, satellites.</li>
+          <li>Connected via wireless networks.</li>
+          <li>Satellite imagery: retail parking lots, shipping, agriculture, oil rigs.</li>
+          <li>Can be <strong>unstructured</strong>. Volume is orders of magnitude larger than individual/business data.</li>
+          <li>Internet of Things (IoT): smart buildings, vehicles, appliances sharing data.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Alternative Data Investment Applications</div>
+      <p>From retail sales data to social media sentiment to satellite imagery — alternative data provides insights into consumer behavior, firm performance, and market trends that traditional data cannot. Examples: satellite images of parking lots count shoppers before earnings announcements; social media sentiment predicts IPO performance; credit card transaction data reveals real-time spending trends ahead of quarterly reports.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Legal &amp; Ethical Issues with Alternative Data</div>
+      <p>Web scraping can capture personally protected information. Data may have been published without the explicit knowledge or consent of individuals. Best practices are still developing across jurisdictions; regulatory approaches can conflict. Investment professionals must assess legal and ethical dimensions before using alternative data in investment decisions.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 5: AI & ML ══════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Artificial Intelligence &amp; Machine Learning</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="def-block">
+        <div class="def-term">Artificial Intelligence (AI)</div>
+        <div class="def-body">Computer systems capable of performing tasks that traditionally required human intelligence, at levels comparable to or superior to those of human beings. Encompasses decision-making ability, cognitive tasks, pattern recognition, and reasoning. Historical example: expert systems using "if-then" rules. Now includes neural networks, deep learning, NLP.</div>
+      </div>
+      <div class="def-block">
+        <div class="def-term">Machine Learning (ML)</div>
+        <div class="def-body">A subset of AI. Computer-based techniques that extract knowledge from large amounts of data <em>without making assumptions about the data's underlying probability distribution</em>. Goal: automate decision-making by generalizing ("learning") from known examples to determine underlying structure. Simply put: <strong>"Find the pattern, apply the pattern."</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why ML requires Big Data:</strong> ML algorithms require massive amounts of data for "training." Historically, insufficient data limited ML applications. The growth of Big Data has provided ML (especially neural networks) with sufficient data to improve modeling and predictive accuracy. Without enough data, the model cannot train and validate properly.</p>
+    </div>
+
+    <h3>How ML Works — The Training Process</h3>
+    <div class="flow-block">
+      <div class="flow-row">
+        <div class="flow-icon">IN</div>
+        <div class="flow-content">Algorithm is given <strong>inputs</strong> (a set of variables or datasets) and possibly <strong>outputs</strong> (target/labeled data, in supervised learning). The "inputs" are the features/predictors; the "outputs" are what the model is trying to predict.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">TR</div>
+        <div class="flow-content"><strong>Training dataset:</strong> algorithm identifies relationships between inputs and outputs based on historical patterns. The model parameters are fitted/optimized on this data. This is where "learning" occurs.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">VL</div>
+        <div class="flow-content"><strong>Validation dataset:</strong> relationships learned in training are validated and the model is tuned/refined. Used to prevent overfitting and select optimal model complexity. Parameters are not fitted again — only model configuration is adjusted.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">TS</div>
+        <div class="flow-content"><strong>Test dataset:</strong> final assessment of the model's ability to predict well on completely new, unseen data. The gold standard — provides an unbiased estimate of real-world performance. Data not used in training or validation.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">→</div>
+        <div class="flow-content">Once trained, validated, and tested — the ML model can be deployed to <strong>predict outcomes</strong> based on other new datasets.</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ML Still Requires Human Judgment</div>
+      <p>Despite automation, ML is not fully autonomous. Humans must: (1) understand the underlying data, (2) select appropriate ML techniques, (3) ensure data is clean and free of biases, (4) have sufficient data for training and validation, (5) interpret results and catch "black box" outputs that may not be explainable. ML is a tool — human expertise guides its application.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 6: ML TYPES ══════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Types of Machine Learning</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title green">Supervised Learning</div>
+        <ul>
+          <li>Computers learn to model relationships from <strong>labeled</strong> training data — both inputs AND outputs are identified for the algorithm.</li>
+          <li>After training, used to predict outcomes for new data.</li>
+          <li>Investment examples:
+            <ul style="padding-left:14px; margin-top:6px;">
+              <li>Predicting next-day stock return direction (up/down/flat).</li>
+              <li>Identifying the best signal/variable for forecasting returns.</li>
+              <li>Credit scoring, fraud detection.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">Unsupervised Learning</div>
+        <ul>
+          <li>Computers are given <strong>only data</strong> — no labeled outputs. Algorithm seeks to describe the data and its underlying structure.</li>
+          <li>Goal: discover hidden patterns, groupings, or structure in data.</li>
+          <li>Investment examples:
+            <ul style="padding-left:14px; margin-top:6px;">
+              <li>Grouping companies into peer groups based on financial characteristics (rather than standard sector classifications).</li>
+              <li>Clustering securities by risk/return profile.</li>
+              <li>Anomaly detection.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">Deep Learning</div>
+        <ul>
+          <li>Uses neural networks with many <strong>hidden layers</strong> for multistage, non-linear data processing.</li>
+          <li>Can use supervised OR unsupervised approaches.</li>
+          <li>Layered approach: simple concepts inform analysis of more complex concepts.</li>
+          <li>Investment examples:
+            <ul style="padding-left:14px; margin-top:6px;">
+              <li>Image recognition from satellite data.</li>
+              <li>Speech recognition (earnings calls).</li>
+              <li>Pattern recognition in large financial time series.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Summary: Three ML Types</div>
+      <div class="f">
+        Supervised:   Labeled inputs + outputs → predict new outputs from new inputs<br>
+        Unsupervised: Only inputs (no labels)  → discover structure/patterns in data<br>
+        Deep Learning: Neural networks + hidden layers → multi-stage non-linear analysis<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(can use supervised or unsupervised approach)
+      </div>
+      <div class="note">
+        Neural networks (underlying deep learning) have existed since 1958. Improvements in algorithms provide more accurate models requiring less computing power than earlier versions. Better at image, pattern, and speech recognition. Neural network basics: programming based on how our brain learns and processes information.
+      </div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: Supervised vs. Unsupervised</div>
+      <p><strong>Supervised = Teacher is present</strong> — the algorithm is given both the questions (inputs) AND the answers (labeled outputs), like a student learning from an answer key. <strong>Unsupervised = No teacher</strong> — only data is given, the algorithm must figure out the structure on its own, like sorting a pile of objects into groups without being told the categories. Deep learning = many layers of neurons, like peeling an onion one layer at a time.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 7: OVERFITTING & UNDERFITTING ══════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Overfitting, Underfitting &amp; the Black Box Problem</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="warn">
+        <div class="warn-label">⚠️ Overfitting</div>
+        <p>The ML model learns the training data <strong>too precisely</strong> — it has been "overtrained." It treats noise in the data as true parameters. Result: the model discovers "false" relationships or "unsubstantiated" patterns → prediction errors on new data. The model is <strong>too complex</strong>. Cannot generalize to new datasets. This is the most tested Big Data pitfall on the exam.</p>
+      </div>
+      <div class="warn">
+        <div class="warn-label">⚠️ Underfitting</div>
+        <p>The ML model treats <strong>true parameters as if they are noise</strong> — it fails to recognize real relationships within the training data. Result: misses patterns that underlie the data. The model is <strong>too simplistic</strong>. Also produces poor predictions but for the opposite reason — not enough model complexity to capture the true relationship.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issue</th><th>What Happens</th><th>Model Complexity</th><th>Training Performance</th><th>New Data Performance</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Overfitting</td>
+            <td>Model learns noise as signal; "false" patterns discovered</td>
+            <td>Too complex</td>
+            <td>Excellent (fits training data perfectly)</td>
+            <td>Poor (fails to generalize)</td>
+          </tr>
+          <tr>
+            <td>Underfitting</td>
+            <td>Model misses true patterns; true signal treated as noise</td>
+            <td>Too simple</td>
+            <td>Poor (can't capture even the training data well)</td>
+            <td>Poor (missed patterns)</td>
+          </tr>
+          <tr>
+            <td>Good Fit</td>
+            <td>Model captures true relationships without memorizing noise</td>
+            <td>Appropriate</td>
+            <td>Good</td>
+            <td>Good (generalizes well)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">"Black Box" Problem</div>
+      <div class="def-body">Because ML techniques are not explicitly programmed with rules, they can appear opaque — they arrive at outcomes that might not be entirely understood or explainable by humans. The model works, but why it works is not always transparent. This is a significant concern in regulated investment management contexts where explainability and auditability of decisions is required.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why the Train / Validation / Test Split Prevents Overfitting</div>
+      <p>The three-way data split is the key defense against overfitting. Training data fits the model. Validation data checks whether the fitted model generalizes — if performance drops sharply on validation vs. training, the model is overfitting. Test data provides final, unbiased performance assessment on completely unseen data. Never use test data during model development — its purity is what makes the final evaluation meaningful.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 8: DATA SCIENCE & PROCESSING ══════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Data Science &amp; Data Processing Methods</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Data Science</div>
+      <div class="def-body">An interdisciplinary field that harnesses advances in computer science (including ML), statistics, and other disciplines for the purpose of extracting information from Big Data (or data in general). Data scientists/analysts extract information and insights for business and investment purposes.</div>
+    </div>
+
+    <h3>Five Data Processing Methods (CSSST)</h3>
+    <div class="flow-block">
+      <div class="flow-row">
+        <div class="flow-icon">1</div>
+        <div class="flow-content"><strong>Capture</strong> — How data are collected and transformed into a usable format. <strong>Low-latency systems</strong> (minimal delay, high-volume data communication) are essential for automated trading. <strong>High-latency systems</strong> do not require real-time data.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">2</div>
+        <div class="flow-content"><strong>Curation</strong> — Ensuring data quality and accuracy through a <strong>data cleaning</strong> exercise. Reviewing all data to detect errors, bad/inaccurate data, and making adjustments for missing data. Critical before any analysis — "garbage in, garbage out."</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">3</div>
+        <div class="flow-content"><strong>Storage</strong> — How data will be recorded, archived, and accessed. Underlying database design. Key consideration: structured vs. unstructured data, and whether low-latency solutions are needed for real-time access.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">4</div>
+        <div class="flow-content"><strong>Search</strong> — How to query data. Big Data has created the need for advanced applications capable of examining and reviewing large quantities of data to locate requested content. Simple SQL queries are insufficient for massive unstructured datasets.</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-icon">5</div>
+        <div class="flow-content"><strong>Transfer</strong> — How data moves from the source/storage location to the analytical tool. Could be through a direct data feed (e.g., a stock exchange's price feed) or batch file transfer.</div>
+      </div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: Five Data Processing Steps</div>
+      <p><strong>"Can Clever Students Store Text?"</strong> — <strong>C</strong>apture, <strong>C</strong>uration, <strong>S</strong>torage, <strong>S</strong>earch, <strong>T</strong>ransfer. The order roughly follows the data lifecycle: collect it → clean it → store it → find what you need → move it to your analytical tool.</p>
+    </div>
+
+    <h3>Data Visualization</h3>
+    <div class="card">
+      <p>An important tool for understanding Big Data. Visualization = how data is formatted, displayed, and summarized in graphical form.</p>
+      <ul style="padding-left:20px; margin-top:10px; line-height:2.0;">
+        <li><strong>Traditional structured data:</strong> tables, charts, trend lines.</li>
+        <li><strong>Unstructured data:</strong> interactive 3D graphics, multidimensional charts with color/shapes/sizes, heat maps, tree diagrams, network graphs.</li>
+        <li><strong>Tag cloud:</strong> words sized by frequency — words appearing more often shown in larger font. Applicable to textual data. Key words in module: "data," "ML," "learning," "AI," "techniques."</li>
+        <li><strong>Mind map:</strong> variation of tag cloud — shows how different concepts are related to each other (rather than just word frequency).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 9: NLP & TEXT ANALYTICS ══════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Text Analytics &amp; Natural Language Processing (NLP)</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="def-block">
+        <div class="def-term">Text Analytics</div>
+        <div class="def-body">Use of computer programs to analyze and derive meaning from large, unstructured text- or voice-based datasets (company filings, reports, earnings calls, social media, email, surveys). Includes automated information retrieval, lexical analysis (word frequency), pattern recognition based on key words/phrases, and predictive analysis for consumer sentiment.</div>
+      </div>
+      <div class="def-block">
+        <div class="def-term">Natural Language Processing (NLP)</div>
+        <div class="def-body">A field at the intersection of computer science, AI, and linguistics. Focuses on developing programs to analyze and interpret human language. The most important application within text analytics. Can scale analysis across thousands of companies globally — work previously humanly impossible.</div>
+      </div>
+    </div>
+
+    <h3>NLP Tasks and Investment Applications</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title purple">NLP Automated Tasks</div>
+        <ul>
+          <li>Translation</li>
+          <li>Speech recognition</li>
+          <li>Text mining</li>
+          <li>Sentiment analysis</li>
+          <li>Topic analysis</li>
+          <li>Compliance monitoring: detecting fraud, reviewing employee communications for policy adherence, protecting confidential information.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">Investment Management Applications</div>
+        <ul>
+          <li>Monitoring analyst commentary → detect sentiment shifts before recommendation changes are formalized.</li>
+          <li>Analyzing central bank (Fed, ECB) transcripts → detect subtle shifts in tone on interest rates, inflation, output.</li>
+          <li>Predicting IPO performance from Twitter sentiment.</li>
+          <li>Analyzing annual reports and earnings calls at scale (millions of pages → beyond human capacity).</li>
+          <li>Identifying short-term trend indicators from social media / news sentiment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why NLP Matters for CFA: Analyst Sentiment Example</div>
+      <p>Analysts rarely change buy/hold/sell recommendations explicitly — instead they embed nuanced commentary in written reports. NLP can assign sentiment ratings (very negative → very positive) to these reports and detect shifts in tone <em>before</em> a formal recommendation change. This gives investors a potential informational edge. The ability to scale this across thousands of companies worldwide is only possible through NLP + ML — not humanly possible otherwise.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 10: TOOLS, LANGUAGES & DATABASES ══════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Programming Languages &amp; Databases</h2>
+    </div>
+
+    <h3>Key Programming Languages</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Language</th><th>Key Features</th><th>Primary Use in Finance/Fintech</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Python</td>
+            <td>Open-source, free, accessible to non-programmers. Low learning curve.</td>
+            <td>Basis for many fintech applications. Advanced analytics, ML models, data processing. Most widely used in finance data science.</td>
+          </tr>
+          <tr>
+            <td>R</td>
+            <td>Open-source, free. Traditional statistical analysis language. Rich mathematical packages.</td>
+            <td>Statistical analysis, ML, optimization, econometrics, financial analysis. Used heavily in academic research.</td>
+          </tr>
+          <tr>
+            <td>Java</td>
+            <td>Runs on different computers, servers, and operating systems (platform-independent).</td>
+            <td>Underlying language for many internet applications. Enterprise-level financial systems.</td>
+          </tr>
+          <tr>
+            <td>C and C++</td>
+            <td>Specialized. Optimize source code for superior calculation speed and processing performance.</td>
+            <td>Algorithmic trading and high-frequency trading (HFT) — speed is critical.</td>
+          </tr>
+          <tr>
+            <td>Excel VBA</td>
+            <td>Bridges programming and manual data processing. Run macros to automate tasks.</td>
+            <td>Automating data tables, formulas, web data queries, customized reports. Gateway to automation for non-programmers.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Database Types</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title blue">SQL</div>
+        <p>Database query language for <strong>structured data</strong>. Data stored in tables with rows and columns. Run on a server; accessed via SQL queries. Standard for traditional financial databases.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title green">SQLite</div>
+        <p>Database for <strong>structured data</strong>. Embedded into the program — does NOT require a server. Most common database for mobile apps requiring data access. Lightweight version of SQL.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title purple">NoSQL</div>
+        <p>Database for <strong>unstructured data</strong>. Data cannot be summarized in traditional rows/columns. Required when data is too flexible, diverse, or large for relational tables. Used for Big Data / alternative data storage.</p>
+      </div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Quick Reference: Data Type → Database Match</div>
+      <p><strong>Structured data → SQL or SQLite</strong> (tables, rows, columns). <strong>Unstructured data → NoSQL</strong> (flexible, no fixed schema). Remember: "No SQL" = "No table structure required." C/C++ = speed for HFT. Python = most versatile for fintech analytics.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 11: EXAM CHECKLIST ══════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Fintech</strong> = technological innovation in the design and delivery of financial services. Relevant areas for investment: analysis of large datasets + advanced analytical tools (AI/ML).</li>
+        <li>✅ <strong>Big Data = 3 Vs of data + 1 V when used for prediction:</strong> Volume (amount), Velocity (speed/frequency), Variety (formats/sources), Veracity (credibility/reliability — 4th V, applies for inference/prediction).</li>
+        <li>✅ <strong>Traditional data:</strong> structured, periodic, lagging indicators (annual reports, price/volume, economic stats). <strong>Alternative data:</strong> non-traditional, mostly unstructured, can be leading or real-time.</li>
+        <li>✅ <strong>Three main alternative data sources:</strong> (1) Individuals (social media, reviews, search logs — unstructured), (2) Business processes (credit cards, corporate exhaust, POS data — structured, leading/real-time), (3) Sensors (satellites, RFID, smartphones, IoT — often unstructured, massive volume).</li>
+        <li>✅ <strong>Data structure:</strong> Structured = tables/rows/columns (SQL). Semistructured = HTML/XML. Unstructured = video, audio, social media, email (NoSQL). Most alternative data is unstructured.</li>
+        <li>✅ <strong>AI</strong> = computer systems that perform tasks requiring human intelligence. Includes rule-based expert systems, neural networks, deep learning. Subset includes ML.</li>
+        <li>✅ <strong>Machine Learning (ML)</strong> = "find the pattern, apply the pattern." Extracts knowledge from data without assuming an underlying probability distribution. Requires massive data for training. Three dataset splits: Training → Validation → Test.</li>
+        <li>✅ <strong>Supervised learning:</strong> labeled inputs AND outputs provided → model learns to predict outputs. Example: predicting stock return direction.</li>
+        <li>✅ <strong>Unsupervised learning:</strong> only inputs (no labeled outputs) → discover hidden structure/groupings. Example: grouping companies into peer groups by financial characteristics.</li>
+        <li>✅ <strong>Deep learning:</strong> neural networks with many hidden layers → multi-stage non-linear processing. Used for image/speech/pattern recognition. Can be supervised or unsupervised.</li>
+        <li>✅ <strong>Overfitting:</strong> model too complex → learns noise as signal → excellent on training data, poor on new data. Most important ML pitfall. Prevention: use validation and test datasets.</li>
+        <li>✅ <strong>Underfitting:</strong> model too simple → misses true patterns → poor on both training and new data.</li>
+        <li>✅ <strong>Black box problem:</strong> ML outputs may not be explainable — the model arrives at answers that humans cannot fully understand or audit. Major concern for regulated investment management.</li>
+        <li>✅ <strong>Five data processing methods (CSSST):</strong> Capture (collect/transform), Curation (clean/ensure quality), Storage (record/archive/access), Search (query), Transfer (move to analytical tool).</li>
+        <li>✅ <strong>Data visualization:</strong> Tag cloud (words sized by frequency), Mind map (shows relationships between concepts). Heat maps, tree diagrams, network graphs for complex multidimensional data.</li>
+        <li>✅ <strong>Text analytics:</strong> deriving meaning from unstructured text/voice data (filings, calls, social media). Includes lexical analysis (word frequency), pattern recognition, sentiment analysis.</li>
+        <li>✅ <strong>NLP (Natural Language Processing):</strong> intersection of computer science, AI, and linguistics. Key application of text analytics. Performs translation, speech recognition, sentiment analysis, topic analysis. Investment use: detect shifts in analyst sentiment before recommendation changes; analyze central bank communications; predict IPO performance from Twitter sentiment.</li>
+        <li>✅ <strong>Programming languages:</strong> Python (versatile, fintech), R (statistics/ML), Java (internet apps), C/C++ (HFT speed), Excel VBA (automation for non-programmers).</li>
+        <li>✅ <strong>Databases:</strong> SQL (structured, requires server), SQLite (structured, no server, mobile apps), NoSQL (unstructured data).</li>
+        <li>✅ <strong>Big Data challenges:</strong> selection bias, missing data, outliers, data quality, volume sufficiency, appropriateness for analysis, legal/ethical issues with alternative data (privacy, consent, cross-jurisdictional regulatory conflicts).</li>
+      </ul>
+    </div>
+
+    <div class="purple-box">
+      <div class="label">★ COMPLETE CONCEPT QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ THE 4 Vs ═══<br>
+        Volume:   massive amount (terabytes, petabytes)<br>
+        Velocity: speed/frequency — real-time or near real-time<br>
+        Variety:  structured / semistructured / unstructured<br>
+        Veracity: credibility/reliability — applies when used for INFERENCE/PREDICTION<br><br>
+
+        ═══ ALTERNATIVE DATA SOURCES ═══<br>
+        Individuals:       unstructured; social media, reviews, clicks, searches<br>
+        Business Processes: structured; credit cards, corporate exhaust, POS data; leading/real-time<br>
+        Sensors:           often unstructured; satellites, IoT, RFID; exponential growth<br><br>
+
+        ═══ ML TYPES ═══<br>
+        Supervised:   labeled inputs + outputs → predict; e.g. stock direction forecast<br>
+        Unsupervised: only inputs → discover structure; e.g. company peer groups<br>
+        Deep Learning: neural nets + hidden layers → multi-stage; image/speech recognition<br><br>
+
+        ═══ ML DATASET SPLITS ═══<br>
+        Training   → fit model parameters (learn patterns)<br>
+        Validation → tune/select model (prevent overfitting)<br>
+        Test       → final unbiased performance assessment on new data<br><br>
+
+        ═══ OVERFITTING vs. UNDERFITTING ═══<br>
+        Overfitting:   too complex; learns noise; good training, bad new data<br>
+        Underfitting:  too simple; misses patterns; bad training AND new data<br><br>
+
+        ═══ DATA PROCESSING (CSSST) ═══<br>
+        Capture → Curation (clean) → Storage → Search → Transfer<br><br>
+
+        ═══ DATABASE TYPES ═══<br>
+        SQL:    structured, table-based, requires server<br>
+        SQLite: structured, embedded, no server (mobile apps)<br>
+        NoSQL:  unstructured, flexible schema<br><br>
+
+        ═══ PROGRAMMING LANGUAGES ═══<br>
+        Python: fintech analytics (most used)  |  R: statistics/ML<br>
+        Java:   internet apps                  |  C/C++: HFT speed<br>
+        Excel VBA: automation for non-programmers
+      </div>
+      <div class="note">
+        <strong>3 Vs describe Big Data; Veracity applies when using it for inference/prediction.</strong><br>
+        <strong>ML = "find the pattern, apply the pattern" — no distributional assumptions.</strong> Requires large training data. Human judgment still required.<br>
+        <strong>Overfitting</strong> (too complex, noise as signal) is the key ML pitfall. Solved by validation/test split.<br>
+        <strong>NLP</strong> = text analytics applied to human language. Can detect analyst sentiment shifts before recommendation changes.<br>
+        <strong>Structured → SQL/SQLite; Unstructured → NoSQL.</strong> Most alternative data is unstructured.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 11: Introduction to Big Data Techniques · Exam Prep Notes
+</footer>
+</body>
+</html>

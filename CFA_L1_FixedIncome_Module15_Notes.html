@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 15: Credit Analysis for Government Issuers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+    --sov-bg: #10160f; --sov-border: #2a5a3a;
+    --nonsov-bg: #0f1520; --nonsov-border: #1a3a6a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d140e 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .sov-box { background: var(--sov-bg); border-left: 3px solid var(--sov-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .sov-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4a9a6a; margin-bottom: 10px; }
+  .sov-box .f { color: #a8d8b8; font-size: 13.5px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .nonsov-box { background: var(--nonsov-bg); border-left: 3px solid var(--nonsov-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .nonsov-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4a7aaa; margin-bottom: 10px; }
+  .nonsov-box .f { color: #a8c8e8; font-size: 13.5px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .four-col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col, .four-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #131e14; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent3); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.sov-row { background: rgba(76,201,138,0.04); }
+  tbody tr.corp-row { background: rgba(76,139,201,0.04); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent3); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  tbody td.good { color: var(--accent3); font-weight: 700; }
+  tbody td.bad { color: var(--danger); font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent3); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent3); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* Qualitative factor cards */
+  .qual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .qual-grid { grid-template-columns: 1fr; } }
+  .qf-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .qf-card.instit { background: rgba(201,168,76,0.05); border-top: 3px solid var(--accent); }
+  .qf-card.fiscal { background: rgba(76,201,138,0.05); border-top: 3px solid var(--accent3); }
+  .qf-card.monetary { background: rgba(76,139,201,0.05); border-top: 3px solid var(--accent2); }
+  .qf-card.econ { background: rgba(106,63,201,0.05); border-top: 3px solid #9a7ce8; }
+  .qf-card.external { background: rgba(201,76,76,0.05); border-top: 3px solid var(--danger); }
+  .qf-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .instit .qf-title { color: var(--accent); }
+  .fiscal .qf-title { color: var(--accent3); }
+  .monetary .qf-title { color: var(--accent2); }
+  .econ .qf-title { color: #9a7ce8; }
+  .external .qf-title { color: var(--danger); }
+  .qf-card p, .qf-card li { font-size: 13px; color: var(--text); }
+  .qf-card ul { padding-left: 14px; }
+  .qf-card li { margin-bottom: 5px; }
+
+  /* Non-sovereign issuer type cards */
+  .nonsov-types { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .nonsov-types { grid-template-columns: 1fr; } }
+  .nt-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .nt-card.agency { background: rgba(76,201,138,0.04); border-left: 3px solid var(--accent3); }
+  .nt-card.bank { background: rgba(76,139,201,0.04); border-left: 3px solid var(--accent2); }
+  .nt-card.supra { background: rgba(201,168,76,0.04); border-left: 3px solid var(--accent); }
+  .nt-card.regional { background: rgba(106,63,201,0.04); border-left: 3px solid #9a7ce8; }
+  .nt-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .agency .nt-title { color: var(--accent3); }
+  .bank .nt-title { color: var(--accent2); }
+  .supra .nt-title { color: var(--accent); }
+  .regional .nt-title { color: #9a7ce8; }
+  .nt-card p, .nt-card li { font-size: 13px; color: var(--text); }
+  .nt-card ul { padding-left: 14px; }
+  .nt-card li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 15</div>
+  <h1>Credit Analysis for <span>Government Issuers</span></h1>
+  <p>Exam-ready notes with full depth: sovereign vs. corporate credit analysis distinctions; the five qualitative factors (Exhibit 1 &amp; 2) — government institutions, fiscal flexibility, monetary effectiveness, economic flexibility, external status; sovereign immunity and willingness to pay; quantitative factors — fiscal strength (Exhibit 4), economic growth (Exhibit 6), external stability; the reserve currency advantage; domestic vs. foreign currency debt; four non-sovereign issuer types (agencies, gov't banks, supranationals, regional governments); GO bonds vs. revenue bonds; key real-world examples (Uruguay restructuring, Romania, Moldova, Detroit, AAHK, KfW, Lima Metro).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Sovereign vs. Corporate Credit — Key Differences</a>
+  <a class="toc-item" href="#s2">02 · Qualitative Factors in Sovereign Analysis</a>
+  <a class="toc-item" href="#s3">03 · Sovereign Immunity &amp; Willingness to Pay</a>
+  <a class="toc-item" href="#s4">04 · Quantitative Factors — Fiscal, Economic, External</a>
+  <a class="toc-item" href="#s5">05 · Reserve Currency &amp; Domestic vs. Foreign Currency Debt</a>
+  <a class="toc-item" href="#s6">06 · Romania vs. Moldova — Country Comparison</a>
+  <a class="toc-item" href="#s7">07 · Non-Sovereign Government Issuers — Four Types</a>
+  <a class="toc-item" href="#s8">08 · GO Bonds vs. Revenue Bonds</a>
+  <a class="toc-item" href="#s9">09 · Case Studies — Real-World Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: SOVEREIGN vs. CORPORATE            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Sovereign vs. Corporate Credit — Fundamental Differences</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Dimension</th><th>Corporate Issuers</th><th>Sovereign Issuers</th></tr>
+        </thead>
+        <tbody>
+          <tr class="corp-row">
+            <td class="label-col">Use of Proceeds</td>
+            <td>Fund working capital and fixed assets to generate profits</td>
+            <td>Conduct fiscal policy; supply public goods and services (infrastructure, health care, education); fund government expenditures</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Primary Repayment Source</td>
+            <td>Operating cash flow (revenue from selling goods/services)</td>
+            <td>Tax revenue (income, corporate, VAT/sales taxes, tariffs, fees, state enterprise profits)</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Credit Risk Hierarchy</td>
+            <td>Credit risk varies; no inherent advantage from issuer type</td>
+            <td>Generally lowest credit risk of any issuer within a specific country (taxing authority over all economic activity)</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Enforceability of Claims</td>
+            <td>Creditors can force bankruptcy and liquidate assets in most jurisdictions</td>
+            <td>Sovereign immunity limits bondholders' legal recourse — cannot force bankruptcy or asset liquidation</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Key Analysis Framework</td>
+            <td>Bottom-up: profitability, coverage, leverage, covenants, collateral</td>
+            <td>Top-down: macroeconomic approach; qualitative + quantitative sovereign-specific factors; ability AND willingness to pay</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Financial Data Quality</td>
+            <td>Periodic financial statements (GAAP/IFRS) — standardized and comparable</td>
+            <td>Government economic data — varying quality and timing, limited comparability across countries, subject to revision and political considerations</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Key Denominator in Ratios</td>
+            <td>Revenue, total assets, EBITDA</td>
+            <td>GDP (economic activity subject to taxation) or government revenue</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Sovereigns Generally Have the Lowest Credit Risk</div>
+      <p>A sovereign government has the legal right to tax <strong>all private economic activity</strong> within its jurisdiction. Unlike a company that may face competition, pricing pressure, or industry decline, a sovereign's tax base is the entire domestic economy. It can also, in extremis, print money (inflation risk) or restructure debt — options unavailable to corporate issuers. Advanced economy sovereigns in domestic currency are often considered default-risk-free (the US, Germany, Japan) because they can always print currency to repay domestic currency debt — at the cost of inflation, but without technical default.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: QUALITATIVE FACTORS                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Qualitative Factors in Sovereign Credit Analysis — Exhibits 1 &amp; 2</h2>
+    </div>
+
+    <div class="card">
+      <p>Sovereign creditworthiness is assessed using a combination of qualitative institutional, economic, and external factors. These five categories (shown in Exhibit 1 and detailed in Exhibit 2) are interdependent — for example, a weak legal system often goes hand in hand with limited ability to collect taxes. They address both the <strong>ability to pay</strong> (economic and fiscal capacity) and the <strong>willingness to pay</strong> (institutional quality and policy commitment).</p>
+    </div>
+
+    <div class="qual-grid">
+      <div class="qf-card instit">
+        <div class="qf-title">① Government Institutions &amp; Policy</div>
+        <p><strong>The foundation of sovereign analysis.</strong> Covers the stability and quality of political and legal institutions that determine how well economic and fiscal policy is designed and implemented.</p>
+        <ul style="margin-top:8px;">
+          <li>Stable, predictable executive, legislative, and judicial institutions</li>
+          <li>Rule of law and enforcement of property rights and contracts</li>
+          <li>Culture of debt repayment; transparency and financial data consistency</li>
+          <li>Ease of doing business within the jurisdiction</li>
+          <li>Political stability: absence of domestic conflict and international tensions</li>
+          <li>Willingness to pay: key factor given sovereign immunity</li>
+        </ul>
+      </div>
+      <div class="qf-card fiscal">
+        <div class="qf-title">② Fiscal Flexibility</div>
+        <p><strong>How well does the government manage its public finances?</strong> Fiscal discipline is about balancing revenue generation with prudent expenditure over the economic cycle.</p>
+        <ul style="margin-top:8px;">
+          <li>Ability to adjust revenues (raise taxes) and expenditures (cut spending) under stress</li>
+          <li>Track record of fiscal discipline over multiple economic cycles</li>
+          <li>Enforceability of tax collection — informal economies reduce the tax base</li>
+          <li>Prudent allocation of public goods spending vs. political pressure</li>
+          <li>Management of sovereign debt outstanding relative to GDP</li>
+          <li>Example: Romania's fiscal reform commitment to reduce deficit below 3% of GDP to meet EU criteria</li>
+        </ul>
+      </div>
+      <div class="qf-card monetary">
+        <div class="qf-title">③ Monetary Effectiveness</div>
+        <p><strong>Can the central bank maintain price stability and economic growth?</strong> Central bank independence is a key qualitative differentiator.</p>
+        <ul style="margin-top:8px;">
+          <li>Central bank independence from government interference — the critical factor</li>
+          <li>Independent CB reduces likelihood of debt monetization (printing money to repay debt)</li>
+          <li>Monetization → higher domestic inflation → lower external currency value</li>
+          <li>Policy credibility: inflation targeting, exchange rate management</li>
+          <li>Financial system development: banking system health, domestic bond market depth</li>
+          <li>Access to open market operations, reserve requirements, interest rate tools</li>
+        </ul>
+      </div>
+      <div class="qf-card econ">
+        <div class="qf-title">④ Economic Flexibility</div>
+        <p><strong>How large, diversified, and resilient is the economy?</strong> The economy is the tax base — its health directly determines the sovereign's repayment capacity.</p>
+        <ul style="margin-top:8px;">
+          <li>Size (GDP) and per capita income — larger, wealthier = more resilient</li>
+          <li>Degree of economic diversification — single-industry or commodity-dependent economies are vulnerable</li>
+          <li>Growth potential: sustainable real GDP growth prospects</li>
+          <li>Adaptability to shocks: ability to recover from crises</li>
+          <li>Emerging/frontier markets: often commodity or agriculture-dependent; informal economy; weak tax collection</li>
+          <li>Competitiveness: export markets, foreign direct investment attraction</li>
+        </ul>
+      </div>
+      <div class="qf-card external" style="grid-column: 1 / -1;">
+        <div class="qf-title">⑤ External Status (Governance)</div>
+        <p><strong>How does the sovereign interact with international capital markets?</strong> Reserve currency status and access to external funding are critical differentiators between advanced and emerging market sovereigns.</p>
+        <ul style="margin-top:8px; columns: 2; column-gap: 20px;">
+          <li>Whether the domestic currency is a <strong>reserve currency</strong> — fully convertible and held by foreign central banks</li>
+          <li>Reserve currency status greatly expands access to foreign investors using domestic currency debt → minimizes default risk</li>
+          <li>Sustainability of structural budget deficits — reserve currency countries can sustain higher debt</li>
+          <li>Exchange rate regime and policy credibility</li>
+          <li>Ability to attract foreign capital (FDI, portfolio flows)</li>
+          <li>Balance of payments position (current account surplus vs. deficit)</li>
+          <li>Geopolitical risk: proximity to conflict, sanctions exposure, political relationships</li>
+          <li>Capital controls and exchange rate restrictions — limit foreign borrowing ability</li>
+          <li>Dependence on supranational funding (IMF, World Bank) = limited market access</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: SOVEREIGN IMMUNITY & WILLINGNESS   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Sovereign Immunity &amp; Willingness to Pay — The Unique Sovereign Risk Dimension</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Sovereign Immunity</div>
+      <div class="def-body">The legal principle under which investors face significant limitations in forcing a sovereign government to declare bankruptcy or liquidate its assets to settle debt claims. Unlike corporate creditors who can pursue court judgments, seize assets, or force liquidation, sovereign bondholders have limited legal recourse in most jurisdictions. This makes <strong>willingness to pay</strong> as important as <strong>ability to pay</strong> for sovereign issuers.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Ability to Pay</div>
+        <ul>
+          <li>Measured by fiscal and economic indicators: tax revenue, GDP, debt ratios, FX reserves</li>
+          <li>Quantitative: can we calculate whether cash flows cover obligations?</li>
+          <li>Applicable to both corporate and sovereign analysis</li>
+          <li>Objective — derived from financial data (though sovereign data quality varies)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Willingness to Pay (Sovereign-Specific)</div>
+        <ul>
+          <li>Government chooses to honor or restructure debt obligations</li>
+          <li>Qualitative: does the government prioritize repayment? Strong institutions?</li>
+          <li><strong>Unique to sovereign analysis</strong> because of sovereign immunity</li>
+          <li>Assessed via: political stability, rule of law, track record, debt culture</li>
+          <li>Countries that CAN pay but WON'T are a distinct category of credit risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Sovereign Default and Restructuring — How It Works in Practice</h3>
+    <div class="card">
+      <p>Since creditors cannot force bankruptcy or seize sovereign assets (sovereign immunity), the typical resolution of sovereign defaults involves <strong>negotiated debt restructuring</strong> with multiple stakeholders:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Involvement of multilateral agencies:</strong> IMF, World Bank, and regional development banks often provide emergency financing in exchange for economic reform commitments. This gives the sovereign breathing room while protecting creditor interests.</li>
+        <li><strong>Debt exchange/restructuring terms:</strong> Extended maturities, reduced interest rates, or reduced principal ("haircut"). Bondholders typically receive better treatment in voluntary restructurings.</li>
+        <li><strong>Voluntary vs. coercive restructuring:</strong> Most restructurings are voluntary (bondholders agree) but may still be classified as a "default in substance" if terms are materially adverse. Uruguay's 2003 exchange (Example 1) was voluntary but analysts classified it as a default due to inadequate compensation.</li>
+        <li><strong>Collective Action Clauses (CACs):</strong> Modern sovereign bonds often include provisions allowing a supermajority of bondholders to agree to restructuring terms binding on all holders — prevents holdout creditors from blocking restructurings.</li>
+      </ul>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Example 1 — Uruguay's 2003 Sovereign Debt Exchange (Classic Restructuring Case)</div>
+      <div class="f">
+        TRIGGER: Economic stagnation + banking crisis + currency depreciation (peso floated June 2002)<br>
+        Sharp rise in debt burden → brink of default<br><br>
+        SOLUTION: IMF-supported, market-friendly debt restructuring (March 2003 announcement)<br>
+        • Extended bond maturities by 5 years<br>
+        • 90% bondholder consent achieved (May 2003)<br>
+        • Transaction was voluntary<br><br>
+        CLASSIFICATION: Despite being voluntary, analysts deemed it a DEFAULT IN SUBSTANCE<br>
+        Reasons: insufficient bondholder compensation + subordination of non-participating holders<br><br>
+        KEY LESSON: Sovereign restructurings can be classified as default even without<br>
+        a formal bankruptcy — the substance of the transaction matters more than the label.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: QUANTITATIVE FACTORS               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Quantitative Factors — Fiscal Strength, Economic Growth, External Stability</h2>
+    </div>
+
+    <div class="card">
+      <p>Unlike corporate analysis (GAAP/IFRS financial statements), sovereign quantitative analysis relies on <strong>government economic data</strong> — which varies in quality, timing, and comparability across countries. Ratios use GDP or government revenue as the denominator (not sales or total assets as for corporates). Analysts use a top-down macroeconomic approach.</p>
+    </div>
+
+    <h3>① Fiscal Strength — Exhibit 4</h3>
+    <div class="formula-box">
+      <div class="label">Key Fiscal Strength Ratios — Debt Burden (Leverage) and Debt Affordability (Coverage)</div>
+      <div class="f">
+        DEBT BURDEN (analogous to leverage):<br>
+        Debt/GDP     = General Government Debt / GDP<br>
+        Debt/Revenue = General Government Debt / Government Revenue<br><br>
+        Higher debt burden ratio → LOWER credit quality → HIGHER default risk<br><br>
+        DEBT AFFORDABILITY (analogous to debt coverage):<br>
+        Interest/GDP     = Government Interest Payments / GDP<br>
+        Interest/Revenue = Government Interest Payments / Government Revenue<br><br>
+        Higher interest/revenue → LOWER credit quality (more revenue consumed by interest)<br><br>
+        FISCAL BALANCE MEASURE:<br>
+        Annual Fiscal Surplus / (Deficit) as % of GDP<br>
+        Positive (surplus) → debt burden improving → better credit trend<br>
+        Negative (deficit) → debt burden worsening → worse credit trend<br><br>
+        ANALOGY TO CORPORATE RATIOS:<br>
+        Debt/GDP ≈ Debt/Total Assets (solvency)<br>
+        Debt/Revenue ≈ Debt/Revenue (leverage on income)<br>
+        Interest/Revenue ≈ Interest Expense/Revenue (debt service burden)
+      </div>
+      <div class="note">
+        <strong>Key difference from corporate ratios:</strong> Denominator is GDP or government revenue (not sales or EBITDA). GDP represents the entire economy available to tax — it's the ultimate tax base. Government revenue represents the portion actually collected. Both are appropriate depending on whether you're measuring economic capacity (GDP) or actual collection efficiency (revenue).<br><br>
+        <strong>Rating agency approach:</strong> These ratios are not used in isolation — they are weighted and combined with qualitative factors in a comprehensive scoring model (as shown in Exhibit 5 for Moody's sovereign ratings).
+      </div>
+    </div>
+
+    <h3>② Economic Growth and Stability — Exhibit 6</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>GDP size:</strong> Absolute economic size — larger economies can withstand shocks better</li>
+        <li><strong>Per capita income:</strong> Wealthier populations generate more tax revenue and are more resilient to downturns</li>
+        <li><strong>Real GDP growth rate:</strong> Historical and projected — higher and more stable growth supports debt sustainability; growing economies don't need to deleverage</li>
+        <li><strong>GDP growth variability (cyclicality):</strong> Volatile growth creates unpredictable tax revenues — higher risk even at the same average growth rate</li>
+        <li><strong>Economic diversification:</strong> Commodity-dependent economies face boom-bust revenue cycles; diversified economies are more stable</li>
+      </ul>
+    </div>
+
+    <h3>③ External Stability — Currency Reserves and External Debt</h3>
+    <div class="formula-box">
+      <div class="label">Key External Stability Ratios</div>
+      <div class="f">
+        CURRENCY RESERVES:<br>
+        FX Reserves/GDP      = FX Reserves / GDP<br>
+        Reserve Ratio        = FX Reserves / External Debt<br><br>
+        Higher FX reserves → more buffer to meet external obligations → better external stability<br><br>
+        EXTERNAL DEBT:<br>
+        External Debt Burden = LT External Debt / GDP<br>
+        External Debt Due    = External Debt Due in Next 12 months / GDP<br><br>
+        Higher external debt → more reliance on foreign funding → greater rollover risk<br><br>
+        CURRENT ACCOUNT:<br>
+        Current Account Surplus → accumulate FX reserves (stronger external position)<br>
+        Current Account Deficit → depend on capital inflows to finance gap (weaker)<br><br>
+        KEY: For non-reserve currency countries, the ability to generate FX cash flows<br>
+        (through exports, remittances, tourism, FDI) is critical to servicing external debt.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: RESERVE CURRENCY                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Reserve Currency Status — The Key Sovereign Credit Differentiator</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Reserve Currency</div>
+      <div class="def-body">A currency that is <strong>fully convertible</strong> and <strong>frequently held by foreign central banks and other investors</strong> as part of their foreign exchange reserves. The US dollar, Euro, Japanese Yen, British Pound, and Swiss Franc are the primary reserve currencies. Reserve currency status confers significant creditworthiness advantages on the sovereign issuer.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Reserve Currency Sovereigns (USD, EUR, GBP, JPY, CHF)</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>Foreign investors willing and able to hold assets in domestic currency (bonds, cash, securities)</li>
+          <li>Vast foreign investor base for domestic currency debt → reduces dependence on domestic savings</li>
+          <li>Can sustain larger structural budget deficits and higher debt/GDP</li>
+          <li>Minimizes likelihood of sovereign default even at high debt levels</li>
+          <li>Can issue virtually unlimited domestic currency debt — default technically optional (can always print to repay)</li>
+          <li>US, Germany, Japan have maintained very high debt levels without credit crises</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Non-Reserve Currency Sovereigns (Emerging/Frontier Markets)</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#dfd0c8;">
+          <li>Exchange rate restrictions or capital controls may limit foreign access</li>
+          <li>Must often borrow in foreign currency (USD, EUR) to attract foreign investors</li>
+          <li>Foreign currency debt creates currency risk: if domestic currency depreciates, debt burden in local terms rises</li>
+          <li>FX reserves and export revenues become critical to service foreign currency debt</li>
+          <li>More likely to need IMF/World Bank/multilateral support</li>
+          <li>Cannot simply "print" foreign currency to repay debt — genuine repayment constraint</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Domestic Currency Debt vs. Foreign Currency Debt</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Domestic Currency Debt</th><th>Foreign Currency Debt</th></tr>
+        </thead>
+        <tbody>
+          <tr class="sov-row">
+            <td class="label-col">Default risk (advanced economies)</td>
+            <td class="good">Near zero — can always print currency to repay</td>
+            <td class="bad">Genuine default risk — cannot print foreign currency</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Repayment constraint</td>
+            <td>Inflation risk (printing devalues currency)</td>
+            <td>Must generate FX reserves or attract foreign capital</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Investor base</td>
+            <td>Primarily domestic; foreign only if reserve currency</td>
+            <td>Foreign investors; broadens access but increases FX risk</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Currency depreciation effect</td>
+            <td>Reduces real burden (inflation erodes real value)</td>
+            <td class="bad">INCREASES debt burden in domestic currency terms</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Examples</td>
+            <td>US Treasuries (USD), German Bunds (EUR)</td>
+            <td>Romania's EUR bonds; most emerging market external debt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ The "Original Sin" Problem in Emerging Markets</div>
+      <p>Many emerging market countries historically could not attract foreign investors with domestic currency bonds — foreigners demanded USD or EUR-denominated bonds to avoid FX risk. This creates a <strong>currency mismatch</strong>: government revenues are in local currency but debt obligations are in foreign currency. When the domestic currency depreciates (often during the very economic stress that causes the fiscal problem), the FX debt burden skyrockets — potentially triggering a sovereign default. This is why reserve currency status is so critical: it eliminates this mismatch for the issuers that have it.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: ROMANIA vs. MOLDOVA               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Romania vs. Moldova — Country Comparison (Example 4)</h2>
+    </div>
+
+    <div class="card">
+      <p>Romania (IG: Baa3/BBB–) and Moldova (HY: B3/B–) share linguistic, cultural, historical ties and a common border. Both transitioned from socialism to market economies. Yet their sovereign credit profiles diverge dramatically — illustrating how the qualitative factors translate into real creditworthiness differences.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Qualitative Factor</th><th>Romania (IG: Baa3/BBB–)</th><th>Moldova (HY: B3/B–)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="sov-row">
+            <td class="label-col">Government Institutions</td>
+            <td>EU member since 2007; stable representative democracy; EU convergence criteria focus; active domestic bond market</td>
+            <td>Unstable democracy; weak governance; widespread corruption; unresolved Transnistria conflict; EU application only in 2022</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Fiscal Flexibility</td>
+            <td>Committed to deficit below 3% of GDP (EU Maastricht criteria); fiscal consolidation supported by EU grant conditionality</td>
+            <td>Near-term fiscal challenges compounded by Ukraine war; short-term debt maturity profile; limited borrowing capacity</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">Monetary Effectiveness</td>
+            <td>Policy focused on EU euro convergence; stable banking system; developed domestic bond market</td>
+            <td>Inflation well above CB target despite tightening; less developed financial system; monetary challenges</td>
+          </tr>
+          <tr class="corp-row">
+            <td class="label-col">Economic Flexibility</td>
+            <td>Larger, diversified industrial economy; significant FDI from EU; abundant natural resources; competitive manufacturing</td>
+            <td>Agriculture/food processing = 40% of GDP; high Russia energy dependence; slower privatization; limited FDI attraction</td>
+          </tr>
+          <tr class="sov-row">
+            <td class="label-col">External Status</td>
+            <td>Access to international EUR/USD bond markets; maintained access even after 2022 Russia-Ukraine invasion</td>
+            <td>Rescheduled foreign debt in 2002; dependent on IMF credit facilities; more limited trading partners</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: NON-SOVEREIGN ISSUERS              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Non-Sovereign Government Issuers — Four Types</h2>
+    </div>
+
+    <div class="card">
+      <p>Non-sovereign government issuers — government agencies, public banks, supranationals, and regional governments — issue debt to finance their activities. They share some sovereign characteristics (taxing authority, government support) but have distinct credit profiles depending on their mandate, backing, and revenue structure.</p>
+    </div>
+
+    <div class="nonsov-types">
+      <div class="nt-card agency">
+        <div class="nt-title">① Government Agencies</div>
+        <ul>
+          <li>Quasi-government entities with government-sponsored mission</li>
+          <li>Created by sovereign law or statute to provide public services</li>
+          <li>Authorized to issue debt to finance activities</li>
+          <li><strong>Rating:</strong> Usually rated same as sovereign — implicit or explicit government support assumed</li>
+          <li><strong>Example:</strong> Airport Authority Hong Kong SAR (AAHK) — rated AA+ (same as HK SAR government) for senior debt; perpetual bonds rated AA (one notch lower due to buyback option)</li>
+          <li>Key: investors assume high likelihood of sovereign bailout if needed</li>
+        </ul>
+      </div>
+      <div class="nt-card bank">
+        <div class="nt-title">② Government Sector Banks &amp; Development Finance Institutions</div>
+        <ul>
+          <li>Specialized financial intermediaries sponsored by sovereign</li>
+          <li>Operate in specific market segment; promote sovereign policy objectives</li>
+          <li><strong>Rating:</strong> Usually same as sovereign — often with explicit government guarantee</li>
+          <li><strong>Example:</strong> KfW (Germany) — largest national development bank; 80% owned by federal government; explicit statutory guarantee; rated AAA (same as Germany); zero bank capital risk weighting; major Green Bond issuer</li>
+          <li>Regulated under sovereign law; exempted from corporate taxes in some cases</li>
+        </ul>
+      </div>
+      <div class="nt-card supra">
+        <div class="nt-title">③ Supranational Issuers</div>
+        <ul>
+          <li>Organizations established and owned by multiple sovereign governments</li>
+          <li>Pursue common objectives across member countries</li>
+          <li>Examples: World Bank (IBRD), Asian Development Bank (ADB), CAF (Latin America), IMF</li>
+          <li><strong>Rating:</strong> Typically very high (AAA/AA) — collective sovereign backing from multiple countries</li>
+          <li><strong>Example:</strong> Indonesia Infrastructure Finance (IIF) — Government of Indonesia (30%), World Bank (20%), ADB (20%), KfW (15%), SMBC (15%) → rated BBB, same as Indonesia sovereign</li>
+          <li>Rating reflects strategic importance and implicit support from global development institutions</li>
+        </ul>
+      </div>
+      <div class="nt-card regional">
+        <div class="nt-title">④ Regional (Sub-Sovereign) Governments</div>
+        <ul>
+          <li>Provincial, state, and local governments within a sovereign jurisdiction</li>
+          <li>US: "municipal bonds"; elsewhere: "local authority bonds"</li>
+          <li>Benefit from sovereign's economic governance but have own taxing and spending authority</li>
+          <li><strong>Rating:</strong> Varies widely — from same as sovereign (Netherlands model) to individually rated (US states and municipalities)</li>
+          <li>Limited jurisdictional powers; no control over sovereign monetary policy</li>
+          <li>May face greater exposure to demographic and industrial change (e.g., Detroit)</li>
+          <li>Two main types: <strong>General Obligation (GO) bonds</strong> and <strong>Revenue bonds</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: GO vs. REVENUE BONDS              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>General Obligation Bonds vs. Revenue Bonds</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">General Obligation (GO) Bonds</div>
+        <p style="font-size:14px; color:#c8dfd0;"><strong>What they are:</strong> Unsecured bonds backed by the <em>general revenues</em> of the issuing non-sovereign government — supported by the taxing authority of the issuer (property tax, income tax, sales tax).</p>
+        <p style="font-size:14px; color:#c8dfd0; margin-top:10px;"><strong>Credit analysis (similar to sovereign):</strong></p>
+        <ul style="padding-left:18px; font-size:13.5px; color:#c8dfd0; margin-top:6px;">
+          <li>Ability to levy and collect taxes and fees</li>
+          <li>Attractiveness of local business climate</li>
+          <li>Presence of major employers → diversified corporate tax base</li>
+          <li>Prudent management of local budget; fiscal discipline</li>
+          <li>Implicit national government support (in some countries)</li>
+          <li>Demographic trends: population growth or decline</li>
+          <li>Industrial base: diversified vs. concentrated</li>
+        </ul>
+        <p style="font-size:13px; color:#c8dfd0; margin-top:10px;"><em>Example: Detroit GO bonds — backed by property and income taxes. Population decline + industrial collapse → revenue shortfall → bankruptcy.</em></p>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Revenue Bonds</div>
+        <p style="font-size:14px; color:#dfd0c8;"><strong>What they are:</strong> Issued to finance a <em>specific project</em>. Repaid from the revenues generated by that specific project (e.g., toll road fees, airport charges, sewer fees, hospital revenues, sports arena revenue).</p>
+        <p style="font-size:14px; color:#dfd0c8; margin-top:10px;"><strong>Credit analysis (similar to corporate):</strong></p>
+        <ul style="padding-left:18px; font-size:13.5px; color:#dfd0c8; margin-top:6px;">
+          <li>Project need and projected utilization (traffic count, patient volume)</li>
+          <li>Economic base supporting the project</li>
+          <li>Operating results, cash flows, liquidity, capital structure</li>
+          <li>Ability to service debt from project-specific cash flows</li>
+          <li><strong>Debt service coverage ratio</strong> = Revenue available after operating expenses / Principal + Interest — KEY metric</li>
+          <li>Higher coverage ratio → stronger creditworthiness</li>
+          <li>Minimum coverage ratio covenants are common features</li>
+        </ul>
+        <p style="font-size:13px; color:#dfd0c8; margin-top:10px;"><strong>Higher risk than GO bonds</strong> — single revenue source; if project underperforms, no tax backup.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Metric for Revenue Bonds — Debt Service Coverage Ratio</div>
+      <div class="f">
+        Debt Service Coverage Ratio = Revenue Available After Operating Expenses<br>
+                                      ÷ Principal + Interest Payments<br><br>
+        Higher ratio → Stronger creditworthiness → Lower default risk<br>
+        Typical covenant: minimum coverage ratio (e.g., 1.25× or 1.50×)<br>
+        Breach of minimum → may trigger technical default or call provisions<br><br>
+        ANALOGY to corporate: similar to EBITDA / Debt Service for a project finance company<br>
+        DIFFERENCE: Secured by specific project revenues (not general tax base of issuer)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 GO vs. Revenue Bonds — Credit Quality Comparison</div>
+      <p>GO bonds are generally considered safer than revenue bonds because they are backed by the full taxing authority of the government — a much broader and more flexible revenue source than a single project. However, highly essential infrastructure (major airports, water utilities) with predictable utilization can carry strong credit ratings even as revenue bonds. Revenue bonds backed by quasi-sovereign government payments (like the Lima Metro RPI-CAO mechanism) may effectively approach GO-bond quality if the government payment commitment is explicit and enforceable.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: CASE STUDIES                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Key Case Studies — Real-World Examples from the Module</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card" style="border-top:3px solid var(--danger);">
+        <div class="mc-title" style="color:var(--danger);">Detroit Bankruptcy (Example 12)</div>
+        <p style="font-size:13px;"><strong>What happened:</strong> Largest US municipal bankruptcy filing (2013). Decades of automotive industry decline → manufacturing jobs moved south → population fell from 2M to 700K → property and income tax base collapsed → USD 18B debt shortfall.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Resolution (17 months):</strong> Asset sales, creditor concessions. Pensioners retained ~85% of benefits. GO unlimited tax bondholders recovered 74 cents on the dollar.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Lesson:</strong> Even GO bonds backed by taxing authority can default if the tax base collapses from demographic/industrial shifts. Non-sovereign entities face greater exposure to these changes than sovereigns.</p>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent2);">
+        <div class="mc-title" style="color:var(--accent2);">AAHK Perpetual Bonds (Example 9)</div>
+        <p style="font-size:13px;"><strong>Issuer:</strong> Airport Authority Hong Kong SAR — statutory body, 100% owned by HK SAR government. One of world's busiest cargo airports.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Bond:</strong> USD 1.5 billion perpetual bonds (2020 — COVID pandemic). Split: 2.10% (callable at 5.5yr) and 2.40% (callable at 7.5yr).</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Rating:</strong> Senior bonds AA+ (= HK SAR sovereign); perpetuals AA (one notch below due to buyback option). Reflects implicit sovereign support assumption.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Lesson:</strong> Agency bonds often rated same as sovereign. Structural subordination (perpetuals) → one notch penalty.</p>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent);">
+        <div class="mc-title" style="color:var(--accent);">Lima Metro Line 2 (Example 13)</div>
+        <p style="font-size:13px;"><strong>Type:</strong> Revenue bond / infrastructure project finance. Largest infrastructure debt offering in Latin America.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Structure:</strong> USD 1.15B, 19.1yr bonds at 5.875% (June 2015). Backed by RPI-CAO payments — milestone-based government payments for construction of Lima subway (35 stations, 35km tunnels).</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Repayment:</strong> Government of Peru (Ministry of Transport) milestone payments — not direct sovereign obligation but investor has recourse to government if Ministry fails to pay.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Rating:</strong> Baa1/BBB/BBB — investment grade despite revenue bond structure, because government payment backstop provides near-sovereign credit support.</p>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:14px;">
+      <div class="mini-card" style="border-top:3px solid var(--accent3);">
+        <div class="mc-title" style="color:var(--accent3);">KfW — Government Development Bank (Example 10)</div>
+        <p style="font-size:13px;"><strong>Type:</strong> Government sector bank. Largest German national development bank. Established 1948.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Structure:</strong> 80% owned by German federal government + 20% by German federal states. Governed by "Law concerning KfW." Explicit statutory guarantee + institutional liability by Federal Republic of Germany. Supervised by German Ministry of Finance and BaFin. Zero bank capital risk weighting.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Rating:</strong> AAA (= Germany sovereign). Exempt from corporate taxes. Major Green Bond issuer (first in 2013; EUR 47.1B total by 2021).</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Lesson:</strong> Government-owned bank with explicit sovereign guarantee → rated same as sovereign. Explicit guarantee vs. implicit support matters for rating.</p>
+      </div>
+      <div class="mini-card" style="border-top:3px solid #9a7ce8;">
+        <div class="mc-title" style="color:#9a7ce8;">Moldova IMF Credit Facility (Example 3)</div>
+        <p style="font-size:13px;"><strong>Context:</strong> Russia's invasion of Ukraine (Feb 2022) → deteriorated creditworthiness for East European neighbors. Moldova faced worst impact: proximity to conflict, large refugee influx per capita → rising inflation, stagnant growth, rising current account deficit from falling exports + rising energy prices.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Resolution:</strong> Moldova requested and received partial drawdown of IMF extended credit facility (May 2022). Conditions: budget submission + commitment to structural economic reforms.</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>Lesson:</strong> Geopolitical risk is a material factor in sovereign credit. Proximity to conflict, energy dependence, and weak external position can rapidly deteriorate creditworthiness. IMF support comes with conditionality.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Sovereign vs. corporate key differences:</strong> (1) Use of proceeds: sovereigns fund public goods, not business operations. (2) Repayment source: tax revenue vs. operating cash flows. (3) Credit risk position: sovereigns generally lowest risk in country due to taxing authority. (4) Enforceability: sovereign immunity limits bondholder recourse — creditors cannot force bankruptcy. (5) Data: government economic data vs. GAAP financial statements. (6) Ratio denominator: GDP or government revenue (not sales or EBITDA).</li>
+        <li>✅ <strong>Sovereign defaults are not uncommon</strong> — especially as countries transition from emerging to advanced economy status. Advanced economy domestic currency debt is often considered default-risk-free; emerging/frontier market debt carries genuine default risk.</li>
+        <li>✅ <strong>Five qualitative factors (Exhibits 1 &amp; 2):</strong> Government Institutions &amp; Policy (stability, rule of law, willingness to pay), Fiscal Flexibility (ability to adjust revenue/expenditure), Monetary Effectiveness (central bank independence), Economic Flexibility (GDP size, diversification, growth), External Status (reserve currency, FX reserves, geopolitical risk).</li>
+        <li>✅ <strong>Sovereign immunity:</strong> Legal principle limiting creditors' ability to force sovereign bankruptcy or asset liquidation. Makes WILLINGNESS TO PAY as critical as ability to pay for sovereign issuers. Resolution typically involves IMF-mediated debt restructuring with extended terms.</li>
+        <li>✅ <strong>Central bank independence reduces monetization risk.</strong> Independent CB → less likely government will print money to repay debt → less inflation → stronger currency → lower sovereign credit risk. The degree of independence is a key qualitative differentiator.</li>
+        <li>✅ <strong>Reserve currency advantage:</strong> Reserve currency sovereigns can issue domestic currency debt to foreign investors → no currency mismatch → can sustain larger deficits and higher debt levels → lower default risk. Non-reserve currency countries must borrow in foreign currency or rely on IMF/multilateral support.</li>
+        <li>✅ <strong>Domestic vs. foreign currency debt:</strong> Domestic currency = no FX repayment constraint (can print, at cost of inflation). Foreign currency = must generate FX (through exports, remittances, FDI) → genuine default risk if FX revenues fall short.</li>
+        <li>✅ <strong>Fiscal strength ratios (Exhibit 4): Debt Burden —</strong> Debt/GDP and Debt/Revenue (leverage analogues; higher = worse). <strong>Debt Affordability —</strong> Interest/GDP and Interest/Revenue (coverage analogues; higher = worse). Fiscal balance: Annual surplus/deficit as % of GDP.</li>
+        <li>✅ <strong>Economic growth quantitative factors:</strong> GDP size, per capita income, real GDP growth rate and variability, economic diversification.</li>
+        <li>✅ <strong>External stability quantitative factors:</strong> FX Reserves/GDP, Reserve Ratio (FX Reserves/External Debt), External Debt/GDP, External Debt Due in 12m/GDP. Current account position.</li>
+        <li>✅ <strong>Four non-sovereign issuer types:</strong> (1) Agencies — quasi-government entities; usually rated same as sovereign. (2) Government sector banks/DFIs — sovereign-sponsored; often rated same as sovereign with explicit guarantee. (3) Supranationals — multi-sovereign ownership (World Bank, ADB); typically AAA/AA. (4) Regional/sub-sovereign governments — individually rated in US; may share sovereign rating in other countries.</li>
+        <li>✅ <strong>GO bonds:</strong> Unsecured; backed by general taxing authority of issuer. Analysis similar to sovereign: ability to levy taxes, local economy health, fiscal management, demographic trends. Detroit bankruptcy: industrial decline + demographic shift collapsed the tax base.</li>
+        <li>✅ <strong>Revenue bonds:</strong> Project-specific; higher risk than GO. Analysis similar to corporate project finance: projected utilization, operating cash flows, capital structure. Key metric: debt service coverage ratio = revenues after operating costs / principal + interest. Higher coverage = stronger credit. Minimum coverage covenants are common.</li>
+        <li>✅ <strong>Uruguay 2003:</strong> Voluntary debt exchange (5-year maturity extension); classified as "default in substance" because compensation was insufficient and non-participants were subordinated. IMF-supported restructuring.</li>
+        <li>✅ <strong>Romania (Baa3/BBB–) vs. Moldova (B3/B–):</strong> Romania = EU member, diversified economy, fiscal consolidation, international market access. Moldova = weak institutions, agriculture-dependent, energy-dependent on Russia, limited market access, near-default in 2002, IMF-dependent.</li>
+        <li>✅ <strong>KfW (Germany):</strong> AAA = German sovereign. Explicit statutory guarantee. 80% federal + 20% state ownership. Explicit guarantee → same rating as sovereign.</li>
+        <li>✅ <strong>AAHK (Hong Kong SAR):</strong> Senior debt AA+ = HK SAR sovereign. Perpetual bonds AA (one notch lower = buyback option = structural subordination).</li>
+        <li>✅ <strong>Commodity-dependent sovereigns:</strong> Commodity price booms allow reserve accumulation and sovereign wealth fund development. Price collapses can cause sovereign defaults — a recurring pattern in emerging markets.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 15</div>
+      <div class="f">
+        ═══ SOVEREIGN vs. CORPORATE ═══<br>
+        Sovereign repayment: tax revenue (not operating CF)<br>
+        Denominator in ratios: GDP or government revenue (not sales/EBITDA)<br>
+        Enforceability: sovereign immunity → willingness to pay is critical<br>
+        Defaults: uncommon in advanced economies; more common in EM/frontier<br><br>
+
+        ═══ FIVE QUALITATIVE FACTORS ═══<br>
+        ① Gov't Institutions &amp; Policy: stability, rule of law, willingness to pay<br>
+        ② Fiscal Flexibility: ability to adjust revenues/expenditures; fiscal discipline<br>
+        ③ Monetary Effectiveness: CB independence → reduces monetization risk<br>
+        ④ Economic Flexibility: GDP size, diversification, growth stability<br>
+        ⑤ External Status: reserve currency, FX reserves, geopolitical risk<br><br>
+
+        ═══ FISCAL STRENGTH RATIOS ═══<br>
+        Debt Burden:       Debt/GDP | Debt/Revenue       (higher = worse)<br>
+        Debt Affordability: Interest/GDP | Interest/Revenue (higher = worse)<br>
+        Fiscal balance:     Annual surplus/deficit as % of GDP<br><br>
+
+        ═══ EXTERNAL STABILITY RATIOS ═══<br>
+        FX Reserves/GDP | FX Reserves/External Debt      (higher = better)<br>
+        LT External Debt/GDP | External Debt Due 12m/GDP (higher = worse)<br><br>
+
+        ═══ NON-SOVEREIGN TYPES ═══<br>
+        Agencies:      Government-sponsored mission; rated = sovereign typically<br>
+        Gov't Banks:   Sovereign policy objectives; explicit guarantee → same rating<br>
+        Supranationals: Multi-sovereign owned (World Bank, ADB); typically AAA/AA<br>
+        Regional:      GO bonds (taxing authority) vs. Revenue bonds (project CFs)<br><br>
+
+        ═══ GO vs. REVENUE BONDS ═══<br>
+        GO: backed by general tax revenues; analysis like sovereign<br>
+        Revenue: backed by project CFs; analysis like corporate<br>
+        Revenue key ratio: Debt Service Coverage = (Revenue − OpEx) / (P + I)<br>
+        Revenue bonds: higher risk (single revenue source); min coverage covenants<br><br>
+
+        ═══ RESERVE CURRENCY ADVANTAGE ═══<br>
+        Reserve currency → domestic currency debt to foreign investors → no FX mismatch<br>
+        → can sustain larger deficits and higher debt → lower default risk<br>
+        Non-reserve: must borrow in FX → currency depreciation worsens debt burden
+      </div>
+      <div class="note">
+        <strong>Key exam theme:</strong> For sovereign issuers, both ability AND willingness to pay must be assessed. Sovereign immunity means the legal tools available to corporate creditors don't work — restructuring is the typical resolution. IMF involvement signals distress; conditions imposed typically require fiscal reform and structural economic changes.<br><br>
+        <strong>Central bank independence is critical:</strong> An independent CB cannot be directed by the government to monetize debt. Monetization (printing money to buy government bonds) provides immediate cash but causes inflation and currency depreciation. Countries with fully independent central banks generally have better monetary effectiveness scores and lower sovereign credit risk.<br><br>
+        <strong>Revenue bonds vs. GO bonds:</strong> The debt service coverage ratio for revenue bonds plays the same role as the interest coverage ratio for corporate bonds. Minimum covenant coverage ratios protect investors just like financial maintenance covenants in corporate bonds.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 15: Credit Analysis for Government Issuers · Exam Prep Notes
+</footer>
+
+</body>
+</html>

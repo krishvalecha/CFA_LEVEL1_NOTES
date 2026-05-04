@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 4: Fixed-Income Markets for Corporate Issuers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --repo-bg: #111620; --repo-border: #4c8bc9;
+    --ig-bg: #111a16; --ig-border: #4cc98a;
+    --hy-bg: #1a1510; --hy-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .repo-box { background: var(--repo-bg); border-left: 3px solid var(--repo-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .repo-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .repo-box .f { color: #9ecef5; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .repo-box .note { color: #7898b4; font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* Repo timeline */
+  .repo-timeline { background: #111620; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .rt-row { display: flex; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .rt-row:last-child { border-bottom: none; }
+  .rt-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent2); min-width: 50px; font-weight: 700; padding-top: 2px; }
+  .rt-event { font-size: 13.5px; color: var(--text); }
+
+  /* IG vs HY cards */
+  .ig-card { background: var(--ig-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .ig-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .hy-card { background: var(--hy-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .hy-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 4</div>
+  <h1>Fixed-Income Markets for <span>Corporate Issuers</span></h1>
+  <p>Exam-ready notes: short-term funding for non-financial corporates (lines of credit, secured loans, commercial paper) and financial institutions (deposits, CDs, interbank markets, ABCP), repurchase agreements (repo mechanics, formulas, applications, risks, bilateral vs. triparty), and long-term corporate debt contrasting investment-grade vs. high-yield issuers.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Short-Term Funding Overview</a>
+  <a class="toc-item" href="#s2">02 · Lines of Credit</a>
+  <a class="toc-item" href="#s3">03 · Secured Loans &amp; Factoring</a>
+  <a class="toc-item" href="#s4">04 · Commercial Paper</a>
+  <a class="toc-item" href="#s5">05 · Bank Funding Sources</a>
+  <a class="toc-item" href="#s6">06 · Repo — Mechanics &amp; Formulas</a>
+  <a class="toc-item" href="#s7">07 · Repo — Applications</a>
+  <a class="toc-item" href="#s8">08 · Repo — Risks &amp; Structure</a>
+  <a class="toc-item" href="#s9">09 · Repo Rate Determinants</a>
+  <a class="toc-item" href="#s10">10 · IG vs. HY Long-Term Debt</a>
+  <a class="toc-item" href="#s11">11 · Master Tables</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: SHORT-TERM FUNDING OVERVIEW -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Short-Term Funding — Overview &amp; Purposes</h2>
+    </div>
+
+    <div class="card">
+      <p>Both non-financial corporations and financial institutions rely on borrowed capital for short-term activities. Three purposes of short-term external financing for corporations:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Meet cash needs</strong> during the cash conversion cycle (inventory → receivables → cash)</li>
+        <li><strong>Preserve liquidity</strong> — maintain financial flexibility</li>
+        <li><strong>Take advantage of supplier discounts</strong> for early payment</li>
+      </ol>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Funding Source</th><th>Type</th><th>Secured?</th><th>Best For</th><th>Key Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Uncommitted Line of Credit</td><td>Bank loan</td><td>Usually unsecured</td><td>Flexible, low-cost short-term needs</td><td>Bank can refuse draw; unreliable</td></tr>
+          <tr><td>Committed (Regular) Line of Credit</td><td>Bank loan</td><td>Unsecured</td><td>More reliable backup; prepayable</td><td>Renewal risk at maturity; commitment fee required</td></tr>
+          <tr><td>Revolving Credit (Revolver)</td><td>Bank loan</td><td>Usually unsecured</td><td>Most reliable; multiyear; like a bond indenture with covenants</td><td>Higher cost than uncommitted; covenant restrictions</td></tr>
+          <tr><td>Secured (Asset-Based) Loan</td><td>Bank loan</td><td>Secured (collateral)</td><td>Companies lacking IG-quality for unsecured lending</td><td>Lender has lien on assets; restricts asset use</td></tr>
+          <tr><td>Factoring / Assignment of Receivables</td><td>Receivables-based</td><td>Secured (receivables)</td><td>Immediate cash from A/R; outsource collections</td><td>Discount cost; credit risk of receivables</td></tr>
+          <tr><td>Commercial Paper (CP)</td><td>Money market security</td><td>Unsecured (ABCP = secured)</td><td>Large IG corporations; cheaper than bank loans</td><td>Rollover risk; requires backup credit line</td></tr>
+          <tr><td>Repurchase Agreement (Repo)</td><td>Secured lending</td><td>Secured (securities)</td><td>Financial institutions; overnight to term funding</td><td>Rollover/liquidity risk; collateral/margin risk</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: LINES OF CREDIT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Bank Lines of Credit — Three Types</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Uncommitted Line</div>
+        <ul>
+          <li><strong>Least reliable</strong> form of bank borrowing</li>
+          <li>Bank offers up to a maximum ("credit line") for a set max maturity</li>
+          <li>Rate = MRR + issuer-specific spread on drawn balance only</li>
+          <li>Bank can <strong>refuse to honor any draw request</strong></li>
+          <li>NO commitment fee — cheapest option</li>
+          <li>Usually <strong>unsecured</strong>; requires stable cash deposits at bank</li>
+          <li>Bank monitors via account activity</li>
+          <li>NOT reliable as primary funding source in stress</li>
+          <li>More common in US</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Committed (Regular) Line</div>
+        <ul>
+          <li><strong>More reliable</strong> — formal written commitment</li>
+          <li>Higher bank capital requirement than uncommitted</li>
+          <li>364-day commitments minimize bank capital needs</li>
+          <li>Banks may form a <strong>syndicate</strong> to share exposure</li>
+          <li>Drawn lines = short-term liabilities (notes payable)</li>
+          <li>Undrawn lines = backup for CP and other short-term debt</li>
+          <li><strong>Commitment fee</strong> (e.g., 0.50%) on full or unused amount</li>
+          <li>Unsecured; prepayable without penalty</li>
+          <li>Risk of non-renewal if issuer credit weakens</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Revolving Credit (Revolver)</div>
+        <ul>
+          <li><strong>Most reliable</strong> short-term bank funding</li>
+          <li>Multiyear credit commitment</li>
+          <li>Includes <strong>covenants</strong> (like a bond indenture) — monitoring and restrictions on borrower actions</li>
+          <li>Similar borrowing rates and commitment fees as regular lines</li>
+          <li>May include optional medium-term loan features</li>
+          <li>Common in US ("operating line of credit")</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Bank Syndicate — Why Banks Form Groups</div>
+      <p>For large corporate borrowers, a single bank might not want full exposure to the credit line. A <strong>syndicate</strong> is a group of banks that mutually agree to each take a predetermined percentage of the total commitment and loan drawdown. This reduces individual bank concentration risk while still providing the borrower with the full credit line they need. Also enables larger credit facilities than any single bank could offer alone.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Uncommitted vs. Committed — The Critical Distinction</div>
+      <p>Under <strong>uncommitted</strong> lines: the bank reserves the right to refuse any draw. This makes them unreliable precisely when the borrower needs them most (during stress). Under <strong>committed</strong> lines: the bank is contractually obligated to fund the draw — more reliable but more expensive (commitment fee). Revolvers are the most reliable but also most restrictive (covenants).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: SECURED LOANS & FACTORING -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Secured Loans &amp; Factoring</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Secured Loan (Asset-Based Loan)</div>
+      <div class="def-body">A loan where the lender requires collateral (a specific asset pledged against the loan). The lender files a <strong>security interest (lien)</strong> against the pledged asset — the right to possess it until the loan is repaid. This lien is recorded on the borrower's credit report. Used by companies that lack the credit quality for unsecured loans. Collateral types: fixed assets, high-quality receivables, inventory, marketable securities.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Assignment of Receivables</div>
+      <div class="def-body">Using accounts receivable as collateral for a loan. The company receives cash now and <strong>remains responsible for collecting the receivables</strong>. A more limited form of receivables financing — the lender has a claim but the company still manages collections.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Factoring</div>
+      <div class="def-body">The company <strong>sells accounts receivable to a lender (factor)</strong>, typically at a substantial discount. The factor takes over the credit-granting and collection process. Company gives up the receivables entirely and shifts credit and collection risk to the factor. Cost = the discount amount = depends on credit quality of receivables and collection costs.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Assignment of Receivables</div>
+        <ul>
+          <li>Company uses A/R as collateral for a loan</li>
+          <li>Company <strong>retains responsibility</strong> for collection</li>
+          <li>Lower cost than factoring</li>
+          <li>Lender has a security interest in the receivables</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Factoring</div>
+        <ul>
+          <li>Company <strong>sells</strong> A/R to factor at a discount</li>
+          <li>Factor takes over credit-granting and collection</li>
+          <li>Company shifts credit and collection risk to factor</li>
+          <li>Higher cost (the discount); company loses control of collections</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: COMMERCIAL PAPER -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Commercial Paper (CP)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Commercial paper (CP)</strong> is a short-term, unsecured promissory note issued by both financial institutions and non-financial corporations in the public market or via private placement. Key facts:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Matures in <strong>less than 3 months</strong> (US: typically &lt;270 days to avoid SEC registration)</li>
+        <li>Used for: working capital, seasonal cash demand, or <strong>bridge financing</strong> (interim until permanent financing arranged)</li>
+        <li>Requires high credit quality — available mainly to <strong>large, highly rated companies</strong></li>
+        <li>Approximately <strong>60% of annual CP issuance</strong> comes from financial institutions; 40% from non-financial corporates</li>
+        <li>International CP is called <strong>Eurocommercial Paper (ECP)</strong> — similar but smaller transaction sizes and less liquid than US CP market</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Rollover Risk</div>
+      <div class="def-body">The risk that an issuer is <strong>unable to issue new CP at maturity</strong> to repay maturing paper. Most CP is repaid with proceeds from newly issued CP ("rolled over"). If markets become disrupted or the issuer's credit deteriorates, rollover may be impossible — creating a funding crisis.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Backup Credit Line (Liquidity Enhancement)</div>
+      <div class="def-body">A committed bank credit line required by CP investors to minimize rollover risk. Ensures the issuer can <strong>fully repay maturing CP</strong> even if a rollover is not possible. The undrawn committed line serves as a liquidity backstop for the CP program.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Asset-Backed Commercial Paper (ABCP)</div>
+      <div class="def-body">A <strong>secured</strong> form of CP issued by a Special Purpose Entity (SPE) backed by a pool of loans or receivables. The bank transfers loans to the SPE, which issues ABCP to investors. The bank provides a backup credit facility. Key benefit: <strong>off-balance-sheet financing</strong> — not recorded on the issuing bank's balance sheet. Benefits both the bank (capital efficiency) and investors (access to a loan portfolio they couldn't access directly).</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ ABCP and the Global Financial Crisis</div>
+      <p>Prior to the 2008 GFC, ABCP grew rapidly because it was used to fund <strong>long-term assets with short-term notes</strong> (maturity mismatch). When many issuers could not roll ABCP at the crisis peak, <strong>numerous SPEs failed</strong>. Post-crisis, ABCP reverted to primarily funding short-term, high-quality loans and receivables (no more long-term asset funding via ABCP). This is a classic example of rollover risk materializing at the worst possible time.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: BANK FUNDING SOURCES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Short-Term Funding for Financial Institutions</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Funding Source</th><th>Description</th><th>Key Features</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Demand Deposits (Checking Accounts)</td>
+            <td>Retail/commercial deposits; no stated maturity; available for transactions; little or no interest</td>
+            <td>Most liquid liability; theoretically withdrawable anytime; stable in practice for operational deposits; fee rebates and credit lines incentivize businesses to maintain balances</td>
+          </tr>
+          <tr>
+            <td>Saving Deposits</td>
+            <td>Non-transactional; often with a stated term; pay higher interest</td>
+            <td>More stable than demand deposits; includes CDs</td>
+          </tr>
+          <tr>
+            <td>Certificate of Deposit (CD)</td>
+            <td>Bank deposit with predetermined maturity and interest rate; typically &lt;1 year; pays interest at maturity</td>
+            <td>Non-negotiable CD: no early withdrawal without penalty. Negotiable CD: can be sold in the open market. Small-denom = retail. Large-denom = wholesale institutional. CDs also trade in Eurobond market.</td>
+          </tr>
+          <tr>
+            <td>Interbank Market (Unsecured)</td>
+            <td>Short-term borrowing/lending among financial institutions; overnight to 1 year; rate closely tied to MRR</td>
+            <td>Banks factor credit risk into interbank rates; impose counterparty limits. Excess reserves lent to banks with deficit reserves via central bank funds market.</td>
+          </tr>
+          <tr>
+            <td>Central Bank Funds Market</td>
+            <td>Banks with surplus reserves lend to those with deficits; interest rate = central bank funds rate (federal funds rate in US)</td>
+            <td>Central banks target a specific rate or range; use open market operations or interest on reserves to achieve it</td>
+          </tr>
+          <tr>
+            <td>Discount Window Lending</td>
+            <td>Central bank lends directly to banks as lender of last resort; requires collateral posting</td>
+            <td>Higher rate than central bank funds rate; stigma associated with use; may trigger greater regulatory scrutiny and restrictions</td>
+          </tr>
+          <tr>
+            <td>Commercial Paper (CP)</td>
+            <td>Unsecured short-term notes; ~60% of CP issuance from financial institutions</td>
+            <td>Same rollover risk as non-financial issuers; also use ABCP (secured CP via SPE)</td>
+          </tr>
+          <tr>
+            <td>Repurchase Agreements (Repo)</td>
+            <td>Secured short-term lending collateralized by securities; most common form of secured interbank lending</td>
+            <td>Overnight to term; low repo rates for high-quality collateral (sovereign bonds); detailed in next section</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Banks Prefer Floating-Rate Funding</div>
+      <p>Banks lend at floating rates (MRR + spread on loans) and want their liabilities to also be floating-rate (deposits, interbank borrowings at MRR). This creates a <strong>natural interest rate hedge</strong>: when rates rise, both lending income and funding costs rise together, protecting the net interest margin (NIM = lending rate − funding rate). This is why banks are major issuers of FRNs and major users of repo financing.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: REPO — MECHANICS & FORMULAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Repurchase Agreements (Repo) — Mechanics &amp; Formulas</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>repurchase agreement (repo)</strong> involves the <strong>sale of a security</strong> with a <strong>simultaneous agreement by the seller to buy the same security back</strong> at an agreed repurchase price on a specified future date (repurchase date). It is effectively <strong>short-term secured lending</strong> using securities as collateral.</p>
+      <p style="margin-top:10px;"><strong>Perspective flip:</strong></p>
+      <ul style="padding-left:20px; margin-top:4px;">
+        <li><strong>Security seller = Cash borrower:</strong> sells security now, gets cash, agrees to buy it back later at a higher price (the difference = interest)</li>
+        <li><strong>Security buyer = Cash lender:</strong> pays cash now, receives security as collateral, returns security later in exchange for cash + interest</li>
+        <li>Viewed from the security buyer's side: this is a <strong>reverse repurchase agreement (reverse repo)</strong></li>
+      </ul>
+    </div>
+
+    <h3>Repo Transaction at t = 0 and t = T</h3>
+    <div class="repo-timeline">
+      <div class="rt-row">
+        <div class="rt-time">t = 0</div>
+        <div class="rt-event"><strong>Security seller (cash borrower)</strong> delivers security to security buyer (cash lender) and receives cash equal to the purchase price. Both parties agree to the repurchase price and date.</div>
+      </div>
+      <div class="rt-row">
+        <div class="rt-time">During</div>
+        <div class="rt-event">Security seller RETAINS ownership of the security, including any coupon income paid by the security during the repo term. Cash lender holds the security only as collateral.</div>
+      </div>
+      <div class="rt-row">
+        <div class="rt-time">t = T</div>
+        <div class="rt-event"><strong>Security buyer (cash lender)</strong> returns the security and receives the pre-agreed repurchase price (= original purchase price + repo interest). Security seller pays cash + repo interest to get security back.</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Repo Repurchase Price Formula</div>
+      <div class="f">
+        Repurchase Price = Purchase Price × [1 + (Repo Rate × Days/360)]<br><br>
+        Example: USD 100,000,000 × [1 + (0.25% × 30/360)]<br>
+                          = USD 100,000,000 × [1 + 0.0000208]<br>
+                          = USD 100,020,833<br><br>
+        Repo Interest = USD 100,020,833 − USD 100,000,000 = USD 20,833<br><br>
+        Repo Rate = annualized interest rate on the secured loan<br>
+        Days = repo term (30 days in this example)<br>
+        360 = day count convention for money market instruments
+      </div>
+      <div class="note">
+        The seller effectively borrows USD 100M at 0.25% annualized, secured by the US Treasury note.<br>
+        Interest of USD 20,833 is paid at maturity (at t = T), not periodically during the repo term.<br>
+        Note: some markets use 365-day convention — check the question.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Initial Margin and Haircut Formulas</div>
+      <div class="f">
+        Initial Margin = Security Price₀ / Purchase Price₀<br><br>
+        Haircut = (Security Price₀ − Purchase Price₀) / Security Price₀<br><br>
+        Relationship: Haircut = 1 − (1 / Initial Margin)<br><br>
+        Example: Security worth USD 102, loan = USD 100<br>
+        Initial Margin = 102 / 100 = 1.02 (or 102%)<br>
+        Haircut = (102 − 100) / 102 = 1.96%<br><br>
+        Variation Margin = (Initial Margin × Purchase Priceₜ) − Security Priceₜ
+      </div>
+      <div class="note">
+        Initial margin &gt; 100% means the loan is LESS THAN the security value → overcollateralized → protects lender.<br>
+        Haircut = the percentage discount between security value and cash lent. Higher quality collateral → lower haircut.<br>
+        Variation margin addresses day-to-day changes in collateral value during the repo term.<br>
+        If security price DECLINES → cash borrower must provide ADDITIONAL collateral (variation margin call).<br>
+        If security price RISES → cash borrower may reclaim EXCESS collateral.
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Overnight Repo vs. Term Repo</div>
+      <div class="def-body"><strong>Overnight repo:</strong> one-day maturity; most common; lowest credit risk; lowest repo rate. <strong>Term repo:</strong> any maturity longer than one day; higher repo rate (longer maturity = more credit risk + typically higher rates). Most repos are overnight due to their very short-term nature.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">General Collateral Repo vs. Special Trade</div>
+      <div class="def-body"><strong>General collateral (GC) repo:</strong> uses a group of securities (e.g., "any government bonds") as eligible collateral rather than a specific bond. Trades at the <strong>general collateral repo rate</strong>. <strong>Special trade:</strong> requires a specific security as collateral. When demand for that specific security is high (e.g., on-the-run Treasury), the <strong>special repo rate</strong> may fall below the GC rate or even turn negative (negative repo rate → security buyer pays interest to the cash borrower).</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: REPO APPLICATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Repo Applications &amp; Uses</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Three specific purposes</strong> for using the repo market:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Finance the ownership of a security</strong> — dealer borrows cash against bonds it holds in inventory</li>
+        <li><strong>Earn short-term income by lending funds on a secured basis</strong> — cash-rich institutions invest short-term at the repo rate</li>
+        <li><strong>Borrow a specific security to sell it short</strong> — hedge funds and other short sellers</li>
+      </ol>
+    </div>
+
+    <h3>Application 1 — Dealer Inventory Financing</h3>
+    <div class="card">
+      <p>A bank's trading desk buys a bond from an investor and must pay immediately. To avoid tying up its own capital, the bank <strong>repos out the bond</strong> — delivers the bond to another party in exchange for cash. The bank's funding requirement is reduced to the haircut/initial margin amount rather than the full bond value. This is the most common use of repos in the financial system.</p>
+    </div>
+
+    <h3>Application 2 — Short-Term Cash Investment</h3>
+    <div class="card">
+      <p>Cash-rich institutions (banks, mutual funds, pension funds) lend cash via reverse repos — they receive a security as collateral and earn the repo rate. This is a <strong>short-term, collateralized investment with minimal credit or liquidity risk</strong>. On the bank's balance sheet, these appear as <strong>"Securities Purchased under Agreements to Resell or Borrowed."</strong> Higher returns available by: (1) accepting longer repo terms, or (2) accepting less liquid or lower-quality collateral.</p>
+    </div>
+
+    <h3>Application 3 — Short Selling via Reverse Repo (Hedge Fund Example)</h3>
+    <div class="card">
+      <p>A hedge fund believes a security's price will fall. Four steps:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>t=0:</strong> Hedge fund borrows the security via a reverse repo (buys security, pays cash, agrees to return security)</li>
+        <li><strong>t=0:</strong> Hedge fund immediately sells the borrowed security in the secondary market at current price → receives cash</li>
+        <li><strong>t=T:</strong> Hedge fund buys the security in the secondary market (at the now-lower price, if the bet is correct)</li>
+        <li><strong>t=T:</strong> Hedge fund returns the security and pays the repurchase price to close the repo</li>
+      </ol>
+      <p style="margin-top:8px;"><strong>Profit = short position gain − repo rate cost.</strong> The hedge fund profits if the price decline exceeds the repo rate paid.</p>
+    </div>
+
+    <h3>Application 4 — Central Bank Monetary Policy</h3>
+    <div class="card">
+      <p>Central banks use repos as a <strong>short-term, transitory</strong> tool for monetary policy (vs. outright purchases/sales for permanent changes). Example: to temporarily increase bank reserves → central bank enters reverse repos (borrows securities, lends cash to banks → cash injected into banking system). Using repos gives the central bank flexibility because the effect automatically reverses at the repo maturity date.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: REPO RISKS & STRUCTURE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Repo Risks, Bilateral vs. Triparty</h2>
+    </div>
+
+    <h3>Five Key Repo Risks</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Risk Type</th><th>Description</th><th>Key Mitigation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Default Risk</td>
+            <td>Primary risk — counterparty cannot meet obligations. Despite collateral, default events can face illiquidity, adverse price changes, and legal challenges in liquidating collateral.</td>
+            <td>High-quality collateral (sovereign bonds); initial margin/haircut; master repurchase agreement</td>
+          </tr>
+          <tr>
+            <td>Collateral Risk</td>
+            <td>Collateral loses value or becomes illiquid. Collateral should have low correlation with counterparty credit risk (to diversify credit exposure). Correlated collateral = "wrong-way risk."</td>
+            <td>Use sovereign bond collateral; avoid collateral correlated with counterparty creditworthiness</td>
+          </tr>
+          <tr>
+            <td>Margining Risk</td>
+            <td>Improper/untimely valuation of collateral and variation margin transfers. Adverse markets can cause large collateral value changes → surge in margin calls → forced liquidations cascade.</td>
+            <td>Daily mark-to-market and variation margin calls; triparty agent for valuation</td>
+          </tr>
+          <tr>
+            <td>Legal Risk</td>
+            <td>Inability to enforce legal rights under the repurchase agreement — e.g., counterparty disputes the contract or insolvency law overrides contract terms.</td>
+            <td>Master repurchase agreement; legal opinions on enforceability</td>
+          </tr>
+          <tr>
+            <td>Netting/Settlement Risk</td>
+            <td>Inability to net or offset obligations with a defaulting counterparty, or to take possession of collateral/cash to settle trades cleanly.</td>
+            <td>Netting agreements; triparty arrangements; clearinghouse involvement</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Rollover Risk — The Most Systemic Repo Risk</h3>
+    <div class="warn">
+      <div class="warn-label">⚠️ Repo Rollover Risk — Lessons from Financial Crises</div>
+      <p>The uncommitted, mostly overnight nature of repo markets creates <strong>significant rollover and liquidity risks under adverse market conditions</strong>. Financial institutions that lost market confidence during the 2008 GFC faced bankruptcy partly due to their <strong>heavy reliance on repo financing</strong>. In theory, collateral should reassure lenders to roll repos — in practice, when confidence collapses, even well-collateralized borrowers cannot roll. Balance sheet: low-cost repo vs. costly but more stable long-term debt.</p>
+    </div>
+
+    <h3>Bilateral vs. Triparty Repos</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Bilateral Repo</div>
+        <ul>
+          <li>Executed <strong>directly between two parties</strong></li>
+          <li>Both parties manage collateral valuation and transfer themselves</li>
+          <li>Lower cost (no third party fee)</li>
+          <li>Higher operational burden; manual margin calls</li>
+          <li>Each party directly exposed to counterparty default</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Triparty Repo</div>
+        <ul>
+          <li>Both parties use a <strong>third-party agent (custodian or clearinghouse)</strong> to administer the transaction</li>
+          <li>Agent responsible for: cash, securities, collateral valuation, management, and custody</li>
+          <li>Does NOT change credit risk between parties in event of default</li>
+          <li>Benefits: larger collateral pool, multiple counterparties, specialized valuation and safekeeping expertise, cost efficiencies</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: REPO RATE DETERMINANTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Repo Rate Determinants</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Factor</th><th>Direction</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Money market interest rates</td>
+            <td>Repo rate ↑ when rates ↑</td>
+            <td>Repo rates correlated with other short-term interest rates. Central banks use secured repo markets to influence the unsecured central bank funds rate.</td>
+          </tr>
+          <tr>
+            <td>Collateral quality</td>
+            <td>Lower quality → higher repo rate</td>
+            <td>Equity securities or EM bonds → higher rate. DM government bonds → lowest rates (highest quality, most liquid collateral).</td>
+          </tr>
+          <tr>
+            <td>Repo term</td>
+            <td>Longer term → higher repo rate</td>
+            <td>Longer maturity = more credit risk + generally upward-sloping yield curve under normal conditions.</td>
+          </tr>
+          <tr>
+            <td>Collateral uniqueness (demand)</td>
+            <td>Higher demand → LOWER repo rate</td>
+            <td>When a specific security is in high demand (e.g., on-the-run Treasury), the special repo rate can fall below GC rate, or even turn negative. Cash borrower pays below-market for the right to use the special security as collateral.</td>
+          </tr>
+          <tr>
+            <td>Collateral delivery / undercollateralization</td>
+            <td>No/poor collateral → higher repo rate</td>
+            <td>If cash lent is undercollateralized or no collateral is provided to the funds lender, higher repo rate demanded to compensate for added risk.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Negative Repo Rate — Special Trades</div>
+      <p>When demand for a specific security is extremely high (e.g., a specific on-the-run sovereign bond for short-selling), the special repo rate can go <strong>negative</strong>. Under a negative repo rate: the <strong>security buyer (cash lender) pays interest to the cash borrower</strong> — an unusual arrangement where the lender pays to lend. This reflects the value of gaining access to the specific, scarce security (e.g., for delivering on a short position).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: IG VS. HY LONG-TERM DEBT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Long-Term Corporate Debt — IG vs. HY Issuers</h2>
+    </div>
+
+    <h3>Similarities — Both IG and HY Face These Trade-offs</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>Longer maturities → higher YTM</strong> (both higher benchmark yield AND higher credit spreads under normal conditions)</li>
+        <li><strong>Investor maturity mismatch risk:</strong> investor with 5-year horizon buying a 7-year bond faces price risk at year 5 (must sell a 2-year bond at prevailing rates)</li>
+        <li><strong>Investor reinvestment risk:</strong> coupons must be reinvested at prevailing (potentially lower) rates</li>
+        <li><strong>Issuer rollover risk:</strong> issuer funding a 5-year project with a 3-year bond must refinance at year 3 at potentially higher rates</li>
+      </ul>
+    </div>
+
+    <h3>Investment Grade (IG) Long-Term Debt</h3>
+    <div class="ig-card">
+      <div class="ig-title">✅ Investment-Grade Bonds — Key Characteristics</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>YTM composition:</strong> Significant proportion of YTM from the government benchmark yield (credit spreads are relatively small). Strong operating cash flows mean investors are confident in debt service.</p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Monitoring:</strong> Relatively <strong>little bondholder monitoring</strong> needed — issuers can meet obligations from operating cash flows without close oversight.</p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Maturities:</strong> High flexibility — up to <strong>30 years</strong>. Investors accept long durations with confidence.</p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Covenants:</strong> <strong>Few or no restrictive covenants</strong>. Standardized bond documents. Little investor-imposed operational restrictions.</p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Structure:</strong> Relatively standardized — general obligation unsecured bonds. Many issues with different maturities outstanding at once.</p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Issuance strategy:</strong> Frequent issuers stagger maturities to minimize rollover risk while preserving ability to opportunistically issue when conditions are favorable.</p>
+      <p style="font-size:14px; color:#c8dfd0;"><strong>Analytical approach:</strong> Use financial ratios and credit ratings to assess whether/when the issuer's likelihood of default will change.</p>
+    </div>
+
+    <h3>High Yield (HY) Long-Term Debt</h3>
+    <div class="hy-card">
+      <div class="hy-title">⚠️ High-Yield Bonds — Key Characteristics</div>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>YTM composition:</strong> Higher proportion from the issuer-specific credit spread. Smaller contribution from benchmark yield. Spreads are large and volatile.</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Nature:</strong> More <strong>equity-like</strong> (uncertain cash flows → like a stock). Analysts emphasize potential loss given default and secondary repayment sources (collateral).</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Monitoring:</strong> Investors impose <strong>significant monitoring</strong> via financial covenants (leverage, interest coverage ratios) that trigger actions if breached.</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Maturities:</strong> Typically shorter — <strong>10 years or less</strong>. Markets are less willing to commit long-term to uncertain credits.</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Covenants:</strong> <strong>Many restrictive covenants</strong> — debt limits, dividend restrictions, incurrence tests, asset pledge restrictions, financial ratio maintenance requirements (VIVU example).</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Structure:</strong> Often secured (asset pledges); callable bonds common (issuers seeking refinancing flexibility); leveraged loans with prepayment features.</p>
+      <p style="font-size:14px; color:#e8d8c0; margin-bottom:8px;"><strong>Issuance flexibility:</strong> Far less flexibility and market availability than IG — issuers cannot always access markets opportunistically; must often restructure debt and renegotiate covenants to reduce borrowing costs.</p>
+      <p style="font-size:14px; color:#e8d8c0;"><strong>Analytical approach:</strong> Consider likelihood of default AND potential loss given default — covenants, security, and secondary sources of repayment are critical.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why HY Issuers Prefer Callable Bonds</div>
+      <p>HY issuers are more likely to issue <strong>callable bonds</strong> than IG issuers, because HY issuers believe their credit quality may improve over time (credit spread could narrow), and the <strong>value of the call feature rises as borrowing costs fall</strong>. If VIVU can issue new debt in 3 years at a cost saving that exceeds the 3.25% call premium in present value, it makes economic sense to call and refinance. IG issuers, by contrast, can already borrow cheaply and don't need call provisions for refinancing flexibility.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Fallen Angels in the HY Market</div>
+      <div class="def-body">Formerly IG issuers downgraded to HY. Their outstanding bonds have <strong>IG-style features</strong> — non-callable, few covenants, longer maturities — because they were issued when the borrower was IG. After downgrade: (1) IG-only investors must sell (forced selling); (2) HY market is much smaller → large price decline; (3) the bonds now trade at HY prices despite IG structure. This mismatch between structure and credit quality makes fallen angel bonds unique in the HY market.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>IG vs. HY Bonds — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Investment Grade (IG)</th><th>High Yield (HY)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>YTM composition</td><td>Mostly benchmark yield; small credit spread</td><td>Mostly issuer-specific credit spread; larger spread over benchmark</td></tr>
+          <tr><td>Cash flow nature</td><td>Bond-like (certain, predictable)</td><td>Equity-like (uncertain, volatile)</td></tr>
+          <tr><td>Likelihood of default</td><td>Low; strong operating cash flows</td><td>Higher; more vulnerable to economic cycles</td></tr>
+          <tr><td>Bondholder monitoring</td><td>Little required; investors trust cash flows</td><td>Heavy — financial covenants trigger monitoring and action</td></tr>
+          <tr><td>Covenants</td><td>Few or none; standardized documents</td><td>Many restrictive (debt limits, dividend restrictions, financial ratios)</td></tr>
+          <tr><td>Typical maturity</td><td>Up to 30 years (flexible)</td><td>10 years or less (shorter)</td></tr>
+          <tr><td>Security/Collateral</td><td>Usually unsecured (general obligation)</td><td>Often secured (asset pledges as secondary repayment)</td></tr>
+          <tr><td>Callable bonds</td><td>Less common; usually non-callable</td><td>Very common — retains refinancing flexibility</td></tr>
+          <tr><td>Issuance strategy</td><td>Opportunistic; staggered maturities</td><td>Must restructure/renegotiate; constrained by market availability</td></tr>
+          <tr><td>Analytical focus</td><td>Probability of default; credit rating changes</td><td>Loss given default; covenant protections; collateral value</td></tr>
+          <tr><td>Credit spread volatility</td><td>Stable; moderate variation</td><td>Large fluctuations over economic cycle</td></tr>
+          <tr><td>Market size</td><td>Very large</td><td>Fraction of IG market size</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Short-Term Funding Sources — Non-Financial vs. Financial Institutions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>Non-Financial Corps</th><th>Financial Institutions (Banks)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bank Lines of Credit</td><td>✅ Primary; uncommitted, committed, revolvers</td><td>✅ Less reliant; tend to borrow from interbank market</td></tr>
+          <tr><td>Secured Loans / Factoring</td><td>✅ For lower credit quality companies</td><td>Mostly provide these, not use them</td></tr>
+          <tr><td>Commercial Paper (Unsecured)</td><td>✅ Large IG corporations only; 40% of issuance</td><td>✅ Dominant issuers; ~60% of annual CP issuance</td></tr>
+          <tr><td>ABCP (Secured CP via SPE)</td><td>Indirect (as SPE originator)</td><td>✅ Bank transfers loans to SPE; receives cash; off-balance-sheet</td></tr>
+          <tr><td>Deposits (Demand/Saving/CDs)</td><td>Not applicable</td><td>✅ Primary and most stable funding source</td></tr>
+          <tr><td>Interbank Market</td><td>Not applicable</td><td>✅ Key unsecured short-term lending market</td></tr>
+          <tr><td>Central Bank Funds Market</td><td>Not applicable</td><td>✅ Balance surplus/deficit reserves among banks</td></tr>
+          <tr><td>Discount Window</td><td>Not applicable</td><td>✅ Lender of last resort; stigma; higher rate; collateral required</td></tr>
+          <tr><td>Repurchase Agreements (Repo)</td><td>Not applicable</td><td>✅ Most common secured interbank funding; core tool</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Three bank credit line types (reliability order):</strong> Uncommitted (least reliable — bank can refuse) → Committed/Regular (more reliable — formal written commitment + commitment fee) → Revolver (most reliable — multiyear commitment + covenants).</li>
+        <li>✅ <strong>Uncommitted lines:</strong> no commitment fee, most flexible, bank CAN refuse any draw. Used more frequently in the US. NOT reliable as primary funding source in stress.</li>
+        <li>✅ <strong>Committed lines:</strong> commitment fee (e.g., 0.50%) on full or unused amount. 364-day term minimizes bank capital requirements. Banks may syndicate large lines. Risk of non-renewal if issuer credit weakens.</li>
+        <li>✅ <strong>Revolvers:</strong> most reliable; multiyear; covenants like a bond indenture. "Operating lines of credit." Most common in US.</li>
+        <li>✅ <strong>Assignment of receivables:</strong> A/R used as collateral; company retains collection responsibility. Factoring: company SELLS A/R to factor at a discount; factor takes over credit-granting and collection.</li>
+        <li>✅ <strong>Commercial paper (CP):</strong> short-term (&lt;3 months), unsecured promissory note. Large highly-rated issuers only. 60% from financial institutions, 40% from non-financial corps. International = Eurocommercial Paper (ECP) — smaller and less liquid than US CP.</li>
+        <li>✅ <strong>Rollover risk:</strong> risk of inability to issue new CP at maturity. Mitigated by backup committed bank credit lines (liquidity enhancement). CP markets adapt quickly to adverse credit events — defaults are rare.</li>
+        <li>✅ <strong>ABCP:</strong> secured CP issued by SPE backed by a pool of loans/receivables. Off-balance-sheet financing. Bank provides backup credit facility. GFC lesson: cannot use ABCP to fund long-term assets (maturity mismatch → collapse in crisis).</li>
+        <li>✅ <strong>Bank deposits:</strong> demand (checking) = most liquid, transactional, little interest; operational deposits = stable; saving deposits = non-transactional, stated term. CDs = predetermined maturity and rate. Non-negotiable CD = penalty for early withdrawal. Negotiable CD = can be sold in open market.</li>
+        <li>✅ <strong>Interbank market:</strong> overnight to 1-year; rate tied to MRR; credit risk factored in; counterparty limits imposed. Central bank funds market balances surplus/deficit reserves. Discount window = lender of last resort, higher rate, collateral required, triggers greater oversight.</li>
+        <li>✅ <strong>Repo = sale + simultaneous agreement to repurchase.</strong> Security seller = cash borrower. Security buyer = cash lender. Seller retains ownership and any coupon income during repo term. Reverse repo = from the buyer's perspective.</li>
+        <li>✅ <strong>Repo repurchase price formula: Purchase Price × [1 + (Repo Rate × Days/360)].</strong></li>
+        <li>✅ <strong>Initial Margin = Security Price₀ / Purchase Price₀.</strong> 100% = fully collateralized. &gt;100% = overcollateralized (protects lender).</li>
+        <li>✅ <strong>Haircut = (Security Price₀ − Purchase Price₀) / Security Price₀.</strong> Percentage discount of loan vs. collateral value.</li>
+        <li>✅ <strong>Variation Margin = (Initial Margin × Purchase Priceₜ) − Security Priceₜ.</strong> If collateral value declines → cash borrower must post additional collateral.</li>
+        <li>✅ <strong>General collateral (GC) repo:</strong> uses a group of acceptable securities. Special trade: specific security required. High demand for specific security → special repo rate below GC rate → can turn negative (lender pays borrower).</li>
+        <li>✅ <strong>Three uses of repo:</strong> (1) finance security ownership (dealer inventory); (2) earn secured short-term income (cash lenders); (3) borrow a security to sell it short (hedge funds).</li>
+        <li>✅ <strong>Repo rate determinants:</strong> money market rates (↑ rates = ↑ repo rate); collateral quality (↓ quality = ↑ rate); term (↑ maturity = ↑ rate); collateral demand (↑ demand = ↓ rate); collateral delivery (undercollateralized = ↑ rate).</li>
+        <li>✅ <strong>Five repo risks:</strong> default, collateral, margining, legal, netting/settlement.</li>
+        <li>✅ <strong>Bilateral repo:</strong> directly between two parties. Triparty repo: uses a third-party agent (custodian/clearinghouse) for administration — does NOT change credit risk but creates efficiencies.</li>
+        <li>✅ <strong>Repo rollover risk:</strong> mostly overnight maturity → heavily reliant on continuous rolling. Financial firms have failed in crises due to heavy repo reliance even with good collateral (confidence collapse).</li>
+        <li>✅ <strong>IG long-term debt:</strong> large benchmark yield component; few covenants; maturities up to 30 years; unsecured; standardized; opportunistic issuance; staggered maturities; minimal bondholder monitoring.</li>
+        <li>✅ <strong>HY long-term debt:</strong> large credit spread component; many restrictive covenants; maturities ≤10 years; often secured; callable; constrained issuance; heavy monitoring; more equity-like; analyze loss given default AND probability of default.</li>
+        <li>✅ <strong>HY issuers frequently issue callable bonds</strong> because they expect to refinance at lower costs if credit improves (value of call rises as costs fall). Call premium must exceed refinancing cost savings for the call to be exercised.</li>
+        <li>✅ <strong>Fallen angels:</strong> downgraded IG issuers whose bonds have IG-style structure (non-callable, few covenants, long maturity) but now have HY credit quality. Forced selling by IG-mandated investors → large price drop. HY market is much smaller than IG → price impact amplified.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA &amp; QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ REPO FORMULAS ═══<br>
+        Repurchase Price = Purchase Price × [1 + (Repo Rate × Days/360)]<br>
+        Initial Margin = Security Price₀ / Purchase Price₀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;100% = overcollateralized]<br>
+        Haircut = (Security Price₀ − Purchase Price₀) / Security Price₀<br>
+        Variation Margin = (Initial Margin × Purchase Priceₜ) − Security Priceₜ<br><br>
+
+        ═══ REPO TERMINOLOGY ═══<br>
+        Security Seller = Cash Borrower (gets cash; promises to repurchase)<br>
+        Security Buyer  = Cash Lender (pays cash; holds security as collateral; = reverse repo)<br>
+        Overnight = 1 day | Term = any maturity &gt;1 day<br>
+        GC repo = any acceptable security | Special = specific security required<br>
+        High security demand → lower/negative special repo rate<br><br>
+
+        ═══ CREDIT LINE HIERARCHY (RELIABILITY) ═══<br>
+        Uncommitted: no commitment fee; bank can refuse; least reliable<br>
+        Committed (364-day): commitment fee; formal commitment; more reliable<br>
+        Revolver: multiyear; covenants; most reliable; most restrictive<br><br>
+
+        ═══ COMMERCIAL PAPER ═══<br>
+        Short-term (&lt;3 months); unsecured; large highly-rated issuers only<br>
+        60% financial institutions / 40% non-financial<br>
+        ECP = international CP (smaller, less liquid than US CP)<br>
+        Rollover risk → mitigated by backup committed credit lines<br>
+        ABCP = secured CP via SPE; off-balance-sheet; backed by loan pool<br><br>
+
+        ═══ IG vs. HY LONG-TERM DEBT ═══<br>
+        IG: large benchmark yield share; few covenants; ≤30yr; unsecured; opportunistic issuance<br>
+        HY: large credit spread share; many covenants; ≤10yr; often secured; callable; constrained<br>
+        HY: equity-like cash flows; analyze PD + LGD + covenants + collateral<br>
+        Fallen angels: IG structure + HY credit quality → forced selling + large price impact
+      </div>
+      <div class="note">
+        <strong>Repo key insight:</strong> Security seller = cash borrower (owns the security, gets cash, pays repo interest at maturity). Security buyer = cash lender (provides cash, receives security as collateral, earns repo rate). Seller retains coupon income during repo term.<br>
+        <strong>Initial margin &gt; 100% = overcollateralized:</strong> loan is less than security value — extra buffer protects the lender.<br>
+        <strong>Negative repo rate:</strong> extremely high demand for specific security → lender PAYS interest to get that security (special trade).<br>
+        <strong>HY callable bond rationale:</strong> HY issuers expect credit improvement → call option becomes valuable as borrowing costs fall. Call when refinancing savings &gt; call premium (in PV terms).<br>
+        <strong>Fallen angel impact:</strong> IG-mandated investors forced to sell + HY market much smaller than IG market → disproportionately large price decline.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 4: Fixed-Income Markets for Corporate Issuers · Exam Prep Notes
+</footer>
+
+</body>
+</html>

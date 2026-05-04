@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 8: Hypothesis Testing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1214 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.06) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p + p { margin-top: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.1); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .error-matrix { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .em-header-row { display: grid; grid-template-columns: 180px 1fr 1fr; background: #1e2330; }
+  .em-row { display: grid; grid-template-columns: 180px 1fr 1fr; }
+  .em-row:last-child { border-bottom: none; }
+  .em-cell { padding: 14px 16px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .em-cell:last-child { border-right: none; }
+  .em-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+  .em-label { font-weight: 700; color: var(--muted); font-size: 13px; }
+  .em-correct { background: rgba(76,201,138,0.08); color: var(--accent3); font-weight: 600; }
+  .em-t1 { background: rgba(201,76,76,0.08); color: var(--danger); font-weight: 600; }
+  .em-t2 { background: rgba(201,168,76,0.08); color: var(--accent); font-weight: 600; }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 8</div>
+  <h1>Hypothesis <span>Testing</span></h1>
+  <p>Six-step process · Type I &amp; II errors · t-test, chi-square, F-test · Paired comparisons · Parametric vs. nonparametric. Complete exam-ready reference — every formula, every decision rule, every trap.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Key Definitions</a>
+  <a class="toc-item" href="#s2">02 · Six-Step Process</a>
+  <a class="toc-item" href="#s3">03 · Errors &amp; Power</a>
+  <a class="toc-item" href="#s4">04 · All Test Statistics</a>
+  <a class="toc-item" href="#s5">05 · Test of Single Mean</a>
+  <a class="toc-item" href="#s6">06 · Test of Single Variance</a>
+  <a class="toc-item" href="#s7">07 · Difference in Means</a>
+  <a class="toc-item" href="#s8">08 · Difference in Variances</a>
+  <a class="toc-item" href="#s9">09 · Parametric vs. Nonparametric</a>
+  <a class="toc-item" href="#s10">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════ SECTION 1: KEY DEFINITIONS ══════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Essential Definitions</h2>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="def-block">
+          <div class="def-term">Null Hypothesis (H₀)</div>
+          <div class="def-body">The statement considered to be true unless the sample gives convincing evidence otherwise. It is what we <em>want to reject</em>. Always stated in terms of population parameters. Typically represents "no effect," "no difference," or a specific hypothesized value.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Alternative Hypothesis (Hₐ)</div>
+          <div class="def-body">The statement we accept if we reject H₀. Must be mutually exclusive and collectively exhaustive with H₀ — together they cover all possible values. Can be one-sided (left or right tail) or two-sided.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Test Statistic</div>
+          <div class="def-body">A value calculated from the sample that is compared to a critical value to decide whether to reject H₀. The choice of test statistic depends on what is being tested and what is known/unknown.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Critical Value</div>
+          <div class="def-body">The boundary value(s) from the test statistic's distribution, determined by the significance level α and whether the test is one- or two-tailed. If the calculated test statistic exceeds the critical value, we reject H₀.</div>
+        </div>
+      </div>
+      <div>
+        <div class="def-block">
+          <div class="def-term">Level of Significance (α)</div>
+          <div class="def-body">The probability of making a Type I error (rejecting a true H₀). Set by the analyst before the test. Common values: 1%, 5%, 10%. <em>Confidence level = 1 − α.</em></div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">p-value</div>
+          <div class="def-body">The smallest level of significance at which the null hypothesis can be rejected. It is the probability of obtaining a test statistic as extreme as (or more extreme than) the observed value, assuming H₀ is true. <strong>Reject H₀ if p-value &lt; α.</strong></div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Statistically Significant</div>
+          <div class="def-body">A result is statistically significant when the calculated test statistic is more extreme than the critical value — i.e., we have sufficient evidence to reject H₀ at the chosen significance level.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Power of a Test (1 − β)</div>
+          <div class="def-body">The probability of correctly rejecting a false H₀. Power = 1 − P(Type II error). Higher power is better. Increases with: larger sample size, higher significance level α, larger true difference from H₀.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 H₀ vs. Hₐ — How to Set Them Up</div>
+      <p>The null hypothesis always contains the equality (=, ≤, ≥). The alternative is what you are trying to prove. One-sided test: Hₐ is "&gt;" or "&lt;". Two-sided test: Hₐ is "≠". Always write hypotheses in terms of population parameters (µ, σ²), not sample statistics (X̄, s²).</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 2: SIX-STEP PROCESS ══════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Six-Step Hypothesis Testing Process</h2>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>State the hypotheses.</strong> Formulate H₀ and Hₐ in terms of population parameters. They must be mutually exclusive and collectively exhaustive. Decide if one-tailed or two-tailed based on the research question.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Identify the appropriate test statistic and its probability distribution.</strong> Choose the correct test statistic (t, z, χ², F) based on what you're testing and the data properties (known/unknown σ, sample sizes, independence of samples).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Specify the level of significance (α).</strong> Choose α before collecting data (typically 1%, 5%, or 10%). This reflects how much evidence you need to reject H₀ and the cost/consequence of a Type I error.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>State the decision rule.</strong> Determine the critical value(s) from the distribution at the chosen α and degrees of freedom. Define the rejection region: if calculated test statistic falls in rejection region → reject H₀.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Collect the data and calculate the test statistic.</strong> Use the sample data to compute the numerical value of the test statistic using the appropriate formula.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Make a decision.</strong> Compare the calculated test statistic to the critical value(s). Reject or fail to reject H₀. State the conclusion in the context of the original question. Note: "fail to reject" ≠ "accept" H₀.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: "Fail to Reject" ≠ "Accept" H₀</div>
+      <p>We <strong>never "accept" the null hypothesis</strong>. We either <em>reject</em> it or <em>fail to reject</em> it. Failing to reject H₀ means the data do not provide sufficient evidence against it — not that H₀ is proven true. This language distinction matters on the exam.</p>
+    </div>
+
+    <h3>One-Tailed vs. Two-Tailed Tests</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Two-Tailed Test (Hₐ: µ ≠ µ₀)</div>
+        <ul>
+          <li>Tests if parameter differs in <em>either</em> direction from H₀.</li>
+          <li>Rejection region split equally: α/2 in each tail.</li>
+          <li>Critical values: ±t(α/2, df) or ±z(α/2).</li>
+          <li>Example: "Is the fund's return different from 1.1%?"</li>
+          <li>More conservative — harder to reject H₀ for a given α.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">One-Tailed Test (Hₐ: µ &gt; µ₀ or µ &lt; µ₀)</div>
+        <ul>
+          <li>Tests if parameter is greater than OR less than H₀ value.</li>
+          <li>All α concentrated in one tail.</li>
+          <li>Critical value: t(α, df) or z(α) — only one boundary.</li>
+          <li>Example: "Is the fund's variance less than 16%²?"</li>
+          <li>More powerful for detecting a difference in the specified direction.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Decision Rule: Test Statistic vs. Critical Value</h3>
+    <div class="card">
+      <p><strong>Reject H₀ if:</strong> |calculated test statistic| &gt; critical value (two-tailed), OR calculated test statistic &gt; +critical value (right-tail), OR calculated test statistic &lt; −critical value (left-tail).</p>
+      <p style="margin-top:10px;"><strong>Alternative via p-value:</strong> Reject H₀ if p-value &lt; α. The p-value is the area in the tail(s) beyond the calculated test statistic. This gives the same conclusion as the critical value approach.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Confidence Interval Approach to Hypothesis Testing</div>
+      <p>A two-tailed hypothesis test at significance level α is equivalent to constructing a (1−α) confidence interval. <strong>Reject H₀ if the hypothesized value falls outside the confidence interval.</strong> CI = X̄ ± critical value × (s/√n). This is a faster approach on the exam when the CI is already calculated.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 3: ERRORS AND POWER ══════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Type I Error, Type II Error &amp; Power</h2>
+    </div>
+
+    <h3>The Error Matrix — Learn This Cold</h3>
+    <div class="error-matrix">
+      <div class="em-header-row">
+        <div class="em-cell em-header">Decision \ Reality</div>
+        <div class="em-cell em-header">H₀ is TRUE</div>
+        <div class="em-cell em-header">H₀ is FALSE</div>
+      </div>
+      <div class="em-row">
+        <div class="em-cell em-label">Fail to Reject H₀</div>
+        <div class="em-cell em-correct">✓ Correct Decision<br><small style="color:var(--muted)">Probability = 1 − α<br>= confidence level</small></div>
+        <div class="em-cell em-t2">Type II Error (β)<br><small style="color:var(--muted)">False Negative<br>Fail to reject a false H₀</small></div>
+      </div>
+      <div class="em-row">
+        <div class="em-cell em-label">Reject H₀</div>
+        <div class="em-cell em-t1">Type I Error (α)<br><small style="color:var(--muted)">False Positive<br>Reject a true H₀</small></div>
+        <div class="em-cell em-correct">✓ Correct Decision<br><small style="color:var(--muted)">Probability = 1 − β<br>= Power of the test</small></div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div class="mini-card">
+        <div class="mc-title red">Type I Error (α) — False Positive</div>
+        <ul>
+          <li>Rejecting H₀ when it is actually TRUE.</li>
+          <li>Probability = α = significance level.</li>
+          <li>Controlled directly by the analyst's choice of α.</li>
+          <li>Lower α → less likely to make Type I error → but more likely to make Type II error.</li>
+          <li><strong>Investment analogy:</strong> Concluding a manager has skill when they don't.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Type II Error (β) — False Negative</div>
+        <ul>
+          <li>Failing to reject H₀ when it is actually FALSE.</li>
+          <li>Probability = β. Not directly controlled by analyst.</li>
+          <li>Decreases with: larger n, larger α, larger true effect size.</li>
+          <li>Cannot simultaneously minimize both α and β without increasing n.</li>
+          <li><strong>Investment analogy:</strong> Concluding a manager has no skill when they do.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Error Probabilities and Power — Complete Summary</div>
+      <div class="f">
+        α = P(Type I error)  = P(Reject H₀ | H₀ is true)   = significance level<br>
+        β = P(Type II error) = P(Fail to reject H₀ | H₀ is false)<br>
+        Power = 1 − β        = P(Reject H₀ | H₀ is false)  = probability of correct rejection<br>
+        Confidence level = 1 − α                             = probability of correct retention<br><br>
+        Trade-off: ↓α → ↑β (and ↓Power)  |  ↑α → ↓β (and ↑Power)<br>
+        Only way to reduce BOTH α and β simultaneously: INCREASE sample size n.
+      </div>
+      <div class="note">
+        Power increases with: (1) larger sample size n, (2) larger significance level α, (3) larger true difference between hypothesized and actual parameter value, (4) lower population variance (data less noisy).
+      </div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: Type I vs. Type II</div>
+      <p><strong>Type I = "Crying wolf"</strong> — you say the wolf is there (reject H₀) but it isn't (H₀ is true). A false alarm. α controls this. <strong>Type II = "Missing the wolf"</strong> — you say there's no wolf (fail to reject H₀) but there is one (H₀ is false). A missed detection. β controls this. You'd rather cry wolf occasionally than miss the actual wolf — so in safety-critical contexts, we prefer controlling Type I error strictly (very small α), accepting higher Type II risk.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 4: ALL TEST STATISTICS ══════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>All Test Statistics at a Glance</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>What We're Testing</th>
+            <th>Test Statistic Formula</th>
+            <th>Distribution</th>
+            <th>Degrees of Freedom</th>
+            <th>Key Assumption</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Single mean (σ unknown)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">t = (X̄ − µ₀) / (s/√n)</td>
+            <td>t-distribution</td>
+            <td>n − 1</td>
+            <td>Normal pop. or large n; σ unknown (use s)</td>
+          </tr>
+          <tr>
+            <td>Single mean (σ known)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">z = (X̄ − µ₀) / (σ/√n)</td>
+            <td>Normal (z)</td>
+            <td>n/a</td>
+            <td>σ known (rare in practice)</td>
+          </tr>
+          <tr>
+            <td>Difference in means (independent samples, equal variances)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">t = [(X̄₁−X̄₂)−(µ₁−µ₂)] / √(s²p/n₁ + s²p/n₂)</td>
+            <td>t-distribution</td>
+            <td>n₁ + n₂ − 2</td>
+            <td>Independent samples; approx. equal variances; pooled s²p</td>
+          </tr>
+          <tr>
+            <td>Mean of differences (paired/dependent samples)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">t = (d̄ − µd₀) / s_d̄</td>
+            <td>t-distribution</td>
+            <td>n − 1</td>
+            <td>Dependent (paired) samples; normal differences</td>
+          </tr>
+          <tr>
+            <td>Single variance</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">χ² = (n−1)s² / σ²₀</td>
+            <td>Chi-square (χ²)</td>
+            <td>n − 1</td>
+            <td>Normally distributed population</td>
+          </tr>
+          <tr>
+            <td>Difference in variances (two populations)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">F = s²₁ / s²₂</td>
+            <td>F-distribution</td>
+            <td>n₁−1 (num.), n₂−1 (den.)</td>
+            <td>Independent samples from normal populations; larger variance in numerator</td>
+          </tr>
+          <tr>
+            <td>Correlation coefficient</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">t = r√(n−2) / √(1−r²)</td>
+            <td>t-distribution</td>
+            <td>n − 2</td>
+            <td>Bivariate normal population</td>
+          </tr>
+          <tr>
+            <td>Independence (categorical data)</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:12.5px;">χ² = Σᵢ Σⱼ (Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ</td>
+            <td>Chi-square (χ²)</td>
+            <td>(r−1)(c−1)</td>
+            <td>r = rows, c = columns in contingency table</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Which Test to Use — Decision Tree</div>
+      <p><strong>Testing a MEAN?</strong> → t-test (σ unknown, nearly always). <strong>Testing a VARIANCE?</strong> → chi-square. <strong>Comparing TWO VARIANCES?</strong> → F-test. <strong>Comparing TWO MEANS (independent)?</strong> → t-test (pooled or separate variances). <strong>Comparing TWO MEANS (dependent/paired)?</strong> → paired t-test (test of mean differences). <strong>Testing CORRELATION?</strong> → t-test with n−2 df. <strong>Categorical data independence?</strong> → chi-square.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 5: TEST OF SINGLE MEAN ══════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Test of a Single Mean (t-test)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">t-statistic for Single Mean (σ Unknown — Use in Practice)</div>
+      <div class="f">
+        t = (X̄ − µ₀) / (s / √n)<br><br>
+        Degrees of freedom: df = n − 1
+      </div>
+      <div class="note">
+        <strong>X̄</strong> = sample mean &nbsp;|&nbsp; <strong>µ₀</strong> = hypothesized population mean &nbsp;|&nbsp; <strong>s</strong> = sample standard deviation &nbsp;|&nbsp; <strong>n</strong> = sample size.<br>
+        The denominator (s/√n) is the <em>standard error of the sample mean</em>.<br>
+        When σ IS known (very rare), use z = (X̄ − µ₀) / (σ/√n) and the normal distribution instead.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example: Sendar Equity Fund — Single Mean Test</div>
+      <p><strong>Setup:</strong> Fund's actual mean monthly return X̄ = 1.50%, s = 3.60%, n = 24 months. Pricing model predicts µ₀ = 1.10%. Test at α = 5% (two-tailed): Is actual performance different from the model prediction?</p>
+      <p><strong>Step 1: H₀: µ = 1.1% vs. Hₐ: µ ≠ 1.1%</strong></p>
+      <p><strong>Step 2: Test statistic → t with df = 24 − 1 = 23</strong></p>
+      <p><strong>Step 3: α = 5%, two-tailed</strong></p>
+      <p><strong>Step 4: Critical values = ±2.069 (t at 2.5% in each tail, 23 df)</strong></p>
+      <div class="calc">
+        Step 5: t = (1.50 − 1.10) / (3.60 / √24)<br>
+               t = 0.40 / (3.60 / 4.899)<br>
+               t = 0.40 / 0.7348<br>
+               t = 0.544
+      </div>
+      <div class="result">Step 6: |0.544| &lt; 2.069 → FAIL TO REJECT H₀</div>
+      <p>Conclusion: Insufficient evidence that the fund's mean monthly return differs from the 1.10% pricing model prediction. The outperformance is not statistically significant at 5%.</p>
+      <p style="margin-top:8px;"><strong>Confidence Interval check:</strong> CI = 1.50 ± 2.069 × (3.60/√24) = 1.50 ± 1.52 = [−0.02%, 3.02%]. Since µ₀ = 1.1% falls within [−0.02%, 3.02%], we fail to reject H₀ — same conclusion.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Statistical vs. Economic Significance</div>
+      <p>A result can be <strong>statistically significant but economically trivial</strong>, or statistically insignificant but economically meaningful. A very large sample can make tiny differences statistically significant. Always ask: "Even if statistically significant, is the effect size large enough to matter economically?" This distinction frequently appears on the exam.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 6: TEST OF SINGLE VARIANCE ══════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Test of a Single Variance (Chi-Square Test)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Chi-Square (χ²) Test Statistic for Single Variance</div>
+      <div class="f">
+        χ² = (n − 1) × s² / σ²₀<br><br>
+        Degrees of freedom: df = n − 1
+      </div>
+      <div class="note">
+        <strong>s²</strong> = observed sample variance &nbsp;|&nbsp; <strong>σ²₀</strong> = hypothesized population variance &nbsp;|&nbsp; <strong>n</strong> = sample size.<br>
+        Assumption: the population is <em>normally distributed</em>. Chi-square is NOT robust to departures from normality.<br>
+        The chi-square distribution is right-skewed and bounded below by 0 (variance cannot be negative). The shape depends on df.
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Three possible hypothesis set-ups for variance:</strong></p>
+      <ul style="padding-left:18px; margin-top:8px; line-height:2.0;">
+        <li><strong>Two-tailed:</strong> H₀: σ² = σ²₀ vs. Hₐ: σ² ≠ σ²₀ → reject if χ² &lt; χ²lower or χ² &gt; χ²upper</li>
+        <li><strong>Right-tail (testing if variance is large):</strong> H₀: σ² ≤ σ²₀ vs. Hₐ: σ² &gt; σ²₀ → reject if χ² &gt; critical value</li>
+        <li><strong>Left-tail (testing if variance is small):</strong> H₀: σ² ≥ σ²₀ vs. Hₐ: σ² &lt; σ²₀ → reject if χ² &lt; critical value</li>
+      </ul>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example: Sendar Equity Fund — Single Variance Test</div>
+      <p><strong>Setup:</strong> Sendar Equity Fund, n = 24, s = 3.60%, so s² = 12.96% (= 0.1296 in decimal, but here in % squared: 12.96). Test at α = 5%: Is σ² &lt; 16 (i.e., σ &lt; 4%)? H₀: σ² ≥ 16 vs. Hₐ: σ² &lt; 16 (one-tailed, left tail). df = 23.</p>
+      <p><strong>Critical value (left tail, 5% in left):</strong> χ²(0.05, 23) = 13.09051. Reject H₀ if χ² &lt; 13.09051.</p>
+      <div class="calc">
+        χ² = (24 − 1) × 12.96 / 16<br>
+        χ² = 23 × 12.96 / 16<br>
+        χ² = 298.08 / 16
+      </div>
+      <div class="result">χ² = 18.63 &gt; 13.09 → FAIL TO REJECT H₀</div>
+      <p>Conclusion: Insufficient evidence that the fund's variance is less than 16 (σ &lt; 4%). The data do not support the claim of lower volatility.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Chi-Square: Key Properties to Remember</div>
+      <p>Chi-square distribution is <strong>asymmetric (right-skewed)</strong> and <strong>always positive</strong>. Critical values are NOT symmetric around zero (unlike t and z). For a left-tail test, you find the value where only α% of the distribution lies to the LEFT — this will be a small positive number. For a right-tail test, it's a large positive number. Always specify df = n−1 for single variance tests.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 7: DIFFERENCE IN MEANS ══════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Tests Concerning Differences Between Means</h2>
+    </div>
+
+    <div class="card">
+      <p>When comparing means of two groups, the first decision is: <span class="hl-blue">Are the samples independent or dependent (paired)?</span> This determines which test to use.</p>
+    </div>
+
+    <h3>Case A: Independent Samples (Pooled t-test — Equal Variances Assumed)</h3>
+
+    <div class="formula-box">
+      <div class="label">t-test: Difference in Means (Independent Samples, Equal Variances)</div>
+      <div class="f">
+        t = [(X̄₁ − X̄₂) − (µ₁ − µ₂)₀] / √(s²p/n₁ + s²p/n₂)<br><br>
+        Pooled variance: s²p = [(n₁−1)s²₁ + (n₂−1)s²₂] / (n₁ + n₂ − 2)<br><br>
+        Degrees of freedom: df = n₁ + n₂ − 2
+      </div>
+      <div class="note">
+        Under H₀: µ₁ − µ₂ = 0, so (µ₁ − µ₂)₀ = 0 in the numerator, simplifying to t = (X̄₁ − X̄₂) / √(s²p/n₁ + s²p/n₂).<br>
+        The <strong>pooled variance s²p</strong> combines both samples' variance estimates into one, weighted by degrees of freedom. This is valid ONLY when variances are assumed equal.<br>
+        Assumption: both samples from normally distributed populations; samples are independent.
+      </div>
+    </div>
+
+    <h3>Case B: Dependent (Paired) Samples — Paired Comparisons Test</h3>
+
+    <div class="formula-box">
+      <div class="label">t-test: Mean of Differences (Paired Comparisons)</div>
+      <div class="f">
+        d̄ = (1/n) × Σᵢ dᵢ     where dᵢ = X₁ᵢ − X₂ᵢ  (difference for each pair)<br><br>
+        t = (d̄ − µd₀) / s_d̄<br><br>
+        s_d̄ = s_d / √n    (standard error of mean difference)<br><br>
+        Degrees of freedom: df = n − 1
+      </div>
+      <div class="note">
+        Under H₀: µd = 0 (no mean difference), so t = d̄ / s_d̄.<br>
+        <strong>d̄</strong> = sample mean of the paired differences.<br>
+        <strong>s_d</strong> = sample standard deviation of the paired differences.<br>
+        <strong>n</strong> = number of PAIRS (not total observations).
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">When to Use Paired Test</div>
+        <ul>
+          <li>Samples are <strong>dependent</strong> — observations are naturally linked in pairs.</li>
+          <li>Same subjects measured twice (before/after): e.g., portfolio returns before and after a strategy change.</li>
+          <li>Matched pairs: e.g., comparing two funds over the same time periods (same economic conditions).</li>
+          <li>df = n − 1 where n = number of pairs.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title green">Why Paired Test is More Powerful</div>
+        <ul>
+          <li>By pairing observations (e.g., same time period), you <strong>eliminate variation</strong> caused by factors common to both samples (market conditions, interest rate environment, etc.).</li>
+          <li>The residual variation (the differences) is smaller, so the test can more easily detect a true difference between means.</li>
+          <li>More powerful than the independent-samples test for the same n pairs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Independent vs. Dependent Samples</div>
+      <p>If the question says "same companies" or "same time periods" for both samples → <strong>dependent/paired → use paired t-test</strong>. If the two samples are drawn from different, unrelated groups → <strong>independent → use pooled t-test</strong>. The df formula is different: paired uses n−1 (n = number of pairs); independent uses n₁+n₂−2.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 8: DIFFERENCE IN VARIANCES ══════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Test of Equality of Two Variances (F-test)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">F-test: Ratio of Two Sample Variances</div>
+      <div class="f">
+        F = s²₁ / s²₂<br><br>
+        Degrees of freedom: df₁ = n₁ − 1 (numerator), df₂ = n₂ − 1 (denominator)
+      </div>
+      <div class="note">
+        <strong>Convention:</strong> Place the larger sample variance in the numerator (s²₁ ≥ s²₂) → F ≥ 1. This simplifies the test to a right-tail test only.<br>
+        <strong>H₀: σ²₁ = σ²₂</strong> (variances are equal) vs. <strong>Hₐ: σ²₁ ≠ σ²₂</strong> (variances differ).<br>
+        Reject H₀ if F &gt; F_critical (right-tail critical value at α/2 for two-tailed, or α for one-tailed).<br>
+        Assumptions: both populations are normally distributed; samples are independent and random.<br>
+        <strong>Finance applications:</strong> Compare volatility of two portfolios, two funds, or the same asset in different time periods.
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Reading F-distribution tables:</strong> The F-distribution is parameterized by two degrees of freedom — numerator (df₁) and denominator (df₂). Critical values are always positive (F ≥ 0). The distribution is right-skewed. Always put the larger variance in the numerator so you only need the right-tail critical value.</p>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Summary: Which Test for Which Situation</div>
+      <p>
+        <strong>One mean, σ unknown → t-test (df = n−1)</strong><br>
+        <strong>One variance → χ² test (df = n−1)</strong><br>
+        <strong>Two means, independent → pooled t-test (df = n₁+n₂−2)</strong><br>
+        <strong>Two means, dependent → paired t-test (df = n−1, n = pairs)</strong><br>
+        <strong>Two variances → F-test (df₁ = n₁−1, df₂ = n₂−1)</strong><br>
+        <strong>Correlation → t-test (df = n−2)</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 9: PARAMETRIC VS. NONPARAMETRIC ══════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Parametric vs. Nonparametric Tests</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Parametric Tests</div>
+        <ul>
+          <li>Concerned with estimating or testing a specific <strong>population parameter</strong> (µ, σ², etc.).</li>
+          <li>Validity depends on <strong>specific distributional assumptions</strong> (usually normality).</li>
+          <li>Examples: t-test, z-test, F-test, chi-square test for variance.</li>
+          <li><strong>Generally preferred</strong> when assumptions are met — more statistically powerful (better at detecting false H₀).</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title green">Nonparametric Tests</div>
+        <ul>
+          <li>Either NOT concerned with a parameter, OR make <strong>minimal distributional assumptions</strong>.</li>
+          <li>Often work with ranks or signs rather than raw data values.</li>
+          <li>Require specialized statistical tables for critical values.</li>
+          <li>Less powerful than parametric tests <em>when parametric assumptions are met</em>.</li>
+          <li>But more reliable when parametric assumptions are violated.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Four Situations Where Nonparametric Tests Are Appropriate</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Distributional assumptions are NOT met.</strong> Data comes from a small sample that appears to come from a markedly non-normal population. Parametric t-tests or z-tests are not valid; use nonparametric alternatives.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Data contains outliers.</strong> Extreme values distort parametric statistics (e.g., mean, variance) but not rank-based nonparametric statistics. Example: testing the median (robust to outliers) instead of the mean.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Data is in ranks or ordinal scale.</strong> Parametric tests generally require interval or ratio scale data. If observations are rankings of investment managers or analyst ratings, use nonparametric procedures.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Hypothesis does not concern a parameter.</strong> Example: testing whether a sample is random (runs test) — used to test the random walk theory for stock price changes. Or testing whether data follows a specific distribution.</div>
+      </div>
+    </div>
+
+    <h3>Nonparametric Alternatives to Common Parametric Tests</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Test Purpose</th>
+            <th>Parametric Alternative</th>
+            <th>Nonparametric Alternative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Test of a single mean</td>
+            <td>t-test or z-test</td>
+            <td>Wilcoxon signed-rank test</td>
+          </tr>
+          <tr>
+            <td>Test of difference between means (independent)</td>
+            <td>t-test (pooled)</td>
+            <td>Mann–Whitney U test (Wilcoxon rank sum test)</td>
+          </tr>
+          <tr>
+            <td>Test of mean differences (paired/dependent)</td>
+            <td>Paired t-test</td>
+            <td>Wilcoxon signed-rank test; Sign test</td>
+          </tr>
+          <tr>
+            <td>Test of randomness</td>
+            <td>n/a (no parametric equivalent)</td>
+            <td>Runs test (tests random walk hypothesis)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 When Are Both Tests Run Together?</div>
+      <p>Analysts often report <strong>both parametric and nonparametric results</strong> side by side. This lets the user assess how sensitive the conclusion is to the distributional assumptions of the parametric test. If both tests agree → conclusion is robust. If they disagree → the parametric assumptions may be questionable and further investigation is warranted.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Nonparametric ≠ Better</div>
+      <p>Nonparametric tests are NOT automatically preferred. When parametric assumptions ARE met, the parametric test generally has <strong>more statistical power</strong> — i.e., a greater probability of correctly rejecting a false H₀. Nonparametric tests are chosen only when the conditions that make parametric tests valid are absent.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 10: EXAM CHECKLIST ══════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Six steps of hypothesis testing:</strong> (1) State hypotheses, (2) Identify test statistic &amp; distribution, (3) Specify α, (4) State decision rule, (5) Calculate test statistic, (6) Make decision. Follow in order.</li>
+        <li>✅ <strong>H₀ always contains the equality</strong> (=, ≤, ≥). Hₐ is what you're trying to prove. Both are in terms of population parameters, not sample statistics.</li>
+        <li>✅ <strong>Never "accept" H₀.</strong> You either REJECT it or FAIL TO REJECT it. Failing to reject ≠ proving it true.</li>
+        <li>✅ <strong>Type I error (α):</strong> Reject a TRUE H₀ = false positive. Controlled by choice of α. Type I = "crying wolf."</li>
+        <li>✅ <strong>Type II error (β):</strong> Fail to reject a FALSE H₀ = false negative. Type II = "missing the wolf."</li>
+        <li>✅ <strong>Power = 1 − β</strong> = probability of correctly rejecting a false H₀. Want power to be high. Increases with larger n, larger α, larger true effect size.</li>
+        <li>✅ <strong>α and β trade-off:</strong> Decreasing α increases β (and reduces power). The ONLY way to reduce both simultaneously is to increase sample size n.</li>
+        <li>✅ <strong>p-value</strong> = smallest α at which H₀ can be rejected. Reject H₀ if p-value &lt; α. p-value is the area in the tail(s) beyond the calculated test statistic.</li>
+        <li>✅ <strong>Confidence interval approach:</strong> Reject H₀ if hypothesized value falls outside the (1−α) CI. Equivalent to the two-tailed test at significance level α.</li>
+        <li>✅ <strong>t-test for single mean:</strong> t = (X̄ − µ₀) / (s/√n), df = n−1. Use when σ is unknown (almost always). Use z when σ is known.</li>
+        <li>✅ <strong>Chi-square for single variance:</strong> χ² = (n−1)s² / σ²₀, df = n−1. Requires normally distributed population. Distribution is right-skewed, asymmetric, always positive.</li>
+        <li>✅ <strong>Pooled t-test for two independent means:</strong> t uses pooled variance s²p, df = n₁+n₂−2. Requires approximately equal population variances.</li>
+        <li>✅ <strong>Paired t-test for dependent means:</strong> t = d̄ / s_d̄, df = n−1 where n = number of pairs. More powerful because it eliminates common variation between paired observations.</li>
+        <li>✅ <strong>Independent vs. dependent samples:</strong> Same time periods / same entities → dependent → paired test. Unrelated groups → independent → pooled t-test.</li>
+        <li>✅ <strong>F-test for two variances:</strong> F = s²₁/s²₂ with larger variance in numerator. df = (n₁−1, n₂−1). Requires normal populations, independent samples. Used to compare volatility of two assets/periods.</li>
+        <li>✅ <strong>Correlation t-test:</strong> t = r√(n−2)/√(1−r²), df = n−2.</li>
+        <li>✅ <strong>Statistical significance ≠ economic significance.</strong> Large n can make trivial differences significant. Always assess practical importance.</li>
+        <li>✅ <strong>Parametric tests:</strong> Concern population parameters; require distributional assumptions (usually normality). Preferred when assumptions are met (more powerful).</li>
+        <li>✅ <strong>Nonparametric tests:</strong> Use when: (1) distributional assumptions violated, (2) outliers present, (3) data is in ranks, (4) hypothesis is not about a parameter (e.g., runs test for randomness).</li>
+        <li>✅ <strong>Key nonparametric alternatives:</strong> Wilcoxon signed-rank (single mean / paired); Mann–Whitney U (difference in means, independent); Runs test (test of randomness / random walk).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ t-TEST: SINGLE MEAN ═══<br>
+        t = (X̄ − µ₀) / (s/√n)&nbsp;&nbsp;&nbsp;df = n−1<br><br>
+
+        ═══ χ²-TEST: SINGLE VARIANCE ═══<br>
+        χ² = (n−1)s² / σ²₀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n−1<br><br>
+
+        ═══ t-TEST: DIFFERENCE IN MEANS (INDEPENDENT) ═══<br>
+        t = [(X̄₁−X̄₂) − 0] / √(s²p/n₁ + s²p/n₂)<br>
+        s²p = [(n₁−1)s²₁ + (n₂−1)s²₂] / (n₁+n₂−2)&nbsp;&nbsp;df = n₁+n₂−2<br><br>
+
+        ═══ t-TEST: MEAN DIFFERENCES (PAIRED) ═══<br>
+        t = d̄ / s_d̄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_d̄ = s_d/√n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n−1  (n = pairs)<br><br>
+
+        ═══ F-TEST: RATIO OF VARIANCES ═══<br>
+        F = s²larger / s²smaller&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = (n₁−1, n₂−1)<br><br>
+
+        ═══ t-TEST: CORRELATION ═══<br>
+        t = r√(n−2) / √(1−r²)&nbsp;&nbsp;&nbsp;df = n−2<br><br>
+
+        ═══ CONFIDENCE INTERVAL (for mean) ═══<br>
+        CI = X̄ ± t(α/2, n−1) × s/√n<br><br>
+
+        ═══ ERROR PROBABILITIES ═══<br>
+        α = P(Type I)  = P(reject H₀ | H₀ true)   = significance level<br>
+        β = P(Type II) = P(fail to reject | H₀ false)<br>
+        Power = 1 − β&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confidence level = 1 − α<br>
+        Reject H₀ when: |test stat| &gt; critical value  OR  p-value &lt; α
+      </div>
+      <div class="note">
+        <strong>Choosing the right test:</strong> One mean → t (df n−1) | One variance → χ² (df n−1) | Two means independent → pooled t (df n₁+n₂−2) | Two means paired → paired t (df n−1) | Two variances → F (df n₁−1, n₂−1) | Correlation → t (df n−2).<br>
+        <strong>Key: H₀ always has equality | Never "accept" H₀ | α ↓ → β ↑ | Only larger n reduces both α and β simultaneously.</strong><br>
+        <strong>Nonparametric when:</strong> non-normal small sample | outliers present | ranked/ordinal data | hypothesis not about a parameter.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 8: Hypothesis Testing · Exam Prep Notes
+</footer>
+</body>
+</html>

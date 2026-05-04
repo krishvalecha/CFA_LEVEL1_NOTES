@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Corporate Issuers | Module 3: Corporate Governance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --card: #1a1e28;
+    --border: #252a38;
+    --accent: #c9a84c;
+    --accent2: #4c8bc9;
+    --accent3: #4cc98a;
+    --danger: #c94c4c;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tip-bg: #1a2218;
+    --tip-border: #4cc98a;
+    --warn-bg: #221a18;
+    --warn-border: #c94c4c;
+    --formula-bg: #12151f;
+    --formula-border: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #161320 40%, #0f140d 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(201,168,76,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 span { color: var(--accent); }
+
+  .page-header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 680px;
+  }
+
+  .toc-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toc-strip::-webkit-scrollbar { display: none; }
+
+  .toc-item {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    padding: 14px 18px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .section { margin-bottom: 56px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 24px 0 12px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box {
+    background: var(--formula-bg);
+    border-left: 3px solid var(--formula-border);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .formula-box .label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip {
+    background: var(--tip-bg);
+    border-left: 3px solid var(--tip-border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 20px;
+    margin: 16px 0;
+  }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn-border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 20px;
+    margin: 16px 0;
+  }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block {
+    background: #171b26;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 6px 6px;
+    padding: 14px 20px;
+    margin: 12px 0;
+  }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .case-box {
+    background: #15191f;
+    border: 1px solid #2e3445;
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .case-box .case-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .case-box p { font-size: 13.5px; color: #b8c4d8; }
+
+  /* Mechanism flow boxes */
+  .mech-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+  }
+  .mech-step {
+    background: rgba(76,139,201,0.12);
+    border: 1px solid rgba(76,139,201,0.3);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent2);
+  }
+  .mech-arrow { color: var(--muted); font-size: 16px; }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · CORPORATE ISSUERS · MODULE 3</div>
+  <h1>Corporate <span>Governance</span>:<br>Conflicts, Mechanisms, Risks &amp; Benefits</h1>
+  <p>Exam-ready notes: principal-agent problem, agency conflicts, all governance mechanisms, anti-takeover defences, board committees, and the risks/benefits of good vs. poor governance.</p>
+</div>
+
+<!-- TOC -->
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Principal-Agent Framework</a>
+  <a class="toc-item" href="#s2">02 · Manager-Shareholder Conflicts</a>
+  <a class="toc-item" href="#s3">03 · Ownership Structure</a>
+  <a class="toc-item" href="#s4">04 · Shareholder vs. Creditor Conflicts</a>
+  <a class="toc-item" href="#s5">05 · Reporting &amp; Transparency</a>
+  <a class="toc-item" href="#s6">06 · Shareholder Mechanisms</a>
+  <a class="toc-item" href="#s7">07 · Anti-Takeover Defences</a>
+  <a class="toc-item" href="#s8">08 · Creditor Mechanisms</a>
+  <a class="toc-item" href="#s9">09 · Board Committees</a>
+  <a class="toc-item" href="#s10">10 · Other Stakeholder Mechanisms</a>
+  <a class="toc-item" href="#s11">11 · Governance Risks &amp; Benefits</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: PRINCIPAL-AGENT FRAMEWORK -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>The Principal-Agent Relationship</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Principal-Agent Relationship (Agency Relationship)</div>
+      <div class="def-body">Created when one party (the <strong>principal</strong>) hires another party (the <strong>agent</strong>) to perform a task or service. The agent is expected to act in the principal's best interest. The relationship can exist with or without a formal contract and involves trust, loyalty, and diligence.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Information Asymmetry</div>
+      <div class="def-body">In most principal-agent relationships, the <strong>agent possesses more information</strong> than the principal. This makes it difficult for the principal to directly verify whether the agent is acting in the principal's best interest — the core reason why agency conflicts arise.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Agency Costs</div>
+      <div class="def-body">Costs arising from conflicts between principal and agent interests. Can be <strong>direct</strong> (e.g., cost of hiring monitoring agents like auditors) or <strong>indirect</strong> (e.g., foregone profits and economic benefits from lost opportunities due to misaligned decisions).</div>
+    </div>
+
+    <h3>The Corporate Principal-Agent Chain</h3>
+    <div class="formula-box">
+      <div class="label">Layered Agency Relationships in a Corporation</div>
+      <div class="f">
+        Shareholders (Principal) → elect → Board of Directors (Agent)<br>
+        Board of Directors (Principal) → hires → Managers / CEO (Agent)<br>
+        Managers (Principal) → hire → Employees (Agent)
+      </div>
+      <div class="note">At each layer, the principal cannot fully verify the agent's actions → information asymmetry → potential for conflict. Shareholders are the ultimate principals; employees are the most distal agents.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why information asymmetry is worse in some companies:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Competing in <strong>many markets and geographies</strong></li>
+        <li>Selling <strong>complex products</strong></li>
+        <li>Companies with <strong>lower levels of institutional ownership</strong> and free float</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Consequence:</strong> Shareholders and lenders demand <strong>higher returns and risk premiums</strong> when faced with greater information asymmetry — they price in the risk of agency conflicts.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Core Problem in One Line</div>
+      <p>The agent knows more than the principal and may act in their own interest rather than the principal's. The entire field of corporate governance is essentially a set of tools to solve this problem.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: MANAGER-SHAREHOLDER CONFLICTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Manager–Shareholder Conflicts (Agency Problem)</h2>
+    </div>
+
+    <div class="card">
+      <p>Directors and managers have <strong>more information</strong> about a company's performance, risks, and investment opportunities than outsiders. This information asymmetry enables managers to make decisions that benefit themselves at the expense of shareholders.</p>
+      <p><strong>Primary tool to align interests:</strong> Compensation (but poorly designed compensation can create its own problems).</p>
+    </div>
+
+    <h3>5 Ways Manager and Shareholder Interests Diverge</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Conflict Type</th>
+            <th>Description</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Insufficient Effort</td>
+            <td>Managers fail to make hard decisions, under-monitor employees, or are distracted by outside activities (politics, charities, other board roles). Cost and investment management suffers.</td>
+            <td>Managers' personal time and reputation are not fully tied to firm performance</td>
+          </tr>
+          <tr>
+            <td>Inappropriate Risk Appetite</td>
+            <td>
+              <strong>Too much risk:</strong> Heavy stock option compensation → managers take excessive risks (options only pay off on upside).<br>
+              <strong>Too little risk:</strong> No equity compensation → overly risk-averse managers; unable to attract talent.<br>
+              Investors hold diversified portfolios → may have higher risk tolerance than managers whose reputation is concentrated in one firm.
+            </td>
+            <td>Misalignment between compensation structure and optimal risk level</td>
+          </tr>
+          <tr>
+            <td>Empire Building</td>
+            <td>Managers pursue acquisitions and "growth for growth's sake" even when deals don't increase shareholder value. Compensation and status often tied to company size (revenues, headcount) rather than returns.</td>
+            <td>Manager incentives tied to business size, not shareholder value</td>
+          </tr>
+          <tr>
+            <td>Entrenchment</td>
+            <td>Managers/directors focus on retaining their jobs: copy competitors, avoid risks, pursue complex transactions they're uniquely suited to manage. Directors avoid speaking out against management even when it's in shareholders' interest.</td>
+            <td>Job preservation instinct overrides shareholder value maximization</td>
+          </tr>
+          <tr>
+            <td>Self-Dealing</td>
+            <td>Managers exploit firm resources for personal benefit: excessive perquisites (private jets, club memberships, security), or outright fraud/misappropriation of assets. The smaller the manager's ownership stake, the less they personally bear these costs.</td>
+            <td>Low ownership stake reduces alignment; weak monitoring enables abuse</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "RIEES" for the 5 Agency Conflicts</div>
+      <p><strong>R</strong>isk appetite mismatch · <strong>I</strong>nsufficient effort · <strong>E</strong>mpire building · <strong>E</strong>ntrenchment · <strong>S</strong>elf-dealing. Remember these as the five ways managers can fail shareholders — the exam tests all five.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Stock Options Can Cause Both Too Much AND Too Little Risk</div>
+      <p>Stock options create excessive risk-taking (managers only benefit from upside). But <em>no</em> stock-based compensation creates excessive risk aversion (managers have no upside incentive). <strong>Both extremes are problems</strong> — the exam may test either direction. The goal is calibrated compensation that aligns risk appetite with shareholder objectives.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: OWNERSHIP STRUCTURE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Ownership Structure: Dispersed vs. Concentrated</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Dispersed Ownership</div>
+        <ul>
+          <li>Many shareholders, none with control</li>
+          <li>No single party can override the board</li>
+          <li>More representative of widely held public companies</li>
+          <li>Agency problem: managers may act without meaningful shareholder check</li>
+          <li>Shareholders can form voting blocs to act collectively</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Concentrated Ownership</div>
+        <ul>
+          <li>One individual or group (<strong>controlling shareholder</strong>) exercises control</li>
+          <li>Group may be a family, another company, or government</li>
+          <li>Controlling shareholder may have long-term perspective (multi-decade)</li>
+          <li>Risk: controlling shareholder may <strong>exploit minority shareholders</strong></li>
+          <li>Minority shareholders may prefer quick gains; controlling shareholder may resist</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Shareholders Are NOT Homogeneous</div>
+      <p>Different shareholders have different, often conflicting interests. Example: A founding family with concentrated wealth in one stock wants <strong>diversification and stability</strong>. Minority shareholders with diversified portfolios want <strong>maximum shareholder value focus</strong>. A long-term controlling owner may resist quick asset sales or buybacks preferred by activist short-term investors.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Dual-Class Share Structures</h3>
+    <div class="def-block">
+      <div class="def-term">Dual-Class Structure</div>
+      <div class="def-body">A share structure with two classes of shares: one class (e.g., <strong>Class A</strong>) that carries <strong>one vote per share</strong>, publicly held and traded, and another (e.g., <strong>Class B</strong>) that carries <strong>multiple votes per share</strong>, held exclusively by insiders or founders. Allows certain stakeholders to control the company even without holding most shares.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Effect of dual-class structures:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Insiders/founders can <strong>avoid voting-power dilution</strong> when new shares are issued</li>
+        <li>Control board elections, strategic decisions, and all significant matters</li>
+        <li><span class="danger-text">CFA Institute is against dual-class structures</span> — they allow one group to have disproportionate power and potentially override the majority for personal interest</li>
+        <li>Where legal, CFA Institute advises <strong>clear disclosure</strong> of arrangements and their implications for investors</li>
+      </ul>
+    </div>
+
+    <div class="case-box">
+      <div class="case-label">📋 Case — Magna International (Canada)</div>
+      <p>Magna had Class A shares (1 vote/share) and Class B shares (500 votes/share). Founder Frank Stronach and family controlled <strong>75% of voting rights while owning only 3%</strong> of total shares via Class B. Despite weak stock performance, Stronach family secured millions in consulting fees, salaries, bonuses, and stock options. Shareholders voted at an EGM for a single-class structure — Stronach agreed to leave after receiving CAD 870 million over five years. A textbook example of dual-class abuse.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Key Exam Point — Share % ≠ Voting Control</div>
+      <p>Do not assume that a shareholder owning 3% of shares has only 3% of voting power. With dual-class structures, voting rights can be <strong>completely decoupled from economic ownership</strong>. Always distinguish between economic ownership (% of shares) and voting control (% of votes).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: SHAREHOLDER VS. CREDITOR CONFLICTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Shareholder vs. Creditor Conflicts</h2>
+    </div>
+
+    <div class="card">
+      <p>Despite having claims on the same cash flows, the <strong>different nature of debt vs. equity claims</strong> creates structural conflicts of interest (covered more deeply in Module 2).</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Shareholders Prefer</div>
+        <ul>
+          <li>Higher leverage (amplifies equity returns)</li>
+          <li>Higher shareholder distributions (dividends/buybacks)</li>
+          <li>Higher-risk, higher-return projects</li>
+          <li>Less equity issuance (avoids dilution)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Debtholders Prefer</div>
+        <ul>
+          <li>Lower leverage (reduces default risk)</li>
+          <li>Less shareholder distributions (preserves cash for debt service)</li>
+          <li>Conservative, predictable cash flow projects</li>
+          <li>More equity issuance (cushions creditors)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Why Long-Term Creditors Are More Restrictive</div>
+      <div class="f">Long-term debt → greater exposure to changes in business conditions, strategy, and management over time → long-term creditors impose MORE contractual restrictions on leverage and distributions than short-term creditors.</div>
+      <div class="note">This is why short-term loans often have fewer covenants than long-term bonds. Time horizon of debt matters greatly for conflict severity.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: REPORTING & TRANSPARENCY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Corporate Reporting &amp; Transparency</h2>
+    </div>
+
+    <div class="card">
+      <p>Corporate reporting and transparency are <strong>foundational to governance</strong>. Without them, external stakeholders cannot advocate for their interests. Reporting is mandated and regulated through legal, regulatory, and quasi-regulatory means (e.g., exchange listing requirements).</p>
+    </div>
+
+    <h3>What Investors Use Reports For</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:6px;">Assess company performance and that of its directors and managers</li>
+        <li style="margin-bottom:6px;">Make valuation and investment decisions</li>
+        <li style="margin-bottom:6px;">Vote on key corporate matters and changes</li>
+        <li style="margin-bottom:6px;">Ensure compliance with legal commitments in debt contracts</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">For debt contract compliance (bond covenants), individual bondholders hire a financial intermediary called a <strong>trustee</strong> to report on and manage payment administration — it's impractical for individual bondholders to track these themselves.</p>
+    </div>
+
+    <h3>Public vs. Private Company Disclosure</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Public Companies</div>
+        <ul>
+          <li>Annual reports, proxy statements, investor relations disclosures</li>
+          <li>Covers: operations, strategy, audited financials, governance structure, ownership, remuneration, related-party transactions, risk factors</li>
+          <li>Most jurisdictions: annual financials must be <strong>audited</strong> by independent third-party auditors; interim financials reviewed</li>
+          <li>Standardized format required</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Private Companies</div>
+        <ul>
+          <li>Disclose to the public only as required by law, or voluntarily</li>
+          <li>Confidential disclosure to investors — content and form <strong>negotiated</strong> (not standardized)</li>
+          <li>Most jurisdictions do NOT require audits</li>
+          <li>May voluntarily obtain audit to improve terms with investors/lenders</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: SHAREHOLDER MECHANISMS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Shareholder Mechanisms</h2>
+    </div>
+
+    <h3>Annual General Meeting (AGM)</h3>
+    <div class="card">
+      <p>Held typically once a year. Enables shareholders to vote on matters not delegated to the board. Common AGM matters:</p>
+      <ul style="margin-top:8px;">
+        <li>Board member elections</li>
+        <li>Appointment of independent auditor</li>
+        <li>Approval of annual financial statements, dividends, and director/auditor compensation</li>
+        <li>Approval of equity-based compensation plans</li>
+        <li><strong>"Say on pay"</strong> — non-binding votes on compensation plans</li>
+      </ul>
+    </div>
+
+    <h3>Extraordinary General Meeting (EGM)</h3>
+    <div class="card">
+      <p>Called when resolutions requiring shareholder approval arise outside the AGM cycle, or when requested by a specified minimum number of shareholders (or proportion of stock). Common EGM matters:</p>
+      <ul style="margin-top:8px;">
+        <li>Special elections of board members (typically shareholder-proposed)</li>
+        <li>Amendments to bylaws or articles of association</li>
+        <li>Mergers and acquisitions, takeovers, and asset sales</li>
+        <li>Capital increases</li>
+        <li>Voluntary firm liquidation</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Proxy Voting</div>
+      <div class="def-body">When shareholders cannot attend a meeting in person, they <strong>authorize another party to vote on their behalf</strong> — typically by submitting a ballot electronically or by mail. Proxy voting is the <strong>most common form</strong> of investor participation in general meetings.</div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Shareholder Activism</h3>
+    <div class="card">
+      <p>Investor strategies to compel a company to act in a desired manner. Primary motivation: <strong>increase shareholder value relatively quickly</strong> (some activism also involves social, political, or environmental goals).</p>
+      <p style="margin-top:8px;"><strong>Common activist tactics:</strong></p>
+      <ul>
+        <li>Initiating <strong>proxy fights</strong></li>
+        <li>Proposing <strong>shareholder resolutions</strong></li>
+        <li>Publicizing issues of contention</li>
+        <li>Litigation (see below)</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Hedge Funds as Activists</div>
+        <ul>
+          <li>Predominant shareholder activists</li>
+          <li>Fees largely based on returns → <strong>strong financial incentive</strong> in activist campaign success</li>
+          <li>Fewer investment restrictions → can take large positions using borrowed funds</li>
+          <li>Can hold illiquid/distressed securities, take on leverage</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--muted);">Mutual Funds as Activists</div>
+        <ul>
+          <li>Subject to more investment restrictions (leverage limits, position size limits, distressed security rules)</li>
+          <li>Cannot pursue same aggressive tactics as hedge funds</li>
+          <li>Some large funds use <strong>influence to encourage positive corporate action</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Shareholder Derivative Lawsuits</h3>
+    <div class="def-block">
+      <div class="def-term">Shareholder Derivative Lawsuit</div>
+      <div class="def-body">Legal proceedings initiated <strong>by a shareholder acting on behalf of the company</strong> against the board of directors, management, and/or controlling shareholders — when those parties have failed to adequately act for the benefit of the company. Note: unrelated to financial derivatives. Many countries restrict these through minimum shareholder interest thresholds or outright prohibition.</div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Corporate Takeover Mechanisms</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Mechanism</th>
+            <th>Description</th>
+            <th>Key Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Proxy Contest (Proxy Fight)</td>
+            <td>A group seeking board control persuades shareholders to vote for them.</td>
+            <td>Works through the voting mechanism — no cash required to gain control.</td>
+          </tr>
+          <tr>
+            <td>Tender Offer</td>
+            <td>An invitation to shareholders to sell their shares directly to a group seeking control.</td>
+            <td>Bypasses management — goes directly to shareholders. Can be friendly or hostile.</td>
+          </tr>
+          <tr>
+            <td>Hostile Takeover</td>
+            <td>Attempt to acquire a company WITHOUT the consent of management.</td>
+            <td>Target management opposes; acquirer goes around them via proxy fight or tender offer.</td>
+          </tr>
+          <tr>
+            <td>Arbitrageurs / Takeover Specialists</td>
+            <td>Buy shares from target shareholders during contest; sell to highest bidder.</td>
+            <td>Facilitate transfers of control; earn spread between purchase and sale price.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Takeover Threat Is a Governance Mechanism</div>
+      <p>The threat of being replaced through a takeover motivates board members and managers to focus on shareholder wealth maximization. If management under-performs, it becomes a takeover target — and the acquirer typically replaces the management team. This disciplining effect of the takeover market is one of the most powerful external governance tools.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: ANTI-TAKEOVER DEFENCES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Anti-Takeover Defences</h2>
+    </div>
+
+    <div class="card">
+      <p>While takeover threats discipline management, companies may adopt anti-takeover defences to protect against <strong>unwanted or hostile takeovers</strong>. These defences can reduce shareholder power and act as a double-edged sword.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Staggered Board Elections</div>
+        <ul>
+          <li>Directors divided into groups, elected in consecutive years</li>
+          <li>Prevents replacing entire board at once</li>
+          <li><span class="danger-text">Limits:</span> Dilutes shareholder voting rights; slows hostile takeover attempts</li>
+          <li><span class="highlight3">Benefit:</span> Provides board continuity; reduces short-termism</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Poison Pill (Shareholder Rights Plan)</div>
+        <ul>
+          <li>Enables existing shareholders to buy additional shares at a <strong>discount</strong> if any single shareholder acquires above a threshold % of shares</li>
+          <li>Dramatically increases the <strong>cost of a takeover</strong> to any potential bidder</li>
+          <li>Makes hostile takeovers economically unattractive</li>
+          <li>Often criticized as entrenching management at shareholders' expense</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Anti-Takeover Measures Can Harm Shareholders</div>
+      <p>Anti-takeover defences protect management's job security but can <strong>harm shareholders</strong> by insulating management from discipline and preventing shareholders from accepting premium acquisition offers. The exam may ask whether a specific defence helps or hurts shareholders — generally it <strong>reduces shareholder power and can destroy value</strong> relative to what a takeover would deliver.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 8: CREDITOR MECHANISMS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Creditor Mechanisms</h2>
+    </div>
+
+    <div class="card">
+      <p>Creditors protect their interests through legal rights (jurisdiction-specific laws) and contractual protections negotiated directly with the borrower.</p>
+    </div>
+
+    <h3>Bond Indenture</h3>
+    <div class="def-block">
+      <div class="def-term">Bond Indenture</div>
+      <div class="def-body">A <strong>legal contract</strong> describing: (1) the structure of a bond, (2) the obligations of the issuing company, and (3) the rights of the bondholders. Contains both <strong>affirmative covenants</strong> (things the issuer must do) and <strong>negative covenants</strong> (things the issuer is prohibited from doing). Bondholders may also require certain assets be pledged as collateral.</div>
+    </div>
+
+    <h3>Creditor Committees</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Official creditor committees:</strong> Established in some countries once a company <strong>files for bankruptcy</strong>. Represent bondholders in bankruptcy proceedings; protect bondholder interests in restructuring or liquidation.</li>
+        <li><strong>Ad hoc committee:</strong> Formed by a group of bondholders when a company is <strong>struggling to meet indenture obligations</strong> (pre-bankruptcy). Members do not officially represent all bondholders but interests are often aligned. Approaches the company with restructuring options.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Ad Hoc vs. Official Creditor Committee</div>
+      <p><strong>Ad hoc</strong> = informal, formed pre-bankruptcy, when company is struggling but hasn't filed yet. <strong>Official</strong> = formally constituted after bankruptcy filing, with legal standing in proceedings. The exam may test this distinction.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 9: BOARD COMMITTEES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Board Committees — The Three Core Committees</h2>
+    </div>
+
+    <div class="card">
+      <p>Boards delegate specific functions to committees for deeper review, monitoring, and expertise. <strong>Delegating to a committee does NOT discharge the board of its ultimate responsibility</strong> — the full board must still review, challenge, and assure committee reports before making final decisions.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Audit Committee</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">Most widely required; all independent members; ≥1 with accounting/financial expertise</p>
+        <ul>
+          <li>Monitors financial reporting process and accounting policy implementation</li>
+          <li>Supervises internal audit function (independence + competence)</li>
+          <li>Recommends appointment and remuneration of <strong>external auditor</strong></li>
+          <li>Receives internal and external audit reports; proposes remedial actions</li>
+          <li>May oversee IT security</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Nominating / Governance Committee</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">Typically independent; oversees director selection and governance policies</p>
+        <ul>
+          <li>Appraises director and manager candidates</li>
+          <li>Oversees board election process</li>
+          <li>Sets nomination procedures, directorship criteria</li>
+          <li>Ensures balanced board structure aligned with governance principles</li>
+          <li>Oversees: corporate governance code, board charter, code of ethics, conflicts-of-interest policy</li>
+          <li>Ensures related-party transaction disclosures</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Compensation / Remuneration Committee</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">All independent; management must NOT assess its own performance</p>
+        <ul>
+          <li>Develops and proposes remuneration policies for directors and key executives</li>
+          <li>Sets performance criteria; evaluates manager performance</li>
+          <li>Designs variable compensation (profit sharing, stock, options) to align managers with shareholders</li>
+          <li>Designs long-term incentive plans (LTIPs) to discourage short-termism and excessive risk</li>
+          <li>Manages "say on pay" process</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Compensation Design Principles</div>
+      <div class="f">
+        Goal: Align manager interests with shareholder interests<br><br>
+        Problem: Stock options → only upside participation → excessive risk-taking<br>
+        Solution: Grant shares (not just options) + restrict vesting/sale for several years or until retirement<br><br>
+        Long-Term Incentive Plan (LTIP): Delays compensation (in part or total) until strategic performance targets are met → discourages short-termism<br><br>
+        "Say on Pay": Non-binding shareholder vote on compensation → limits director discretion on excessive pay
+      </div>
+      <div class="note">Dodd-Frank Act (USA) requires say-on-pay votes. LTIP design is increasingly standard in large corporations.</div>
+    </div>
+
+    <h3>Additional Committees</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Risk Committee</strong> — Common (required in some jurisdictions) in financial services. Determines risk profile and appetite; ensures enterprise risk management (ERM) system is in place; oversees risk policy and annual risk management plans.</li>
+        <li><strong>Investment Committee</strong> — Common in insurance companies. Ensures rational and prudent investment and capital management policies.</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Committees Don't Absolve the Board</div>
+      <p>A common misconception: once a committee reviews something, the full board is off the hook. <strong>Wrong.</strong> The board <strong>retains ultimate responsibility</strong> and must review, challenge, and assure all committee reports before making decisions. Committees are a tool for specialization and depth, not a shield for board liability.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 10: OTHER STAKEHOLDER MECHANISMS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Other Stakeholder Mechanisms</h2>
+    </div>
+
+    <h3>Employee Mechanisms</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Labor laws:</strong> Jurisdiction-specific; define standards for work hours, benefits, health care, paid leave, and post-employment rights</li>
+        <li><strong>Labor unions:</strong> Employees can form unions to collectively negotiate compensation, working conditions, and other matters in most countries</li>
+        <li><strong>Board representation:</strong> In some countries (Germany, Austria, Luxembourg), employees are represented on the board or supervisory board if the company meets size/ownership criteria</li>
+        <li><strong>Employment contracts:</strong> Specify rights and responsibilities of employer and employee individually</li>
+        <li><strong>Employee Stock Ownership Plan (ESOP):</strong> Company establishes a fund of shares/cash granted to employees based on service or performance criteria (often with vesting periods) → aligns employee interests with company performance</li>
+      </ul>
+    </div>
+
+    <h3>Customer &amp; Supplier Mechanisms</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Contractual agreements:</strong> Specify products/services, prices/fees, payment terms, rights/responsibilities, after-sale relationship, guarantees, and recourse for breach</li>
+        <li><strong>Social media:</strong> Customers, owners, and stakeholders use social media to voice interests, protect rights, and influence corporate matters. Negative media attention can damage reputation and affect management. Social media allows instant broadcast with minimal cost — stakeholders can now compete with management in influencing public sentiment.</li>
+      </ul>
+    </div>
+
+    <h3>Government Mechanisms</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Laws and regulations:</strong> Protect property rights, contract rights, and rights of consumers and the environment. Industries with greater public impact face greater regulation (financial services, healthcare, agriculture/food, defense).</li>
+        <li><strong>Corporate governance codes:</strong> Adopted by many regulatory authorities; guiding principles for publicly traded companies. Follow a <strong>"comply or explain"</strong> approach — companies must disclose adoption of recommended practices OR explain why not. Japan example: companies with no outside directors must justify why.</li>
+        <li><strong>USA approach:</strong> No national governance code, but: national securities laws (Securities Act, Sarbanes-Oxley), enforced by the SEC; exchange listing requirements (e.g., majority independent boards); Delaware state corporate law effectively serves as a national code (most US companies incorporated there).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">"Comply or Explain" — Key Concept</div>
+      <div class="f">Companies must either: COMPLY with recommended governance practices, OR EXPLAIN why they have not adopted them.</div>
+      <div class="note">This flexible approach allows jurisdiction-specific governance standards without rigid one-size-fits-all mandates. Common in UK (UK Corporate Governance Code), EU, Japan, and many other markets.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 11: GOVERNANCE RISKS & BENEFITS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Risks of Poor Governance &amp; Benefits of Strong Governance</h2>
+    </div>
+
+    <div class="card">
+      <p>Weak governance, unmanaged conflicts, and inadequate stakeholder management place firms at a <strong>competitive disadvantage</strong>. Strong governance → increased competitiveness, operational efficiency, better controls, improved performance.</p>
+    </div>
+
+    <h3>Operational Risks &amp; Benefits</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Operational Risks (Weak Governance)</div>
+        <ul>
+          <li>Fraud and mismanagement when controls are inadequate</li>
+          <li>One stakeholder group benefits at expense of others</li>
+          <li>Poor oversight → managers make self-serving decisions</li>
+          <li>Hidden costs from unfair related-party transactions</li>
+          <li>Unclear authority delegation → poor decision-making</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Operational Benefits (Strong Governance)</div>
+        <ul>
+          <li>Early identification and control of fraud risk</li>
+          <li>Formal conflict-of-interest procedures ensure fair dealing</li>
+          <li>Clear delegation of authority and reporting lines</li>
+          <li>GRC (Governance, Risk &amp; Compliance) functions aligned → improved decision-making</li>
+          <li>Board-defined risk profile aligns operations with shareholder interests</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Legal, Regulatory &amp; Reputational Risks</h3>
+    <div class="card">
+      <p>Compliance failures may expose the company to:</p>
+      <ul style="margin-top:8px;">
+        <li>Government/regulatory <strong>investigations and penalties</strong></li>
+        <li><strong>Lawsuits</strong> by shareholders, employees, creditors, or other parties for breach of contracts/bylaws or violation of legal rights</li>
+        <li><strong>Reputational harm</strong> — particularly costly for public companies subject to analyst and investor scrutiny</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Reputational benefit of strong governance:</strong> Employees, creditors, customers, and suppliers prefer companies known for respecting stakeholder rights → better talent attraction, cheaper capital, improved sales, better supplier terms.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Financial Risks &amp; Benefits</h3>
+    <div class="card">
+      <p><strong>Risks of poor financial governance:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Weak creditor management → increased default risk</li>
+        <li>Default consequences extend beyond creditors and shareholders to managers, employees, suppliers, society, and the environment</li>
+        <li>Information asymmetry between firm and capital providers raises cost of capital</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Governance → Cost of Capital Linkage</div>
+      <div class="f">
+        Better governance → lower information asymmetry → lower investor risk perception → lower required return → lower cost of equity + debt<br><br>
+        Improved audit + transparent reporting → higher trust in earnings quality → higher valuation multiples → better stock performance<br><br>
+        Lower default risk (via debt restrictions + transparency) → lower cost of debt → credit rating upgrades
+      </div>
+      <div class="note">Good governance directly improves firm valuation by reducing both the cost of equity and the cost of debt. This is a core testable concept.</div>
+    </div>
+
+    <h3>Research Evidence on Governance Benefits</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;">Improved corporate governance practices <strong>increase the likelihood of a credit rating upgrade</strong> from speculative to investment grade → reduces cost of debt.</li>
+        <li style="margin-bottom:8px;">Listed companies with experienced audit committees possessing financial expertise tend to have <strong>stronger market performance during a crisis</strong>.</li>
+        <li style="margin-bottom:8px;"><strong>Board diversity and independence</strong> appear to be key factors in firm valuation.</li>
+      </ol>
+    </div>
+
+    <h3>Key Analyst Questions for Governance Assessment</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:6px;">What is the company's <strong>ownership and voting structure</strong>? (Any dual-class shares?)</li>
+        <li style="margin-bottom:6px;">Do board members' <strong>skills and experience</strong> match current and future company needs?</li>
+        <li style="margin-bottom:6px;">How closely does the <strong>management compensation and incentive structure</strong> align with factors expected to drive overall company results?</li>
+        <li style="margin-bottom:6px;">Who are the <strong>significant investors</strong>? Any controlling shareholders?</li>
+        <li style="margin-bottom:6px;">How strong are company <strong>shareholder rights vs. peers</strong>?</li>
+        <li style="margin-bottom:6px;">How effective is the company in <strong>managing long-term risks and sustainability</strong>?</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Best sources: proxy statements, annual reports, sustainability reports.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Principal-agent relationship:</strong> Principal hires agent to act in principal's best interest. Can exist with or without contract. Agent usually has more information (information asymmetry).</li>
+        <li>✅ <strong>Agency costs:</strong> Direct (cost of monitoring agents, e.g., auditors) + Indirect (foregone profits from lost opportunities due to misalignment).</li>
+        <li>✅ <strong>Corporate agency chain:</strong> Shareholders (principal) → Board (agent/principal) → Managers (agent) → Employees (agent).</li>
+        <li>✅ <strong>5 manager-shareholder conflicts (RIEES):</strong> Risk appetite mismatch, Insufficient effort, Empire building, Entrenchment, Self-dealing.</li>
+        <li>✅ <strong>Options-heavy comp → excessive risk-taking.</strong> No equity comp → excessive risk aversion. Both are problems. LTIP + restricted shares better align long-term interests.</li>
+        <li>✅ <strong>Empire building:</strong> Manager compensation tied to company size (not returns) → acquisitions that don't create value.</li>
+        <li>✅ <strong>Dispersed ownership:</strong> No single controlling shareholder; managers may act with weak oversight. <strong>Concentrated ownership:</strong> Controlling shareholder may exploit minority shareholders.</li>
+        <li>✅ <strong>Dual-class structure:</strong> One class with many votes (held by insiders), one class with few votes (public). Economic ownership ≠ voting control. CFA Institute opposes dual-class structures.</li>
+        <li>✅ <strong>Magna International example:</strong> 3% ownership = 75% voting control via Class B (500 votes/share). Founder paid out CAD 870M after shareholder vote for single-class structure.</li>
+        <li>✅ <strong>Long-term creditors impose MORE restrictions</strong> than short-term creditors due to greater exposure to changing conditions over time.</li>
+        <li>✅ <strong>AGM:</strong> Annual, routine matters (board elections, auditor, financials, dividends, say on pay). <strong>EGM:</strong> Special, extraordinary matters (M&amp;A, bylaw changes, capital increases, voluntary liquidation).</li>
+        <li>✅ <strong>Proxy voting:</strong> Most common form of investor meeting participation. Shareholder authorizes another party to vote on their behalf.</li>
+        <li>✅ <strong>Hedge funds dominate activism</strong> (return-based fees, fewer restrictions). Mutual funds more limited but use influence for positive corporate change.</li>
+        <li>✅ <strong>Shareholder derivative lawsuit:</strong> Shareholder sues on behalf of the company (not for personal gain) against directors/managers who failed the company. Unrelated to financial derivatives.</li>
+        <li>✅ <strong>Tender offer:</strong> Invitation to sell shares directly to acquirer. <strong>Proxy fight:</strong> Battle for shareholder votes to gain board control. <strong>Hostile takeover:</strong> Without management consent.</li>
+        <li>✅ <strong>Poison pill (shareholder rights plan):</strong> Existing shareholders buy more shares at a discount if any acquirer crosses a threshold % → raises takeover cost. Protects management but limits shareholder value.</li>
+        <li>✅ <strong>Bond indenture:</strong> Legal contract governing bond structure, issuer obligations, and bondholder rights. Contains affirmative and negative covenants; may require asset pledging.</li>
+        <li>✅ <strong>Three core committees:</strong> Audit (financial integrity, external auditor), Nominating/Governance (director selection, governance policies), Compensation/Remuneration (executive pay alignment). All should have independent members. Full board retains ultimate responsibility.</li>
+        <li>✅ <strong>"Say on pay":</strong> Non-binding shareholder vote on executive compensation. Required in USA under Dodd-Frank Act.</li>
+        <li>✅ <strong>"Comply or explain":</strong> Companies either adopt governance code recommendations OR explain why they haven't. USA uses securities laws + exchange rules (no national code); most US companies incorporated in Delaware.</li>
+        <li>✅ <strong>Good governance → lower cost of equity AND debt</strong> (reduces investor risk perception → lower required returns). Board diversity/independence = key valuation driver. Experienced audit committees → stronger crisis performance.</li>
+        <li>✅ <strong>ESOP:</strong> Company fund of shares/cash granted to employees based on service or performance, with vesting periods → aligns employees with firm.</li>
+        <li>✅ <strong>Trustee:</strong> Financial intermediary hired by individual bondholders to track covenant compliance and manage payment administration on their behalf.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Governance Mechanisms — Quick Reference</div>
+      <div class="f">
+        SHAREHOLDERS: AGM/EGM votes · Proxy voting · Shareholder activism · Derivative lawsuits · Proxy fights · Tender offers · Hostile takeovers<br><br>
+        CREDITORS: Bond indenture (covenants, collateral) · Creditor committees (official post-bankruptcy; ad hoc pre-bankruptcy) · Laws and legal recourse<br><br>
+        BOARD: Audit Committee · Nominating/Governance Committee · Compensation/Remuneration Committee · Risk Committee · Investment Committee<br><br>
+        EMPLOYEES: Labor laws · Unions · Board representation (Germany etc.) · Employment contracts · ESOPs<br><br>
+        CUSTOMERS/SUPPLIERS: Contracts · Social media pressure<br><br>
+        GOVERNMENTS: Laws &amp; regulations · Corporate governance codes ("comply or explain") · Exchange listing requirements
+      </div>
+      <div class="note">Each stakeholder group has distinct mechanisms — the exam tests which mechanism belongs to which group and why.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Corporate Issuers · Module 3: Corporate Governance: Conflicts, Mechanisms, Risks &amp; Benefits · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 9: Option Replication Using Put–Call Parity</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  /* Payoff scenario rows */
+  .scenario-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 12px 0; }
+  .sg-header { background: #1e2330; }
+  .sg-header > div { padding: 10px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-right: 1px solid var(--border); }
+  .sg-header > div:last-child { border-right: none; }
+  .sg-row { display: contents; }
+  .sg-row > div { padding: 9px 14px; font-size: 13px; color: var(--text); border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+  .sg-row > div:first-child { color: var(--muted); font-style: italic; }
+  .sg-row > div:last-child { border-right: none; }
+  .sg-subtotal > div { padding: 9px 14px; font-size: 13px; font-weight: 700; color: var(--accent3); border-right: 1px solid var(--border); border-top: 2px solid var(--border); background: rgba(76,201,138,0.05); }
+  .sg-subtotal > div:last-child { border-right: none; }
+  .sg-section > div { padding: 8px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); background: rgba(76,139,201,0.07); border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .sg-section > div:last-child { border-right: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 9</div>
+  <h1>Option Replication Using <span>Put–Call Parity</span></h1>
+  <p>Exam-ready notes: the put–call parity equation and its derivation (protective put vs. fiduciary call); arbitrage when parity is violated; all six replication equivalences (Exhibit 6); covered call and protective put strategies via parity; put–call forward parity; the firm value application — shareholders as long call, debtholders as long bond + short put.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · The Big Idea — Four Building Blocks</a>
+  <a class="toc-item" href="#s2">02 · Protective Put vs. Fiduciary Call</a>
+  <a class="toc-item" href="#s3">03 · Put–Call Parity Equation (Eq. 1)</a>
+  <a class="toc-item" href="#s4">04 · Arbitrage When Parity is Violated</a>
+  <a class="toc-item" href="#s5">05 · Replication of Individual Positions (Exhibit 6)</a>
+  <a class="toc-item" href="#s6">06 · Option Strategies via Parity</a>
+  <a class="toc-item" href="#s7">07 · Put–Call Forward Parity (Eq. 4 &amp; 5)</a>
+  <a class="toc-item" href="#s8">08 · Firm Value Application — Equity &amp; Debt as Options</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: THE BIG IDEA                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>The Big Idea — Four Building Blocks, One Relationship</h2>
+    </div>
+
+    <div class="card">
+      <p>Put–call parity is one of the most powerful and testable relationships in all of derivatives. It links four instruments — a <strong>call option, a put option, the underlying asset, and a risk-free bond</strong> — into a single no-arbitrage equation. Knowing any three, you can derive the fourth. And by rearranging the equation, you can <strong>replicate any one of the four instruments using the other three</strong>.</p>
+      <p style="margin-top:10px;">The core logic: two portfolios that produce <em>identical cash flows under all scenarios</em> at time T must have the same price at time 0. If they don't, a riskless arbitrage profit is available.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">📋 Call Option (c₀)</div>
+        <p>Right to BUY underlying at X. Payoff: Max(0, S_T − X). Costs c₀ upfront. Gains when S rises.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">📋 Put Option (p₀)</div>
+        <p>Right to SELL underlying at X. Payoff: Max(0, X − S_T). Costs p₀ upfront. Gains when S falls.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">📋 Risk-Free Bond (PV(X))</div>
+        <p>Costs X(1+r)^−T today. Returns exactly X at time T. No default risk. The "floor" that protects value.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why This Module Matters</div>
+      <p>Put–call parity lets you: (1) price a put if you know the call (and vice versa); (2) identify and exploit mispricing; (3) understand how standard investment strategies (covered call, protective put) can be replicated; (4) extend to forward contracts; (5) model the financial claims of shareholders and debtholders using option theory. Every CFA exam tests at least one of these applications.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: PROTECTIVE PUT vs. FIDUCIARY CALL  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Protective Put vs. Fiduciary Call — Identical Payoffs, Same Price</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Portfolio 2: Protective Put</div>
+        <p style="font-size:14px; color:#c8dfd0;"><strong>What it is:</strong> Long underlying (S₀) + Long put option (p₀)</p>
+        <p style="font-size:14px; color:#c8dfd0; margin-top:8px;"><strong>Cost at t=0:</strong> S₀ + p₀</p>
+        <p style="font-size:14px; color:#c8dfd0; margin-top:8px;"><strong>Goal:</strong> Participate in upside of the underlying; the put provides a floor — if S_T &lt; X, the put kicks in and you receive X regardless.</p>
+        <p style="font-size:14px; color:#c8dfd0; margin-top:8px;"><strong>Analogy:</strong> Owning a stock and buying insurance against it falling below X.</p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">Portfolio 1: Fiduciary Call</div>
+        <p style="font-size:14px; color:#c8d5f5;"><strong>What it is:</strong> Long call option (c₀) + Long risk-free bond that pays X at T [costs X(1+r)^−T today]</p>
+        <p style="font-size:14px; color:#c8d5f5; margin-top:8px;"><strong>Cost at t=0:</strong> c₀ + X(1+r)^−T</p>
+        <p style="font-size:14px; color:#c8d5f5; margin-top:8px;"><strong>Goal:</strong> The bond guarantees X at T (downside floor). The call captures any upside above X.</p>
+        <p style="font-size:14px; color:#c8d5f5; margin-top:8px;"><strong>Why "fiduciary":</strong> The bond ensures you always have X available to exercise the call — responsible/fiduciary management of capital.</p>
+      </div>
+    </div>
+
+    <h3>Payoff Comparison at Maturity T — Exhibit 4</h3>
+
+    <div class="scenario-grid">
+      <div class="sg-header">
+        <div>Position</div>
+        <div>Put Exercised (S_T &lt; X)</div>
+        <div>At The Money (S_T = X)</div>
+        <div>Call Exercised (S_T &gt; X)</div>
+      </div>
+      <div class="sg-section">
+        <div>Protective Put (Portfolio 2)</div><div></div><div></div><div></div>
+      </div>
+      <div class="sg-row">
+        <div>Long Underlying</div>
+        <div>S_T</div>
+        <div>S_T (= X)</div>
+        <div>S_T</div>
+      </div>
+      <div class="sg-row">
+        <div>Long Put Option</div>
+        <div>X − S_T</div>
+        <div>0</div>
+        <div>0</div>
+      </div>
+      <div class="sg-subtotal">
+        <div>TOTAL</div>
+        <div style="color:#e8c97a;">X</div>
+        <div style="color:#e8c97a;">X (= S_T)</div>
+        <div style="color:#e8c97a;">S_T</div>
+      </div>
+      <div class="sg-section">
+        <div>Fiduciary Call (Portfolio 1)</div><div></div><div></div><div></div>
+      </div>
+      <div class="sg-row">
+        <div>Long Call Option</div>
+        <div>0</div>
+        <div>0</div>
+        <div>S_T − X</div>
+      </div>
+      <div class="sg-row">
+        <div>Long Risk-Free Bond</div>
+        <div>X</div>
+        <div>X</div>
+        <div>X</div>
+      </div>
+      <div class="sg-subtotal">
+        <div>TOTAL</div>
+        <div style="color:#e8c97a;">X</div>
+        <div style="color:#e8c97a;">X (= S_T)</div>
+        <div style="color:#e8c97a;">S_T</div>
+      </div>
+    </div>
+
+    <div class="swap-card" style="margin-top:16px;">
+      <div class="swap-title">★ The Key Insight — Identical Payoffs in ALL Scenarios</div>
+      <p style="font-size:14px; color:#dfd0c8;">Both portfolios produce exactly the same payoff in every scenario:</p>
+      <ul style="padding-left:20px; margin-top:8px; font-size:14px; color:#dfd0c8;">
+        <li>When S_T &lt; X: Both pay X (put protects / bond provides X)</li>
+        <li>When S_T = X: Both pay X (= S_T)</li>
+        <li>When S_T &gt; X: Both pay S_T (underlying appreciation / call captures the gain + bond = X, so S_T − X + X = S_T)</li>
+      </ul>
+      <p style="font-size:14px; color:#dfd0c8; margin-top:10px;"><strong>No-arbitrage condition:</strong> Identical future cash flows → identical current prices. Therefore: <strong>S₀ + p₀ = c₀ + X(1+r)^−T</strong></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: PUT–CALL PARITY EQUATION           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Put–Call Parity — Equation 1 &amp; All Rearrangements</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Put–Call Parity (the Master Equation)</div>
+      <div class="f">
+        S₀ + p₀ = c₀ + X(1+r)^−T<br><br>
+        [Protective Put] = [Fiduciary Call]<br><br>
+        Where:<br>
+        S₀  = current underlying price<br>
+        p₀  = put option premium (same X and T as call)<br>
+        c₀  = call option premium<br>
+        X   = exercise price (same for both options)<br>
+        r   = risk-free rate (per period)<br>
+        T   = time to expiration<br>
+        X(1+r)^−T = PV of the exercise price = cost of the risk-free bond today
+      </div>
+      <div class="note">
+        <strong>Critical requirements for put–call parity to hold:</strong><br>
+        (1) Both options are EUROPEAN (exercisable only at T)<br>
+        (2) Same underlying, same exercise price X, same expiration T<br>
+        (3) No dividends or income on the underlying (covered in the parity extension for assets with income)<br>
+        (4) Can borrow and lend at the risk-free rate<br><br>
+        <strong>Not just a formula — it's a no-arbitrage identity.</strong> If LHS ≠ RHS, you can earn riskless profit.
+      </div>
+    </div>
+
+    <h3>All Four Rearrangements — Solving for Each Component</h3>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Solving for Put (p₀)</div>
+      <div class="f">
+        p₀ = c₀ + X(1+r)^−T − S₀<br><br>
+        Replication: Long call + Long bond + Short underlying = Long put<br>
+        The put can be created synthetically without ever buying a put directly.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation — Solving for Call (c₀)</div>
+      <div class="f">
+        c₀ = S₀ + p₀ − X(1+r)^−T<br><br>
+        Replication: Long underlying + Long put + Short bond = Long call<br>
+        A long call can be replicated: own the asset, insure it with a put, borrow PV(X).
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Solving for Underlying (S₀)</div>
+      <div class="f">
+        S₀ = c₀ − p₀ + X(1+r)^−T<br><br>
+        Replication: Long call + Short put + Long bond = Long underlying<br>
+        The asymmetric payoffs of the call and put offset each other,<br>
+        leaving a linear (underlying-like) payoff.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation — Solving for Risk-Free Bond (PV(X))</div>
+      <div class="f">
+        X(1+r)^−T = S₀ + p₀ − c₀<br><br>
+        Replication: Long underlying + Long put + Short call = Long risk-free bond<br>
+        This is the key insight: a covered call position plus a put = a risk-free bond.
+      </div>
+    </div>
+
+    <h3>Worked Example — Biomian Put–Call Parity (Example 1)</h3>
+    <div class="auction-box">
+      <div class="label">VFO: Biomian shares S₀ = INR295 | X = INR265 | T = 0.5 years | r = 4% | c₀ = INR59</div>
+      <div class="f">
+        Step 1: Calculate PV(X) = 265 × (1.04)^−0.5 = 265 × 0.9806 = INR259.85<br><br>
+        Step 2: Apply put–call parity (Eq. 1):<br>
+        S₀ + p₀ = c₀ + PV(X)<br>
+        295 + p₀ = 59 + 259.85<br>
+        295 + p₀ = 318.85<br>
+        p₀ = INR23.85<br><br>
+        Check: Protective Put cost = 295 + 23.85 = INR318.85 ✓<br>
+        Fiduciary Call cost = 59 + 259.85 = INR318.85 ✓<br>
+        Both portfolios cost the same → no-arbitrage holds.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: ARBITRAGE WHEN PARITY IS VIOLATED  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Arbitrage When Put–Call Parity is Violated — Example 2</h2>
+    </div>
+
+    <div class="card">
+      <p>If put–call parity is violated (i.e., the two portfolios trade at different prices), a riskless arbitrage profit is available. The strategy: <strong>sell the overpriced portfolio, buy the underpriced portfolio</strong>. The combined position will have zero cash flows at maturity under every scenario, locking in the price difference as a riskless profit at t=0.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Identifying the Arbitrage — Always Compare Both Sides</div>
+      <p><strong>Step 1:</strong> Check if S₀ + p₀ = c₀ + X(1+r)^−T<br>
+      <strong>Step 2:</strong> If LHS &gt; RHS → Protective put is overpriced → <em>SELL</em> protective put (sell the stock + sell the put), <em>BUY</em> fiduciary call (buy the call + buy the bond)<br>
+      <strong>Step 3:</strong> If LHS &lt; RHS → Fiduciary call is overpriced → <em>SELL</em> fiduciary call (sell the call + sell the bond), <em>BUY</em> protective put (buy the stock + buy the put)<br>
+      <strong>Step 4:</strong> Profit = |LHS − RHS| — collected at t=0 with zero net cash flows at T.</p>
+    </div>
+
+    <h3>Worked Arbitrage Example (Example 2)</h3>
+    <div class="auction-box">
+      <div class="label">Same as Example 1 but: observed put price = INR30 (fair value = INR23.85)</div>
+      <div class="f">
+        Check parity: S₀ + p₀ vs. c₀ + PV(X)<br>
+        295 + 30 = 325 vs. 59 + 259.85 = 318.85<br>
+        325 &gt; 318.85 → PROTECTIVE PUT IS OVERPRICED by INR6.15<br><br>
+        ARBITRAGE STRATEGY:<br>
+        At t=0: Sell the protective put (sell stock + sell put) → receive 295 + 30 = +325<br>
+                Buy the fiduciary call (buy call + buy bond) → pay 59 + 259.85 = −318.85<br>
+        NET CASH INFLOW at t=0: +INR6.15 ← this is the riskless profit<br><br>
+        At t=T (all three scenarios):
+      </div>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="sg-header">
+        <div>Position</div>
+        <div>Put Exercised (S_T &lt; X)</div>
+        <div>At The Money (S_T = X)</div>
+        <div>Call Exercised (S_T &gt; X)</div>
+      </div>
+      <div class="sg-section"><div>Short Protective Put</div><div></div><div></div><div></div></div>
+      <div class="sg-row"><div>Short Underlying</div><div>−S_T</div><div>−S_T</div><div>−S_T</div></div>
+      <div class="sg-row"><div>Short Put</div><div>−(X − S_T)</div><div>0</div><div>0</div></div>
+      <div class="sg-subtotal"><div>Subtotal</div><div>−X</div><div>−S_T</div><div>−S_T</div></div>
+      <div class="sg-section"><div>Long Fiduciary Call</div><div></div><div></div><div></div></div>
+      <div class="sg-row"><div>Long Call</div><div>0</div><div>0</div><div>S_T − X</div></div>
+      <div class="sg-row"><div>Long Bond</div><div>X</div><div>X</div><div>X</div></div>
+      <div class="sg-subtotal"><div>Subtotal</div><div>X</div><div>X (= S_T)</div><div>S_T</div></div>
+      <div class="sg-subtotal"><div style="color:#4cc98a;">NET (all scenarios)</div><div style="color:#4cc98a;">0</div><div style="color:#4cc98a;">0</div><div style="color:#4cc98a;">0</div></div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Perfect Arbitrage — Why Zero Net Cash Flows at T</div>
+      <p>The short protective put and long fiduciary call produce exactly offsetting cash flows at T in every scenario. This means the INR6.15 received at t=0 is <strong>pure riskless profit</strong> — you've locked in a gain with zero net exposure going forward. This is the textbook definition of arbitrage: positive cash flow today, zero net cash flows tomorrow, no risk. Market forces will push the put price back toward INR23.85 as arbitrageurs exploit this.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: REPLICATION TABLE (EXHIBIT 6)      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Replication of Individual Positions — Exhibit 6 (Master Table)</h2>
+    </div>
+
+    <div class="card">
+      <p>Put–call parity can be rearranged to show how <strong>each of the four building blocks can be replicated using the other three</strong>. This is the most exam-tested part of this module. You must know which three instruments replicate each position — and what sign (long or short) each component takes.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>To Replicate This Position →</th>
+            <th>Use Underlying (S₀)</th>
+            <th>Use Risk-Free Bond (PV(X))</th>
+            <th>Use Call (c₀)</th>
+            <th>Use Put (p₀)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-yellow">Long Underlying (S₀)</span></td>
+            <td>—</td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td><span class="tag tag-red">Short</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Long Risk-Free Bond (PV(X))</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td>—</td>
+            <td><span class="tag tag-red">Short</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Long Call (c₀)</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td><span class="tag tag-red">Short</span></td>
+            <td>—</td>
+            <td><span class="tag tag-green">Long</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Long Put (p₀)</span></td>
+            <td><span class="tag tag-red">Short</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td><span class="tag tag-green">Long</span></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 How to Read This Table — and Derive It Yourself</div>
+      <p>Start with Eq. 1: S₀ + p₀ = c₀ + X(1+r)^−T. To replicate any position, move it to the right side and rearrange. Whatever is on the right = the replicating portfolio. Long = positive sign; Short = negative sign.<br><br>
+      <strong>Example — Replicate Long Put:</strong> p₀ = c₀ + X(1+r)^−T − S₀ → Long call + Long bond + Short underlying ✓<br>
+      <strong>Example — Replicate Long Call:</strong> c₀ = S₀ + p₀ − X(1+r)^−T → Long underlying + Long put + Short bond ✓<br>
+      <strong>Example — Replicate Long Bond:</strong> X(1+r)^−T = S₀ + p₀ − c₀ → Long underlying + Long put + Short call ✓<br>
+      <strong>Example — Replicate Long Underlying:</strong> S₀ = c₀ − p₀ + X(1+r)^−T → Long call + Short put + Long bond ✓</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Short Positions Are Negatives in the Equation</div>
+      <p>When you "short" an instrument in a replicating portfolio, it means you SELL it — you receive cash now and have an obligation at T. In the put–call parity equation, short = negative sign. So "short bond" means you <em>borrow</em> PV(X) today and repay X at T. "Short underlying" means you sell the asset now and must buy it back at T. Always track the signs carefully in both the cost at t=0 and the cash flows at T.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: OPTION STRATEGIES VIA PARITY       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Option Strategies via Put–Call Parity — Covered Call &amp; Protective Put</h2>
+    </div>
+
+    <h3>Strategy 1: Covered Call</h3>
+    <div class="card">
+      <p><strong>What it is:</strong> Long underlying + Short call. Written as: S₀ − c₀.</p>
+      <p style="margin-top:8px;"><strong>Who uses it:</strong> An investor who owns the stock and believes it will be flat in the near term. They sell a call to generate income (the premium). If S_T &gt; X, they must sell the stock at X (forgoing further upside). If S_T ≤ X, they keep the stock and the premium.</p>
+      <p style="margin-top:8px;"><strong>Payoff:</strong> If S_T &lt; X: S_T (keep stock). If S_T &gt; X: X (stock sold at X, giving up upside above X).</p>
+    </div>
+    <div class="formula-box">
+      <div class="label">Covered Call Replication via Put–Call Parity</div>
+      <div class="f">
+        Start: S₀ + p₀ = c₀ + X(1+r)^−T<br>
+        Rearrange for (S₀ − c₀):<br>
+        S₀ − c₀ = X(1+r)^−T − p₀<br><br>
+        COVERED CALL = Long risk-free bond + Short put option<br><br>
+        Intuition:<br>
+        • The bond provides the X floor (you always receive at least X in PV terms)<br>
+        • The short put obligates you to buy the stock at X if S_T &lt; X (capping your downside just like a sold call combined with owning the stock)<br>
+        • Both positions cap upside at X and have downside through the short put / sold call
+      </div>
+      <div class="note">
+        <strong>Payoff check — covered call vs. short put + bond:</strong><br>
+        If S_T &lt; X: Covered call pays S_T. Short put + bond pays X − (X − S_T) = S_T ✓<br>
+        If S_T &gt; X: Covered call pays X. Short put + bond pays 0 + X = X ✓<br>
+        Identical payoffs → identical prices.
+      </div>
+    </div>
+
+    <h3>Worked Example — VFO Covered Call (Example 3)</h3>
+    <div class="auction-box">
+      <div class="label">S₀ = INR295 | X = INR325 | T = 0.5yr | r = 4% | p₀ = INR56 | Find c₀</div>
+      <div class="f">
+        Use: S₀ − c₀ = X(1+r)^−T − p₀<br>
+        PV(X) = 325 × (1.04)^−0.5 = 325 × 0.9806 = INR318.69<br>
+        295 − c₀ = 318.69 − 56<br>
+        295 − c₀ = 262.69<br>
+        c₀ = 295 − 262.69 = INR32.31<br><br>
+        The no-arbitrage call premium is INR32.31.<br>
+        Verify: S₀ + p₀ = 295 + 56 = 351 | c₀ + PV(X) = 32.31 + 318.69 = 351 ✓
+      </div>
+    </div>
+
+    <h3>Strategy 2: Protective Put (Recap)</h3>
+    <div class="card">
+      <p><strong>What it is:</strong> Long underlying + Long put. Written as: S₀ + p₀.</p>
+      <p style="margin-top:8px;"><strong>Who uses it:</strong> An investor who wants upside participation in the stock but fears a drop. The put provides a floor: if S_T &lt; X, the put pays X − S_T so the total portfolio value is always at least X.</p>
+      <p style="margin-top:8px;"><strong>Replication:</strong> From Eq. 1: S₀ + p₀ = c₀ + X(1+r)^−T. The protective put equals a fiduciary call. Alternatively: S₀ + p₀ = long underlying + long put = long call + long bond.</p>
+    </div>
+
+    <h3>All Key Strategy Equivalences</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Strategy</th><th>Direct Construction</th><th>Equivalent via PCP</th><th>Payoff at T</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Protective Put</td><td>Long S + Long p</td><td>Long c + Long bond (PV(X))</td><td>Max(X, S_T)</td></tr>
+          <tr><td>Fiduciary Call</td><td>Long c + Long bond (PV(X))</td><td>Long S + Long p</td><td>Max(X, S_T)</td></tr>
+          <tr><td>Covered Call</td><td>Long S + Short c</td><td>Long bond (PV(X)) + Short p</td><td>Min(S_T, X)</td></tr>
+          <tr><td>Synthetic Underlying</td><td>Long c + Short p + Long bond</td><td>S₀ directly</td><td>S_T</td></tr>
+          <tr><td>Synthetic Bond</td><td>Long S + Long p + Short c</td><td>Bond directly</td><td>X (risk-free)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: PUT–CALL FORWARD PARITY            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Put–Call Forward Parity — Equations 4 &amp; 5</h2>
+    </div>
+
+    <div class="card">
+      <p>Put–call forward parity extends the basic put–call parity by <strong>replacing the cash underlying (S₀) with a synthetic underlying position</strong> — a long forward contract plus a risk-free bond. Since we already know that: <strong>Long Forward + Long Bond (PV(F₀(T))) = Long Underlying</strong>, we substitute this into Eq. 1.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Put–Call Forward Parity</div>
+      <div class="f">
+        Recall: S₀ = F₀(T) × (1+r)^−T + 0 [long forward costs nothing; bond costs PV(F₀(T))]<br>
+        Substitute S₀ = F₀(T)(1+r)^−T into Eq. 1:<br><br>
+        F₀(T)(1+r)^−T + p₀ = c₀ + X(1+r)^−T<br><br>
+        [Synthetic Protective Put] = [Fiduciary Call]<br><br>
+        Where the synthetic protective put = Long forward + Long bond (PV(F₀(T))) + Long put
+      </div>
+      <div class="note">
+        <strong>Synthetic protective put:</strong> Instead of buying the underlying directly, you replicate ownership using a forward + a bond (PV of forward price). Adding a put on top gives the same payoff as a traditional protective put.<br><br>
+        <strong>Why use this?</strong> Forwards are often more liquid and capital-efficient than holding the physical underlying. A fund manager can use a futures contract instead of buying shares, while still using put–call parity to price the put or call.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 5 — Key Rearrangement: Long Put / Short Call = Long Bond + Short Forward</div>
+      <div class="f">
+        From Eq. 4: F₀(T)(1+r)^−T + p₀ = c₀ + X(1+r)^−T<br>
+        Rearrange:<br>
+        p₀ − c₀ = X(1+r)^−T − F₀(T)(1+r)^−T<br>
+        p₀ − c₀ = [X − F₀(T)](1+r)^−T<br><br>
+        MEANING:<br>
+        Long put + Short call = Long bond (PV of X) + Short forward (PV of F₀(T))<br><br>
+        When X = F₀(T) (at-the-money forward options):<br>
+        p₀ = c₀ — ATM call and ATM put have the same price!
+      </div>
+      <div class="note">
+        <strong>If X &gt; F₀(T):</strong> p₀ &gt; c₀ (put is more valuable — you can sell at X which is above the forward price)<br>
+        <strong>If X &lt; F₀(T):</strong> c₀ &gt; p₀ (call is more valuable — you can buy at X which is below the forward price)<br>
+        <strong>If X = F₀(T):</strong> p₀ = c₀ (both options equally likely to be exercised → same price)
+      </div>
+    </div>
+
+    <h3>Proof — Synthetic Protective Put = Fiduciary Call (Exhibits 7 & 8)</h3>
+    <div class="scenario-grid">
+      <div class="sg-header">
+        <div>Position</div>
+        <div>Put Exercised (S_T &lt; X)</div>
+        <div>At The Money (S_T ≥ X)</div>
+        <div>Cost at t=0</div>
+      </div>
+      <div class="sg-section"><div>Synthetic Protective Put</div><div></div><div></div><div></div></div>
+      <div class="sg-row"><div>Long Put</div><div>X − S_T</div><div>0</div><div>p₀</div></div>
+      <div class="sg-row"><div>Long Forward</div><div>S_T − F₀(T)</div><div>S_T − F₀(T)</div><div>0</div></div>
+      <div class="sg-row"><div>Long Bond (PV(F₀(T)))</div><div>F₀(T)</div><div>F₀(T)</div><div>F₀(T)(1+r)^−T</div></div>
+      <div class="sg-subtotal"><div>TOTAL</div><div>X</div><div>S_T</div><div>p₀ + F₀(T)(1+r)^−T</div></div>
+      <div class="sg-section"><div>Fiduciary Call</div><div></div><div></div><div></div></div>
+      <div class="sg-row"><div>Long Call</div><div>0</div><div>S_T − X (if S_T &gt; X)</div><div>c₀</div></div>
+      <div class="sg-row"><div>Long Bond (PV(X))</div><div>X</div><div>X</div><div>X(1+r)^−T</div></div>
+      <div class="sg-subtotal"><div>TOTAL</div><div>X</div><div>S_T</div><div>c₀ + X(1+r)^−T</div></div>
+    </div>
+
+    <h3>Worked Example — VFO Put–Call Forward Parity (Example 4)</h3>
+    <div class="auction-box">
+      <div class="label">S₀ = INR295 | X = INR265 | T = 0.5yr | r = 4% | c₀ = INR59 | Find p₀ using forward parity</div>
+      <div class="f">
+        Step 1: Calculate F₀(T) = S₀ × (1+r)^T = 295 × (1.04)^0.5 = 295 × 1.0198 = INR300.84<br><br>
+        Step 2: Apply Equation 5: p₀ − c₀ = [X − F₀(T)](1+r)^−T<br>
+        p₀ − 59 = (265 − 300.84) × (1.04)^−0.5<br>
+        p₀ − 59 = −35.84 × 0.9806<br>
+        p₀ − 59 = −35.15<br>
+        p₀ = 59 − 35.15 = INR23.85<br><br>
+        Same answer as put–call parity approach (INR23.85 ≈ INR23.86 due to rounding) ✓<br><br>
+        Note: X = 265 &lt; F₀(T) = 300.84 → c₀ &gt; p₀ (call worth more: 59 &gt; 23.85) ✓
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 When X = F₀(T): ATM Call = ATM Put</div>
+      <p>When the exercise price equals the forward price, the option is "at the money forward." In this case: p₀ − c₀ = [X − F₀(T)](1+r)^−T = 0 → <strong>p₀ = c₀</strong>. This is an important exam fact: for at-the-money forward European options, the call and put have the same price. This is intuitive — both options are equally likely to be exercised since X = the expected future price.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: FIRM VALUE APPLICATION             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Firm Value Application — Equity &amp; Debt as Options (Equation 6)</h2>
+    </div>
+
+    <div class="card">
+      <p>One of the most elegant applications of put–call parity is in corporate finance: the financial claims of <strong>shareholders and debtholders can be described as option positions on the value of the firm</strong>. This insight connects derivatives theory to credit risk and capital structure — a crossover topic the exam tests.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">The Setup</div>
+      <div class="def-body">A firm at t=0 has asset value V₀ = E₀ + PV(D), where E₀ = equity value and PV(D) = present value of zero-coupon debt with face value D maturing at T. At T, the firm's assets (V_T) are distributed to shareholders and debtholders based on whether the firm is solvent or insolvent.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">✅ Solvency (V_T &gt; D)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Firm can repay debt in full</li>
+          <li><strong>Debtholders receive:</strong> D (repaid in full)</li>
+          <li><strong>Shareholders receive:</strong> V_T − D (residual after debt)</li>
+          <li>Shareholder payoff = Max(0, V_T − D) when solvent → V_T − D &gt; 0</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="float-title" style="color:#c9a84c;">⚠️ Insolvency (V_T &lt; D)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>Firm cannot repay debt — defaults</li>
+          <li><strong>Debtholders receive:</strong> V_T (all assets, still less than D owed)</li>
+          <li><strong>Shareholders receive:</strong> 0 (equity wiped out)</li>
+          <li>Shareholder payoff = Max(0, V_T − D) when insolvent → 0</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Shareholders and Debtholders as Option Positions</h3>
+
+    <div class="formula-box">
+      <div class="label">Shareholder Payoff = Long Call on Firm Value</div>
+      <div class="f">
+        Shareholder payoff at T = Max(0, V_T − D)<br><br>
+        This is IDENTICAL to a long call option on the firm's assets (V_T)<br>
+        with exercise price = D (the debt face value).<br><br>
+        Intuition:<br>
+        • If V_T &gt; D: Shareholders exercise — pay off debt D, keep residual (V_T − D)<br>
+        • If V_T &lt; D: Shareholders "don't exercise" — let firm default, walk away with 0<br>
+        • Unlimited upside (if firm grows, equity grows). Downside capped at 0 (limited liability).<br><br>
+        Equity = Long Call on Firm Value (exercise price = D)
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Debtholder Payoff = Long Risk-Free Bond + Short Put on Firm Value</div>
+      <div class="f">
+        Debtholder payoff at T = Min(V_T, D)<br><br>
+        This equals: D − Max(0, D − V_T)<br>
+        = Long risk-free bond (D) + Short put on V_T with exercise price D<br><br>
+        Intuition:<br>
+        • If V_T &gt; D (solvent): Receive D (bond pays off). Short put expires worthless → net = D<br>
+        • If V_T &lt; D (insolvent): Receive D but pay (D − V_T) on the short put → net = V_T<br>
+        • Limited upside (at most D, even if firm grows dramatically)<br>
+        • Downside risk: if firm defaults, receive less than D owed<br><br>
+        Risky Debt = Long Risk-Free Bond − Put Option on Firm Value
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 6 — Firm Value via Put–Call Parity</div>
+      <div class="f">
+        Apply put–call parity: S₀ + p₀ = c₀ + PV(X)<br>
+        Substitute: V₀ for S₀, D for X, E₀ for c₀, risky debt position for p₀:<br><br>
+        V₀ + p₀ = c₀ + PV(D)<br>
+        V₀ = c₀ + PV(D) − p₀<br><br>
+        WHERE:<br>
+        V₀   = total firm asset value at t=0<br>
+        c₀   = equity value (call option on firm assets, exercise price = D)<br>
+        PV(D) = present value of risk-free debt<br>
+        p₀   = put option on firm value = CREDIT SPREAD on the debt<br><br>
+        Interpretation:<br>
+        Firm value = Equity (call) + Risk-free debt − Put option (credit spread)<br>
+        OR: Firm value = Equity value + Risky debt value
+      </div>
+      <div class="note">
+        <strong>The put option (p₀) as credit spread:</strong> The put represents the premium above the risk-free rate that the firm must pay to debtholders to compensate them for assuming insolvency risk. The more likely insolvency (lower V₀ relative to D), the more valuable p₀, the higher the credit spread.<br><br>
+        <strong>This is the foundation of structural credit models</strong> (e.g., Merton model) used in credit risk assessment.
+      </div>
+    </div>
+
+    <h3>Summary — Firm Value Option Analogy</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Stakeholder</th><th>Option Position</th><th>Payoff at T</th><th>Upside</th><th>Downside</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Shareholders</td><td>Long Call on V (exercise price = D)</td><td>Max(0, V_T − D)</td><td>Unlimited (as V_T rises)</td><td>Capped at 0 (limited liability)</td></tr>
+          <tr><td>Debtholders</td><td>Long Bond (D) + Short Put on V</td><td>Min(V_T, D)</td><td>Capped at D (fixed claim)</td><td>Receive V_T &lt; D if insolvent</td></tr>
+          <tr><td>Firm (combined)</td><td>V₀ = c₀ + PV(D) − p₀</td><td>V_T</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Shareholders Have LIMITED Downside, NOT Unlimited</div>
+      <p>Students sometimes confuse the analogy. Shareholders are like CALL BUYERS — they have unlimited upside (if firm value soars) and limited downside (equity can only go to zero, not negative — limited liability). Debtholders are like CALL SELLERS / BOND HOLDERS + SHORT PUT — they have limited upside (maximum D) and bear downside through the short put (they absorb losses when V_T &lt; D). The asymmetry between shareholders and debtholders is precisely the put option embedded in risky debt.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Spread Intuition — The Put Option Connection</div>
+      <p>The credit spread on a bond (the yield above the risk-free rate) compensates debtholders for the insolvency risk they bear (the sold put). When a company is financially distressed (V₀ close to D), the put option is deep in the money → very valuable → large credit spread. When a company is financially healthy (V₀ much greater than D), the put is deep out of the money → nearly worthless → small credit spread. This is why credit spreads widen when firms' asset values decline relative to their debt obligations.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Put–Call Parity (Eq. 1):</strong> S₀ + p₀ = c₀ + X(1+r)^−T. Applies to European options with same X and same T on the same underlying (no income/costs).</li>
+        <li>✅ <strong>Protective Put = Fiduciary Call:</strong> Both produce Max(X, S_T) under all scenarios. This equivalence IS put–call parity.</li>
+        <li>✅ <strong>Fiduciary call:</strong> Long call + Long bond (pays X at T). Costs c₀ + X(1+r)^−T.</li>
+        <li>✅ <strong>Protective put:</strong> Long underlying + Long put. Costs S₀ + p₀.</li>
+        <li>✅ <strong>Solving for put:</strong> p₀ = c₀ + X(1+r)^−T − S₀. To get the put: buy a call, buy a bond, short the underlying.</li>
+        <li>✅ <strong>Solving for call:</strong> c₀ = S₀ + p₀ − X(1+r)^−T. To get the call: buy the stock, buy a put, short the bond (borrow PV(X)).</li>
+        <li>✅ <strong>Solving for underlying:</strong> S₀ = c₀ − p₀ + X(1+r)^−T. Synthetic underlying: long call + short put + long bond.</li>
+        <li>✅ <strong>Solving for bond:</strong> X(1+r)^−T = S₀ + p₀ − c₀. Synthetic bond: long underlying + long put + short call (also known as a conversion).</li>
+        <li>✅ <strong>Arbitrage rule:</strong> If S₀ + p₀ &gt; c₀ + PV(X) → sell protective put, buy fiduciary call. Riskless profit = difference. Net cash flows at T = 0 under ALL scenarios.</li>
+        <li>✅ <strong>Covered call = Long bond + Short put:</strong> From S₀ − c₀ = X(1+r)^−T − p₀. The covered call has capped upside (at X) and downside through the short put / falling stock.</li>
+        <li>✅ <strong>Put–Call Forward Parity (Eq. 4):</strong> F₀(T)(1+r)^−T + p₀ = c₀ + X(1+r)^−T. Substitute PV(F₀(T)) for S₀ in the basic parity equation.</li>
+        <li>✅ <strong>Key rearrangement (Eq. 5):</strong> p₀ − c₀ = [X − F₀(T)](1+r)^−T. Long put + Short call = Long bond (PV(X)) + Short forward (PV(F₀(T))).</li>
+        <li>✅ <strong>ATM Forward options: p₀ = c₀.</strong> When X = F₀(T), both options have the same price. When X &gt; F₀(T), put &gt; call. When X &lt; F₀(T), call &gt; put.</li>
+        <li>✅ <strong>Synthetic protective put:</strong> Long forward + Long bond (PV(F₀(T))) + Long put. Identical payoff to cash protective put and to fiduciary call.</li>
+        <li>✅ <strong>Shareholder payoff = Max(0, V_T − D) = Long Call on firm assets</strong> with exercise price D. Unlimited upside; downside capped at 0 (limited liability).</li>
+        <li>✅ <strong>Debtholder payoff = Min(V_T, D) = Long Bond + Short Put</strong> on firm assets with exercise price D. Upside capped at D; downside exposed to insolvency.</li>
+        <li>✅ <strong>Firm value equation (Eq. 6):</strong> V₀ = c₀ + PV(D) − p₀. Firm value = Equity (call) + PV(risk-free debt) − Credit spread (put).</li>
+        <li>✅ <strong>The put (p₀) in firm value = credit spread:</strong> It's the premium debtholders demand above the risk-free rate to compensate for insolvency risk. Higher insolvency risk → higher p₀ → wider credit spread.</li>
+        <li>✅ <strong>As firm approaches distress:</strong> p₀ (the insolvency put) becomes more valuable. Shareholders benefit from this (they're long the put in a way — they "put" the firm to debtholders in insolvency). Debtholders bear more risk (they're short the put).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — MODULE 9</div>
+      <div class="f">
+        ═══ PUT–CALL PARITY (Basic) ═══<br>
+        S₀ + p₀ = c₀ + X(1+r)^−T          [Eq. 1]<br>
+        [Protective Put] = [Fiduciary Call]<br><br>
+
+        ═══ REARRANGEMENTS ═══<br>
+        Solve for p₀:  p₀ = c₀ + X(1+r)^−T − S₀<br>
+        Solve for c₀:  c₀ = S₀ + p₀ − X(1+r)^−T<br>
+        Solve for S₀:  S₀ = c₀ − p₀ + X(1+r)^−T<br>
+        Solve for bond: X(1+r)^−T = S₀ + p₀ − c₀<br>
+        Covered call:  S₀ − c₀ = X(1+r)^−T − p₀<br><br>
+
+        ═══ REPLICATION (Exhibit 6) ═══<br>
+        Long underlying = Long bond + Long call + Short put<br>
+        Long bond       = Long S + Long p + Short c<br>
+        Long call       = Long S + Long p + Short bond<br>
+        Long put        = Short S + Long bond + Long call<br><br>
+
+        ═══ PUT–CALL FORWARD PARITY ═══<br>
+        F₀(T)(1+r)^−T + p₀ = c₀ + X(1+r)^−T   [Eq. 4]<br>
+        p₀ − c₀ = [X − F₀(T)](1+r)^−T          [Eq. 5]<br>
+        When X = F₀(T): p₀ = c₀  (ATM forward → same price)<br><br>
+
+        ═══ FIRM VALUE APPLICATION ═══<br>
+        Shareholder payoff = Max(0, V_T − D) = Long call (X=D)<br>
+        Debtholder payoff  = Min(V_T, D)     = Long bond + Short put<br>
+        Firm value: V₀ = c₀ + PV(D) − p₀    [Eq. 6]<br>
+        p₀ = credit spread (insolvency risk premium)<br><br>
+
+        ═══ ARBITRAGE RULE ═══<br>
+        LHS &gt; RHS → Sell protective put, Buy fiduciary call<br>
+        LHS &lt; RHS → Sell fiduciary call, Buy protective put<br>
+        Profit = |S₀ + p₀ − c₀ − X(1+r)^−T| collected at t=0
+      </div>
+      <div class="note">
+        <strong>Put–call parity requires:</strong> European options only (not American); same X and same T for both options; same underlying; no dividends/income; can borrow/lend at r. Any violation = potential arbitrage.<br><br>
+        <strong>Covered call = short put + long bond</strong> — not intuitively obvious but follows directly from parity. The key insight: selling a call caps your upside; a short put has the same downside shape; combining with a bond provides the X floor.<br><br>
+        <strong>Firm value application:</strong> The most conceptually deep part of this module. Connect it to credit risk: equity = call, risky debt = bond − put, credit spread = put premium. More risk → more valuable put → wider spread.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 9: Option Replication Using Put–Call Parity · Exam Prep Notes
+</footer>
+
+</body>
+</html>

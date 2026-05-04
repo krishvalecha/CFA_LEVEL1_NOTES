@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 2: Time Value of Money in Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --purple: #a04cc9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d0d18 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(160,76,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(160,76,201,0.12); color: var(--purple); border: 1px solid rgba(160,76,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--purple); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--purple); border-color: var(--purple); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--purple); background: rgba(160,76,201,0.1); border: 1px solid rgba(160,76,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--purple); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(160,76,201,0.15); color: var(--purple); border: 1px solid rgba(160,76,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .highlight-p { color: var(--purple); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--purple); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--purple); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Instrument type cards */
+  .inst-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .inst-disc { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .inst-coup { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .inst-annuity { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .inst-perp { background: rgba(160,76,201,0.06); border: 1px solid rgba(160,76,201,0.3); }
+  .inst-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .inst-disc .inst-label { color: var(--accent3); }
+  .inst-coup .inst-label { color: var(--accent2); }
+  .inst-annuity .inst-label { color: var(--accent); }
+  .inst-perp .inst-label { color: var(--purple); }
+  .inst-card p, .inst-card li { font-size: 14px; color: var(--text); }
+  .inst-card ul { padding-left: 16px; margin-top: 6px; }
+  .inst-card li { margin-bottom: 4px; }
+
+  /* Equity model cards */
+  .eq-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .eq-const { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .eq-grow { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .eq-2stage { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .eq-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .eq-const .eq-label { color: var(--accent3); }
+  .eq-grow .eq-label { color: var(--accent2); }
+  .eq-2stage .eq-label { color: var(--accent); }
+  .eq-card p, .eq-card li { font-size: 14px; color: var(--text); }
+  .eq-card ul { padding-left: 16px; margin-top: 6px; }
+  .eq-card li { margin-bottom: 4px; }
+
+  /* No-arb application boxes */
+  .arb-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .arb-1 { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .arb-2 { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .arb-3 { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .arb-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .arb-1 .arb-label { color: var(--accent2); }
+  .arb-2 .arb-label { color: var(--accent3); }
+  .arb-3 .arb-label { color: var(--accent); }
+  .arb-card p, .arb-card li { font-size: 14px; color: var(--text); }
+  .arb-card ul { padding-left: 16px; margin-top: 6px; }
+  .arb-card li { margin-bottom: 4px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 2</div>
+  <h1>Time Value of Money <span>in Finance</span></h1>
+  <p>Exam-ready notes: PV of fixed-income instruments (discount, coupon, annuity, perpetuity), equity valuation (constant/growing/two-stage dividend models), implied YTM and required return, implied growth rate, P/E ratio, and cash flow additivity with no-arbitrage applications (forward rates, FX forwards, option pricing).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · PV / FV Core Equations</a>
+  <a class="toc-item" href="#s2">02 · Fixed-Income: 3 Cash Flow Patterns</a>
+  <a class="toc-item" href="#s3">03 · Fixed-Income PV Formulas</a>
+  <a class="toc-item" href="#s4">04 · Equity: 3 Dividend Models</a>
+  <a class="toc-item" href="#s5">05 · Implied Return — Fixed Income (YTM)</a>
+  <a class="toc-item" href="#s6">06 · Equity: Implied Return &amp; Implied Growth</a>
+  <a class="toc-item" href="#s7">07 · P/E Ratio &amp; Gordon Growth</a>
+  <a class="toc-item" href="#s8">08 · Cash Flow Additivity &amp; No-Arbitrage</a>
+  <a class="toc-item" href="#s9">09 · Implied Forward Rates</a>
+  <a class="toc-item" href="#s10">10 · Forward FX Rates</a>
+  <a class="toc-item" href="#s11">11 · Option Pricing (Binomial / Replicating Portfolio)</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: PV/FV CORE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>PV / FV — Core TVM Equations</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Fundamental TVM Relationships</div>
+      <div class="f">
+        Future Value (discrete):    FV_t = PV × (1 + r)^t<br>
+        Future Value (continuous):  FV_t = PV × e^(r×t)<br><br>
+        Present Value (discrete):   PV = FV_t / (1 + r)^t  =  FV_t × (1 + r)^(−t)<br>
+        Present Value (continuous): PV_t = FV × e^(−r×t)<br><br>
+        where:  r = discount rate per period,  t = number of compounding periods
+      </div>
+      <div class="note">
+        These equations are the foundation of all TVM applications in this module.<br>
+        Continuous compounding is the limiting case as compounding frequency → ∞.<br>
+        PV and FV factors are always reciprocals of each other.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Core Principle</div>
+      <p>Cash received <strong>today</strong> is worth more than cash received in the <strong>future</strong> because today's cash can be invested and earn returns. The discount rate <strong>r</strong> captures the opportunity cost, riskiness, and time preference between these two cash flows.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: FIXED INCOME PATTERNS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Fixed-Income Instruments — 3 Cash Flow Patterns</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Fixed-Income Instruments</div>
+      <div class="def-body">Debt instruments (bonds, loans) under which an issuer borrows money from an investor in exchange for a promise of future repayment. The discount rate is an interest rate, and the rate of return is the <strong>yield-to-maturity (YTM)</strong>.</div>
+    </div>
+
+    <div class="inst-card inst-disc">
+      <div class="inst-label">Pattern 1 — Discount (Zero-Coupon)</div>
+      <p>Investor pays PV today → receives a single principal cash flow (FV) at maturity. <strong>No intermediate payments.</strong></p>
+      <ul>
+        <li>Interest earned = FV − PV (the difference)</li>
+        <li>Also called: zero-coupon bond, discount instrument, T-bill</li>
+        <li>Sole source of return is the price discount from par</li>
+      </ul>
+    </div>
+
+    <div class="inst-card inst-coup">
+      <div class="inst-label">Pattern 2 — Periodic Interest (Coupon Bond)</div>
+      <p>Investor pays PV today → receives periodic interest payments (PMT = coupon) at pre-determined intervals → final coupon + principal (FV) at maturity.</p>
+      <ul>
+        <li>Most common fixed-income structure</li>
+        <li>Coupons are often paid <strong>semiannually</strong></li>
+        <li>YTM is the single discount rate used for ALL cash flows regardless of timing</li>
+      </ul>
+    </div>
+
+    <div class="inst-card inst-annuity">
+      <div class="inst-label">Pattern 3 — Level Payments (Annuity / Mortgage)</div>
+      <p>Investor pays PV today → receives uniform cash flows (A) at pre-determined intervals through maturity, each payment containing <strong>both interest and principal repayment</strong>.</p>
+      <ul>
+        <li>Fully amortizing loans: mortgages, auto loans</li>
+        <li>Payment A remains constant; but the interest/principal split within each payment changes over time</li>
+        <li>No separate principal repayment at maturity — all included in the level payments</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: FIXED INCOME PV FORMULAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Fixed-Income PV Formulas — Master Reference</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Discount Bond (Zero-Coupon)</div>
+      <div class="f">
+        PV = FV_t / (1 + r)^t
+      </div>
+      <div class="note">
+        r = periodic discount rate, t = periods to maturity<br>
+        Example: FV = 1,000, r = 5%, t = 2 → PV = 1,000 / (1.05)² = 907.03
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Coupon Bond (Periodic Interest + Principal at Maturity)</div>
+      <div class="f">
+        PV = PMT/(1+r)¹ + PMT/(1+r)² + ... + (PMT + FV)/(1+r)^N<br><br>
+        Or using annuity + PV of par:<br>
+        PV = PMT × [1 − (1+r)^(−N)] / r  +  FV / (1+r)^N
+      </div>
+      <div class="note">
+        PMT = periodic coupon payment, FV = par/face value, N = total periods, r = YTM per period<br>
+        For semiannual bonds: use r = YTM/2 and N = years × 2<br>
+        YTM is a single implied discount rate for ALL cash flows — cannot be solved algebraically; use calculator or iteration.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Perpetual Bond / Preferred Stock (Constant PMT forever)</div>
+      <div class="f">
+        PV(Perpetuity) = PMT / r
+      </div>
+      <div class="note">
+        Valid when r > 0. Derived by taking N → ∞ in the coupon bond formula.<br>
+        Most perpetual bonds are issued by companies for equity-like financing and often have redemption features.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Annuity / Level Payment Instrument (Periodic Payment A)</div>
+      <div class="f">
+        A = r × PV / [1 − (1 + r)^(−t)]
+      </div>
+      <div class="note">
+        PV = loan or bond principal, r = periodic interest rate, t = number of payment periods<br>
+        Rearrange to find PV: PV = A × [1 − (1+r)^(−t)] / r<br>
+        Example: Mortgage — same monthly payment over 30 years (360 periods)
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Instrument</th>
+            <th>Cash Flow Pattern</th>
+            <th>PV Formula</th>
+            <th>Key Feature</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Zero-coupon / T-bill</td>
+            <td>Single FV at maturity</td>
+            <td>FV / (1+r)^t</td>
+            <td>No intermediate payments</td>
+          </tr>
+          <tr>
+            <td>Coupon bond</td>
+            <td>Periodic PMT + FV at maturity</td>
+            <td>Σ PMT/(1+r)^t + FV/(1+r)^N</td>
+            <td>YTM = single rate for all CFs</td>
+          </tr>
+          <tr>
+            <td>Perpetual bond</td>
+            <td>PMT forever</td>
+            <td>PMT / r</td>
+            <td>No maturity date; N → ∞</td>
+          </tr>
+          <tr>
+            <td>Mortgage / annuity</td>
+            <td>Level payment A (interest + principal)</td>
+            <td>A = r×PV / [1−(1+r)^(−t)]</td>
+            <td>No separate principal at end</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: EQUITY DIVIDEND MODELS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Equity Instruments — 3 Dividend Valuation Models</h2>
+    </div>
+
+    <div class="card">
+      <p>Equity investments (preferred or common stock) represent ownership with <strong>no maturity date</strong>. Valued by discounting expected future dividends at the required return r. Unlike bonds, equity cash flows (dividends) are discretionary — not contractually promised.</p>
+      <p style="margin-top:8px;">Cash flows to value: <strong>periodic dividends + expected sale price</strong> at end of investment horizon. For perpetual holding: sum of all future dividends discounted to present.</p>
+    </div>
+
+    <div class="eq-card eq-const">
+      <div class="eq-label">Model 1 — Constant Dividends (Zero Growth)</div>
+      <p>Stock pays a fixed dividend D forever. Price = PV of a perpetuity.</p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        PV_t = D / r
+      </div>
+      <ul>
+        <li>Same formula as perpetual bond — just replace PMT with D</li>
+        <li>Applicable to <strong>preferred stock</strong> with a fixed dividend</li>
+        <li>Also applicable to mature common stocks assumed to pay stable, non-growing dividends</li>
+      </ul>
+    </div>
+
+    <div class="eq-card eq-grow">
+      <div class="eq-label">Model 2 — Constant Dividend Growth (Gordon Growth Model)</div>
+      <p>Dividends grow at constant rate g forever. D(t+1) = D_t × (1+g).</p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        PV_t = D_t(1+g) / (r − g)  =  D_(t+1) / (r − g)
+      </div>
+      <ul>
+        <li>Valid <strong>only when r &gt; g</strong> (if g ≥ r, formula breaks down — price would be infinite)</li>
+        <li>D_(t+1) = next period's expected dividend (already grown by one period)</li>
+        <li>g = constant perpetual dividend growth rate</li>
+        <li>r = required rate of return (cost of equity)</li>
+        <li>Most commonly tested equity valuation formula on the CFA exam</li>
+      </ul>
+    </div>
+
+    <div class="eq-card eq-2stage">
+      <div class="eq-label">Model 3 — Changing Growth (Two-Stage Model)</div>
+      <p>Company grows at short-term rate g_s for first n periods, then transitions to lower long-term rate g_l indefinitely. More realistic for high-growth companies.</p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        PV_t = Σ[D_t(1+g_s)^i / (1+r)^i]  +  E(S_(t+n)) / (1+r)^n<br>
+        (i = 1 to n, high-growth phase)     (terminal value)
+      </div>
+      <ul>
+        <li><strong>Terminal value</strong> E(S_(t+n)) = D_(t+n+1) / (r − g_l) = value of stock at end of high-growth phase using Gordon Growth Model</li>
+        <li>g_s &gt; g_l (short-term growth exceeds long-term growth)</li>
+        <li>Step 1: PV each dividend in high-growth phase. Step 2: Compute terminal value at period n. Step 3: PV the terminal value back to today.</li>
+        <li>Sum of both components = total stock price today</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Gordon Growth Model — Critical Constraint</div>
+      <p>The Gordon Growth Model requires <strong>r &gt; g</strong>. If the growth rate equals or exceeds the required return, the formula produces a negative or infinite price — which is meaningless. Also, <strong>D_(t+1)</strong> is next period's dividend (already one period of growth applied), NOT this period's D_t.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: IMPLIED RETURN FIXED INCOME -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Implied Return — Fixed-Income (YTM)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Yield-to-Maturity (YTM)</div>
+      <div class="def-body">The single implied market discount rate that equates the present value of all promised future cash flows to the current market price. It is the IRR of the bond's cash flows. Key assumption: <strong>all promised cash flows are received AND reinvested at the same YTM until maturity.</strong></div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Implied Return Formulas</div>
+      <div class="f">
+        Discount Bond (solve for r):
+        r = (FV_t / PV)^(1/t) − 1<br><br>
+        Coupon Bond (YTM — solve iteratively):<br>
+        PV = PMT/(1+r)¹ + PMT/(1+r)² + ... + (PMT+FV)/(1+r)^N<br>
+        → Cannot solve algebraically; use financial calculator or spreadsheet<br><br>
+        Excel YIELD function syntax:<br>
+        = YIELD(settlement, maturity, rate, pr, redemption, frequency, [basis])<br>
+        where: pr = price per 100 face value; basis = 0 for US bonds (30/360)
+      </div>
+      <div class="note">
+        YTM Assumptions: (1) Hold to maturity. (2) No default — all promised payments received. (3) Reinvest all coupons at the same YTM.<br>
+        If reinvestment rates differ from YTM → actual realized return will differ from YTM.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Bond Price vs. YTM Relationship</div>
+      <p>Price and YTM move in <strong>opposite directions</strong>. When market rates rise → bond price falls. When market rates fall → bond price rises. At YTM = coupon rate → price = par. At YTM &lt; coupon → price &gt; par (premium). At YTM &gt; coupon → price &lt; par (discount).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: EQUITY IMPLIED RETURN & GROWTH -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Equity: Implied Return &amp; Implied Growth</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Gordon Growth — Rearranged for r and g</div>
+      <div class="f">
+        Starting from:  PV_t = D_(t+1) / (r − g)<br><br>
+        Implied Required Return (r):
+        r = D_(t+1) / PV_t  +  g<br>
+        r = [Dividend yield based on next period's expected dividend]  +  [growth rate]<br><br>
+        Implied Growth Rate (g):
+        g = r − D_(t+1) / PV_t<br>
+        g = r − [forward dividend yield]
+      </div>
+      <div class="note">
+        D_(t+1) / PV_t = forward dividend yield (next period's dividend ÷ current stock price)<br>
+        Interpretation: required return = dividend yield + capital gain (growth) component<br>
+        Implied g tells you: "what growth rate does the market expect to justify this price?" Compare vs. analyst's forecast → overvalued or undervalued?
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Using Implied r</div>
+        <p>Useful for understanding what <strong>return investors require</strong> at the current price. If r implied by price &lt; your required return → stock appears overvalued (not enough compensation for risk).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Using Implied g</div>
+        <p>Compare implied growth against analyst's growth estimate. If implied g (from price) = 10% but analyst thinks company can only grow at 5% → <span class="danger-text">shares appear overvalued</span>. If implied g &lt; analyst estimate → undervalued.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — Market Price Embeds Expectations</div>
+      <p>Solving for implied r and implied g reveals the <strong>market's embedded expectations</strong>. This is more useful than asking "what is the price?" — it lets analysts ask "what must be true about growth or required return for this price to be justified?"</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: P/E RATIO -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>P/E Ratio &amp; Its Gordon Growth Connection</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Price-to-Earnings (P/E) Ratio</div>
+      <div class="def-body">A relative valuation metric: share price ÷ earnings per share. Controls for EPS and currency to improve comparability. A P/E of 20 means investors pay 20× EPS for each share — more expensive than a P/E of 10. Used for individual stocks AND stock indexes (S&P 500, FTSE 100, Nikkei 225).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">P/E Ratio Derived from Gordon Growth Model</div>
+      <div class="f">
+        Trailing P/E:   PV_t / E_t  =  (D_t/E_t)(1+g) / (r − g)<br><br>
+        Forward P/E:    PV_t / E_(t+1)  =  (D_(t+1)/E_(t+1)) / (r − g)<br><br>
+        where D/E = dividend payout ratio (proportion of earnings paid as dividends)
+      </div>
+      <div class="note">
+        Forward P/E is more commonly used in practice (based on next year's estimated EPS).<br><br>
+        P/E is POSITIVELY related to: higher dividend payout ratio, higher expected growth rate (g)<br>
+        P/E is NEGATIVELY related to: higher required return (r)<br><br>
+        Application: Given P/E and payout ratio, solve for implied r OR implied g (assuming the other is known).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 P/E Intuition</div>
+      <p>Think of P/E as the <strong>price per unit of earnings</strong> — like price per square meter in real estate. Higher growth expectations → higher P/E (investors pay more for future earnings). Higher risk/required return → lower P/E (discount future earnings more heavily). Higher dividend payout → higher P/E (more earnings distributed now).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: CASH FLOW ADDITIVITY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Cash Flow Additivity &amp; No-Arbitrage</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Cash Flow Additivity Principle</div>
+      <div class="def-body">The present value of any future cash flow stream indexed at the same point in time equals the <strong>sum of the present values of the individual cash flows</strong>. This allows comparison of multiple cash flow streams as long as the cash flows occur at the same point in time.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">No-Arbitrage Condition</div>
+      <div class="def-body">No possibility exists to earn a <strong>riskless profit</strong> in the absence of transaction costs. Economically equivalent strategies must produce the same payoff and therefore must have the same price. If prices diverge, arbitrageurs exploit the difference until prices converge. Cash flow additivity ensures no-arbitrage pricing.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>The key test for no-arbitrage:</strong> Two strategies that produce <strong>identical future cash flows in ALL scenarios</strong> must have the <strong>same present value today</strong>. If they don't, an arbitrageur can:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>Buy the cheaper strategy (invest)</li>
+        <li>Sell the more expensive strategy (borrow)</li>
+        <li>Earn a <span class="highlight3">riskless profit</span> with <span class="highlight3">zero net investment</span></li>
+      </ol>
+      <p style="margin-top:10px;">Three applications in this module: (1) Implied forward interest rates, (2) Forward exchange rates, (3) Option pricing via replicating portfolio.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: IMPLIED FORWARD RATES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Application 1 — Implied Forward Interest Rates</h2>
+    </div>
+
+    <div class="arb-card arb-1">
+      <div class="arb-label">Setup — Two Equivalent Strategies</div>
+      <p>An investor has GBP100 to invest for 2 years. Two strategies:</p>
+      <ul>
+        <li><strong>Strategy 1:</strong> Invest for 2 years at known 2-year spot rate r₂</li>
+        <li><strong>Strategy 2:</strong> Invest for 1 year at known 1-year spot rate r₁, then reinvest at the 1-year forward rate F_(1,1)</li>
+      </ul>
+      <p style="margin-top:8px;">Both strategies must yield the same FV — otherwise arbitrage exists.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Implied Forward Rate Formula</div>
+      <div class="f">
+        No-arbitrage condition:<br>
+        (1 + r₂)²  =  (1 + r₁)(1 + F_(1,1))<br><br>
+        Solving for the implied 1-year forward rate 1 year from now:<br>
+        F_(1,1)  =  (1 + r₂)² / (1 + r₁)  −  1<br><br>
+        General form — forward rate starting at t₁, ending at t₂:<br>
+        (1 + r_(t₂))^(t₂)  =  (1 + r_(t₁))^(t₁) × (1 + F_(t₁,t₂−t₁))^(t₂−t₁)
+      </div>
+      <div class="note">
+        Worked example: r₁ = 2.50%, r₂ = 3.50%<br>
+        FV₂ = 100 × (1.035)² = GBP107.12<br>
+        F_(1,1) = (1.035)² / (1.025) − 1 = 107.12/102.50 − 1 = 4.51%<br><br>
+        Interpretation: F_(1,1) = 4.51% is the BREAKEVEN reinvestment rate for 1 year starting in year 1.<br>
+        If actual available rate > 4.51% → profitable to invest short then roll (Strategy 2 wins).<br>
+        If actual available rate < 4.51% → invest for 2 years directly (Strategy 1 wins).
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Arbitrage if Forward Rate Is Wrong</div>
+      <p>If the available 1-year forward rate (say 5%) ≠ implied forward rate (4.51%): (1) Borrow GBP100 for 2 years at 3.5% → owe GBP107.12. (2) Invest for 1 year at 2.5% → GBP102.50, then invest for 1 year at 5% → GBP107.63. (3) Riskless profit = GBP0.51 with zero net investment. Markets eliminate this via price pressure.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: FORWARD FX RATES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Application 2 — Forward Exchange Rates (Covered Interest Parity)</h2>
+    </div>
+
+    <div class="arb-card arb-2">
+      <div class="arb-label">Setup — Two Equivalent Strategies (Continuous Compounding)</div>
+      <p>Investor has USD1,000, invests for 6 months. Current spot rate: JPY/USD = 134.40. r_USD (6-month) = 2.00%. r_JPY (6-month) = 0.05%. Uses continuous compounding.</p>
+      <ul>
+        <li><strong>Strategy 1:</strong> Invest USD1,000 in US T-bill at r_USD → receive USD1,010.05 in 6 months [= 1,000 × e^(0.02×0.5)]</li>
+        <li><strong>Strategy 2:</strong> Convert USD to JPY at spot rate → invest in JPY T-bill → convert back to USD at forward rate F</li>
+          <ul>
+            <li>t=0: USD1,000 → JPY134,400 (at spot 134.40). Invest at 0.05% for 6 months</li>
+            <li>t=T: Receive JPY134,433.60 [= 134,400 × e^(0.0005×0.5)]. Convert at forward F</li>
+          </ul>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Forward FX Rate — No-Arbitrage (Covered Interest Parity)</div>
+      <div class="f">
+        For continuous compounding:<br>
+        F = S × e^((r_d − r_f) × T)<br><br>
+        where:  S = spot exchange rate (domestic per foreign)<br>
+                r_d = domestic risk-free rate (continuously compounded)<br>
+                r_f = foreign risk-free rate (continuously compounded)<br>
+                T = time to forward contract maturity (in years)<br><br>
+        Worked example: F = 134.40 × e^((0.02−0.0005)×0.5) = 134.40 × e^(0.00975) = 133.096 JPY/USD<br><br>
+        For discrete compounding:<br>
+        F = S × (1 + r_d)^T / (1 + r_f)^T
+      </div>
+      <div class="note">
+        Both strategies yield USD1,010.05 in 6 months → they are economically equivalent → forward rate MUST be 133.096.<br>
+        If F ≠ 133.096 → arbitrage opportunity exists (borrow in one currency, invest in the other, lock forward rate).<br>
+        Note: JPY/USD declined from 134.40 → 133.096 because USD interest rate (2%) > JPY interest rate (0.05%) → USD at forward discount, JPY at forward premium.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward FX Intuition — Interest Rate Parity</div>
+      <p>The currency with the <strong>higher interest rate</strong> will trade at a <strong>forward discount</strong> (weaker in the forward market). The currency with the <strong>lower interest rate</strong> will trade at a <strong>forward premium</strong>. This ensures no riskless profit from investing in the higher-rate currency — the FX move exactly offsets the interest rate differential.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: OPTION PRICING -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Application 3 — Option Pricing via Replicating Portfolio</h2>
+    </div>
+
+    <div class="arb-card arb-3">
+      <div class="arb-label">Setup — Binomial Tree (One Period)</div>
+      <p>Asset current price S₀ = CNY40. Asset can rise 40% to CNY56 OR fall 20% to CNY32. Call option: right to buy at CNY50 (strike price).</p>
+      <ul>
+        <li>If price rises to CNY56: option value = 56 − 50 = <strong>CNY6</strong> (exercise — buy at 50, sell at 56)</li>
+        <li>If price falls to CNY32: option value = <strong>CNY0</strong> (do not exercise — why buy at 50 when market price is 32?)</li>
+        <li>Risk-free rate r = 5%</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Replicating Portfolio Method — Step by Step</div>
+      <div class="f">
+        Step 1 — Find hedge ratio (h):
+        h = (C_u − C_d) / (S_u − S_d) = (6 − 0) / (56 − 32) = 0.25<br>
+        (Buy 0.25 units of the asset, sell 1 call option)<br><br>
+        Step 2 — Verify portfolio is risk-free:
+        V₁^up   = 0.25 × 56 − 6 = 14 − 6 = CNY8<br>
+        V₁^down = 0.25 × 32 − 0 = CNY8  ✓ (same in both scenarios → risk-free)<br><br>
+        Step 3 — Set PV of risk-free payoff = current portfolio value:
+        V₀ = V₁ / (1 + r) = 8 / 1.05 = CNY7.619<br><br>
+        Step 4 — Solve for option price c₀:
+        V₀ = 0.25 × S₀ − c₀<br>
+        7.619 = 0.25 × 40 − c₀<br>
+        7.619 = 10 − c₀<br>
+        c₀ = CNY2.38
+      </div>
+      <div class="note">
+        The hedge ratio (0.25) = proportion of underlying asset to hold per option sold to create a risk-free portfolio.<br>
+        This is a simplified binomial option pricing model — the foundation of more complex option pricing (Black-Scholes).<br>
+        The no-arbitrage condition: if c₀ ≠ 2.38, a riskless profit could be constructed → market forces c₀ to 2.38.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Concepts in Option Pricing via Replicating Portfolio</div>
+      <p><strong>Replicating portfolio:</strong> A combination of the underlying asset and the option (or risk-free borrowing) that produces the same payoff in ALL scenarios → must have the same value as the risk-free asset discounted at the risk-free rate.<br>
+      <strong>Hedge ratio:</strong> (C_up − C_down) / (S_up − S_down) = the number of shares of the asset needed per option to make the portfolio risk-free.<br>
+      <strong>Call option value:</strong> Always between 0 and the stock price (0 ≤ c ≤ S₀).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Core TVM:</strong> FV = PV(1+r)^t (discrete); FV = PV×e^(rt) (continuous). PV = FV/(1+r)^t. PV and FV factors are always reciprocals.</li>
+        <li>✅ <strong>3 fixed-income cash flow patterns:</strong> (1) Discount/zero-coupon — single FV at maturity; return = FV−PV. (2) Periodic interest/coupon — PMT each period + FV at maturity; YTM is the single discount rate for all cash flows. (3) Level payment/annuity — constant payment A (interest + principal combined); no separate FV at maturity.</li>
+        <li>✅ <strong>Zero-coupon bond PV:</strong> PV = FV / (1+r)^t. Implied r = (FV/PV)^(1/t) − 1.</li>
+        <li>✅ <strong>Coupon bond PV:</strong> Sum of PV of all coupons + PV of par. Cannot solve for YTM algebraically — use calculator/iteration/Excel YIELD function.</li>
+        <li>✅ <strong>Perpetuity PV:</strong> PV = PMT / r. Used for perpetual bonds AND preferred stock (zero growth). Requires r &gt; 0.</li>
+        <li>✅ <strong>Annuity payment:</strong> A = r×PV / [1−(1+r)^(−t)]. Rearrange to find PV of annuity: PV = A×[1−(1+r)^(−t)]/r.</li>
+        <li>✅ <strong>YTM assumptions:</strong> (1) Hold to maturity, (2) No default, (3) Reinvest all coupons at YTM. Violation of assumption 3 → realized return ≠ YTM.</li>
+        <li>✅ <strong>Bond price-YTM relationship:</strong> Inverse. YTM = coupon rate → price = par. YTM &lt; coupon → premium. YTM &gt; coupon → discount.</li>
+        <li>✅ <strong>3 equity dividend models:</strong> (1) Constant dividend: PV = D/r (zero growth perpetuity). (2) Constant growth (Gordon): PV = D_(t+1)/(r−g); requires r&gt;g. (3) Two-stage: PV = Σ[high-growth dividends discounted] + [terminal value discounted]; terminal value = D_(t+n+1)/(r−g_l).</li>
+        <li>✅ <strong>Gordon Growth Model — D_(t+1):</strong> Always the NEXT period dividend = D_t × (1+g). Never use current D_t in the numerator.</li>
+        <li>✅ <strong>Implied required return (equity):</strong> r = D_(t+1)/PV_t + g = forward dividend yield + growth rate.</li>
+        <li>✅ <strong>Implied growth rate (equity):</strong> g = r − D_(t+1)/PV_t = required return − forward dividend yield. If implied g &gt; analyst's estimate → stock overvalued.</li>
+        <li>✅ <strong>Forward P/E:</strong> PV_t/E_(t+1) = (D_(t+1)/E_(t+1))/(r−g) = payout ratio / (r−g). Positively related to: payout ratio, growth. Negatively related to: required return.</li>
+        <li>✅ <strong>Cash flow additivity:</strong> PV of any cash flow stream = sum of PVs of individual cash flows (at same time index). Foundation of no-arbitrage pricing. Economically equivalent strategies → same PV → same price.</li>
+        <li>✅ <strong>No-arbitrage condition:</strong> Two strategies with IDENTICAL payoffs in ALL future scenarios must have the same price today. If prices differ → arbitrage profit = buy cheap, sell expensive, earn riskless gain with zero net investment.</li>
+        <li>✅ <strong>Implied forward rate:</strong> (1+r₂)² = (1+r₁)(1+F_(1,1)) → F_(1,1) = (1+r₂)²/(1+r₁) − 1. Interpretation: breakeven 1-year reinvestment rate in year 1. If available forward rate &gt; implied → invest short and roll (Strategy 2).</li>
+        <li>✅ <strong>Forward FX rate (continuous):</strong> F = S × e^((r_d−r_f)×T). Higher interest rate currency → forward discount. Lower interest rate currency → forward premium. This is covered interest rate parity — no risk-free profit from currency arbitrage.</li>
+        <li>✅ <strong>Option pricing — binomial:</strong> Hedge ratio h = (C_up−C_down)/(S_up−S_down). Build replicating portfolio (long h shares, short 1 call) → risk-free payoff in ALL scenarios. PV of risk-free payoff at risk-free rate = current portfolio value. Solve for c₀.</li>
+        <li>✅ <strong>Call option payoffs:</strong> If S_T &gt; K (strike): option value = S_T − K (exercise). If S_T ≤ K: option value = 0 (do not exercise). Never exercise when market price &lt; strike.</li>
+        <li>✅ <strong>Replicating portfolio logic:</strong> V₁^up = V₁^down → portfolio is risk-free → discount at risk-free rate → V₀ = V₁/(1+r) = h×S₀ − c₀ → solve for c₀.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        FV = PV(1+r)^t   |   PV = FV/(1+r)^t   |   FV = PV×e^(rt)   |   PV = FV×e^(−rt)<br><br>
+        FIXED INCOME:<br>
+        Zero-coupon:  PV = FV/(1+r)^t;  r = (FV/PV)^(1/t) − 1<br>
+        Coupon bond:  PV = Σ[PMT/(1+r)^t] + FV/(1+r)^N  [YTM = r, solve iteratively]<br>
+        Perpetuity:   PV = PMT / r<br>
+        Annuity payment: A = r×PV / [1−(1+r)^(−t)]<br><br>
+        EQUITY:<br>
+        Constant dividend:  PV = D / r<br>
+        Gordon Growth:      PV = D_(t+1) / (r−g)   [r > g required]<br>
+        Implied r:          r = D_(t+1)/PV + g<br>
+        Implied g:          g = r − D_(t+1)/PV<br>
+        Forward P/E:        PV/E_(t+1) = (D_(t+1)/E_(t+1)) / (r−g)<br><br>
+        NO-ARBITRAGE / CASH FLOW ADDITIVITY:<br>
+        Forward rate:       (1+r₂)² = (1+r₁)(1+F_(1,1))  →  F_(1,1) = (1+r₂)²/(1+r₁) − 1<br>
+        Forward FX (cts):   F = S × e^((r_d−r_f)×T)<br>
+        Forward FX (disc):  F = S × (1+r_d)^T / (1+r_f)^T<br>
+        Hedge ratio:        h = (C_up − C_down) / (S_up − S_down)<br>
+        Option pricing:     h×S₀ − c₀ = V₁/(1+r)  →  solve for c₀
+      </div>
+      <div class="note">
+        Gordon Growth: D_(t+1) = D_t × (1+g). Always use NEXT period's dividend in numerator. Constraint: r &gt; g.<br>
+        Two-stage model: Terminal value = D_(t+n+1)/(r−g_l), discounted back n periods.<br>
+        YTM: cannot solve algebraically — use calculator or YIELD function. Assumes reinvestment at YTM.<br>
+        No-arbitrage: identical payoffs in all scenarios → identical PV today. Violation → riskless profit opportunity.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 2: Time Value of Money in Finance · Exam Prep Notes
+</footer>
+
+</body>
+</html>

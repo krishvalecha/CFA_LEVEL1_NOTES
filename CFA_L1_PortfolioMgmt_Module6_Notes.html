@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 6: Introduction to Risk Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --fin-bg: #111a22; --fin-border: #4c8bc9;
+    --nonfin-bg: #1a1422; --nonfin-border: #9b59b6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.0; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,89,182,0.15); color: #c39ef5; border: 1px solid rgba(155,89,182,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Financial risk cards - blue left border */
+  .fin-risk { background: var(--fin-bg); border: 1px solid rgba(76,139,201,0.25); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fin-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #7eb8f5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Non-financial risk cards - purple left border */
+  .nonfin-risk { background: var(--nonfin-bg); border: 1px solid rgba(155,89,182,0.25); border-left: 3px solid #9b59b6; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .nonfin-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c39ef5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .risk-section { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 10px 0 4px; }
+  .risk-content { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+  .risk-content ul { padding-left: 18px; margin-top: 4px; }
+  .risk-content li { margin-bottom: 4px; font-size: 13.5px; }
+
+  /* Risk modification cards - teal */
+  .mod-card { background: #111e1a; border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .mod-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 6</div>
+  <h1>Introduction to <span>Risk Management</span></h1>
+  <p>Exam-ready notes: risk management definition and process, risk management framework (7 elements), risk governance and enterprise risk management, risk tolerance and risk budgeting, financial risks (market, credit, liquidity) vs. non-financial risks (settlement, legal, model, tail, operational, solvency), risk metrics (standard deviation, beta, VaR, CVaR, Greeks, duration), and risk modification methods (prevention/avoidance, self-insurance, risk transfer, risk shifting via derivatives).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Risk Management Definition</a>
+  <a class="toc-item" href="#s2">02 · Risk Management Framework</a>
+  <a class="toc-item" href="#s3">03 · Risk Governance &amp; Tolerance</a>
+  <a class="toc-item" href="#s4">04 · Risk Budgeting</a>
+  <a class="toc-item" href="#s5">05 · Financial Risks</a>
+  <a class="toc-item" href="#s6">06 · Non-Financial Risks</a>
+  <a class="toc-item" href="#s7">07 · Risk Interactions</a>
+  <a class="toc-item" href="#s8">08 · Risk Metrics</a>
+  <a class="toc-item" href="#s9">09 · Risk Modification Methods</a>
+  <a class="toc-item" href="#s10">10 · Master Tables</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: RISK MANAGEMENT DEFINITION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Risk Management — Core Definitions</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Risk management is NOT about minimizing or avoiding risk</strong> — it is about actively understanding, choosing, and managing the risks that best balance goal achievement with an acceptable chance of failure. "A company that shied away from all risk would find that it could not operate."</p>
+      <p style="margin-top:10px;"><strong>Core idea:</strong> Return without risk is generally a false hope. Risk and return are the interconnected forces of the financial universe. Organizations must allocate scarce resources to <em>chosen</em> risks — the ones that maximize value.</p>
+    </div>
+
+    <h3>Key Definitions</h3>
+
+    <div class="def-block">
+      <div class="def-term">Risk</div>
+      <div class="def-body">Exposure to uncertainty. Three related meanings: (1) <strong>Risk driver</strong> = the underlying uncertainty (e.g., currency movement ±1%); (2) <strong>Risk position</strong> = the extent of the risky action taken (e.g., ¥1,000,000 held); (3) <strong>Risk exposure</strong> = the potential valuation change that may result (e.g., ±¥10,000). <em>Risk exposure = Risk position × Risk driver</em> (in simplified terms).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Management</div>
+      <div class="def-body">The process by which an organization or individual <strong>defines</strong> the level of risk to be taken, <strong>measures</strong> the level of risk being taken, and <strong>adjusts</strong> the latter toward the former — with the goal of maximizing company/portfolio value or individual utility.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Exposure</div>
+      <div class="def-body">The extent to which an organization's value may be affected through sensitivity to underlying risks. Results from the decisions of an organization or investor to take on risk-sensitive assets and liabilities.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 "The Doctrine of No Surprises"</div>
+      <p>A key risk management mantra — does NOT mean predicting what will happen. It means: if an unpredictable event occurs, its potential <strong>impact on the organization would NOT be a surprise</strong> because it was quantified and considered in advance through stress-testing and scenario analysis. Good risk management work is done <em>before</em> an adverse event happens.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Good vs. Poor Risk Management</div>
+      <p><strong>Good risk management:</strong> Quantifies potential losses in advance, informs governance-level discussion, continuously monitors and reports exposure, takes pre-emptive action. Does NOT prevent all losses — even the best risk management cannot stop a portfolio from losing money in a market crash.<br><br>
+      <strong>Poor risk management:</strong> Ignores low-probability but high-impact events, fails to quantify potential loss, does all the work AFTER the event (after the damage is done).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Risk — Three Meanings (Must Know)</div>
+      <div class="f">
+        Risk Driver    = underlying source of uncertainty (e.g., ±1% currency move)<br>
+        Risk Position  = size of the risky action taken (e.g., ¥1,000,000 exposure)<br>
+        Risk Exposure  = potential valuation change = Risk Position × Risk Driver<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(e.g., ±¥10,000 outcome)
+      </div>
+      <div class="note">In practice, "risk" is used interchangeably for all three meanings — but the CFA exam may test the formal distinction.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: RISK MANAGEMENT FRAMEWORK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Risk Management Framework — 7 Elements</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>risk management framework</strong> is the infrastructure, process, and analytics needed to support effective risk management. It is NOT a "one size fits all" solution — it must be custom to the enterprise's goals and needs. Every framework must address seven key factors.</p>
+      <p style="margin-top:10px;">Mnemonic: <span class="highlight">"GI² PM C S"</span> — <strong>G</strong>overnance, <strong>I</strong>dentification &amp; measurement, <strong>I</strong>nfrastructure, <strong>P</strong>olicies &amp; processes, <strong>M</strong>itigation/monitoring/management, <strong>C</strong>ommunication, <strong>S</strong>trategic analysis.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Element</th>
+            <th>What It Does</th>
+            <th>Key Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Risk Governance</td>
+            <td>Top-down guidance from the board; defines risk tolerance and oversight</td>
+            <td>Board level; fiduciary role; drives risk appetite; foundation of framework</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Risk Identification &amp; Measurement</td>
+            <td>Quantitative + qualitative assessment of all risk sources and exposures</td>
+            <td>Analyzes risk drivers; tracks changes; calculates risk metrics under various scenarios</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Risk Infrastructure</td>
+            <td>People and systems for tracking exposures and performing quantitative analysis</td>
+            <td>Includes risk capture, database, analytic models, stress/scenario engine, reporting</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Policies &amp; Processes</td>
+            <td>Extension of governance into day-to-day operations and decision-making</td>
+            <td>Limits, constraints, guidelines — both quantitative and procedural; ensure compliance with risk tolerance</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Risk Monitoring, Mitigation &amp; Management</td>
+            <td>Most obvious but most difficult facet; active monitoring and adjustment of risk</td>
+            <td>Pulls all framework elements together; checks if risk is in line with tolerance; takes corrective action if not</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Communication</td>
+            <td>Ongoing reporting of critical risk issues across all levels</td>
+            <td>Risk metrics reported clearly and timely; feedback loop to governance body</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Strategic Analysis &amp; Integration</td>
+            <td>Turns risk management into an "offensive weapon" to improve performance</td>
+            <td>Helps identify which activities add value; improves risk-adjusted returns; often underappreciated</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Enterprise Risk Management (ERM)</div>
+      <p><strong>Enterprise Risk Management</strong> is an overarching governance approach applied throughout the organization, consistent with its strategy, focusing risk activities on the <strong>objectives, health, and value of the ENTIRE organization</strong> — not just one part or asset class. ERM requires considering the entire economic balance sheet (assets AND liabilities), not just assets in isolation.<br><br>
+      Classic ERM example: A pension fund manager who maximizes asset returns without considering liabilities ignores half the risk. In a market collapse with declining interest rates, liabilities (bond-like) increase while equity assets fall → fund could become insolvent.</p>
+    </div>
+
+    <h3>Risk Management Process for an Individual</h3>
+    <div class="card">
+      <p>Individuals follow a scaled-down version of the same framework. Six essential steps:</p>
+      <ol style="padding-left:20px; margin-top:10px;">
+        <li><strong>Determine goals/objectives</strong> (equivalent to governance)</li>
+        <li><strong>Choose investments and identify risks</strong> (may require financial adviser)</li>
+        <li><strong>Evaluate risk exposure</strong> (like the "risks in line?" decision diamond)</li>
+        <li><strong>Consider risk modification alternatives</strong> (insuring, hedging, trading)</li>
+        <li><strong>Implement the risk management solution</strong></li>
+        <li><strong>Evaluation and review</strong> (less frequent for individuals, but no less important)</li>
+      </ol>
+      <p style="margin-top:10px;">The individual is effectively their own governance body; the adviser serves the role of management.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: RISK GOVERNANCE & TOLERANCE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Risk Governance &amp; Risk Tolerance</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Governance</div>
+      <div class="def-body">The top-down process and guidance that directs risk management activities to align with and support the goals of the overall enterprise. Typically from a board of directors with fiduciary obligations. Provides context and clarity on an organization's value drivers and risk appetite, specifies clear authority to management, and ensures risk oversight.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Tolerance</div>
+      <div class="def-body">Identifies the extent to which the organization is willing to experience losses or opportunity costs and to fail in meeting its objectives. Spells out which risks are acceptable, which are to be mitigated, and which are unacceptable. The most important element of good risk governance.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Two analyses that must be integrated for risk tolerance:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>"Inside" view:</strong> What shortfalls within the organization would cause it to fail or miss critical goals?</li>
+        <li><strong>"Outside" view:</strong> What uncertain forces/risk drivers is the organization exposed to?</li>
+      </ul>
+      <p style="margin-top:10px;">Risk tolerance should be <strong>formally chosen and communicated BEFORE a crisis</strong> — doing it after a crisis is "like buying insurance after the loss occurs."</p>
+    </div>
+
+    <h3>Elements of Good Risk Governance</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Structural Elements</div>
+        <ul>
+          <li><strong>Risk Management Committee:</strong> Forum at management level for regular risk deliberations (operational level, not just high-level oversight)</li>
+          <li><strong>Chief Risk Officer (CRO):</strong> Responsible executive who builds and implements the risk framework; key participant in strategic decisions (not solely a policing role)</li>
+          <li><strong>Board/Governing Body:</strong> Defines goals, determines risk appetite, provides risk oversight; drives risk governance at the top</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Factors That Determine Risk Tolerance</div>
+        <ul>
+          <li>Company's goals, expertise, and strategies</li>
+          <li>Ability to respond dynamically to adverse events (higher ability → higher tolerance)</li>
+          <li>Amount of loss a company can sustain without impairing going concern status</li>
+          <li>Competitive and regulatory landscape</li>
+          <li>Scenario analysis, economic models, macro sensitivities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ What Should NOT Drive Risk Tolerance (but often does)</div>
+      <p>Personal motivations and agendas of board members (agency problem) · Company size · Whether the market environment seems stable · Short-term pressures · Management compensation. These may distort risk tolerance away from owners' best interests.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Enterprise View for Individuals</div>
+      <p>Even individuals need an enterprise view. A client whose wealth includes both financial assets AND human capital should have risk decisions consider <em>both</em>. A client in real estate should NOT heavily overweight real estate securities — even if optimal from an isolated portfolio view — because it makes total wealth underdiversified. Three investors with different pension arrangements (inflation-adjusted, fixed, or no pension) need remarkably different investment solutions.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: RISK BUDGETING -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Risk Budgeting</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Budgeting</div>
+      <div class="def-body">Any means of allocating investments or assets (a portfolio or business) based on their <strong>risk characteristics</strong>. Risk budgeting picks up where risk tolerance leaves off — it focuses on HOW that risk is taken, not just HOW MUCH. It quantifies and allocates the tolerable risk by specific metrics and bridges from high-level governance decisions to management's actual risk exposures.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Risk tolerance vs. Risk budgeting distinction:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Risk tolerance:</strong> What level of risk is acceptable? Which risks are acceptable/unacceptable?</li>
+        <li><strong>Risk budgeting:</strong> How is that risk taken? Allocates tolerable risk by specific metrics to specific activities.</li>
+      </ul>
+      <p style="margin-top:10px;">Example: A portfolio may be viewed traditionally as 20% hedge funds / 30% private equity / 50% stocks+bonds — but a <em>risk view</em> of the same portfolio reveals 70% driven by global equity returns / 20% domestic equity / 10% interest rates. The risk view is more meaningful for risk management.</p>
+    </div>
+
+    <h3>Common Single-Dimension Risk Budget Metrics</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Four Key Measures</div>
+        <ul>
+          <li><strong>Standard deviation:</strong> Used by hedge funds; manage to a fixed-risk fund target</li>
+          <li><strong>Beta:</strong> Overall equity market risk contribution</li>
+          <li><strong>Value at Risk (VaR):</strong> Tail loss measure in currency units</li>
+          <li><strong>Scenario loss:</strong> Loss under a defined adverse scenario</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Multi-Dimension Approaches</div>
+        <ul>
+          <li>Risk class approach: allocate by equity, fixed income, commodity risk, etc.</li>
+          <li>Risk factor approach: exposure to factors (e.g., value vs. growth tilt) to capture risk premiums</li>
+          <li>Multiple dimensions co-exist simultaneously (not mutually exclusive)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Risk Budgeting Matters</div>
+      <p>The main benefit: forces risk trade-offs and supports a culture where risk is part of ALL key decisions. When all desired activities exceed the risk budget, risk budgeting forces comparison on a return-per-unit-of-risk basis. It also forces evaluation of <strong>active vs. passive strategies</strong> — comparing investment choices against the "market return" on a risk-equivalent basis. Classic individual failure: investing retirement savings in employer stock → financial portfolio AND human capital concentrated in one firm.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: FINANCIAL RISKS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Financial Risks (3 Types)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Financial risks</strong> = risks that arise from events occurring in the financial markets (changes in prices, interest rates, etc.). Three primary types: <span class="highlight">Market Risk, Credit Risk, Liquidity Risk</span>. Mnemonic: <span class="highlight">"MCL"</span> — Market, Credit, Liquidity.</p>
+    </div>
+
+    <!-- MARKET RISK -->
+    <div class="fin-risk">
+      <div class="fin-name">① Market Risk</div>
+      <div class="risk-section">Definition</div>
+      <div class="risk-content">Risk that arises from movements in <strong>interest rates, stock prices, exchange rates, and commodity prices</strong>. Most obvious and visible of all financial risks. Most developed state of knowledge in risk management exists here.</div>
+      <div class="risk-section">Key Points</div>
+      <div class="risk-content"><ul>
+        <li>Four main market factors: interest rates, equity prices, FX rates, commodity prices</li>
+        <li>Root source = fundamental economic conditions, industry events, or company-specific developments (these are the underlying <em>risk drivers</em>)</li>
+        <li>Typically systematic risk — affects the market broadly</li>
+        <li>Receives most media attention; information abundant</li>
+      </ul></div>
+    </div>
+
+    <!-- CREDIT RISK -->
+    <div class="fin-risk">
+      <div class="fin-name">② Credit Risk</div>
+      <div class="risk-section">Definition</div>
+      <div class="risk-content">Risk of loss if one party <strong>fails to pay an amount owed</strong> on an obligation (bond, loan, or derivative). Also called <strong>default risk</strong> or <strong>counterparty risk</strong>.</div>
+      <div class="risk-section">Key Points</div>
+      <div class="risk-content"><ul>
+        <li>Loan: only one party owes money. Some derivatives: one party owes; other derivatives: either party can owe</li>
+        <li>Root source = fundamental conditions in economy, industry, or company weakness</li>
+        <li>Ultimately an <strong>asset-specific risk</strong></li>
+        <li>Unlike market risk (prices can bounce back), <strong>defaults and bankruptcies have extremely long-term implications</strong> for borrowers — a critical distinction</li>
+        <li>Credit analysis focuses on: liquidity, profitability, leverage, macro/industry strength</li>
+        <li>Key credit risk measures: credit ratings, credit VaR, probability of default (PD), expected loss given default (LGD), probability of credit rating change</li>
+        <li>Credit default swaps (CDS) provide market-implied signal of default risk cost</li>
+        <li>Challenge: credit events (defaults, downgrades) are <strong>rare for any specific issuer</strong> → difficult to estimate probability from history alone (e.g., Lehman Brothers — operated since 1850, never defaulted until 2008)</li>
+      </ul></div>
+    </div>
+
+    <!-- LIQUIDITY RISK -->
+    <div class="fin-risk">
+      <div class="fin-name">③ Liquidity Risk</div>
+      <div class="risk-section">Definition</div>
+      <div class="risk-content">Risk of a <strong>significant downward valuation adjustment</strong> when selling a financial asset. Also called <strong>"transaction cost risk."</strong> In order to sell, a party may need to reduce the price below marked value or the seller's assessment of fundamental value.</div>
+      <div class="risk-section">Key Points</div>
+      <div class="risk-content"><ul>
+        <li>The bid-ask spread is a <strong>known cost</strong>, not a risk. The <em>uncertainty</em> of that spread is the risk</li>
+        <li>Two sources of liquidity risk: (1) market liquidity varies over time; (2) as position size increases, liquidation cost and uncertainty increase</li>
+        <li>Becomes a serious issue when liquidation price falls below fundamental value</li>
+        <li>More common to institutions; can be unknowingly faced by individuals</li>
+        <li>Extreme case: no price above zero at which the asset can be sold</li>
+        <li>Lack of liquidity can also offer <em>opportunities</em> (buy before others see value), but is generally a negative risk factor</li>
+      </ul></div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Exam Distinction: Bid-Ask Spread vs. Liquidity Risk</div>
+      <p>Liquidity risk ≠ the bid-ask spread. The known spread when buying a $10 stock is a cost ($0.01), not a risk. Liquidity risk is the <strong>uncertainty that this spread may increase dramatically</strong> due to changing market conditions or a position size exceeding normal trading volume.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: NON-FINANCIAL RISKS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Non-Financial Risks</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Non-financial risks</strong> = risks arising from actions within the organization OR from external origins (environment, regulators, governments, suppliers, customers). Though most have monetary consequences, they do NOT arise primarily from financial market events. Key types to know: <span class="highlight">"SLRATMOT-SH"</span> — Settlement, Legal, Regulatory, Accounting, Tax, Model, Operational (cyber, rogue trader, natural disaster, terrorism), Tail risk, Solvency, Health/Mortality/Longevity.</p>
+    </div>
+
+    <!-- SETTLEMENT RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">① Settlement Risk</div>
+      <div class="risk-content">Risk that arises from the <strong>timing of the payment process</strong> — one party fulfills its obligation but the other does not (e.g., Party A wires money but Party B (now bankrupt) does not transfer the bonds). Financial consequences very high, but root cause is the timing/process of settlement, not a market event. Closely related to credit/default risk but distinct.</div>
+    </div>
+
+    <!-- LEGAL RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">② Legal Risk</div>
+      <div class="risk-content">Two forms: (1) risk of being sued over a transaction; (2) <strong>risk that contract terms will not be upheld by the legal system</strong>. In financial risk management, the major legal concern is contract enforceability. Even a seemingly weak legal case can prevail in court. Often arises from market or credit risk (parties search for loopholes to avoid losses after adverse market moves).</div>
+    </div>
+
+    <!-- REGULATORY / ACCOUNTING / TAX -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">③ Regulatory Risk / Accounting Risk / Tax Risk (Compliance Risks)</div>
+      <div class="risk-content">All three deal with conforming to policies, laws, rules, and regulations. Collectively called <strong>compliance risk</strong>. The rapid expansion of financial products vs. the slow pace of regulatory response means laws are always catching up. When updated, can result in: unexpected costs, back taxes, financial restatements, penalties.</div>
+    </div>
+
+    <!-- MODEL RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">④ Model Risk</div>
+      <div class="risk-content">Risk of a <strong>valuation error from improperly using a model</strong> — either using the wrong model or using the right model incorrectly. Example: assuming constant dividend growth in the DDM when growth is not constant. Most quantitative models ignore fat tails, making market risk appear more manageable than it is.</div>
+    </div>
+
+    <!-- TAIL RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">⑤ Tail Risk</div>
+      <div class="risk-content">More events in the tails of the distribution than probability models would predict. A facet of market risk, but classified as non-financial because the mistake occurs internally from poor modeling choices. The normal distribution dramatically underestimates extreme events:
+        <ul style="margin-top:6px;">
+          <li>S&amp;P 500 worst monthly return: −21.76% (Oct 1987) — under a normal distribution, expected to occur only once every <strong>2,199,935 years</strong></li>
+          <li>Second worst: −16.94% (Oct 2008) — once every <strong>6,916 years</strong></li>
+          <li>Third worst: −14.58% (Aug 1998) — once every <strong>654 years</strong></li>
+          <li>Yet all three occurred in recorded history → normal distribution is clearly unsuitable</li>
+        </ul>
+        Ignoring tail risk is a form of model risk. Fat tails are real.
+      </div>
+    </div>
+
+    <!-- OPERATIONAL RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">⑥ Operational Risk</div>
+      <div class="risk-content">Risk arising from inadequate or failed <strong>people, systems, and internal policies/procedures/processes</strong>, as well as from external events beyond the organization's control that affect its operations. Key sub-types:
+        <ul style="margin-top:6px;">
+          <li><strong>Employee risk:</strong> Theft, honest mistakes (e.g., crediting $100,000 for $100 deposit), accounting fraud</li>
+          <li><strong>Rogue trader risk:</strong> Trader engages in unauthorized transactions exceeding limits (classic case: Nick Leeson, Barings Bank 1995 — destroyed 200-year-old firm)</li>
+          <li><strong>Business interruption:</strong> Extreme weather, earthquakes, floods, hurricanes — organizations responsible for having appropriate internal procedures regardless of external cause</li>
+          <li><strong>Cyber risk:</strong> Hacking, data breaches, programming errors; GDPR requires notification within 72 hours of a breach; fines of millions of euros</li>
+          <li><strong>Terrorism:</strong> 1993 and 9/11 WTC attacks prompted many firms to establish backup facilities outside major financial centers</li>
+        </ul>
+        Some operational risks are insurable (to a modest extent).
+      </div>
+    </div>
+
+    <!-- SOLVENCY RISK -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">⑦ Solvency Risk</div>
+      <div class="risk-content">Risk that the organization <strong>does not survive because it runs out of cash</strong>, even though it might otherwise be solvent (i.e., assets &gt; liabilities). The most underappreciated risk before the 2008 crisis.
+        <ul style="margin-top:6px;">
+          <li>Classic example: Lehman Brothers — destroyed overnight by solvency risk when funding sources refused to bear counterparty risk; even large market gains on its last day could not save it</li>
+          <li>An endowment portfolio may be well-balanced in isolation, but solvency risk appears when: university revenues, grants, and donations fall simultaneously with portfolio values in a deep recession</li>
+          <li>Mitigations since 2008: less leverage, more stable financing sources, more cash equivalents, solvency models, enterprise-level solvency risk governance</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- INDIVIDUAL RISKS -->
+    <div class="nonfin-risk">
+      <div class="nonfin-name">⑧ Individual Non-Financial Risks</div>
+      <div class="risk-content">
+        <ul>
+          <li><strong>Health risk:</strong> Poor health from poor choices or uncontrollable factors → direct healthcare expenses, disability income reduction, reduced lifespan/quality of life</li>
+          <li><strong>Mortality risk:</strong> Risk of dying relatively young — critical for life insurance and financial planning</li>
+          <li><strong>Longevity risk:</strong> Risk of outliving one's financial resources. Increasingly important with aging population and good healthcare. Defined contribution plan holders must build portfolios that outlive them — difficult without knowing lifespan</li>
+          <li><strong>Property &amp; Casualty risk:</strong> Fire, natural disaster, massive liability (e.g., car accidents) — generally insurable</li>
+          <li><strong>Identity theft:</strong> One of the most commonly cited individual operational risks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: RISK INTERACTIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Interactions Between Risks</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Risks do not arise independently — they interact, and the combined risk is practically always non-linear</strong> (total risk is worse than the sum of the parts). Most risk models and systems do NOT directly account for risk interactions.</p>
+      <p style="margin-top:10px;">Classic chain: <span class="highlight">"Market risk begets credit risk, which begets operational risk."</span> Unexpected market moves → one party owes the other (credit risk) → internal operations must process payments and collect (settlement/operational risk). Legal risk often arises from market or credit risk losses.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#f5a623;">Wrong-Way Risk</div>
+        <p>When credit risk and market risk are NOT independent — they interact adversely. Example: buying a put option where the counterparty's probability of DEFAULT is <strong>highest precisely when the put is in the money</strong> (deep market decline). The investor bears much more risk than initially thought and overpaid for the contract. Extremely common in 2008 crisis (mortgage credit risk believed diversified but was actually systematic).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Leverage + Liquidity (Toxic Combination)</div>
+        <p>Leverage (higher market risk) interacting with liquidity risk and solvency risk in an extremely toxic, non-linear manner → impaired or shuttered many investment firms (Long-Term Capital Management 1998; many banks/funds in 2008). In a 2× levered fund: 1% baseline loss → 2% fund loss (linear). At 10% baseline loss + liquidity problems → 25% fund loss (non-linear). At 30% baseline loss → likely failure.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Individual Risk Interaction Example</div>
+      <p>An employee holding concentrated employer stock through an incentive plan faces an incredibly adverse interaction: if the company struggles, the employee may simultaneously lose their <strong>job</strong> (human capital risk) AND their <strong>savings</strong> (market risk). Enron 2003: loyal employees lost virtually all retirement savings. This is why risk budgeting of TOTAL wealth (financial + human capital) matters.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Non-Linearity of Risk Interactions</div>
+      <p>The combined risk from interacting risks is <strong>non-linear</strong> — the total is worse than the sum of the parts. This is especially severe in stressed market conditions. Most risk models do not account for these interactions, making consequences even worse than models predict. <strong>Scenario planning is valuable precisely because it can capture these non-linear interactions.</strong></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: RISK METRICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Risk Measurement — Drivers &amp; Metrics</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Risk drivers</strong>: The basic drivers of risk arise from (hierarchy, top to bottom):</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Global and domestic macroeconomies</strong> (set by governments and central banks — taxes, regulations, monetary/fiscal policy)</li>
+        <li><strong>Industries</strong> (some stable, some cyclical; affected by government policy)</li>
+        <li><strong>Individual companies</strong> (idiosyncratic/unsystematic risks — matter to management, undiversified investors, and analysts; can sometimes be systematic, e.g., "too big to fail")</li>
+      </ol>
+    </div>
+
+    <h3>Key Risk Metrics — Exam Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Measures</th>
+            <th>Asset Class</th>
+            <th>Key Limitations / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Standard Deviation (σ)</td>
+            <td>Dispersion of returns; range within which outcomes fall (68% within ±1σ; 95% within ±2σ; 99% within ±3σ for normal distribution)</td>
+            <td>All</td>
+            <td>Inappropriate for non-normal distributions; overstates risk in a diversified portfolio (includes idiosyncratic risk); may not exist for fat-tailed distributions</td>
+          </tr>
+          <tr>
+            <td>Beta (β)</td>
+            <td>Sensitivity of an asset's returns to market portfolio returns; relative (systematic) risk in a diversified portfolio</td>
+            <td>Equities</td>
+            <td>Best for equity portfolios; inappropriate for other asset classes; assumes market risk is the only relevant risk</td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td>Interest rate sensitivity of a fixed-income instrument; first-order risk (like delta for derivatives)</td>
+            <td>Fixed Income</td>
+            <td>Analogous to delta; only valid for small interest rate changes</td>
+          </tr>
+          <tr>
+            <td>Delta (δ)</td>
+            <td>Sensitivity of derivative price to a small change in the underlying asset's value; first-order</td>
+            <td>Derivatives</td>
+            <td>Most important derivatives risk measure; limited to small changes</td>
+          </tr>
+          <tr>
+            <td>Gamma (Γ)</td>
+            <td>Rate of change in delta; captures large changes in the underlying; second-order risk</td>
+            <td>Derivatives</td>
+            <td>Second-order; reflects risk of changes in delta itself</td>
+          </tr>
+          <tr>
+            <td>Vega (ν)</td>
+            <td>Sensitivity of derivative price to changes in volatility of the underlying; first-order</td>
+            <td>Derivatives (Options)</td>
+            <td>Not a Greek letter per se; important for options; volatility risk</td>
+          </tr>
+          <tr>
+            <td>Rho (ρ)</td>
+            <td>Sensitivity of derivative price to changes in interest rates</td>
+            <td>Derivatives</td>
+            <td>Most options have relatively LOW interest rate sensitivity</td>
+          </tr>
+          <tr>
+            <td>Value at Risk (VaR)</td>
+            <td>Minimum extreme loss over a time period at a given probability. Three elements: currency amount + time period + probability</td>
+            <td>All (portfolios)</td>
+            <td>Does NOT tell maximum loss — tells MINIMUM extreme loss; subject to model risk; widely accepted by banking regulators; can give false sense of security</td>
+          </tr>
+          <tr>
+            <td>Conditional VaR (CVaR)</td>
+            <td>Weighted average of ALL loss outcomes that exceed the VaR loss (expected loss in the tail beyond VaR)</td>
+            <td>All</td>
+            <td>More complete than VaR; captures the severity of tail losses; also called Expected Shortfall</td>
+          </tr>
+          <tr>
+            <td>Expected Loss Given Default</td>
+            <td>Average loss on a debt security if the issuer defaults</td>
+            <td>Credit</td>
+            <td>Credit risk analog to CVaR; answers "how much do we lose on average if default occurs?"</td>
+          </tr>
+          <tr>
+            <td>Scenario Analysis</td>
+            <td>Package of stress tests with a common theme; defines conditions/market movements and evaluates expected portfolio loss</td>
+            <td>All</td>
+            <td>Common sense approach: "If this happens, how are we affected?" Subject to model risk</td>
+          </tr>
+          <tr>
+            <td>Stress Testing</td>
+            <td>Specific extreme asset price moves — large, high-pressure, rare scenarios that could destabilize the entire organization</td>
+            <td>All</td>
+            <td>Required by US Federal Reserve and other central banks for major banks; scenario analysis with more extreme scenarios</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ VaR — Must-Know Interpretation</div>
+      <div class="f">
+        VaR = £3 million at 5% for one day<br>
+        Means: The bank expects to lose a MINIMUM of £3M in one day, 5% of the time<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Expects losses of at least £3M once every 20 business days<br><br>
+        Key word: MINIMUM (not average, not maximum)<br>
+        VaR says nothing about how bad losses can get beyond the threshold<br><br>
+        CVaR = Weighted average of ALL losses that exceed the VaR threshold<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Tells you what the EXPECTED LOSS is given that you are in the tail
+      </div>
+      <div class="note">VaR is widely accepted by banking regulators and approved for accounting disclosure. However, naive users can be lulled into false security — supplement VaR with CVaR, scenario analysis, and stress testing.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Greeks — Derivatives Risk Measures</div>
+      <div class="f">
+        Delta (δ)  = ΔDerivative Price / ΔUnderlying Price (first-order; small changes only)<br>
+        Gamma (Γ) = ΔDelta / ΔUnderlying Price (second-order; large changes; risk of delta changing)<br>
+        Vega  (ν)  = ΔDerivative Price / ΔVolatility (first-order; volatility sensitivity)<br>
+        Rho   (ρ)  = ΔDerivative Price / ΔInterest Rate (most options: low sensitivity)<br><br>
+        Duration   = Fixed income analog to Delta (first-order interest rate sensitivity)
+      </div>
+      <div class="note">All of these are collectively called "the Greeks." Derivatives are highly leveraged — measuring their risk precisely is critical. Delta applies only to small price changes; gamma is needed for large moves.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Risk Measurement Challenge</div>
+      <p>Credit events (defaults, rating changes) are <strong>rare for any specific organization</strong>. Without a history of defaulting, estimating default probability is extremely difficult. Solution: aggregate companies with similar characteristics to pool data. Also useful: market-implied default risk signals from CDS pricing, put options, and other derivatives. These provide ex ante risk cost information without needing historical default data for that specific issuer.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: RISK MODIFICATION METHODS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Risk Modification Methods</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Risk modification is not strictly risk reduction.</strong> A portfolio that has become too conservative (below risk tolerance) requires risk modification in the form of <em>increasing</em> risk (e.g., rebalancing back to target equity allocation). Four broad categories of risk modification:</p>
+      <p style="margin-top:8px;">Mnemonic: <span class="highlight">"PAST"</span> — Prevention/avoidance, Acceptance (self-insurance/diversification), Shifting (derivatives), Transfer (insurance). Methods are NOT mutually exclusive — many organizations use all four.</p>
+    </div>
+
+    <!-- 1: PREVENTION & AVOIDANCE -->
+    <div class="mod-card">
+      <div class="mod-name">① Risk Prevention &amp; Avoidance</div>
+      <div class="risk-section">What It Is</div>
+      <div class="risk-content">Taking steps to avoid a risk altogether, or taking precautions to reduce its likelihood. The first choice of measures, especially for risks outside core competencies with little expectation of adding value.</div>
+      <div class="risk-section">Key Points</div>
+      <div class="risk-content"><ul>
+        <li>Complete avoidance is often impossible and may be undesirable (trade-off: loss of benefits from the risky activity)</li>
+        <li>Examples: driving less to reduce accident risk; non-smoking to reduce mortality risk; investing in foreign operations rather than shipping goods to hedge currency risk naturally</li>
+        <li>In organizations: governance-level decision; boards exclude areas where they have no expertise or where risk-return trade-off is unattractive</li>
+        <li>Insurance companies use prevention: lower premiums for less driving, non-smoking</li>
+        <li>Risk avoidance = avoiding opportunity — cannot simply decide not to take a risk for all undesirable risks</li>
+      </ul></div>
+    </div>
+
+    <!-- 2: SELF-INSURANCE & DIVERSIFICATION -->
+    <div class="mod-card">
+      <div class="mod-name">② Risk Acceptance — Self-Insurance &amp; Diversification</div>
+      <div class="risk-section">Self-Insurance</div>
+      <div class="risk-content">Bearing a risk considered undesirable but too costly to eliminate externally. May involve: (1) simply bearing the risk, or (2) establishing a reserve to cover losses. Banks self-insure by maintaining capital and loan loss reserves.
+        <ul style="margin-top:6px;">
+          <li>Fine line between self-insurance and denial: if a risk is OUTSIDE the stated risk tolerance and management simply bears it claiming "self-insurance," that is <strong>bad governance and a violation of risk tolerance</strong></li>
+          <li>Preferred by organizations: reduces external monitoring costs, gives maximum flexibility</li>
+          <li>Should be clearly addressed at the governance level and consistent with risk tolerance</li>
+        </ul>
+      </div>
+      <div class="risk-section">Diversification</div>
+      <div class="risk-content">Eliminates a portion of risk (idiosyncratic/unsystematic) through holding low-correlated assets. Central to modern portfolio theory. Usually not effective if used in isolation — a starting point to which other risk modification methods are appended.</div>
+    </div>
+
+    <!-- 3: RISK TRANSFER (INSURANCE) -->
+    <div class="mod-card">
+      <div class="mod-name">③ Risk Transfer — Insurance</div>
+      <div class="risk-section">What It Is</div>
+      <div class="risk-content">Passing the risk to another party — typically an insurance policy. Insurance is a legal contract: insurer agrees to cover a percentage of loss from a specific event in return for a premium. Works on the principle of <strong>diversification/pooling of risks</strong> (low correlation across many policies).</div>
+      <div class="risk-section">Key Concepts</div>
+      <div class="risk-content"><ul>
+        <li><strong>Deductible:</strong> Amount of loss covered by the INSURED before any claims are paid. Reduces small claims (fixed insurer costs per claim), encourages risk management by insured, allows combination of transfer with self-insurance</li>
+        <li><strong>Reinsurance:</strong> Insurers managing their own risk by selling some of it to another insurer</li>
+        <li><strong>Catastrophe bonds:</strong> Insurers pass some risk to investors by issuing bonds where principal/interest may not be paid if claims exceed a certain amount</li>
+        <li><strong>Lloyd's of London:</strong> Covers unusual risks; organizes investor syndicates bearing full extent of losses; syndicates can combine uncorrelated unusual risks for diversification</li>
+        <li><strong>Surety bond:</strong> Insurer promises to pay if a <em>third party</em> fails to fulfill its obligation</li>
+        <li><strong>Fidelity bond:</strong> Covers losses from employee dishonesty</li>
+        <li>Insurance works best when risks can be pooled; NOT suitable for many types of risks (correlated, systemic, or unpoolable risks)</li>
+      </ul></div>
+    </div>
+
+    <!-- 4: RISK SHIFTING (DERIVATIVES) -->
+    <div class="mod-card">
+      <div class="mod-name">④ Risk Shifting — Derivatives</div>
+      <div class="risk-section">What It Is</div>
+      <div class="risk-content">Changes the distribution of risk outcomes — adjusts the payoff diagram. Diverts some portion of the risk distribution to another market participant. <strong>Risk transfer</strong> = passes risk via insurance (pooling). <strong>Risk shifting</strong> = changes the distribution via derivatives. Most common form of risk modification for financial organizations.</div>
+      <div class="risk-section">Two Types of Derivatives</div>
+      <div class="risk-content">
+        <p><strong>1. Forward Commitments</strong> — obligate BOTH parties to undertake a transaction at a future date at a pre-agreed price/rate. No money exchanged at initiation. One party will ultimately gain; the other will lose:</p>
+        <ul style="margin-top:4px;">
+          <li><strong>Forward contracts:</strong> Private, bilateral; lock in future price/rate/exchange rate</li>
+          <li><strong>Futures contracts:</strong> Exchange-traded forward commitments</li>
+          <li><strong>Swaps:</strong> Series of forward commitments</li>
+        </ul>
+        <p style="margin-top:8px;"><strong>2. Contingent Claims (Options)</strong> — give ONE party the RIGHT (not obligation) to buy/sell; the other party is obligated. The right comes at a cost (premium paid upfront):</p>
+        <ul style="margin-top:4px;">
+          <li><strong>Call option:</strong> Right to BUY the underlying (or pay a known rate)</li>
+          <li><strong>Put option:</strong> Right to SELL the underlying (or receive a known rate)</li>
+          <li>Option buyer: pays premium upfront; can exercise or let expire; flexibility to benefit from favorable moves while limiting downside</li>
+          <li>Option seller: receives premium; obligated if buyer exercises</li>
+        </ul>
+      </div>
+      <div class="risk-section">Key Comparison</div>
+      <div class="risk-content">
+        <ul>
+          <li>Forward commitments: <strong>lock in an outcome</strong>; no upfront cash; little flexibility</li>
+          <li>Contingent claims (options): <strong>provide flexibility</strong> to benefit from favorable moves; require upfront premium payment; tailor desired outcomes by shifting the risk distribution</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Portfolio Return with Currency Risk (Example from LES)</div>
+      <div class="f">
+        RP = w₁ × R₁ + (1 – w₁) × [(1 + Rlc) × (1 + RFX) – 1]<br><br>
+        Where:<br>
+        w₁  = weight in domestic asset (FTSE 100)<br>
+        R₁  = return on domestic asset<br>
+        Rlc = return on foreign asset in local currency<br>
+        RFX = return on foreign exchange rate<br><br>
+        Example: 60% FTSE 100 (5.5%), 40% US Treasuries (1.6%), 0% FX return<br>
+        RP = 0.6 × 0.055 + 0.4 × [(1 + 0.016) × (1 + 0.0) – 1] = <span style="color:#4cc98a;">3.9%</span>
+      </div>
+      <div class="note">A forward contract hedging the currency exposure eliminates FX risk from the USD/GBP exchange rate component. The forward price = spot price adjusted for the difference in deposit rates between the two countries over the contract tenor.</div>
+    </div>
+
+    <h3>How to Choose Which Risk Modification Method</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Best Used When</th>
+            <th>Limitations</th>
+            <th>Cost Structure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Prevention &amp; Avoidance</td>
+            <td>Risks outside core competencies; few benefits relative to costs; low-cost precautions available</td>
+            <td>Avoidance may mean avoiding opportunity; not all risks can be fully avoided</td>
+            <td>Usually low-cost precautions; trade-off is loss of associated benefits</td>
+          </tr>
+          <tr>
+            <td>Self-Insurance / Diversification</td>
+            <td>Organization has free cash flow / reserves; risk is within tolerance; external transfer too costly</td>
+            <td>Fine line between self-insurance and denial; cannot self-insure all risks; risks that can imperil entire capital base should NOT be self-insured</td>
+            <td>Cheapest — no external cost; gives most flexibility; but must match risk tolerance</td>
+          </tr>
+          <tr>
+            <td>Risk Transfer (Insurance)</td>
+            <td>Risks that can be effectively pooled; risk exceeds tolerance and cannot be self-insured</td>
+            <td>Not available for all risk types; some risks not insurable cost-effectively (systemic, correlated risks); requires premium payment</td>
+            <td>Premium paid upfront; deductible portions borne by insured; provides flexibility (contingent claim structure)</td>
+          </tr>
+          <tr>
+            <td>Risk Shifting (Derivatives)</td>
+            <td>Financial risks exceeding risk appetite; need to efficiently adjust probability distribution of outcomes; need to lock in future price/rate</td>
+            <td>Not available for all risk types; forward commitments lock in outcomes (lose flexibility); options require upfront premium</td>
+            <td>Forwards/Futures/Swaps: no upfront cost but lock in outcome. Options: upfront premium but retain flexibility on favorable moves</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward Commitment vs. Option — Key Exam Trade-Off</div>
+      <p>
+        <strong>Forward commitment</strong> (forward, futures, swap): Locks in a future price. No upfront cash. No flexibility — obligated regardless of market direction. Good for certainty; bad for opportunity cost when market moves in your favor.<br><br>
+        <strong>Option (contingent claim)</strong>: Requires upfront premium. Provides flexibility — can benefit from favorable moves AND be protected from adverse moves. More expensive but more tailored risk profile.<br><br>
+        Example: Corporate treasurer expecting foreign cash inflow — <em>forward</em> locks in conversion rate (no premium, no flexibility); <em>put option</em> provides conversion floor (premium paid, but retains upside if currency rises).
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>All Risk Types — Complete Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Risk Type</th>
+            <th>Category</th>
+            <th>Definition / Core Idea</th>
+            <th>Key Exam Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Market Risk</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+            <td>Movements in interest rates, equity prices, FX rates, commodity prices</td>
+            <td>Most visible; most developed state of risk knowledge; 4 main factors</td>
+          </tr>
+          <tr>
+            <td>Credit Risk</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+            <td>Counterparty fails to pay; also: default risk, counterparty risk</td>
+            <td>Defaults have long-term implications; asset-specific; rare events make measurement difficult</td>
+          </tr>
+          <tr>
+            <td>Liquidity Risk</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+            <td>Significant valuation loss when selling; bid-ask spread uncertainty; also: transaction cost risk</td>
+            <td>Spread known = cost; spread uncertain = risk; position size amplifies it</td>
+          </tr>
+          <tr>
+            <td>Settlement Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>One party pays; other fails to deliver; timing-of-payment process risk</td>
+            <td>Related to but distinct from default risk — root cause is timing, not market</td>
+          </tr>
+          <tr>
+            <td>Legal Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>Contracts not upheld; litigation uncertainty; often arises from market/credit risk losses</td>
+            <td>Even a weak legal case can prevail; parties search for loopholes after market losses</td>
+          </tr>
+          <tr>
+            <td>Regulatory/Accounting/Tax Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>Compliance risk; changes in laws/rules → unexpected costs, penalties, restatements</td>
+            <td>Financial products evolve faster than regulations; laws always catching up</td>
+          </tr>
+          <tr>
+            <td>Model Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>Valuation error from wrong model or wrong use of correct model</td>
+            <td>Classic: assuming constant DDM growth; ignoring fat tails is model risk</td>
+          </tr>
+          <tr>
+            <td>Tail Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>More extreme events than probability models predict; fat tails in return distributions</td>
+            <td>Normal distribution massively underestimates extreme events; Oct 1987 return expected once in 2.2M years</td>
+          </tr>
+          <tr>
+            <td>Operational Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>Failed people, systems, internal processes; or external events affecting operations</td>
+            <td>Includes cyber, rogue traders, weather, terrorism; some insurable</td>
+          </tr>
+          <tr>
+            <td>Solvency Risk</td>
+            <td><span class="tag tag-purple">Non-Financial</span></td>
+            <td>Organization runs out of cash even if otherwise solvent</td>
+            <td>Most underappreciated before 2008; Lehman destroyed by solvency risk, not just market losses</td>
+          </tr>
+          <tr>
+            <td>Health / Mortality / Longevity Risk</td>
+            <td><span class="tag tag-purple">Individual</span></td>
+            <td>Health care costs, disability, dying too early, or outliving financial resources</td>
+            <td>Longevity risk increasingly important with aging population; defined contribution plans expose individuals fully to this risk</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Risk Governance — Key Roles and Bodies</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">Board / Governing Body</div>
+        <ul>
+          <li>Defines organizational goals and priorities</li>
+          <li>Sets risk tolerance and risk appetite</li>
+          <li>Provides risk oversight</li>
+          <li>Fiduciary obligations</li>
+          <li>Sets high-level policies</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Risk Management Committee</div>
+        <ul>
+          <li>Management-level forum</li>
+          <li>Regular discussion of risk framework and issues</li>
+          <li>Operational level (not high-level oversight)</li>
+          <li>Integrates all aspects of risk framework</li>
+          <li>Key element of good risk governance</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Chief Risk Officer (CRO)</div>
+        <ul>
+          <li>Builds and implements the risk framework</li>
+          <li>Key participant in strategic decisions</li>
+          <li>NOT solely a policing role</li>
+          <li>Distinct from CEO (as CFO is distinct from CEO)</li>
+          <li>Best practice even before the 2008 crisis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.1;">
+        <li>✅ <strong>Risk management ≠ minimizing risk.</strong> It's about defining tolerable risk, measuring actual risk, and adjusting one toward the other to maximize value/utility.</li>
+        <li>✅ <strong>Three meanings of "risk":</strong> Risk driver (underlying uncertainty) → Risk position (extent of action taken) → Risk exposure (potential valuation change = position × driver).</li>
+        <li>✅ <strong>"Doctrine of No Surprises":</strong> Risk managers cannot predict events — but the impact of any unpredictable event on the organization should NOT be a surprise (pre-quantified via scenario/stress testing).</li>
+        <li>✅ <strong>7 elements of risk management framework (GI² PM C S):</strong> Governance, Identification &amp; measurement, Infrastructure, Policies &amp; processes, Monitoring/mitigation/management, Communication, Strategic analysis.</li>
+        <li>✅ <strong>Risk governance</strong> = top-down, board-level; fiduciary duty; defines risk tolerance; most important element = risk tolerance decision.</li>
+        <li>✅ <strong>Enterprise Risk Management (ERM):</strong> Must consider the entire economic balance sheet (assets AND liabilities), not just assets. Pension fund example: ignoring liabilities ignores half the risk.</li>
+        <li>✅ <strong>CRO &amp; Risk Management Committee:</strong> Both hallmarks of strong risk governance. CRO ≠ just a policing role; is a strategic participant. Committee operates at operational level.</li>
+        <li>✅ <strong>Risk tolerance vs. Risk budgeting:</strong> Tolerance = HOW MUCH risk; Budgeting = HOW that risk is taken (allocates by specific risk characteristics). Budgeting bridges governance to management action.</li>
+        <li>✅ <strong>3 financial risks (MCL):</strong> Market (interest rates, equity, FX, commodities), Credit (default/counterparty; defaults have long-term implications unlike market losses), Liquidity (transaction cost uncertainty; bid-ask spread is cost not risk).</li>
+        <li>✅ <strong>Solvency risk:</strong> Most underappreciated before 2008. Lehman Brothers destroyed by solvency risk (funding sources disappeared) not just by market losses.</li>
+        <li>✅ <strong>Tail risk:</strong> Normal distribution massively underestimates extremes. Oct 1987 −21.76% should occur once per 2.2M years under normal distribution — but happened. Ignoring fat tails = model risk.</li>
+        <li>✅ <strong>Operational risk:</strong> People, systems, internal processes. Rogue trader (Nick Leeson/Barings Bank), cyber risk (GDPR: 72-hour breach notification), natural disasters, terrorism.</li>
+        <li>✅ <strong>"Market risk begets credit risk, which begets operational risk":</strong> Risks interact. Wrong-way risk = credit risk and market risk positively correlated (default most likely when loss is largest). Non-linear combined risk.</li>
+        <li>✅ <strong>VaR interpretation:</strong> £3M VaR at 5% (1 day) = minimum expected loss of £3M on 5% of days = minimum loss of £3M once every 20 business days. Key word: MINIMUM, not average, not maximum.</li>
+        <li>✅ <strong>CVaR:</strong> Weighted average of all losses EXCEEDING VaR. More complete measure of tail risk than VaR alone.</li>
+        <li>✅ <strong>Greeks:</strong> Delta (first-order, small Δunderlying), Gamma (second-order, large Δunderlying, change in delta), Vega (volatility sensitivity), Rho (interest rate sensitivity, usually low). Duration = fixed income analog to delta.</li>
+        <li>✅ <strong>4 risk modification methods (PAST):</strong> Prevention/Avoidance (first choice, especially for non-core risks), Acceptance (self-insurance + diversification), Shifting (derivatives), Transfer (insurance).</li>
+        <li>✅ <strong>Forward commitments</strong> (forwards, futures, swaps): lock in outcome, NO upfront cash, NO flexibility, both parties obligated.</li>
+        <li>✅ <strong>Contingent claims (options):</strong> RIGHT but not obligation; buyer pays PREMIUM upfront; provides flexibility to benefit from favorable moves; tailor desired payoff distribution.</li>
+        <li>✅ <strong>Insurance relies on pooling/diversification of uncorrelated risks.</strong> Deductible = insured covers first portion; reduces small claims and encourages risk management by insured.</li>
+        <li>✅ <strong>Self-insurance ≠ denial.</strong> If a risk exceeds stated risk tolerance and management just "bears it," that is bad governance. Self-insurance must be within risk tolerance and addressed at governance level.</li>
+        <li>✅ <strong>Individual longevity risk:</strong> Risk of outliving financial resources. Defined contribution plan holders fully exposed (unlike defined benefit / pension plans with actuarial pooling).</li>
+        <li>✅ <strong>Good risk management does NOT prevent losses.</strong> Even the best risk management cannot stop a portfolio from losing in a market crash — but it provides the framework, informs decisions, and limits surprises.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK-REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ RISK TERMINOLOGY ═══<br>
+        Risk Driver = underlying uncertainty | Risk Position = extent of action | Risk Exposure = Position × Driver<br>
+        Risk Management = define + measure + adjust risk toward tolerance → maximize value/utility<br><br>
+
+        ═══ FRAMEWORK ELEMENTS (GI² PM C S) ═══<br>
+        Governance → Identification &amp; Measurement → Infrastructure → Policies &amp; Processes<br>
+        → Monitoring/Mitigation/Management → Communication → Strategic Analysis<br><br>
+
+        ═══ FINANCIAL RISKS (MCL) ═══<br>
+        Market: interest rates + equities + FX + commodities<br>
+        Credit: default/counterparty; defaults have long-term implications; asset-specific<br>
+        Liquidity: bid-ask spread UNCERTAINTY (not the spread itself); position size amplifies<br><br>
+
+        ═══ NON-FINANCIAL RISKS ═══<br>
+        Settlement (timing) | Legal (contract enforceability) | Regulatory/Accounting/Tax (compliance)<br>
+        Model (wrong model/misuse) | Tail (fat tails; normal distribution underestimates)<br>
+        Operational (people, systems, cyber, rogue trader, weather, terrorism)<br>
+        Solvency (run out of cash even if assets &gt; liabilities) | Individual: Health/Mortality/Longevity<br><br>
+
+        ═══ RISK METRICS ═══<br>
+        σ (all) | β (equity) | Duration (fixed income) | Greeks (derivatives: δ,Γ,ν,ρ)<br>
+        VaR: MINIMUM loss at a probability over a period; CVaR: avg loss BEYOND VaR threshold<br>
+        Scenario analysis (package of stress tests) | Stress testing (extreme rare scenarios)<br><br>
+
+        ═══ RISK MODIFICATION METHODS (PAST) ═══<br>
+        Prevention/Avoidance: first choice; especially for non-core risks<br>
+        Acceptance: Self-insure (within tolerance) + Diversify (eliminate idiosyncratic risk)<br>
+        Shifting: Derivatives — forward commitments (lock in, no cash) vs. options (premium, flexible)<br>
+        Transfer: Insurance — pooling of uncorrelated risks; deductible = shared cost with insured<br><br>
+
+        ═══ KEY DISTINCTIONS ═══<br>
+        Risk tolerance = HOW MUCH | Risk budgeting = HOW (allocation by risk characteristics)<br>
+        "Doctrine of No Surprises" = pre-quantify impact, not predict events<br>
+        Wrong-way risk = market risk &amp; credit risk positively correlated (worst case: both hit at once)<br>
+        Self-insurance ≠ denial: must be within stated risk tolerance<br>
+        VaR = MINIMUM extreme loss (not maximum); CVaR = expected loss IN the tail beyond VaR<br>
+        Forward commitment = lock in, obligated | Option = right, not obligation; premium upfront
+      </div>
+      <div class="note">
+        <strong>Enterprise Risk Management:</strong> Must consider ENTIRE economic balance sheet — assets AND liabilities — not just one part in isolation.<br>
+        <strong>Solvency risk (2008 lesson):</strong> Lehman Brothers — destroyed by funding withdrawal, not just market losses. Most underappreciated pre-crisis risk.<br>
+        <strong>Tail risk (fat tails):</strong> Oct 1987 monthly return (−21.76%) should occur once per 2.2 million years under normal distribution. It happened. Use CVaR, scenario analysis, stress tests to supplement VaR.<br>
+        <strong>CRO:</strong> Strategic role, not just policing. Analogous to CFO — CEO should not perform both roles.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 6: Introduction to Risk Management · Exam Prep Notes
+</footer>
+
+</body>
+</html>

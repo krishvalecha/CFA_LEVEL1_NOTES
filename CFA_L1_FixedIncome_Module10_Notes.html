@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 10: Interest Rate Risk and Return</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+    --fi-bg: #0f1a1f; --fi-border: #2a4a5a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1318 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 860px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.75; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .fi-box { background: var(--fi-bg); border-left: 3px solid var(--fi-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .fi-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4a8fa8; margin-bottom: 10px; }
+  .fi-box .f { color: #a8d4e8; font-size: 13.5px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1a1f2e; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.total-row { background: rgba(76,139,201,0.08); border-top: 2px solid rgba(76,139,201,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  tbody td:first-child { color: var(--muted); }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent2); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.75; }
+
+  /* Rate scenario cards */
+  .scenario-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 780px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .scenario-card.neutral { background: #141820; border-top: 3px solid var(--accent); }
+  .scenario-card.up { background: #1a1510; border-top: 3px solid var(--danger); }
+  .scenario-card.down { background: #111a15; border-top: 3px solid var(--accent3); }
+  .sc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+  .neutral .sc-title { color: var(--accent); }
+  .up .sc-title { color: var(--danger); }
+  .down .sc-title { color: var(--accent3); }
+  .scenario-card p, .scenario-card li { font-size: 13px; color: var(--text); }
+  .scenario-card ul { padding-left: 14px; }
+  .scenario-card li { margin-bottom: 4px; }
+
+  /* Duration gap visual */
+  .dur-gap-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 780px) { .dur-gap-grid { grid-template-columns: 1fr; } }
+  .dgap-card { border: 1px solid var(--border); border-radius: 6px; padding: 18px 20px; text-align: center; }
+  .dgap-card.neg { background: #111a15; border-color: rgba(76,201,138,0.3); }
+  .dgap-card.zero { background: #141820; border-color: rgba(201,168,76,0.3); }
+  .dgap-card.pos { background: #1a1510; border-color: rgba(201,76,76,0.3); }
+  .dgap-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .neg .dgap-label { color: var(--accent3); }
+  .zero .dgap-label { color: var(--accent); }
+  .pos .dgap-label { color: var(--danger); }
+  .dgap-investor { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; font-family: 'Playfair Display', serif; }
+  .dgap-detail { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 10</div>
+  <h1>Interest Rate <span>Risk and Return</span></h1>
+  <p>Exam-ready notes with extra depth: three sources of fixed-rate bond return; horizon yield calculation and when it equals YTM; reinvestment risk vs. price risk — the inverse relationship; the full investment horizon × interest rate scenario matrix; Macaulay duration definition, weighted-average calculation, closed-form formula, and Excel function; duration gap and what it tells you; all BRWA worked examples fully stepped through.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Three Sources of Return</a>
+  <a class="toc-item" href="#s2">02 · Horizon Yield — When It Equals YTM</a>
+  <a class="toc-item" href="#s3">03 · Reinvestment Risk vs. Price Risk</a>
+  <a class="toc-item" href="#s4">04 · Rate Scenarios: VFO, Baywhite, Hightest</a>
+  <a class="toc-item" href="#s5">05 · Macaulay Duration — Concept &amp; Definition</a>
+  <a class="toc-item" href="#s6">06 · Macaulay Duration — Calculation Methods</a>
+  <a class="toc-item" href="#s7">07 · Duration Between Coupon Dates</a>
+  <a class="toc-item" href="#s8">08 · Duration Gap &amp; Interest Rate Risk Summary</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: THREE SOURCES OF RETURN            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Three Sources of Return from a Fixed-Rate Bond</h2>
+    </div>
+
+    <div class="card">
+      <p>Every dollar of return you earn from a fixed-rate bond comes from exactly one of three buckets. <strong>Understanding which bucket dominates depends entirely on your investment horizon and what happens to interest rates after you buy.</strong> This module is about understanding how these three sources interact — and how interest rate risk flows through them differently for different investors.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="fixed-card">
+        <div class="fixed-title">① Coupon + Principal Payments</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d5f5;">
+          <li>Fixed and contractually promised</li>
+          <li>Certain (barring default)</li>
+          <li>Coupons received each period; principal at maturity</li>
+          <li>Not affected by interest rate changes</li>
+          <li>For a 6.2% bond: 6.2 per 100 par each year + 100 at maturity</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">② Reinvestment of Coupons</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#dfd0c8;">
+          <li>"Interest-on-interest" — compounding gain</li>
+          <li><strong>Uncertain</strong> — depends on future reinvestment rates</li>
+          <li>Affected by rate changes after purchase</li>
+          <li>Rates rise → more reinvestment income</li>
+          <li>Rates fall → less reinvestment income</li>
+          <li>More important the longer the holding period</li>
+        </ul>
+      </div>
+      <div class="float-card">
+        <div class="float-title">③ Capital Gain / Loss on Sale</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>Only relevant if bond is sold BEFORE maturity</li>
+          <li><strong>Uncertain</strong> — depends on yields at time of sale</li>
+          <li>Rates rise → bond price falls → capital loss</li>
+          <li>Rates fall → bond price rises → capital gain</li>
+          <li>More important the shorter the holding period</li>
+          <li>Buy-and-hold investors: no capital gain/loss risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Inverse Relationship — The Core Concept of this Module</div>
+      <p>Sources ② and ③ are <strong>inversely affected by interest rate changes</strong>. When rates rise: reinvestment income goes up, but bond price goes down (capital loss if sold). When rates fall: reinvestment income goes down, but bond price goes up (capital gain if sold). These two effects partially or fully offset each other — and the balance between them depends on your investment horizon relative to Macaulay duration.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Horizon Yield (Realized Rate of Return) — The General Approach</div>
+      <div class="f">
+        Total future value at horizon = FV(reinvested coupons) + Sale price (or par at maturity)<br><br>
+        (1 + r)^N = [FV(reinvested coupons) + Sale price] / Purchase price<br><br>
+        r = [(FV(reinvested coupons) + Sale price) / Purchase price]^(1/N) − 1<br><br>
+        WHERE:<br>
+        N = number of periods held (investment horizon)<br>
+        r = annualized horizon yield (compounded)<br><br>
+        EXCEL: FV of coupons = -FV(reinvestment rate, N periods, coupon, 0, 0)<br>
+        Sale price = -PV(yield at sale, remaining periods, coupon, 100, 0)
+      </div>
+      <div class="note">
+        <strong>Horizon yield</strong> (also called realized return or holding-period return) is the investor's actual IRR based on the price paid, total cash flows received, and the reinvestment rates actually achieved. It is NOT necessarily equal to the bond's stated YTM. The YTM at purchase is only a promise — the horizon yield is the reality.<br><br>
+        <strong>Compounded annual growth rate:</strong> r = (Total future value / Purchase price)^(1/N) − 1. This is the correct formula — not a simple return.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: WHEN HORIZON YIELD = YTM           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Horizon Yield = YTM — The Three Assumptions You Must Know</h2>
+    </div>
+
+    <div class="swap-card" style="margin-bottom:16px;">
+      <div class="swap-title">★ Critical: Three Conditions for Horizon Yield = YTM</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+        <li><strong>① Hold to maturity:</strong> No early sale → no capital gain/loss risk</li>
+        <li><strong>② No default:</strong> All promised cash flows are received on schedule</li>
+        <li><strong>③ Reinvest all coupons at YTM:</strong> Every coupon payment is reinvested at exactly the bond's original YTM throughout its life</li>
+      </ul>
+      <p style="font-size:14px; color:#dfd0c8; margin-top:10px;">If ANY of these three assumptions fails, the horizon yield ≠ YTM. In practice, the reinvestment assumption almost always fails — reinvestment rates change as interest rates change.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ YTM is Not a "Guaranteed" Return — It's a Promise Under Perfect Conditions</div>
+      <p>The most common exam trap: students treat YTM as the investor's actual return. YTM is what you earn ONLY if you hold to maturity, face no default, AND reinvest every coupon at exactly YTM. Since reinvestment rates change over time, your realized return will differ from YTM unless you happen to always reinvest at exactly the original YTM rate. The module's examples prove this systematically.</p>
+    </div>
+
+    <h3>The "Constant-Yield Price Trajectory" — Selling at Par</h3>
+    <div class="card">
+      <p>A bond sold at a price on its <strong>constant-yield price trajectory</strong> means there is no capital gain or loss — the bond is priced exactly where it "should be" given its original yield. The carrying value at any point = purchase price ± amortized discount/premium.</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Bond purchased at par, YTM unchanged: carrying value = 100 at all times → no capital gain/loss when sold at any point</li>
+        <li>Bond purchased at discount: carrying value rises toward par over time (discount amortization)</li>
+        <li>Bond purchased at premium: carrying value falls toward par over time (premium amortization)</li>
+        <li><strong>Capital gain/loss arises only when the sale price deviates from the carrying value (constant-yield price trajectory)</strong> — i.e., when yields have changed</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Interest income</strong> = coupon receipt + reinvestment income + amortization of discount (or minus amortization of premium). This is the passage-of-time return.<br>
+      <strong>Capital gain/loss</strong> = return from change in market yields (change in PV of the bond's cash flows).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: REINVESTMENT RISK vs PRICE RISK    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Reinvestment Risk vs. Price Risk — The Inverse Relationship</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="swap-card">
+        <div class="swap-title">📉 Reinvestment Risk</div>
+        <p style="font-size:13.5px; color:#dfd0c8;"><strong>Definition:</strong> The risk that coupon payments will be reinvested at rates LOWER than the original YTM, reducing the total future value of reinvested cash flows.</p>
+        <p style="font-size:13.5px; color:#dfd0c8; margin-top:8px;"><strong>Triggered by:</strong> Falling interest rates after purchase.</p>
+        <p style="font-size:13.5px; color:#dfd0c8; margin-top:8px;"><strong>Who faces it most:</strong> Long-horizon investors (especially buy-and-hold). A buy-and-hold investor has ONLY reinvestment risk — no capital gain/loss risk since they hold to maturity.</p>
+        <p style="font-size:13.5px; color:#dfd0c8; margin-top:8px;"><strong>Worst case:</strong> Rates fall dramatically → all coupons reinvested at very low rates → FV of coupons much lower than expected.</p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">📈 Price Risk</div>
+        <p style="font-size:13.5px; color:#c8d5f5;"><strong>Definition:</strong> The risk that bond prices will fall (due to rising yields), creating a capital loss if the bond is sold before maturity.</p>
+        <p style="font-size:13.5px; color:#c8d5f5; margin-top:8px;"><strong>Triggered by:</strong> Rising interest rates after purchase.</p>
+        <p style="font-size:13.5px; color:#c8d5f5; margin-top:8px;"><strong>Who faces it most:</strong> Short-horizon investors. An investor who sells before receiving a single coupon has ONLY price risk — no reinvestment risk at all.</p>
+        <p style="font-size:13.5px; color:#c8d5f5; margin-top:8px;"><strong>Worst case:</strong> Rates rise dramatically immediately after purchase → large capital loss when selling at the lower market price.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Inverse Relationship — Summary</div>
+      <div class="f">
+        Interest rates RISE →  Reinvestment income ↑  AND  Bond price ↓ (capital loss if sold)<br>
+        Interest rates FALL →  Reinvestment income ↓  AND  Bond price ↑ (capital gain if sold)<br><br>
+        These effects partially (or fully, at Macaulay duration) offset each other.<br><br>
+        Long horizon investor:  Reinvestment risk dominates  →  fears FALLING rates<br>
+        Short horizon investor: Price risk dominates          →  fears RISING rates<br>
+        Horizon = MacDur:       Two risks exactly offset      →  immunized against rate changes
+      </div>
+      <div class="note">
+        <strong>The key insight:</strong> The same interest rate change affects the two risks in opposite directions. This is why the investment horizon is at the heart of understanding which risk matters more. Neither risk is "better" to have — it depends on whether rates move for or against you. What matters is knowing which risk dominates your position so you know what to hedge.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: RATE SCENARIOS — THREE INVESTORS   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Rate Scenarios — VFO, Baywhite &amp; Hightest Capital (Full Matrix)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Bond details throughout:</strong> BRWA 10-year, 6.2% annual coupon eurobond. Purchased at par (price = 100). Settlement: 15 October 2025. Maturity: 15 October 2035. Three investors with different horizons: VFO (10yr, buy-and-hold), Baywhite (4yr), Hightest Capital (8yr).</p>
+    </div>
+
+    <h3>Scenario A — Rates Unchanged at 6.20%</h3>
+    <div class="scenario-grid">
+      <div class="scenario-card neutral">
+        <div class="sc-title">VFO — 10yr Horizon</div>
+        <ul>
+          <li>FV coupons: -FV(0.062, 10, 6.2, 0, 0) = 82.493</li>
+          <li>Total coupons paid: 62.0</li>
+          <li>Interest-on-interest: 20.493</li>
+          <li>Principal at maturity: 100.000</li>
+          <li>Total FV: 182.493</li>
+          <li>Horizon yield: <strong>6.20%</strong> = YTM ✓</li>
+        </ul>
+      </div>
+      <div class="scenario-card neutral">
+        <div class="sc-title">Baywhite — 4yr Horizon</div>
+        <ul>
+          <li>FV coupons (4yr): 27.203</li>
+          <li>Sale price (6yr remaining, YTM=6.2%): 100.000</li>
+          <li>Total FV: 127.203</li>
+          <li>Horizon yield: <strong>6.20%</strong> = YTM ✓</li>
+          <li>No capital gain/loss (sold on trajectory)</li>
+        </ul>
+      </div>
+      <div class="scenario-card neutral">
+        <div class="sc-title">Hightest — 8yr Horizon</div>
+        <ul>
+          <li>FV coupons (8yr): 61.807</li>
+          <li>Sale price (2yr remaining, YTM=6.2%): 100.000</li>
+          <li>Total FV: 161.807</li>
+          <li>Horizon yield: <strong>6.20%</strong> = YTM ✓</li>
+          <li>No capital gain/loss (sold on trajectory)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Observation — Unchanged Rates: All Three Earn YTM</div>
+      <p>When rates don't change after purchase, all investors earn exactly YTM regardless of their holding period — as long as coupons are reinvested at YTM and the bond is sold at its constant-yield price. This confirms the YTM premise: it's what you earn in a stable rate environment.</p>
+    </div>
+
+    <h3>Scenario B — Rates Rise Immediately by 100bps (6.20% → 7.20%)</h3>
+    <div class="scenario-grid">
+      <div class="scenario-card up">
+        <div class="sc-title">VFO — 10yr Horizon (Rates ↑)</div>
+        <ul>
+          <li>FV coupons @7.2%: -FV(0.072,10,6.2,0,0) = 86.475</li>
+          <li>More reinvestment income (higher rates)</li>
+          <li>No sale → no capital loss</li>
+          <li>Total FV: 186.475</li>
+          <li>Horizon yield: <strong>6.43%</strong> (+23bps vs. base)</li>
+          <li>VFO BENEFITS: buy-and-hold = only reinvestment risk, and rates rose</li>
+        </ul>
+      </div>
+      <div class="scenario-card up">
+        <div class="sc-title">Baywhite — 4yr Horizon (Rates ↑)</div>
+        <ul>
+          <li>FV coupons @7.2% for 4yr: 27.609</li>
+          <li>Sale price @7.2%: -PV(0.072,6,6.2,100,0) = 95.263</li>
+          <li>Capital loss: 95.263 − 100 = <strong>−4.737</strong></li>
+          <li>Total FV: 122.872</li>
+          <li>Horizon yield: <strong>5.28%</strong> (−92bps vs. base)</li>
+          <li>Baywhite HURT: reinvestment gain offset by large capital loss</li>
+        </ul>
+      </div>
+      <div class="scenario-card up">
+        <div class="sc-title">Hightest — 8yr Horizon (Rates ↑)</div>
+        <ul>
+          <li>FV coupons @7.2% for 8yr: 64.071</li>
+          <li>Sale price @7.2%: -PV(0.072,2,6.2,100,0) = 98.197</li>
+          <li>Capital loss: 98.197 − 100 = −1.803</li>
+          <li>Extra reinvestment: 64.071 − 61.807 = +2.264</li>
+          <li>Horizon yield: <strong>6.24%</strong> (≈ same as base)</li>
+          <li>Effects nearly CANCEL: Hightest ≈ immunized ✓</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Scenario C — Rates Fall Immediately by 100bps (6.20% → 5.20%)</h3>
+    <div class="scenario-grid">
+      <div class="scenario-card down">
+        <div class="sc-title">VFO — 10yr Horizon (Rates ↓)</div>
+        <ul>
+          <li>FV coupons @5.2%: -FV(0.052,10,6.2,0,0) = 79.085</li>
+          <li>Less reinvestment income (lower rates)</li>
+          <li>No sale → no capital gain</li>
+          <li>Horizon yield: <strong>5.99%</strong> (−21bps vs. base)</li>
+          <li>VFO HURT: falling rates reduce reinvestment income</li>
+        </ul>
+      </div>
+      <div class="scenario-card down">
+        <div class="sc-title">Baywhite — 4yr Horizon (Rates ↓)</div>
+        <ul>
+          <li>FV coupons @5.2% for 4yr: 26.808</li>
+          <li>Sale price @5.2%: -PV(0.052,6,6.2,100,0) = 105.072</li>
+          <li>Capital gain: 105.072 − 100 = <strong>+5.072</strong></li>
+          <li>Horizon yield: <strong>7.09%</strong> (+89bps vs. base)</li>
+          <li>Baywhite BENEFITS: large capital gain dominates</li>
+        </ul>
+      </div>
+      <div class="scenario-card down">
+        <div class="sc-title">Hightest — 8yr Horizon (Rates ↓)</div>
+        <ul>
+          <li>FV coupons @5.2% for 8yr: 59.630</li>
+          <li>Sale price @5.2%: -PV(0.052,2,6.2,100,0) = 101.854</li>
+          <li>Capital gain: +1.854</li>
+          <li>Lost reinvestment: 61.807 − 59.630 = −2.177</li>
+          <li>Horizon yield: <strong>6.17%</strong> (≈ same as base)</li>
+          <li>Effects nearly CANCEL again: Hightest ≈ immunized ✓</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Full Summary Matrix — Exhibit 1</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Investor</th><th>Horizon</th><th>Rates Unchanged</th><th>Rates Rise +100bps</th><th>Rates Fall −100bps</th><th>Dominant Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">VFO (Buy-and-Hold)</td>
+            <td>10 years</td>
+            <td>6.20%</td>
+            <td class="highlight">6.43% ↑</td>
+            <td>5.99% ↓</td>
+            <td><span class="tag tag-green">Reinvestment Risk</span></td>
+          </tr>
+          <tr>
+            <td class="label-col">Hightest Capital</td>
+            <td>8 years ≈ MacDur</td>
+            <td>6.20%</td>
+            <td>6.24% ≈</td>
+            <td>6.17% ≈</td>
+            <td><span class="tag tag-yellow">≈ Immunized</span></td>
+          </tr>
+          <tr>
+            <td class="label-col">Baywhite Financial</td>
+            <td>4 years</td>
+            <td>6.20%</td>
+            <td>5.28% ↓</td>
+            <td class="highlight">7.09% ↑</td>
+            <td><span class="tag tag-red">Price Risk</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Understanding Direction of Risk</div>
+      <p>VFO (long horizon) BENEFITS from rising rates and is HURT by falling rates — because reinvestment risk dominates and higher rates mean better reinvestment. Baywhite (short horizon) is HURT by rising rates and BENEFITS from falling rates — because price risk dominates and lower rates mean higher sale prices. Candidates often get this backwards. Use the matrix: "Long horizon = reinvestment risk = fears falling rates. Short horizon = price risk = fears rising rates."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: MACAULAY DURATION — CONCEPT        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Macaulay Duration — Definition, Concept &amp; Properties</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Macaulay Duration (MacDur)</div>
+      <div class="def-body">The weighted-average time to receipt of a bond's cash flows, where each cash flow's weight is its share of the bond's total present value (full price). It is expressed in periods (years for annual coupon bonds; divide by 2 for semiannual bonds to get years). Named after Frederick Macaulay (Canadian economist, 1938). It is the investment horizon at which reinvestment risk and price risk exactly offset each other for a parallel yield curve shift.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>What Macaulay duration tells you in plain English:</strong> If you hold the bond for exactly its Macaulay duration (in years), a one-time instantaneous parallel shift in the yield curve immediately after purchase will leave your horizon yield virtually unchanged — the gain/loss from reinvestment and the loss/gain from price change exactly cancel.</p>
+      <p style="margin-top:10px;"><strong>Why is MacDur less than maturity?</strong> Because it is a PV-weighted average of cash flows — the large final payment (coupon + principal) at maturity is discounted most heavily. The earlier coupons receive less weight because they arrive sooner. For a par bond, MacDur is always less than maturity (because coupons pull the average earlier than T). For a zero-coupon bond, MacDur = maturity exactly (only one cash flow: at T).</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">📉 When Rates Rise (Panel A of Exhibit 2)</div>
+        <ul>
+          <li>Immediate: bond price drops → paper loss</li>
+          <li>Over time: "pull to par" effect → price recovers toward par</li>
+          <li>Reinvestment income grows as coupons are reinvested at higher rates</li>
+          <li>At MacDur: reinvestment gain = price loss → total return unchanged</li>
+          <li>Beyond MacDur: reinvestment gain &gt; price loss → net gain</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">📈 When Rates Fall (Panel B of Exhibit 2)</div>
+        <ul>
+          <li>Immediate: bond price rises → paper gain</li>
+          <li>Over time: "pull to par" → price falls back toward par</li>
+          <li>Reinvestment income shrinks as coupons reinvested at lower rates</li>
+          <li>At MacDur: reinvestment loss = price gain → total return unchanged</li>
+          <li>Beyond MacDur: reinvestment loss &gt; price gain → net loss</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Key Properties of Macaulay Duration</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>MacDur is always ≤ time to maturity.</strong> Equal only for zero-coupon bonds (MacDur = maturity). Always less for coupon bonds.</li>
+        <li><strong>MacDur decreases as time passes</strong> (between coupon dates). After a coupon is paid, the time to receipt of all remaining cash flows shortens → MacDur falls.</li>
+        <li><strong>MacDur falls after each coupon payment.</strong> With one fewer cash flow outstanding, the weighted average of remaining cash flows shifts earlier.</li>
+        <li><strong>Higher coupon rate → lower MacDur.</strong> A bond with a higher coupon has more cash flows arriving early (larger weight on near-term periods) → lower weighted-average time.</li>
+        <li><strong>Higher YTM → lower MacDur.</strong> Higher discount rate reduces the present value weight of distant cash flows (which are discounted more heavily) → weighted average shifts earlier.</li>
+        <li><strong>Longer maturity → higher MacDur</strong> (generally). More distant cash flows shift the weighted average later.</li>
+        <li><strong>Zero-coupon bond:</strong> MacDur = maturity. The only cash flow is at T, so the weighted average is T.</li>
+        <li><strong>Macaulay duration is not static</strong> — it must be recalculated at each point in time as the bond moves toward maturity.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: MACAULAY DURATION — CALCULATION    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Macaulay Duration — Three Calculation Methods</h2>
+    </div>
+
+    <h3>Method 1: Weighted-Average Tabular Calculation (On Coupon Date)</h3>
+    <div class="card">
+      <p>The most intuitive approach. Build a table with 6 columns. The sum of column (6) is the Macaulay duration.</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Col 1:</strong> Period number (1, 2, 3, ... N)</li>
+        <li><strong>Col 2:</strong> Time to receipt (= period number when on a coupon date)</li>
+        <li><strong>Col 3:</strong> Cash flow (PMT for periods 1 to N−1; PMT + FV for period N)</li>
+        <li><strong>Col 4:</strong> Present value of each cash flow (CF / (1+r)^t)</li>
+        <li><strong>Col 5:</strong> Weight = Col4 / Sum of Col4 (= PV of CF / Full price)</li>
+        <li><strong>Col 6:</strong> Col2 × Col5 (time-weighted contribution to duration)</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>MacDur = Σ Col6</strong> = sum of all (time to receipt × weight)</p>
+    </div>
+
+    <h3>BRWA Bond — Full Calculation Table (at Issuance)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:4px;">BRWA 10-year, 6.2% annual coupon, priced at par. YTM = 6.2%. Settlement: 15 Oct 2025.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>(1) Period</th>
+            <th>(2) Time (yrs)</th>
+            <th>(3) Cash Flow</th>
+            <th>(4) PV of CF</th>
+            <th>(5) Weight</th>
+            <th>(6) Time × Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1</td><td>6.200</td><td>5.8380</td><td>0.0584</td><td>0.0584</td></tr>
+          <tr><td>2</td><td>2</td><td>6.200</td><td>5.4972</td><td>0.0550</td><td>0.1099</td></tr>
+          <tr><td>3</td><td>3</td><td>6.200</td><td>5.1763</td><td>0.0518</td><td>0.1553</td></tr>
+          <tr><td>4</td><td>4</td><td>6.200</td><td>4.8741</td><td>0.0487</td><td>0.1950</td></tr>
+          <tr><td>5</td><td>5</td><td>6.200</td><td>4.5895</td><td>0.0459</td><td>0.2295</td></tr>
+          <tr><td>6</td><td>6</td><td>6.200</td><td>4.3216</td><td>0.0432</td><td>0.2593</td></tr>
+          <tr><td>7</td><td>7</td><td>6.200</td><td>4.0693</td><td>0.0407</td><td>0.2849</td></tr>
+          <tr><td>8</td><td>8</td><td>6.200</td><td>3.8317</td><td>0.0383</td><td>0.3065</td></tr>
+          <tr><td>9</td><td>9</td><td>6.200</td><td>3.6080</td><td>0.0361</td><td>0.3247</td></tr>
+          <tr><td>10</td><td>10</td><td><strong>106.200</strong></td><td>58.1942</td><td><strong>0.5819</strong></td><td><strong>5.8194</strong></td></tr>
+          <tr class="total-row">
+            <td class="label-col">TOTAL</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="highlight">100.000</td>
+            <td class="highlight">1.0000</td>
+            <td class="highlight">7.7429 yrs ← MacDur</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Key Observations from the Table</div>
+      <div class="f">
+        Final payment (period 10) accounts for 58.19% of full price → dominates the duration<br>
+        MacDur = 7.7429 yrs &lt; 10 yrs maturity (as always for coupon bonds)<br>
+        Hightest Capital's 8-yr horizon ≈ MacDur = 7.7429 → nearly immunized ✓<br>
+        If YTM = coupon rate AND priced at par → MacDur &lt; maturity by a predictable amount<br>
+        Each coupon adds a small increment; the final principal payment drives the result
+      </div>
+    </div>
+
+    <h3>Method 2: Closed-Form Formula (Equation 3)</h3>
+    <div class="formula-box">
+      <div class="label">Equation 3 — Macaulay Duration Closed-Form</div>
+      <div class="f">
+        MacDur = { (1+r)/r  −  [1+r + N×(c−r)] / [c×((1+r)^N − 1) + r] }  −  t/T<br><br>
+        WHERE:<br>
+        r = yield-to-maturity per period (e.g., 0.062 for annual 6.2%)<br>
+        N = number of periods to maturity (as of beginning of current period)<br>
+        c = coupon rate per period (e.g., 0.062 for 6.2% annual)<br>
+        t = days from last coupon payment to settlement date<br>
+        T = days in the coupon period<br>
+        t/T = fraction of period elapsed since last coupon (= 0 on a coupon date)
+      </div>
+      <div class="note">
+        <strong>Special case: when c = r (priced at par, on coupon date):</strong><br>
+        When coupon rate = YTM and t/T = 0, the formula simplifies significantly. The (c−r) term in the numerator becomes 0, and the formula reduces to: MacDur = (1+r)/r − N/((1+r)^N − 1). For the BRWA bond: (1.062/0.062) − 10/(1.062^10 − 1) = 17.129 − 9.386 = 7.743 ≈ 7.7429 ✓<br><br>
+        <strong>On coupon date:</strong> t/T = 0, so the last term drops out entirely. The formula gives the same result as the tabular method.
+      </div>
+    </div>
+
+    <h3>Method 3: Excel / Google Sheets DURATION Function</h3>
+    <div class="fi-box">
+      <div class="label">Excel DURATION Function</div>
+      <div class="f">
+        =DURATION(Settlement, Maturity, Coupon, Yld, Frequency, [Basis])<br><br>
+        Settlement  = settlement date in DATE form (e.g., DATE(2025,10,15))<br>
+        Maturity    = maturity date in DATE form (e.g., DATE(2035,10,15))<br>
+        Coupon      = annual coupon rate (e.g., 0.062)<br>
+        Yld         = annualized YTM (e.g., 0.062)<br>
+        Frequency   = payments per year (1=annual, 2=semiannual, 4=quarterly)<br>
+        [Basis]     = day-count convention (0 or omitted = 30/360, 1 = actual/actual)<br><br>
+        EXAMPLE: =DURATION(DATE(2025,10,15), DATE(2035,10,15), 0.062, 0.062, 1, 0)<br>
+        → Returns: 7.7429
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Which Method to Use on the Exam?</div>
+      <p>The tabular method is most intuitive and asked for most frequently at Level 1 — you should know how to build the table and identify which row/column is which. The closed-form formula is rarely computed by hand on the exam but its structure (and what t, T, r, c, N represent) is tested conceptually. The DURATION Excel function is referenced for context but not directly testable. Know the table method thoroughly.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: DURATION BETWEEN COUPON DATES      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Macaulay Duration Between Coupon Dates — Example 5</h2>
+    </div>
+
+    <div class="card">
+      <p>When calculating Macaulay duration between coupon payment dates (not on a coupon date), the time to receipt of each cash flow is fractional. The same tabular method applies — the only difference is that each "time to receipt" shifts earlier by the fraction of the period that has already elapsed (t/T).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Between-Coupon-Date Adjustment — The t/T Factor</div>
+      <div class="f">
+        On a coupon date: Time to receipt of period k = k (whole number)<br>
+        Between coupon dates: Time to receipt of period k = k − t/T<br><br>
+        WHERE:<br>
+        t = days since last coupon payment (e.g., 57 days)<br>
+        T = total days in the coupon period (e.g., 360 for 30/360 convention)<br>
+        t/T = fraction elapsed (e.g., 57/360 = 0.1583)<br><br>
+        So if you're 57 days into the first period:<br>
+        Period 1 time to receipt: 1 − 57/360 = 1 − 0.1583 = 0.8417<br>
+        Period 2 time to receipt: 2 − 0.1583 = 1.8417<br>
+        Period 10 time to receipt: 10 − 0.1583 = 9.8417<br><br>
+        PV of each CF also increases (less discounting needed — closer to payment date)
+      </div>
+      <div class="note">
+        <strong>Key result from Example 5:</strong> Settling 57 days after issuance, MacDur = 7.5845 vs. 7.7429 at issuance. The Macaulay duration <em>fell</em> — because 57 days of time has elapsed and all cash flows are now closer to receipt. This confirms that MacDur is not static: it falls continuously as time passes.
+      </div>
+    </div>
+
+    <h3>Between-Coupon Table — BRWA Bond at 57 Days after Issuance</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:4px;">Settlement: 11 Dec 2025. t/T = 57/360 = 0.1583. Note: weights remain the same; only times to receipt change.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>(1) Period</th>
+            <th>(2) Time (k − t/T)</th>
+            <th>(3) Cash Flow</th>
+            <th>(4) PV of CF</th>
+            <th>(5) Weight</th>
+            <th>(6) Time × Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>0.8417</td><td>6.200</td><td>5.8939</td><td>0.0584</td><td>0.0491</td></tr>
+          <tr><td>2</td><td>1.8417</td><td>6.200</td><td>5.5498</td><td>0.0550</td><td>0.1012</td></tr>
+          <tr><td>3</td><td>2.8417</td><td>6.200</td><td>5.2258</td><td>0.0518</td><td>0.1471</td></tr>
+          <tr><td>4</td><td>3.8417</td><td>6.200</td><td>4.9207</td><td>0.0487</td><td>0.1872</td></tr>
+          <tr><td>5</td><td>4.8417</td><td>6.200</td><td>4.6335</td><td>0.0459</td><td>0.2222</td></tr>
+          <tr><td>6</td><td>5.8417</td><td>6.200</td><td>4.3630</td><td>0.0432</td><td>0.2525</td></tr>
+          <tr><td>7</td><td>6.8417</td><td>6.200</td><td>4.1082</td><td>0.0407</td><td>0.2784</td></tr>
+          <tr><td>8</td><td>7.8417</td><td>6.200</td><td>3.8684</td><td>0.0383</td><td>0.3005</td></tr>
+          <tr><td>9</td><td>8.8417</td><td>6.200</td><td>3.6426</td><td>0.0361</td><td>0.3190</td></tr>
+          <tr><td>10</td><td>9.8417</td><td>106.200</td><td>58.7511</td><td>0.5819</td><td>5.7273</td></tr>
+          <tr class="total-row">
+            <td class="label-col">TOTAL</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="highlight">100.9570</td>
+            <td class="highlight">1.0000</td>
+            <td class="highlight">7.5845 yrs ← MacDur</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Weights Stay the Same — Only Times Change</div>
+      <p>Notice that column (5) weights are identical to the on-coupon-date table (0.0584, 0.0550, etc.). This is because weights are determined by the YTM and coupon structure — and those haven't changed. Only the times to receipt (column 2) have shifted earlier by t/T = 0.1583. The full price increased slightly (from 100.000 to 100.9570) because accrued interest has been accumulated since the last coupon. The lower MacDur (7.5845 vs. 7.7429) reflects the simple passage of 57 days.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: DURATION GAP                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Duration Gap — Quantifying Your Interest Rate Risk Exposure</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Duration Gap</div>
+      <div class="f">
+        Duration Gap = Macaulay Duration − Investment Horizon<br><br>
+        Positive duration gap →  Investment horizon &lt; MacDur  →  Price risk dominates  →  Fears RISING rates<br>
+        Zero duration gap    →  Investment horizon = MacDur  →  Immunized  →  Neutral to rate changes<br>
+        Negative duration gap → Investment horizon &gt; MacDur →  Reinvestment risk dominates → Fears FALLING rates
+      </div>
+      <div class="note">
+        The duration gap quantifies the mismatch between your investment horizon and the bond's Macaulay duration. A portfolio manager trying to immunize a liability (match a payment due at a specific future date) wants a duration gap of zero — they would choose a bond or portfolio of bonds with Macaulay duration equal to their investment horizon.
+      </div>
+    </div>
+
+    <h3>Duration Gap for Each Investor — BRWA Bond (MacDur = 7.7429 years)</h3>
+    <div class="dur-gap-grid">
+      <div class="dgap-card neg">
+        <div class="dgap-label">Negative Duration Gap</div>
+        <div class="dgap-investor">VFO (Buy-and-Hold)</div>
+        <div class="dgap-detail">
+          Horizon: 10 years<br>
+          MacDur: 7.7429 years<br>
+          Gap: 7.7429 − 10 = <strong style="color:#4cc98a;">−2.26 years</strong><br><br>
+          Dominant risk: <strong>Reinvestment Risk</strong><br>
+          Fears: Falling interest rates<br>
+          Benefits from: Rising rates (more reinvestment income)
+        </div>
+      </div>
+      <div class="dgap-card zero">
+        <div class="dgap-label">Near-Zero Duration Gap</div>
+        <div class="dgap-investor">Hightest Capital</div>
+        <div class="dgap-detail">
+          Horizon: 8 years<br>
+          MacDur: 7.7429 years<br>
+          Gap: 7.7429 − 8 = <strong style="color:#c9a84c;">−0.26 years ≈ 0</strong><br><br>
+          ≈ Immunized against parallel rate shifts<br>
+          Horizon yields nearly unchanged<br>
+          in all three rate scenarios
+        </div>
+      </div>
+      <div class="dgap-card pos">
+        <div class="dgap-label">Positive Duration Gap</div>
+        <div class="dgap-investor">Baywhite Financial</div>
+        <div class="dgap-detail">
+          Horizon: 4 years<br>
+          MacDur: 7.7429 years<br>
+          Gap: 7.7429 − 4 = <strong style="color:#c94c4c;">+3.74 years</strong><br><br>
+          Dominant risk: <strong>Price Risk</strong><br>
+          Fears: Rising interest rates<br>
+          Benefits from: Falling rates (higher sale price)
+        </div>
+      </div>
+    </div>
+
+    <h3>The Exhibit 3 Relationship — Master Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Comparison</th><th>Duration Gap Sign</th><th>Dominant Risk</th><th>Source of Interest Rate Risk</th><th>Investor Fears</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Horizon &gt; MacDur</td>
+            <td><span class="tag tag-green">Negative</span></td>
+            <td>Reinvestment Risk</td>
+            <td>Falling interest rates</td>
+            <td>Rates falling (less reinvestment income)</td>
+          </tr>
+          <tr>
+            <td class="label-col">Horizon = MacDur</td>
+            <td><span class="tag tag-yellow">Zero</span></td>
+            <td>Balanced — Immunized</td>
+            <td>Neither dominates</td>
+            <td>Nothing — risks offset</td>
+          </tr>
+          <tr>
+            <td class="label-col">Horizon &lt; MacDur</td>
+            <td><span class="tag tag-red">Positive</span></td>
+            <td>Price Risk</td>
+            <td>Rising interest rates</td>
+            <td>Rates rising (capital loss if sold)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Important Caveat — MacDur Immunization is Not Perfect</div>
+      <p>Immunization (duration gap = 0) only works perfectly for a <strong>one-time, instantaneous, parallel shift in the yield curve</strong>. In practice: (1) rates shift multiple times and non-instantaneously; (2) the yield curve may twist (non-parallel shifts); (3) both MacDur and the investment horizon change over time, requiring rebalancing. Level 1 treats this as a single-shift approximation. Be careful not to claim perfect immunity — say "nearly immunized" or "largely offsetting."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Three sources of return:</strong> (1) Coupon + principal payments [certain]; (2) Reinvestment income on coupons ["interest-on-interest", uncertain, rate-sensitive]; (3) Capital gain/loss on sale before maturity [uncertain, rate-sensitive, only if sold before maturity].</li>
+        <li>✅ <strong>Horizon yield = YTM only if:</strong> (1) held to maturity; (2) no default; (3) all coupons reinvested at original YTM. Failure of ANY ONE of these → horizon yield ≠ YTM.</li>
+        <li>✅ <strong>Horizon yield formula:</strong> r = [(FV coupons + Sale price) / Purchase price]^(1/N) − 1. Compute FV of coupons using Excel FV function at the reinvestment rate. Compute sale price using PV function at yield prevailing at sale.</li>
+        <li>✅ <strong>Constant-yield price trajectory:</strong> The "fair value" path of a bond price assuming yields don't change. Selling on the trajectory = no capital gain/loss. Premium bonds: price falls toward par. Discount bonds: price rises toward par. Capital gain/loss = deviation from this trajectory.</li>
+        <li>✅ <strong>Reinvestment risk:</strong> Risk that future coupon reinvestment rates fall below original YTM. Triggered by falling rates. Hurts long-horizon investors most. Buy-and-hold investors face ONLY reinvestment risk (no price risk).</li>
+        <li>✅ <strong>Price risk:</strong> Risk that bond price falls (yields rise) creating a capital loss if sold. Triggered by rising rates. Hurts short-horizon investors most. Ultra-short investors (sell before first coupon) face ONLY price risk.</li>
+        <li>✅ <strong>Inverse relationship:</strong> Rates rise → reinvestment income ↑ AND sale price ↓. Rates fall → reinvestment income ↓ AND sale price ↑. These offset each other — the balance depends on holding period vs. MacDur.</li>
+        <li>✅ <strong>Long horizon &gt; MacDur:</strong> Reinvestment risk dominates. Fears falling rates. Benefits from rising rates. Duration gap is negative.</li>
+        <li>✅ <strong>Short horizon &lt; MacDur:</strong> Price risk dominates. Fears rising rates. Benefits from falling rates. Duration gap is positive.</li>
+        <li>✅ <strong>Horizon = MacDur:</strong> Immunized. The two risks exactly offset for a one-time parallel yield curve shift. Duration gap = 0. This is the concept of immunization.</li>
+        <li>✅ <strong>Duration Gap = MacDur − Investment Horizon.</strong> Positive → price risk dominant. Zero → immunized. Negative → reinvestment risk dominant.</li>
+        <li>✅ <strong>Macaulay duration definition:</strong> Weighted-average time to receipt of a bond's cash flows. Weights = PV of each CF / Full price. Expressed in years (for annual bonds). MacDur ≤ maturity always. MacDur = maturity for zero-coupon bonds only.</li>
+        <li>✅ <strong>Tabular calculation method:</strong> 6-column table. Col 5 = PV weight. Col 6 = time × weight. Sum of Col 6 = MacDur. Know this cold. The final cash flow (coupon + par) typically accounts for ~58% of full price and dominates the duration.</li>
+        <li>✅ <strong>Between-coupon-date calculation:</strong> Each time to receipt = period number − t/T. PV of each CF rises (less discounting required). Weights remain unchanged. MacDur is lower (time has passed). t = days since last coupon, T = days in the period.</li>
+        <li>✅ <strong>MacDur is not static:</strong> It falls continuously as time passes toward maturity. Falls after each coupon payment. Must be recalculated to remain immunized over time (requires periodic rebalancing).</li>
+        <li>✅ <strong>Higher coupon rate → lower MacDur</strong> (more cash flow weight on early periods). <strong>Higher YTM → lower MacDur</strong> (distant CFs discounted more heavily). <strong>Longer maturity → higher MacDur</strong> (generally). Zero coupon: MacDur = maturity.</li>
+        <li>✅ <strong>BRWA bond key numbers:</strong> 10yr, 6.2% annual, par price. MacDur at issuance = 7.7429 years. MacDur at 57 days later = 7.5845 years. Hightest (8yr horizon) ≈ immunized.</li>
+        <li>✅ <strong>Excel DURATION function:</strong> =DURATION(Settlement, Maturity, Coupon, Yld, Frequency, [Basis]). Basis: 0=30/360, 1=actual/actual.</li>
+        <li>✅ <strong>Immunization caveat:</strong> Only perfectly offsets a one-time, instantaneous, parallel yield curve shift. Non-parallel shifts, multiple rate changes, or passage of time require rebalancing.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 10</div>
+      <div class="f">
+        ═══ THREE SOURCES OF RETURN ═══<br>
+        ① Coupon + principal (certain)<br>
+        ② Reinvestment income (rates rise → ↑; rates fall → ↓)<br>
+        ③ Capital gain/loss on sale (rates rise → ↓ price; rates fall → ↑ price)<br><br>
+
+        ═══ HORIZON YIELD = YTM ONLY IF ═══<br>
+        ① Hold to maturity  ② No default  ③ Reinvest at YTM<br><br>
+
+        ═══ INTEREST RATE RISK MATRIX ═══<br>
+        Rates rise:  Reinvestment ↑   Sale price ↓   (net: long horizon benefits; short hurts)<br>
+        Rates fall:  Reinvestment ↓   Sale price ↑   (net: long horizon hurt; short benefits)<br><br>
+
+        ═══ DURATION GAP (Eq. 1) ═══<br>
+        Duration Gap = MacDur − Investment Horizon<br>
+        Gap &gt; 0  →  Horizon &lt; MacDur  →  Price risk  →  Fears rising rates<br>
+        Gap = 0  →  Horizon = MacDur  →  Immunized   →  Neutral<br>
+        Gap &lt; 0  →  Horizon &gt; MacDur  →  Reinv. risk →  Fears falling rates<br><br>
+
+        ═══ MACAULAY DURATION ═══<br>
+        MacDur = Σ (time to receipt_k × weight_k)<br>
+        weight_k = PV(CF_k) / Full price<br>
+        MacDur ≤ maturity (= maturity for zero-coupon bonds)<br>
+        MacDur falls as time passes; recalculate between coupon dates using t/T<br><br>
+
+        ═══ BETWEEN COUPON DATES ═══<br>
+        Time to receipt of period k = k − t/T<br>
+        t = days since last coupon; T = days in coupon period<br>
+        Weights unchanged; times reduced; MacDur decreases<br><br>
+
+        ═══ CLOSED-FORM MacDur (Eq. 3) ═══<br>
+        MacDur = {(1+r)/r − [1+r+N(c−r)] / [c((1+r)^N−1)+r]} − t/T<br>
+        When c=r and t=0: simplifies to (1+r)/r − N/((1+r)^N−1)<br><br>
+
+        ═══ EXCEL FUNCTION ═══<br>
+        =DURATION(Settlement, Maturity, Coupon, Yld, Frequency, [Basis])<br>
+        Basis: 0=30/360, 1=actual/actual<br><br>
+
+        ═══ BRWA BOND REFERENCE ═══<br>
+        10yr, 6.2% annual, at par. MacDur at issuance = 7.7429 yrs<br>
+        VFO (10yr): Reinv. risk. Baywhite (4yr): Price risk. Hightest (8yr): ≈ Immunized<br>
+        Rate unchanged → all earn 6.20% (= YTM)<br>
+        Rates +100bps: VFO=6.43% ↑, Hightest=6.24% ≈, Baywhite=5.28% ↓<br>
+        Rates −100bps: VFO=5.99% ↓, Hightest=6.17% ≈, Baywhite=7.09% ↑
+      </div>
+      <div class="note">
+        <strong>Most testable concepts in this module:</strong> (1) Three sources of return and how interest rate changes affect each. (2) The three conditions for horizon yield = YTM. (3) Duration gap direction and which risk it implies. (4) Reading a MacDur table — especially identifying which column is which and confirming the sum. (5) The observation that MacDur &lt; maturity and why. (6) The inverse relationship between reinvestment risk and price risk.<br><br>
+        <strong>Computational focus:</strong> Computing FV of coupons using the FV function formula; computing sale price using PV; calculating the resulting horizon yield; and computing Macaulay duration from the tabular method. Practice building the 6-column MacDur table for at least one bond from scratch.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 10: Interest Rate Risk and Return · Exam Prep Notes
+</footer>
+
+</body>
+</html>

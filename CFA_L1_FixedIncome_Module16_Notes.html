@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 16: Credit Analysis for Corporate Issuers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #140d10 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e1a12; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.secured-row { background: rgba(76,201,138,0.04); }
+  tbody tr.unsecured-row { background: rgba(201,168,76,0.03); }
+  tbody tr.sub-row { background: rgba(201,76,76,0.04); }
+  tbody tr.total-row { background: rgba(201,168,76,0.08); border-top: 2px solid rgba(201,168,76,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  tbody td.good { color: var(--accent3); font-weight: 700; }
+  tbody td.bad { color: var(--danger); font-weight: 700; }
+  tbody td.mid { color: var(--accent); font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* Seniority ladder */
+  .seniority-ladder { display: flex; flex-direction: column; gap: 0; margin: 16px 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .sl-item { display: grid; grid-template-columns: 120px 1fr 100px; padding: 11px 16px; border-bottom: 1px solid var(--border); align-items: center; gap: 12px; }
+  .sl-item:last-child { border-bottom: none; }
+  .sl-item.highest { background: rgba(76,201,138,0.10); }
+  .sl-item.secured { background: rgba(76,201,138,0.05); }
+  .sl-item.sen-unsec { background: rgba(201,168,76,0.05); }
+  .sl-item.sub { background: rgba(201,76,76,0.05); }
+  .sl-item.equity { background: rgba(100,30,30,0.10); }
+  .sl-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; }
+  .highest .sl-label { color: var(--accent3); }
+  .secured .sl-label { color: #7ad8a8; }
+  .sen-unsec .sl-label { color: var(--accent); }
+  .sub .sl-label { color: #e8a8a8; }
+  .equity .sl-label { color: var(--danger); }
+  .sl-desc { font-size: 12.5px; color: var(--text); }
+  .sl-lgd { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-align: right; }
+  .highest .sl-lgd, .secured .sl-lgd { color: var(--accent3); }
+  .sen-unsec .sl-lgd { color: var(--accent); }
+  .sub .sl-lgd, .equity .sl-lgd { color: var(--danger); }
+
+  /* Ratio cards */
+  .ratio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .ratio-grid { grid-template-columns: 1fr; } }
+  .rg-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .rg-card.profit { background: rgba(76,201,138,0.04); border-left: 3px solid var(--accent3); }
+  .rg-card.coverage { background: rgba(76,139,201,0.04); border-left: 3px solid var(--accent2); }
+  .rg-card.leverage { background: rgba(201,168,76,0.04); border-left: 3px solid var(--accent); }
+  .rg-card.liquidity { background: rgba(106,63,201,0.04); border-left: 3px solid #9a7ce8; }
+  .rg-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .profit .rg-title { color: var(--accent3); }
+  .coverage .rg-title { color: var(--accent2); }
+  .leverage .rg-title { color: var(--accent); }
+  .liquidity .rg-title { color: #9a7ce8; }
+  .rg-card p, .rg-card li { font-size: 13px; color: var(--text); }
+  .rg-card ul { padding-left: 14px; }
+  .rg-card li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 16</div>
+  <h1>Credit Analysis for <span>Corporate Issuers</span></h1>
+  <p>Exam-ready notes with full depth: qualitative factors (business model, industry, competition, collateral, corporate governance, covenants, accounting red flags); four quantitative dimensions (profitability, coverage, leverage, liquidity); the six key credit ratios — formulas, direction, and interpretation (EBIT margin, EBIT/interest, Debt/EBITDA, RCF/Net Debt); full seniority ranking ladder (Exhibit 4) with LGD implications; priority of claims in bankruptcy; historical recovery rates by seniority (Exhibit 5) and by industry (Exhibit 6); notching — issuer rating vs. issue rating; Moody's EL vs. S&amp;P/Fitch POD approach; Royal Caribbean and VIVU bond case studies.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Qualitative Factors — Business Model &amp; Industry</a>
+  <a class="toc-item" href="#s2">02 · Collateral — Tangible vs. Intangible</a>
+  <a class="toc-item" href="#s3">03 · Corporate Governance &amp; Red Flags</a>
+  <a class="toc-item" href="#s4">04 · Quantitative Framework — Four Dimensions</a>
+  <a class="toc-item" href="#s5">05 · Key Credit Ratios (Exhibit 3) — Formulas &amp; Interpretation</a>
+  <a class="toc-item" href="#s6">06 · Cash Flow Measures in Credit Analysis</a>
+  <a class="toc-item" href="#s7">07 · Seniority Rankings (Exhibit 4) — Priority of Claims</a>
+  <a class="toc-item" href="#s8">08 · Recovery Rates — By Seniority and Industry</a>
+  <a class="toc-item" href="#s9">09 · Issuer vs. Issue Ratings — Notching</a>
+  <a class="toc-item" href="#s10">10 · Case Studies — Royal Caribbean &amp; VIVU</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: QUALITATIVE FACTORS                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Qualitative Factors — Business Model, Industry &amp; Competition</h2>
+    </div>
+
+    <div class="card">
+      <p>Corporate creditworthiness depends primarily on a company's ability to generate <strong>profits and cash flow sufficient to meet interest and principal payments</strong>. Qualitative analysis assesses the stability, predictability, and sustainability of those cash flows — before any numbers are run. The key insight for credit analysts: unlike equity analysts who value all future cash flows, fixed-income analysts focus on whether cash flows are <strong>sufficient and timely enough</strong> to cover fixed debt obligations over the specific maturity of the debt claim.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">Business Model</div>
+        <ul>
+          <li><strong>Demand/Revenue/Margin stability:</strong> Stable, predictable cash flows → lower POD</li>
+          <li><strong>Asset quality:</strong> Tangible vs. intangible assets available as collateral</li>
+          <li>Capital-light vs. asset-heavy models have different debt capacities</li>
+          <li>Recurring vs. non-recurring revenue — credit analysts focus on recurring</li>
+          <li>Firms with stable cash flows can carry more debt safely</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Industry &amp; Competition</div>
+        <ul>
+          <li><strong>Industry structure:</strong> Concentration, competitive forces, barriers to entry</li>
+          <li><strong>Long-term growth and demand:</strong> Secular growth vs. declining industry</li>
+          <li>Life cycle: growth stage vs. mature vs. declining (affects debt sustainability)</li>
+          <li>Cyclicality: commodity, auto, construction — highly cyclical = higher credit risk at same leverage</li>
+          <li>Intra-industry rivalry: pricing power → margin stability</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Business Risk</div>
+        <ul>
+          <li>Deviations from expected demand, revenue, and margin — the key risk</li>
+          <li>Issuer-specific: company-level execution risk</li>
+          <li>Industry-specific: cyclicality, intra-industry rivalry, life cycle stage</li>
+          <li>External: macroeconomic, technology disruption, demographic shifts, geopolitical, ESG</li>
+          <li>Higher business risk → less debt capacity → higher POD at a given leverage level</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Analyst vs. Equity Analyst — Different Lens on the Same Company</div>
+      <p>An <strong>equity analyst</strong> values all future cash flows accruing to shareholders — they care about growth potential and upside.<br><br>
+      A <strong>credit analyst</strong> asks: can this company make its next interest payment? Its payment in five years? Will it still be generating sufficient cash flow when this bond matures? The focus is on the <em>downside</em> and the <em>finite time horizon</em> of the debt claim. Credit analysts are less excited about upside potential and more concerned about the stability of the floor — the minimum cash flows that ensure debt service.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: COLLATERAL                         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Collateral — Tangible vs. Intangible, Secured vs. Unsecured</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Tangible Collateral (Hard Collateral) — Preferred by Secured Lenders</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>Identifiable physical assets that can be seized and sold in default</li>
+          <li>Property, plant &amp; equipment (factories, buildings, power plants)</li>
+          <li>Inventory (can be liquidated)</li>
+          <li>Cash and marketable securities</li>
+          <li>Vessels, aircraft (Royal Caribbean example)</li>
+          <li>Higher recovery rates — easier to value and liquidate</li>
+          <li>Strongly preferred for secured debt pledges</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Intangible Collateral (Soft Collateral) — Less Preferred</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#dfd0c8;">
+          <li>Non-physical assets — harder to seize and sell</li>
+          <li>Patents and intellectual property rights</li>
+          <li>Trademarks, brands, trade names</li>
+          <li>Goodwill (cannot be sold separately from the business)</li>
+          <li>Lower recovery in default — value may evaporate with the business</li>
+          <li>May be pledged (RCL pledged IP along with vessels) but less reliable than tangible</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>When does collateral matter most?</strong> Collateral is most relevant for companies with <em>lower credit quality</em> — when POD rises to a level where the secondary source of repayment (collateral) is genuinely needed. For high-quality investment-grade issuers, the primary repayment source (operating cash flow) is so strong that collateral is largely irrelevant. For high-yield or stressed issuers, the type and quality of collateral can be the difference between full recovery and near-total loss.</p>
+      <p style="margin-top:10px;"><strong>Secured debt advantages:</strong> Either (1) reduces the borrowing cost vs. unsecured alternatives, or (2) provides access to debt markets that would otherwise be unavailable at all. Royal Caribbean's pandemic borrowing illustrates the second use case — the company's POD had risen dramatically (COVID suspension of operations) but investors were willing to lend at a reasonable rate because the ships and IP provided strong collateral (lower LGD).</p>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Example 2 — Royal Caribbean COVID-19 Secured Borrowing (May 2020)</div>
+      <div class="f">
+        SITUATION: Operations suspended March 2020 (COVID-19) → POD rises sharply<br><br>
+        SOLUTION: $3.3 billion senior secured notes (due 2023/2025)<br>
+        COLLATERAL: 28 of RCL's fleet of 60+ vessels + material intellectual property<br>
+        PURPOSE: Repay $2.35B 364-day senior secured term loan + general corporate purposes<br><br>
+        KEY INSIGHT: Despite greatly increased POD (operations stopped entirely),<br>
+        investors were willing to lend BECAUSE of REDUCED LGD from secured collateral<br>
+        → High-quality tangible assets (cruise ships) provided strong recovery backstop<br><br>
+        LESSON: Secured collateral can unlock debt market access even when POD is elevated<br>
+        EL = POD × LGD — if LGD falls enough, EL stays manageable even as POD rises
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: CORPORATE GOVERNANCE & RED FLAGS   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Corporate Governance &amp; Accounting Red Flags — The Character Factor</h2>
+    </div>
+
+    <div class="card">
+      <p>Corporate governance quality is a critical qualitative factor for debt investors. Unlike equity investors who can vote on management decisions, <strong>debtholders primarily protect themselves through covenants and deal structure at the time of issuance</strong>. Assessment of management's character and track record is therefore essential before lending.</p>
+    </div>
+
+    <h3>Covenants — IG vs. HY</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Investment-Grade Bonds — Lighter Covenant Package</div>
+        <ul>
+          <li>Typically <strong>affirmative covenants only</strong> (must do)</li>
+          <li>Compliance with applicable laws and regulations</li>
+          <li>Maintaining current lines of business</li>
+          <li>Insuring and maintaining company assets</li>
+          <li>Paying taxes on time</li>
+          <li>General corporate purpose use of proceeds with few restrictions</li>
+          <li>IG issuers have reputation and credit quality to protect → fewer restrictions needed</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">High-Yield Bonds — Tighter Covenant Package</div>
+        <ul>
+          <li><strong>Affirmative AND negative covenants</strong> (must do + cannot do)</li>
+          <li>Restriction on dividend payments to shareholders</li>
+          <li>Restriction on additional debt incurrence</li>
+          <li><strong>Financial maintenance covenants:</strong> minimum coverage ratios, maximum leverage ratios</li>
+          <li>Restrictions on asset sales, M&amp;A, related-party transactions</li>
+          <li>Springing liens, change of control provisions</li>
+          <li>Greater protection needed due to higher POD and agency risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Management Character Red Flags — What to Watch For</h3>
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Warning Signs in Corporate Credit Analysis</div>
+      <p>These signals suggest management may not act in debtholders' best interests or may be concealing problems:</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card" style="border-top:3px solid var(--danger);">
+        <div class="mc-title" style="color:var(--danger);">Actions That Harm Debtholders</div>
+        <ul>
+          <li>Overleveraged debt-financed acquisitions (increases leverage dramatically)</li>
+          <li>Large debt-financed special dividends to shareholders (cash leaves the firm)</li>
+          <li>Major debt-financed stock buyback programs (same effect)</li>
+          <li>Any financing strategy that prioritizes shareholders at cost of rising debt burden</li>
+          <li>These actions shift value from debtholders to equity holders</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent);">
+        <div class="mc-title" style="color:var(--accent);">Aggressive Accounting Policies</div>
+        <ul>
+          <li>Significant off-balance-sheet financing (hides true leverage)</li>
+          <li>Preferring capitalization over immediate expensing (inflates assets, delays expense recognition)</li>
+          <li>Early or premature revenue recognition (inflates current-period revenues)</li>
+          <li>Complex, opaque business structures with off-shore entities (Wirecard)</li>
+          <li>Revenue concentrated in few undisclosed partners (Wirecard: 3 partners = most profits)</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent3);">
+        <div class="mc-title" style="color:var(--accent3);">Personnel &amp; Auditor Red Flags</div>
+        <ul>
+          <li><strong>Frequent change of auditors</strong> — the #1 red flag</li>
+          <li>Frequent change of CFOs</li>
+          <li>Rapid international expansion through acquisitions (harder to audit)</li>
+          <li>Auditors unable to confirm existence of cash balances</li>
+          <li>Fraud or malfeasance allegations — any evidence requires heightened scrutiny</li>
+          <li>Whistleblower reports or short-seller attacks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Example 3 — Wirecard AG Accounting Fraud (Germany, 2020) — Classic Red Flags Case</div>
+      <div class="f">
+        COMPANY: German payments firm; joined DAX-30; EUR 27B peak market cap (2018)<br>
+        OUTCOME: Filed for insolvency June 2020; unsecured bonds fell to 20 cents/EUR; CEO arrested<br>
+        → Largest accounting fraud and bankruptcy in Germany's post-WWII corporate history<br><br>
+        RED FLAGS (all visible before collapse):<br>
+        ① Revenue concentration: 3 third-party partners = large share of reported revenue and most profits<br>
+        ② Opaque business model: rapid international expansion through acquisitions masked rising numbers<br>
+        ③ Off-shore entities: significant assets held through external offshore trust accounts<br>
+        ④ Self-dealing: bank subsidiary lent to fintech "partners" who generated revenue for Wirecard<br>
+        ⑤ Complex structure: revenue deposited in third-party trustee escrow (not Wirecard's accounts)<br><br>
+        TRIGGER: Auditors could not confirm existence of EUR 1.9 billion in cash<br>
+        (the bulk of Wirecard's reported profits — it didn't exist)<br><br>
+        LESSON: Qualitative analysis of management strategy and accounting policy could have<br>
+        identified all five red flags well in advance of the June 2020 collapse.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: QUANTITATIVE FRAMEWORK             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Quantitative Framework — Four Dimensions of Credit Analysis</h2>
+    </div>
+
+    <div class="ratio-grid">
+      <div class="rg-card profit">
+        <div class="rg-title">① Profitability</div>
+        <p><strong>Key question: Does the company generate enough operating income?</strong></p>
+        <ul style="margin-top:8px;">
+          <li>Focus on <em>operating profits</em> and <em>recurring revenues</em> — not one-time gains</li>
+          <li>EBIT and EBITDA margins are the primary metrics</li>
+          <li>Strong, stable earnings generate reliable cash flows for debt service</li>
+          <li>Macro factors (economic downturn) and market share loss threaten profitability</li>
+          <li>Cyclical companies: profitability varies — average through-the-cycle margins matter most</li>
+          <li>Higher EBIT margin → more profit available to pay interest → lower POD</li>
+        </ul>
+      </div>
+      <div class="rg-card coverage">
+        <div class="rg-title">② Coverage</div>
+        <p><strong>Key question: Do income/cash flows cover debt service payments?</strong></p>
+        <ul style="margin-top:8px;">
+          <li>Compare periodic income or cash flows to interest and principal payments</li>
+          <li>Interest coverage ratio (EBIT / Interest): most commonly used</li>
+          <li>Also: EBITDA, EBITDAR (adds rental expense) in numerator</li>
+          <li>Lease payments often included in denominator (operating leases are debt-like)</li>
+          <li>Higher coverage → more buffer → lower POD</li>
+          <li>Coverage ratios can deteriorate quickly in downturns — watch trends</li>
+        </ul>
+      </div>
+      <div class="rg-card leverage">
+        <div class="rg-title">③ Leverage</div>
+        <p><strong>Key question: How much debt relative to resources/earnings?</strong></p>
+        <ul style="margin-top:8px;">
+          <li>Compare total debt to assets, capital, or earnings/cash flow</li>
+          <li>Debt investors prefer LOWER leverage (more resources per unit of debt)</li>
+          <li>Equity investors often benefit from HIGHER leverage (financial leverage amplifies ROE)</li>
+          <li>Key ratio: Debt/EBITDA — used by rating agencies as rating trigger and in loan covenants</li>
+          <li>Also: Retained Cash Flow (RCF) / Net Debt — cash flow-based leverage</li>
+          <li>Higher Debt/EBITDA = higher leverage = higher credit risk</li>
+          <li>CAUTION: Debt/EBITDA volatile for cyclical companies with high operating leverage</li>
+        </ul>
+      </div>
+      <div class="rg-card liquidity">
+        <div class="rg-title">④ Liquidity</div>
+        <p><strong>Key question: Can the company meet near-term obligations even if CF is lumpy?</strong></p>
+        <ul style="margin-top:8px;">
+          <li>A solvent company (assets > liabilities) can still default if illiquid</li>
+          <li>Short-term resources: cash, marketable securities, current assets</li>
+          <li>Committed bank revolving credit facilities — if contractually drawable, count as liquidity</li>
+          <li>Most critical for companies with lumpy or seasonal cash flows</li>
+          <li>Liquidity analysis asks: "can they pay next quarter's interest?"</li>
+          <li>Current ratio, quick ratio — balance sheet liquidity measures</li>
+          <li>IG investors less focused on liquidity; HY investors: critical near-term concern</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 IG vs. HY — Different Emphasis in Quantitative Analysis</div>
+      <p><strong>Investment-grade investors</strong> are almost solely focused on <strong>POD</strong> — they assume recovery (LGD) will be adequate if default occurs. They monitor profitability, coverage, and leverage to assess whether the probability of default is creeping up.<br><br>
+      <strong>High-yield investors</strong> must consider both POD and LGD because the probability of default is non-trivial. They analyze subordination structures and collateral quality to estimate likely recovery rates. For very distressed companies, pricing focuses on expected default timing and expected recovery — not YTM.<br><br>
+      <strong>Approach (Exhibit 2):</strong> Top-down (macro → industry → company), bottom-up (balance sheet → income statement → cash flow), or hybrid. The hybrid combines macroeconomic cyclicality expectations with bottom-up issuer financial forecasting.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: KEY CREDIT RATIOS                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Key Financial Ratios in Credit Analysis — Exhibit 3 (Full)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">EBIT Margin — Profitability Ratio</div>
+      <div class="f">
+        EBIT Margin = EBIT (Operating Income) / Revenue<br><br>
+        EBIT = Earnings Before Interest and Taxes (= operating income)<br>
+        Why EBIT? Interest is paid before taxes → EBIT shows profit before capital structure costs<br><br>
+        EBITDA Margin = EBITDA / Revenue<br>
+        EBITDA = EBIT + Depreciation + Amortization<br>
+        EBITDA adds back non-cash charges → closer to cash operating profit<br><br>
+        Higher EBIT/EBITDA margin → More profit available to service debt → Lower POD<br>
+        Focus on RECURRING operating profit, not one-time gains
+      </div>
+      <div class="note">
+        <strong>Why not net income margin?</strong> Net income is after interest expense and taxes — but interest is the very payment we're assessing credit risk for. EBIT removes the capital structure effect, allowing apples-to-apples comparison across companies with different debt levels.<br><br>
+        <strong>EBITDA vs. EBIT:</strong> EBITDA is a proxy for cash operating earnings. Used when D&amp;A is large relative to earnings (capital-intensive industries). But EBITDA ignores capex (capital expenditures) — a company with high capex needs may have good EBITDA but poor free cash flow.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">EBIT to Interest Expense — Coverage Ratio (KEY EXAM RATIO)</div>
+      <div class="f">
+        Interest Coverage Ratio = EBIT / Interest Expense<br><br>
+        Also expressed as: EBITDA / Interest Expense (more generous, adds back D&amp;A)<br>
+        Or: EBITDAR / (Interest + Lease Payments) (adds rental expense for lease-heavy industries)<br><br>
+        Higher ratio = More operating profit per unit of interest = LESS credit risk<br>
+        Typical IG threshold: 4× or higher<br>
+        Typical HY range: 1.5× to 4×<br>
+        Below 1×: Operating profit less than interest expense → cash flow insufficient → severe distress<br><br>
+        KEY: Watch for TRENDS — declining coverage over time signals credit deterioration<br>
+        even if coverage is still adequate today.
+      </div>
+      <div class="note">
+        <strong>Denominator variations:</strong> Plain interest expense is most common. Sometimes reduced by interest EARNED on cash/securities (net interest). Sometimes increased to include operating lease payments (relevant for retailers with large lease obligations). EBITDAR/Fixed Charges = best coverage ratio for lease-heavy industries (retail, airlines).<br><br>
+        <strong>Direction to remember:</strong> Coverage ↑ = credit quality ↑. Coverage ↓ = credit quality ↓. This is opposite from leverage ratios.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Debt to EBITDA — Leverage Ratio (KEY EXAM RATIO)</div>
+      <div class="f">
+        Debt/EBITDA = Total Debt / EBITDA<br><br>
+        Total Debt may be adjusted for: operating lease obligations, off-balance-sheet commitments<br>
+        EBITDA = EBIT + D&amp;A<br><br>
+        Higher Debt/EBITDA → More debt relative to earnings → HIGHER credit risk<br>
+        Investment-grade typical: &lt;3× to 4×<br>
+        High-yield typical: 4× to 8×+<br>
+        CCC/near-distress: 7×+<br><br>
+        CRITICAL: Debt/EBITDA is highly VOLATILE for:<br>
+        (1) Cyclical companies — EBITDA swings dramatically through cycle<br>
+        (2) High operating leverage companies (fixed costs) — small revenue drops → large EBITDA drops<br>
+        Both cause ratio to spike in downturns even without additional debt
+      </div>
+      <div class="note">
+        <strong>Rating agency use:</strong> Debt/EBITDA is commonly referenced in Moody's and S&P methodologies as a trigger for rating actions (e.g., "a sustained Debt/EBITDA above X× could lead to a downgrade"). Banks use it in loan covenants (maintenance covenants: "Debt/EBITDA must not exceed X×").<br><br>
+        <strong>The volatility warning is critical:</strong> A cyclical company might show Debt/EBITDA of 3× at the peak and 8× in a downturn, without any new debt. Credit analysts must adjust for the cycle — use normalized or through-the-cycle EBITDA for cyclical industries.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Retained Cash Flow (RCF) to Net Debt — Cash Flow Leverage Ratio</div>
+      <div class="f">
+        RCF to Net Debt = Retained Cash Flow / (Debt − Cash and Marketable Securities)<br><br>
+        RCF = Net cash flow from operating activities − Dividends paid<br>
+        (= the cash the company retains after paying dividends, available to repay debt)<br><br>
+        Net Debt = Total Debt − Cash and Marketable Securities<br>
+        (= the amount of debt that is not covered by available liquid assets)<br><br>
+        Higher RCF/Net Debt → Lower leverage (more cash flow relative to net debt) → Better credit<br><br>
+        Advantages over Debt/EBITDA:<br>
+        (1) Uses cash flow (not accounting earnings) → harder to manipulate<br>
+        (2) Nets out available cash → reflects true debt burden<br>
+        (3) More conservative — dividends are subtracted before computing numerator
+      </div>
+    </div>
+
+    <h3>Ratio Direction Quick Reference — Always Know Which Way is Better</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>Higher = ?</th><th>Analogy</th></tr>
+        </thead>
+        <tbody>
+          <tr class="secured-row">
+            <td class="label-col">EBIT Margin</td>
+            <td>EBIT / Revenue</td>
+            <td class="good">Better (more profit per revenue dollar)</td>
+            <td>Profitability margin</td>
+          </tr>
+          <tr>
+            <td class="label-col">EBITDA Margin</td>
+            <td>EBITDA / Revenue</td>
+            <td class="good">Better</td>
+            <td>Cash profitability margin</td>
+          </tr>
+          <tr class="secured-row">
+            <td class="label-col">EBIT / Interest</td>
+            <td>EBIT / Interest Expense</td>
+            <td class="good">Better (more coverage)</td>
+            <td>Interest coverage ratio</td>
+          </tr>
+          <tr>
+            <td class="label-col">Debt / EBITDA</td>
+            <td>Total Debt / EBITDA</td>
+            <td class="bad">Worse (more leverage)</td>
+            <td>Debt-to-earnings leverage</td>
+          </tr>
+          <tr class="secured-row">
+            <td class="label-col">RCF / Net Debt</td>
+            <td>Retained Cash Flow / (Debt − Cash)</td>
+            <td class="good">Better (more cash flow per net debt)</td>
+            <td>Cash flow leverage (inverse)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: CASH FLOW MEASURES                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Cash Flow Measures Used in Credit Analysis — FCF, FFO, RCF</h2>
+    </div>
+
+    <div class="card">
+      <p>Credit analysis focuses on <strong>cash flows from operating activities</strong>, not asset disposals or financing activities (which are one-off and unsustainable). Three cash flow measures are commonly used, all more conservative than EBITDA because they make adjustments for cash used in the business or distributed to shareholders.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Three Credit Cash Flow Measures — Definitions</div>
+      <div class="f">
+        FREE CASH FLOW (FCF):<br>
+        FCF = Net Income − Working Capital Increases − Capital Expenditures (Fixed Assets) − Net Interest Paid<br>
+        Most conservative — captures all cash used in running and growing the business<br>
+        Debt repayment capacity after investing in the business<br><br>
+        FUNDS FROM OPERATIONS (FFO):<br>
+        FFO = Net Income from Continuing Operations + Depreciation &amp; Amortization<br>
+              + Deferred Income Tax + Other Non-Cash Items<br>
+        Adjusts net income for non-cash charges to get closer to operating cash generation<br>
+        Used heavily by Moody's and S&amp;P in sovereign and corporate credit analysis<br><br>
+        RETAINED CASH FLOW (RCF):<br>
+        RCF = Net Cash Flow from Operating Activities − Dividends Paid<br>
+        The operating cash flow that the company keeps after shareholder distributions<br>
+        Used in the denominator: RCF / Net Debt leverage ratio<br><br>
+        All three are NON-IFRS — no official GAAP/IFRS definition; vary by analyst/agency
+      </div>
+      <div class="note">
+        <strong>Why use these instead of EBITDA?</strong> EBITDA ignores changes in working capital, capital expenditure requirements, interest payments, and shareholder dividends. A company with strong EBITDA but heavy capex needs (like a semiconductor company) may have very little actual free cash flow available for debt repayment. These three measures capture more of the real cash available to service debt.<br><br>
+        <strong>Also:</strong> Debt and interest expense may be adjusted for operating leases (these are contractual payment obligations that function like debt but may not appear on the balance sheet under some accounting standards). Credit analysts add back operating lease obligations to debt and add operating lease payments to interest expense to capture the full fixed payment burden.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: SENIORITY RANKINGS                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Seniority Rankings &amp; Priority of Claims — Exhibit 4</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Seniority Ranking</div>
+      <div class="def-body">The <strong>priority of payment</strong> in the event of default or bankruptcy. The most senior (highest-ranking) debt has the first claim on the cash flows and assets of the issuer. Seniority directly determines the recovery rate (RR) and thus the LGD for a specific debt issue. Higher seniority = higher recovery = lower LGD = lower Expected Loss (for a given POD).</div>
+    </div>
+
+    <div class="seniority-ladder">
+      <div class="sl-item highest">
+        <div class="sl-label">1st Lien / Mortgage</div>
+        <div class="sl-desc"><strong>HIGHEST.</strong> Pledge of specific property (first mortgage) or specific assets including PP&amp;E, licenses, patents, brands, inventory (first lien). First to be paid from collateral proceeds. Most secured lenders.</div>
+        <div class="sl-lgd">Lowest LGD (~27% historical)</div>
+      </div>
+      <div class="sl-item secured">
+        <div class="sl-label">Senior Secured</div>
+        <div class="sl-desc">Secured claim on pledged assets. Ranks below 1st lien but above junior secured. RCL's 2020 bonds fall here (vessels + IP as collateral). Most second-lien loans are senior secured obligations.</div>
+        <div class="sl-lgd">Low LGD (~39% historical)</div>
+      </div>
+      <div class="sl-item secured">
+        <div class="sl-label">Junior Secured</div>
+        <div class="sl-desc">Secured interest in pledged assets that ranks BELOW first lien in both collateral protection and priority of payment. Still higher than unsecured claims on collateral, but lower than senior secured.</div>
+        <div class="sl-lgd">Moderate LGD</div>
+      </div>
+      <div class="sl-item sen-unsec">
+        <div class="sl-label">Senior Unsecured</div>
+        <div class="sl-desc"><strong>Most common corporate bond type.</strong> Only a general claim on assets and cash flows — no specific collateral pledge. BRWA's bonds are senior unsecured. Ranks below all secured debt but above subordinated. Standard "issuer rating" level.</div>
+        <div class="sl-lgd">~53% LGD historical</div>
+      </div>
+      <div class="sl-item sub">
+        <div class="sl-label">Senior Subordinated</div>
+        <div class="sl-desc">Ranks below senior unsecured. Has priority over subordinated and junior subordinated, but gets paid after all senior claims are satisfied. Step-down in recovery vs. senior unsecured.</div>
+        <div class="sl-lgd">Higher LGD</div>
+      </div>
+      <div class="sl-item sub">
+        <div class="sl-label">Subordinated</div>
+        <div class="sl-desc">General unsecured claim but contractually subordinated. Often little or no recovery in default. Issued by issuers needing cheap non-dilutive capital — costs less than equity (tax-deductible interest) but is non-dilutive. VIVU's 10% notes are here.</div>
+        <div class="sl-lgd">Very High LGD (~72% historical)</div>
+      </div>
+      <div class="sl-item sub">
+        <div class="sl-label">Junior Subordinated</div>
+        <div class="sl-desc">LOWEST priority among debt claims. Almost always zero recovery in default. Sometimes called "mezzanine" debt in leveraged finance. Essentially equity-like risk with debt-like coupon.</div>
+        <div class="sl-lgd">Near 100% LGD</div>
+      </div>
+      <div class="sl-item equity">
+        <div class="sl-label">Equity (Common/Preferred)</div>
+        <div class="sl-desc">LOWEST of all. Paid only after ALL debt claims satisfied in full. In most corporate bankruptcies, equity recovers nothing. Common shareholders typically wiped out; preferred shareholders may recover a small fraction.</div>
+        <div class="sl-lgd">100% LGD (zero recovery)</div>
+      </div>
+    </div>
+
+    <h3>Priority of Claims — Key Rules</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>Same seniority = pari passu = same pro-rata claim.</strong> A senior unsecured bondholder with 30-year maturity has the exact same pro-rata claim as one with 6-month maturity — maturity doesn't affect seniority. All senior unsecured creditors share equally from the remaining pool after secured creditors are paid.</li>
+        <li style="margin-top:8px;"><strong>If secured collateral is insufficient:</strong> The deficiency (value of claim minus collateral proceeds) becomes a senior unsecured claim — NOT a secured claim. For example, if secured debt is $100M but collateral only generates $60M, the remaining $40M becomes an unsecured claim ranked pari passu with other senior unsecured creditors.</li>
+        <li style="margin-top:8px;"><strong>Practical reality:</strong> Lower-seniority creditors and even shareholders may receive some consideration without more senior creditors being paid in full. Why? Bankruptcy takes time, legal fees are substantial, company value declines (employees leave, customers churn), and faster resolution is valuable. Higher seniority holders may accept compromise to accelerate exit from bankruptcy.</li>
+        <li style="margin-top:8px;"><strong>Country variation:</strong> US bankruptcy law (Chapter 11) biases toward reorganization and company survival. Many other countries lean toward liquidation and maximizing recovery for senior bank lenders. Priority of claims varies by jurisdiction.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: RECOVERY RATES                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Recovery Rates — By Seniority and By Industry (Exhibits 5 &amp; 6)</h2>
+    </div>
+
+    <div class="card">
+      <p>Historical recovery rates (RR) confirm the seniority priority — higher seniority = higher average recovery = lower LGD. But <strong>recovery rates are averages with very high variability</strong> across industries, economic cycles, and individual companies. Never rely on averages for a specific credit situation.</p>
+    </div>
+
+    <h3>Recovery Rates by Seniority — Exhibit 5 (Moody's, North American non-financials)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Priority Position</th><th>2020 (Emergence)</th><th>2019 (Emergence)</th><th>1987–2020 Average</th><th>Implied Avg LGD</th></tr>
+        </thead>
+        <tbody>
+          <tr class="secured-row">
+            <td class="label-col">Term Loans (all types)</td>
+            <td>48.5%</td>
+            <td>58.1%</td>
+            <td class="highlight">72.6%</td>
+            <td class="good">27.4%</td>
+          </tr>
+          <tr>
+            <td class="label-col">Senior Secured Bonds</td>
+            <td>34.8%</td>
+            <td>45.9%</td>
+            <td class="highlight">61.4%</td>
+            <td class="good">38.6%</td>
+          </tr>
+          <tr class="unsecured-row">
+            <td class="label-col">Senior Unsecured Bonds</td>
+            <td>8.6%</td>
+            <td>31.3%</td>
+            <td class="highlight">46.9%</td>
+            <td class="mid">53.1%</td>
+          </tr>
+          <tr class="sub-row">
+            <td class="label-col">Subordinated Bonds</td>
+            <td>0.9%</td>
+            <td>24.7%</td>
+            <td class="highlight">27.9%</td>
+            <td class="bad">72.1%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Recovery Rates in 2020 vs. Long-Term Averages — The Cycle Effect</div>
+      <p>Notice how 2020 recovery rates (COVID year) were dramatically lower than long-term averages and 2019 figures. Senior unsecured: 8.6% in 2020 vs. 31.3% in 2019 vs. 46.9% long-term average. Subordinated bonds: 0.9% in 2020 — essentially zero! This demonstrates that <strong>recovery rates are highly cyclical</strong>: when the economy is weak, asset values and buyer appetite collapse, leaving less to distribute to creditors. Strong economies = higher recovery (robust resale markets for assets). Crisis conditions = much lower recovery (fire-sale prices, distressed market).</p>
+    </div>
+
+    <h3>Recovery Rates by Industry — Exhibit 6 (1983–2020)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Industry</th><th>1st Lien Bond RR</th><th>Senior Unsecured RR</th><th>Subordinated Bond RR</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="label-col">Energy: Electricity</td><td class="good">81.5%</td><td class="good">58.2%</td><td>39.5%</td><td>High tangible asset value (power plants)</td></tr>
+          <tr><td class="label-col">Services: Business</td><td class="good">71.1%</td><td>46.8%</td><td>46.2%</td><td>Service businesses can continue operating</td></tr>
+          <tr><td class="label-col">Capital Equipment</td><td class="good">62.3%</td><td>36.7%</td><td>45.5%</td><td>Machinery can be sold/redeployed</td></tr>
+          <tr><td class="label-col">Automotive</td><td>57.9%</td><td>46.1%</td><td>49.5%</td><td>Moderate tangible assets</td></tr>
+          <tr><td class="label-col">Retail</td><td>57.8%</td><td>36.3%</td><td class="bad">21.7%</td><td>Lease-heavy; assets less distinctive</td></tr>
+          <tr><td class="label-col">Energy: Oil &amp; Gas</td><td>56.6%</td><td>36.3%</td><td>39.1%</td><td>Volatile commodity prices affect asset value</td></tr>
+          <tr><td class="label-col">Telecom</td><td>56.8%</td><td class="bad">26.2%</td><td>31.6%</td><td>Network assets hard to sell intact</td></tr>
+          <tr><td class="label-col">High-Tech</td><td>53.5%</td><td>33.1%</td><td class="bad">23.7%</td><td>Intangible-heavy; assets may have no standalone value</td></tr>
+          <tr><td class="label-col">Environmental</td><td class="bad">13.0%</td><td>29.7%</td><td class="bad">5.4%</td><td>Industry in secular decline; limited asset demand</td></tr>
+          <tr class="total-row"><td class="label-col">Overall Average</td><td class="highlight">53.0%</td><td class="highlight">41.8%</td><td class="highlight">34.7%</td><td>Averages across all 33 Moody's industry groups</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Three Key Recovery Rate Takeaways</div>
+      <p><strong>① Industries in secular decline have lower recoveries.</strong> Environmental services (13% on 1st lien!) — limited buyer demand for assets in a declining industry. Compare to energy electricity (81.5%) where power plant assets are highly valued.<br><br>
+      <strong>② Tangible asset-heavy industries recover more.</strong> Power plants, equipment, and vessels are easier to sell than intangible-heavy assets. High-tech and telecom generally have worse recoveries than capital equipment industries.<br><br>
+      <strong>③ Recovery rates are averages with extreme variability.</strong> Highest 1st lien recovery: 96.25%. Lowest 1st lien recovery: 7.00%. These are averages — individual cases can deviate dramatically. An abundance of secured debt in a capital structure will lead to lower recovery for unsecured and subordinated claims (the pie shrinks for lower-ranked creditors).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: ISSUER vs. ISSUE RATINGS — NOTCHING -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Issuer vs. Issue Ratings — Notching Explained</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Notching</div>
+      <div class="def-body">The rating agency practice of adjusting an individual debt issue's rating <strong>up or down</strong> from the issuer-level rating to reflect differences in LGD due to seniority, subordination, and collateral. The POD is typically the same for all issues of the same issuer (cross-default provisions mean all debt defaults simultaneously), but LGD differences by seniority create issue-specific ratings.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Issuer Rating (Corporate Family Rating / CCR)</div>
+        <ul>
+          <li>Addresses the <strong>overall creditworthiness</strong> of the issuer</li>
+          <li>Typically mapped to the <strong>senior unsecured debt level</strong> for consistency</li>
+          <li>Also called: Corporate Family Rating (CFR, Moody's), Corporate Credit Rating (CCR, S&amp;P), Issuer Default Rating (IDR, Fitch)</li>
+          <li>Reflects the issuer's overall POD (and EL for Moody's)</li>
+          <li>Starting point for notching individual issues</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Issue Rating (Individual Debt Issue)</div>
+        <ul>
+          <li>Reflects <strong>specific obligations</strong> — takes seniority into account</li>
+          <li>POD is typically the same as issuer (cross-default provisions)</li>
+          <li>Differs from issuer rating due to different <strong>LGD by seniority</strong></li>
+          <li>Secured debt: rated ABOVE issuer rating (lower LGD → better issue rating)</li>
+          <li>Subordinated debt: rated BELOW issuer rating (higher LGD → worse issue rating)</li>
+          <li>Amount of notching depends on credit quality and degree of subordination</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Notching Direction and Magnitude</div>
+      <div class="f">
+        Secured debt issue:     Issuer rating + notches UP (lower LGD → better recovery)<br>
+        Senior unsecured issue: Same as issuer rating (baseline)<br>
+        Subordinated issue:     Issuer rating − notches DOWN (higher LGD → worse recovery)<br><br>
+        NOTCHING SIZE (general principle):<br>
+        Higher-rated issuers (IG):  Smaller notching adjustments (lower base POD → LGD differences matter less)<br>
+        Lower-rated issuers (HY):   Larger notching adjustments (higher base POD → LGD differences matter more)<br><br>
+        ROYAL CARIBBEAN EXAMPLE (from Example 6):<br>
+        Issuer CFR (Moody's):           B1<br>
+        Senior unsecured notes (2021):  B2 (one notch BELOW issuer — less collateral protection)<br>
+        Senior secured notes (2020):    Ba2 (THREE notches ABOVE issuer — strong vessel/IP collateral)<br><br>
+        Ba2 to B2 = FOUR notch spread between secured and unsecured → large notching for HY issuer
+      </div>
+      <div class="note">
+        <strong>Cross-default provisions:</strong> Most bond indentures contain cross-default clauses — if one issue defaults, all issues are deemed to be in default simultaneously. This means all issues of the same issuer have the same POD. The only reason for different ratings is different LGD (from seniority).<br><br>
+        <strong>Structural subordination:</strong> When a holding company has debt outstanding and its operating subsidiaries also have debt, the subsidiary debt has priority over the holding company debt — operating cash flows service the subsidiary debt first, and only what's left over gets "upstreamed" to the parent. Parent holding company debt is therefore structurally subordinated to subsidiary debt, even if it's technically senior unsecured at the parent level.
+      </div>
+    </div>
+
+    <h3>How Rating Agencies Approach EL vs. POD</h3>
+    <div class="three-col">
+      <div class="mini-card" style="border-top:3px solid var(--danger);">
+        <div class="mc-title" style="color:var(--danger);">Moody's — EL Approach</div>
+        <p style="font-size:13px;">Defines credit risk as the risk an entity may not meet contractual obligations AND the estimated financial loss in the event of default. Considers BOTH POD AND LGD (recovery) in its ratings. Rating scale reflects Expected Loss (EL = POD × LGD). Particularly relevant for speculative-grade debt where recovery differences are meaningful. Notching incorporates both default probability and recovery expectations.</p>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent2);">
+        <div class="mc-title" style="color:var(--accent2);">S&amp;P — POD Approach</div>
+        <p style="font-size:13px;">Ratings primarily reflect POD. Publishes SEPARATE recovery ratings (RR1–RR6) for individual issues in addition to issue credit ratings. Recovery ratings explicitly capture loss severity (seniority and collateral). S&P may also incorporate recovery into notching adjustments for issue ratings. POD is the primary rating driver; recovery is a supplemental analytical tool.</p>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent3);">
+        <div class="mc-title" style="color:var(--accent3);">Fitch — POD Approach (like S&P)</div>
+        <p style="font-size:13px;">Assigns Issuer Default Ratings (IDRs) reflecting a POD view — similar to S&P's approach. Notching adjustments then apply to issue ratings by considering recovery expectations for specific issues. Fitch recovery ratings scale their notching of individual issue ratings up or down from the IDR based on expected recovery outcome (superior, average, or below-average recovery).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: CASE STUDIES                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Key Case Studies — Royal Caribbean &amp; VIVU Bonds</h2>
+    </div>
+
+    <h3>Royal Caribbean — Secured (May 2020) vs. Unsecured (March 2021)</h3>
+    <div class="auction-box">
+      <div class="label">RCL Capital Structure — Illustrating How POD and LGD Drive Ratings Simultaneously</div>
+      <div class="f">
+        MAY 2020 — SENIOR SECURED NOTES:<br>
+        Amount: $3.3 billion | Collateral: 28 vessels + IP<br>
+        Situation: Operations fully suspended (COVID) → POD very high<br>
+        Moody's rating: Ba2 (leveraged finance grade but accessible because LGD reduced by collateral)<br>
+        Lesson: High POD but investors accepted it BECAUSE collateral lowered LGD significantly<br><br>
+        MARCH 2021 — SENIOR UNSECURED NOTES:<br>
+        Amount: $1.5 billion | No collateral pledged<br>
+        Situation: Cruise operations resuming → POD declining from pandemic peak<br>
+        Moody's CFR (Issuer): B1<br>
+        New unsecured notes (Issue rating): B2 — one notch BELOW issuer (less protection)<br>
+        Senior secured (from 2020): Ba2 — THREE notches ABOVE issuer (strong collateral)<br><br>
+        SPREAD: Ba2 to B2 = FOUR rating notches between secured and unsecured<br>
+        Large spread reflects HY credit quality — higher POD means LGD differences matter more → larger notching
+      </div>
+    </div>
+
+    <h3>VIVU Bond — Seniority Comparison (Example 5)</h3>
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">VIVU 6.5% 7-Year Callable Notes — SENIOR SECURED</div>
+        <p style="font-size:13.5px; color:#c8dfd0;">USD 400M | 6.5% fixed, semiannual | <strong>Secured and unsubordinated</strong></p>
+        <p style="font-size:13.5px; color:#c8dfd0; margin-top:6px;">Collateral: specific assets as identified in the Indenture</p>
+        <p style="font-size:13.5px; color:#c8dfd0; margin-top:6px;">Callable: issuer can repurchase beginning year 3 through maturity (year 7)</p>
+        <p style="font-size:13.5px; color:#c8dfd0; margin-top:6px;">In default: FIRST claim on collateral proceeds. If collateral insufficient, deficiency becomes senior unsecured claim (pari passu with other senior unsecured).</p>
+        <p style="font-size:13.5px; color:#c8dfd0; margin-top:6px;"><strong>Lower yield premium reflects lower LGD from collateral support.</strong></p>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">VIVU 10% 10-Year Notes — SUBORDINATED UNSECURED</div>
+        <p style="font-size:14px; color:#dfd0c8;">USD 300M | 10.0% fixed, semiannual | <strong>Direct, unsecured, subordinated</strong></p>
+        <p style="font-size:14px; color:#dfd0c8; margin-top:6px;">No collateral pledged</p>
+        <p style="font-size:14px; color:#dfd0c8; margin-top:6px;">Rank pari passu with each other (no preference among subordinated notes)</p>
+        <p style="font-size:14px; color:#dfd0c8; margin-top:6px;">In default: Paid AFTER secured creditors AND after senior unsecured creditors. Often little or no recovery — effectively near 100% LGD.</p>
+        <p style="font-size:14px; color:#dfd0c8; margin-top:6px;"><strong>Higher yield (10% vs. 6.5%) = compensation for higher LGD and lower seniority.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Corporate credit analysis framework:</strong> Assesses POD (probability of default) and LGD (loss given default). Both qualitative (business model, industry, governance) and quantitative (financial ratios) factors used.</li>
+        <li>✅ <strong>Credit analyst vs. equity analyst:</strong> Credit analyst focuses on downside — whether cash flows are sufficient and timely to meet fixed obligations. Equity analyst values all future cash flows for upside. Credit focus: finite maturity of debt claims.</li>
+        <li>✅ <strong>Qualitative factors (Exhibit 1):</strong> (1) Business model — demand/revenue/margin stability, asset quality; (2) Industry and competition — structure, competitive forces, long-term growth; (3) Business risk — deviations from expected performance; (4) Corporate governance — appropriate use of proceeds, covenant compliance, management character.</li>
+        <li>✅ <strong>Tangible vs. intangible collateral:</strong> Tangible (PP&amp;E, inventory, cash, vessels) preferred by secured lenders — easier to seize and sell. Intangible (patents, IP, goodwill) is less reliable as collateral. Both may be pledged but recovery from tangibles is typically higher.</li>
+        <li>✅ <strong>IG covenants:</strong> Primarily affirmative covenants (comply with laws, maintain business, insure assets, pay taxes). Few restrictions — issuer quality serves as protection.</li>
+        <li>✅ <strong>HY covenants:</strong> Both affirmative AND negative covenants. Dividend restrictions, additional debt restrictions, financial maintenance covenants (max leverage, min coverage). Stronger protection because higher POD creates greater agency risk.</li>
+        <li>✅ <strong>Management red flags:</strong> Debt-financed acquisitions that spike leverage; large debt-financed special dividends or buybacks; off-balance-sheet financing; capitalizing vs. expensing; premature revenue recognition; <strong>frequent change of auditors or CFOs (most important red flag).</strong></li>
+        <li>✅ <strong>Four quantitative dimensions:</strong> Profitability (stable earnings drive cash flows), Coverage (income/CF vs. debt service), Leverage (debt vs. resources/earnings), Liquidity (short-term resources to meet near-term obligations).</li>
+        <li>✅ <strong>EBIT Margin = EBIT / Revenue.</strong> Higher = better (more profit per revenue dollar to service debt). Focus on recurring operating profit, not one-time items.</li>
+        <li>✅ <strong>EBIT / Interest Expense (coverage ratio).</strong> Higher = better (more coverage). Below 1× = operating profit insufficient to cover interest — severe distress signal.</li>
+        <li>✅ <strong>Debt / EBITDA (leverage ratio).</strong> Higher = worse (more leverage = higher credit risk). Highly volatile for cyclical companies — normalize EBITDA through the cycle. Used by rating agencies as rating trigger; in loan covenants as maintenance test.</li>
+        <li>✅ <strong>RCF / Net Debt.</strong> RCF = operating cash flow − dividends. Net Debt = Debt − Cash. Higher ratio = lower leverage = better credit. Uses cash flows (harder to manipulate than earnings).</li>
+        <li>✅ <strong>Ratio directions: Coverage ↑ = better. Leverage ↑ (Debt/EBITDA) = worse. Profitability ↑ = better. RCF/Net Debt ↑ = better.</strong></li>
+        <li>✅ <strong>Cash flow measures:</strong> FCF = net income − WC increases − capex − net interest. FFO = net income + D&amp;A + deferred taxes + non-cash items. RCF = operating CF − dividends. All three more conservative than EBITDA. Non-IFRS definitions vary.</li>
+        <li>✅ <strong>Seniority ranking (Exhibit 4), highest to lowest:</strong> First Lien/Mortgage → Senior Secured → Junior Secured → Senior Unsecured → Senior Subordinated → Subordinated → Junior Subordinated → Equity.</li>
+        <li>✅ <strong>Senior unsecured = most common corporate bond type.</strong> General claim on issuer's assets; no specific collateral pledge. Issuer rating is typically mapped to this level.</li>
+        <li>✅ <strong>Priority of claims — pari passu within seniority class.</strong> A 30-year senior unsecured bond has the same pro-rata claim in bankruptcy as a 6-month senior unsecured bond. Maturity doesn't affect priority.</li>
+        <li>✅ <strong>If collateral insufficient:</strong> Deficiency balance becomes a senior unsecured claim. Secured creditors don't automatically get more recovery just from having a pledge — if the collateral falls short, they join the unsecured pool for the balance.</li>
+        <li>✅ <strong>Historical recovery rates (Exhibit 5):</strong> Term loans ~72.6% (long-run avg). Senior secured bonds ~61.4%. Senior unsecured bonds ~46.9%. Subordinated bonds ~27.9%. Note: 2020 COVID crisis showed dramatically lower recoveries (senior unsecured: 8.6%).</li>
+        <li>✅ <strong>Recovery rates vary by:</strong> (1) Industry — secular decline industries recover less. (2) Cycle — strong economy = higher recovery; crisis = lower recovery. (3) Capital structure — more secured debt means less left for unsecured creditors.</li>
+        <li>✅ <strong>Notching:</strong> Issuer rating typically mapped to senior unsecured level. Secured issues: rated ABOVE issuer (lower LGD → lower notches). Subordinated issues: rated BELOW issuer (higher LGD → negative notches). Larger notching for lower-rated (HY) issuers because higher POD means LGD differences matter more.</li>
+        <li>✅ <strong>Moody's = EL approach (POD × LGD both matter). S&P = POD approach (separate recovery ratings for LGD). Fitch = POD approach (IDR + notching for recovery).</strong></li>
+        <li>✅ <strong>Structural subordination:</strong> Parent holding company debt is subordinated to operating subsidiary debt because operating CF services subsidiary debt first before being upstreamed to the parent.</li>
+        <li>✅ <strong>RCL case:</strong> Pandemic → POD rises → secured notes (Ba2) unlocked debt market access. Post-pandemic unsecured notes: B2 (one notch below B1 CFR). Secured vs. unsecured spread: 4 rating notches (Ba2 vs. B2) — large because HY issuer where LGD differences matter more.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 16</div>
+      <div class="f">
+        ═══ FOUR QUANTITATIVE DIMENSIONS ═══<br>
+        Profitability:  Strong, stable recurring earnings → reliable CF for debt service<br>
+        Coverage:       Periodic income/CF vs. interest/principal → higher = better<br>
+        Leverage:       Total debt vs. assets/earnings/CF → lower = better<br>
+        Liquidity:      Short-term resources to meet near-term obligations<br><br>
+
+        ═══ KEY CREDIT RATIOS (EXHIBIT 3) ═══<br>
+        EBIT Margin        = EBIT / Revenue                    [higher = better: profitability]<br>
+        EBIT/Interest      = EBIT / Interest Expense           [higher = better: coverage]<br>
+        Debt/EBITDA        = Total Debt / EBITDA               [higher = worse: leverage]<br>
+        RCF/Net Debt       = Retained CF / (Debt − Cash)       [higher = better: CF leverage]<br><br>
+
+        ═══ SENIORITY LADDER (HIGH → LOW PRIORITY) ═══<br>
+        1st Lien/Mortgage → Senior Secured → Junior Secured<br>
+        Senior Unsecured (most common bond) → Sr. Subordinated<br>
+        Subordinated → Junior Subordinated → Equity<br><br>
+
+        ═══ RECOVERY RATES (LONG-RUN AVERAGE) ═══<br>
+        Term Loans: 72.6% | Senior Secured: 61.4%<br>
+        Senior Unsecured: 46.9% | Subordinated: 27.9%<br>
+        Cyclical: 2020 senior unsecured fell to 8.6% (COVID crisis)<br><br>
+
+        ═══ NOTCHING ═══<br>
+        Issuer rating → mapped to senior unsecured level<br>
+        Secured issues: notched UP (lower LGD)<br>
+        Subordinated: notched DOWN (higher LGD)<br>
+        IG issuers: smaller notching | HY issuers: larger notching<br><br>
+
+        ═══ RATING AGENCY APPROACHES ═══<br>
+        Moody's: EL = POD × LGD (both matter in ratings)<br>
+        S&P: POD primary + separate recovery ratings for LGD<br>
+        Fitch: IDR (POD) + notching for recovery<br><br>
+
+        ═══ GOVERNANCE RED FLAGS ═══<br>
+        Frequent auditor/CFO changes (most important!)<br>
+        Off-balance-sheet financing | Premature revenue recognition<br>
+        Debt-financed acquisitions/buybacks that spike leverage<br>
+        Complex offshore structures (Wirecard pattern)
+      </div>
+      <div class="note">
+        <strong>Debt/EBITDA warning:</strong> This ratio is commonly used by rating agencies and banks but is highly volatile for cyclical companies with high operating leverage. When analyzing cyclical sectors (auto, commodities, construction), always normalize EBITDA through the business cycle — don't evaluate leverage at the peak when EBITDA is inflated.<br><br>
+        <strong>Notching logic:</strong> Cross-default provisions mean ALL issues of the same issuer have the same POD. The only reason for different issue ratings is different LGD from seniority. For IG issuers (low POD), even if LGD differs significantly between secured and unsecured, the EL difference is small. For HY issuers (high POD), the same LGD difference creates a large EL difference — hence larger notching. This is why the RCL example shows a 4-notch spread between secured and unsecured at the B1 CFR level.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 16: Credit Analysis for Corporate Issuers · Exam Prep Notes
+</footer>
+
+</body>
+</html>

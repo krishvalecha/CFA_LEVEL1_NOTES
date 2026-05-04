@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 2: Portfolio Risk and Return Part II</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14100d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .line-block { border-radius: 6px; padding: 20px 24px; margin: 14px 0; }
+  .line-cml { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.35); }
+  .line-sml { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.35); }
+  .line-scl { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.35); }
+  .line-cal { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.35); }
+  .line-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 12px; text-transform: uppercase; }
+  .line-cml .line-label { color: var(--accent3); }
+  .line-sml .line-label { color: var(--accent2); }
+  .line-scl .line-label { color: var(--accent); }
+  .line-cal .line-label { color: var(--danger); }
+  .line-block ul { padding-left: 20px; }
+  .line-block li { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+
+  .ratio-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .ratio-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ratio-body { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 2</div>
+  <h1>Portfolio Risk and <span>Return: Part II</span></h1>
+  <p>Exam-ready notes: capital market line (CML), systematic vs. nonsystematic risk, return-generating models, single-index/market model, beta calculation and interpretation, the Capital Asset Pricing Model (CAPM), security market line (SML), performance appraisal measures (Sharpe, Treynor, M², Jensen's alpha), and applications to security selection and portfolio construction.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · CML &amp; Capital Market Theory</a>
+  <a class="toc-item" href="#s2">02 · Leveraged Portfolios</a>
+  <a class="toc-item" href="#s3">03 · Systematic vs. Nonsystematic Risk</a>
+  <a class="toc-item" href="#s4">04 · Return-Generating Models</a>
+  <a class="toc-item" href="#s5">05 · Beta — Calculation &amp; Interpretation</a>
+  <a class="toc-item" href="#s6">06 · CAPM &amp; SML</a>
+  <a class="toc-item" href="#s7">07 · CML vs. SML Master Comparison</a>
+  <a class="toc-item" href="#s8">08 · Beyond CAPM</a>
+  <a class="toc-item" href="#s9">09 · Performance Appraisal Ratios</a>
+  <a class="toc-item" href="#s10">10 · Portfolio Construction Applications</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: CAPITAL MARKET THEORY & CML -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Capital Market Theory &amp; the Capital Market Line</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Homogeneity of Expectations</div>
+      <div class="def-body">The assumption that <strong>all investors have the same expectations</strong> for prices, cash flows, and other investment characteristics. Under this assumption, all investors arrive at the <strong>same optimal risky portfolio</strong> — the market portfolio. If relaxed, investors arrive at different optimal portfolios. This is a KEY CAPM assumption.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why homogeneity matters</strong>: The intrinsic value of any asset depends on estimates of (a) future cash flows and (b) required rate of return. Different analysts value these differently — leading to different "optimal" portfolios. Homogeneity forces everyone to the same conclusion → a single market portfolio.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Asset Price Formula (Intrinsic Value)</div>
+      <div class="f">
+        P = Σ [CF<sub>t</sub> / (1 + r<sub>t</sub>)<sup>t</sup>]
+      </div>
+      <div class="note">
+        CF<sub>t</sub> = cash flow at end of period t<br>
+        r<sub>t</sub> = required return/discount rate for period t<br>
+        Different analysts use different CFs and r<sub>t</sub>s → different intrinsic values → different "optimal" portfolios without homogeneity.
+      </div>
+    </div>
+
+    <h3>Passive vs. Active Portfolio Management</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Passive Portfolios</div>
+        <ul>
+          <li>Assume market prices are unbiased (informationally efficient market)</li>
+          <li>Replicate market indexes (S&amp;P 500, Nikkei 300, CAC 40)</li>
+          <li>Index funds / ETFs</li>
+          <li><strong>Low costs</strong> — no security analysis needed</li>
+          <li>Examples: S&amp;P 500 index fund, Nikkei 300 ETF</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Active Portfolios</div>
+        <ul>
+          <li>Rely on own valuations, not market prices</li>
+          <li>Overweight undervalued / underweight (or short) overvalued</li>
+          <li>Higher costs (research, transactions)</li>
+          <li>Examples: most open-end mutual funds, hedge funds</li>
+          <li>Value add is debated but most analysts believe it exists</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>What is the "Market"?</h3>
+    <div class="card">
+      <p><strong>Theoretically</strong>: includes ALL risky assets — stocks, bonds, real estate, commodities, even human capital.</p>
+      <p><strong>Practically</strong>: a broad market index is used as a proxy (e.g., S&amp;P 500 for US equities).</p>
+      <ul style="margin-top:8px;">
+        <li>S&amp;P 500 ≈ 80% of US equity market cap; US markets ≈ 40% of world equity → S&amp;P 500 ≈ 32% of worldwide equity</li>
+        <li>The proxy doesn't include non-US stocks, bonds, real estate, or other asset classes</li>
+        <li>Some assets are not tradable (human capital, Taj Mahal); some are tradable but not investable (e.g., restricted shares)</li>
+      </ul>
+    </div>
+
+    <h3>The Capital Market Line (CML)</h3>
+
+    <div class="line-block line-cml">
+      <div class="line-label">CAPITAL MARKET LINE (CML)</div>
+      <ul>
+        <li><strong>Definition</strong>: A SPECIAL CASE of the Capital Allocation Line (CAL) where the risky portfolio is <strong>THE MARKET PORTFOLIO</strong></li>
+        <li><strong>Only applies to efficient portfolios</strong> (those on the efficient frontier that are well-diversified)</li>
+        <li><strong>X-axis</strong>: total risk (σ<sub>p</sub>) · <strong>Y-axis</strong>: expected return E(R<sub>p</sub>)</li>
+        <li><strong>Intercept</strong>: R<sub>f</sub> (risk-free return, zero risk)</li>
+        <li><strong>Slope</strong>: [E(R<sub>m</sub>) − R<sub>f</sub>] / σ<sub>m</sub> = <span class="highlight">market price of risk</span></li>
+        <li>Tangent to the Markowitz efficient frontier at the <strong>market portfolio (M)</strong></li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ CAPITAL MARKET LINE EQUATION ★ (Memorize!)</div>
+      <div class="f">
+        E(R<sub>p</sub>) = R<sub>f</sub> + [(E(R<sub>m</sub>) − R<sub>f</sub>) / σ<sub>m</sub>] × σ<sub>p</sub>
+      </div>
+      <div class="note">
+        <strong>Slope = Sharpe ratio of the market</strong> = Market price of risk<br>
+        Also called the "reward-to-variability ratio" or "reward-to-total-risk ratio"<br>
+        Straight line form y = a + bx: intercept R<sub>f</sub>, slope = (E(R<sub>m</sub>)−R<sub>f</sub>)/σ<sub>m</sub>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Portfolio on the CML — Risk &amp; Return</div>
+      <div class="f">
+        Let w₁ = weight in risk-free asset, (1 − w₁) = weight in market<br><br>
+        E(R<sub>p</sub>) = w₁ R<sub>f</sub> + (1 − w₁) E(R<sub>m</sub>)<br>
+        σ<sub>p</sub> = (1 − w₁) σ<sub>m</sub>
+      </div>
+      <div class="note">
+        Why σ<sub>p</sub> is linear: risk-free asset has σ<sub>f</sub> = 0 AND Cov(R<sub>f</sub>, anything) = 0.<br>
+        Two of three terms in the variance formula drop out → portfolio risk is proportional to market risk.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Why the CML is Straight (Key Conceptual Point)</div>
+      <p>Combining TWO RISKY assets generally gives a CURVED opportunity set (because of non-zero covariance). But combining the risk-free asset + risky portfolio gives a <strong>STRAIGHT LINE</strong> because σ<sub>f</sub> = 0 and Cov(R<sub>f</sub>, R<sub>m</sub>) = 0 — the cross-product terms vanish in the portfolio variance formula.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: LEVERAGED PORTFOLIOS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Leveraged Portfolios &amp; Different Borrowing Rates</h2>
+    </div>
+
+    <h3>Lending vs. Borrowing Portfolios</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Position on CML</th><th>Weight in R<sub>f</sub></th><th>Weight in Market</th><th>Name</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>At R<sub>f</sub> (y-intercept)</td><td>100%</td><td>0%</td><td>100% lending — zero risk</td></tr>
+          <tr><td>Between R<sub>f</sub> and M</td><td>0% &lt; w₁ &lt; 100%</td><td>0% &lt; w₂ &lt; 100%</td><td><span class="tag tag-green">Lending portfolio</span></td></tr>
+          <tr><td>At M (market)</td><td>0%</td><td>100%</td><td>Fully invested in market</td></tr>
+          <tr><td>Right of M</td><td>w₁ &lt; 0% (negative)</td><td>&gt; 100%</td><td><span class="tag tag-red">Borrowing / leveraged portfolio</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Different Borrowing and Lending Rates — "Kinked" CML</h3>
+    <div class="card">
+      <p>In reality, investors cannot borrow at the risk-free rate — they must pay a higher borrowing rate R<sub>b</sub>. This creates a <strong>kinked CML</strong> with two different slopes:</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Kinked CML — Two Equations</div>
+      <div class="f">
+        <strong>Lending segment</strong> (w₁ ≥ 0, left of M):<br>
+        E(R<sub>p</sub>) = R<sub>f</sub> + [(E(R<sub>m</sub>) − R<sub>f</sub>)/σ<sub>m</sub>] × σ<sub>p</sub><br><br>
+        <strong>Borrowing segment</strong> (w₁ &lt; 0, right of M):<br>
+        E(R<sub>p</sub>) = R<sub>b</sub> + [(E(R<sub>m</sub>) − R<sub>b</sub>)/σ<sub>m</sub>] × σ<sub>p</sub>
+      </div>
+      <div class="note">
+        Because R<sub>b</sub> &gt; R<sub>f</sub>, the borrowing segment has a <strong>SMALLER slope</strong> than the lending segment.<br>
+        The CML "kinks" downward at the market portfolio (M).<br>
+        Leveraged investors get a worse risk-return trade-off than lending investors.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Visualizing the Kinked CML</div>
+      <p>Picture the CML as a straight line from R<sub>f</sub> through M and beyond. Now, at point M, the line bends downward (to a flatter slope) because beyond M you're using the higher borrowing rate R<sub>b</sub>. Leverage is still possible but offers less incremental return per unit of risk.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: SYSTEMATIC vs. NONSYSTEMATIC RISK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Systematic vs. Nonsystematic Risk</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Systematic Risk</div>
+        <ul>
+          <li>Also called: <strong>market risk, non-diversifiable risk</strong></li>
+          <li>Affects the ENTIRE market/economy</li>
+          <li>CANNOT be diversified away</li>
+          <li>Examples: interest rates, inflation, economic cycles, political uncertainty, widespread natural disasters</li>
+          <li><strong>PRICED by the market</strong> → investors earn a return for bearing it</li>
+          <li>Measured by <strong>beta (β)</strong></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Nonsystematic Risk</div>
+        <ul>
+          <li>Also called: <strong>company-specific, industry-specific, diversifiable, idiosyncratic risk</strong></li>
+          <li>Pertains to a single company or industry</li>
+          <li>CAN be diversified away</li>
+          <li>Examples: failed drug trial, airliner crash, CEO scandal</li>
+          <li><strong>NOT PRICED</strong> → no extra return expected</li>
+          <li>Measured by residual/error variance (σ²<sub>e</sub>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ TOTAL RISK DECOMPOSITION ★ (Variance-Based)</div>
+      <div class="f">
+        Total variance = Systematic variance + Nonsystematic variance<br><br>
+        σ²<sub>i</sub> = β²<sub>i</sub> σ²<sub>m</sub> + σ²<sub>e</sub><br><br>
+        σ<sub>i</sub> = √(β²<sub>i</sub> σ²<sub>m</sub> + σ²<sub>e</sub>)
+      </div>
+      <div class="note">
+        β<sub>i</sub> σ<sub>m</sub> = systematic risk (std. dev.)<br>
+        σ<sub>e</sub> = nonsystematic risk (std. dev. of residual error)<br>
+        <strong>Important</strong>: The equality is about VARIANCES (squared terms), not standard deviations!<br>
+        For a <strong>well-diversified portfolio</strong>: σ²<sub>e</sub> ≈ 0, so total risk ≈ β σ<sub>m</sub> (systematic only).
+      </div>
+    </div>
+
+    <h3>Why Nonsystematic Risk Is NOT Priced (Economic Argument)</h3>
+    <div class="card">
+      <p>Suppose nonsystematic risk WERE priced (earned a positive return):</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>Investors would buy assets with high nonsystematic risk to earn that return</li>
+        <li>They'd then diversify away the nonsystematic risk (combining with low-correlation assets)</li>
+        <li>They'd now earn the nonsystematic return WITHOUT bearing the risk</li>
+        <li>Demand for such diversifiable risk would surge → price rises to infinity → return falls to zero</li>
+        <li>Conclusion: in equilibrium, <strong>the return on nonsystematic risk must be ZERO</strong></li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Principle — Only Systematic Risk Is Compensated</div>
+      <p>Risk-averse investors should hold only <strong>well-diversified portfolios</strong> because bearing nonsystematic risk earns them no reward. The entire CAPM framework is built on this insight: expected return depends ONLY on an asset's systematic risk (beta), not its total risk.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Variances Add, Not Std Devs</div>
+      <p>Total variance = systematic variance + nonsystematic variance. You cannot simply add standard deviations. If systematic σ = 0.12 and nonsystematic σ = 0.05, total σ = √(0.12² + 0.05²) = √(0.0144 + 0.0025) = √0.0169 = 0.13 — NOT 0.17.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: RETURN-GENERATING MODELS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Return-Generating Models</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Return-Generating Model</div>
+      <div class="def-body">A model that provides an estimate of the <strong>expected return of a security</strong> given certain parameters. Most general form is a <strong>multi-factor model</strong>. The CAPM is a special case — a single-factor model where the only factor is the market.</div>
+    </div>
+
+    <h3>Types of Factor Models</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Macroeconomic</div>
+        <p>Uses economic factors: GDP growth, interest rates, inflation, productivity, employment, consumer confidence. Preferred for having economic meaning.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Fundamental</div>
+        <p>Uses company fundamentals: earnings, earnings growth, cash flow, R&amp;D, advertising, patents. Preferred for having economic meaning.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Statistical</div>
+        <p>Uses historical return data to find explanatory factors. May have NO economic connection (e.g., "Super Bowl winner's conference" as a factor). Prone to data mining — results can be spurious.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">General Multi-Factor Return-Generating Model</div>
+      <div class="f">
+        E(R<sub>i</sub>) − R<sub>f</sub> = β<sub>i1</sub>[E(R<sub>m</sub>) − R<sub>f</sub>] + Σ<sub>j=2</sub><sup>k</sup> β<sub>ij</sub> E(F<sub>j</sub>)
+      </div>
+      <div class="note">
+        LHS: expected excess return over risk-free rate<br>
+        β<sub>ij</sub> = factor loadings (sensitivity of asset i to factor j)<br>
+        E(F<sub>j</sub>) = expected value of factor j<br>
+        <strong>All models contain the market factor</strong> as at least one of the factors.
+      </div>
+    </div>
+
+    <h3>Fama-French and Carhart Models</h3>
+    <div class="formula-box">
+      <div class="label">Fama-French 3-Factor Model (1992) + Carhart 4th Factor (1997)</div>
+      <div class="f">
+        E(R<sub>it</sub>) = α<sub>i</sub> + β<sub>i,MKT</sub>·MKT<sub>t</sub> + β<sub>i,SMB</sub>·SMB<sub>t</sub> + β<sub>i,HML</sub>·HML<sub>t</sub> + β<sub>i,UMD</sub>·UMD<sub>t</sub>
+      </div>
+      <div class="note">
+        <strong>MKT</strong> = excess return on the market portfolio<br>
+        <strong>SMB</strong> = Small Minus Big (size factor — small caps outperform large caps)<br>
+        <strong>HML</strong> = High Minus Low (value factor — high book-to-market outperforms low)<br>
+        <strong>UMD</strong> = Up Minus Down (momentum factor — past winners outperform past losers)<br><br>
+        Empirical finding: β<sub>MKT</sub> coefficient often NOT significantly different from zero — the other three factors explain most of the variation!
+      </div>
+    </div>
+
+    <h3>The Single-Index Model</h3>
+    <div class="formula-box">
+      <div class="label">★ Single-Index Model ★</div>
+      <div class="f">
+        E(R<sub>i</sub>) − R<sub>f</sub> = β<sub>i</sub> [E(R<sub>m</sub>) − R<sub>f</sub>]
+      </div>
+      <div class="note">
+        Only ONE factor: the market return.<br>
+        This is effectively the CAPM equation.<br>
+        Derived from CML by substituting σ<sub>i</sub> = β<sub>i</sub>σ<sub>m</sub> (which holds for well-diversified portfolios).
+      </div>
+    </div>
+
+    <h3>The Market Model</h3>
+    <div class="formula-box">
+      <div class="label">★ MARKET MODEL ★ (used to estimate beta via regression)</div>
+      <div class="f">
+        R<sub>i</sub> = α<sub>i</sub> + β<sub>i</sub> R<sub>m</sub> + e<sub>i</sub>
+      </div>
+      <div class="note">
+        α<sub>i</sub> = intercept (theoretically α<sub>i</sub> = R<sub>f</sub>(1 − β<sub>i</sub>))<br>
+        β<sub>i</sub> = slope = beta (estimated via regression of historical returns)<br>
+        e<sub>i</sub> = error term (company-specific/residual return)<br><br>
+        <strong>Most common way to estimate beta</strong>: regress asset returns on market returns; slope = beta.<br>
+        Used to compute ABNORMAL RETURNS on specific dates: abnormal return = R<sub>i</sub> − (α<sub>i</sub> + β<sub>i</sub>R<sub>m</sub>)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Example — Walmart's Market Model</div>
+      <p>Regress Walmart's daily returns on S&amp;P 500 daily returns. Say we get α = 0.0001, β = 0.90. On a day when market rose 1% and Walmart rose 2%: <br>
+      Expected = 0.0001 + 0.90 × 0.01 = 0.0091 = 0.91%<br>
+      Abnormal return = 2% − 0.91% = 1.09%<br>
+      Walmart outperformed its expected return by 1.09% that day.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Single-Index Model vs. Market Model — Subtle Difference</div>
+      <p><strong>Single-Index Model</strong>: theoretical; uses excess returns; α<sub>i</sub> = R<sub>f</sub>(1 − β<sub>i</sub>).<br>
+      <strong>Market Model</strong>: empirical version; uses raw returns; α<sub>i</sub> estimated freely from data.<br>
+      In practice these are treated as nearly equivalent. Market model is easier to estimate and is the standard for computing beta.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: BETA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Beta — The Central Measure</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Beta (β)</div>
+      <div class="def-body">Measures an asset's <strong>sensitivity to market movements</strong> — the portion of an asset's risk that cannot be eliminated through diversification. Beta captures SYSTEMATIC RISK only. Mathematically, it's the covariance of the asset's return with the market, standardized by market variance.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ BETA — THE FORMULA (Memorize!) ★</div>
+      <div class="f">
+        β<sub>i</sub> = Cov(R<sub>i</sub>, R<sub>m</sub>) / σ²<sub>m</sub><br><br>
+        = ρ<sub>i,m</sub> × σ<sub>i</sub> × σ<sub>m</sub> / σ²<sub>m</sub><br><br>
+        <strong>= ρ<sub>i,m</sub> × (σ<sub>i</sub> / σ<sub>m</sub>)</strong>
+      </div>
+      <div class="note">
+        Three equivalent forms — use whichever the question gives you inputs for.<br>
+        ρ<sub>i,m</sub> = correlation between asset i and market<br>
+        σ<sub>i</sub> = std. dev. of asset i, σ<sub>m</sub> = std. dev. of market<br>
+        Cov(R<sub>i</sub>, R<sub>m</sub>) = covariance of asset with market<br>
+        <strong>σ<sub>m</sub>² in denominator is VARIANCE (not std dev)</strong>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Worked Examples</div>
+      <p><strong>Example 1 — From correlation and std devs</strong>: ρ = 0.70, σ<sub>i</sub> = 0.25, σ<sub>m</sub> = 0.15. β = 0.70 × (0.25/0.15) = 0.70 × 1.667 = <strong>1.17</strong>.</p>
+      <p><strong>Example 2 — From covariance and variance</strong>: Cov = 0.026250, σ²<sub>m</sub> = 0.02250. β = 0.026250 / 0.02250 = <strong>1.17</strong>. (Same answer — equivalent formulas.)</p>
+    </div>
+
+    <h3>Interpreting Beta Values</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Beta Value</th><th>Interpretation</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>β = 1</td><td>Moves with the market — <strong>market has β = 1 by definition</strong></td><td>A broad index fund</td></tr>
+          <tr><td>β &gt; 1</td><td>More volatile than market (aggressive). Expected return &gt; market</td><td>Tech stocks, small caps</td></tr>
+          <tr><td>0 &lt; β &lt; 1</td><td>Less volatile than market (defensive). Expected return &lt; market but &gt; R<sub>f</sub></td><td>Utilities, consumer staples</td></tr>
+          <tr><td>β = 0</td><td>No correlation with market → risk-free asset</td><td>T-bills</td></tr>
+          <tr><td>β &lt; 0</td><td>Moves opposite to market (rare). Expected return &lt; R<sub>f</sub></td><td>Gold (sometimes), insurance, put options</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Why Market Beta = 1 (and Risk-Free Beta = 0)</div>
+      <div class="f">
+        β<sub>m</sub> = ρ<sub>m,m</sub> × σ<sub>m</sub> / σ<sub>m</sub> = 1 × 1 = 1<br>
+        (correlation of anything with itself = 1)<br><br>
+        β<sub>f</sub> = Cov(R<sub>f</sub>, R<sub>m</sub>) / σ²<sub>m</sub> = 0 / σ²<sub>m</sub> = 0<br>
+        (risk-free asset has zero covariance with everything)
+      </div>
+      <div class="note">
+        The <strong>AVERAGE beta of all stocks = 1</strong> because the market itself has β = 1 (and the market is the average of all stocks by cap weight).
+      </div>
+    </div>
+
+    <h3>Portfolio Beta — Weighted Average</h3>
+    <div class="formula-box">
+      <div class="label">★ Portfolio Beta ★</div>
+      <div class="f">
+        β<sub>p</sub> = Σ w<sub>i</sub> β<sub>i</sub> &nbsp;&nbsp;&nbsp; where Σ w<sub>i</sub> = 1
+      </div>
+      <div class="note">
+        <strong>Unlike standard deviation, beta IS a simple weighted average.</strong><br>
+        This is because beta is linear in asset weights (unlike variance, which has cross-terms).<br>
+        Example: 60% in β=1.2 asset + 40% in β=0.8 asset → β<sub>p</sub> = 0.6(1.2) + 0.4(0.8) = 0.72 + 0.32 = 1.04
+      </div>
+    </div>
+
+    <h3>Estimation of Beta — Practical Issues</h3>
+    <div class="card">
+      <ul>
+        <li>Beta is estimated by regressing historical asset returns on historical market returns (market model)</li>
+        <li><strong>Shorter periods (e.g., 12 months)</strong>: capture CURRENT systematic risk better, but less statistically accurate</li>
+        <li><strong>Longer periods (3-5 years)</strong>: more statistically accurate, but may not reflect current state if company has changed</li>
+        <li>Different data frequencies (daily vs. monthly) produce different beta estimates</li>
+        <li><strong>3-year beta ≠ 5-year beta ≠ daily beta ≠ monthly beta</strong> — estimate depends on sample period and frequency</li>
+        <li>In developed markets, most stocks have correlation &gt; 0.70 with market (for S&amp;P 500: &gt; 0.90)</li>
+        <li>Consistently negative betas are RARE due to broad market effects on all assets</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Variance in the Beta Formula</div>
+      <p>The denominator of β = Cov(R<sub>i</sub>, R<sub>m</sub>) / σ²<sub>m</sub> is market <strong>VARIANCE</strong>, NOT market standard deviation. If σ<sub>m</sub> = 15%, then σ²<sub>m</sub> = 0.0225 (not 0.15). Pay attention to whether the question gives you variance or std dev.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: CAPM AND SML -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Capital Asset Pricing Model (CAPM) &amp; Security Market Line</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★★★ THE CAPM — THE MOST IMPORTANT FORMULA IN PORTFOLIO THEORY ★★★</div>
+      <div class="f">
+        E(R<sub>i</sub>) = R<sub>f</sub> + β<sub>i</sub> [E(R<sub>m</sub>) − R<sub>f</sub>]
+      </div>
+      <div class="note">
+        E(R<sub>i</sub>) = required/expected return on asset i<br>
+        R<sub>f</sub> = risk-free rate<br>
+        β<sub>i</sub> = beta of asset i (systematic risk)<br>
+        E(R<sub>m</sub>) − R<sub>f</sub> = market risk premium<br>
+        β<sub>i</sub> × [E(R<sub>m</sub>) − R<sub>f</sub>] = asset's own risk premium<br><br>
+        <strong>Two assets with same beta → same expected return</strong>, regardless of anything else about the assets.
+      </div>
+    </div>
+
+    <h3>CAPM Assumptions (6 Key Assumptions)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Assumption</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Risk-averse, utility-maximizing, rational investors</strong></td><td>Investors dislike risk, want more wealth, evaluate info rationally. Degrees of aversion can differ.</td></tr>
+          <tr><td>2</td><td><strong>Frictionless markets</strong></td><td>No transaction costs, no taxes, no short-selling costs/restrictions, can borrow/lend at R<sub>f</sub>.</td></tr>
+          <tr><td>3</td><td><strong>Single-period horizon</strong></td><td>All investor decisions made for one common period. No multi-period strategy.</td></tr>
+          <tr><td>4</td><td><strong>Homogeneous expectations</strong></td><td>All investors use same inputs and arrive at same valuations → same optimal risky portfolio (the market).</td></tr>
+          <tr><td>5</td><td><strong>Infinitely divisible investments</strong></td><td>Can invest any fraction in any asset (continuous, not discrete).</td></tr>
+          <tr><td>6</td><td><strong>Price takers (competitive markets)</strong></td><td>No single investor large enough to affect prices.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — CAPM Assumptions: "RF HIP"</div>
+      <p><strong>R</strong>ational (and risk-averse, utility-maximizing) · <strong>F</strong>rictionless markets · <strong>H</strong>omogeneous expectations · <strong>I</strong>nfinitely divisible · <strong>P</strong>rice takers · (and single-period horizon)</p>
+    </div>
+
+    <h3>The Security Market Line (SML)</h3>
+
+    <div class="line-block line-sml">
+      <div class="line-label">SECURITY MARKET LINE (SML)</div>
+      <ul>
+        <li><strong>Graphical representation of CAPM</strong></li>
+        <li><strong>X-axis</strong>: beta (β) — systematic risk</li>
+        <li><strong>Y-axis</strong>: expected return E(R<sub>i</sub>)</li>
+        <li><strong>Intercept</strong>: R<sub>f</sub></li>
+        <li><strong>Slope</strong>: [E(R<sub>m</sub>) − R<sub>f</sub>] = <span class="highlight">market risk premium</span></li>
+        <li><strong>Applies to ALL securities and portfolios</strong> — whether efficient or not</li>
+        <li>Passes through (β=0, R<sub>f</sub>) and (β=1, E(R<sub>m</sub>))</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">SML — Two Key Points</div>
+      <div class="f">
+        At β = 0: E(R) = R<sub>f</sub> (y-intercept)<br>
+        At β = 1: E(R) = E(R<sub>m</sub>) (the market portfolio)<br>
+        Slope = E(R<sub>m</sub>) − R<sub>f</sub> = market risk premium
+      </div>
+      <div class="note">The SML is the CAPM drawn as a line.</div>
+    </div>
+
+    <h3>Using CAPM for Portfolio Expected Return</h3>
+    <div class="formula-box">
+      <div class="label">Portfolio CAPM Equation</div>
+      <div class="f">
+        E(R<sub>p</sub>) = R<sub>f</sub> + β<sub>p</sub> [E(R<sub>m</sub>) − R<sub>f</sub>]<br><br>
+        where β<sub>p</sub> = Σ w<sub>i</sub> β<sub>i</sub>
+      </div>
+      <div class="note">
+        Because beta is a weighted average, CAPM works for any portfolio by simply using portfolio beta.<br>
+        This makes CAPM very convenient for practical applications.
+      </div>
+    </div>
+
+    <h3>CAPM Applications</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">1. Expected Return / Valuation</div>
+        <p>Use CAPM return as the discount rate to value assets (stocks, bonds, real estate) by discounting future cash flows.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">2. Capital Budgeting</div>
+        <p>Use CAPM to estimate required rate of return for projects based on project's beta. Computes NPV of investments.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">3. Performance Appraisal</div>
+        <p>Compare actual portfolio return with CAPM-predicted return. Used to evaluate managers.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">4. Security Selection</div>
+        <p>Compare analyst's expected return vs. CAPM's required return. Above SML = undervalued (buy); below SML = overvalued (sell/short).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">5. Cost of Capital</div>
+        <p>Used by regulatory commissions to set fair returns for regulated utilities.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">6. Insurance Premiums</div>
+        <p>Used to set actuarially fair insurance premiums based on systematic risk exposure.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Negative Beta Example — Insurance</div>
+      <p>Insurance has a negative beta: it pays out when the market tanks (you lost your house in a disaster when economy is also struggling). CAPM gives it a NEGATIVE expected return — yet people buy it because it <strong>reduces overall portfolio risk</strong>. This is consistent with CAPM: assets that reduce systematic risk can have expected returns below R<sub>f</sub>.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: CML VS SML MASTER COMPARISON -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>CML vs. SML — Master Comparison</h2>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical — Don't Confuse CML and SML!</div>
+      <p>These are two of the most frequently confused concepts on the CFA exam. They are DIFFERENT lines with DIFFERENT axes, slopes, and applicability. Memorize the distinctions cold.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Capital Market Line (CML)</th>
+            <th>Security Market Line (SML)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>What it plots</td>
+            <td>E(R) vs. <strong>σ (total risk)</strong></td>
+            <td>E(R) vs. <strong>β (systematic risk)</strong></td>
+          </tr>
+          <tr>
+            <td>X-axis</td>
+            <td>Standard deviation (σ<sub>p</sub>)</td>
+            <td>Beta (β<sub>i</sub>)</td>
+          </tr>
+          <tr>
+            <td>Y-axis</td>
+            <td>E(R<sub>p</sub>)</td>
+            <td>E(R<sub>i</sub>)</td>
+          </tr>
+          <tr>
+            <td>Intercept</td>
+            <td>R<sub>f</sub></td>
+            <td>R<sub>f</sub></td>
+          </tr>
+          <tr>
+            <td>Slope</td>
+            <td>(E(R<sub>m</sub>) − R<sub>f</sub>) / σ<sub>m</sub> = Sharpe ratio</td>
+            <td>E(R<sub>m</sub>) − R<sub>f</sub> = market risk premium</td>
+          </tr>
+          <tr>
+            <td>Equation</td>
+            <td>E(R<sub>p</sub>) = R<sub>f</sub> + [(E(R<sub>m</sub>)−R<sub>f</sub>)/σ<sub>m</sub>] × σ<sub>p</sub></td>
+            <td>E(R<sub>i</sub>) = R<sub>f</sub> + β<sub>i</sub> × [E(R<sub>m</sub>)−R<sub>f</sub>]</td>
+          </tr>
+          <tr>
+            <td>Applies to</td>
+            <td><span class="tag tag-yellow">Only EFFICIENT portfolios</span> (well-diversified)</td>
+            <td><span class="tag tag-green">ALL assets and portfolios</span> (efficient or not)</td>
+          </tr>
+          <tr>
+            <td>Passes through</td>
+            <td>R<sub>f</sub> and the <strong>market portfolio M</strong></td>
+            <td>(0, R<sub>f</sub>) and (1, E(R<sub>m</sub>))</td>
+          </tr>
+          <tr>
+            <td>Risk measure</td>
+            <td>Total risk (σ) — appropriate for diversified portfolios</td>
+            <td>Systematic risk only (β) — appropriate for individual assets</td>
+          </tr>
+          <tr>
+            <td>Individual assets on it?</td>
+            <td><span class="tag tag-red">NO</span> — individual assets are BELOW CML (have nonsystematic risk)</td>
+            <td><span class="tag tag-green">YES</span> — all correctly-priced assets lie ON SML</td>
+          </tr>
+          <tr>
+            <td>Use</td>
+            <td>Passive management, asset allocation between R<sub>f</sub> and market</td>
+            <td>Pricing individual securities, security selection</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — CML vs. SML</div>
+      <p>
+        <strong>CML</strong> → <strong>"C"</strong>omplete/<strong>C</strong>omprehensive portfolios → total risk (σ) → only efficient portfolios<br>
+        <strong>SML</strong> → <strong>"S"</strong>ingle <strong>S</strong>ecurities → systematic risk (β) → all securities<br><br>
+        When you see σ → CML. When you see β → SML. Simple.
+      </p>
+    </div>
+
+    <div class="card">
+      <p><strong>Why individual stocks are BELOW the CML but ON the SML:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>An individual stock has TOTAL risk = systematic + nonsystematic</li>
+        <li>CML plots return vs. TOTAL risk → the stock has more total risk than its systematic risk alone</li>
+        <li>For the stock's systematic risk level, the CML would predict a higher return than the stock actually earns → stock is BELOW CML</li>
+        <li>SML plots return vs. SYSTEMATIC risk only → nonsystematic risk is ignored → correctly-priced stocks lie ON SML</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: BEYOND CAPM -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Beyond CAPM — Limitations &amp; Extensions</h2>
+    </div>
+
+    <h3>Theoretical Limitations of the CAPM</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Single-factor model</strong>: Only beta matters. Very restrictive — ignores all other potentially relevant factors (size, value, momentum, etc.)</li>
+        <li><strong>Single-period model</strong>: Does not account for multi-period decisions. Can lead to myopic choices (e.g., default now to maximize one-period return, ignoring future consequences)</li>
+      </ul>
+    </div>
+
+    <h3>Practical Limitations of the CAPM</h3>
+    <div class="card">
+      <ul>
+        <li><strong>True market portfolio unobservable</strong>: Should include ALL assets (human capital, closed-economy assets), but most aren't measurable (<strong>Roll's critique</strong>)</li>
+        <li><strong>Market proxy varies</strong>: Different analysts use different market proxies (S&amp;P 500, MSCI World, etc.) → different return estimates. CAPM theory requires a unique market portfolio</li>
+        <li><strong>Beta estimation issues</strong>: Long history needed (3-5 years); historical beta may not reflect current/future beta. Ex ante theory applied with ex post data</li>
+        <li><strong>Poor empirical predictor</strong>: Tests of CAPM show that returns are NOT determined by beta alone. Weak empirical support</li>
+        <li><strong>Homogeneous expectations unrealistic</strong>: Investors really do have different expectations → multiple optimal portfolios and SMLs exist in practice</li>
+      </ul>
+    </div>
+
+    <h3>Extensions of the CAPM — Two Categories</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Theoretical: Arbitrage Pricing Theory (APT)</div>
+        <p>Developed by Stephen Ross. Multi-factor linear model based on no-arbitrage condition:</p>
+        <p style="margin-top:6px; font-family: 'JetBrains Mono', monospace; color: var(--accent);">E(R<sub>p</sub>) = R<sub>F</sub> + λ₁β<sub>p,1</sub> + ... + λ<sub>K</sub>β<sub>p,K</sub></p>
+        <ul style="margin-top:6px;">
+          <li>λ<sub>j</sub> = risk premium for factor j</li>
+          <li>β<sub>p,j</sub> = sensitivity to factor j</li>
+          <li>Does NOT specify what the factors are</li>
+          <li>Factors need not be common across assets</li>
+          <li><strong>Theoretically elegant but rarely used in practice</strong> (hard to identify factors)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Practical: Fama-French-Carhart 4-Factor</div>
+        <p>Empirically successful — predicts returns better than CAPM for US stocks:</p>
+        <p style="margin-top:6px; font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size:12px;">R<sub>i</sub> − R<sub>f</sub> = α + β<sub>MKT</sub>·MKT + β<sub>SMB</sub>·SMB + β<sub>HML</sub>·HML + β<sub>UMD</sub>·UMD</p>
+        <ul style="margin-top:6px;">
+          <li><strong>SMB</strong>: small caps beat large caps</li>
+          <li><strong>HML</strong>: value beats growth</li>
+          <li><strong>UMD</strong>: winners beat losers (momentum)</li>
+          <li>Coefficient on MKT often insignificant → market risk doesn't matter much after controlling for other factors</li>
+          <li>Not based on equilibrium theory (unlike CAPM)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ APT vs. CAPM Key Distinction</div>
+      <p>APT is based on <strong>no-arbitrage</strong> (if arbitrage opportunities exist, they'd be exploited away). CAPM is based on <strong>market equilibrium</strong> (all investors hold optimal portfolio). APT is more flexible but doesn't tell you WHICH factors to use. CAPM is rigid but specific.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: PERFORMANCE APPRAISAL -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Portfolio Performance Appraisal Measures</h2>
+    </div>
+
+    <h3>Performance Evaluation — Three Questions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Question</th><th>Subject</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>What was past performance?</td><td>Performance MEASUREMENT</td><td>Measure return and risk</td></tr>
+          <tr><td>How was it produced? What sources?</td><td>Performance ATTRIBUTION</td><td>Identify sources of returns</td></tr>
+          <tr><td>Skill or luck?</td><td>Performance APPRAISAL</td><td>Measure investment skill</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Four Performance Appraisal Ratios</h3>
+
+    <!-- SHARPE RATIO -->
+    <div class="ratio-card">
+      <div class="ratio-name">① The Sharpe Ratio</div>
+      <div class="ratio-body">
+        <p><strong>Uses total risk (σ)</strong>. Also called the "reward-to-variability ratio". Equals the <strong>slope of the CAL</strong>.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Sharpe Ratio ★</div>
+      <div class="f">
+        SR = [E(R<sub>p</sub>) − R<sub>f</sub>] / σ<sub>p</sub> &nbsp;&nbsp; (ex ante)<br><br>
+        SR = (R̄<sub>p</sub> − R̄<sub>f</sub>) / σ̂<sub>p</sub> &nbsp;&nbsp; (ex post)
+      </div>
+      <div class="note">
+        <strong>Interpretation</strong>: excess return per unit of TOTAL risk.<br>
+        <strong>Higher = better</strong> (assuming positive numerator).<br>
+        <strong>Limitations</strong>:<br>
+        (1) Uses total risk (only systematic risk is priced) — best when portfolio is the entire investment (not added to another portfolio)<br>
+        (2) Ratio value alone is meaningless — only useful for comparison<br>
+        (3) Rankings break down if numerator is negative (less negative ≠ better when ratio is negative)
+      </div>
+    </div>
+
+    <!-- TREYNOR RATIO -->
+    <div class="ratio-card">
+      <div class="ratio-name">② The Treynor Ratio</div>
+      <div class="ratio-body">
+        <p><strong>Uses beta (systematic risk)</strong>. Fixes Sharpe's main issue — only systematic risk is priced, so divide by beta instead of σ.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Treynor Ratio ★</div>
+      <div class="f">
+        TR = [E(R<sub>p</sub>) − R<sub>f</sub>] / β<sub>p</sub> &nbsp;&nbsp; (ex ante)<br><br>
+        TR = (R̄<sub>p</sub> − R̄<sub>f</sub>) / β̂<sub>p</sub> &nbsp;&nbsp; (ex post)
+      </div>
+      <div class="note">
+        <strong>Interpretation</strong>: excess return per unit of SYSTEMATIC risk.<br>
+        <strong>Appropriate when portfolio is part of a broader diversified portfolio</strong>.<br>
+        <strong>Limitations</strong>:<br>
+        (1) Does NOT work with negative beta (denominator must be positive)<br>
+        (2) Does not give economic significance of over/underperformance<br>
+        (3) Numerator must also be positive for rankings to work
+      </div>
+    </div>
+
+    <!-- M-SQUARED -->
+    <div class="ratio-card">
+      <div class="ratio-name">③ M² (M-Squared / Modigliani-Modigliani RAP)</div>
+      <div class="ratio-body">
+        <p><strong>Risk-adjusted performance measure</strong> — expressed in percentage points. Same rankings as Sharpe ratio but more interpretable. Developed by Franco Modigliani and Leah Modigliani (1997).</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ M² Formula ★</div>
+      <div class="f">
+        M² = [E(R<sub>p</sub>) − R<sub>f</sub>] × (σ<sub>m</sub>/σ<sub>p</sub>) + R<sub>f</sub><br><br>
+        Equivalently: M² = SR × σ<sub>m</sub> + R<sub>f</sub>
+      </div>
+      <div class="note">
+        <strong>Idea</strong>: Leverage/de-leverage the portfolio until its σ equals σ<sub>m</sub>. Then compare the adjusted return to market return.<br>
+        σ<sub>m</sub>/σ<sub>p</sub> = portfolio-specific leverage ratio<br><br>
+        <strong>M² Alpha</strong> = M² − R<sub>m</sub> = risk-adjusted outperformance vs. market (in percentage points)<br>
+        Positive M² alpha → outperformed market on risk-adjusted basis.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 M² Worked Example</div>
+      <p>R̄<sub>f</sub> = 4%, R̄<sub>p</sub> = 14%, σ<sub>p</sub> = 25%, σ<sub>m</sub> = 20%.<br>
+      Sharpe = (14 − 4)/25 = 0.4<br>
+      M² = 0.4 × 20 + 4 = 12.0%<br>
+      If market return = 10%, M² alpha = 12% − 10% = +2.0% outperformance on risk-adjusted basis.</p>
+    </div>
+
+    <!-- JENSEN'S ALPHA -->
+    <div class="ratio-card">
+      <div class="ratio-name">④ Jensen's Alpha (α)</div>
+      <div class="ratio-body">
+        <p><strong>Uses systematic risk (beta)</strong>. Measures the difference between actual return and CAPM-predicted return. Most commonly used measure for evaluating institutional managers, pension funds, and mutual funds.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Jensen's Alpha ★</div>
+      <div class="f">
+        α<sub>p</sub> = R<sub>p</sub> − {R<sub>f</sub> + β<sub>p</sub> [E(R<sub>m</sub>) − R<sub>f</sub>]}<br><br>
+        α<sub>p</sub> = Actual Return − CAPM Required Return
+      </div>
+      <div class="note">
+        <strong>α &gt; 0</strong>: portfolio outperformed CAPM prediction → superior risk-adjusted returns → skilled manager<br>
+        <strong>α &lt; 0</strong>: portfolio underperformed → unskilled manager<br>
+        <strong>α = 0</strong>: portfolio earned exactly what CAPM predicts<br>
+        <strong>By definition</strong>: α of the market = 0<br><br>
+        <strong>Jensen's alpha is the maximum you should pay a manager</strong>. An alpha of 2% means the manager adds 2% of value.<br>
+        Graphical interpretation: vertical distance from the SML.
+      </div>
+    </div>
+
+    <h3>Performance Ratios — Master Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Ratio</th>
+            <th>Risk Measure</th>
+            <th>Formula</th>
+            <th>When to Use</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sharpe</td>
+            <td>Total risk (σ)</td>
+            <td>(R<sub>p</sub> − R<sub>f</sub>) / σ<sub>p</sub></td>
+            <td>Portfolio is full investment (undiversified investor)</td>
+            <td>Ratio; ranks portfolios; not absolute</td>
+          </tr>
+          <tr>
+            <td>Treynor</td>
+            <td>Systematic (β)</td>
+            <td>(R<sub>p</sub> − R<sub>f</sub>) / β<sub>p</sub></td>
+            <td>Portfolio is part of diversified portfolio</td>
+            <td>Ratio; ranks portfolios; not absolute</td>
+          </tr>
+          <tr>
+            <td>M²</td>
+            <td>Total risk (σ)</td>
+            <td>SR × σ<sub>m</sub> + R<sub>f</sub></td>
+            <td>Same use as Sharpe; easier to interpret</td>
+            <td><strong>Percentage return</strong>; directly comparable to market</td>
+          </tr>
+          <tr>
+            <td>Jensen's α</td>
+            <td>Systematic (β)</td>
+            <td>R<sub>p</sub> − [R<sub>f</sub> + β<sub>p</sub>(R<sub>m</sub>−R<sub>f</sub>)]</td>
+            <td>Most common for evaluating mutual funds/managers</td>
+            <td><strong>Percentage alpha</strong>; directly shows over/underperformance</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Pairings and Relationships</div>
+      <p>
+        <strong>Sharpe &amp; M²</strong> use TOTAL risk (σ) → rank portfolios IDENTICALLY<br>
+        <strong>Treynor &amp; Jensen's α</strong> use SYSTEMATIC risk (β) → related but can rank differently<br>
+        <strong>Sharpe is the slope of the CAL</strong><br>
+        <strong>M² is a rescaled Sharpe</strong> (expressed as a % return instead of a ratio)<br>
+        <strong>Jensen's α is the vertical distance from the SML</strong>
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Traps on Performance Ratios</div>
+      <p>
+        <strong>1.</strong> Treynor ratio doesn't work for negative beta (denominator issue).<br>
+        <strong>2.</strong> Sharpe/Treynor rankings break if numerator is negative (a less-negative ratio isn't necessarily better when it comes from higher risk).<br>
+        <strong>3.</strong> Sharpe uses σ, Treynor uses β — pay attention to which risk measure the question provides.<br>
+        <strong>4.</strong> M² and Sharpe always rank the same; Treynor and Jensen's α use beta but can disagree.<br>
+        <strong>5.</strong> Use Sharpe when the portfolio is the investor's ENTIRE portfolio; use Treynor/Jensen's when it's PART of a larger diversified portfolio.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: PORTFOLIO CONSTRUCTION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Applications: Portfolio Construction &amp; Security Selection</h2>
+    </div>
+
+    <h3>Security Characteristic Line (SCL)</h3>
+
+    <div class="line-block line-scl">
+      <div class="line-label">SECURITY CHARACTERISTIC LINE (SCL)</div>
+      <ul>
+        <li><strong>Plots excess security return vs. excess market return</strong> (both over R<sub>f</sub>)</li>
+        <li><strong>X-axis</strong>: R<sub>m</sub> − R<sub>f</sub> (excess market return)</li>
+        <li><strong>Y-axis</strong>: R<sub>i</sub> − R<sub>f</sub> (excess security return)</li>
+        <li><strong>Slope</strong>: β<sub>i</sub> (beta of the security)</li>
+        <li><strong>Intercept</strong>: α<sub>i</sub> (Jensen's alpha — ex post)</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Security Characteristic Line Equation</div>
+      <div class="f">
+        R<sub>i</sub> − R<sub>f</sub> = α<sub>i</sub> + β<sub>i</sub>(R<sub>m</sub> − R<sub>f</sub>)
+      </div>
+      <div class="note">
+        Estimated by regressing (R<sub>i</sub> − R<sub>f</sub>) on (R<sub>m</sub> − R<sub>f</sub>).<br>
+        Slope gives β; intercept gives Jensen's α.<br>
+        <strong>Related to but different from SML</strong>: SCL plots returns over time for ONE security; SML plots expected return vs. β across securities.
+      </div>
+    </div>
+
+    <h3>Security Selection Using the SML</h3>
+    <div class="card">
+      <p><strong>Core principle</strong>: Compare an analyst's expected return to the CAPM-required return. Position relative to the SML tells you if a security is a buy/sell/hold.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Position vs. SML</th><th>Interpretation</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ABOVE</strong> SML</td><td>Expected return &gt; CAPM required → <span class="highlight3">UNDERVALUED</span> (positive α)</td><td>BUY / overweight</td></tr>
+          <tr><td><strong>ON</strong> SML</td><td>Expected return = CAPM required → <strong>fairly valued</strong></td><td>Hold at market weight</td></tr>
+          <tr><td><strong>BELOW</strong> SML</td><td>Expected return &lt; CAPM required → <span class="danger-text">OVERVALUED</span> (negative α)</td><td>SELL / underweight / short</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 SML Example</div>
+      <p>Given R<sub>f</sub> = 5%, E(R<sub>m</sub>) = 15%:<br>
+      Asset A: R = 11%, β = 0.5 → CAPM predicts 5 + 0.5(15−5) = <strong>10%</strong>. Expected 11% &gt; required 10% → ABOVE SML → BUY.<br>
+      Asset B: R = 12%, β = 1.0 → CAPM predicts 5 + 1.0(10) = <strong>15%</strong>. Expected 12% &lt; required 15% → BELOW SML → SELL/short.<br>
+      Asset C: R = 20%, β = 1.2 → CAPM predicts 5 + 1.2(10) = <strong>17%</strong>. Expected 20% &gt; required 17% → ABOVE SML → BUY.</p>
+    </div>
+
+    <h3>Implications of CAPM for Portfolio Construction</h3>
+    <div class="card">
+      <p><strong>Practical steps based on CAPM insights:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Start with a broad index</strong> (e.g., S&amp;P 500) as the base portfolio — treat it as "the market"</li>
+        <li><strong>Diversification basics</strong>: most nonsystematic risk is eliminated with ~30 randomly selected, diverse securities</li>
+        <li><strong>Evaluate candidate securities</strong>: for any non-index security, calculate its α using CAPM with the index as the market</li>
+        <li><strong>Add securities with positive α</strong>: they offer excess return relative to their beta</li>
+        <li><strong>Overweight undervalued index members</strong>: securities within the index with positive α should be overweighted</li>
+        <li><strong>Underweight/short overvalued securities</strong>: those with negative α</li>
+        <li><strong>Weight by Information Ratio</strong>: weights proportional to α<sub>i</sub> / σ²<sub>e,i</sub> (higher α and lower nonsystematic risk = more weight)</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Information Ratio (for security selection weighting)</div>
+      <div class="f">
+        IR<sub>i</sub> = α<sub>i</sub> / σ<sub>e,i</sub>
+      </div>
+      <div class="note">
+        α<sub>i</sub> = Jensen's alpha of security i<br>
+        σ<sub>e,i</sub> = nonsystematic (residual) risk of security i<br><br>
+        <strong>Higher IR = more valuable security</strong>. Measures abnormal return per unit of nonsystematic risk added to a well-diversified portfolio.<br>
+        The optimal weight for a non-market security in a portfolio is proportional to α<sub>i</sub> / σ²<sub>e,i</sub>.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why ~30 Securities Diversifies Most Nonsystematic Risk</div>
+      <p>As you add securities (randomly selected, representing different asset classes), nonsystematic variance falls rapidly. By ~30 securities, nearly all of it is gone. BUT this only works if securities are <strong>randomly selected and diverse</strong>. 30 tech stocks won't diversify industry-specific risk. Hence the CAPM takeaway: use broad index funds to get the market efficiently.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Homogeneity of expectations</strong>: CAPM assumption that ALL investors have same probability beliefs → single optimal risky portfolio = market portfolio.</li>
+        <li>✅ <strong>Passive portfolios</strong>: replicate market indexes; low cost; assume market is informationally efficient. <strong>Active portfolios</strong>: use own valuations; higher costs.</li>
+        <li>✅ <strong>The "market"</strong>: theoretically ALL risky assets (including human capital); practically a broad proxy like S&amp;P 500.</li>
+        <li>✅ <strong>CML EQUATION</strong>: E(R<sub>p</sub>) = R<sub>f</sub> + [(E(R<sub>m</sub>)−R<sub>f</sub>)/σ<sub>m</sub>] × σ<sub>p</sub>. Slope = Sharpe ratio = market price of risk.</li>
+        <li>✅ <strong>CML plots</strong>: E(R) vs. σ (TOTAL risk). Applies ONLY to efficient portfolios (well-diversified). Individual stocks lie BELOW CML.</li>
+        <li>✅ <strong>CML is a straight line</strong> because R<sub>f</sub> has σ=0 AND Cov=0 with market — the cross-term in variance formula vanishes.</li>
+        <li>✅ <strong>Lending portfolio</strong>: between R<sub>f</sub> and M (positive w in R<sub>f</sub>). <strong>Borrowing portfolio</strong>: right of M (negative w in R<sub>f</sub>, leveraged).</li>
+        <li>✅ <strong>Kinked CML</strong>: when borrowing rate R<sub>b</sub> &gt; lending rate R<sub>f</sub>, the CML has a LOWER slope to the right of M.</li>
+        <li>✅ <strong>Systematic risk</strong>: market risk, non-diversifiable, PRICED. Examples: interest rates, inflation, business cycles. Measured by β.</li>
+        <li>✅ <strong>Nonsystematic risk</strong>: company/industry-specific, diversifiable, NOT PRICED. Examples: drug trial failure, strike. Can be eliminated through diversification.</li>
+        <li>✅ <strong>Total variance = Systematic variance + Nonsystematic variance</strong>: σ²<sub>i</sub> = β²<sub>i</sub>σ²<sub>m</sub> + σ²<sub>e</sub>. Equation is in VARIANCES, not std devs.</li>
+        <li>✅ <strong>Why nonsystematic risk isn't priced</strong>: if it were, investors would diversify, get the return without the risk, demand would push price up, and return would fall to zero.</li>
+        <li>✅ <strong>Return-generating models</strong>: can be multi-factor; types = macroeconomic, fundamental, statistical. All include market as at least one factor.</li>
+        <li>✅ <strong>Statistical factor models</strong> are prone to data mining (e.g., Super Bowl winner as predictor — no economic meaning).</li>
+        <li>✅ <strong>Fama-French-Carhart 4-factor model</strong>: MKT, SMB (size), HML (value), UMD (momentum). Historically, β<sub>MKT</sub> often not significant.</li>
+        <li>✅ <strong>Single-index model</strong>: E(R<sub>i</sub>) − R<sub>f</sub> = β<sub>i</sub>[E(R<sub>m</sub>) − R<sub>f</sub>]. Same as CAPM equation.</li>
+        <li>✅ <strong>Market model</strong>: R<sub>i</sub> = α<sub>i</sub> + β<sub>i</sub>R<sub>m</sub> + e<sub>i</sub>. Used to ESTIMATE BETA via regression and compute abnormal returns.</li>
+        <li>✅ <strong>BETA FORMULA</strong>: β<sub>i</sub> = Cov(R<sub>i</sub>, R<sub>m</sub>)/σ²<sub>m</sub> = ρ<sub>i,m</sub>σ<sub>i</sub>σ<sub>m</sub>/σ²<sub>m</sub> = ρ<sub>i,m</sub>(σ<sub>i</sub>/σ<sub>m</sub>).</li>
+        <li>✅ <strong>Market beta = 1</strong>, <strong>risk-free beta = 0</strong>. Average beta of all stocks = 1.</li>
+        <li>✅ <strong>β &gt; 1</strong>: aggressive/volatile. <strong>β &lt; 1</strong>: defensive. <strong>β &lt; 0</strong>: moves opposite market (rare).</li>
+        <li>✅ <strong>Portfolio beta IS a weighted average</strong>: β<sub>p</sub> = Σ w<sub>i</sub>β<sub>i</sub>. Unlike std dev, beta has no cross-terms.</li>
+        <li>✅ <strong>Beta estimation tradeoff</strong>: shorter period = reflects current risk but less accurate; longer period = more accurate but may be stale.</li>
+        <li>✅ <strong>CAPM EQUATION</strong>: E(R<sub>i</sub>) = R<sub>f</sub> + β<sub>i</sub>[E(R<sub>m</sub>) − R<sub>f</sub>]. Cornerstone formula.</li>
+        <li>✅ <strong>Market risk premium</strong> = E(R<sub>m</sub>) − R<sub>f</sub>. Asset's own risk premium = β<sub>i</sub> × market risk premium.</li>
+        <li>✅ <strong>CAPM Assumptions (6)</strong>: risk-averse rational investors · frictionless markets · single holding period · homogeneous expectations · infinitely divisible · price takers.</li>
+        <li>✅ <strong>SML EQUATION</strong>: Same as CAPM — E(R<sub>i</sub>) = R<sub>f</sub> + β<sub>i</sub>[E(R<sub>m</sub>) − R<sub>f</sub>]. SML is CAPM drawn as a line.</li>
+        <li>✅ <strong>SML plots</strong>: E(R) vs. β (SYSTEMATIC risk). <strong>Applies to ALL securities</strong>, efficient or not. Slope = market risk premium.</li>
+        <li>✅ <strong>CML vs. SML — KEY DIFFERENCE</strong>: CML has σ on x-axis (total risk, efficient portfolios only); SML has β on x-axis (systematic risk, ALL assets).</li>
+        <li>✅ <strong>CAPM applications</strong>: valuation, capital budgeting, performance appraisal, security selection, cost of capital, insurance pricing.</li>
+        <li>✅ <strong>CAPM theoretical limitations</strong>: single-factor, single-period.</li>
+        <li>✅ <strong>CAPM practical limitations</strong>: unobservable true market (Roll's critique), varying proxies, beta estimation issues, poor empirical fit, unrealistic homogeneity.</li>
+        <li>✅ <strong>APT (Ross)</strong>: multi-factor, based on no-arbitrage. Flexible but doesn't specify factors. Rarely used practically.</li>
+        <li>✅ <strong>SHARPE RATIO</strong>: (R<sub>p</sub> − R<sub>f</sub>) / σ<sub>p</sub>. Total risk. Slope of CAL. Good for undiversified investors.</li>
+        <li>✅ <strong>TREYNOR RATIO</strong>: (R<sub>p</sub> − R<sub>f</sub>) / β<sub>p</sub>. Systematic risk. Good for part-of-larger-portfolio contexts. Fails for negative beta.</li>
+        <li>✅ <strong>M²</strong>: [E(R<sub>p</sub>) − R<sub>f</sub>](σ<sub>m</sub>/σ<sub>p</sub>) + R<sub>f</sub>. Rescaled Sharpe; expressed as % return. Same ranking as Sharpe.</li>
+        <li>✅ <strong>M² alpha</strong> = M² − R<sub>m</sub> = risk-adjusted outperformance in percentage points.</li>
+        <li>✅ <strong>JENSEN'S ALPHA</strong>: α<sub>p</sub> = R<sub>p</sub> − [R<sub>f</sub> + β<sub>p</sub>(R<sub>m</sub> − R<sub>f</sub>)]. Actual − CAPM required. Uses beta. Positive = outperformed.</li>
+        <li>✅ <strong>Jensen's α of market = 0</strong> by definition. Alpha is max you should pay a manager.</li>
+        <li>✅ <strong>Sharpe and M²</strong> rank portfolios IDENTICALLY. Both use total risk (σ).</li>
+        <li>✅ <strong>Treynor and Jensen</strong> both use systematic risk (β) but can rank differently.</li>
+        <li>✅ <strong>Numerator positive</strong> required for Sharpe/Treynor rankings to work correctly.</li>
+        <li>✅ <strong>Security Characteristic Line (SCL)</strong>: R<sub>i</sub> − R<sub>f</sub> = α<sub>i</sub> + β<sub>i</sub>(R<sub>m</sub> − R<sub>f</sub>). Plots excess security return vs. excess market return over time.</li>
+        <li>✅ <strong>SML security selection</strong>: above SML = undervalued (buy), on SML = fairly valued, below SML = overvalued (sell/short).</li>
+        <li>✅ <strong>~30 randomly diverse securities</strong> diversifies most nonsystematic risk.</li>
+        <li>✅ <strong>Information Ratio</strong>: IR = α<sub>i</sub> / σ<sub>e,i</sub>. Measures abnormal return per unit of nonsystematic risk. Higher = more valuable security.</li>
+        <li>✅ <strong>Optimal weight</strong> in a non-market security is proportional to α<sub>i</sub>/σ²<sub>e,i</sub>.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ KEY FORMULAS — QUICK REFERENCE (MEMORIZE ALL) ★</div>
+      <div class="f">
+        ═══ CAPM / SML ═══<br>
+        E(R<sub>i</sub>) = R<sub>f</sub> + β<sub>i</sub> × [E(R<sub>m</sub>) − R<sub>f</sub>]<br>
+        Market risk premium = E(R<sub>m</sub>) − R<sub>f</sub><br>
+        Asset risk premium = β<sub>i</sub> × [E(R<sub>m</sub>) − R<sub>f</sub>]<br><br>
+        ═══ CML (efficient portfolios only) ═══<br>
+        E(R<sub>p</sub>) = R<sub>f</sub> + [(E(R<sub>m</sub>) − R<sub>f</sub>)/σ<sub>m</sub>] × σ<sub>p</sub><br>
+        CML slope = Sharpe ratio of market = market price of risk<br><br>
+        ═══ BETA ═══<br>
+        β<sub>i</sub> = Cov(R<sub>i</sub>, R<sub>m</sub>) / σ²<sub>m</sub><br>
+        β<sub>i</sub> = ρ<sub>i,m</sub> × σ<sub>i</sub> × σ<sub>m</sub> / σ²<sub>m</sub><br>
+        β<sub>i</sub> = ρ<sub>i,m</sub> × (σ<sub>i</sub> / σ<sub>m</sub>)<br>
+        β<sub>market</sub> = 1, β<sub>Rf</sub> = 0<br>
+        β<sub>p</sub> = Σ w<sub>i</sub> β<sub>i</sub> (weighted average)<br><br>
+        ═══ RISK DECOMPOSITION ═══<br>
+        σ²<sub>i</sub> = β²<sub>i</sub> σ²<sub>m</sub> + σ²<sub>e</sub><br>
+        Total variance = Systematic + Nonsystematic<br>
+        σ<sub>i</sub> = √(β²<sub>i</sub>σ²<sub>m</sub> + σ²<sub>e</sub>)<br><br>
+        ═══ MARKET MODEL (regression) ═══<br>
+        R<sub>i</sub> = α<sub>i</sub> + β<sub>i</sub>R<sub>m</sub> + e<sub>i</sub><br>
+        Abnormal return = R<sub>i</sub> − (α<sub>i</sub> + β<sub>i</sub>R<sub>m</sub>) = e<sub>i</sub><br><br>
+        ═══ SINGLE-INDEX MODEL ═══<br>
+        E(R<sub>i</sub>) − R<sub>f</sub> = β<sub>i</sub>[E(R<sub>m</sub>) − R<sub>f</sub>]<br><br>
+        ═══ FAMA-FRENCH-CARHART 4-FACTOR ═══<br>
+        R<sub>i</sub> − R<sub>f</sub> = α + β<sub>MKT</sub>·MKT + β<sub>SMB</sub>·SMB + β<sub>HML</sub>·HML + β<sub>UMD</sub>·UMD<br><br>
+        ═══ PERFORMANCE RATIOS ═══<br>
+        <strong>Sharpe</strong>:  SR = (R<sub>p</sub> − R<sub>f</sub>) / σ<sub>p</sub> &nbsp;[total risk]<br>
+        <strong>Treynor</strong>: TR = (R<sub>p</sub> − R<sub>f</sub>) / β<sub>p</sub> &nbsp;[systematic risk]<br>
+        <strong>M²</strong>:  M² = SR × σ<sub>m</sub> + R<sub>f</sub> = (R<sub>p</sub> − R<sub>f</sub>)(σ<sub>m</sub>/σ<sub>p</sub>) + R<sub>f</sub><br>
+        <strong>M² alpha</strong>: M² − R<sub>m</sub><br>
+        <strong>Jensen's α</strong>: α<sub>p</sub> = R<sub>p</sub> − [R<sub>f</sub> + β<sub>p</sub>(R<sub>m</sub> − R<sub>f</sub>)]<br><br>
+        ═══ SECURITY CHARACTERISTIC LINE (SCL) ═══<br>
+        R<sub>i</sub> − R<sub>f</sub> = α<sub>i</sub> + β<sub>i</sub>(R<sub>m</sub> − R<sub>f</sub>)<br><br>
+        ═══ INFORMATION RATIO ═══<br>
+        IR<sub>i</sub> = α<sub>i</sub> / σ<sub>e,i</sub><br>
+        Optimal non-market weight ∝ α<sub>i</sub> / σ²<sub>e,i</sub><br><br>
+        ═══ APT (Arbitrage Pricing Theory) ═══<br>
+        E(R<sub>p</sub>) = R<sub>f</sub> + λ₁β<sub>p,1</sub> + λ₂β<sub>p,2</sub> + ... + λ<sub>K</sub>β<sub>p,K</sub>
+      </div>
+      <div class="note">
+        <strong>Critical distinctions to cement</strong>:<br>
+        CML uses σ (total risk), efficient portfolios only.<br>
+        SML uses β (systematic risk), ALL securities.<br>
+        Sharpe &amp; M² use σ; Treynor &amp; Jensen's α use β.<br>
+        Portfolio BETA is weighted avg; portfolio STD DEV is NOT (except when ρ=+1).<br>
+        Total VARIANCE = systematic + nonsystematic (variances add, not std devs).<br>
+        β<sub>market</sub> = 1 always; β<sub>Rf</sub> = 0 always.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 2: Portfolio Risk and Return Part II · Exam Prep Notes
+</footer>
+
+</body>
+</html>

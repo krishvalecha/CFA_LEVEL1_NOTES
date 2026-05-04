@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 3: Derivative Benefits, Risks, and Issuer and Investor Uses</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --benefit-bg: #111a16; --benefit-border: #4cc98a;
+    --risk-bg: #1a1010; --risk-border: #c94c4c;
+    --issuer-bg: #1a1510; --issuer-border: #c9a84c;
+    --investor-bg: #1a1020; --investor-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .benefit-card { background: var(--benefit-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .benefit-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .risk-card { background: var(--risk-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .risk-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .issuer-card { background: var(--issuer-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .issuer-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .investor-card { background: var(--investor-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .investor-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 3</div>
+  <h1>Derivative Benefits, Risks, and <span>Issuer &amp; Investor Uses</span></h1>
+  <p>Exam-ready notes: four key benefits of derivatives (risk allocation, price discovery, operational advantages, market efficiency), six major risks (leverage, transparency, basis, liquidity, counterparty credit, systemic risk), hedge accounting designations (cash flow, fair value, net investment hedges), and the fundamental differences in how issuers vs. investors use derivatives.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why Derivatives? The Timing Gap</a>
+  <a class="toc-item" href="#s2">02 · Four Key Benefits</a>
+  <a class="toc-item" href="#s3">03 · Price Discovery Function</a>
+  <a class="toc-item" href="#s4">04 · Operational Advantages</a>
+  <a class="toc-item" href="#s5">05 · Six Key Risks</a>
+  <a class="toc-item" href="#s6">06 · Implicit Leverage — The Core Risk</a>
+  <a class="toc-item" href="#s7">07 · Issuer Use of Derivatives</a>
+  <a class="toc-item" href="#s8">08 · Hedge Accounting — Three Types</a>
+  <a class="toc-item" href="#s9">09 · Investor Use of Derivatives</a>
+  <a class="toc-item" href="#s10">10 · Issuers vs. Investors — Master Comparison</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 1: WHY DERIVATIVES — THE TIMING GAP  -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why Derivatives? The Timing Gap Problem</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivatives allow market participants to <strong>allocate, transfer, and/or manage risk without trading an underlying asset</strong> in the cash (spot) market. One of the most important reasons derivatives exist is to bridge a <strong>timing gap</strong> — the difference between when an economic decision must be made and when the actual cash market transaction can occur.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="issuer-card">
+        <div class="issuer-title">Issuer Timing Problems</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li><strong>Manufacturer:</strong> Must order commodity inputs NOW (before knowing finished-goods order volume) → needs to lock in input prices today for future delivery</li>
+          <li><strong>Retailer:</strong> Awaiting a shipment priced in foreign currency → must decide when to sell domestic currency for payment BEFORE the shipment arrives</li>
+          <li><strong>Debt issuer:</strong> Wants to lock in future debt costs BEFORE the existing debt matures → cannot wait for the cash market timing</li>
+        </ul>
+      </div>
+      <div class="investor-card">
+        <div class="investor-title">Investor Timing Problems</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+          <li><strong>Cash-constrained investor:</strong> Has a market view but lacks the immediate cash to execute in the spot market → derivatives require minimal upfront cash outlay</li>
+          <li><strong>Reinvestment planning:</strong> Anticipates receiving future cash flows (dividends, coupon payments, principal repayments) and wants to decide how to reinvest them TODAY, before receiving the cash</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p>A derivative instrument allows both issuers and investors to <strong>agree on a price today for a future transaction</strong> — effectively locking in the economics of the transaction now, even though the underlying cash exchange happens later. This is the fundamental economic rationale for derivatives: they allow the <strong>separation of economic decision-making from cash settlement timing</strong>.</p>
+      <p style="margin-top:10px;">Derivatives also enable the creation of <strong>exposure profiles unavailable in cash markets</strong>. For example, combining a long cash position with a sold call option creates a "covered call" profile — a strategy that would be difficult or expensive to replicate using only cash market instruments.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 2: FOUR KEY BENEFITS                  -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Four Key Benefits of Derivative Instruments</h2>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-title">① Risk Allocation, Transfer, and Management</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Allocate, trade, and/or manage underlying exposure <strong>without buying or selling the underlying</strong> in the cash market</li>
+        <li>Transfer risk across time and among counterparties willing to accept specific exposures</li>
+        <li>Create exposure profiles that are <strong>unavailable in cash markets</strong> (e.g., covered calls, collars, structured payoffs)</li>
+        <li>Bridge the timing gap between economic decisions and cash transactions</li>
+        <li>Isolate specific risks (e.g., FX risk from a foreign portfolio) while retaining others (equity market exposure)</li>
+        <li>Examples: FX forward to hedge commercial transaction, interest rate swap to fix floating debt cost, gold futures to speculate on commodity prices</li>
+      </ul>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-title">② Information Discovery (Price Discovery)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Derivative prices deliver information about <strong>expected future prices and expected risk</strong> of the underlying</li>
+        <li>Futures prices provide a gauge of cash market direction (though NOT strictly an unbiased forecast of future spot prices)</li>
+        <li>Option prices (via <strong>implied volatility</strong>) reflect market's expectation of future price risk — a measure of uncertainty</li>
+        <li>Markets actively use derivatives for price discovery ahead of or between cash market trading hours</li>
+      </ul>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-title">③ Operational Advantages</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Lower transaction costs:</strong> Commodity derivatives eliminate transport, insurance, and storage costs of physical assets</li>
+        <li><strong>Increased liquidity:</strong> Derivative markets are typically more liquid due to reduced capital requirements versus equivalent cash positions</li>
+        <li><strong>Lower upfront cash requirements:</strong> Initial futures margin and option premiums are small fractions of full notional value → creates leverage</li>
+        <li><strong>Easy short selling:</strong> Taking a short position via derivatives avoids the costly process of locating a cash owner willing to lend the underlying — short selling in cash markets requires borrowing the asset</li>
+      </ul>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-title">④ Market Efficiency</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>When asset prices deviate from fundamental values, derivatives offer <strong>less costly ways to exploit mispricings</strong></li>
+        <li>Lower capital requirements, lower transaction costs, easier short-selling → arbitrage is cheaper in derivative markets</li>
+        <li>Fundamental value is often restored in derivative markets <strong>before</strong> it is restored in the underlying cash market</li>
+        <li>Existence of derivative markets generally causes <strong>all financial markets to function more effectively</strong> (faster price discovery, tighter spreads)</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Four Benefits — Quick Reference</div>
+      <div class="f">
+        ① Risk Allocation/Transfer/Management → manage exposure without trading underlying<br>
+        ② Information Discovery → price discovery, implied volatility, futures as market indicators<br>
+        ③ Operational Advantages → lower costs, better liquidity, less cash needed, easy short sales<br>
+        ④ Market Efficiency → cheaper arbitrage → faster restoration of fundamental value
+      </div>
+      <div class="note">The exam often tests whether you can identify which benefit applies to a given scenario. The key distinction: ① is about risk management; ② is about information; ③ is about mechanics/costs; ④ is about market-level effects.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 3: PRICE DISCOVERY FUNCTION          -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Price Discovery Function — Futures &amp; Implied Volatility</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivative markets serve an important <strong>price discovery function</strong> — they reveal information about expected future prices and expected risk that goes beyond what is available in spot markets alone.</p>
+    </div>
+
+    <h3>Futures as Price Discovery Tools</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Market</th><th>How Futures Are Used for Price Discovery</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equity Markets</td>
+            <td>Equity index futures prices (e.g., S&P 500 futures) are monitored BEFORE the stock market opens each day to gauge the expected direction of early cash market trading. A futures market that is open earlier or trades 24 hours provides real-time signals to equity investors.</td>
+          </tr>
+          <tr>
+            <td>Interest Rate Markets</td>
+            <td>Interest rate futures (e.g., Fed funds futures, SOFR futures) are used by analysts to extract implied investor expectations about central bank benchmark rate changes at future policy meetings. Market-implied probability of a rate hike or cut is derived from futures pricing.</td>
+          </tr>
+          <tr>
+            <td>Commodity Markets</td>
+            <td>Commodity futures prices across different maturities (the "forward curve") reveal supply and demand dynamics between producers, consumers, and investors. Contango (futures above spot) vs. backwardation (futures below spot) signals supply/demand balance.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Futures Are NOT an Unbiased Forecast of Future Spot Prices</div>
+      <p>While market participants use futures prices to gauge the direction of cash markets, futures prices are <strong>NOT strictly an unbiased forecast</strong> of the future spot price. Futures prices incorporate: (1) the current spot price, (2) the cost of carry (financing, storage, insurance), (3) risk premiums (term premium, liquidity premium), and (4) supply/demand dynamics. These components mean a futures price systematically over- or under-estimates the expected future spot price depending on market conditions. The exam tests the distinction between "useful indicator" and "unbiased forecast."</p>
+    </div>
+
+    <h3>Option Implied Volatility — Price Discovery for Risk</h3>
+
+    <div class="def-block">
+      <div class="def-term">Implied Volatility</div>
+      <div class="def-body">The market's expectation of future price risk (volatility) of the underlying, as derived from the current market price of an option and other known option features (strike, maturity, current underlying price, risk-free rate). Implied volatility represents the market's collective view of uncertainty in the underlying's future price. Higher implied volatility → higher option price (more uncertainty = more valuable right to exercise).</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Implied Volatility — The Market's Fear Gauge</div>
+      <p>The VIX index (CBOE Volatility Index) is the most famous measure of implied volatility — it measures the implied volatility of S&P 500 index options and is widely called "the fear gauge." A rising VIX means options are getting more expensive (market expects greater future uncertainty). Implied volatility is forward-looking — it tells you what the market EXPECTS going forward, whereas historical volatility tells you what happened in the past. The exam tests the concept and direction: higher option price → higher implied volatility (all else equal).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 4: OPERATIONAL ADVANTAGES            -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Operational Advantages — Detailed Analysis</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Advantage</th><th>Detail</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lower Transaction Costs</td>
+            <td>Commodity derivatives eliminate the physical costs of owning the underlying: no need to transport, insure, or store a physical asset. Bid-offer spreads in derivative markets are often tighter than in underlying markets.</td>
+            <td>An investor who wants gold exposure buys gold futures rather than buying physical gold bars — avoids vault storage fees, insurance, transport costs, assay costs.</td>
+          </tr>
+          <tr>
+            <td>Increased Liquidity</td>
+            <td>Derivative markets are typically MORE liquid than the underlying cash markets because less capital is needed to trade them. A larger number of market participants can participate, tightening bid-offer spreads and improving market depth.</td>
+            <td>S&P 500 index futures are more liquid than buying all 500 component stocks. Interest rate futures markets often dwarf the underlying Treasury bond market in daily trading volume.</td>
+          </tr>
+          <tr>
+            <td>Low Upfront Cash Requirements</td>
+            <td>Futures require only a small initial margin (fraction of full notional). Options require only the premium (often a small % of the underlying value). Both create exposure to the full notional value with far less cash upfront → implicit leverage.</td>
+            <td>Procam deposits $4,950 initial margin to control a $179,213 notional gold futures contract — leverage ratio ≈ 36:1. An option buyer pays a $5 premium to control a $30 stock position — 6:1 leverage on a per-share basis.</td>
+          </tr>
+          <tr>
+            <td>Easy Short Selling</td>
+            <td>In cash markets, short selling requires borrowing the asset from a willing owner and paying fees for the loan. If no owners are willing to lend, the short position is impossible. Derivatives make short selling trivial — simply sell a futures contract or buy a put option.</td>
+            <td>Short-selling a thinly traded corporate bond is extremely difficult in the cash market. Buying CDS protection achieves the same short-credit exposure instantly, without needing to borrow the bond.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Leverage is Both a Benefit AND a Risk</div>
+      <p>The low upfront cash requirement (benefit ③) is a double-edged sword. It creates implicit leverage — any percentage gain or loss on the small margin/premium is amplified relative to the full notional value. A 1% move in the underlying causes a much larger percentage move in the derivative position. The CFA exam tests this in both the "benefits" context (lower capital needed for same exposure) and the "risks" context (potential for amplified losses, margin calls, financial distress).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 5: SIX KEY RISKS                     -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Six Key Risks of Derivative Instruments</h2>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">① Greater Potential for Speculative Use (Implicit Leverage)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>The low cash outlay of derivatives creates a <strong>high degree of implicit leverage</strong> versus an equivalent cash position</li>
+        <li>Small moves in the underlying produce proportionally large gains or losses on the derivative (relative to the cash invested)</li>
+        <li>Increases the likelihood of financial distress if the underlying moves adversely</li>
+        <li>Structured notes (debt + embedded derivative) may involve significant embedded leverage not immediately apparent to investors</li>
+        <li>Example: A futures position with 36:1 leverage means a 3% adverse move wipes out the entire initial margin</li>
+      </ul>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">② Lack of Transparency</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Derivatives can add significant <strong>portfolio complexity</strong> — the resulting exposure profile may not be well understood by stakeholders (investors, regulators, boards)</li>
+        <li>The risk increases with combinations of multiple derivatives or embedded derivatives (structured notes, structured products)</li>
+        <li>OTC derivatives are inherently less transparent than exchange-traded instruments</li>
+        <li><strong>Structured notes:</strong> debt instruments with one or more embedded derivatives designed for specific issuer/investor objectives. May involve higher costs, lower liquidity, and less transparency than equivalent stand-alone derivatives</li>
+        <li>Complexity means risk exposures may be hidden or misunderstood until a crisis occurs</li>
+      </ul>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">③ Basis Risk</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>The risk that a derivative's expected value <strong>diverges unexpectedly from that of the underlying</strong> or the hedged transaction</li>
+        <li>Arises when the derivative references a price or index that is <strong>similar but does not exactly match</strong> the underlying exposure</li>
+        <li>Examples of basis risk: hedging with a different-grade commodity than the one held; using a generic MRR when the loan references a different rate; CDS on an index instead of the specific issuer's bond</li>
+        <li>Affected by supply/demand dynamics in the derivative market itself (technical factors)</li>
+        <li>Hedger assumes the derivative will be highly effective in offsetting the underlying price risk — basis risk is the degree to which this assumption fails</li>
+      </ul>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">④ Liquidity Risk</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>A <strong>divergence in cash flow timing</strong> between the derivative and the underlying/hedged transaction</li>
+        <li>The daily MTM settlement of futures creates liquidity risk: if a hedger cannot meet a margin call due to lack of funds, the position is forcibly closed and the investor must cover losses immediately</li>
+        <li>A hedger may have a correctly positioned hedge but lack immediate liquidity to meet margin calls during adverse price moves — forced to close at the worst time</li>
+        <li>The underlying hedged transaction may settle in the future while the derivative requires daily cash flows NOW</li>
+        <li>Less of a concern for OTC derivatives (negotiated credit terms) but can arise when collateral calls occur</li>
+      </ul>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">⑤ Counterparty Credit Risk</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Unlike loans/bonds (credit exposure = notional + accrued interest, predictable), derivative credit exposure is determined by <strong>daily swings in the underlying price</strong> — variable and harder to monitor</li>
+        <li>Credit exposure monitoring must be more frequent and dynamic than for fixed-income credit</li>
+        <li>Varies by derivative type: futures (low — daily MTM + clearinghouse guarantee), OTC (higher — bilateral, unless centrally cleared)</li>
+        <li>For contingent claims: one-sided credit risk (option buyer faces seller's credit risk; seller has no credit risk to buyer after premium is paid)</li>
+        <li>For firm commitments: bilateral credit risk — both counterparties can have mark-to-market exposure to each other</li>
+        <li>Mitigated by: daily MTM for ETDs, central clearing mandate for OTC swaps (post-2008), collateral agreements (ISDA credit support annex)</li>
+      </ul>
+    </div>
+
+    <div class="risk-card">
+      <div class="risk-title">⑥ Destabilization and Systemic Risk</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li>Excessive risk-taking and leverage through derivatives can contribute to <strong>market-wide stress and systemic risk</strong></li>
+        <li>The 2008 global financial crisis highlighted how interconnected OTC derivative exposures (particularly CDS and mortgage-backed securities derivatives) could cascade across the financial system</li>
+        <li>Regulators continue to focus on financial innovation, leverage, and systemic risk monitoring</li>
+        <li>Post-2008 reforms: central clearing mandate for OTC swaps, margin requirements similar to futures, trade reporting requirements</li>
+        <li>Central clearing reduces bilateral counterparty risk but concentrates systemic risk in CCPs — which must have robust safeguards</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Six Risks — Quick Reference</div>
+      <div class="f">
+        ① Speculative/Leverage Risk → implicit leverage → amplified gains and losses<br>
+        ② Transparency Risk → complexity → stakeholders may misunderstand exposures<br>
+        ③ Basis Risk → derivative ≠ exactly match underlying → hedge effectiveness uncertainty<br>
+        ④ Liquidity Risk → cash flow timing mismatch → margin calls when funds aren't available<br>
+        ⑤ Counterparty Credit Risk → MTM exposure variable, monitoring more complex than bonds<br>
+        ⑥ Systemic Risk → excessive leverage/risk → market destabilization (2008 crisis)
+      </div>
+      <div class="note">
+        <strong>Basis risk vs. liquidity risk:</strong> Basis risk = VALUE mismatch between derivative and underlying. Liquidity risk = TIMING mismatch between derivative cash flows and underlying cash flows. Both are "mismatch" risks but in different dimensions.<br>
+        <strong>Counterparty credit risk (derivatives vs. bonds):</strong> Bond credit exposure = predictable (notional + accrued). Derivative credit exposure = variable (MTM swings daily with price changes).
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 6: IMPLICIT LEVERAGE — THE CORE RISK -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Implicit Leverage — The Core Risk in Detail</h2>
+    </div>
+
+    <div class="card">
+      <p>The operational advantage of low upfront cash requirements directly translates to <strong>implicit leverage</strong> — the same dollar of capital controls a much larger notional exposure in derivatives than in cash markets. This leverage amplifies both gains AND losses proportionally.</p>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Leverage Comparison — Futures vs. Cash Market (Gold Example)</div>
+      <div class="f">
+        Cash Market Purchase (No Borrowing):<br>
+        Buy 100 oz gold at $1,770/oz → Outlay = $177,000<br>
+        If gold rises to $1,780.50/oz → Gain = $1,050 → Return = $1,050/$177,000 = 0.59%<br><br>
+        Futures Contract (Initial Margin = $4,950):<br>
+        Same 100 oz exposure, f₀(T) = $1,792.13 → Cash outlay = $4,950 (initial margin only)<br>
+        Net settlement = ($1,780.50 − $1,792.13) × 100 = −$1,163 loss<br>
+        Return on margin = −$1,163/$4,950 = −23.5% (vs. −0.65% for cash purchase at same price)<br><br>
+        Leverage ratio = Notional / Margin = $179,213 / $4,950 ≈ 36:1<br>
+        → A 1% move in gold price = ~36% move in the futures margin account value
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Leverage Works Both Ways — The Key Exam Concept</div>
+      <p>The futures leverage of ~36:1 means:<br>
+      <strong>Positive scenario:</strong> Gold rises 1% → futures position gains ~36% on the margin deposited → dramatically outperforms the cash position.<br>
+      <strong>Negative scenario:</strong> Gold falls 1% → futures position loses ~36% on the margin → far more severe than the cash position loss.<br>
+      This is the essence of implicit leverage — it doesn't change the total dollar gain/loss (which is the same for both approaches on the same notional), but it dramatically changes the <em>percentage return on capital deployed</em>. The exam tests this amplification effect and the risk of margin calls forcing position closure at adverse prices.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Liquidity Risk + Leverage = Forced Liquidation Risk</div>
+      <p>The combination of leverage (small margin) and daily MTM creates a dangerous scenario: an investor may be <strong>economically right about the long-term direction</strong> of the underlying but get <strong>forced out of the position in the short term</strong> due to an inability to meet margin calls. This forced liquidation — selling at the worst time — is a recurring theme in derivative market crises. Example: a hedger with a correctly positioned futures hedge may be forced to close out due to margin calls, leaving their underlying exposure unhedged at exactly the wrong moment.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 7: ISSUER USE OF DERIVATIVES         -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Issuer Use of Derivatives</h2>
+    </div>
+
+    <div class="card">
+      <p>Non-financial corporate issuers typically face risks to their <strong>assets, liabilities, and earnings</strong> as a result of changes in the price of an underlying. These risks arise from their normal commercial operations and financing activities — not from a desire to speculate.</p>
+      <p style="margin-top:10px;"><strong>Primary motivation:</strong> To offset or hedge market-based exposures, reduce earnings volatility, and stabilize cash flows. Unlike investors, issuers are primarily focused on <strong>hedge accounting treatment</strong> — ensuring that derivative gains and losses are recognized at the same time as the underlying hedged transaction, minimizing income statement and cash flow volatility.</p>
+    </div>
+
+    <div class="issuer-card">
+      <div class="issuer-title">Why Issuers Hedge — The Core Problem</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+        <li>Commodity input price volatility → unpredictable earnings → harder for investors to forecast future EPS</li>
+        <li>FX volatility → translates foreign currency revenues/costs into unpredictable domestic currency amounts</li>
+        <li>Interest rate volatility → floating-rate debt creates variable cash outflows → harder to plan</li>
+        <li>Higher earnings volatility → perceived higher risk → potentially higher cost of capital/borrowing</li>
+        <li>Hedging with derivatives reduces all these effects → smooths earnings → reduces uncertainty → potentially lowers cost of capital</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Derivatives accounting evolution:</strong> Derivatives historically had off-balance-sheet treatment — not shown as assets/liabilities. Post-reform, derivatives must be <strong>reported on the balance sheet at fair market value</strong>. This increases transparency and disclosure of derivative use, aligning with the principle of economic reality in financial reporting.</p>
+      <p style="margin-top:10px;"><strong>Default treatment (no hedge designation):</strong> Any derivative must be marked to market through the income statement via earnings — creating quarterly earnings volatility as the derivative's fair value fluctuates, even if it perfectly hedges the underlying.</p>
+      <p style="margin-top:10px;"><strong>Solution: Hedge accounting.</strong> If an issuer meets specific criteria, it can designate the derivative as a hedge and defer MTM changes to <strong>Other Comprehensive Income (OCI)</strong> — an equity account — releasing them into earnings only when the underlying hedged transaction is recognized. This eliminates the income statement volatility from timing mismatches.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why OTC Derivatives Are Preferred by Issuers (for Hedging)</div>
+      <p>To qualify for hedge accounting, the derivative's <strong>dates, notional amounts, and other contract features must closely match those of the underlying hedged transaction</strong>. Standardized exchange-traded contracts almost never match an issuer's specific exposure perfectly (e.g., a 75-day forward matches a specific commercial contract; a standardized 2-month futures contract does not). For this reason, issuers are FAR MORE likely to use <strong>OTC markets for customized hedges</strong> that can be tailored to exactly match the hedged transaction — enabling hedge accounting qualification.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 8: HEDGE ACCOUNTING — THREE TYPES    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Hedge Accounting — Three Designation Types</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Hedge Accounting</div>
+      <div class="def-body">An accounting treatment that allows an issuer to <strong>offset a hedging instrument (usually a derivative) against a hedged transaction or balance sheet item</strong>, reducing financial statement volatility. Derivative MTM changes are held in Other Comprehensive Income (OCI — an equity account) and released into earnings at the same time as the underlying hedged transaction — aligning the timing of recognition.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Hedge Type</th><th>Definition</th><th>Examples</th><th>Derivative Types Used</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cash Flow Hedge</td>
+            <td>Absorbs the <strong>variable cash flow of a floating-rate asset or liability</strong> (or a forecasted transaction). Offsets variability in cash flows, not fair value.</td>
+            <td>1. Interest rate swap converting floating-rate debt to fixed-rate → hedges variable interest payments<br>2. FX forward to hedge forecasted foreign currency sales (like Montau AG's KRW→EUR example)<br>3. Commodity forward to lock in input prices for future raw material purchases</td>
+            <td>Forward commitments OR contingent claims (both qualify)</td>
+          </tr>
+          <tr>
+            <td>Fair Value Hedge</td>
+            <td>Offsets the <strong>fluctuation in fair value of an existing asset or liability</strong> on the balance sheet. The hedged item's fair value change is also recognized in earnings (offsetting the derivative).</td>
+            <td>1. Interest rate swap receiving fixed rate and paying MRR → converts fixed-rate bond to floating (hedges fair value of the bond against rate changes)<br>2. Commodity futures contract to hedge the fair value of existing physical inventory against price declines<br>3. Fixed-to-floating rate swap on a fixed-rate debt issuance</td>
+            <td>Mostly forward commitments (swaps, futures, forwards)</td>
+          </tr>
+          <tr>
+            <td>Net Investment Hedge</td>
+            <td>Designated to offset the <strong>FX risk of the equity of a foreign operation</strong>. Protects the issuer's reported equity value from being eroded by exchange rate movements when translating a foreign subsidiary's equity into the reporting currency.</td>
+            <td>1. Currency swap to hedge the equity of a foreign subsidiary<br>2. Currency forward to offset FX risk on a foreign operation's equity<br>3. Foreign currency-denominated debt issued by the parent company (non-derivative hedge)</td>
+            <td>Currency swaps, FX forwards, or foreign currency debt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Three Hedge Types — Memory Hook</div>
+      <div class="f">
+        CASH FLOW HEDGE: Hedges VARIABLE CASH FLOWS of floating-rate or forecasted transactions<br>
+        → "Lock in" a future rate/price | OCI treatment | Forward commitments OR options<br>
+        Examples: floating→fixed swap, FX forward on forecasted sales<br><br>
+        FAIR VALUE HEDGE: Hedges FAIR VALUE CHANGES of existing fixed-rate assets/liabilities<br>
+        → Converts existing fixed exposure to floating | Both derivative and hedged item marked to earnings<br>
+        Examples: fixed→floating swap on a fixed-rate bond; inventory forward hedge<br><br>
+        NET INVESTMENT HEDGE: Hedges FX RISK on equity of a foreign subsidiary<br>
+        → Protects equity translation from foreign currency movements<br>
+        Examples: currency swap, FX forward, or FX-denominated debt issued by parent
+      </div>
+      <div class="note">
+        <strong>Key confusion:</strong> Cash flow hedge (floating→fixed swap) vs. fair value hedge (fixed→floating swap) — opposite directions! The interest rate swap type depends on whether you want to stabilize cash flows (you have floating debt, go fixed = cash flow hedge) or stabilize fair value (you have fixed-rate debt, go floating = fair value hedge — because floating-rate bonds don't change in value when rates change, unlike fixed-rate bonds).<br>
+        <strong>Why OCI?</strong> Hedge accounting stores derivative MTM changes in OCI (equity section) until the hedged transaction is recognized in earnings — preventing "phantom" earnings volatility from the derivative alone.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Qualifying for Hedge Accounting — The Key Requirement</div>
+      <p>Not all derivatives automatically qualify for hedge accounting. To qualify, the issuer must document: (1) the hedging relationship, (2) the risk management objective, and (3) the strategy. The derivative must be <strong>highly effective</strong> in offsetting the designated risk of the hedged item — meaning the derivative's critical terms (notional, maturity, payment dates, underlying) must closely match the hedged transaction. This is why corporate issuers overwhelmingly prefer <strong>customized OTC derivatives</strong> for hedging — standardized ETD contracts rarely match the specific terms needed for hedge accounting qualification.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 9: INVESTOR USE OF DERIVATIVES       -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Investor Use of Derivatives</h2>
+    </div>
+
+    <div class="card">
+      <p>Investors use derivatives differently from issuers. While issuers primarily hedge commercial exposures, investors use derivatives to achieve investment objectives — often through strategies that would be impossible, too expensive, or too capital-intensive in cash markets alone.</p>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-title">Three Primary Investor Uses of Derivatives</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li><strong>Replicate cash market strategies more cheaply/efficiently:</strong> Use derivatives to get the same economic exposure as a cash market purchase but with less capital, lower costs, and faster execution. Example: Procam uses gold futures instead of buying physical gold — same exposure, far less cash outlay, no storage/insurance costs.</li>
+        <li><strong>Hedge existing portfolio exposures:</strong> Isolate specific risks while retaining others. Example: Use FX forwards to hedge currency risk when investing in overseas equities — retain equity market exposure while eliminating (or reducing) currency exposure. Example: Buy CDS to hedge credit exposure without selling the bonds.</li>
+        <li><strong>Modify or create exposures unavailable in cash markets:</strong> Use derivatives to create payoff profiles that cannot be replicated in spot markets alone. Example: Covered call (long stock + short call) → generates extra income in stable/slightly rising markets. Example: Use equity index swaps to rotate exposure from one sector to another instantly, without trading individual stocks.</li>
+      </ul>
+    </div>
+
+    <h3>Investor Examples from the Module</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Investor/Fund</th><th>Derivative Used</th><th>Objective</th><th>Market Used</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Procam Investments</td>
+            <td>Gold futures (or forward)</td>
+            <td>Gain gold price exposure without cash purchase or physical delivery requirement</td>
+            <td>ETD (futures) or OTC (forward)</td>
+          </tr>
+          <tr>
+            <td>Fyleton Investments</td>
+            <td>GBP interest rate swap (receive fixed, pay floating)</td>
+            <td>Increase portfolio duration without purchasing long-term bonds — no initial cash outlay</td>
+            <td>OTC (customized swap)</td>
+          </tr>
+          <tr>
+            <td>Hightest Capital</td>
+            <td>Health care index call option (SIXV)</td>
+            <td>Benefit from expected sector outperformance with limited downside (max loss = premium)</td>
+            <td>ETD (CBOE — standardized option)</td>
+          </tr>
+          <tr>
+            <td>SCSI (Covered Call)</td>
+            <td>Long equity index + short call option</td>
+            <td>Enhance return vs. long-only position if index is stable to slightly higher (CIO's view)</td>
+            <td>ETD (standardized call option)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Investors Don't Need Hedge Accounting</div>
+      <p>An investment fund's derivative positions are typically <strong>marked to market daily and included in the fund's net asset value (NAV)</strong>. Unlike corporate issuers who need to match derivative gains/losses to specific underlying transactions for accounting purposes, investors report everything at fair value on a daily basis anyway. There is no timing mismatch problem to solve through hedge accounting — the derivative's P&amp;L hits NAV immediately. This is a major reason why investors use derivatives differently from issuers and are <strong>less focused on the OTC vs. ETD distinction</strong> — they can use more standardized, liquid ETD markets freely.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 10: ISSUERS vs. INVESTORS — COMPARISON   -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Issuers vs. Investors — Complete Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Dimension</th><th>Issuers (Non-Financial Corporates)</th><th>Investors (Funds, Portfolio Managers)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primary Purpose</td>
+            <td>Offset/hedge market-based exposures arising from commercial operations and financing activities. Reduce earnings and cash flow volatility.</td>
+            <td>Replicate cash market strategy more efficiently, hedge portfolio exposures, or create/modify exposures unavailable in cash markets.</td>
+          </tr>
+          <tr>
+            <td>Underlying Exposure Origin</td>
+            <td>Incidental to operations: commodity inputs, FX from international trade, floating-rate debt costs. Not chosen for investment return.</td>
+            <td>Chosen as part of investment strategy: equity market exposure, interest rate duration, sector bets, currency exposure.</td>
+          </tr>
+          <tr>
+            <td>Focus on Hedge Accounting?</td>
+            <td><span class="tag tag-green">Yes — Critical</span>. Must match derivative to hedged item precisely to qualify. Drives preference for OTC customization.</td>
+            <td><span class="tag tag-red">No — Minimal</span>. Daily NAV marking of derivatives already aligns with fair value reporting. No timing mismatch to solve.</td>
+          </tr>
+          <tr>
+            <td>Preferred Market Type</td>
+            <td><strong>OTC markets</strong> — need customized terms (specific maturity, notional, payment dates) to match hedged transaction for hedge accounting qualification.</td>
+            <td><strong>More standardized ETD markets</strong> — prefer liquidity, transparency, lower costs. Less need for exact customization.</td>
+          </tr>
+          <tr>
+            <td>Typical Derivatives Used</td>
+            <td>FX forwards (commercial transaction hedges), interest rate swaps (debt profile management), commodity forwards/futures (input cost hedges)</td>
+            <td>Equity index options and futures (sector bets, portfolio hedges), interest rate swaps (duration management), FX forwards (currency hedges on overseas positions)</td>
+          </tr>
+          <tr>
+            <td>Accounting Treatment</td>
+            <td>Derivatives marked to market through P&amp;L unless designated hedge accounting (then MTM to OCI). Aim to minimize income statement volatility.</td>
+            <td>Derivatives marked to market daily via NAV. No separate hedge accounting designation needed. All gains/losses reflected daily in fund performance.</td>
+          </tr>
+          <tr>
+            <td>Risk Focus</td>
+            <td>Managing commercial and financial statement risk. Counterparty credit risk, basis risk, and liquidity risk are key concerns (matching cash flows to hedged transactions).</td>
+            <td>Investment return and risk management. Leverage risk, counterparty credit risk for OTC positions, and basis risk when hedging are key concerns.</td>
+          </tr>
+          <tr>
+            <td>Hedge Designation Types</td>
+            <td>Cash flow hedges (floating→fixed, FX on forecasted sales), fair value hedges (fixed→floating, inventory), net investment hedges (FX on foreign subsidiary equity)</td>
+            <td>No formal hedge designations — portfolio-level hedging (e.g., index put options as portfolio insurance) without specific accounting designation</td>
+          </tr>
+          <tr>
+            <td>Example</td>
+            <td>Montau AG uses 75-day OTC FX forward to hedge KRW receivable → qualifies as cash flow hedge → avoids earnings volatility from FX swings</td>
+            <td>Fyleton Investments uses interest rate swap to increase portfolio duration without buying bonds → daily MTM reflected in NAV directly</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Issuers vs. Investors — Key Exam Contrasts</div>
+      <div class="f">
+        ISSUERS: hedge commercial/financial exposures → care about hedge accounting → prefer OTC<br>
+        INVESTORS: replicate/modify investment exposures → mark-to-market daily in NAV → prefer ETD<br><br>
+        ISSUERS use OTC because:<br>
+        → Customized terms needed to match hedged transaction (hedge accounting qualification)<br>
+        → Standard ETD contracts may not match specific exposure timing/size<br><br>
+        INVESTORS use ETD more often because:<br>
+        → No hedge accounting needed (daily NAV MTM already handles it)<br>
+        → Prefer liquidity and lower costs of standardized exchange markets<br>
+        → Easy entry/exit for dynamic portfolio management<br><br>
+        BOTH benefit from: risk allocation, price discovery, operational advantages<br>
+        BOTH face: basis risk, liquidity risk, counterparty credit risk, leverage risk
+      </div>
+      <div class="note">
+        <strong>Hedge accounting is the KEY difference driver:</strong> The need (or lack thereof) for hedge accounting determines whether issuers use OTC (need exact match) vs. investors using ETD (no match requirement).<br>
+        <strong>Investment fund prospectus:</strong> Specifies which derivative instruments a fund may use and for which purpose — investors operate within these constraints.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST & QUICK REFERENCE      -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Core rationale for derivatives:</strong> Bridge the timing gap between economic decisions and cash market transactions. Allow risk allocation, transfer, and management without trading the underlying asset.</li>
+        <li>✅ <strong>Benefit ①: Risk Allocation/Transfer/Management.</strong> Allocate, trade, manage exposure without trading underlying. Transfer risk across time and counterparties. Create exposures unavailable in cash markets (e.g., covered calls, non-linear payoffs).</li>
+        <li>✅ <strong>Benefit ②: Price Discovery (Information).</strong> Futures prices → direction of cash markets (equity index futures pre-open, rate futures for central bank expectations, commodity futures for supply/demand). Option implied volatility → market's expected future price risk. BUT: futures prices are NOT strictly unbiased forecasts of future spot prices.</li>
+        <li>✅ <strong>Implied volatility</strong> = expected future price risk derived from current option prices. Higher implied vol = higher option price = more market uncertainty. Important price discovery function of options markets.</li>
+        <li>✅ <strong>Benefit ③: Operational Advantages.</strong> Lower transaction costs (no storage/transport for commodity derivatives). More liquid markets. Low upfront cash (initial margin / premium = fraction of notional). Easy short selling (no need to borrow the underlying).</li>
+        <li>✅ <strong>Benefit ④: Market Efficiency.</strong> Derivatives make exploiting mispricings cheaper → arbitrage corrects prices faster → derivative markets often reflect fundamental value before cash markets do.</li>
+        <li>✅ <strong>Risk ①: Leverage/Speculation.</strong> Low cash outlay = implicit leverage. Small adverse moves wipe out the margin deposited. Amplifies losses proportionally. Structured notes may embed hidden leverage.</li>
+        <li>✅ <strong>Risk ②: Transparency.</strong> Derivative complexity may create exposures not understood by stakeholders. OTC derivatives are less transparent. Structured notes (debt + embedded derivative) add layers of complexity.</li>
+        <li>✅ <strong>Risk ③: Basis Risk.</strong> VALUE mismatch — derivative references an index/rate similar to, but not exactly matching, the hedged underlying. Hedge effectiveness is uncertain. Examples: different MRR, index CDS vs. specific issuer's bond.</li>
+        <li>✅ <strong>Risk ④: Liquidity Risk.</strong> TIMING mismatch — derivative cash flows (daily MTM margin calls) don't match the hedged transaction's cash flows. A correctly positioned hedger may be forced to close due to inability to meet margin calls despite being economically right long-term.</li>
+        <li>✅ <strong>Risk ⑤: Counterparty Credit Risk.</strong> Different from bond credit risk (predictable notional + accrued). Derivative credit exposure varies daily with MTM swings. Requires more frequent monitoring. ETDs mitigate via daily MTM + clearinghouse guarantee. OTC mitigated by central clearing post-2008.</li>
+        <li>✅ <strong>Risk ⑥: Systemic Risk.</strong> Excessive leverage/risk in derivatives contributed to 2008 financial crisis. CCPs introduced to reduce bilateral risks — but concentrate systemic risk in CCPs (must have robust safeguards).</li>
+        <li>✅ <strong>Issuers primarily hedge commercial and financing exposures</strong> — FX (commercial transactions), interest rates (debt costs), commodities (input costs). Goal: reduce earnings/cash flow volatility, stabilize financial statements.</li>
+        <li>✅ <strong>Issuers seek hedge accounting treatment</strong> — allows MTM changes to flow through OCI (equity account) instead of P&L, releasing into earnings when the hedged transaction is recognized. Eliminates "phantom" earnings volatility.</li>
+        <li>✅ <strong>Issuers prefer OTC derivatives</strong> because customized terms (exact maturity, notional, payment dates) are needed to match the hedged transaction and qualify for hedge accounting. Standardized ETD contracts rarely match precisely enough.</li>
+        <li>✅ <strong>Three hedge accounting types:</strong> (1) Cash Flow Hedge: hedges variable cash flows of floating-rate/forecasted transactions (e.g., floating→fixed swap, FX forward on forecasted sales). (2) Fair Value Hedge: hedges fair value changes of existing fixed-rate assets/liabilities (e.g., fixed→floating swap on a fixed-rate bond). (3) Net Investment Hedge: hedges FX risk on equity of a foreign subsidiary (currency swap/forward).</li>
+        <li>✅ <strong>Cash flow hedge vs. fair value hedge direction:</strong> If you have FLOATING debt and swap to FIXED → cash flow hedge (stabilizing cash flows). If you have FIXED-RATE debt and swap to FLOATING → fair value hedge (stabilizing fair value of the liability).</li>
+        <li>✅ <strong>Investors use derivatives for:</strong> (1) Replicating cash market strategies cheaply (Procam: gold futures = gold exposure with minimal cash). (2) Hedging portfolio exposures (FX forwards to hedge overseas equity positions). (3) Creating/modifying exposures unavailable in cash markets (covered calls, interest rate duration changes via swaps).</li>
+        <li>✅ <strong>Investors don't need hedge accounting</strong> — daily MTM in fund NAV already captures all derivative gains/losses. No timing mismatch to solve. This is why investors prefer ETD markets (more liquid, standardized, cheaper) over OTC.</li>
+        <li>✅ <strong>Investment fund prospectus</strong> specifies which derivatives may be used and for what purpose — investors are constrained by their mandate.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ FOUR DERIVATIVE BENEFITS ═══<br>
+        ① Risk Allocation/Transfer/Management: manage exposure without trading underlying<br>
+        ② Information/Price Discovery: futures = market direction; implied vol = price risk<br>
+        ③ Operational Advantages: lower costs, liquidity, low cash, easy short selling<br>
+        ④ Market Efficiency: cheaper arbitrage → faster price correction<br><br>
+
+        ═══ SIX DERIVATIVE RISKS ═══<br>
+        ① Leverage/Speculation: implicit leverage → amplified gains AND losses<br>
+        ② Transparency: complexity → stakeholders may misunderstand exposures<br>
+        ③ Basis Risk: VALUE mismatch (derivative ≠ exact underlying match)<br>
+        ④ Liquidity Risk: TIMING mismatch (derivative cash flows ≠ hedged transaction timing)<br>
+        ⑤ Counterparty Credit Risk: MTM-variable exposure, complex to monitor<br>
+        ⑥ Systemic Risk: excessive leverage → market destabilization (2008 crisis)<br><br>
+
+        ═══ ISSUERS ═══<br>
+        Hedge commercial/financing exposures → reduce earnings/cash flow volatility<br>
+        Seek hedge accounting (MTM to OCI, not P&L)<br>
+        Prefer OTC (customized terms needed for hedge accounting qualification)<br>
+        Three hedge types: Cash Flow | Fair Value | Net Investment<br><br>
+
+        ═══ INVESTORS ═══<br>
+        Replicate cash market positions cheaply → hedge portfolio → create new exposures<br>
+        No hedge accounting needed (daily NAV MTM handles it automatically)<br>
+        Prefer ETD (more liquid, standardized, lower cost)<br>
+        May be constrained by fund prospectus on permitted derivative use
+      </div>
+      <div class="note">
+        <strong>Cash flow hedge (floating→fixed) vs. fair value hedge (fixed→floating):</strong> The swap direction determines the designation. Floating→fixed = stabilize cash flows (CF hedge). Fixed→floating = stabilize fair value (FV hedge).<br>
+        <strong>Basis risk vs. liquidity risk:</strong> Both are "mismatch" risks. Basis = VALUE mismatch. Liquidity = TIMING mismatch in cash flows.<br>
+        <strong>Futures price ≠ unbiased forecast of future spot price.</strong> Contains cost of carry, risk premiums, supply/demand — not just the "expected" future spot.<br>
+        <strong>OCI (Other Comprehensive Income)</strong> = the equity account where hedge accounting MTM changes are stored until the hedged item is recognized in earnings.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 3: Derivative Benefits, Risks, and Issuer and Investor Uses · Exam Prep Notes
+</footer>
+
+</body>
+</html>

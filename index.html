@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA Level 1 — Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0d11;
+  --sidebar-bg: #0d0f15;
+  --sidebar-border: #1c2030;
+  --card: #13161f;
+  --border: #1e2235;
+  --accent: #c9a84c;
+  --accent-dim: rgba(201,168,76,0.12);
+  --accent2: #4c8bc9;
+  --accent3: #4cc98a;
+  --text: #e8eaf0;
+  --muted: #6b7589;
+  --muted2: #8892a4;
+  --hover: #161a26;
+  --active: #1a1f2e;
+  --active-border: #c9a84c;
+  --search-bg: #111420;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; display: flex; flex-direction: column; }
+
+/* ── TOP BAR ── */
+.topbar {
+  height: 52px; min-height: 52px;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--sidebar-border);
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 20px; z-index: 100; flex-shrink: 0;
+}
+.topbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 900;
+  color: var(--accent); white-space: nowrap; letter-spacing: 0.02em;
+}
+.topbar-logo span { color: var(--muted2); font-weight: 400; font-size: 13px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+.topbar-search {
+  flex: 1; max-width: 420px; position: relative;
+}
+.topbar-search input {
+  width: 100%; background: var(--search-bg);
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px; padding: 7px 12px 7px 32px;
+  outline: none; transition: border-color 0.15s;
+}
+.topbar-search input:focus { border-color: rgba(201,168,76,0.4); }
+.topbar-search input::placeholder { color: var(--muted); }
+.topbar-search .search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-size: 14px; pointer-events: none;
+}
+.topbar-stats {
+  margin-left: auto; display: flex; gap: 20px; align-items: center; flex-shrink: 0;
+}
+.stat { text-align: center; }
+.stat-n { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--accent); }
+.stat-l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── MAIN LAYOUT ── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 290px; min-width: 290px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-inner { flex: 1; overflow-y: auto; padding: 12px 0; scrollbar-width: thin; scrollbar-color: #252a38 transparent; }
+.sidebar-inner::-webkit-scrollbar { width: 4px; }
+.sidebar-inner::-webkit-scrollbar-track { background: transparent; }
+.sidebar-inner::-webkit-scrollbar-thumb { background: #252a38; border-radius: 2px; }
+
+/* Subject group */
+.subject-group { margin-bottom: 4px; }
+.subject-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px 6px;
+  cursor: pointer; user-select: none;
+  border-radius: 0;
+  transition: background 0.12s;
+}
+.subject-header:hover { background: var(--hover); }
+.subject-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 2px 7px;
+  border-radius: 3px; flex-shrink: 0;
+}
+.subject-name {
+  font-size: 12px; font-weight: 600; color: var(--text);
+  text-transform: uppercase; letter-spacing: 0.06em; flex: 1;
+}
+.subject-count { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.chevron { color: var(--muted); font-size: 10px; transition: transform 0.2s; }
+.subject-group.open .chevron { transform: rotate(90deg); }
+.subject-group.open .subject-header { background: var(--hover); }
+
+/* Notes list */
+.notes-list { display: none; }
+.subject-group.open .notes-list { display: block; }
+.note-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 16px 7px 28px;
+  cursor: pointer; border-left: 2px solid transparent;
+  transition: all 0.12s; position: relative;
+}
+.note-item:hover { background: var(--hover); }
+.note-item.active {
+  background: var(--active);
+  border-left-color: var(--active-border);
+}
+.note-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+.note-item.active .note-dot { background: var(--accent); }
+.note-title { font-size: 12.5px; color: var(--muted2); line-height: 1.4; }
+.note-item.active .note-title { color: var(--text); }
+.note-item:hover .note-title { color: var(--text); }
+.note-tag {
+  margin-left: auto; font-size: 9px; font-family: 'JetBrains Mono', monospace;
+  padding: 1px 5px; border-radius: 2px; flex-shrink: 0; opacity: 0.7;
+}
+
+/* ── CONTENT AREA ── */
+.content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Welcome screen */
+.welcome {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px; text-align: center;
+}
+.welcome-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900; color: var(--accent);
+  line-height: 1; margin-bottom: 8px;
+  opacity: 0.15;
+}
+.welcome h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+}
+.welcome p { font-size: 14.5px; color: var(--muted2); max-width: 500px; line-height: 1.8; margin-bottom: 32px; }
+.subject-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px; max-width: 800px; width: 100%;
+}
+.subject-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 16px;
+  cursor: pointer; text-align: left;
+  transition: all 0.15s; border-top: 2px solid transparent;
+}
+.subject-card:hover { background: var(--hover); transform: translateY(-1px); }
+.sc-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 2px 7px;
+  border-radius: 3px; display: inline-block; margin-bottom: 8px;
+}
+.sc-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.sc-count { font-size: 11px; color: var(--muted); }
+
+/* Breadcrumb bar */
+.breadcrumb {
+  height: 40px; background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: none; align-items: center;
+  padding: 0 20px; gap: 8px; flex-shrink: 0;
+}
+.breadcrumb.visible { display: flex; }
+.bc-subject {
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px; border-radius: 3px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.bc-sep { color: var(--muted); font-size: 12px; }
+.bc-title { font-size: 13px; color: var(--text); font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bc-new-tab {
+  font-size: 11px; color: var(--muted); cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--border); border: none; border-radius: 4px;
+  padding: 4px 10px; transition: all 0.12s; text-decoration: none;
+  white-space: nowrap;
+}
+.bc-new-tab:hover { background: var(--hover); color: var(--accent); }
+
+/* Iframe */
+.viewer { flex: 1; display: none; overflow: hidden; }
+.viewer.visible { display: block; }
+.viewer iframe { width: 100%; height: 100%; border: none; background: var(--bg); }
+
+/* ── SEARCH RESULTS OVERLAY ── */
+.search-results {
+  position: absolute; top: 52px; left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 50; display: none;
+  overflow-y: auto; padding: 24px 32px;
+}
+.search-results.visible { display: block; }
+.search-results h3 {
+  font-size: 12px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 16px;
+}
+.search-result-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;
+  cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: all 0.12s;
+}
+.search-result-item:hover { background: var(--hover); border-color: rgba(201,168,76,0.3); }
+.sr-chip {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px;
+  border-radius: 3px; flex-shrink: 0;
+}
+.sr-info { flex: 1; }
+.sr-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.sr-sub { font-size: 12px; color: var(--muted2); }
+.sr-arrow { color: var(--muted); font-size: 14px; }
+
+/* colour palette per subject */
+.c-eth  { background: rgba(201,168,76,0.15);  color: #c9a84c; }
+.c-quant{ background: rgba(76,139,201,0.15);  color: #4c8bc9; }
+.c-eco  { background: rgba(76,201,138,0.15);  color: #4cc98a; }
+.c-fsa  { background: rgba(155,127,212,0.15); color: #9b7fd4; }
+.c-corp { background: rgba(201,76,76,0.15);   color: #c94c4c; }
+.c-eq   { background: rgba(76,175,201,0.15);  color: #4cafc9; }
+.c-fi   { background: rgba(201,120,76,0.15);  color: #c9784c; }
+.c-der  { background: rgba(180,201,76,0.15);  color: #b4c94c; }
+.c-alt  { background: rgba(201,76,140,0.15);  color: #c94c8c; }
+.c-pm   { background: rgba(120,76,201,0.15);  color: #784cc9; }
+
+.border-eth  { border-top-color: #c9a84c; }
+.border-quant{ border-top-color: #4c8bc9; }
+.border-eco  { border-top-color: #4cc98a; }
+.border-fsa  { border-top-color: #9b7fd4; }
+.border-corp { border-top-color: #c94c4c; }
+.border-eq   { border-top-color: #4cafc9; }
+.border-fi   { border-top-color: #c9784c; }
+.border-der  { border-top-color: #b4c94c; }
+.border-alt  { border-top-color: #c94c8c; }
+.border-pm   { border-top-color: #784cc9; }
+
+/* No results */
+.no-results { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
+
+/* Collapse all button */
+.sidebar-toolbar {
+  padding: 8px 16px 4px; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--sidebar-border); flex-shrink: 0;
+}
+.sidebar-toolbar button {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--muted); background: none; border: 1px solid var(--border);
+  border-radius: 4px; padding: 3px 8px; cursor: pointer; transition: all 0.12s;
+}
+.sidebar-toolbar button:hover { color: var(--accent); border-color: rgba(201,168,76,0.3); }
+.sidebar-progress { font-size: 10px; color: var(--muted); margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">CFA L1 <span>Study Notes</span></div>
+  <div class="topbar-search">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="searchInput" placeholder="Search notes, topics, standards..." autocomplete="off">
+  </div>
+  <div class="topbar-stats">
+    <div class="stat"><div class="stat-n" id="totalFiles">0</div><div class="stat-l">Files</div></div>
+    <div class="stat"><div class="stat-n" id="totalSubjects">0</div><div class="stat-l">Subjects</div></div>
+  </div>
+</div>
+
+<div class="layout" style="position:relative;">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-toolbar">
+      <button onclick="expandAll()">Expand All</button>
+      <button onclick="collapseAll()">Collapse All</button>
+      <span class="sidebar-progress" id="sidebarCount"></span>
+    </div>
+    <div class="sidebar-inner" id="sidebarInner"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="contentArea">
+
+    <!-- WELCOME -->
+    <div class="welcome" id="welcomeScreen">
+      <div class="welcome-logo">CFA</div>
+      <h2>Level 1 Study Notes</h2>
+      <p>All subjects in one place. Click any note in the sidebar to open it, or use search to find topics across all subjects.</p>
+      <div class="subject-grid" id="welcomeGrid"></div>
+    </div>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb" id="breadcrumb">
+      <span class="bc-subject" id="bcSubject"></span>
+      <span class="bc-sep">›</span>
+      <span class="bc-title" id="bcTitle"></span>
+      <a class="bc-new-tab" id="bcNewTab" target="_blank">↗ Open in new tab</a>
+    </div>
+
+    <!-- IFRAME VIEWER -->
+    <div class="viewer" id="viewer">
+      <iframe id="noteFrame" src="about:blank" title="Note viewer"></iframe>
+    </div>
+
+  </div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-results" id="searchOverlay">
+    <h3 id="searchHeading">Search results</h3>
+    <div id="searchResultsList"></div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA — all notes organised by subject
+// File paths are relative (same folder as index.html)
+// ══════════════════════════════════════════════════════
+const SUBJECTS = [
+  {
+    id: 'eth', name: 'Ethics', color: 'eth',
+    notes: [
+      { title: 'Module 2 — Ethics Overview', file: 'CFA_L1_Ethics_Module2_Notes.html' },
+      { title: 'Module 4 — GIPS', file: 'CFA_L1_Ethics_Module4_Notes.html' },
+      { title: 'Module 5 — Ethics in Practice', file: 'CFA_L1_Ethics_Module5_Notes.html' },
+      { title: 'Std I(A) — Knowledge of the Law', file: 'CFA_L1_Std_IA_Knowledge_of_the_Law.html', tag: 'I(A)' },
+      { title: 'Std I(B) — Independence & Objectivity', file: 'CFA_L1_Std_IB_Independence_Objectivity.html', tag: 'I(B)' },
+      { title: 'Std I(C) — Misrepresentation', file: 'CFA_L1_Std_IC_Misrepresentation.html', tag: 'I(C)' },
+      { title: 'Std I(D)+(E) — Misconduct & Competence', file: 'CFA_L1_Std_ID_IE_Misconduct_Competence.html', tag: 'I(D/E)' },
+      { title: 'Std II(A) — Material Nonpublic Info', file: 'CFA_L1_Std_IIA_Material_Nonpublic_Info.html', tag: 'II(A)' },
+      { title: 'Std II(B) — Market Manipulation', file: 'CFA_L1_Std_IIB_Market_Manipulation.html', tag: 'II(B)' },
+      { title: 'Std III(A) — Loyalty, Prudence & Care', file: 'CFA_L1_Std_IIIA_Loyalty_Prudence_Care.html', tag: 'III(A)' },
+      { title: 'Std III(B)+(C) — Fair Dealing & Suitability', file: 'CFA_L1_Std_IIIB_IIIC_FairDealing_Suitability.html', tag: 'III(B/C)' },
+      { title: 'Std III(D)+(E) — Performance & Confidentiality', file: 'CFA_L1_Std_IIID_IIIE_Performance_Confidentiality.html', tag: 'III(D/E)' },
+      { title: 'Std IV(A) — Loyalty to Employer', file: 'CFA_L1_Std_IVA_Loyalty_Employer.html', tag: 'IV(A)' },
+      { title: 'Std IV(B)+(C) — Compensation & Supervisors', file: 'CFA_L1_Std_IVB_IVC_AdditionalComp_Supervisors.html', tag: 'IV(B/C)' },
+      { title: 'Std V(A) — Diligence & Reasonable Basis', file: 'CFA_L1_Std_VA_Diligence_ReasonableBasis.html', tag: 'V(A)' },
+      { title: 'Std V(B)+(C) — Communication & Records', file: 'CFA_L1_Std_VB_VC_Communication_Records.html', tag: 'V(B/C)' },
+      { title: 'Std VI — Conflicts of Interest', file: 'CFA_L1_Std_VI_Conflicts_of_Interest.html', tag: 'VI' },
+      { title: 'Std VII — CFA Member & Candidate', file: 'CFA_L1_Std_VII_CFA_Member_Candidate_Responsibilities.html', tag: 'VII' },
+    ]
+  },
+  {
+    id: 'quant', name: 'Quantitative Methods', color: 'quant',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Quants_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Quants_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Quants_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Quants_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Quants_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Quants_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Quants_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_Quants_Module8_Notes.html' },
+      { title: 'Module 9', file: 'CFA_L1_Quants_Module9_Notes.html' },
+      { title: 'Module 10', file: 'CFA_L1_Quants_Module10_Notes.html' },
+      { title: 'Module 11', file: 'CFA_L1_Quants_Module11_Notes.html' },
+    ]
+  },
+  {
+    id: 'eco', name: 'Economics', color: 'eco',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Eco_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Eco_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Eco_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Eco_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Eco_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Eco_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Eco_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_Eco_Module8_Notes.html' },
+    ]
+  },
+  {
+    id: 'fsa', name: 'Financial Statement Analysis', color: 'fsa',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_FSA_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_FSA_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_FSA_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_FSA_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_FSA_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_FSA_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_FSA_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_FSA_Module8_Notes.html' },
+      { title: 'Module 9', file: 'CFA_L1_FSA_Module9_Notes.html' },
+      { title: 'Module 10', file: 'CFA_L1_FSA_Module10_Notes.html' },
+      { title: 'Module 11', file: 'CFA_L1_FSA_Module11_Notes.html' },
+      { title: 'Module 12', file: 'CFA_L1_FSA_Module12_Notes.html' },
+    ]
+  },
+  {
+    id: 'corp', name: 'Corporate Issuers', color: 'corp',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Corp_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Corp_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Corp_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Corp_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Corp_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Corp_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Corp_Module7_Notes.html' },
+    ]
+  },
+  {
+    id: 'eq', name: 'Equity Investments', color: 'eq',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Equity_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Equity_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Equity_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Equity_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Equity_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Equity_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Equity_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_Equity_Module8_Notes.html' },
+    ]
+  },
+  {
+    id: 'fi', name: 'Fixed Income', color: 'fi',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_FixedIncome_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_FixedIncome_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_FixedIncome_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_FixedIncome_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_FixedIncome_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_FixedIncome_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_FixedIncome_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_FixedIncome_Module8_Notes.html' },
+      { title: 'Module 9', file: 'CFA_L1_FixedIncome_Module9_Notes.html' },
+      { title: 'Module 10', file: 'CFA_L1_FixedIncome_Module10_Notes.html' },
+      { title: 'Module 11', file: 'CFA_L1_FixedIncome_Module11_Notes.html' },
+      { title: 'Module 12', file: 'CFA_L1_FixedIncome_Module12_Notes.html' },
+      { title: 'Module 13', file: 'CFA_L1_FixedIncome_Module13_Notes.html' },
+      { title: 'Module 14', file: 'CFA_L1_FixedIncome_Module14_Notes.html' },
+      { title: 'Module 15', file: 'CFA_L1_FixedIncome_Module15_Notes.html' },
+      { title: 'Module 16', file: 'CFA_L1_FixedIncome_Module16_Notes.html' },
+      { title: 'Module 17', file: 'CFA_L1_FixedIncome_Module17_Notes.html' },
+      { title: 'Module 18', file: 'CFA_L1_FixedIncome_Module18_Notes.html' },
+      { title: 'Module 19', file: 'CFA_L1_FixedIncome_Module19_Notes.html' },
+    ]
+  },
+  {
+    id: 'der', name: 'Derivatives', color: 'der',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Derivatives_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Derivatives_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Derivatives_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Derivatives_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Derivatives_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Derivatives_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Derivatives_Module7_Notes.html' },
+      { title: 'Module 8', file: 'CFA_L1_Derivatives_Module8_Notes.html' },
+      { title: 'Module 9', file: 'CFA_L1_Derivatives_Module9_Notes.html' },
+      { title: 'Module 10', file: 'CFA_L1_Derivatives_Module10_Notes.html' },
+    ]
+  },
+  {
+    id: 'alt', name: 'Alternative Investments', color: 'alt',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_Alts_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_Alts_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_Alts_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_Alts_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_Alts_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_Alts_Module6_Notes.html' },
+      { title: 'Module 7', file: 'CFA_L1_Alts_Module7_Notes.html' },
+    ]
+  },
+  {
+    id: 'pm', name: 'Portfolio Management', color: 'pm',
+    notes: [
+      { title: 'Module 1', file: 'CFA_L1_PortfolioMgmt_Module1_Notes.html' },
+      { title: 'Module 2', file: 'CFA_L1_PortfolioMgmt_Module2_Notes.html' },
+      { title: 'Module 3', file: 'CFA_L1_PortfolioMgmt_Module3_Notes.html' },
+      { title: 'Module 4', file: 'CFA_L1_PortfolioMgmt_Module4_Notes.html' },
+      { title: 'Module 5', file: 'CFA_L1_PortfolioMgmt_Module5_Notes.html' },
+      { title: 'Module 6', file: 'CFA_L1_PortfolioMgmt_Module6_Notes.html' },
+    ]
+  },
+];
+
+// ── STATE
+let currentFile = null;
+let currentSubject = null;
+
+// ── BUILD SIDEBAR
+function buildSidebar() {
+  const inner = document.getElementById('sidebarInner');
+  let totalNotes = 0;
+
+  SUBJECTS.forEach(subj => {
+    totalNotes += subj.notes.length;
+    const group = document.createElement('div');
+    group.className = 'subject-group';
+    if (subj.id === 'eth') group.classList.add('open'); // Ethics open by default
+
+    const header = document.createElement('div');
+    header.className = 'subject-header';
+    header.innerHTML = `
+      <span class="subject-chip c-${subj.color}">${subj.id.toUpperCase()}</span>
+      <span class="subject-name">${subj.name}</span>
+      <span class="subject-count">${subj.notes.length}</span>
+      <span class="chevron">›</span>`;
+    header.addEventListener('click', () => group.classList.toggle('open'));
+
+    const list = document.createElement('div');
+    list.className = 'notes-list';
+
+    subj.notes.forEach(note => {
+      const item = document.createElement('div');
+      item.className = 'note-item';
+      item.dataset.file = note.file;
+      item.dataset.subject = subj.id;
+      item.innerHTML = `
+        <span class="note-dot"></span>
+        <span class="note-title">${note.title}</span>
+        ${note.tag ? `<span class="note-tag c-${subj.color}">${note.tag}</span>` : ''}`;
+      item.addEventListener('click', () => openNote(note, subj));
+      list.appendChild(item);
+    });
+
+    group.appendChild(header);
+    group.appendChild(list);
+    inner.appendChild(group);
+  });
+
+  document.getElementById('totalFiles').textContent = totalNotes;
+  document.getElementById('totalSubjects').textContent = SUBJECTS.length;
+  document.getElementById('sidebarCount').textContent = totalNotes + ' notes';
+}
+
+// ── BUILD WELCOME GRID
+function buildWelcomeGrid() {
+  const grid = document.getElementById('welcomeGrid');
+  SUBJECTS.forEach(subj => {
+    const card = document.createElement('div');
+    card.className = `subject-card border-${subj.color}`;
+    card.innerHTML = `
+      <span class="sc-chip c-${subj.color}">${subj.id.toUpperCase()}</span>
+      <div class="sc-name">${subj.name}</div>
+      <div class="sc-count">${subj.notes.length} notes</div>`;
+    card.addEventListener('click', () => {
+      // Open that subject group in sidebar
+      document.querySelectorAll('.subject-group').forEach(g => {
+        const chip = g.querySelector('.subject-chip');
+        if (chip && chip.textContent.trim().toLowerCase() === subj.id) {
+          g.classList.add('open');
+          g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    grid.appendChild(card);
+  });
+}
+
+// ── OPEN NOTE
+function openNote(note, subj) {
+  currentFile = note.file;
+  currentSubject = subj;
+
+  // Update sidebar active state
+  document.querySelectorAll('.note-item').forEach(el => el.classList.remove('active'));
+  const item = document.querySelector(`.note-item[data-file="${note.file}"]`);
+  if (item) {
+    item.classList.add('active');
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Show breadcrumb
+  const bc = document.getElementById('breadcrumb');
+  bc.classList.add('visible');
+  document.getElementById('bcSubject').className = `bc-subject c-${subj.color}`;
+  document.getElementById('bcSubject').textContent = subj.name;
+  document.getElementById('bcTitle').textContent = note.title;
+  document.getElementById('bcNewTab').href = note.file;
+
+  // Load iframe
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('viewer').classList.add('visible');
+  document.getElementById('noteFrame').src = note.file;
+
+  // Clear search
+  clearSearch();
+}
+
+// ── SEARCH
+function setupSearch() {
+  const input = document.getElementById('searchInput');
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { clearSearch(); return; }
+    performSearch(q);
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { input.value = ''; clearSearch(); }
+  });
+}
+
+function performSearch(q) {
+  const overlay = document.getElementById('searchOverlay');
+  const list = document.getElementById('searchResultsList');
+  const heading = document.getElementById('searchHeading');
+  overlay.classList.add('visible');
+  list.innerHTML = '';
+
+  const results = [];
+  SUBJECTS.forEach(subj => {
+    subj.notes.forEach(note => {
+      const haystack = (note.title + ' ' + subj.name + ' ' + (note.tag || '') + ' ' + note.file).toLowerCase();
+      if (haystack.includes(q)) results.push({ note, subj });
+    });
+  });
+
+  heading.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${q}"`;
+
+  if (results.length === 0) {
+    list.innerHTML = '<div class="no-results">No notes found matching your search.</div>';
+    return;
+  }
+
+  results.forEach(({ note, subj }) => {
+    const item = document.createElement('div');
+    item.className = 'search-result-item';
+    item.innerHTML = `
+      <span class="sr-chip c-${subj.color}">${subj.id.toUpperCase()}</span>
+      <div class="sr-info">
+        <div class="sr-title">${highlight(note.title, q)}</div>
+        <div class="sr-sub">${subj.name}${note.tag ? ' · ' + note.tag : ''}</div>
+      </div>
+      <span class="sr-arrow">›</span>`;
+    item.addEventListener('click', () => {
+      openNote(note, subj);
+      // also open the subject group
+      document.querySelectorAll('.subject-group').forEach(g => {
+        const chip = g.querySelector('.subject-chip');
+        if (chip && chip.textContent.trim().toLowerCase() === subj.id) g.classList.add('open');
+      });
+    });
+    list.appendChild(item);
+  });
+}
+
+function highlight(text, q) {
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(re, '<mark style="background:rgba(201,168,76,0.25);color:#e8c97a;border-radius:2px;padding:0 2px;">$1</mark>');
+}
+
+function clearSearch() {
+  document.getElementById('searchOverlay').classList.remove('visible');
+}
+
+// ── EXPAND / COLLAPSE ALL
+function expandAll() {
+  document.querySelectorAll('.subject-group').forEach(g => g.classList.add('open'));
+}
+function collapseAll() {
+  document.querySelectorAll('.subject-group').forEach(g => g.classList.remove('open'));
+}
+
+// ── KEYBOARD SHORTCUT: ⌘K / Ctrl+K to focus search
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+    document.getElementById('searchInput').select();
+  }
+});
+
+// ── INIT
+buildSidebar();
+buildWelcomeGrid();
+setupSearch();
+</script>
+</body>
+</html>

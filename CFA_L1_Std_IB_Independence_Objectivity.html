@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard I(B): Independence and Objectivity</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --warn-bg: #221a18; --exam-bg: #1a1428; --formula-bg: #12151f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 50%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'I(B)'; position: absolute; bottom: -24px; right: 48px; font-family: 'Playfair Display', serif; font-size: 10rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+  h3 { font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 26px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p { font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card ul li, .card ol li { margin-bottom: 7px; font-size: 15px; }
+  .standard-box { background: #0f1219; border: 1px solid rgba(201,168,76,0.3); border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; padding: 20px 24px; margin-bottom: 20px; }
+  .standard-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px; }
+  .standard-box p { font-size: 14.5px; color: #ddd0a8; line-height: 1.85; font-style: italic; }
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; }
+  .examiner-label::before { content: '🎯 '; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--accent3); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--danger); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 13px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; }
+  .mini-card p { font-size: 13.5px; line-height: 1.65; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .example { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .ex-header { display: flex; align-items: center; gap: 12px; padding: 12px 18px; background: #12161e; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .ex-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .ex-title { font-weight: 700; font-size: 14px; color: #fff; }
+  .ex-tag { margin-left: auto; }
+  .ex-body { padding: 16px 18px; }
+  .ex-facts { font-size: 13.5px; color: #c8d0dc; line-height: 1.8; margin-bottom: 12px; }
+  .ex-verdict { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .ex-verdict strong { color: #e8c97a; }
+  .ex-key { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 12px 16px; margin-top: 10px; font-size: 13.5px; color: #c8dfd0; line-height: 1.7; }
+  .ex-key-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 5px; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+  /* Source cards */
+  .source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .pressure-card { background: #1a0f0f; border: 1px solid rgba(201,76,76,0.25); border-top: 2px solid var(--danger); border-radius: 6px; padding: 16px 18px; }
+  .pressure-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 10px; }
+  .pressure-card li { font-size: 13.5px; margin-bottom: 7px; list-style: none; color: var(--text); padding-left: 0; }
+  .pressure-card li::before { content: '⚠ '; color: var(--danger); }
+  .ok-card { background: #0f1a12; border: 1px solid rgba(76,201,138,0.25); border-top: 2px solid var(--accent3); border-radius: 6px; padding: 16px 18px; }
+  .ok-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 10px; }
+  .ok-card li { font-size: 13.5px; margin-bottom: 7px; list-style: none; color: var(--text); padding-left: 0; }
+  .ok-card li::before { content: '✓ '; color: var(--accent3); }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD I · MODULE 3</div>
+  <h1>Standard <span>I(B)</span>: Independence and Objectivity</h1>
+  <p class="subtitle">The standard governing conflicts of interest from external and internal pressures. Covers gifts, entertainment, travel funding, sell-side/buy-side dynamics, investment banking relationships, performance measurement pressures, issuer-paid research, political contributions, and manager selection/procurement. Guidelines + all worked examples synthesised from both the LES and Handbook.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">The Standard</a>
+  <a class="toc-item" href="#s2">Core Principles</a>
+  <a class="toc-item" href="#s3">Gifts: Client vs. Third Party</a>
+  <a class="toc-item" href="#s4">Sources of Pressure</a>
+  <a class="toc-item" href="#s5">Issuer-Paid Research</a>
+  <a class="toc-item" href="#s6">Travel Funding</a>
+  <a class="toc-item" href="#s7">Manager Selection</a>
+  <a class="toc-item" href="#s8">Procedures</a>
+  <a class="toc-item" href="#s9">Worked Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+<!-- ═══ SECTION 1: THE STANDARD ═══ -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>The Standard — Verbatim Text</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard I(B) — Independence and Objectivity</div>
+    <p>Members and Candidates must use reasonable care and judgment to achieve and maintain independence and objectivity in their professional activities. Members and Candidates must not offer, solicit, or accept any gift, benefit, compensation, or consideration that reasonably could be expected to compromise their own or another's independence and objectivity.</p>
+  </div>
+  <div class="card">
+    <p>I(B) has two key obligations: (1) <strong>Maintain independence and objectivity</strong> — using reasonable care and judgment in all professional activities. (2) <strong>No offers, solicitations, or acceptance</strong> of gifts, benefits, compensation, or consideration that could <em>reasonably be expected</em> to compromise independence and objectivity — whether the compromise affects the member's own judgment <em>or another's</em>.</p>
+    <p>The standard covers BOTH directions: receiving gifts that might compromise your own objectivity, AND offering gifts that might compromise someone else's objectivity. The Myers (pay-to-play) vignette illustrates the "offering" direction.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2: CORE PRINCIPLES ═══ -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>Core Principles — What Independence and Objectivity Require</h2></div>
+  <div class="card">
+    <p>Members and candidates are <strong>personally responsible</strong> for maintaining independence and objectivity — this cannot be delegated to the firm. Recommendations must:</p>
+    <ul>
+      <li>Convey the member's or candidate's <strong>true opinions</strong></li>
+      <li>Be free of bias from <strong>internal or external pressures</strong></li>
+      <li>Be stated in <strong>clear and unambiguous language</strong></li>
+    </ul>
+    <p>Every member and candidate should endeavour to avoid situations that <em>could cause</em> or be <em>perceived to cause</em> a loss of independence or objectivity in recommending investments or taking investment action. The appearance of a conflict is treated nearly as seriously as an actual conflict.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Subtle and Ambiguous Language = Violation</div>
+    <p>Both sources emphasise that one way analysts have historically coped with pressure is to use vague or softened language in their reports — tempering negative recommendations rather than issuing them honestly. <strong>This is a violation of I(B).</strong> Investors reasonably expect research to communicate the analyst's unbiased views clearly. Using code language to avoid conflict while technically "complying" undermines the entire purpose of independent research.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: GIFTS — CLIENT vs. THIRD PARTY ═══ -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Gifts and Entertainment — The Client vs. Third-Party Distinction</h2></div>
+
+  <div class="card">
+    <p>The most important and consistently tested distinction in I(B) is between gifts from clients and gifts from non-clients (third parties seeking to influence). The analysis is different for each category:</p>
+  </div>
+
+  <div class="source-grid">
+    <div class="ok-card">
+      <div class="ok-title">✓ Gifts FROM Clients — Generally Acceptable with Disclosure</div>
+      <ul>
+        <li>Client has a pre-existing compensation arrangement with the member — the gift is supplementary compensation, not an attempt to improperly influence a third party</li>
+        <li>The potential for improper influence exists but is lower than from non-client third parties</li>
+        <li><strong>MUST disclose to employer</strong> — prior to accepting if possible; if not, must disclose after accepting</li>
+        <li>Disclosure allows employer to monitor for favouritism toward the gift-giving client (e.g., biased IPO allocation)</li>
+      </ul>
+    </div>
+    <div class="pressure-card">
+      <div class="pressure-title">⚠️ Gifts FROM Third Parties — Higher Scrutiny Required</div>
+      <ul>
+        <li>Corporations seeking research coverage, underwriters, brokers seeking commission business, rating agency clients — all have interests in influencing the member</li>
+        <li>Benefits include: gifts, lavish functions, tickets, favours, job referrals, IPO allocations to personal accounts</li>
+        <li>IPO allocations specifically prohibited under I(B) — clear conflict: member could profit while denying clients the same opportunity</li>
+        <li>Must reject any offer that could reasonably be expected to threaten independence and objectivity</li>
+        <li>Modest gifts and ordinary business entertainment are acceptable as long as purpose is not to influence</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — The "Reasonably Expected" Test</div>
+    <p>The standard uses "reasonably could be expected to compromise" — not "will definitely compromise" or "actually did compromise." This is an objective, prospective test. <strong>The question is whether a reasonable observer would conclude the gift creates a risk of compromised judgment.</strong> The Grant example (World Cup tickets, resort stay, limousine) clearly fails this test — substantial gifts from a broker who benefits from commission business = conflict regardless of Grant's subjective intentions. Even if Grant believes he can remain objective, the <em>appearance</em> of a conflict is itself a problem under I(B).</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Employer Monitoring After Client Gift Disclosure</div>
+    <p>The Handbook specifies what employers should do after a member discloses a client gift: compare the transaction costs of the gift-giving client's account with other accounts managed by the member, and compare performance returns against similar accounts. This is to detect whether a pattern of favouritism is developing — even if the member believes they are objective, the employer's monitoring serves as a check against unconscious bias toward a generous client.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: SOURCES OF PRESSURE ═══ -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Sources of Pressure on Independence and Objectivity</h2></div>
+
+  <h3>Buy-Side Pressure on Sell-Side Analysts</h3>
+  <div class="card">
+    <p>Institutional portfolio managers (buy-side clients) who hold large positions in a stock may implicitly or explicitly pressure sell-side analysts not to downgrade the stock — because a downgrade could reduce portfolio performance and the manager's compensation. <strong>Portfolio managers have a responsibility to respect and foster the intellectual honesty of sell-side research.</strong> Retaliatory practices (reporting negative analysts to covered companies to trigger corporate punishment) are improper. Even the <em>perception</em> of retaliation can impair analyst independence.</p>
+  </div>
+
+  <h3>Investment Banking Relationships</h3>
+  <div class="card">
+    <p>Sell-side firms may pressure research analysts to issue favourable research on investment banking clients or prospects. Income from investment banking has become increasingly important to overall firm profitability — creating strong internal pressure on analysts. Key safeguards:</p>
+    <ul>
+      <li><strong>Firewalls</strong> between research and investment banking — separate reporting structures, no authority for IB personnel to approve or modify research reports</li>
+      <li><strong>Compensation arrangements</strong> must not link analyst remuneration directly to IB assignments they participate in</li>
+      <li>Public disclosure of actual conflicts of interest is required</li>
+      <li>Analyst collaboration with IB is appropriate <em>only</em> when conflicts are adequately managed and disclosed</li>
+      <li>If firm won't allow adverse research, put the company on a <strong>restricted list</strong> — disseminate only factual information, no recommendation</li>
+    </ul>
+  </div>
+
+  <h3>Performance Measurement</h3>
+  <div class="card">
+    <p>Performance analysts face pressure to alter composite construction (e.g., moving underperforming accounts to a different composite) or exclude poor accounts from firm performance data. <strong>The member must not allow internal or external influences to affect their independence and objectivity in performance calculation and analysis.</strong> See the Stein (Example 16/LES) and Scott (Example 12/Handbook) examples — both involve requests to manipulate composites for self-serving reasons.</p>
+  </div>
+
+  <h3>Public Companies and Credit Rating Agencies</h3>
+  <div class="card">
+    <p>Companies may pressure analysts by threatening to restrict access to management, conference calls, or investor relations events if the analyst issues negative research. Credit rating agencies face pressure from companies to issue ratings at specific levels — especially from companies that also pay the agency for other services (structured product advice). Members at rating agencies must ensure procedures prevent undue influence from sponsoring companies. Users of credit ratings should be mindful of these potential conflicts and may need to independently validate the rating granted.</p>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — CFA Institute / Society Activities as Sources of Conflict</div>
+    <p>Both sources note that professional society activities (seeking corporate financial support for conventions, seminars, or society luncheons) can subtly threaten independence or objectivity. Members responsible for fundraising from corporate sponsors must evaluate both the actual effect of solicitations on their independence AND whether their objectivity might be <em>perceived</em> to be compromised in the eyes of their clients. This is a nuanced source of conflict that is easy to overlook.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: ISSUER-PAID RESEARCH ═══ -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>Issuer-Paid Research</h2></div>
+
+  <div class="card">
+    <p>Issuer-paid research bridges the gap left by reduced sell-side coverage — companies pay analysts to write research about themselves. This creates an inherent conflict. The practice is NOT automatically unethical, but strict safeguards must be observed:</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Required Conduct for Issuer-Paid Research</div>
+      <ul>
+        <li>Thorough, independent, unbiased analysis</li>
+        <li>Full disclosure of all potential conflicts, including nature of compensation</li>
+        <li>Distinguish fact from opinion in the report</li>
+        <li>Conclusions must have reasonable and adequate basis</li>
+        <li>Limit the type of compensation accepted — avoid arrangements that could influence conclusions</li>
+        <li>At minimum: analysis of financial statements, peer group benchmarking, industry analysis</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Compensation That Violates I(B)</div>
+      <ul>
+        <li>Payment contingent on conclusions or recommendations of the report</li>
+        <li>Bonus for attracting investors (creates incentive to draft positive report regardless of facts)</li>
+        <li>Stock warrants or equity instruments that rise in value based on positive coverage</li>
+        <li>Any arrangement where analyst has financial incentive to avoid negative information or conclusions</li>
+        <li><strong>Best practice: flat fee only, negotiated before writing, not linked to conclusions</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Herrero (Example 10) — Flat Fee vs. Bonus</div>
+    <p>Herrero is hired by an investor relations firm to write research on a small tech company. The compensation: <strong>flat fee PLUS bonus if new investors buy stock as a result of the report.</strong> The bonus element violates I(B) — it provides an incentive to draft a positive report regardless of facts and to downplay negative information. The flat fee component alone would be acceptable. The solution: <strong>negotiate only a flat fee, not linked to conclusions or ability to attract investors.</strong> Note: issuer-paid research that IS objective and unbiased is acceptable under the right circumstances with proper disclosures about conflicts of interest.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6: TRAVEL FUNDING ═══ -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Travel Funding</h2></div>
+
+  <div class="card">
+    <p>Accepting paid travel from companies creates potential conflicts — the extended time with company executives and the social dynamics of shared travel experiences can influence judgment even when the member believes they are objective. The guidance distinguishes between legitimate and problematic arrangements:</p>
+  </div>
+
+  <div class="source-grid">
+    <div class="ok-card">
+      <div class="ok-title">✓ Generally Acceptable Travel</div>
+      <ul>
+        <li>Commercial transportation paid by the member or their firm</li>
+        <li>Modest, necessary accommodations (e.g., only hotel near the site) for legitimate business trips</li>
+        <li>Chartered transport for a site visit where commercial transport is unavailable</li>
+        <li>Modest arrangements for appropriate information-gathering events (e.g., a property tour)</li>
+        <li>Educational/marketing events — if member independently evaluates the merits</li>
+      </ul>
+    </div>
+    <div class="pressure-card">
+      <div class="pressure-title">⚠️ Problematic Travel Arrangements</div>
+      <ul>
+        <li>Corporate or chartered jet travel for general analyst visits where commercial transport is available</li>
+        <li>Lavish accommodations or entertainment beyond basic business needs</li>
+        <li>Travel that creates daily personal contact with the company's executives (Wayne/Penguin example)</li>
+        <li>Trips sponsored by fund managers when the member is making hiring decisions about those same managers</li>
+        <li>Best practice: always use commercial transportation at own or firm's expense</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Taylor (Example 1) — Reasonable Judgment for Travel</div>
+    <p>A mining analyst accepts company-paid chartered flights and modest motel accommodations for a legitimate site tour. This does NOT violate I(B) — the trip was strictly for business, the accommodations were modest (only option near the mines), and the chartered flights were necessary for site access. The standard is judgment-based: was the arrangement lavish? Was it influencing the analyst? The key: <strong>members must consider both whether they can remain objective AND whether their integrity might be perceived to have been compromised.</strong> Adams (who paid for his own hotel) represents best practice. Taylor did not necessarily violate the standard.</p>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Wayne/Penguin (Example 9) — Daily Contact Creates Conflict</div>
+    <p>Wayne participates in an "investment fact-finding trip to Asia" sponsored by Penguin Advisers — one of the managers he is evaluating for his pension plan. The president of Penguin is also on the trip. Wayne then recommends Penguin. The problem: daily personal contact over an extended trip creates familiarity and social dynamics that make it difficult to maintain fully objective analysis. The trip also gives Penguin an advantage over competing managers who didn't share the trip. <strong>Wayne should have had his basic expenses paid by his employer or the pension plan; contact with Penguin's president should have been limited to informational/educational events only; and the trip, organiser, and sponsors should have been a matter of public record.</strong></p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: MANAGER SELECTION ═══ -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Influence during Manager Selection/Procurement</h2></div>
+
+  <div class="card">
+    <p>Members and candidates may find themselves on either side of a manager selection process — as a hiring representative (pension fund, endowment) or as an asset manager seeking a mandate. The I(B) obligations run in both directions:</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">When Hiring (Selection Side)</div>
+      <ul>
+        <li>Must not solicit gifts, contributions, or other compensation that affects independence</li>
+        <li>Solicitations to benefit a favourite charity or political cause ALSO violate I(B) — even if the member doesn't personally benefit</li>
+        <li>Must refuse offered compensation that may be perceived to influence the decision</li>
+        <li>Independence obligation extends to ALL business service procurement, not just investment management</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">When Seeking a Mandate (Asset Manager Side)</div>
+      <ul>
+        <li>Must not offer gifts, contributions, or other compensation to influence the hiring representative</li>
+        <li>Pay-to-play: political donations to representatives who control hiring decisions = I(B) violation</li>
+        <li>Offering donations to a charity referred by the hiring representative also violates I(B)</li>
+        <li>The Myers example: even with a legitimate (environmental) reason for a political donation, the additional business motivation taints the action</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Mixed Motives in Political Contributions (Myers)</div>
+    <p>The Myers vignette (Module 5/LES) is the canonical mixed-motives case. Myers wants to donate $10,000 to DeFrietas for genuine environmental reasons — but also explicitly acknowledges the donation might benefit Corboba by influencing DeFrietas to select the fund for the state pension. <strong>Having a legitimate reason does not neutralise a prohibited reason.</strong> The correct action: refrain from donating to DeFrietas. Find other ways to support environmental causes that don't create the pay-to-play conflict. The Mandel examples (13 and 14 in LES) show the same principle in more explicit pay-to-play scenarios: contributions to union leader's campaign fund + lavish entertainment = clear violation.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 8: PROCEDURES ═══ -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Recommended Procedures for Compliance</h2></div>
+
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Research Integrity</div>
+      <ul>
+        <li>Establish policy: every research report must reflect the unbiased opinion of the analyst</li>
+        <li>Compensation systems must protect integrity of the investment decision process</li>
+        <li>If firm won't allow adverse opinions on a client: put the company on a restricted list — factual information only, no recommendation</li>
+        <li>Separate reporting structures for research and investment banking — IB cannot approve or modify research</li>
+        <li>Regularly review policies to ensure analysts are adequately safeguarded</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Travel and Entertainment</div>
+      <ul>
+        <li>Restrict special cost arrangements: members should pay commercial transport and hotel when visiting issuers</li>
+        <li>No corporate issuer should reimburse members for air transport</li>
+        <li>When multiple meetings occur between a member and an issuer, the issuer should not always host</li>
+        <li>Use commercial transportation whenever available; accept modest arrangements only if commercial unavailable</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Gifts and Investments</div>
+      <ul>
+        <li>Limit gifts to token items even without a firm policy</li>
+        <li>Ordinary business entertainment is acceptable if its purpose is not to influence or reward</li>
+        <li>Develop formal policies for employee IPO participation (require pre-approval, prompt disclosure)</li>
+        <li>Impose strict limits on acquiring private placement securities</li>
+        <li>Implement effective supervisory and review procedures for personal investment activities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Independence Policy and Appointed Officer</div>
+    <p>Firms should establish a formal written independence and objectivity policy, implement reporting structures ensuring research analysts don't report to departments that could compromise them, and appoint a senior officer with oversight responsibilities for compliance with the firm's code of ethics. Every employee should have procedures and policies for reporting potentially unethical behaviour.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 9: WORKED EXAMPLES ═══ -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Worked Examples — LES + Handbook</h2></div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 1</div>
+      <div class="ex-title">Dillon — Research Coverage Promise to Prospective Client</div>
+      <div class="ex-tag"><span class="tag tag-yellow">NUANCED — PARTIAL OK</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Dillon, a corporate finance analyst, is pitching to a potential new business client and promises "full research coverage" of the potential client.</div>
+      <div class="ex-verdict"><strong>Dillon may</strong> commit to providing research coverage. <strong>She must NOT</strong> commit to providing a <em>favourable</em> recommendation. The firm's recommendation (favourable, neutral, or unfavourable) must be based on independent and objective analysis of the company and its securities.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Promising coverage = acceptable. Promising favourable coverage = I(B) violation. Coverage and recommendation direction are separate decisions. The commitment to cover is a commercial decision; the actual recommendation must be based solely on research.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 3 + 4</div>
+      <div class="ex-title">Fritz — Resisting Intrafirm and Issuer Pressure</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION IF CAPITULATES</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Fritz concludes that Metals &amp; Mining is overpriced. His firm's IB department has just proposed a debt underwriting for M&amp;M. Fritz also worries that a negative report will damage his personal relationship with M&amp;M's CEO and CFO, potentially cutting off his access to conference calls and management meetings.</div>
+      <div class="ex-verdict"><strong>Fritz's analysis must be objective and based solely on company fundamentals.</strong> Any pressure from other divisions of his firm OR from Metals &amp; Mining is inappropriate. For the IB pressure: the conflict could be eliminated by placing M&amp;M on a restricted list. For the issuer relationship pressure: Fritz should fully document his work and make clear his recommendation is based on relative valuation — not personal relationships.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Two separate sources of pressure, same answer: ignore both. The Handbook adds a valuable nuance for Example 4: Fritz should "fully document his work, including how his investment recommendation is based on relative valuation" — documentation protects the analyst's credibility and the integrity of the recommendation against both internal and external pressure.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 5</div>
+      <div class="ex-title">Warner — Internal Sales Pressure on Bond Recommendations</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION IF CAPITULATES</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Warner provides credit guidance; her compensation is tied to corporate bond department performance. Near quarter-end, the firm has a large unsold inventory of Milton bonds (price dropped due to operating problem). Salespeople ask her to contact large clients to push the bonds.</div>
+      <div class="ex-verdict"><strong>Warner must refuse</strong> to push the Milton bonds unless she is able to justify that the market price has already adjusted for the operating problem. Her opinion must not be affected by internal pressure or compensation arrangements. If she pushes bonds she doesn't believe have adjusted for the problem, she is providing biased credit guidance.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Compensation tied to business performance = conflict of interest. This conflict must be actively resisted, not simply disclosed. Warner must exercise independent judgment about whether the current price justifies a recommendation — and if she can't justify it, she must not recommend the bonds regardless of internal pressure. This also implicates III(A) (Loyalty, Prudence, Care) — recommending unsuitable investments to clients.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 6</div>
+      <div class="ex-title">Jorund — Boss Instructs No Change to Buy Recommendation</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION IF COMPLIES BLINDLY</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Jorund is asked to take over coverage of International Airlines. Her boss tells her "under no circumstances" should the prevailing buy recommendation be changed.</div>
+      <div class="ex-verdict">Jorund must be independent and objective. She has two options: <strong>(1)</strong> Tell her boss she cannot cover the company under these constraints. <strong>(2)</strong> Take over coverage, reach her own independent conclusions, and if they conflict with her boss's opinion, share them with her boss or supervisors so they can make appropriate recommendations. <strong>She must issue only recommendations that reflect her independent and objective opinion.</strong></div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Instructions from supervisors cannot override the obligation to provide independent research. Options when facing supervisor pressure: (a) refuse the assignment, or (b) accept the assignment and produce independent work — then escalate internally if the conclusion differs. What is NOT permitted: accept the assignment and produce a report you don't believe simply because your boss told you to.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 7 (LES) / Example 7 (Handbook)</div>
+      <div class="ex-title">Grant — World Cup Tickets from Broker = Violation</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Grant directs large commission business to a New York brokerage house. In appreciation, the broker gives Grant: two World Cup tickets, two nights at a resort, several meals, and limousine transportation. Grant does not disclose receiving this package to his supervisor.</div>
+      <div class="ex-verdict"><strong>Grant violated I(B).</strong> Accepting these substantial gifts may impede his independence and objectivity. The Handbook version adds: <strong>at minimum, Grant must disclose this conflict to his employer and clients.</strong> Best practice: avoid situations that might cause or be perceived to cause a loss of independence or objectivity. By accepting the trip, Grant created a conflict of interest.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Two violations: (1) accepting substantial gifts from a party that benefits from his commission allocation decisions, (2) failing to disclose. The Handbook stresses the Handbook version more strongly: "Members and candidates must not solicit or accept gifts, contributions, or other compensation that affects their independence and objectivity or that <em>reasonably could be expected to influence</em> their decision-making process." The LES focuses on the acceptance; the Handbook adds the disclosure obligation.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 8</div>
+      <div class="ex-title">Green — Wimbledon Tickets from Outperforming Client = Acceptable</div>
+      <div class="ex-tag"><span class="tag tag-green">ACCEPTABLE WITH DISCLOSURE</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Green manages Knowlden's portfolio and consistently outperforms the agreed benchmark. As a reward, Knowlden offers Green two Wimbledon tickets and use of his London flat for a week. Green discloses this gift to her supervisor at Tisbury.</div>
+      <div class="ex-verdict"><strong>Green is in compliance with I(B)</strong> because she disclosed the gift from her client in accordance with the firm's policies. Members and candidates may accept bonuses or gifts from clients as long as they disclose them to their employer.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Client gifts = lower conflict risk than third-party gifts (client already has a compensation arrangement with the member). But disclosure to employer is REQUIRED regardless. The employer then monitors: compare transaction costs and performance returns of Knowlden's account against other accounts managed by Green to detect any emerging pattern of favoritism.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Examples 11–12 (Handbook) / Example 13–14 (LES)</div>
+      <div class="ex-title">Mandel — Pay-to-Play: Political Donations to Union Leader</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Mandel makes significant monetary contributions to Gomez's (union chair/pension decision-maker) reelection campaign fund, and lavishes him with expensive restaurant entertainment — both to win the initial mandate and to maintain the relationship afterward. All disguised as marketing expenses. In Example 14, Mandel wines and dines Finlay, a celebrity pension consultant, to gain entry to a competitive manager search.</div>
+      <div class="ex-verdict"><strong>Both scenarios: violation of I(B).</strong> Mandel offered monetary gifts, benefits, and considerations that reasonably could be expected to compromise Gomez's and Finlay's independence and objectivity. The fact that Mandel's firm approved the expenses does not cure the I(B) violation.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        The pay-to-play prohibition applies even when the compensation goes through official channels (expense accounts with senior approval) and is characterised as "marketing." The test is not "was it approved internally" — it is "does the gift or benefit reasonably compromise someone else's independence and objectivity?" Here, the intent is explicit: to influence hiring decisions. That is the violation.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 15 (LES) / Example 12 (Handbook)</div>
+      <div class="ex-title">Scott — Performance Analyst Facing Pressure Not to Report Composite Change</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION IF OMITS</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Scott, a performance analyst, notices a manager moved a large underperforming account into a "residual composite" — allowing the manager to remain at the top of the performance list. Scott knows the firm has a large allocation to this manager, and the manager is a close personal friend of the CEO. She is concerned about reporting the composite change.</div>
+      <div class="ex-verdict"><strong>Scott would violate I(B) if she did not disclose the change in her final report.</strong> The analysis of managers' performance must not be influenced by personal relationships or the size of the firm's allocation to the outside manager. Omitting the change = not providing an independent analysis.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Independence and objectivity apply to performance analysts just as to research analysts and portfolio managers. The pressure here is subtle — no one explicitly told Scott to omit the information. But the circumstances (CEO's friendship with the manager, large allocation at stake) create an implicit pressure. I(B) requires resisting this implicit pressure with the same rigour as explicit demands to change a recommendation.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 16 (LES) / Example 13 (Handbook)</div>
+      <div class="ex-title">Stein — Head of Performance Told to Remove Underperforming Client from Composite</div>
+      <div class="ex-tag"><span class="tag tag-red">MUST REFUSE</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">During the last quarter, many research department employees were removed due to poor recommendations, causing a large client to underperform significantly. The client withdrew their money. The head of sales asks Stein to remove this account from the firm's performance composite because the underperformance was due to the departed research team, not the client's adviser.</div>
+      <div class="ex-verdict"><strong>Stein must maintain her independence and objectivity and refuse</strong> to exclude specific accounts from the firm's performance composites. As long as the client invested under a strategy similar to the composite's definition, it cannot be excluded because of the poor stock selections that led to underperformance and asset withdrawal.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        The "blame the departed team" argument is irrelevant to composite construction — the account was managed under the strategy and must remain in the composite for the period it was managed. Post-hoc exclusions to improve the composite's appearance = manipulation = I(B) and III(D) violation. Also implicates GIPS standards.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 10: EXAM CHECKLIST ═══ -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">★</span><h2>Exam Checklist — Standard I(B): Independence and Objectivity</h2></div>
+
+  <div class="card" style="border-color:rgba(155,127,212,0.3);">
+    <ul class="checklist">
+      <li>✅ <strong>Three-part prohibition:</strong> Must not offer, solicit, OR accept gifts/benefits/compensation that could reasonably compromise own OR another's independence and objectivity.</li>
+      <li>✅ <strong>The "reasonably expected" test:</strong> Objective, prospective — does a reasonable observer conclude the gift creates a risk of compromised judgment? Actual compromise not required.</li>
+      <li>✅ <strong>Appearance of conflict matters.</strong> Must consider both whether they can remain objective AND whether their integrity might be perceived to have been compromised.</li>
+      <li>✅ <strong>Client gifts vs. third-party gifts:</strong> Client gifts are supplementary compensation — lower conflict risk, but MUST DISCLOSE TO EMPLOYER before accepting (or immediately after if prior notice is not possible).</li>
+      <li>✅ <strong>Third-party gifts</strong> from entities seeking to influence (corporations, brokers, underwriters, rating agency clients) — higher scrutiny, must reject if they could reasonably compromise independence.</li>
+      <li>✅ <strong>Modest gifts and ordinary business entertainment</strong> are acceptable as long as the purpose is not to influence or reward — must use judgment about what is "modest."</li>
+      <li>✅ <strong>IPO allocations to personal accounts</strong> from corporations or brokers are specifically prohibited — they give the member an advantage not available to clients and create an incentive to favour the allocating entity.</li>
+      <li>✅ <strong>Buy-side pressure on sell-side:</strong> Portfolio managers must respect sell-side intellectual honesty — retaliatory practices (reporting negative analysts to the covered company) are improper. Perception of retaliation can itself impair independence.</li>
+      <li>✅ <strong>Investment banking firewall:</strong> Separate reporting structures; IB cannot approve, disapprove, or modify research; analyst compensation must not be linked to IB assignments they participate in.</li>
+      <li>✅ <strong>Restricted list:</strong> If firm won't allow adverse opinions on a client, the company goes on the restricted list — factual information only, no recommendation disseminated.</li>
+      <li>✅ <strong>Performance analysts are also covered.</strong> Requests to alter composite construction due to negative results = independence threat. Must resist and report accurately. (Scott, Stein examples)</li>
+      <li>✅ <strong>Credit rating agencies:</strong> Procedures must prevent undue influence from sponsoring companies. Users of ratings should be mindful of conflicts and may need to validate independently.</li>
+      <li>✅ <strong>Travel funding — best practice:</strong> Always use commercial transportation at own/firm's expense. If commercial is unavailable, may accept modestly arranged travel to information-gathering events.</li>
+      <li>✅ <strong>Daily personal contact during sponsored trips</strong> creates intimacy that impairs objectivity — even if the trip is ostensibly educational. (Wayne/Penguin)</li>
+      <li>✅ <strong>Issuer-paid research:</strong> Not automatically unethical. Must disclose nature of compensation, conduct independent analysis, accept only flat fee not linked to conclusions or ability to attract investors.</li>
+      <li>✅ <strong>Pay-to-play prohibition:</strong> Political donations to individuals responsible for hiring decisions = I(B) violation — regardless of legitimate co-existing reasons for the donation. Mixed motives: the improper motive taints the action.</li>
+      <li>✅ <strong>Manager selection — both sides:</strong> Hiring side must not solicit/accept gifts. Manager seeking mandate must not offer gifts. Includes charitable donations and political contributions requested by the other side.</li>
+      <li>✅ <strong>Subtle/ambiguous language</strong> in recommendations to avoid conflict = violation. Must communicate true opinions clearly.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ I(B) QUICK REFERENCE</div>
+    <div class="f">
+      THREE PROHIBITIONS:   Must not offer / solicit / accept gifts that could compromise independence<br>
+      WHOSE INDEPENDENCE:   Your own OR another's — both directions covered<br>
+      TEST:                 "Reasonably could be expected to compromise" — objective, prospective standard<br><br>
+      CLIENT GIFTS:         Lower conflict risk → acceptable with EMPLOYER DISCLOSURE<br>
+      THIRD-PARTY GIFTS:    Higher conflict risk → reject if could compromise independence<br>
+      MODEST GIFTS:         Acceptable if purpose is NOT to influence or reward<br>
+      IPO ALLOCATIONS:      Prohibited — creates unfair advantage and improper incentive<br><br>
+      IB FIREWALL:          Separate reporting; IB cannot modify research; comp not linked to IB deals<br>
+      RESTRICTED LIST:      Company goes on restricted list if firm won't allow adverse opinion<br>
+      PERFORMANCE:          Composite manipulation = I(B) violation; must report accurately regardless of pressure<br><br>
+      ISSUER-PAID RESEARCH: Flat fee only; not linked to conclusions; full disclosure of compensation<br>
+      PAY-TO-PLAY:          Political donations to hiring decision-makers = I(B) violation<br>
+      MIXED MOTIVES:        Legitimate reason does not neutralise prohibited reason<br><br>
+      TRAVEL BEST PRACTICE: Use commercial transport at own/firm expense<br>
+      TRAVEL EXCEPTION:     Modest arrangements when commercial unavailable (e.g., site tour)<br>
+      DAILY CONTACT:        Extended trip with evaluated manager creates conflict — avoid
+    </div>
+    <div class="note">
+      <strong>Top I(B) exam traps:</strong><br>
+      (1) "The gift came from a client, not a third party, so no need to disclose" — WRONG, must always disclose client gifts to employer<br>
+      (2) "He can remain objective despite the gift, so no violation" — the test is whether it COULD compromise, not whether it DID<br>
+      (3) "The charitable donation was for a good cause, not to gain business" — mixed motives: the business motivation taints the action<br>
+      (4) "The company was put on the restricted list so no violation even though IB won't allow adverse opinion" — CORRECT, restricted list is the right procedure<br>
+      (5) "Issuer-paid research is automatically unethical" — WRONG, it is acceptable with proper disclosure and flat fee structure<br>
+      (6) "The bonus is small relative to the flat fee, so it's acceptable" — any bonus linked to conclusions or investor attraction violates I(B)<br>
+      (7) "The trip was educational so the expense is fine" — daily contact with a manager being evaluated creates a conflict regardless of the trip's educational character
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard I(B): Independence and Objectivity · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 14: Credit Risk</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+    --cr-bg: #1a100e; --cr-border: #8b2020;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #150d0d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--danger); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--danger); border-color: var(--danger); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--danger); background: rgba(201,76,76,0.1); border: 1px solid rgba(201,76,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--danger); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .cr-box { background: var(--cr-bg); border-left: 3px solid var(--cr-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .cr-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #c05050; margin-bottom: 10px; }
+  .cr-box .f { color: #e8b8b8; font-size: 14px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1f1418; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--danger); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.ig-row { background: rgba(76,139,201,0.05); }
+  tbody tr.hy-row { background: rgba(201,76,76,0.05); }
+  tbody tr.total-row { background: rgba(201,76,76,0.08); border-top: 2px solid rgba(201,76,76,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--danger); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  tbody td.good { color: var(--accent3); font-weight: 700; }
+  tbody td.bad { color: var(--danger); font-weight: 700; }
+  tbody td.neutral { color: var(--accent); font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--danger); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--danger); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* The Cs of Credit grid */
+  .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .cs-grid { grid-template-columns: 1fr; } }
+  .cs-topdown { background: rgba(201,76,76,0.05); border: 1px solid rgba(201,76,76,0.2); border-radius: 6px; padding: 14px 18px; }
+  .cs-bottomup { background: rgba(76,139,201,0.05); border: 1px solid rgba(76,139,201,0.2); border-radius: 6px; padding: 14px 18px; }
+  .cs-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .cs-topdown .cs-label { color: var(--danger); }
+  .cs-bottomup .cs-label { color: var(--accent2); }
+  .cs-topdown li, .cs-bottomup li { font-size: 13.5px; margin-bottom: 6px; }
+  .cs-topdown li { color: #e8c8c8; }
+  .cs-bottomup li { color: #c8d5e8; }
+
+  /* Rating scale */
+  .rating-row { display: grid; grid-template-columns: 80px 80px 80px 1fr 1.5fr; gap: 0; border: 1px solid var(--border); margin-bottom: 1px; border-radius: 3px; }
+  .rating-row > div { padding: 7px 12px; font-size: 12.5px; font-family: 'JetBrains Mono', monospace; border-right: 1px solid var(--border); }
+  .rating-row > div:last-child { border-right: none; font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: var(--text); }
+  .rating-row.header > div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: #1a1f2e; }
+  .rating-row.ig { background: rgba(76,139,201,0.04); }
+  .rating-row.hy { background: rgba(201,76,76,0.04); }
+  .rating-row.def { background: rgba(100,30,30,0.15); }
+  .ig-tier { color: var(--accent2); font-weight: 700; }
+  .hy-tier { color: var(--danger); font-weight: 700; }
+  .def-tier { color: #8b2020; font-weight: 700; }
+
+  /* Spread factor cards */
+  .spread-factors { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 780px) { .spread-factors { grid-template-columns: 1fr; } }
+  .sf-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .sf-card.macro { background: rgba(201,76,76,0.04); border-top: 3px solid var(--danger); }
+  .sf-card.market { background: rgba(201,168,76,0.04); border-top: 3px solid var(--accent); }
+  .sf-card.issuer { background: rgba(76,139,201,0.04); border-top: 3px solid var(--accent2); }
+  .sf-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .macro .sf-title { color: var(--danger); }
+  .market .sf-title { color: var(--accent); }
+  .issuer .sf-title { color: var(--accent2); }
+  .sf-card p, .sf-card li { font-size: 13px; color: var(--text); }
+  .sf-card ul { padding-left: 14px; }
+  .sf-card li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 14</div>
+  <h1><span>Credit Risk</span></h1>
+  <p>Exam-ready notes with full depth: credit risk definition and two components (POD, LGD); the Expected Loss formula and its link to credit spreads; the 8 Cs of credit analysis (5 bottom-up, 3 top-down); illiquid vs. insolvent; borrower types and sources of repayment; the full credit rating scale with IG/HY boundary; three limitations of credit ratings; three categories of yield spread drivers (macro, market, issuer); credit spread over the economic cycle (Exhibit 9); price impact of spread changes (Eqs. 3 &amp; 4) — including the convexity scaling rule; higher-quality vs. high-yield spread sensitivity.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Credit Risk — Definition &amp; Core Components</a>
+  <a class="toc-item" href="#s2">02 · Expected Loss Formula (Eq. 1)</a>
+  <a class="toc-item" href="#s3">03 · The 8 Cs of Credit Analysis</a>
+  <a class="toc-item" href="#s4">04 · Sources of Credit Risk by Borrower Type</a>
+  <a class="toc-item" href="#s5">05 · POD Drivers — Coverage, Leverage, Profitability</a>
+  <a class="toc-item" href="#s6">06 · Credit Rating Agencies &amp; Rating Scale</a>
+  <a class="toc-item" href="#s7">07 · Limitations of Credit Ratings</a>
+  <a class="toc-item" href="#s8">08 · Yield Spreads — Three Categories of Drivers</a>
+  <a class="toc-item" href="#s9">09 · Spreads Over the Economic Cycle (Exhibit 9)</a>
+  <a class="toc-item" href="#s10">10 · Price Impact of Spread Changes (Eqs. 3 &amp; 4)</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: CREDIT RISK DEFINITION             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Credit Risk — Definition, Components &amp; Key Distinctions</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Credit Risk</div>
+      <div class="def-body">The risk of <strong>economic loss</strong> resulting from a borrower's failure to make <strong>full and timely payments</strong> of interest and/or principal. It is a form of <em>performance risk</em> in a contractual relationship — the borrower has promised specific cash flows; credit risk is the possibility that those promises are not kept.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Default:</strong> A borrower that fails to make promised interest and/or principal payments on a bond or loan contract. Default is the credit event that triggers credit losses.</p>
+      <p style="margin-top:10px;"><strong>Credit risk is dynamic</strong> — it changes over time with economic conditions, borrower financial performance, market sentiment, and events specific to the issuer. It is not static and must be continuously re-evaluated.</p>
+      <p style="margin-top:10px;"><strong>Impact on the lender/investor:</strong> Loss of some or all principal and interest due (capital loss or income shortfall), disruption to the investor's own cash flows, increased legal and collection costs, reduced income margins.</p>
+    </div>
+
+    <h3>Illiquid vs. Insolvent — A Critical Distinction</h3>
+    <div class="two-col">
+      <div class="swap-card">
+        <div class="swap-title">Illiquid Borrower</div>
+        <p style="font-size:14px; color:#dfd0c8;"><strong>Cannot raise the necessary funds</strong> to make a timely payment — but their assets may still be worth more than their liabilities. They cannot tap credit lines, sell assets quickly, or otherwise secure funding in time. Liquidity problem: a timing issue, not necessarily a solvency issue. An illiquid but solvent borrower may survive if given time or emergency financing.</p>
+      </div>
+      <div class="cr-box" style="border-radius:6px;">
+        <div class="label">Insolvent Borrower</div>
+        <p style="font-size:14px; color:#e8b8b8; margin-top:4px;"><strong>Assets are worth LESS than liabilities</strong>. Even if all assets were liquidated, there wouldn't be enough to repay all debts. This is a structural solvency problem — not just a timing issue. An insolvent borrower almost always defaults; restructuring or bankruptcy typically follows.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Exam Distinction: Illiquid ≠ Insolvent</div>
+      <p>A company can be liquid but insolvent (can make payments today but liabilities exceed assets long-term), or illiquid but solvent (assets > liabilities but can't pay right now). Credit analysis must assess both dimensions. Liquidity risk is about timing of cash flows; solvency risk is about the fundamental balance sheet. Most defaults begin as liquidity crises but may be underpinned by solvency concerns.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: EXPECTED LOSS FORMULA              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Expected Loss Formula — The Two Components of Credit Risk (Equation 1)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Expected Loss (EL)</div>
+      <div class="f">
+        EL = POD × LGD<br><br>
+        WHERE:<br>
+        POD = Probability of Default<br>
+              (likelihood that the issuer fails to make full and timely payments)<br>
+              (typically annualized — the chance of default in a given year)<br><br>
+        LGD = Loss Given Default<br>
+              = EE × (1 − RR)<br><br>
+        EE  = Expected Exposure (= Exposure at Default, EAD)<br>
+              Amount the investor stands to lose at default<br>
+              ≈ bond face value + accrued interest − current market value of collateral<br><br>
+        RR  = Recovery Rate<br>
+              Percentage of the outstanding debt claim recovered if default occurs<br>
+              (bond investors usually recover something — rarely 0%)<br><br>
+        (1 − RR) = Loss Severity<br>
+                   Unrecovered portion of the claim
+      </div>
+      <div class="note">
+        <strong>LGD can be expressed two ways:</strong><br>
+        (a) Currency terms: e.g., EUR 450,000 of loss on EUR 1,000,000 bond<br>
+        (b) Percentage of principal: e.g., 45% LGD<br>
+        The percentage form is preferred for analysis because it allows comparison across borrowers of different sizes.<br><br>
+        <strong>Example:</strong> A bond with POD = 2% annually and LGD = 40% has EL = 0.02 × 0.40 = 0.008 = 0.8% per year. If the credit spread on this bond is 80bps (0.80%), the investor is exactly fairly compensated for expected loss.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Credit Spread as Compensation for Expected Loss</div>
+      <div class="f">
+        Credit Spread ≈ POD × LGD = Expected Loss<br><br>
+        WHERE: Credit Spread (G-spread) = YTM of corporate bond − YTM of comparable government bond<br><br>
+        INTERPRETATION:<br>
+        Credit spread &gt; EL → Investor overcompensated (bond is cheap relative to risk)<br>
+        Credit spread = EL → Fairly compensated (breakeven)<br>
+        Credit spread &lt; EL → Investor undercompensated (bond is expensive relative to risk)<br><br>
+        This is the fundamental link between credit risk measurement and bond pricing.
+      </div>
+      <div class="note">
+        <strong>Important:</strong> This is an approximation — the G-spread also includes liquidity risk premium and other components beyond pure credit risk. In practice, Credit Spread = Credit Risk Premium + Liquidity Risk Premium (+ sometimes a tax component). The expected loss captures only the credit risk portion.
+      </div>
+    </div>
+
+    <h3>Component Relationships — Exhibit 4 Walkthrough</h3>
+    <div class="card">
+      <p>The credit risk components cascade as follows:</p>
+      <ul style="padding-left:20px; margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:14px; color:#e8c97a; line-height:2.2;">
+        <li>Expected Exposure (EE) → total at risk if default occurs</li>
+        <li>× Recovery Rate (RR) → what's recovered → EE × RR = recovered amount</li>
+        <li>= Loss Given Default (LGD) = EE × (1−RR) → what's LOST if default occurs</li>
+        <li>× Probability of Default (POD) → probability-weight the loss</li>
+        <li>= Expected Loss (EL) = POD × LGD → the probability-weighted loss</li>
+      </ul>
+      <p style="margin-top:10px; font-size:14px;">The credit spread should, at minimum, compensate investors for this expected loss. Any excess spread above EL compensates for liquidity risk, uncertainty risk, and the investor's required risk premium.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: THE 8 Cs OF CREDIT ANALYSIS       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The 8 Cs of Credit Analysis — Bottom-Up &amp; Top-Down Factors</h2>
+    </div>
+
+    <div class="card">
+      <p>The traditional "Cs of credit analysis" framework organizes the factors that determine creditworthiness into two groups: <strong>5 bottom-up factors</strong> specific to the individual borrower, and <strong>3 top-down factors</strong> that apply to all borrowers in a given environment.</p>
+    </div>
+
+    <div class="cs-grid">
+      <div class="cs-topdown">
+        <div class="cs-label">Top-Down Factors (3 Cs) — Apply to All Borrowers</div>
+        <ul style="padding-left:16px;">
+          <li><strong style="color:#e8c97a;">Conditions:</strong> General economic, competitive, and business environment — recessions, industry disruption, commodity prices. Affects all borrowers' ability to service and refinance debt.</li>
+          <li style="margin-top:10px;"><strong style="color:#e8c97a;">Country:</strong> Geopolitical environment, legal and political system, rule of law, risk of expropriation, sovereign risk. Especially important for cross-border lending and emerging market bonds.</li>
+          <li style="margin-top:10px;"><strong style="color:#e8c97a;">Currency:</strong> Exchange rate risk — affects issuers whose cash flows are in one currency but debt is in another. Particularly critical for sovereign issuers with foreign currency debt (e.g., Romania's EUR-denominated bonds).</li>
+        </ul>
+      </div>
+      <div class="cs-bottomup">
+        <div class="cs-label">Bottom-Up Factors (5 Cs) — Specific to Individual Borrower</div>
+        <ul style="padding-left:16px;">
+          <li><strong style="color:#9ecef5;">Capacity:</strong> Ability to make debt payments on time — the most critical factor. Assessed using financial ratios (coverage, leverage, profitability). <em>Quantitative.</em></li>
+          <li style="margin-top:8px;"><strong style="color:#9ecef5;">Capital:</strong> Other financial resources (equity, reserves) that reduce reliance on debt. Higher capital → lower default risk. <em>Quantitative.</em></li>
+          <li style="margin-top:8px;"><strong style="color:#9ecef5;">Collateral:</strong> Quality and value of assets pledged to support debt. If borrower defaults, collateral can be seized → lowers LGD. <em>Qualitative + quantitative.</em></li>
+          <li style="margin-top:8px;"><strong style="color:#9ecef5;">Covenants:</strong> Legal terms of debt agreements (restrictions on dividends, leverage limits, maintenance tests). Protect bondholders; violations may trigger default. <em>Qualitative.</em></li>
+          <li style="margin-top:8px;"><strong style="color:#9ecef5;">Character:</strong> Quality of management and willingness to repay debt. Track record, reputation, transparency, governance quality. <em>Qualitative.</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Quantitative vs. Qualitative Cs</div>
+      <p><strong>Quantitative (financial statement based):</strong> Capacity (coverage ratios, leverage ratios, profitability) and Capital (equity/debt levels). These can be measured precisely and compared across borrowers.<br><br>
+      <strong>Qualitative (judgment-based):</strong> Collateral (what are the assets worth? how liquid?), Covenants (how protective are the terms?), Character (is management trustworthy?), Conditions (how tough is the economy?), Country (how stable is the legal system?), Currency (how exposed to FX?).<br><br>
+      Analysts assess collateral, covenants, and character based on historical company performance, credit relationships, and the reputation and track record of current management.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: SOURCES OF CREDIT RISK BY BORROWER -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Sources of Credit Risk by Borrower Type — Exhibit 3</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Borrower Type</th><th>Primary Source of Repayment</th><th>Secondary Source</th><th>Key Sources of Credit Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr class="ig-row">
+            <td class="label-col">Corporate</td>
+            <td>Business operations<br>Investment &amp; financing activities</td>
+            <td>Asset sales &amp; divestitures<br>Additional debt issuance<br>Equity issuance</td>
+            <td>Economic contraction; strategic shifts; increased competition; reduced pricing power; shrinking margins; excessive debt service burden</td>
+          </tr>
+          <tr class="hy-row">
+            <td class="label-col">Sovereign / Public Entity</td>
+            <td>Corporate &amp; personal income taxes, VAT &amp; sales taxes, capital gains taxes, tariffs, fees, and other government revenue</td>
+            <td>Newly issued debt<br>Sale of public assets (privatization)</td>
+            <td>Economic contraction; political uncertainty; excessive debt; expansionary policies; budget deficits; tax cuts; limited tax collection capacity; inability to generate reserve currency (for foreign currency debt)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Unsecured vs. Secured Debt — Impact on LGD</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Unsecured Debt</div>
+        <ul>
+          <li>Primary repayment source: issuer's operating cash flows</li>
+          <li>No collateral pledged — unsupported claim</li>
+          <li>Higher LGD (recovery depends entirely on firm's remaining assets after secured claims are paid)</li>
+          <li>Typical of investment-grade corporate bonds and sovereign debt</li>
+          <li>Risk management focus: <strong>minimize POD</strong> (more important than LGD)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Secured Debt</div>
+        <ul>
+          <li>Primary repayment: cash flows — same as unsecured</li>
+          <li>Secondary: specific collateral pledged (real estate, equipment, receivables)</li>
+          <li>Lower LGD (if default, collateral can be seized and liquidated)</li>
+          <li>Typical of high-yield bonds, bank loans, mortgages</li>
+          <li>Risk management focus: <strong>minimize both POD and LGD</strong> via covenant restrictions and collateral quality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: POD DRIVERS                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Drivers of POD — Profitability, Coverage &amp; Leverage</h2>
+    </div>
+
+    <div class="card">
+      <p>The probability of default (POD) is driven primarily by a borrower's ability to service debt — measured through quantitative financial ratios across three dimensions:</p>
+    </div>
+
+    <div class="three-col">
+      <div class="swap-card">
+        <div class="swap-title">Profitability</div>
+        <p style="font-size:13.5px; color:#dfd0c8;"><strong>Key metric:</strong> EBIT margin (operating profit as % of revenue)<br><br>Stable, predictable cash flows and profits → lower POD. Highly profitable companies can absorb downturns more easily. Volatile or thin margins → higher POD.<br><br><strong>Higher profitability → Lower POD → Better credit quality</strong></p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">Coverage</div>
+        <p style="font-size:13.5px; color:#c8d5f5;"><strong>Key metric:</strong> EBIT / Interest Expense (interest coverage ratio)<br><br>Measures whether cash flows/profits are sufficient to cover interest payments. A coverage ratio of 3× means earnings are 3 times the interest bill. Low coverage → high default risk.<br><br><strong>Higher coverage → Lower POD → Better credit quality</strong></p>
+      </div>
+      <div class="float-card">
+        <div class="float-title">Leverage</div>
+        <p style="font-size:13.5px; color:#c8dfd0;"><strong>Key metrics:</strong> Debt/EBITDA, Cash Flow to Net Debt<br><br>Measures relative reliance on debt financing. High leverage = large debt burden relative to earnings capacity → higher chance of distress if conditions deteriorate.<br><br><strong>Lower leverage → Lower POD → Better credit quality</strong></p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Credit Quality / Rating</th><th>Profitability (EBIT Margin)</th><th>Coverage (EBIT / Interest)</th><th>Leverage (Debt/EBITDA)</th><th>POD</th></tr>
+        </thead>
+        <tbody>
+          <tr class="ig-row"><td class="label-col">High Quality (Aaa/AAA)</td><td class="good">High margins</td><td class="good">Very high (e.g., 15×+)</td><td class="good">Very low (e.g., &lt;1×)</td><td class="good">Very low</td></tr>
+          <tr><td class="label-col">Investment Grade (BBB)</td><td>Moderate margins</td><td>Moderate (e.g., 4–6×)</td><td>Moderate (e.g., 2–4×)</td><td class="neutral">Moderate</td></tr>
+          <tr class="hy-row"><td class="label-col">High Yield (B/CCC)</td><td class="bad">Low/negative margins</td><td class="bad">Low (e.g., &lt;2×)</td><td class="bad">High (e.g., 5–8×+)</td><td class="bad">High to Very High</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 IG vs. HY: Different Focus in Credit Analysis</div>
+      <p><strong>Investment-grade investors:</strong> Less concerned about default (POD is low); more focused on <strong>spread risk</strong> — how changes in the credit environment affect bond prices. A 1% decline in credit quality spreads can cause significant mark-to-market losses even without a default.<br><br>
+      <strong>High-yield investors:</strong> Accept higher POD; focus on <strong>minimizing LGD</strong> through covenants (operational restrictions, financial maintenance tests) and collateral (secured claims, specific asset pledges). They also analyze recovery rates very carefully — for a CCC-rated bond that is likely to default, the expected recovery rate is as important as the POD.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: CREDIT RATING AGENCIES             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Credit Rating Agencies &amp; the Long-Term Rating Scale — Exhibit 7</h2>
+    </div>
+
+    <div class="card">
+      <p>The three major global credit rating agencies are <strong>Moody's Investors Service</strong>, <strong>Standard &amp; Poor's (S&amp;P)</strong>, and <strong>Fitch Ratings</strong>. They independently assess creditworthiness on a forward-looking basis using quantitative and qualitative analysis. Ratings are symbol-based measures of potential default risk.</p>
+      <p style="margin-top:10px;"><strong>Business model:</strong> "Issuer pays" — the bond issuer pays the rating agency to rate its debt. This creates a potential conflict of interest (agencies may have incentive to give favorable ratings to retain clients). Post-2008 financial crisis reforms have reduced but not eliminated this conflict.</p>
+    </div>
+
+    <h3>Long-Term Rating Scale — Exhibit 7 (Full)</h3>
+
+    <div class="rating-row header">
+      <div>Moody's</div><div>S&amp;P</div><div>Fitch</div><div>Category</div><div>Description</div>
+    </div>
+    <div style="background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.2); border-radius:4px; padding:6px 12px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent2); margin-top:8px; margin-bottom:2px;">INVESTMENT GRADE</div>
+    <div class="rating-row ig"><div class="ig-tier">Aaa</div><div class="ig-tier">AAA</div><div class="ig-tier">AAA</div><div>Highest Quality</div><div>Highest credit quality; lowest level of credit risk</div></div>
+    <div class="rating-row ig"><div class="ig-tier">Aa1</div><div>AA+</div><div>AA+</div><div>Very High Quality</div><div>Very high credit quality; very low credit risk</div></div>
+    <div class="rating-row ig"><div>Aa2</div><div>AA</div><div>AA</div><div></div><div></div></div>
+    <div class="rating-row ig"><div>Aa3</div><div>AA–</div><div>AA–</div><div></div><div></div></div>
+    <div class="rating-row ig"><div>A1</div><div>A+</div><div>A+</div><div>Upper Medium Grade</div><div>High credit quality; low credit risk</div></div>
+    <div class="rating-row ig"><div>A2</div><div>A</div><div>A</div><div></div><div></div></div>
+    <div class="rating-row ig"><div>A3</div><div>A–</div><div>A–</div><div></div><div></div></div>
+    <div class="rating-row ig"><div>Baa1</div><div>BBB+</div><div>BBB+</div><div>Low Medium Grade</div><div>Good credit quality; moderate credit risk</div></div>
+    <div class="rating-row ig"><div>Baa2</div><div>BBB</div><div>BBB</div><div></div><div></div></div>
+    <div class="rating-row ig" style="border-bottom:2px solid var(--danger);"><div class="ig-tier">Baa3</div><div class="ig-tier">BBB–</div><div class="ig-tier">BBB–</div><div><strong style="color:#e8c97a;">← IG/HY BOUNDARY</strong></div><div>Lowest investment-grade rating — often called "BBB-". Below this = non-investment grade</div></div>
+
+    <div style="background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.3); border-radius:4px; padding:6px 12px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--danger); margin-top:8px; margin-bottom:2px;">NON-INVESTMENT GRADE (HIGH YIELD / JUNK)</div>
+    <div class="rating-row hy"><div>Ba1</div><div class="hy-tier">BB+</div><div>BB+</div><div>Speculative Grade</div><div>Speculative; substantial credit risk</div></div>
+    <div class="rating-row hy"><div>Ba2</div><div>BB</div><div>BB</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>Ba3</div><div>BB–</div><div>BB–</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>B1</div><div>B+</div><div>B+</div><div>Highly Speculative</div><div>Highly speculative; high credit risk</div></div>
+    <div class="rating-row hy"><div>B2</div><div>B</div><div>B</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>B3</div><div>B–</div><div>B–</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>Caa1</div><div>CCC+</div><div>CCC+</div><div>Very High Risk</div><div>Substantial risk; default a real possibility</div></div>
+    <div class="rating-row hy"><div>Caa2</div><div>CCC</div><div>CCC</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>Caa3</div><div>CCC–</div><div>CCC–</div><div></div><div></div></div>
+    <div class="rating-row hy"><div>Ca</div><div>CC</div><div>CC</div><div>Near Default</div><div>Very high credit risk; default imminent or about to occur</div></div>
+    <div class="rating-row hy"><div>Ca</div><div>C</div><div>C</div><div>In Default Process</div><div>Default or default-like process has begun</div></div>
+    <div class="rating-row def"><div class="def-tier">C</div><div class="def-tier">D</div><div class="def-tier">D</div><div class="def-tier">DEFAULT</div><div>In default — bankruptcy, administration, liquidation, or formal winding-up; little prospect of recovery</div></div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Three Key Relationships in the Rating Scale (Exhibit 8)</div>
+      <p>1. <strong>Higher rating → lower yield</strong> for a given maturity. Investors demand less compensation for lower default risk.<br><br>
+      2. <strong>Longer maturity → higher yield</strong> (generally). Default risk accumulates over time; more uncertainty about the future.<br><br>
+      3. <strong>Yield spread between IG grades is narrower than IG–HY gap.</strong> The jump from BBB– to BB+ (the IG/HY boundary) is often the largest single step in the spread structure — crossing this boundary dramatically changes the investor base, liquidity, and yield required.</p>
+    </div>
+
+    <h3>Key Features of the Credit Rating Process</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>Ratings are issued on behalf of the issuer</strong> (not the investor) — the issuer pays for and requests the rating.</li>
+        <li>Rating agencies often receive <strong>access to material non-public information</strong> (e.g., financial projections) not available to public investors — giving them informational advantages.</li>
+        <li>Ratings are <strong>monitored on an ongoing basis</strong> — upgraded if credit quality improves, downgraded if deterioration is likely.</li>
+        <li>Rating agencies may issue a <strong>positive or negative "outlook"</strong> when creditworthiness is shifting but a rating change is not yet warranted. Outlooks are more aligned with current market conditions than ratings themselves.</li>
+        <li><strong>Credit migration risk (downgrade risk)</strong> = the risk that a bond issuer's rating deteriorates, increasing perceived default probability and widening spreads.</li>
+        <li>Ratings also trigger <strong>contractual consequences</strong>: step-up coupons on step-up bonds (coupon rises if rating falls), covenant violations, collateral posting requirements, investment mandates (institutional investors often cannot hold below-IG bonds).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: LIMITATIONS OF CREDIT RATINGS      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Limitations of Credit Ratings — Three Core Pitfalls</h2>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Never Rely Solely on Credit Ratings — Three Fundamental Limitations</div>
+      <p>Market participants must conduct their own credit analysis. Sole reliance on ratings has led to substantial losses, including during the 2008 Global Financial Crisis. Three specific pitfalls are identified by the curriculum.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card" style="border-top:3px solid var(--danger);">
+        <div class="mc-title" style="color:var(--danger);">① Ratings Lag Market Pricing</div>
+        <ul>
+          <li>Credit spreads change <strong>daily</strong>; ratings change much less frequently</li>
+          <li>Bond prices move faster than agencies can update ratings</li>
+          <li>Investors who wait for rating changes before acting may underperform those who anticipate them</li>
+          <li>Even long-term: ratings may lag changes in bond prices for extended periods</li>
+          <li>For distressed debt: pricing focused on <em>default timing</em> and <em>recovery rates</em> — ratings capture expected loss (POD × LGD) which may be a different signal</li>
+          <li><em>"Sticky" ratings</em> — agencies prefer stability over frequent changes</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent);">
+        <div class="mc-title" style="color:var(--accent);">② Ratings Miss Hard-to-Quantify Risks</div>
+        <ul>
+          <li>Litigation risk (environmental lawsuits, product liability)</li>
+          <li>Natural disaster risk (not predictable)</li>
+          <li>Environmental risk (long-term asset impairment)</li>
+          <li>Leveraged transactions (debt-financed acquisitions, large buybacks) — difficult to anticipate</li>
+          <li>Complex or novel business models create divergent ratings across agencies</li>
+          <li><em>WeWork example:</em> Fitch: BB–, S&P: B+, Moody's: Caa1 — same company, three very different assessments</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="border-top:3px solid var(--accent3);">
+        <div class="mc-title" style="color:var(--accent3);">③ Miscalculations &amp; Unforeseen Events</div>
+        <ul>
+          <li>Rating models may be built on assumptions that break down in extreme scenarios</li>
+          <li>2008 GFC: highly rated AAA subprime MBS defaulted massively — rating agencies failed to model the scenario of nationwide housing price decline</li>
+          <li>Accounting fraud: Enron, WorldCom (US), Wirecard AG (Germany) — all maintained high ratings until very close to disclosure</li>
+          <li>Wirecard: fraud discovered 19 June 2020 — investors holding solely on IG rating suffered severe losses</li>
+          <li>No model can fully capture management fraud or unprecedented market events</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: FACTORS IMPACTING YIELD SPREADS    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Factors Impacting Yield Spreads — Three Categories</h2>
+    </div>
+
+    <div class="card">
+      <p>Yield spread = yield of corporate bond − yield of comparable government bond (the "default-risk-free" benchmark). Spreads <strong>widen</strong> when credit risk rises (higher expected loss, lower liquidity) and <strong>narrow</strong> when credit risk falls. Credit spread risk is the risk of greater expected loss due to changing macro, market, or issuer-specific conditions.</p>
+      <p style="margin-top:10px;"><strong>Total corporate bond spread decomposition:</strong><br>
+      G-spread ≈ Credit risk premium + Liquidity risk premium + (Tax component)</p>
+    </div>
+
+    <div class="spread-factors">
+      <div class="sf-card macro">
+        <div class="sf-title">① Macroeconomic Factors</div>
+        <ul>
+          <li><strong>Credit cycle:</strong> Business cycle conditions drive spreads — expansion (narrowing), contraction (widening)</li>
+          <li>Spreads <strong>narrowest</strong> at top of cycle (low perceived risk); <strong>widest</strong> at bottom (peak fear)</li>
+          <li>Heavy new issue supply without sufficient demand → spreads widen</li>
+          <li>Flight to quality: investors sell risky assets → buy government bonds → corporate spreads widen dramatically</li>
+          <li>Tighter financial regulations → higher cost of market-making → structurally wider spreads</li>
+          <li>Funding stress among broker-dealers → wider spreads</li>
+          <li>HY more sensitive than IG to macroeconomic cycles</li>
+        </ul>
+      </div>
+      <div class="sf-card market">
+        <div class="sf-title">② Market / Liquidity Factors</div>
+        <ul>
+          <li>Corporate bond spread = credit risk + <strong>liquidity risk premium</strong></li>
+          <li><strong>Bid–ask spread</strong>: difference between purchase and sale prices → wider = more liquidity risk</li>
+          <li><strong>Issuer size:</strong> More publicly traded debt outstanding → more liquid → lower spread</li>
+          <li><strong>Credit quality:</strong> Lower quality → less liquid → higher spread</li>
+          <li>Government bonds: fraction of a bp bid–ask; illiquid corporate bonds: much wider</li>
+          <li>During crises: liquidity evaporates → spreads widen sharply (not just from credit deterioration)</li>
+          <li>Spillover: HY stress → spreads widen even for lower-rated IG bonds</li>
+        </ul>
+      </div>
+      <div class="sf-card issuer">
+        <div class="sf-title">③ Issuer-Specific Factors</div>
+        <ul>
+          <li><strong>Coverage ratios:</strong> EBIT/interest — falling coverage → spreads widen</li>
+          <li><strong>Leverage:</strong> Debt/EBITDA rising → spreads widen</li>
+          <li><strong>Profitability changes:</strong> Margin compression → credit deterioration → wider spreads</li>
+          <li><strong>Rating changes:</strong> Downgrade → spread widening; upgrade → spread narrowing (credit migration risk)</li>
+          <li>Sector comparison: investors compare spreads within same sector/rating to isolate issuer-specific factors</li>
+          <li>Events: M&amp;A (leveraging), management changes, legal issues, technological disruption</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Corporate Bond YTM Decomposition</div>
+      <div class="f">
+        Corporate Bond YTM = Government Benchmark Yield + Credit Spread<br><br>
+        Where: Government Benchmark Yield = Real Rate + Expected Inflation Premium<br>
+        Credit Spread = Credit Risk Premium + Liquidity Risk Premium (+ Tax component)<br><br>
+        A change in YTM can come from:<br>
+        (a) Change in government benchmark yield (rate risk)<br>
+        (b) Change in credit spread (spread risk)<br>
+        (c) Both simultaneously (e.g., flight to quality: benchmark falls + spreads widen)<br><br>
+        KEY: For option-free bonds, duration and convexity work the same way for<br>
+        spread changes as for benchmark yield changes — same formulas apply.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: SPREADS OVER THE ECONOMIC CYCLE    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Credit Spread Curves Over the Economic Cycle — Exhibit 9</h2>
+    </div>
+
+    <div class="card">
+      <p>Exhibit 9 shows stylized credit spread curves (spread vs. tenor/maturity) for both IG and HY issuers across four phases of the economic cycle, moving clockwise. Key observations:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>HY spreads are <strong>always higher</strong> than IG spreads at all tenors</li>
+        <li>HY spreads are <strong>more volatile</strong> — they move more dramatically across the cycle</li>
+        <li>IG spreads are narrower and more stable — smaller change in spreads through the cycle</li>
+        <li>In all phases, the spread curve is generally <strong>upward sloping</strong> (longer maturity → higher spread) because default risk accumulates over time and uncertainty grows</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Economic Cycle Phase</th><th>IG Spreads</th><th>HY Spreads</th><th>Investor Behavior</th></tr>
+        </thead>
+        <tbody>
+          <tr class="ig-row">
+            <td class="label-col">Early Expansion</td>
+            <td class="good">Narrowing</td>
+            <td class="good">Narrowing (faster)</td>
+            <td>Growing confidence; investors take on more risk; credit appetite expands</td>
+          </tr>
+          <tr>
+            <td class="label-col">Late Expansion / Peak</td>
+            <td class="good">Narrow (at minimum)</td>
+            <td class="good">Very narrow (at minimum)</td>
+            <td>Risk appetite is highest; spreads at their tightest; may be complacent</td>
+          </tr>
+          <tr class="hy-row">
+            <td class="label-col">Contraction / Recession</td>
+            <td class="bad">Widening</td>
+            <td class="bad">Widening (much faster)</td>
+            <td>Flight to quality; investors sell risky assets; HY liquidity falls sharply</td>
+          </tr>
+          <tr class="hy-row" style="border-bottom:none;">
+            <td class="label-col">Trough / Bottom</td>
+            <td class="bad">Wide (at maximum)</td>
+            <td class="bad">Very wide (at maximum)</td>
+            <td>Fear is highest; default risk perceived as maximum; credit markets may be near-frozen</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Invest in High-Yield Bonds?</div>
+      <p>Despite higher credit risk, HY bonds offer specific benefits: (1) <strong>Higher income</strong> — significantly higher coupons than IG or government bonds. (2) <strong>Portfolio diversification</strong> — lower correlation with IG bonds and interest rates; HY behaves more like equity. (3) <strong>Capital appreciation potential</strong> — economic recovery or issuer improvement has larger positive impact on HY than IG prices; ratings upgrades (the "fallen angel" becoming "rising star") can dramatically narrow spreads. (4) <strong>Equity-like returns with lower volatility</strong> — HY bond prices are more stable than equities due to larger income component and seniority in capital structure (bonds ranked above equity in insolvency). Some studies suggest better risk-adjusted returns than equities over the long term.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: PRICE IMPACT OF SPREAD CHANGES    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Price Impact of Spread Changes — Equations 3 &amp; 4</h2>
+    </div>
+
+    <div class="card">
+      <p>Since the YTM of a corporate bond = government benchmark yield + credit spread, a change in YTM can come from either or both components. <strong>For option-free fixed-rate bonds, the same duration and convexity formulas apply whether the yield change comes from the benchmark or the spread.</strong> The formulas are identical — just substitute ΔSpread for ΔYield.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Small Spread Changes (Duration Only)</div>
+      <div class="f">
+        %ΔPV^Full ≈ −AnnModDur × ΔSpread<br><br>
+        WHERE:<br>
+        AnnModDur = annualized modified duration<br>
+        ΔSpread   = change in credit spread (as decimal, e.g., +0.0100 for +100bps)<br><br>
+        Spread NARROWS (ΔSpread &lt; 0): Price RISES → positive holding period return<br>
+        Spread WIDENS (ΔSpread &gt; 0): Price FALLS → negative holding period return<br><br>
+        Valid for small, instantaneous spread changes. For larger moves → add convexity.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Larger Spread Changes (Duration + Convexity)</div>
+      <div class="f">
+        %ΔPV^Full ≈ (−AnnModDur × ΔSpread) + [½ × AnnConvexity × (ΔSpread)²]<br><br>
+        CONVEXITY SCALING RULE — CRITICAL EXAM DETAIL:<br>
+        Convexity must be re-scaled to be consistent with how the spread change is expressed.<br><br>
+        Rule: AnnConvexity should have the same order of magnitude as (AnnModDur)²<br><br>
+        Example:<br>
+        ModDur = 5.0 → ModDur² ≈ 25<br>
+        If reported AnnConvexity = 0.235 → this is in the wrong scale (too small)<br>
+        Re-scale: 0.235 × 100 = 23.5 (now consistent with ModDur² ≈ 25)<br><br>
+        Then for +1% (100bps) spread increase:<br>
+        %ΔPV ≈ (−5.0 × 0.01) + [½ × 23.5 × (0.01)²]<br>
+               = −0.05 + [½ × 23.5 × 0.0001]<br>
+               = −0.05 + 0.001175<br>
+               = −0.048825 = −4.8825%
+      </div>
+      <div class="note">
+        <strong>The convexity scaling rule is a key exam detail</strong> — if convexity is reported as a small decimal (e.g., 0.235), you must multiply by 100 before applying the formula when the spread change is expressed as a decimal percentage. This ensures both terms in the approximation are of comparable magnitude.<br><br>
+        <strong>Why does duration dominate for small spread changes?</strong> For small ΔSpread, the (ΔSpread)² term is tiny (squaring a small number makes it tinier). For a 1bp = 0.0001 spread change: (0.0001)² = 0.00000001 → convexity term is negligible. For 100bps: (0.01)² = 0.0001 → convexity term is meaningful.
+      </div>
+    </div>
+
+    <h3>Key Observations on Spread Sensitivity</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Longer Duration = Higher Spread Sensitivity</div>
+        <ul>
+          <li>A 30-year bond has much higher spread sensitivity than a 5-year bond</li>
+          <li>Same spread change → much larger price impact for long duration bonds</li>
+          <li>IG investors in long-dated bonds must monitor spread changes carefully</li>
+          <li>Spread sensitivity = AnnModDur × spread change in bps</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Uncertainty Increases with Maturity</div>
+        <ul>
+          <li>Short-term creditworthiness is easier to assess</li>
+          <li>Long-term: harder to forecast management strategy, technology, competition</li>
+          <li>Investors demand more compensation for greater uncertainty in long-dated bonds</li>
+          <li>Results in upward-sloping credit spread curve</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Holding Period Return Decomposition — Credit Bond</div>
+      <div class="f">
+        Total Holding Period Return ≈ Coupon income + Price change from benchmark ΔYield<br>
+                                    + Price change from ΔSpread<br><br>
+        Price change from ΔSpread ≈ −AnnModDur × ΔSpread  (+ convexity for large moves)<br><br>
+        SPREAD NARROWING → Price ↑ → Positive contribution to return (capital gain)<br>
+        SPREAD WIDENING  → Price ↓ → Negative contribution to return (capital loss)<br><br>
+        For IG bonds: spread changes often dominate total return (small coupon, large duration effect)<br>
+        For HY bonds: coupon income often more important than price appreciation from spread moves<br>
+        (but HY prices are also very sensitive to spread changes — higher yield, potentially lower duration)<br><br>
+        EXAMPLE: ModDur = 7.0; Spread narrows by 50bps<br>
+        Price gain ≈ 7.0 × 0.0050 = 3.5% (meaningful capital appreciation)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Credit risk definition:</strong> Risk of economic loss from borrower's failure to make full and timely payments of interest and/or principal. It is a form of performance risk. Dynamic — changes continuously with economic conditions and borrower performance.</li>
+        <li>✅ <strong>Default:</strong> Failure to make promised interest and/or principal payments on schedule. Triggers credit loss for the investor.</li>
+        <li>✅ <strong>Illiquid vs. insolvent:</strong> Illiquid = cannot raise funds to make timely payment (timing problem; assets may still exceed liabilities). Insolvent = assets worth less than liabilities (structural balance sheet problem). Both can lead to default but for different reasons.</li>
+        <li>✅ <strong>Two components of credit risk:</strong> POD (probability of default — annualized likelihood of missing payments) and LGD (loss given default = EE × (1−RR)). Both required to compute EL.</li>
+        <li>✅ <strong>Expected Loss formula (Eq. 1):</strong> EL = POD × LGD. LGD = EE × (1 − RR). EE = expected exposure at default (≈ face value + accrued interest − collateral MV). RR = recovery rate; (1−RR) = loss severity.</li>
+        <li>✅ <strong>Credit spread ≈ POD × LGD.</strong> If credit spread = EL → fairly compensated. Spread > EL → overcompensated (cheap bond). Spread < EL → undercompensated (expensive). In practice, spread also includes liquidity premium.</li>
+        <li>✅ <strong>LGD expressed as percentage of principal</strong> preferred over currency terms — allows comparison across borrowers of different sizes.</li>
+        <li>✅ <strong>The 8 Cs of Credit Analysis:</strong> 5 bottom-up (Capacity, Capital, Collateral, Covenants, Character) + 3 top-down (Conditions, Country, Currency). Capacity and Capital are quantitative; the rest largely qualitative.</li>
+        <li>✅ <strong>POD driven by:</strong> Profitability (EBIT margin ↑ → POD ↓), Coverage (EBIT/Interest ↑ → POD ↓), Leverage (Debt/EBITDA ↑ → POD ↑). Higher quality = more profitable, better covered, less leveraged.</li>
+        <li>✅ <strong>IG vs. HY credit analysis focus:</strong> IG investors focus on SPREAD RISK (spreads change even without default). HY investors focus on MINIMIZING LGD via covenants and collateral (expect higher POD, want to recover more).</li>
+        <li>✅ <strong>Three major rating agencies:</strong> Moody's, S&P, Fitch. Symbol-based ratings; "issuer pays" model; forward-looking analysis; ratings monitored on ongoing basis; positive/negative outlooks issued.</li>
+        <li>✅ <strong>IG/HY Boundary:</strong> Baa3/BBB– (Moody's/S&P/Fitch) and above = investment grade. Ba1/BB+ and below = non-investment grade (high yield / junk).</li>
+        <li>✅ <strong>Credit migration risk (downgrade risk):</strong> Risk that a bond's rating deteriorates, leading investors to perceive higher default probability and widening spreads.</li>
+        <li>✅ <strong>Three limitations of credit ratings:</strong> (1) Sticky — lag market pricing (spreads move daily, ratings rarely). (2) Miss hard-to-quantify risks (litigation, fraud, leveraged transactions, novel business models — e.g., WeWork split ratings). (3) Miscalculations/unforeseen events (2008 subprime MBS; Wirecard, Enron, WorldCom accounting fraud).</li>
+        <li>✅ <strong>Three categories of yield spread drivers:</strong> Macroeconomic (credit cycle, flight to quality, new issue supply, financial regulation), Market/Liquidity (bid-ask spreads, issuer size, credit quality, broker-dealer capital), Issuer-specific (coverage, leverage, profitability, rating changes, events).</li>
+        <li>✅ <strong>Credit spread curves over the cycle (Exhibit 9):</strong> Spreads narrowest at cycle peak; widest at trough. HY more volatile than IG. Upward-sloping spread curves generally. HY more sensitive to economic conditions.</li>
+        <li>✅ <strong>Price impact of small spread change (Eq. 3):</strong> %ΔPV^Full ≈ −AnnModDur × ΔSpread. Spread narrows → price rises. Spread widens → price falls. Same formula as yield change — just substitute ΔSpread for ΔYield.</li>
+        <li>✅ <strong>Price impact of large spread change (Eq. 4):</strong> %ΔPV^Full ≈ (−AnnModDur × ΔSpread) + [½ × AnnConvexity × (ΔSpread)²]. CRITICAL: AnnConvexity must be re-scaled to same order of magnitude as ModDur². If reported as small decimal (e.g., 0.235), multiply by 100 to get 23.5 before applying the formula.</li>
+        <li>✅ <strong>Longer duration → higher spread sensitivity.</strong> A 30yr bond loses much more from a 50bp spread widening than a 5yr bond. Investors in long-dated IG bonds are primarily exposed to spread risk, not default risk.</li>
+        <li>✅ <strong>For option-free bonds: same duration/convexity applies to both benchmark yield and spread changes.</strong> The source of the YTM change doesn't matter — ModDur works the same way.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 14</div>
+      <div class="f">
+        ═══ CREDIT RISK COMPONENTS ═══<br>
+        EL  = POD × LGD                           [Equation 1]<br>
+        LGD = EE × (1 − RR)<br>
+        EE  = Expected Exposure (face + accrued − collateral MV)<br>
+        RR  = Recovery Rate; (1−RR) = Loss Severity<br>
+        Credit Spread ≈ POD × LGD (fair compensation when equal)<br><br>
+
+        ═══ THE 8 Cs ═══<br>
+        Bottom-up (issuer-specific): Capacity, Capital, Collateral, Covenants, Character<br>
+        Top-down (environmental): Conditions, Country, Currency<br><br>
+
+        ═══ POD DRIVERS ═══<br>
+        Profitability ↑ (EBIT margin)   → POD ↓<br>
+        Coverage ↑ (EBIT/Interest)      → POD ↓<br>
+        Leverage ↑ (Debt/EBITDA)        → POD ↑<br><br>
+
+        ═══ RATING SCALE BOUNDARY ═══<br>
+        IG:  Baa3/BBB– and above (Moody's/S&P/Fitch)<br>
+        HY:  Ba1/BB+ and below<br>
+        D:   S&P/Fitch default; C = Moody's near-default/default<br><br>
+
+        ═══ 3 LIMITATIONS OF RATINGS ═══<br>
+        ① Sticky — lag market (spreads daily, ratings rarely)<br>
+        ② Miss hard-to-quantify risks (fraud, litigation, novel models)<br>
+        ③ Miscalculations/unforeseen events (2008 GFC, Wirecard)<br><br>
+
+        ═══ YIELD SPREAD DRIVERS ═══<br>
+        Macro: credit cycle, flight to quality, new issue supply, regulation<br>
+        Market: liquidity (bid-ask, issuer size, credit quality)<br>
+        Issuer: coverage, leverage, profitability, rating migration<br><br>
+
+        ═══ PRICE IMPACT OF SPREAD CHANGES ═══<br>
+        Small: %ΔPV ≈ −ModDur × ΔSpread             [Eq. 3]<br>
+        Large: %ΔPV ≈ (−ModDur × ΔSpread) + [½ × Convexity × (ΔSpread)²] [Eq. 4]<br>
+        SCALE CONVEXITY: must be ~same order of magnitude as ModDur²<br>
+        (if reported as 0.235 with ModDur=5 → re-scale to 23.5)<br>
+        Spread narrows → price rises (+return). Spread widens → price falls (−return).
+      </div>
+      <div class="note">
+        <strong>Spread narrowing increases holding period returns — two channels:</strong><br>
+        (1) Higher coupon income (already priced into the bond's yield at purchase). (2) Capital gain from price appreciation as spread narrows. Spread narrowing is the capital gains channel.<br><br>
+        <strong>IG vs. HY on spread dynamics:</strong> IG spreads narrower and more stable. HY spreads wider and more volatile — move more through the credit cycle. Both have upward-sloping spread curves (longer maturity → higher spread). The IG-to-HY jump at the BBB–/BB+ boundary is typically the largest step on the spread scale.<br><br>
+        <strong>Flight to quality effect:</strong> Government yields fall (demand for safety) AND corporate spreads widen (sell-off of risk) simultaneously. The net effect on corporate bond prices depends on which moves more — falling benchmark vs. widening spread. For HY bonds in crises, spread widening typically overwhelms the benchmark yield decline.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 14: Credit Risk · Exam Prep Notes
+</footer>
+
+</body>
+</html>

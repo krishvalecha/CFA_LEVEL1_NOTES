@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 1: Introduction to Financial Statement Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --ifrs-bg: #111a16; --ifrs-border: #4cc98a;
+    --gaap-bg: #14111a; --gaap-border: #9b7fd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%); border-radius: 50%; }
+  .page-header::after { content: 'FSA'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(201,168,76,0.04); letter-spacing: -0.05em; pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+  .importance-bar { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+  .importance-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .importance-dots { display: flex; gap: 4px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+  .dot.on { background: var(--accent); }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  /* EXAMINER MINDSET BOX — unique to FSA */
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; white-space: nowrap; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  .ifrs-card { background: var(--ifrs-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .ifrs-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .gaap-card { background: var(--gaap-bg); border: 1px solid rgba(155,127,212,0.2); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .gaap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #9b7fd4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .phase-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .phase-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .phase-row:last-child { border-bottom: none; }
+  .phase-num { background: rgba(201,168,76,0.08); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; padding: 16px 14px; min-width: 58px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; }
+  .phase-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .phase-content .ph-title { font-weight: 700; color: #fff; font-size: 14.5px; margin-bottom: 6px; }
+  .phase-content .ph-source { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .phase-content .ph-output { font-size: 12.5px; color: var(--accent3); margin-top: 4px; }
+  .phase-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 1</div>
+  <h1>Introduction to <span>Financial Statement Analysis</span></h1>
+  <p class="subtitle">Complete module replacement: the FSA framework (6 phases), roles of financial analysis (equity vs. credit), all regulated sources of information (SEC forms, audit opinions, notes), IFRS vs. US GAAP key differences, and supplementary information sources. FSA is 13–17% of the CFA L1 exam — every module matters.</p>
+  <div class="importance-bar">
+    <span class="importance-label">MODULE WEIGHT</span>
+    <div class="importance-dots">
+      <div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <span class="importance-label" style="color:#c9a84c;">FOUNDATIONAL — sets the stage for every subsequent FSA module</span>
+  </div>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What FSA Is</a>
+  <a class="toc-item" href="#s2">02 · The 6-Phase Framework</a>
+  <a class="toc-item" href="#s3">03 · Roles of FSA</a>
+  <a class="toc-item" href="#s4">04 · Regulatory Bodies</a>
+  <a class="toc-item" href="#s5">05 · SEC Filings</a>
+  <a class="toc-item" href="#s6">06 · Notes &amp; Segment Reporting</a>
+  <a class="toc-item" href="#s7">07 · MD&amp;A &amp; Audit Reports</a>
+  <a class="toc-item" href="#s8">08 · IFRS vs. US GAAP</a>
+  <a class="toc-item" href="#s9">09 · Other Info Sources</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: WHAT IS FSA                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What Financial Statement Analysis Is</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Financial analysis</strong> is the process of interpreting and evaluating a company's performance and financial position in the context of its economic environment — for the purpose of making investment, credit, or other economic decisions.</p>
+      <p>It starts with financial reports (audited statements + required regulatory disclosures + unaudited management commentary), supplemented by industry and company research. The central focus: evaluating whether a company earns a return on capital at least equal to its cost of capital, can grow profitably, and generates enough cash to meet obligations.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Equity Analyst — What They Care About</div>
+        <ul>
+          <li>Profitability — can the company grow earnings?</li>
+          <li>Per-share value — what is a fair price to buy?</li>
+          <li>Future earnings, free cash flow estimates</li>
+          <li>Buy / hold / sell recommendation</li>
+          <li>P/E ratio vs. peers; DCF-based fair value</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Credit Analyst — What They Care About</div>
+        <ul>
+          <li>Ability to pay interest (coverage ratios)</li>
+          <li>Ability to repay principal at maturity</li>
+          <li>Leverage: how much debt relative to assets/earnings?</li>
+          <li>Free cash flow forecasts + interest coverage</li>
+          <li>Credit rating assignment or loan terms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Equity vs. Credit Analyst</div>
+      <p>The exam loves asking: "Which of the following would be of PRIMARY concern to a credit analyst vs. an equity analyst?" The instinct to build: <strong>credit analyst = can they pay their debts?</strong> (solvency, cash flow, leverage). <strong>Equity analyst = can they grow and create value?</strong> (profitability, EPS, free cash flow for growth). Both care about cash flow, but for different reasons — the credit analyst cares because it must cover debt service; the equity analyst cares because it supports dividends and buybacks. If the question mentions "extending a loan" or "assigning a credit rating" → think credit analyst. "Buy/sell recommendation" or "P/E comparison" → think equity analyst.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Central Question of FSA</div>
+      <p>All financial analysis ultimately asks: <strong>What is this company's past, current, and expected future performance and financial position — and what does that imply for the decision I need to make?</strong> The decision shapes which tools, ratios, and data sources matter. Never calculate ratios before knowing what question you're trying to answer.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: THE 6-PHASE FRAMEWORK              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Financial Statement Analysis Framework — 6 Phases</h2>
+    </div>
+
+    <div class="card">
+      <p>The FSA framework is a structured process for conducting any financial analysis — whether for equity, credit, M&amp;A, or private equity evaluation. The framework applies regardless of the specific task. <strong>Know all 6 phases, their sequence, their inputs (sources), and their outputs.</strong></p>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-row">
+        <div class="phase-num">01<br><span style="font-size:9px; font-weight:400;">PURPOSE</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Articulate the Purpose and Context of the Analysis</div>
+          <p>Define WHY you are doing the analysis before doing anything. Understand the decision it will support (equity investment? credit rating? M&A?). Define audience, deliverable format, timeline, and resource constraints. Compile the specific questions the analysis must answer.</p>
+          <p style="margin-top:6px;"><strong>Key warning from LES:</strong> Do NOT start calculating ratios without first understanding what question you are trying to answer. Less experienced analysts are tempted to compute everything — resist this. Ask: "If all calculations were instantly done, what decision would I be able to make?"</p>
+          <div class="ph-source">📥 Sources: Nature of analyst's function, client communication, institutional guidelines</div>
+          <div class="ph-output">📤 Outputs: Statement of purpose, list of specific questions, report format, timetable</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">02<br><span style="font-size:9px; font-weight:400;">COLLECT</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Collect Data</div>
+          <p>Obtain information required to answer the specific questions. Key: understand the company's business model, financial performance, and financial position (trends over time, relative to peers). Financial statement data alone may suffice for simple screening; deeper questions (why did Company A outperform Company B?) require additional context.</p>
+          <p style="margin-top:6px;"><strong>Top-down approach:</strong> (1) Macroeconomic environment → (2) Industry prospects → (3) Company prospects. This sequencing helps frame expectations before diving into numbers.</p>
+          <div class="ph-source">📥 Sources: Financial statements, other financial data, questionnaires, industry/economic data, discussions with management/suppliers/customers/competitors, site visits</div>
+          <div class="ph-output">📤 Outputs: Financial statements in usable form (spreadsheet), completed questionnaires</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">03<br><span style="font-size:9px; font-weight:400;">PROCESS</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Process Data</div>
+          <p>Apply analytical tools to the collected data. This is where the actual number-crunching happens — but always in service of the questions from Phase 1. Includes:</p>
+          <ul style="padding-left:18px; margin-top:6px; font-size:13.5px; color:var(--text);">
+            <li>Computing ratios and growth rates</li>
+            <li>Preparing <strong>common-size financial statements</strong> (scale data as % of revenue or % of total assets)</li>
+            <li>Creating charts and running statistical analyses (regressions, Monte Carlo simulations)</li>
+            <li>Making forecasts and performing valuations</li>
+            <li>Adjusting financial statements to improve comparability (e.g., IFRS vs. US GAAP differences, lease adjustments)</li>
+            <li>Identifying factors that affect comparability: business models, operating decisions (leasing vs. buying), accounting policies (revenue recognition), tax jurisdictions</li>
+          </ul>
+          <div class="ph-source">📥 Sources: Data from Phase 2</div>
+          <div class="ph-output">📤 Outputs: Adjusted statements, common-size statements, ratios and graphs, forecasts, valuations</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">04<br><span style="font-size:9px; font-weight:400;">ANALYZE</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Analyze / Interpret the Data</div>
+          <p>The <strong>most critical phase</strong>. The answer to a specific analytical question is almost never a number alone — it requires the analyst's interpretation of the output and the use of that interpretation to support a conclusion or recommendation.</p>
+          <p style="margin-top:6px;">Equity analyst example: Forecasts of earnings + free cash flow + fair value range → buy/hold/sell recommendation. Credit analyst example: Free cash flow forecasts + interest coverage + leverage ratios → investment decision or credit rating.</p>
+          <div class="ph-source">📥 Sources: Input data + all processed data from Phase 3</div>
+          <div class="ph-output">📤 Outputs: Analytical results, forecasts, valuations</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">05<br><span style="font-size:9px; font-weight:400;">COMMUNICATE</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Develop and Communicate Conclusions and Recommendations</div>
+          <p>Present findings in the appropriate format for the audience and purpose. For an equity analyst's external report, this typically includes: <strong>(1) Summary and investment conclusion; (2) Industry overview and competitive analysis; (3) Financial statement model (with scenarios); (4) Valuation; (5) Investment risks.</strong></p>
+          <p style="margin-top:6px;"><strong>CFA Institute Standard V(B):</strong> Members must clearly distinguish between opinions and facts, disclose limitations and inherent risks, and include elements important to analysis so readers can evaluate the conclusions themselves.</p>
+          <div class="ph-source">📥 Sources: Analytical results + prior reports + institutional guidelines</div>
+          <div class="ph-output">📤 Outputs: Analytical report answering Phase 1 questions; buy/hold/sell or credit recommendation</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">06<br><span style="font-size:9px; font-weight:400;">FOLLOW-UP</span></div>
+        <div class="phase-content">
+          <div class="ph-title">Follow-Up</div>
+          <p>Analysis is not a one-time event. If an investment is made or a credit rating is assigned, <strong>periodic review</strong> is required to revise forecasts and recommendations as new information arrives. Even if an investment was rejected, subsequent analyses may be needed if price or business conditions change. Follow-up involves repeating all previous phases periodically.</p>
+          <div class="ph-source">📥 Sources: Periodically repeating all previous steps</div>
+          <div class="ph-output">📤 Outputs: Actual vs. expected comparison, revised forecasts, updated reports and recommendations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — The 6-Phase Framework</div>
+      <p>The exam tests this framework in two main ways: (1) <strong>Sequencing questions</strong> — "Which phase involves preparing common-size statements?" (Phase 3 — Process). "Which phase involves identifying specific questions to be answered?" (Phase 1 — Articulate). (2) <strong>What belongs in which phase</strong> — analysts must understand that interpretation (Phase 4) is separate from processing (Phase 3). Calculating a P/E ratio = Phase 3. Deciding it means the stock is overvalued = Phase 4. The most tested phases are Phase 1 (articulate — including the "resist calculating ratios without purpose" warning) and Phase 4 (interpretation is the critical step).</p>
+      <p><strong>Common trap:</strong> The exam may describe an analyst doing something (e.g., "conducting site visits to production facilities") and ask which phase it belongs to. Site visits = data collection = Phase 2. Making adjustments for IFRS vs. GAAP differences = Phase 3 (Processing). A revised recommendation after a quarterly earnings release = Phase 6 (Follow-up).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: ROLES OF FSA                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Roles and Scope of Financial Statement Analysis</h2>
+    </div>
+
+    <div class="card">
+      <p>The role of FSA is to use financial reports — combined with other information — to <strong>evaluate the past, current, and potential performance and financial position</strong> of a company for the purpose of making investment, credit, and other economic decisions.</p>
+      <p><strong>Key distinction:</strong> Managers inside a company also perform financial analysis for operating/investing/financing decisions, but they have access to non-public internal financial information — so they don't rely exclusively on published financial statements. External analysts only have public information.</p>
+    </div>
+
+    <h3>Economic Decisions FSA Supports</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Decision Type</th><th>Who Makes It</th><th>Primary FSA Focus</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equity investment evaluation</td>
+            <td>Portfolio managers, equity analysts</td>
+            <td>Profitability, earnings growth, valuation (P/E, DCF)</td>
+          </tr>
+          <tr>
+            <td>Security valuation / recommendation</td>
+            <td>Sell-side equity analysts</td>
+            <td>Fair value estimate vs. current price → buy/hold/sell</td>
+          </tr>
+          <tr>
+            <td>Creditworthiness assessment / loan terms</td>
+            <td>Credit analysts, bank loan officers</td>
+            <td>Interest coverage, leverage, cash flow adequacy, collateral</td>
+          </tr>
+          <tr>
+            <td>Debt rating assignment</td>
+            <td>Rating agencies (Moody's, S&P, Fitch)</td>
+            <td>Solvency, leverage ratios, EBITDA, free cash flow, business risk</td>
+          </tr>
+          <tr>
+            <td>Venture capital / private equity investment</td>
+            <td>VC and PE analysts</td>
+            <td>Business model viability, growth potential, exit multiples</td>
+          </tr>
+          <tr>
+            <td>M&amp;A target evaluation</td>
+            <td>Corporate development, investment bankers</td>
+            <td>Synergies, combined financials, deal valuation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Two Recurring Themes in FSA</div>
+      <p><strong>Theme 1 — Past to forecast future:</strong> Analysts study past and current performance to form expectations about future performance and financial position. Financial statements are a historical record; FSA extrapolates forward.<br><br>
+      <strong>Theme 2 — Risk assessment:</strong> Analysts are always concerned about factors that affect the <em>risks</em> to a company's future performance — not just the base case. Both profitability (earnings) and cash flow generation (receipts vs. disbursements) matter, but for different reasons depending on whether you're an equity or credit analyst.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — The Sea Limited Example (from LES)</div>
+      <p>The LES uses Sea Limited's Q2 2022 earnings as a real-world illustration. The key analyst insight: <strong>beating on EPS but missing on revenue AND suspending guidance = mixed result.</strong> The stock dropped 14.3%. This illustrates the analyst's role: it's not just reading numbers — it's interpreting revenue miss + guidance suspension in the context of macro uncertainty (rising inflation, rising rates, currency depreciation) to form a view on future performance. The exam may test whether you understand that analysts must read management commentary critically (management is biased to their own perspective) and that revenue guidance suspension signals uncertainty, not just caution.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: REGULATORY BODIES                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Regulatory Bodies — IOSCO, SEC, and EU</h2>
+    </div>
+
+    <h3>IOSCO — The Global Framework</h3>
+
+    <div class="card">
+      <p><strong>IOSCO (International Organization of Securities Commissions)</strong> — founded 1983. Technically NOT a regulatory authority itself, but its members (securities commissions and similar governmental regulatory authorities) regulate over 95% of the world's financial capital markets across more than 115 jurisdictions. 75% of its ordinary membership = securities regulators from emerging markets.</p>
+      <p>IOSCO's role: establish a global benchmark for securities regulation through its <strong>Objectives and Principles of Securities Regulation</strong>, facilitate cross-border cooperation, and assist in combating violations of securities and derivatives laws.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">IOSCO's 3 Core Objectives of Securities Regulation</div>
+      <div class="f">
+        ① Protecting investors<br>
+        ② Ensuring markets are fair, efficient, and transparent<br>
+        ③ Reducing systemic risk<br><br>
+        Two IOSCO principles directly relevant to financial reporting:<br>
+        → Full, accurate, and timely disclosure of financial results, risk, and material information<br>
+        → Accounting standards used should be of high and internationally acceptable quality
+      </div>
+    </div>
+
+    <h3>US SEC — The Most Important Regulatory Authority to Know</h3>
+
+    <div class="card">
+      <p>The <strong>US Securities and Exchange Commission (SEC)</strong> has primary responsibility for securities and capital markets regulation in the United States. Created after the 1929 stock market crash that preceded the Great Depression. An ordinary IOSCO member. Any company issuing securities in the US (NYSE, NASDAQ) or involved in US capital markets is subject to SEC rules.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Statute</th><th>Year</th><th>Key Provisions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Securities Act of 1933</td>
+            <td>1933</td>
+            <td>Specifies financial and significant information investors must receive when securities are sold. Prohibits misrepresentations. Requires initial registration of all public issuances of securities.</td>
+          </tr>
+          <tr>
+            <td>Securities Exchange Act of 1934</td>
+            <td>1934</td>
+            <td>Created the SEC. Gave SEC authority over all aspects of the securities industry. Empowered SEC to require periodic reporting by companies with publicly traded securities.</td>
+          </tr>
+          <tr>
+            <td>Sarbanes-Oxley Act (SOX)</td>
+            <td>2002</td>
+            <td>Created PCAOB (Public Company Accounting Oversight Board) to oversee auditors. Required: auditor independence (auditors cannot provide certain non-audit services); executive certification of financial reports; management report on effectiveness of internal controls (with external auditor confirmation).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — SOX and the PCAOB</div>
+      <p>Sarbanes-Oxley (2002) is frequently tested because it introduced three major requirements: <strong>(1) Auditor independence</strong> — auditors cannot provide certain non-audit services to companies they audit (eliminates conflicts of interest). <strong>(2) CEO/CFO certification</strong> — executive management must personally certify that financial reports fairly represent the company's financial condition (personal liability). <strong>(3) Internal control reporting</strong> — management must report on the effectiveness of internal controls over financial reporting AND obtain external auditor confirmation of that effectiveness. The exam often asks: "What body oversees auditors of public companies in the US?" → Answer: PCAOB (created by SOX). "Who certifies that financial reports fairly present the company's condition?" → Executive management.</p>
+    </div>
+
+    <h3>European Regulatory Structure</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">ESC — European Securities Committee</div>
+        <p>Consists of high-level representatives of EU member states. Advises the European Commission on securities policy issues. No direct regulatory authority — advisory role only.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">ESMA — European Securities and Markets Authority</div>
+        <p>EU cross-border supervisor. Coordinates supervision of the EU market. One of three European Supervisory Authorities (the other two: banking and insurance). Regulation still rests with individual member states → reporting requirements vary by country.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 EU Financial Reporting Standard Adoption</div>
+      <p>From 2005, consolidated accounts of EU-listed companies must use IFRS. The endorsement process: IASB issues new standard → EFRAG (European Financial Reporting Advisory Group) advises European Commission → Standards Advice Review Group provides opinion → Commission prepares draft regulation → Accounting Regulatory Committee votes → if favorable → European Parliament and Council of EU approval. It's a multi-step process reflecting the balance between individual member state autonomy and EU-wide convergence.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: SEC FILINGS                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>SEC Filings — The Forms Analysts Use</h2>
+    </div>
+
+    <div class="card">
+      <p>Companies comply with SEC Acts by filing standardized forms. More than 50 different types of SEC forms exist; analysts focus on a subset. Most filings are made electronically and can be accessed via the issuer's investor relations website or the SEC's EDGAR database. <strong>Know the form number, who files it, and how often.</strong></p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Form</th><th>Who Files</th><th>Frequency</th><th>Key Content</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10-K</td>
+            <td>US registrants</td>
+            <td>Annual</td>
+            <td>Comprehensive overview: business description, risk factors, financial disclosures (audited financials + notes), MD&amp;A, auditors' reports. The primary annual disclosure document.</td>
+          </tr>
+          <tr>
+            <td>20-F</td>
+            <td>Non-US registrants (except certain Canadian)</td>
+            <td>Annual</td>
+            <td>Same as 10-K but for foreign private issuers (e.g., Sea Ltd. files 20-F). Contains same audited financials, MD&amp;A, risk factors.</td>
+          </tr>
+          <tr>
+            <td>40-F</td>
+            <td>Certain Canadian registrants</td>
+            <td>Annual</td>
+            <td>Canadian-specific version of the annual report form.</td>
+          </tr>
+          <tr>
+            <td>Annual Report to Shareholders</td>
+            <td>Most public companies (NOT required by SEC)</td>
+            <td>Annual</td>
+            <td>Polished marketing document: CEO letter, photos, segment info, R&amp;D, future goals. Overlaps significantly with 10-K. NOT required by SEC — voluntarily prepared. Often a "highly polished" version for investors.</td>
+          </tr>
+          <tr>
+            <td>Proxy / DEF-14A</td>
+            <td>US companies before shareholder meetings</td>
+            <td>Before each shareholder meeting (at least annual)</td>
+            <td>Required before shareholder vote. Contains: shareholder vote proposals, security ownership by management/principal owners, director bios, executive compensation disclosure. Useful for governance analysis.</td>
+          </tr>
+          <tr>
+            <td>10-Q</td>
+            <td>US registrants</td>
+            <td>Quarterly</td>
+            <td>Interim period financial information: unaudited financials + MD&amp;A. Also must include non-recurring events (significant new accounting policy, commencement of significant litigation, material changes to securities rights).</td>
+          </tr>
+          <tr>
+            <td>6-K</td>
+            <td>Non-US registrants</td>
+            <td>Semiannual (many non-US)</td>
+            <td>Interim filing for non-US companies. Less frequent than 10-Q (many file only semiannually, not quarterly).</td>
+          </tr>
+          <tr>
+            <td>8-K</td>
+            <td>US registrants (6-K for non-US)</td>
+            <td>Current (event-driven)</td>
+            <td>"Current report" — filed for major events: acquisitions/disposals of assets, changes in securities/trading, accountant/financial statement matters, corporate governance changes, management changes, Regulation FD disclosures. <span class="tag tag-yellow">Timely info with valuation implications</span></td>
+          </tr>
+          <tr>
+            <td>Forms 3, 4, 5</td>
+            <td>Directors, officers, and >10% beneficial owners</td>
+            <td>Ongoing (event-driven)</td>
+            <td>Beneficial ownership reporting. Form 3 = initial statement. Form 4 = changes in ownership. Form 5 = annual report. Used to track insider buying and selling — directional signal for analysts.</td>
+          </tr>
+          <tr>
+            <td>Form 144</td>
+            <td>Affiliates of the issuer</td>
+            <td>Before restricted stock sales</td>
+            <td>Notice of proposed sale of restricted securities or securities held by an affiliate. Indicates insiders plan to sell — potentially bearish signal.</td>
+          </tr>
+          <tr>
+            <td>Form 11-K</td>
+            <td>US companies with employee benefit plans</td>
+            <td>Annual</td>
+            <td>Annual report of employee stock purchase, savings, and similar plans. Useful for companies with significant employee benefit plans — contains more detail than in financial statements.</td>
+          </tr>
+          <tr>
+            <td>Registration Statement (1933 Act)</td>
+            <td>Any company offering new securities</td>
+            <td>At time of new issuance</td>
+            <td>Required for new securities offerings. Contains: disclosure about securities offered, relationship to existing capital, standard annual filing info, recent audited financials, risk factors. Plus interim unaudited financials if filed 3+ months after fiscal year end.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Which Form for Which Situation?</div>
+      <p>The exam frequently presents a scenario and asks which SEC form would contain the relevant information. Key distinctions to memorize: <strong>10-K vs. Annual Report:</strong> 10-K is the SEC legal filing (required); Annual Report is the shareholder marketing document (not SEC-required). Both overlap, but only 10-K is mandatory. <strong>10-Q vs. 8-K:</strong> 10-Q is periodic (quarterly); 8-K is event-driven (material events). A surprise acquisition announcement → 8-K. Quarterly financials → 10-Q. <strong>Forms 3/4/5:</strong> These track insider ownership changes. An analyst noticing heavy insider selling would check Form 4 (changes). <strong>Proxy (DEF-14A):</strong> Contains executive compensation — tested frequently. "Which filing would disclose the CEO's total compensation?" → Proxy statement (DEF-14A).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Annual Report ≠ 10-K — Common Confusion</div>
+      <p>The annual report to shareholders is a voluntary, marketing-oriented document — it is NOT required by the SEC. The 10-K is the required legal filing. They overlap significantly, but the annual report may omit some of the legal detail in the 10-K, and it typically includes more promotional content (CEO letter, photos, narrative about strategy). Some companies publish only a Form 10-K or an abbreviated annual report + a copy of the 10-K. Never assume the annual report and the 10-K are the same document — the 10-K is always the authoritative source.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: NOTES & SEGMENT REPORTING          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Financial Notes, Supplementary Schedules &amp; Segment Reporting</h2>
+    </div>
+
+    <h3>Financial Notes — Why They Matter</h3>
+
+    <div class="card">
+      <p>Notes (footnotes) are required and often account for a large percentage of financial disclosures — Sea Ltd.'s 2021 financial statements included <strong>more than 60 pages of notes</strong>. They are essential to understanding the information in the financial statements themselves. An analyst who reads only the financial statements and ignores the notes is missing critical information.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">What Financial Notes Disclose</div>
+      <div class="f">
+        ① Basis of preparation: fiscal year, accounting standards used (IFRS or US GAAP),<br>
+           currency/units, consolidation basis, rounding policy<br><br>
+        ② Accounting policies, methods, and estimates used to prepare the statements<br>
+           (IFRS and US GAAP allow flexibility in policies → reduces comparability across companies)<br><br>
+        ③ Segment reporting (breakdown by business segment and geography)<br>
+        ④ Business acquisitions and disposals<br>
+        ⑤ Contractual obligations (on-balance-sheet AND off-balance-sheet debt)<br>
+        ⑥ Financial instruments and associated risks<br>
+        ⑦ Legal proceedings<br>
+        ⑧ Related-party transactions<br>
+        ⑨ Subsequent events (events occurring AFTER the balance sheet date)
+      </div>
+      <div class="note">The notes may include explanatory information about virtually every line item on the balance sheet and income statement. Flexibility in accounting choices is necessary (companies differ in their economic environments) but creates comparability challenges — analysts must understand policies to make appropriate adjustments when comparing companies.</div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Notes and Accounting Flexibility</div>
+      <p>The exam tests whether you understand WHY accounting flexibility exists and what problems it creates. <strong>Why flexibility exists:</strong> different companies have different economic environments; a single set of rigid rules can't fairly reflect all businesses. <strong>The problem it creates:</strong> two companies with similar assets (e.g., equipment) can use different depreciation methods → different reported expenses → incomparable profitability. This is why analysts must read notes to understand accounting policies before comparing companies. The exam may ask: "An analyst finds that Company A uses straight-line depreciation and Company B uses accelerated depreciation. Where would the analyst find this information?" → Answer: Financial statement notes (footnotes).</p>
+    </div>
+
+    <h3>Segment Reporting — The Rules</h3>
+
+    <div class="card">
+      <p>Both IFRS and US GAAP require companies to provide disaggregated information about <strong>operating segments</strong> in the notes. An operating segment is a component of a company that: (1) engages in activities generating revenue and expenses; (2) whose results are regularly reviewed by senior management; and (3) for which discrete financial information is available.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Segment Reporting — Quantitative Thresholds</div>
+      <div class="f">
+        A segment must be separately reported if it meets ANY of these (the "10% rule"):<br>
+        → Revenue ≥ 10% of combined segments' total revenue<br>
+        → Assets ≥ 10% of combined segments' total assets<br>
+        → Profit or loss ≥ 10% of the GREATER of:<br>
+           (a) combined profits of all profitable segments, OR<br>
+           (b) absolute combined losses of all loss-making segments<br><br>
+        ADDITIONAL RULE — 75% test:<br>
+        → If reportable segments' combined external revenue < 75% of total company revenue,<br>
+          additional segments must be identified until 75% is reached.<br><br>
+        Small segments may be combined if they share substantial defining factors, or combined<br>
+        with a similar significant segment. Non-reportable info → "All Other Segments" category.
+      </div>
+      <div class="note">For each reportable segment, disclose: external revenue + inter-segment revenue, profit/loss, assets and liabilities (if reviewed by chief decision-maker), interest revenue/expense, PP&E/intangibles acquired, D&A, other non-cash expenses, income tax, equity method investee share. Plus a reconciliation to consolidated financials.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Segment Data Is Valuable — Sea Limited Example</div>
+      <p>Sea Ltd.'s 2021 segment data showed: E-commerce = 51% of revenue but generated a large operating loss. Digital Entertainment (Garena) = ~43% of revenue and was the ONLY profitable segment. Without segment data, an analyst looking only at consolidated results would see a $9.96bn revenue company — but would miss that the largest revenue segment is deeply unprofitable and the profitable segment is actually shrinking in relative importance. Segment data is essential for identifying which parts of a business drive value and which destroy it.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Segment Reporting Rules</div>
+      <p>Two common exam traps: (1) <strong>The 10% threshold is OR, not AND</strong> — a segment only needs to exceed one of the three thresholds (revenue, assets, or profit/loss) to require separate reporting. (2) <strong>Single customer disclosure:</strong> If any single customer represents 10% or more of total revenues, the company must disclose THAT FACT but does NOT have to disclose the customer's identity. The exam may ask: "A company has a customer representing 12% of revenues. What must the company disclose?" → That a single customer exceeds 10% of revenue, but not the customer's name.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: MD&A & AUDIT REPORTS               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Management Commentary (MD&amp;A) &amp; Audit Reports</h2>
+    </div>
+
+    <h3>Management's Discussion and Analysis (MD&amp;A)</h3>
+
+    <div class="card">
+      <p>The MD&amp;A (also called management report, management commentary, or operating and financial review) is one of the most useful parts of an annual report besides the financial statements themselves. <strong>However — other than excerpts from financial statements — the MD&amp;A is typically UNAUDITED.</strong> (Exception: Germany has required audited management reports since 1931.)</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">IASB Framework — 5 Content Elements of "Decision-Useful" MD&A</div>
+      <div class="f">
+        ① The nature of the business<br>
+        ② Management's objectives and strategies<br>
+        ③ The company's significant resources, risks, and relationships<br>
+        ④ Results of operations<br>
+        ⑤ Critical performance measures
+      </div>
+      <div class="note">The IASB issued an IFRS Practice Statement "Management Commentary" — provides guidance (not a binding standard) for preparing and presenting management commentary.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">SEC Requirements for MD&A (US-Listed Companies)</div>
+      <div class="f">
+        Management must highlight:<br>
+        → Favorable or unfavorable trends<br>
+        → Significant events and uncertainties affecting liquidity, capital resources, and operations<br>
+        → Effects of inflation, changing prices, or other material events that may cause future results<br>
+          to materially depart from current reported financial information<br>
+        → Off-balance-sheet obligations<br>
+        → Contractual commitments (e.g., purchase obligations)<br>
+        → Critical accounting policies requiring subjective judgments with significant impact on results
+      </div>
+      <div class="note">The MD&A is a good starting point — especially its forward-looking disclosures (planned capex, new store openings, divestitures) for projecting future performance. But: management is biased. MD&A is only ONE input for an objective, independent analysis.</div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — MD&amp;A: Useful but Biased</div>
+      <p>The exam knows that MD&A is simultaneously valuable and unreliable. The right answer to questions about MD&A: it is <strong>useful as a starting point</strong> (especially forward-looking disclosures), but: (1) it is generally unaudited (except Germany); (2) management is naturally biased toward presenting favorable information; (3) it is only ONE input — analysts must seek an objective, independent perspective. If the exam asks "Which section of the annual report contains unaudited forward-looking information about planned capital expenditures?" → MD&A. If it asks "Which limitation must analysts be aware of when using the MD&A?" → It is unaudited and management is biased to their own perspective.</p>
+    </div>
+
+    <h3>Audit Reports — Types of Opinions</h3>
+
+    <div class="card">
+      <p>Financial statements in annual reports are generally required to be audited by an <strong>independent accounting firm</strong> in accordance with specified auditing standards. The auditor issues a written opinion — the <strong>audit report</strong> — on the financial statements.</p>
+      <p><strong>What the audit provides:</strong> "Reasonable assurance" (not absolute assurance) that the financial statements are fairly presented and free from material misstatement. Auditors use sampling techniques; line items may be based on estimates. "Reasonable assurance" = high probability of no material error — NOT a guarantee. Analysts must maintain healthy skepticism.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Auditing Standards Bodies</div>
+      <div class="f">
+        International: IAASB (International Auditing and Assurance Standards Board) — issues ISAs<br>
+                       (International Standards on Auditing) — adopted by many countries<br><br>
+        United States: PCAOB (Public Company Accounting Oversight Board) — created by SOX 2002<br>
+                       Sets auditing standards for US public companies<br><br>
+        Audit objectives (under ISAs):<br>
+        → Obtain reasonable assurance that financials are free from material misstatement<br>
+          (whether due to fraud or error)<br>
+        → Report findings in accordance with ISAs
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Audit Opinion Type</th><th>What It Means</th><th>Analyst Implication</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unqualified / Unmodified ("Clean") Opinion</td>
+            <td>Financial statements give a "true and fair view" (international) or are "fairly presented" (international + US) in accordance with applicable accounting standards. No material exceptions.</td>
+            <td><span class="tag tag-green">Desired outcome</span> — analysts want to see this. Sea Ltd. received a clean opinion from Ernst &amp; Young for FY2021.</td>
+          </tr>
+          <tr>
+            <td>Qualified Opinion</td>
+            <td>Some scope limitation OR exception to accounting standards. Exceptions are described in the audit report with additional explanatory paragraphs.</td>
+            <td><span class="tag tag-yellow">Caution</span> — analyst must read the explanatory paragraphs to determine the importance and impact of the exception.</td>
+          </tr>
+          <tr>
+            <td>Adverse Opinion</td>
+            <td>Auditor determines that the financial statements materially depart from accounting standards and are NOT fairly presented.</td>
+            <td><span class="tag tag-red">Red flag</span> — financial statements cannot be relied upon as presented. Serious issue requiring investigation.</td>
+          </tr>
+          <tr>
+            <td>Disclaimer of Opinion</td>
+            <td>Auditor is UNABLE to issue an opinion (e.g., due to a scope limitation — insufficient access to evidence).</td>
+            <td><span class="tag tag-red">Major concern</span> — something prevented the auditor from completing the work. Often signals serious governance or information access issues.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Audit Matters (KAM) vs. Critical Audit Matters (CAM)</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Key Audit Matters (KAM) — International</div>
+        <p>Issues the auditor considers most important — higher risk of misstatement, significant management judgment, or significant transactions. Sea Ltd. example KAMs: (1) DE revenue recognition (complex judgment about paying user lifespans); (2) Long-lived asset impairment in e-commerce (highly judgmental due to forecasted cash flows).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#9b7fd4;">Critical Audit Matters (CAM) — US</div>
+        <p>Issues involving "especially challenging, subjective, or complex auditor judgment" — similar concept to KAM, applied under PCAOB standards. Both KAMs and CAMs highlight areas where management must make significant estimates or judgments — useful flags for analysts about where reported numbers are most uncertain.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ KAMs/CAMs ≠ Most Important for Investors</div>
+      <p>The LES specifically notes: "Key and Critical Audit Matters are not necessarily the most important factors for analysts and investors." They reflect what was most challenging for the auditor — not what is most decision-relevant for investment analysis. An analyst should not assume that just because something is a KAM/CAM it is the most important driver of the company's value. This is an exam trap — don't confuse "most difficult to audit" with "most important for investment decision."</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Audit Opinion Types</div>
+      <p>The exam loves testing audit opinion terminology. Key instincts: <strong>"Clean" = unqualified = unmodified = good.</strong> "Qualified" = exception exists, but not so severe as to make statements unreliable — read the explanatory paragraph. "Adverse" = statements materially wrong — don't trust them. "Disclaimer" = auditor couldn't form an opinion — often worse than adverse because you don't even know how bad it is. <strong>Common trap:</strong> "Which opinion means the financial statements are fairly presented WITH exceptions?" → Qualified (NOT adverse — adverse means NOT fairly presented at all). The exam may also test that the audit provides "reasonable assurance" not "absolute assurance" — auditing uses sampling, so it cannot guarantee zero errors.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 SOX Internal Control Requirements</div>
+      <p>Under SOX, US auditors must also express an opinion on the company's <strong>internal control systems</strong> (provided separately or incorporated in the audit report). Internal controls = the company's processes, personnel, and systems designed to ensure the financial reporting process is sound. Under SOX, management of US publicly traded companies must: (1) explicitly accept responsibility for effectiveness of internal control; (2) evaluate effectiveness using suitable criteria; (3) support evaluation with sufficient competent evidence; (4) provide a report on internal control. The external auditor must confirm management's assessment.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: IFRS vs. US GAAP                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>IFRS vs. US GAAP — Comparison &amp; Monitoring Standards</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="ifrs-card">
+        <div class="ifrs-title">IFRS — International Financial Reporting Standards</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li><strong>Set by:</strong> IASB (International Accounting Standards Board)</li>
+          <li><strong>Approach:</strong> Principles-based — gives broader guidance, requires more professional judgment</li>
+          <li><strong>Used by:</strong> Most countries outside the US (EU, most of Asia, Latin America, Australia, etc.)</li>
+          <li><strong>Interest paid on cash flow statement:</strong> Can be classified as Operating OR Financing</li>
+          <li><strong>Inventory methods:</strong> FIFO and Weighted Average only. LIFO is <span class="tag tag-red">PROHIBITED</span></li>
+          <li><strong>Development costs:</strong> Capitalized (if certain conditions met) → appears on balance sheet as asset</li>
+          <li><strong>Inventory writedown reversal:</strong> Permitted (if conditions met) — reversed through income statement</li>
+        </ul>
+      </div>
+      <div class="gaap-card">
+        <div class="gaap-title">US GAAP — Generally Accepted Accounting Principles</div>
+        <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+          <li><strong>Set by:</strong> FASB (Financial Accounting Standards Board)</li>
+          <li><strong>Approach:</strong> Rules-based — more specific rules for specific situations, less judgment required</li>
+          <li><strong>Used by:</strong> United States companies; companies with US capital market access</li>
+          <li><strong>Interest paid on cash flow statement:</strong> Always Operating Activities</li>
+          <li><strong>Inventory methods:</strong> FIFO, LIFO, and Weighted Average. LIFO is <span class="tag tag-green">PERMITTED</span></li>
+          <li><strong>Development costs:</strong> Expensed immediately (treated as period expense, not capitalized)</li>
+          <li><strong>Inventory writedown reversal:</strong> <span class="tag tag-red">PROHIBITED</span> — once written down, cannot be reversed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Topic</th><th>US GAAP</th><th>IFRS</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Standard setter</td>
+            <td>FASB</td>
+            <td>IASB</td>
+          </tr>
+          <tr>
+            <td>Approach</td>
+            <td>Rules-based</td>
+            <td>Principles-based</td>
+          </tr>
+          <tr>
+            <td>Interest paid (cash flow)</td>
+            <td>Operating Activities only</td>
+            <td>Operating OR Financing (company choice)</td>
+          </tr>
+          <tr>
+            <td>Interest received (cash flow)</td>
+            <td>Operating Activities only</td>
+            <td>Operating OR Investing (company choice)</td>
+          </tr>
+          <tr>
+            <td>Dividends paid (cash flow)</td>
+            <td>Financing Activities only</td>
+            <td>Financing OR Operating (company choice)</td>
+          </tr>
+          <tr>
+            <td>Inventory cost methods</td>
+            <td>FIFO, LIFO, Weighted Average</td>
+            <td>FIFO, Weighted Average only (LIFO PROHIBITED)</td>
+          </tr>
+          <tr>
+            <td>R&amp;D / Development costs</td>
+            <td>Both R&amp;D expensed</td>
+            <td>Research = expensed; Development = capitalized if conditions met</td>
+          </tr>
+          <tr>
+            <td>Inventory writedown reversal</td>
+            <td>Prohibited</td>
+            <td>Permitted (if conditions satisfied)</td>
+          </tr>
+          <tr>
+            <td>Investment property</td>
+            <td>Historical cost less depreciation</td>
+            <td>Fair value model option (gains/losses to income statement)</td>
+          </tr>
+          <tr>
+            <td>Revaluation of PP&amp;E</td>
+            <td>Not permitted</td>
+            <td>Permitted under revaluation model</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — IFRS vs. US GAAP Key Differences</div>
+      <p>The four most tested IFRS vs. US GAAP differences are: <strong>(1) LIFO:</strong> Permitted under US GAAP, PROHIBITED under IFRS. In inflationary environments, LIFO → higher COGS → lower taxable income → lower taxes. IFRS companies cannot use this. (2) <strong>Development costs:</strong> IFRS capitalizes (if criteria met) → higher assets, higher future amortization, smoother earnings. US GAAP expenses immediately → lower assets, higher current expenses. (3) <strong>Inventory writedown reversal:</strong> IFRS allows reversal (price recovers → asset marked back up → gain in income statement). US GAAP prohibits reversal — once written down, permanently stays at lower value. (4) <strong>Interest paid on cash flow:</strong> IFRS gives a choice (operating or financing); US GAAP requires operating. This affects operating cash flow comparability between IFRS and US GAAP companies.</p>
+      <p><strong>Convergence note:</strong> IASB and FASB work to converge standards. Revenue recognition, leasing, and credit losses have largely converged. But differences remain (LIFO, development costs, writedown reversals) — analysts must know where convergence has NOT occurred.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 No Reconciliation Required — The Analyst's Challenge</div>
+      <p>Crucially: reconciliation disclosures between IFRS and US GAAP are NOT required. An analyst comparing two companies using different standards often does NOT have enough information to make the specific adjustments needed for full comparability. The implication: analysts must maintain caution when interpreting comparative financial measures across different accounting standard regimes. This is why monitoring developments in financial reporting standards matters — if FASB or IASB changes a rule, it affects comparability and can change valuations.</p>
+    </div>
+
+    <h3>Monitoring Financial Reporting Developments</h3>
+
+    <div class="card">
+      <p>Analysts need to monitor developments <strong>from a user's perspective</strong> (how do changes affect financial reports and valuations?) — not from a preparer's perspective (how do I implement the change?). Three key areas to monitor:</p>
+      <ul>
+        <li><strong>New products or types of transactions</strong> — may lack explicit guidance (e.g., fintech products, cryptocurrencies). May appear in financial reports, business journals, or capital markets before standard-setters act.</li>
+        <li><strong>Actions of standard setters (IASB, FASB)</strong> — changes in regulation can affect companies' financial reports and valuations. Example: requiring stock option expense on the income statement (previously only in footnotes) made dilution more visible and affected valuations.</li>
+        <li><strong>Company disclosures on critical accounting policies</strong> — companies disclose where they exercise judgment. Changes in estimates or policies signal where future surprises may occur.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CFA Institute's Role in Financial Reporting</div>
+      <p>CFA Institute actively advocates for improved financial reporting standards. Volunteer members serve on liaison committees meeting with IASB and FASB. CFA Institute's 2007 position paper "A Comprehensive Business Reporting Model" recommended: current fair value of assets and liabilities, neutrality in financial reporting, and the direct format for the cash flow statement. Analysts can contribute by submitting comment letters on proposed standards — IASB and FASB seek input from the financial analyst community (users of financial statements) when developing new standards.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: OTHER INFO SOURCES                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Other Information Sources for Financial Analysis</h2>
+    </div>
+
+    <div class="card">
+      <p>Beyond annual and interim regulatory filings, analysts use four categories of additional sources. The quality and objectivity of information varies significantly across categories.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Examples</th><th>Key Characteristics</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Issuer sources (non-regulatory)</td>
+            <td>Earnings calls, investor days, press releases, speaking with management/IR/other personnel, company website visits, product/store visits</td>
+            <td>Direct from the source → rich context. BUT: management is biased to their own perspective. Analysts must ask probing questions. Earnings calls: analysts get to probe management on results, strategy, and forward-looking targets. Platforms like Bloomberg, Wind, FactSet transcribe calls.</td>
+          </tr>
+          <tr>
+            <td>Public third-party sources</td>
+            <td>Free industry whitepapers, consultancy reports, government economic/industry indicators (retail sales, price indexes), general news outlets, industry-specific news, social media</td>
+            <td>Freely available, broad market view. Social media useful as a gauge of customer sentiment. Government statistics (monthly/quarterly releases) provide macro context. Least proprietary advantage from these sources.</td>
+          </tr>
+          <tr>
+            <td>Proprietary third-party sources</td>
+            <td>Sell-side analyst reports, credit rating agency reports, Bloomberg/Wind/FactSet data, industry-specific consultancies (Rystad for energy, iQvia/Evaluate for biopharma, Gartner/IDC for IT)</td>
+            <td>High quality, specialized data. Costs money. Sell-side reports have inherent conflicts of interest (banking relationships). Rating agency reports focus on creditworthiness. Industry-specific databases provide proprietary market data not in public filings.</td>
+          </tr>
+          <tr>
+            <td>Proprietary primary research</td>
+            <td>Surveys, conversations, product comparisons, other studies commissioned or directly conducted by the analyst</td>
+            <td>Highest proprietary advantage — generates unique insights competitors don't have. Examples: tasting the food, visiting stores, speaking with customers, conducting channel checks with suppliers. Labor-intensive and expensive but can provide edge.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Mindset — Analyst Sources and Their Limitations</div>
+      <p>The exam may present a source and ask what its limitation is, or ask which source provides the most independent/objective view. Key instincts: <strong>Earnings calls / investor days:</strong> useful but management is biased — always acknowledge this. <strong>Sell-side reports:</strong> potentially conflicted (investment banking relationships may bias recommendations). <strong>Company website visits / product testing:</strong> proprietary primary research — most independent, generates unique insight, but impractical for some industries (e.g., pharmaceuticals — you can't easily test drugs). <strong>Social media:</strong> useful for consumer sentiment — not for hard financial data. The most objective views come from independent primary research and non-issuer third-party sources.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Financial analysis</strong> = interpreting/evaluating company performance and position in economic context, for investment/credit/economic decisions. Starts with financial reports + supplemented by industry/company research.</li>
+        <li>✅ <strong>Equity analyst focus:</strong> profitability, per-share value, earnings growth, P/E vs. peers, DCF valuation → buy/hold/sell. <strong>Credit analyst focus:</strong> ability to pay interest and repay principal, leverage, interest coverage, free cash flow adequacy → loan terms or credit rating.</li>
+        <li>✅ <strong>6-Phase FSA Framework:</strong> (1) Articulate purpose/context; (2) Collect data; (3) Process data; (4) Analyze/interpret; (5) Communicate conclusions/recommendations; (6) Follow-up. Know which phase each activity belongs to.</li>
+        <li>✅ <strong>Phase 1 warning:</strong> Resist calculating ratios before knowing what question you're answering. Define purpose, context, audience, deliverable, timetable first.</li>
+        <li>✅ <strong>Phase 4 is critical:</strong> Interpretation of output — the answer is almost never the number alone. The analyst's judgment and interpretation turn data into a recommendation.</li>
+        <li>✅ <strong>Top-down approach (Phase 2):</strong> Macroeconomic environment → Industry prospects → Company prospects. This sequencing provides proper context for financial data.</li>
+        <li>✅ <strong>IOSCO:</strong> Not a direct regulator. Members regulate >95% of world's financial capital markets. Founded 1983. 3 core objectives: protect investors, ensure fair/efficient/transparent markets, reduce systemic risk.</li>
+        <li>✅ <strong>SEC Acts:</strong> 1933 Act = initial registration + disclosure on new issuances. 1934 Act = created the SEC + periodic reporting requirement. SOX 2002 = created PCAOB, auditor independence, CEO/CFO certification, internal control reporting.</li>
+        <li>✅ <strong>Key SEC forms:</strong> 10-K (US annual), 20-F (non-US annual), 10-Q (US quarterly), 6-K (non-US interim), 8-K (material events), DEF-14A/Proxy (shareholder meeting — contains exec compensation), Forms 3/4/5 (insider ownership). Annual Report to shareholders = NOT required by SEC, marketing-oriented.</li>
+        <li>✅ <strong>MD&amp;A:</strong> Generally UNAUDITED (exception: Germany). Forward-looking disclosures are useful. Management is biased. Must be read critically — only one input, not an independent view. IASB's 5 content elements: nature of business, objectives/strategies, resources/risks/relationships, results of operations, critical performance measures.</li>
+        <li>✅ <strong>Audit opinions:</strong> Unqualified/clean = good, fairly presented. Qualified = exception exists, read explanatory paragraph. Adverse = materially wrong, not fairly presented. Disclaimer = auditor unable to form opinion. Audit provides reasonable assurance (NOT absolute assurance) — uses sampling.</li>
+        <li>✅ <strong>KAM (international) / CAM (US):</strong> Most challenging audit areas (high misstatement risk, significant management judgment). NOT necessarily the most important factors for analysts/investors — don't confuse "hard to audit" with "most important for valuation."</li>
+        <li>✅ <strong>Notes disclose:</strong> Basis of preparation, accounting policies/methods/estimates, segment data, acquisitions/disposals, off-balance-sheet obligations, financial instruments/risks, legal proceedings, related-party transactions, subsequent events. Often 60+ pages. Essential — don't skip them.</li>
+        <li>✅ <strong>Segment reporting:</strong> 10% rule (revenue, assets, OR profit/loss); 75% test (combined reportable segment external revenue must = 75% of total). Single customer ≥10% of revenue must be disclosed, but identity does NOT have to be disclosed.</li>
+        <li>✅ <strong>IFRS vs. US GAAP — 4 critical differences:</strong> LIFO (GAAP: permitted; IFRS: prohibited). Development costs (GAAP: expense; IFRS: capitalize if criteria met). Inventory writedown reversal (GAAP: prohibited; IFRS: permitted). Interest paid on cash flow (GAAP: always operating; IFRS: operating OR financing).</li>
+        <li>✅ <strong>IFRS = principles-based (IASB). US GAAP = rules-based (FASB).</strong> Both converging on major new standards (revenue recognition, leases, credit losses). Reconciliation between IFRS and GAAP is NOT required — analysts cannot always make full comparability adjustments.</li>
+        <li>✅ <strong>Monitoring standards:</strong> Analyst monitors from USER's perspective (how do changes affect reports/valuations?), not preparer's. Monitor: new products/transactions, IASB/FASB actions, company disclosures on critical accounting policies.</li>
+        <li>✅ <strong>Information sources beyond filings:</strong> Issuer non-regulatory (earnings calls, investor days, press releases, site visits); Public third-party (govt data, industry news, social media); Proprietary third-party (sell-side reports, Bloomberg, industry databases); Proprietary primary research (surveys, channel checks, product testing — most independent, most proprietary advantage).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 1 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ 6-PHASE FRAMEWORK ═══<br>
+        1. Articulate (purpose, questions, format, timetable) — don't calculate before knowing WHY<br>
+        2. Collect (financials, industry/macro data, company visits, management discussions)<br>
+        3. Process (ratios, common-size statements, adjustments, valuations, forecasts)<br>
+        4. Analyze/Interpret — THE CRITICAL PHASE — numbers + judgment = recommendation<br>
+        5. Communicate (report: summary, industry, financials, valuation, risks + Standard V(B))<br>
+        6. Follow-up (revise periodically; repeat all phases; actual vs. expected)<br><br>
+
+        ═══ KEY REGULATORY BODIES ═══<br>
+        IOSCO: Not a regulator; members regulate >95% of global capital markets; 3 objectives<br>
+        SEC: US primary securities regulator; enforces 1933 Act, 1934 Act, SOX 2002<br>
+        PCAOB: Oversees US public company auditors; created by SOX<br>
+        ESMA: EU cross-border supervisor (not primary regulator — still member states)<br><br>
+
+        ═══ CRITICAL SEC FORMS ═══<br>
+        10-K / 20-F / 40-F: Annual (US / non-US / Canadian) — audited financials + MD&A<br>
+        10-Q / 6-K: Quarterly (US) / Semiannual (non-US) — unaudited + MD&A<br>
+        8-K: Material events (acquisitions, management changes, accounting changes)<br>
+        DEF-14A (Proxy): Before shareholder meetings — exec comp, director bios, vote proposals<br>
+        Forms 3/4/5: Insider ownership (initial / changes / annual) — track insider trades<br>
+        Annual Report: NOT required by SEC — marketing document; overlaps with 10-K<br><br>
+
+        ═══ AUDIT OPINIONS ═══<br>
+        Unqualified/Clean: Fairly presented — GOOD. Analysts want this.<br>
+        Qualified: Exception exists — read explanatory paragraph carefully<br>
+        Adverse: Materially wrong — DO NOT rely on statements<br>
+        Disclaimer: Auditor couldn't form opinion — serious governance concern<br>
+        Audit = reasonable assurance (NOT absolute). Uses sampling. Healthy skepticism required.<br><br>
+
+        ═══ IFRS VS. US GAAP — MUST-KNOW DIFFERENCES ═══<br>
+        LIFO:              GAAP = PERMITTED  |  IFRS = PROHIBITED<br>
+        Dev. costs:        GAAP = Expense    |  IFRS = Capitalize (if criteria met)<br>
+        Writedown reversal:GAAP = Prohibited |  IFRS = Permitted<br>
+        Interest paid (CF):GAAP = Operating  |  IFRS = Operating OR Financing<br>
+        Int. received (CF):GAAP = Operating  |  IFRS = Operating OR Investing<br>
+        Dividends paid(CF):GAAP = Financing  |  IFRS = Financing OR Operating<br>
+        Approach:          GAAP = Rules-based |  IFRS = Principles-based<br><br>
+
+        ═══ SEGMENT REPORTING THRESHOLDS ═══<br>
+        Report segment if: Revenue ≥10% OR Assets ≥10% OR Profit/Loss ≥10% of combined<br>
+        75% rule: Keep identifying segments until external revenue of reportable segments ≥75% total<br>
+        Single customer ≥10% of revenue: Disclose the FACT — identity NOT required
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 1:</strong><br>
+        (1) Annual Report ≠ 10-K — Annual Report is NOT required by SEC.<br>
+        (2) MD&A is generally unaudited — management is biased.<br>
+        (3) Audit = reasonable assurance, not absolute assurance.<br>
+        (4) KAMs/CAMs = hardest to audit, NOT most important for investors.<br>
+        (5) LIFO: PROHIBITED under IFRS, PERMITTED under US GAAP.<br>
+        (6) Inventory writedown reversal: PROHIBITED under US GAAP, PERMITTED under IFRS.<br>
+        (7) Segment 10% rule is OR (not AND) — only one threshold needs to be met.<br>
+        (8) Single customer disclosure: must say ≥10% exists, but NOT who the customer is.<br>
+        (9) Phase 4 (Interpret) is described as "the critical step" — not Phase 3 (Process).<br>
+        (10) IOSCO is NOT a direct regulatory authority — it facilitates and coordinates.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 1: Introduction to Financial Statement Analysis · Exam Prep Notes
+</footer>
+
+</body>
+</html>

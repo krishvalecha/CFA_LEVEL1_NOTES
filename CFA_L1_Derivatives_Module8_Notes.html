@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 8: Pricing and Valuation of Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  /* Option-specific payoff visual */
+  .payoff-diagram { background: #101318; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #8892a4; line-height: 1.9; }
+  .payoff-diagram .pd-title { color: var(--accent); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+
+  .factor-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 6px 0; }
+  .factor-row:first-child { border-radius: 6px 6px 0 0; }
+  .factor-row.header { background: #1e2330; }
+  .factor-row > div { padding: 10px 16px; font-size: 13.5px; border-right: 1px solid var(--border); }
+  .factor-row > div:last-child { border-right: none; }
+  .factor-row.header > div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+  .f-up { color: var(--accent3); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .f-dn { color: var(--danger); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .f-both { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 8</div>
+  <h1>Pricing &amp; Valuation of <span>Options</span></h1>
+  <p>Exam-ready notes: exercise value, moneyness &amp; time value; no-arbitrage bounds for calls and puts; replication of options vs. forward commitments; all six factors that determine option value with directional effects; call vs. put comparison throughout; worked numerical examples for every formula.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Option vs. Forward — The Core Distinction</a>
+  <a class="toc-item" href="#s2">02 · Exercise Value (Intrinsic Value)</a>
+  <a class="toc-item" href="#s3">03 · Moneyness — ITM / ATM / OTM</a>
+  <a class="toc-item" href="#s4">04 · Time Value &amp; Time Value Decay</a>
+  <a class="toc-item" href="#s5">05 · Arbitrage &amp; No-Arbitrage Bounds</a>
+  <a class="toc-item" href="#s6">06 · Replication of Options</a>
+  <a class="toc-item" href="#s7">07 · Six Factors Affecting Option Value</a>
+  <a class="toc-item" href="#s8">08 · Master Comparison Tables</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: OPTIONS vs. FORWARDS                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Options vs. Forward Commitments — The Core Distinction</h2>
+    </div>
+
+    <div class="card">
+      <p>Options are <strong>contingent claims</strong> — they give one party (the buyer) the <em>right but not the obligation</em> to transact. This is fundamentally different from a forward commitment where both parties are obligated. Understanding this asymmetry is the foundation of everything in this module.</p>
+      <p style="margin-top:10px;">The option buyer pays an upfront <strong>premium</strong> (c₀ for a call, p₀ for a put) to the seller in exchange for this right. The seller receives the premium and takes on the obligation to perform if exercised.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">📋 Forward Commitment</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d5f5;">
+          <li>Firm commitment — both sides obligated</li>
+          <li><strong>No premium at inception</strong> — V₀ = 0</li>
+          <li><strong>Symmetric payoff:</strong> linear, one-for-one with underlying</li>
+          <li>Settle at maturity regardless of direction</li>
+          <li>Priced by no-arbitrage using forward price F₀(T)</li>
+          <li>Value at maturity: V_T = S_T − F₀(T) for long</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">⚡ Contingent Claim (Option)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>Buyer has the right; seller has the obligation</li>
+          <li><strong>Premium paid upfront</strong> (c₀ or p₀) — cost to buyer</li>
+          <li><strong>Asymmetric payoff:</strong> non-linear — only exercises when profitable</li>
+          <li>Settles only if in the money at maturity</li>
+          <li>Priced with no-arbitrage <em>bounds</em> (upper and lower)</li>
+          <li>Value at maturity: Max(0, S_T − X) for call; Max(0, X − S_T) for put</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Option Payoff &amp; Profit at Maturity (T)</div>
+      <div class="f">
+        CALL OPTION BUYER:<br>
+        Payoff = Max(0, S_T − X)<br>
+        Profit = Max(0, S_T − X) − c₀   [c₀ = premium paid at t=0]<br><br>
+        PUT OPTION BUYER:<br>
+        Payoff = Max(0, X − S_T)<br>
+        Profit = Max(0, X − S_T) − p₀   [p₀ = premium paid at t=0]<br><br>
+        KEY: Option buyer's maximum loss = premium paid (c₀ or p₀)<br>
+        Option seller's maximum gain = premium received<br>
+        Option seller's maximum loss = unlimited (call seller) or X − c₀ net (put seller)
+      </div>
+      <div class="note">
+        <strong>Why Max(0, ...)?</strong> The option buyer will only exercise if payoff is positive. If S_T &lt; X for a call, the buyer simply walks away — the option expires worthless. The Max function captures this asymmetry.<br><br>
+        <strong>Profit vs. Payoff:</strong> Payoff ignores the premium. Profit accounts for the premium cost. The break-even for a call buyer is S_T = X + c₀. For a put buyer: S_T = X − p₀.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 European vs. American Options — This Module's Scope</div>
+      <p><strong>European options:</strong> Can only be exercised AT maturity (t = T). This module focuses entirely on European options.<br>
+      <strong>American options:</strong> Can be exercised at ANY time before or at maturity. Same directional sensitivities, but American options are always worth ≥ their European equivalents (early exercise right has value). The exam may ask you to recognize this relationship.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: EXERCISE VALUE                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Exercise Value (Intrinsic Value) — Equations 1 &amp; 2</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Exercise Value (= Intrinsic Value)</div>
+      <div class="def-body">The value of an option <strong>if it were immediately exercisable at time t</strong>. It equals the current payoff of the option, incorporating the time value of money on the exercise price. This is NOT the full option price — it excludes time value. The exercise value is always ≥ 0 (an option can't have negative exercise value — the buyer just wouldn't exercise).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Call Option Exercise Value at time t</div>
+      <div class="f">
+        Call Exercise Value = Max(0, S_t − X(1+r)^−(T−t))<br>
+                           = Max(0, S_t − PV(X))<br><br>
+        Where:<br>
+        S_t = spot price of underlying at time t<br>
+        X   = exercise (strike) price<br>
+        r   = risk-free rate<br>
+        T−t = remaining time to maturity<br>
+        PV(X) = X(1+r)^−(T−t) = present value of the exercise price
+      </div>
+      <div class="note">
+        <strong>Why PV(X) and not just X?</strong> The option doesn't require payment of X until maturity (T). So the "cost" of buying the underlying via the option in today's terms is only the PV of X — not the full X. This makes the exercise value larger than the simple (S_t − X) difference.<br><br>
+        <strong>Link to forward value:</strong> If X = F₀(T), the call exercise value equals the value of a long forward at time t: V_t(T) = S_t − PV(F₀(T)) = S_t − PV(X). The call and forward have the same exercise value when X = F₀(T) — but the option buyer paid a premium; the forward required nothing upfront.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Put Option Exercise Value at time t</div>
+      <div class="f">
+        Put Exercise Value = Max(0, X(1+r)^−(T−t) − S_t)<br>
+                          = Max(0, PV(X) − S_t)<br><br>
+        Intuition: The put is the right to SELL the underlying at X.<br>
+        Benefit = receiving PV(X) at maturity → worth PV(X) today<br>
+        Cost    = giving up the underlying worth S_t today<br>
+        Net     = PV(X) − S_t (positive = in the money for put)
+      </div>
+      <div class="note">
+        <strong>Key insight:</strong> The put exercise value mirrors the call, but with X and S_t swapped. Calls benefit when S_t &gt; PV(X). Puts benefit when PV(X) &gt; S_t (i.e., when S_t is low).
+      </div>
+    </div>
+
+    <h3>Worked Example — Put Option Exercise Value (Example 1)</h3>
+    <div class="auction-box">
+      <div class="label">1-year put | X = EUR 1,000 | r = 1% | t = 6 months (T−t = 0.5 years) | S_t = EUR 950</div>
+      <div class="f">
+        PV(X) = 1,000 × (1.01)^−0.5 = 1,000 × 0.99504 = EUR 995.04<br><br>
+        Put Exercise Value = Max(0, PV(X) − S_t)<br>
+                           = Max(0, 995.04 − 950)<br>
+                           = Max(0, 45.04)<br>
+                           = EUR 45.04  ← the put is IN the money<br><br>
+        Note: Simple (X − S_t) = 1,000 − 950 = 50. Exercise value (45.04) is LESS than 50<br>
+        because PV(X) &lt; X — we won't receive X until maturity, not today.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Common Exam Trap — Using X Instead of PV(X)</div>
+      <p>Students often calculate exercise value as (S_t − X) for a call or (X − S_t) for a put. This is wrong before maturity. The correct formula uses <strong>PV(X) = X(1+r)^−(T−t)</strong> because the exercise price isn't paid/received until maturity. At maturity (t = T), (T−t) = 0, so PV(X) = X and the formulas reduce to the simple Max(0, S_T − X) and Max(0, X − S_T). The only time you use X directly (not PV(X)) is at maturity itself.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: MONEYNESS                          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Option Moneyness — ITM, ATM, OTM</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Moneyness</strong> describes the relationship between the underlying spot price (S_t) and the exercise price (X). It tells you whether and by how much an option would pay off <em>if exercised right now</em>. It's used to compare options on the same underlying with different strike prices and/or maturities.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Moneyness Status</th><th>Call Option (c_t)</th><th>Put Option (p_t)</th><th>Intuition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag tag-green">In the Money (ITM)</span></td><td>S_t &gt; X</td><td>S_t &lt; X</td><td>Option has positive exercise value; likely to be exercised if at maturity</td></tr>
+          <tr><td><span class="tag tag-yellow">At the Money (ATM)</span></td><td>S_t = X</td><td>S_t = X</td><td>Exercise value = 0; small underlying moves determine whether it'll be exercised</td></tr>
+          <tr><td><span class="tag tag-red">Out of the Money (OTM)</span></td><td>S_t &lt; X</td><td>S_t &gt; X</td><td>Exercise value = 0; unlikely to be exercised; still has time value</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — Which Way Is "In the Money"?</div>
+      <p><strong>Call = you want to BUY cheap.</strong> A call is ITM when S_t &gt; X — you can buy at the low exercise price X when the market is above it. You're "in the money" because you get a below-market deal.<br><br>
+      <strong>Put = you want to SELL high.</strong> A put is ITM when S_t &lt; X — you can sell at the high exercise price X when the market is below it. You're "in the money" because you get an above-market sale.<br><br>
+      Mnemonic: <strong>Call = CLIMB</strong> (wants S_t to go up). <strong>Put = PLUNGE</strong> (wants S_t to go down).</p>
+    </div>
+
+    <h3>Moneyness and Price Sensitivity</h3>
+    <div class="card">
+      <p>The degree of moneyness affects how sensitively the option's price responds to changes in the underlying price:</p>
+      <ul style="padding-left:20px; margin-top:10px;">
+        <li><strong>Deep ITM:</strong> Near 1:1 correspondence — option price moves almost dollar-for-dollar with the underlying. The option behaves like the underlying itself.</li>
+        <li><strong>ATM:</strong> Most sensitive threshold — even a tiny move in S_t can flip the option from OTM to ITM (or vice versa). Large time value here.</li>
+        <li><strong>Deep OTM:</strong> Very little sensitivity — a given change in the underlying barely moves the option's price. Mostly time value, very little exercise value.</li>
+      </ul>
+      <p style="margin-top:10px;">This non-linear sensitivity is fundamentally different from forward contracts (which have constant 1:1 sensitivity). In later modules this sensitivity is formalized as <strong>delta</strong> (Δ).</p>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Example 2 — Put Option Moneyness Check</div>
+      <div class="f">
+        From Example 1: t = 6 months remaining, X = EUR 1,000, S_t = EUR 950<br><br>
+        For a PUT: ITM when S_t &lt; X<br>
+        S_t = 950 &lt; X = 1,000 → PUT IS IN THE MONEY<br>
+        Amount ITM = X − S_t = 1,000 − 950 = EUR 50 (simple moneyness measure)<br>
+        Exercise value = EUR 45.04 (incorporates time value of money on X)<br><br>
+        Note: Moneyness is typically stated as (X − S_t) = EUR 50 "in the money"<br>
+        (the simple difference, not using PV(X)). Exercise value uses PV(X).
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: TIME VALUE                         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Option Time Value &amp; Time Value Decay — Equations 3 &amp; 4</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Time Value of an Option</div>
+      <div class="def-body">The portion of an option's price that <strong>exceeds its exercise value</strong>. It represents the additional value from the possibility that the underlying price will move favorably before maturity. Time value is always ≥ 0 (an option's price is always ≥ its exercise value). At maturity, time value = 0.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Call Option: Price = Exercise Value + Time Value</div>
+      <div class="f">
+        c_t = Max(0, S_t − X(1+r)^−(T−t)) + Time Value<br><br>
+        Rearranging:<br>
+        Call Time Value = c_t − Max(0, S_t − PV(X))<br><br>
+        Since c_t ≥ Max(0, S_t − PV(X)) always:<br>
+        Time Value ≥ 0 always
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Put Option: Price = Exercise Value + Time Value</div>
+      <div class="f">
+        p_t = Max(0, X(1+r)^−(T−t) − S_t) + Time Value<br><br>
+        Rearranging:<br>
+        Put Time Value = p_t − Max(0, PV(X) − S_t)<br><br>
+        Summary: Option Price = Exercise Value + Time Value (for both calls and puts)
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Example 3 — Put Time Value Calculation</div>
+      <div class="f">
+        From previous: Put exercise value = EUR 45.04 (with 6 months remaining)<br>
+        Observed put option price: p_t = EUR 50<br><br>
+        Put Time Value = p_t − Exercise Value<br>
+                       = 50 − 45.04<br>
+                       = EUR 4.96<br><br>
+        Interpretation:<br>
+        • EUR 45.04 → you'd get right now if you could exercise (exercise value)<br>
+        • EUR 4.96  → extra amount you pay for the chance rates move further in your favor<br>
+        • EUR 50.00 → total premium (market price of the put)
+      </div>
+    </div>
+
+    <h3>Time Value Decay — The Key Behavior</h3>
+    <div class="card">
+      <p><strong>Time value decreases as the option approaches maturity</strong> — a process called <strong>time value decay</strong> (also called "theta decay"). This happens because:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Less time remaining = less chance for favorable underlying price moves</li>
+        <li>At maturity: time value = 0. Option price = exercise value only = Max(0, S_T − X) or Max(0, X − S_T)</li>
+        <li>Time value decay is not linear — it accelerates as expiry approaches (especially for ATM options)</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>The decay path:</strong> Deep ITM options → time value is small (option already has high exercise value; little additional "optionality"). Deep OTM options → time value is small (unlikely to be exercised). ATM options → time value is highest (most "optionality"; S_t is right at the inflection point).</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">💡 What Creates Time Value?</div>
+        <ul>
+          <li><strong>Time to maturity:</strong> More time = more chance for favorable moves = higher time value</li>
+          <li><strong>Volatility:</strong> More volatility = wider range of outcomes = higher time value</li>
+          <li>Both factors work together — and they always increase both call AND put time values</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">⚠️ Time Value vs. Time Value of Money</div>
+        <ul>
+          <li>These are completely different concepts</li>
+          <li><strong>Option time value</strong> = the speculative/optionality component of option price</li>
+          <li><strong>Time value of money</strong> = r, the risk-free rate — used in discounting PV(X)</li>
+          <li>The risk-free rate (r) does NOT directly affect option time value (per the LES)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: NO-ARBITRAGE BOUNDS                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>No-Arbitrage Price Bounds — Equations 9 through 14</h2>
+    </div>
+
+    <div class="card">
+      <p>Because options have asymmetric payoffs, we cannot pin down an exact price using simple no-arbitrage (as we do for forwards). Instead, we establish <strong>upper and lower bounds</strong> within which the option price must lie. Any option trading outside these bounds creates a riskless arbitrage profit opportunity.</p>
+      <p style="margin-top:10px;">The key insight: <strong>an option that trades below its exercise value violates no-arbitrage</strong> — you could buy the option and immediately exercise for a riskless profit.</p>
+    </div>
+
+    <h3>Call Option Bounds — Equations 9, 10, 11</h3>
+
+    <div class="formula-box">
+      <div class="label">Call Option No-Arbitrage Bounds</div>
+      <div class="f">
+        LOWER BOUND (Eq. 10):  c_t,Lower = Max(0, S_t − X(1+r)^−(T−t))<br>
+        = Max(0, S_t − PV(X))<br>
+        = Exercise value of the call<br><br>
+        UPPER BOUND (Eq. 11):  c_t,Upper = S_t<br>
+        (Call buyer will NEVER pay more than the underlying itself)<br><br>
+        COMBINED (Eq. 9):  Max(0, S_t − PV(X)) &lt; c_t ≤ S_t
+      </div>
+      <div class="note">
+        <strong>Why is the lower bound the exercise value?</strong> If c_t &lt; Max(0, S_t − PV(X)), you can buy the call and immediately exercise (or synthetically exercise) to lock in a riskless profit. No rational seller would sell below exercise value.<br><br>
+        <strong>Why is the upper bound S_t?</strong> A call gives you the RIGHT to buy the underlying. Why would you pay MORE than the underlying price itself for that right? You'd just buy the underlying directly for S_t. So c_t ≤ S_t always.
+      </div>
+    </div>
+
+    <h3>Put Option Bounds — Equations 12, 13, 14</h3>
+
+    <div class="formula-box">
+      <div class="label">Put Option No-Arbitrage Bounds</div>
+      <div class="f">
+        LOWER BOUND (Eq. 13):  p_t,Lower = Max(0, X(1+r)^−(T−t) − S_t)<br>
+        = Max(0, PV(X) − S_t)<br>
+        = Exercise value of the put<br><br>
+        UPPER BOUND (Eq. 14):  p_t,Upper = X<br>
+        (Best case for put: underlying → 0; receive X at exercise; PV is at most X)<br><br>
+        COMBINED (Eq. 12):  Max(0, PV(X) − S_t) &lt; p_t ≤ X
+      </div>
+      <div class="note">
+        <strong>Why is the upper bound X (not PV(X))?</strong> The convention is to use X as the upper bound for puts. The absolute maximum payoff on a put is X (when the underlying goes to zero). So the put can never be worth more than X.<br><br>
+        <strong>Why not PV(X)?</strong> The upper bound uses X, not PV(X), because we're bounding the current option price conservatively — X is always ≥ PV(X), making it a valid (if slightly loose) upper bound.<br><br>
+        <strong>Compare to call upper bound:</strong> Call upper = S_t (underlying price, no discounting). Put upper = X (exercise price, no discounting). These are the maximums each could ever be worth.
+      </div>
+    </div>
+
+    <h3>Worked Example — Call Option Bounds (Example 4)</h3>
+    <div class="auction-box">
+      <div class="label">1-year call | X = EUR 1,000 | r = 1% | at t = 6 months: S_t = EUR 1,050</div>
+      <div class="f">
+        LOWER BOUND:<br>
+        PV(X) = 1,000 × (1.01)^−0.5 = EUR 995.04<br>
+        c_t,Lower = Max(0, S_t − PV(X)) = Max(0, 1,050 − 995.04) = Max(0, 54.96) = EUR 54.96<br><br>
+        UPPER BOUND:<br>
+        c_t,Upper = S_t = EUR 1,050<br><br>
+        CONCLUSION: EUR 54.96 &lt; c_t ≤ EUR 1,050<br>
+        The call must be priced between EUR 54.96 and EUR 1,050.<br>
+        Any price below EUR 54.96 → arbitrage profit available.<br>
+        Any price above EUR 1,050 → you'd just buy the underlying instead.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bound</th><th>Call (c_t)</th><th>Put (p_t)</th><th>Reason</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lower Bound</td><td>Max(0, S_t − PV(X))</td><td>Max(0, PV(X) − S_t)</td><td>= exercise value; trading below = arbitrage</td></tr>
+          <tr><td>Upper Bound</td><td>S_t (underlying price)</td><td>X (exercise price)</td><td>Can't rationally pay more than this</td></tr>
+          <tr><td>At inception (t=0)</td><td>Max(0, S₀ − PV(X))</td><td>Max(0, PV(X) − S₀)</td><td>Same formulas; T−t = T at inception</td></tr>
+          <tr><td>At maturity (t=T)</td><td>Max(0, S_T − X)</td><td>Max(0, X − S_T)</td><td>PV(X) = X when T−t = 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ The Inequality is Strict on the Lower Bound</div>
+      <p>The equations use strict inequality for the lower bound: <strong>c_t &gt; Max(0, S_t − PV(X))</strong>, not ≥. This is because if c_t exactly equals the lower bound, there is no time value — implying the option will definitely be exercised or definitely won't be. For any option with time remaining, there must be positive time value, so the actual price exceeds the exercise value. At maturity only does the price exactly equal the exercise value (time value = 0).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: REPLICATION OF OPTIONS             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Replication of Options — Key Differences from Forward Replication</h2>
+    </div>
+
+    <div class="card">
+      <p>Just as forward commitments can be replicated using a combination of the underlying asset and borrowing/lending, options can also be replicated. However, the asymmetric payoff profile of options introduces a crucial difference: <strong>the replication must be dynamically adjusted</strong> over time as the likelihood of exercise changes.</p>
+    </div>
+
+    <h3>Call Option Replication</h3>
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Long Forward Replication (Fixed)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d5f5;">
+          <li>At t=0: Borrow PV(F₀(T)) = PV(X), buy underlying at S₀</li>
+          <li>At T: Sell underlying for S_T, repay X</li>
+          <li>Net payoff: S_T − X (always — both gain and loss)</li>
+          <li>Replicating trade is <strong>FIXED</strong> — no adjustment needed</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Long Call Option Replication (Dynamic)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>At t=0: Borrow a <em>proportion</em> of PV(X); buy underlying</li>
+          <li>At T (if ITM): Sell underlying for S_T, repay X → payoff = S_T − X</li>
+          <li>At T (if OTM): No exercise → no settlement</li>
+          <li>Replicating trade must be <strong>ADJUSTED</strong> as exercise likelihood changes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Call Replication — The Core Logic</div>
+      <div class="f">
+        FORWARD replication at t=0: Borrow exactly PV(X), buy underlying S₀<br>
+        → At T: Always exercise → payoff = S_T − X<br><br>
+        CALL replication at t=0: Borrow (proportion × PV(X)), buy (proportion × underlying)<br>
+        → The "proportion" is based on the LIKELIHOOD of exercise<br>
+        → This proportion changes as the option moves ITM/OTM/ATM<br>
+        → Deep ITM call: proportion ≈ 1 (behaves like a forward)<br>
+        → Deep OTM call: proportion ≈ 0 (barely any underlying held)<br>
+        → ATM call: proportion ≈ 0.5<br><br>
+        This proportion is formally known as DELTA (Δ) in later lessons.
+      </div>
+      <div class="note">
+        <strong>Key exam point:</strong> For forward replication — static (no adjustment). For option replication — dynamic (must be continuously adjusted). This is why option pricing is more complex and requires models like Black-Scholes-Merton.
+      </div>
+    </div>
+
+    <h3>Put Option Replication</h3>
+    <div class="card">
+      <p>To replicate a <strong>long put option</strong> at inception (t=0):</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Sell the underlying SHORT</strong> at price S₀</li>
+        <li><strong>Lend the proceeds</strong> at the risk-free rate r</li>
+        <li>This gives you a position that benefits when S_T falls (just like a put)</li>
+      </ul>
+      <p style="margin-top:10px;">At expiration, two possible outcomes:</p>
+      <ul style="padding-left:20px; margin-top:4px;">
+        <li><strong>Exercise (S_T &lt; X):</strong> Buy the underlying for S_T from the risk-free loan proceeds → payoff = X − S_T</li>
+        <li><strong>No exercise (S_T &gt; X):</strong> No settlement. Close short position at a loss offset by the loan proceeds.</li>
+      </ul>
+      <p style="margin-top:10px;">As with the call, <strong>the amount lent is a proportion of PV(X)</strong> based on the likelihood of exercise — not the full PV(X) as would be the case for a forward. And as the likelihood of exercise changes, the replicating position must be dynamically adjusted.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Commitment Replication</th><th>Option Replication</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Underlying position</td><td>Full long (call) or full short (put)</td><td>Proportional long/short (based on exercise likelihood)</td></tr>
+          <tr><td>Borrowing / lending</td><td>Full PV(X) at inception</td><td>Proportion of PV(X) at inception</td></tr>
+          <tr><td>Adjustment over time</td><td>None — static replication</td><td>Continuous — dynamic replication required</td></tr>
+          <tr><td>What determines proportion</td><td>N/A (always 1:1)</td><td>Moneyness / likelihood of exercise (= delta)</td></tr>
+          <tr><td>Payoff at maturity</td><td>S_T − F₀(T) for long (symmetric)</td><td>Max(0, S_T − X) for call; Max(0, X − S_T) for put</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Does the Replication Proportion Change?</div>
+      <p>As the underlying price moves, the probability of exercise changes. A deep OTM option is very unlikely to be exercised → replication holds almost no underlying. A deep ITM option is almost certain to be exercised → replication holds nearly the full underlying. An ATM option is 50/50 → about half the underlying. As the underlying price moves continuously, the replicating portfolio must be continuously readjusted. This is <strong>delta hedging</strong> — a concept developed further in later modules.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: FACTORS AFFECTING OPTION VALUE     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Six Factors That Determine Option Value</h2>
+    </div>
+
+    <div class="card">
+      <p>Six factors determine the value of an option. <strong>Two factors have the same directional effect on both calls and puts</strong> (time to maturity, volatility). <strong>Four factors have opposite effects on calls vs. puts</strong> (underlying value, exercise price, risk-free rate, income/costs). Memorizing which is which is a high-frequency exam topic.</p>
+    </div>
+
+    <!-- Factor 1 -->
+    <h3>① Value of the Underlying (S_t)</h3>
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">📈 Call Option — S_t rises → Value INCREASES</div>
+        <p style="font-size:14px; color:#c8dfd0;">A higher underlying price means S_t is further above X → higher exercise value for ITM calls, or the call is pushed into the money. More favorable → call value rises. Same direction as a long forward position.</p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">📉 Put Option — S_t rises → Value DECREASES</div>
+        <p style="font-size:14px; color:#c8d5f5;">A higher underlying price means S_t moves away from (and above) X → lower exercise value for puts, or the put is pushed out of the money. Less favorable → put value falls. Same direction as a short forward position.</p>
+      </div>
+    </div>
+    <div class="warn">
+      <div class="warn-label">⚠️ Non-Linear Relationship — Options vs. Forwards</div>
+      <p>For a forward: value changes 1:1 with the underlying (linear). For an option: the sensitivity depends on moneyness. Deep ITM → ~1:1. ATM → ~0.5:1. Deep OTM → ~0:1. This non-linearity (captured by delta) is a key distinction between contingent claims and forward commitments.</p>
+    </div>
+
+    <!-- Factor 2 -->
+    <h3>② Exercise Price (X)</h3>
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Call — Lower X → Higher Value</div>
+        <p style="font-size:14px; color:#c8dfd0;">Lower X means a lower threshold to buy the underlying → more likely to be exercised AND higher payoff when exercised. Max(0, S_T − X) rises when X falls. <strong>X is a lower bound on call exercise value.</strong></p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">Put — Higher X → Higher Value</div>
+        <p style="font-size:14px; color:#c8d5f5;">Higher X means a higher price at which you can sell the underlying → more likely to be exercised AND higher payoff when exercised. Max(0, X − S_T) rises when X rises. <strong>X is an upper bound on put exercise value.</strong></p>
+      </div>
+    </div>
+
+    <!-- Factor 3 -->
+    <h3>③ Time to Expiration (T − t)</h3>
+    <div class="card">
+      <p><strong>Effect on BOTH calls and puts: generally positive (more time = more value)</strong> — but with an important exception for puts.</p>
+    </div>
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Call — More Time → ALWAYS Higher Value</div>
+        <p style="font-size:14px; color:#c8dfd0;">A longer time horizon means more opportunity for S to rise above X. The upside is unlimited; the downside is capped at the premium. Longer time always increases call value — no exceptions for European calls.</p>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Put — More Time → Usually Higher Value (Exception Exists)</div>
+        <p style="font-size:14px; color:#dfd0c8;">More time allows S to fall further below X → generally good. <strong>BUT:</strong> longer time also reduces PV(X) (the payoff is discounted for longer). For a deep ITM put with high r, this discounting effect can dominate → put value may DECREASE with more time. This exception only occurs in specific conditions (deep ITM, high r).</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Exam Note — Put Time to Expiry is "+/−"</div>
+      <p>The factor table shows "+/−" for put time to expiration. The examiners expect you to know that while the answer is <em>usually positive</em>, it can be negative for deep-in-the-money puts when the risk-free rate is high and time to expiry is long. The reason: the put buyer waits to receive X − S_T at maturity. A longer wait means PV(X − S_T) is smaller. If the option is already deep ITM and highly likely to be exercised, the time value of waiting for exercise is a negative, not a positive.</p>
+    </div>
+
+    <!-- Factor 4 -->
+    <h3>④ Risk-Free Interest Rate (r)</h3>
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">Call — Higher r → Higher Value</div>
+        <p style="font-size:14px; color:#c8dfd0;">Higher r → lower PV(X) → lower cost to "buy" the underlying via the option (you pay PV(X) now in equivalent terms). Call exercise value = S_t − PV(X). If PV(X) falls, exercise value rises. <strong>Higher r = better for call.</strong></p>
+      </div>
+      <div class="fixed-card">
+        <div class="fixed-title">Put — Higher r → Lower Value</div>
+        <p style="font-size:14px; color:#c8d5f5;">Higher r → lower PV(X) → lower value of being able to sell at X. Put exercise value = PV(X) − S_t. If PV(X) falls, exercise value falls. <strong>Higher r = worse for put.</strong></p>
+      </div>
+    </div>
+    <div class="formula-box">
+      <div class="label">Intuition — r and PV(X)</div>
+      <div class="f">
+        PV(X) = X × (1+r)^−(T−t)<br><br>
+        As r ↑ → PV(X) ↓<br><br>
+        Call exercise value = S_t − PV(X) → rises when PV(X) falls → CALL ↑<br>
+        Put exercise value = PV(X) − S_t → falls when PV(X) falls → PUT ↓<br><br>
+        Note: r does NOT affect TIME VALUE of the option directly —<br>
+        its effect works through the PV of the exercise price only.
+      </div>
+    </div>
+
+    <!-- Factor 5 -->
+    <h3>⑤ Volatility of the Underlying (σ)</h3>
+    <div class="card">
+      <p><strong>Volatility ALWAYS increases BOTH call and put values — same direction for both.</strong> This is the most unique option factor (no direct analog in forward pricing).</p>
+    </div>
+    <div class="swap-card">
+      <div class="swap-title">★ Volatility — The Most Important Option-Specific Factor</div>
+      <p style="font-size:14px; color:#dfd0c8; padding-top:8px;">Higher volatility = wider dispersion of future underlying prices = higher probability of large favorable moves. The option buyer captures all the upside (when S_T &gt; X for a call, or S_T &lt; X for a put) but ignores the downside (option simply expires worthless — loss capped at premium). So:</p>
+      <ul style="padding-left:20px; margin-top:8px; font-size:14px; color:#dfd0c8;">
+        <li>Higher σ → wider range of possible outcomes → more chance of a large favorable move → <strong>both call AND put values rise</strong></li>
+        <li>Lower σ → narrower range → less chance of large moves → time value falls for both</li>
+        <li>Why doesn't downside volatility hurt options? Because the option buyer doesn't have to participate in unfavorable outcomes (they just let the option expire)</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — Volatility Always Helps Option BUYERS</div>
+      <p>Options give you asymmetric exposure — you capture the gains from volatility without being exposed to the losses (beyond the premium). Think of it this way: a call option on a very volatile stock has a much higher chance of ending up ITM (even starting OTM) than a call on a stable stock with the same X. The buyer always benefits from volatility. The seller of options hates volatility (that's why they demand a higher premium when σ is high).</p>
+    </div>
+
+    <!-- Factor 6 -->
+    <h3>⑥ Income or Cost Related to Owning the Underlying</h3>
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Income/Benefits (Dividends, Convenience Yield)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d5f5;">
+          <li><strong>Call value DECREASES:</strong> Income accrues to the owner of the underlying, NOT to the option holder. A stock paying dividends is effectively worth less from the call buyer's perspective (the price drop on ex-div date reduces S_t). Lower S_t → lower call value.</li>
+          <li><strong>Put value INCREASES:</strong> Same reason — the put buyer benefits because income reduces S_t, pushing the put further ITM.</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">Carry Costs (Storage, Insurance for Commodities)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li><strong>Call value INCREASES:</strong> Owning the underlying costs money (storage, insurance). The call buyer avoids these costs by using an option instead. This makes the call more attractive → higher call value.</li>
+          <li><strong>Put value DECREASES:</strong> Same costs reduce the attractiveness of owning the underlying (which you must then sell at X on a put) → lower put value.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — Income vs. Costs</div>
+      <p><strong>Income (dividends):</strong> Drains value from the underlying → Call ↓ (loses the income), Put ↑ (underlying worth less → put more ITM).<br>
+      <strong>Carry costs (storage):</strong> Adds a burden to owning → Call ↑ (avoids the cost), Put ↓ (underlying burden makes it less attractive to own and sell later).<br>
+      Think: income and costs have <em>opposite</em> effects on calls vs. puts. And income vs. costs have <em>opposite</em> effects on each other.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: MASTER COMPARISON TABLES           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Master Comparison Tables — The Complete Picture</h2>
+    </div>
+
+    <h3>Option Factor Effects — Exhibit 9 Expanded</h3>
+
+    <div class="factor-row header">
+      <div>Factor (an INCREASE in this factor...)</div>
+      <div>Call Value (c_t)</div>
+      <div>Put Value (p_t)</div>
+    </div>
+    <div class="factor-row" style="background:#1a1e28;">
+      <div>① Underlying price (S_t) ↑</div>
+      <div><span class="f-up">+ (rises)</span></div>
+      <div><span class="f-dn">− (falls)</span></div>
+    </div>
+    <div class="factor-row">
+      <div>② Exercise price (X) ↑</div>
+      <div><span class="f-dn">− (falls)</span></div>
+      <div><span class="f-up">+ (rises)</span></div>
+    </div>
+    <div class="factor-row" style="background:#1a1e28;">
+      <div>③ Time to expiration (T−t) ↑</div>
+      <div><span class="f-up">+ (rises)</span></div>
+      <div><span class="f-both">+/− (usually rises; exception: deep ITM put + high r)</span></div>
+    </div>
+    <div class="factor-row">
+      <div>④ Risk-free rate (r) ↑</div>
+      <div><span class="f-up">+ (rises)</span></div>
+      <div><span class="f-dn">− (falls)</span></div>
+    </div>
+    <div class="factor-row" style="background:#1a1e28;">
+      <div>⑤ Volatility of underlying (σ) ↑</div>
+      <div><span class="f-up">+ (rises)</span></div>
+      <div><span class="f-up">+ (rises)</span></div>
+    </div>
+    <div class="factor-row">
+      <div>⑥a Income/benefits of owning underlying ↑</div>
+      <div><span class="f-dn">− (falls)</span></div>
+      <div><span class="f-up">+ (rises)</span></div>
+    </div>
+    <div class="factor-row" style="background:#1a1e28; border-radius: 0 0 6px 6px;">
+      <div>⑥b Carry costs of owning underlying ↑</div>
+      <div><span class="f-up">+ (rises)</span></div>
+      <div><span class="f-dn">− (falls)</span></div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Pattern Recognition — Same vs. Opposite Direction</div>
+      <p><strong>SAME direction for both calls and puts:</strong> Volatility (σ) and time to expiry (T−t) — these always affect both in the same direction (usually both +).<br><br>
+      <strong>OPPOSITE direction for calls vs. puts:</strong> S_t, X, r, income, carry costs — knowing the call direction, the put is always the opposite.<br><br>
+      Quick exam approach: memorize the call column (+ for S_t, − for X, + for T, + for r, + for σ, − for income, + for costs). The put column is opposite on all except σ and T.</p>
+    </div>
+
+    <h3>Option Terminology — Complete Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Definition</th><th>Formula / Key Point</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Exercise Value</td><td>Option value if exercised NOW at time t (= intrinsic value)</td><td>Call: Max(0, S_t − PV(X)) | Put: Max(0, PV(X) − S_t)</td></tr>
+          <tr><td>Time Value</td><td>Option price minus exercise value; accounts for future potential</td><td>Always ≥ 0; = 0 at maturity; highest for ATM options</td></tr>
+          <tr><td>Option Price</td><td>Exercise value + Time value</td><td>c_t or p_t (paid upfront as premium)</td></tr>
+          <tr><td>Moneyness (ITM)</td><td>Option has positive exercise value</td><td>Call: S_t &gt; X | Put: S_t &lt; X</td></tr>
+          <tr><td>Moneyness (ATM)</td><td>Underlying equals exercise price</td><td>S_t = X for both call and put</td></tr>
+          <tr><td>Moneyness (OTM)</td><td>Exercise value = 0; unfavorable to exercise</td><td>Call: S_t &lt; X | Put: S_t &gt; X</td></tr>
+          <tr><td>Time Value Decay</td><td>Decline of time value toward zero as expiry approaches</td><td>Accelerates near maturity; not linear</td></tr>
+          <tr><td>Call Lower Bound</td><td>Minimum no-arbitrage call price</td><td>Max(0, S_t − PV(X))</td></tr>
+          <tr><td>Call Upper Bound</td><td>Maximum no-arbitrage call price</td><td>S_t (underlying spot price)</td></tr>
+          <tr><td>Put Lower Bound</td><td>Minimum no-arbitrage put price</td><td>Max(0, PV(X) − S_t)</td></tr>
+          <tr><td>Put Upper Bound</td><td>Maximum no-arbitrage put price</td><td>X (exercise price)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Option vs. Forward Commitment — Full Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Commitment</th><th>Call Option</th><th>Put Option</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Upfront cost</td><td>Zero (V₀=0)</td><td>Call premium c₀ &gt; 0</td><td>Put premium p₀ &gt; 0</td></tr>
+          <tr><td>Payoff profile</td><td>Symmetric (linear)</td><td>Asymmetric — gains only</td><td>Asymmetric — gains only</td></tr>
+          <tr><td>Max loss (buyer)</td><td>Unlimited (symmetric)</td><td>Premium paid (c₀)</td><td>Premium paid (p₀)</td></tr>
+          <tr><td>Settlement</td><td>Obligatory at maturity</td><td>Only if S_T &gt; X</td><td>Only if S_T &lt; X</td></tr>
+          <tr><td>Replication</td><td>Static (fixed)</td><td>Dynamic (adjusts over time)</td><td>Dynamic (adjusts over time)</td></tr>
+          <tr><td>Pricing method</td><td>No-arbitrage: single price F₀(T)</td><td>No-arbitrage: bounds only</td><td>No-arbitrage: bounds only</td></tr>
+          <tr><td>S_t sensitivity</td><td>1:1 linear (always)</td><td>Non-linear (depends on moneyness)</td><td>Non-linear (depends on moneyness)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Option = contingent claim.</strong> Buyer pays premium for the RIGHT (not obligation) to transact. Seller receives premium and has the obligation. Max loss for buyer = premium. Max gain for seller = premium.</li>
+        <li>✅ <strong>Payoff at maturity:</strong> Call = Max(0, S_T − X). Put = Max(0, X − S_T). Profit = Payoff − Premium paid (ignoring time value of money on premium).</li>
+        <li>✅ <strong>Call Exercise Value (Eq. 1):</strong> Max(0, S_t − PV(X)) = Max(0, S_t − X(1+r)^−(T−t)). Uses PV(X), NOT just X. At maturity only: PV(X) = X.</li>
+        <li>✅ <strong>Put Exercise Value (Eq. 2):</strong> Max(0, PV(X) − S_t) = Max(0, X(1+r)^−(T−t) − S_t). Mirrors call but signs reversed.</li>
+        <li>✅ <strong>Exercise value ≥ 0 always.</strong> An option can't have negative exercise value — buyer simply won't exercise. The Max(0,...) captures this floor.</li>
+        <li>✅ <strong>Time value = Option price − Exercise value.</strong> Time value ≥ 0 always. At maturity, time value = 0 (price = exercise value exactly).</li>
+        <li>✅ <strong>Time value decay:</strong> Time value falls as option approaches maturity. Non-linear — accelerates near expiry. Highest time value for ATM options.</li>
+        <li>✅ <strong>Moneyness — Call:</strong> ITM if S_t &gt; X; ATM if S_t = X; OTM if S_t &lt; X. <strong>Put:</strong> ITM if S_t &lt; X; ATM if S_t = X; OTM if S_t &gt; X.</li>
+        <li>✅ <strong>Deeper ITM → ~1:1 price sensitivity to underlying.</strong> Deeper OTM → ~0 sensitivity. ATM → ~0.5 sensitivity. This non-linearity contrasts with forward commitment's constant 1:1 relationship.</li>
+        <li>✅ <strong>Call bounds (Eqs. 9–11):</strong> Max(0, S_t − PV(X)) &lt; c_t ≤ S_t. Lower = exercise value. Upper = underlying price.</li>
+        <li>✅ <strong>Put bounds (Eqs. 12–14):</strong> Max(0, PV(X) − S_t) &lt; p_t ≤ X. Lower = exercise value. Upper = exercise price X (not PV(X)).</li>
+        <li>✅ <strong>Strict lower bound inequality:</strong> c_t &gt; exercise value (not ≥) before maturity because time value &gt; 0. Equality only at maturity.</li>
+        <li>✅ <strong>Replication — call:</strong> Buy proportion of underlying + borrow proportion of PV(X). <strong>Put:</strong> Short sell proportion of underlying + lend proportion of PV(X). Proportion = likelihood of exercise (= delta).</li>
+        <li>✅ <strong>Replication is DYNAMIC for options</strong> (must be adjusted continuously as moneyness changes). Replication is STATIC for forwards (no adjustment needed). This is the key structural difference.</li>
+        <li>✅ <strong>Factor: S_t ↑ → Call ↑, Put ↓.</strong> Non-linear relationship (unlike forwards).</li>
+        <li>✅ <strong>Factor: X ↑ → Call ↓, Put ↑.</strong> Lower X = better for call (lower cost to buy). Higher X = better for put (higher price to sell).</li>
+        <li>✅ <strong>Factor: Time to expiry ↑ → Call ↑ (always), Put ↑ (usually, exception: deep ITM put + high r).</strong></li>
+        <li>✅ <strong>Factor: r ↑ → Call ↑, Put ↓.</strong> Higher r → lower PV(X) → raises call exercise value, lowers put exercise value. Does NOT directly affect time value.</li>
+        <li>✅ <strong>Factor: σ (volatility) ↑ → BOTH Call ↑ AND Put ↑.</strong> This is the only factor with the same positive direction for both. Higher σ = wider outcome range = more optionality value for buyer (downside capped at premium).</li>
+        <li>✅ <strong>Factor: Income/benefits ↑ → Call ↓, Put ↑.</strong> Income accrues to underlying owner, not option holder. Reduces effective S_t. Bad for call, good for put.</li>
+        <li>✅ <strong>Factor: Carry costs ↑ → Call ↑, Put ↓.</strong> Costs of owning underlying. Call avoids these costs (better). Put must own and then sell at X (worse, burdened by costs).</li>
+        <li>✅ <strong>Same direction for both: σ and T.</strong> Opposite direction (call vs. put): S_t, X, r, income, costs.</li>
+        <li>✅ <strong>European vs. American:</strong> American ≥ European value always (early exercise right). This module covers European options only.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — MODULE 8</div>
+      <div class="f">
+        ═══ KEY FORMULAS ═══<br>
+        Call exercise value:  Max(0, S_t − X(1+r)^−(T−t))         [Eq. 1]<br>
+        Put exercise value:   Max(0, X(1+r)^−(T−t) − S_t)         [Eq. 2]<br>
+        Option price:         Exercise value + Time value<br>
+        Call time value:      c_t − Max(0, S_t − PV(X))            [Eq. 3]<br>
+        Put time value:       p_t − Max(0, PV(X) − S_t)            [Eq. 4]<br><br>
+
+        ═══ NO-ARBITRAGE BOUNDS ═══<br>
+        Call: Max(0, S_t − PV(X)) &lt; c_t ≤ S_t<br>
+        Put:  Max(0, PV(X) − S_t) &lt; p_t ≤ X<br><br>
+
+        ═══ MONEYNESS ═══<br>
+        ITM Call: S_t &gt; X | ITM Put: S_t &lt; X<br>
+        ATM: S_t = X (both)<br>
+        OTM Call: S_t &lt; X | OTM Put: S_t &gt; X<br><br>
+
+        ═══ FACTOR EFFECTS (increase in factor → effect on option value) ═══<br>
+        S_t ↑:       Call ↑   |  Put ↓<br>
+        X ↑:         Call ↓   |  Put ↑<br>
+        T−t ↑:       Call ↑   |  Put +/− (usually ↑)<br>
+        r ↑:         Call ↑   |  Put ↓<br>
+        σ ↑:         Call ↑   |  Put ↑  ← SAME direction<br>
+        Income ↑:    Call ↓   |  Put ↑<br>
+        Carry cost↑: Call ↑   |  Put ↓<br><br>
+
+        ═══ REPLICATION ═══<br>
+        Call: Long (proportion) of underlying + Borrow (proportion × PV(X))<br>
+        Put:  Short (proportion) of underlying + Lend (proportion × PV(X))<br>
+        Proportion = likelihood of exercise = delta (Δ) — changes dynamically<br><br>
+
+        ═══ OPTIONS vs. FORWARDS ═══<br>
+        Forward: no premium, symmetric, static replication, exact price<br>
+        Option: premium paid, asymmetric, dynamic replication, price bounds<br>
+        Both: no-arbitrage framework, underlying drives value
+      </div>
+      <div class="note">
+        <strong>Volatility is the most option-specific factor</strong> — it has no analog in forward pricing and always helps both buyers simultaneously. This is because options provide asymmetric participation in the distribution of outcomes.<br>
+        <strong>Risk-free rate effect works through PV(X) only</strong> — not through the time value component. Higher r → lower PV(X) → call exercise value ↑, put exercise value ↓.<br>
+        <strong>At maturity: time value = 0.</strong> Option price collapses to its payoff: Max(0, S_T − X) for call; Max(0, X − S_T) for put. PV(X) = X at T.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 8: Pricing and Valuation of Options · Exam Prep Notes
+</footer>
+
+</body>
+</html>

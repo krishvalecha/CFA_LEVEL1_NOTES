@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Corporate Issuers | Module 6: Capital Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14121e 40%, #0d1018 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 680px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* MM proposition blocks */
+  .prop-block { border-radius: 6px; padding: 18px 22px; margin: 14px 0; }
+  .prop-notax { background: rgba(76,139,201,0.08); border: 1px solid rgba(76,139,201,0.3); }
+  .prop-tax { background: rgba(76,201,138,0.08); border: 1px solid rgba(76,201,138,0.3); }
+  .prop-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; text-transform: uppercase; }
+  .prop-notax .prop-label { color: var(--accent2); }
+  .prop-tax .prop-label { color: var(--accent3); }
+  .prop-block ol { padding-left: 20px; }
+  .prop-block li { font-size: 14px; color: var(--text); margin-bottom: 5px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · CORPORATE ISSUERS · MODULE 6</div>
+  <h1><span>Capital</span> Structure</h1>
+  <p>Exam-ready notes: WACC formula and components, factors affecting capital structure, all four MM propositions, static trade-off theory, and pecking order theory.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · WACC Formula</a>
+  <a class="toc-item" href="#s2">02 · WACC Components</a>
+  <a class="toc-item" href="#s3">03 · Business Model Factors</a>
+  <a class="toc-item" href="#s4">04 · Corporate Life Cycle</a>
+  <a class="toc-item" href="#s5">05 · Top-Down &amp; Issuer Factors</a>
+  <a class="toc-item" href="#s6">06 · MM Assumptions</a>
+  <a class="toc-item" href="#s7">07 · MM Prop I &amp; II (No Tax)</a>
+  <a class="toc-item" href="#s8">08 · MM Prop I &amp; II (With Tax)</a>
+  <a class="toc-item" href="#s9">09 · Financial Distress Costs</a>
+  <a class="toc-item" href="#s10">10 · Static Trade-Off Theory</a>
+  <a class="toc-item" href="#s11">11 · Pecking Order &amp; Agency Costs</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WACC FORMULA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Weighted-Average Cost of Capital (WACC)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Cost of Capital / WACC</div>
+      <div class="def-body">An issuer's required rate of return on its capital investments, derived from its investors' required rates of return. Used as <strong>r</strong> in NPV analysis and as the <strong>hurdle rate</strong> for IRR analysis. The objective: <strong>minimize WACC</strong> to maximize firm value (lower WACC → higher NPV for any given set of cash flows).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ WACC Formula</div>
+      <div class="f">
+        WACC = (r_d × W_d) + (r_e × W_e)<br><br>
+        After-tax version (most common):<br>
+        WACC = [r_d × (1 − t) × W_d] + (r_e × W_e)<br><br>
+        With preferred stock or other financing:<br>
+        WACC = [r_d × (1−t) × W_d] + (r_p × W_p) + (r_e × W_e)
+      </div>
+      <div class="note">
+        r_d = before-tax cost of debt | r_e = cost of equity | r_p = cost of preferred stock<br>
+        W_d, W_e, W_p = weights (proportions) of debt, equity, preferred stock<br>
+        t = marginal corporate tax rate<br>
+        Weights must sum to 1.0. Use market value weights (or management's disclosed target weights).<br>
+        Interest is tax-deductible → multiply cost of debt by (1 − t) → interest tax shield lowers effective debt cost.
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Two management objectives in capital structure:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Minimize WACC</strong> — every 1% reduction in WACC increases the NPV of every project and creates value</li>
+        <li style="margin-bottom:6px;"><strong>Match duration of assets and financing</strong> — fund long-term assets with long-term capital (match funding principle)</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Important: The cost of debt and equity are NOT chosen by management — they are <strong>determined by investors in financial markets</strong>. Management influences but does not set these rates.</p>
+    </div>
+
+    <h3>Weights: Market Value vs. Book Value</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Market Value Weights (Preferred for WACC)</div>
+        <ul>
+          <li>Reflect current prices of debt and equity</li>
+          <li>Based on investors' opportunity costs at current prices</li>
+          <li>Used in WACC calculations</li>
+          <li>Can fluctuate significantly — stock price changes shift weights</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Book Value Weights (For Target Capital Structure)</div>
+        <ul>
+          <li>Reflect historical costs of capital</li>
+          <li>Less volatile than market values</li>
+          <li>Used for management's target capital structure</li>
+          <li>Aligned with how lenders, rating agencies, and debt covenants measure leverage</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Converting D/E Ratio to a Weight</div>
+      <div class="f">W_d = (D/E) / (1 + D/E) = D / (D + E)</div>
+      <div class="note">Example: D/E = 0.5 → W_d = 0.5/1.5 = 33.3%; W_e = 1/1.5 = 66.7%</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: WACC COMPONENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>WACC — Component Costs</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Definition</th>
+            <th>How Estimated</th>
+            <th>Tax Treatment</th>
+            <th>Relative Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cost of Debt (r_d)</td>
+            <td>Debt investors' required return on debt financing</td>
+            <td>Interest rate on existing unsecured debt (historical starting point) OR recent borrowing rates of comparable companies (forward-looking)</td>
+            <td>Interest is tax-deductible → multiply by (1−t) → LOWER effective cost</td>
+            <td><span class="tag tag-green">Lower</span> (priority, fixed claim → less risk)</td>
+          </tr>
+          <tr>
+            <td>Cost of Equity (r_e)</td>
+            <td>Equity investors' required return on equity financing</td>
+            <td>No observable rate. Start with historical equity market returns (e.g., ~10% CAGR US long-run); adjust for company-specific factors. More formal methods (CAPM, DDM) covered in later modules.</td>
+            <td>Dividends are NOT tax-deductible → no tax benefit</td>
+            <td><span class="tag tag-red">Higher</span> (residual claim → more risk; no tax deductibility)</td>
+          </tr>
+          <tr>
+            <td>Cost of Preferred Stock (r_p)</td>
+            <td>Preferred stockholders' required return</td>
+            <td>Preferred dividend / preferred stock price</td>
+            <td>Preferred dividends typically NOT tax-deductible</td>
+            <td>Between debt and equity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">After-Tax Cost of Debt</div>
+      <div class="f">After-tax cost of debt = Before-tax cost of debt × (1 − Marginal tax rate)</div>
+      <div class="note">
+        Example: Pre-tax cost of debt = 6%, Tax rate = 25%<br>
+        After-tax cost of debt = 6% × (1 − 0.25) = 4.5%<br><br>
+        Key insight: The tax deductibility of interest is one of the most important reasons firms use debt — it reduces the effective cost of borrowing.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Cost of Debt &lt; Cost of Equity</div>
+      <p>Three reasons: (1) Debt has <strong>priority</strong> over equity in cash flows and liquidation → less risk → lower required return. (2) Debt may be <strong>secured</strong> by specific assets (collateral) → further reduces risk. (3) Interest is <strong>tax-deductible</strong> → lowers effective cost. All three make debt cheaper for the issuer than equity.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Estimating Target Weights When Undisclosed</div>
+      <p>If management hasn't disclosed target capital structure, analysts can: (1) Use current capital structure at market value weights; (2) Examine capital structure trends or management statements; (3) Use averages of comparable companies' capital structures. All three are valid approaches — the exam may test which is most appropriate in context.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: BUSINESS MODEL FACTORS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Factors Affecting Capital Structure — Business Model</h2>
+    </div>
+
+    <div class="card">
+      <p>The total <em>amount</em> and <em>type</em> of financing needed — and therefore the weights in WACC — are primarily determined by the issuer's <strong>business model</strong> and <strong>life cycle stage</strong>. The <em>costs</em> of debt and equity are determined by top-down market factors and issuer-specific factors.</p>
+    </div>
+
+    <h3>Capital-Intensive vs. Capital-Light Businesses</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Capital-Intensive Businesses</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">Require large amounts of physical assets</p>
+        <ul>
+          <li>Industries: utilities, transportation, real estate, semiconductor manufacturing, natural resources</li>
+          <li>Signals: <strong>low asset turnover</strong>, high capex/sales, high NWC/sales</li>
+          <li>Need external financing for assets</li>
+          <li>Often regulated (e.g., banks must maintain minimum equity ratios → raises WACC)</li>
+          <li>Trend: many have separated capital-intensive operations from brand/service business (e.g., Hilton franchises; NVIDIA outsources manufacturing to TSMC/Samsung)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">"Capital-Light" / Asset-Light Businesses</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">Low capital needs; mainly intangibles and cash</p>
+        <ul>
+          <li>Industries: technology platforms, service businesses</li>
+          <li>Signals: <strong>high asset turnover</strong>, low capex/sales</li>
+          <li>Network model: operate platform but don't own underlying assets (Uber, Airbnb)</li>
+          <li>May receive cash upfront / negative CCC → no external WC financing needed</li>
+          <li>May compensate employees with stock → reduces cash financing needs</li>
+          <li>If early-stage profitable and capital-light → may not need significant external financing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Regulatory Capital Constraints</div>
+      <p>Governments regulate some firms' capital structures. Banks must maintain minimum equity ratios (Basel standards). Utilities are regulated on pricing — constraining leverage. These regulatory requirements <strong>typically increase WACC</strong> because they force higher equity financing (equity costs more than debt).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: CORPORATE LIFE CYCLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Corporate Life Cycle and Capital Structure</h2>
+    </div>
+
+    <div class="card">
+      <p>Capital structure is <strong>dynamic</strong>, not static — it evolves as the firm matures. Business risk declines over time and cash flows stabilize, allowing progressively greater use of lower-cost debt.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Life Cycle Stage</th>
+            <th>Revenue Growth</th>
+            <th>Free Cash Flow</th>
+            <th>Business Risk</th>
+            <th>Debt Availability</th>
+            <th>Typical Debt Type</th>
+            <th>Dominant Financing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Startup / Early Stage</td>
+            <td>Minimal / Zero</td>
+            <td><span class="tag tag-red">Negative</span></td>
+            <td><span class="tag tag-red">High</span></td>
+            <td>Little or none</td>
+            <td>Convertible debt, leases</td>
+            <td><strong>Equity</strong> — founders, employees, VC (not IPO; exchanges have min. requirements)</td>
+          </tr>
+          <tr>
+            <td>Growth</td>
+            <td>Rising, accelerating</td>
+            <td>Improving (still negative)</td>
+            <td><span class="tag tag-yellow">Medium</span></td>
+            <td>Rising</td>
+            <td>Secured debt</td>
+            <td><strong>Equity dominant</strong>; conservative debt use to preserve flexibility</td>
+          </tr>
+          <tr>
+            <td>Mature</td>
+            <td>Slowing but predictable</td>
+            <td><span class="tag tag-green">Stable &amp; positive</span></td>
+            <td><span class="tag tag-green">Low</span></td>
+            <td>High</td>
+            <td>Unsecured debt</td>
+            <td><strong>Significant debt</strong>; aim for investment-grade rating; distribute to shareholders (dividends/buybacks)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Convertible Debt</div>
+      <div class="def-body">Debt that gives investors the right to convert to equity in the future at a predetermined price, while usually deferring interest payments until maturity. Available to startups when traditional debt is not — investors accept lower/deferred interest for the equity upside.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Life Cycle ≠ Industry Stage</div>
+      <p>A startup or growth company can exist in a mature industry. Examples: new restaurant concepts, new fashion brands in established sectors; TikTok (advertising), Shopify (retail), Tesla/BYD (automobiles) — all disrupted mature industries at their growth stage. Don't assume industry maturity = firm maturity.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: TOP-DOWN & ISSUER FACTORS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Determinants of Costs of Debt &amp; Equity</h2>
+    </div>
+
+    <h3>Top-Down Factors</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Economic conditions (macro):</strong> Debt investors start with risk-free sovereign rate → demand a credit spread above it. Macroeconomic factors (real growth, inflation, monetary policy, exchange rates) affect both sovereign rates and credit spreads. Recession → higher spreads (especially cyclicals: mining, materials, industrials). Companies want to borrow when rates are low and issue equity when stock prices are high.</li>
+        <li><strong>Industry conditions:</strong> The products/services an issuer sells determine its macro exposure. Example: Higher oil prices → tighter credit spreads for oil producers (revenue up) but wider spreads for airlines (input cost up).</li>
+      </ul>
+    </div>
+
+    <h3>Issuer-Specific Factors</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Definition / Formula</th>
+            <th>Impact on Cost of Capital</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sales Risk</td>
+            <td>Stability, predictability, and growth of revenues. Influenced by firm size, customer diversification, product type (subscription vs. one-time), and economic sensitivity.</td>
+            <td>Stable, predictable revenues → lower risk premium → lower cost of debt and equity. Highly cyclical revenues → higher required return (e.g., auto manufacturing vs. SaaS).</td>
+          </tr>
+          <tr>
+            <td>Operating Leverage</td>
+            <td><strong>Operating leverage = Fixed costs / Total costs.</strong> High operating leverage = higher proportion of fixed costs.</td>
+            <td>High operating leverage amplifies swings in profitability for a given revenue change → higher business risk → higher required returns from both debt and equity investors.</td>
+          </tr>
+          <tr>
+            <td>Financial Leverage &amp; Interest Coverage</td>
+            <td>Financial leverage: D/E or Debt/EBITDA. Interest coverage = Profit before interest and taxes / Interest expense.</td>
+            <td>High existing debt → less room for incremental debt → higher cost of debt (more default risk). For equity investors: high debt means large priority claims ahead of them → higher equity required return.</td>
+          </tr>
+          <tr>
+            <td>Collateral / Asset Type</td>
+            <td>Assets that can be pledged or sold in default: real estate, aircraft, automobiles, receivables (fungible, liquid, generate cash). Intangible/knowledge assets cannot easily serve as collateral.</td>
+            <td>Tangible, liquid collateral → lower cost of debt (secured lending). Tech/pharma/service firms with mostly intangibles → higher financial distress costs → higher cost of debt.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Ratio Formulas — Issuer Factors</div>
+      <div class="f">
+        Operating Leverage = Fixed Costs / Total Costs<br>
+        (Higher = profits more volatile for given revenue change → higher risk)<br><br>
+        Interest Coverage = Profit Before Interest and Taxes (EBIT) / Interest Expense<br>
+        (Higher = more able to service debt → lower default risk → lower cost of debt)
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: MM ASSUMPTIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Modigliani–Miller — Assumptions</h2>
+    </div>
+
+    <div class="card">
+      <p>In their landmark 1958 paper, Nobel laureates <strong>Franco Modigliani and Merton Miller (MM)</strong> argued that under certain assumptions, a company's capital structure is <strong>irrelevant to firm value</strong>. Firm value equals the present value of expected future cash flows, discounted by WACC — which does NOT change with capital structure under their assumptions.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Assumption 1<br>Homogeneous Expectations</div>
+        <p>All investors agree on a given investment's expected cash flows.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Assumption 2<br>Perfect Capital Markets</div>
+        <p>No transaction costs, no taxes, no bankruptcy costs. Everyone has the same information (no asymmetry).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Assumption 3<br>Risk-Free Borrowing Rate</div>
+        <p>Investors can borrow and lend at the risk-free rate.</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Assumption 4<br>No Agency Costs</div>
+        <p>Managers always act to maximize shareholder wealth — no principal-agent conflicts.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Assumption 5<br>Independent Decisions</div>
+        <p>Financing and investment decisions are independent of each other.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — What MM Tell Us</div>
+      <p>None of these assumptions hold perfectly in reality — but that's the point. MM showed what changes when you relax each assumption. By identifying where and why capital structure matters (taxes, financial distress costs), they gave practitioners a rigorous framework. The fundamental takeaway remains: <strong>it's the firm's future cash flows, not capital structure, that primarily drive value.</strong></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: MM PROPOSITIONS (NO TAX) -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>MM Propositions I &amp; II — Without Taxes</h2>
+    </div>
+
+    <h3>The "Homemade Leverage" Argument</h3>
+    <div class="card">
+      <p>MM's core insight: investors can replicate any capital structure themselves by <strong>borrowing and lending alongside their share ownership</strong>. If a firm has 50% debt and an investor wants 70% debt, she can simply borrow personally to lever up her position. This "homemade leverage" means the firm cannot create value by changing capital structure — investors can already do it themselves.</p>
+      <p style="margin-top:8px;">MM used <strong>arbitrage</strong> to formalize this: if V_levered ≠ V_unlevered, investors would sell the overvalued and buy the undervalued until values equalized. Therefore, capital structure cannot affect value.</p>
+    </div>
+
+    <div class="prop-block prop-notax">
+      <div class="prop-label">MM Proposition I — Without Taxes</div>
+      <ol>
+        <li>V_L = V_U (levered firm = unlevered firm in value)</li>
+        <li>Firm value is determined solely by expected future cash flows — NOT by capital structure</li>
+        <li>In the absence of taxes, WACC is unaffected by capital structure</li>
+      </ol>
+    </div>
+
+    <div class="prop-block prop-notax" style="margin-top:14px;">
+      <div class="prop-label">MM Proposition II — Without Taxes (Equity Cost Rises with Leverage)</div>
+      <ol>
+        <li>Higher leverage raises the cost of equity <strong>exactly offsetting</strong> the benefit of lower-cost debt → WACC unchanged</li>
+        <li>The increase in cost of equity perfectly offsets the greater use of lower-cost debt</li>
+        <li>Cost of equity is a <strong>linear function of D/E</strong>:
+          <div style="margin:10px 0; padding:10px 14px; background:var(--formula-bg); border-left:3px solid var(--accent); border-radius:0 4px 4px 0; font-family:'JetBrains Mono',monospace; font-size:13px; color:#e8c97a;">r_e = r_0 + (r_0 − r_d) × (D/E)</div>
+          r_0 = cost of all-equity firm; r_d = cost of debt; D/E = leverage ratio
+        </li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Critical Insight — Without Taxes: WACC Doesn't Change With Leverage</div>
+      <p>This is the foundational result. As you add debt (cheaper financing), the cost of equity rises to exactly offset the benefit. The WACC remains flat regardless of how much debt you add. Note: MM did NOT assume away bankruptcy — they assumed it occurs at <strong>zero cost</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: MM PROPOSITIONS (WITH TAX) -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>MM Propositions I &amp; II — With Corporate Taxes</h2>
+    </div>
+
+    <div class="card">
+      <p>When MM relaxed the no-tax assumption, the analysis changes dramatically. Interest is tax-deductible → debt creates a <strong>tax shield</strong> that enhances firm value. The tax savings are real and add to firm value — not cancelled out by rising equity costs.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ MM Prop I with Taxes — Firm Value Formula</div>
+      <div class="f">V_L = V_U + tD</div>
+      <div class="note">
+        V_L = value of levered firm<br>
+        V_U = value of all-equity (unlevered) firm<br>
+        t = marginal corporate tax rate<br>
+        D = market value of debt<br>
+        tD = present value of the debt tax shield<br><br>
+        As D increases → tD increases → V_L increases. Taken to the extreme: optimal capital structure = 100% debt (unrealistic).
+      </div>
+    </div>
+
+    <div class="prop-block prop-tax">
+      <div class="prop-label">MM Proposition I — With Corporate Taxes</div>
+      <ol>
+        <li>In the presence of taxes, a profitable company can <strong>increase its value by using debt</strong></li>
+        <li>The higher the tax rate, the greater the benefit of debt in the capital structure</li>
+        <li>V_L = V_U + tD (levered firm is worth more by the amount of the tax shield)</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ MM Prop II with Taxes — Cost of Equity Formula</div>
+      <div class="f">r_e = r_0 + (r_0 − r_d)(1 − t) × (D/E)</div>
+      <div class="note">
+        Compare to no-tax version: r_e = r_0 + (r_0 − r_d) × (D/E)<br>
+        With taxes: (1−t) factor reduces the slope → cost of equity rises more slowly with leverage than in the no-tax case<br>
+        This means the tax benefit of debt is NOT fully offset by rising equity costs → WACC actually FALLS as debt increases
+      </div>
+    </div>
+
+    <div class="prop-block prop-tax" style="margin-top:14px;">
+      <div class="prop-label">MM Proposition II — With Corporate Taxes</div>
+      <ol>
+        <li>Cost of equity still rises with more debt, but at a <strong>slower rate</strong> than in the no-tax case (because of the (1−t) dampening factor)</li>
+        <li>As debt increases, <strong>WACC decreases</strong> and firm value increases (the tax shield benefit now outweighs the rising equity cost)</li>
+        <li>In the presence of taxes but NO financial distress costs, the use of debt is value-enhancing — extreme result: <strong>100% debt = optimal</strong></li>
+      </ol>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>V_L vs. V_U</th>
+            <th>WACC as Debt ↑</th>
+            <th>Cost of Equity as D/E ↑</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No Taxes, No Distress Costs</td>
+            <td>V_L = V_U (equal)</td>
+            <td>Unchanged (flat)</td>
+            <td>Rises linearly — exactly offsets lower debt cost</td>
+          </tr>
+          <tr>
+            <td>With Corporate Taxes, No Distress Costs</td>
+            <td>V_L = V_U + tD (V_L &gt; V_U)</td>
+            <td><span class="tag tag-green">Decreases</span> (tax shield benefit)</td>
+            <td>Rises, but more slowly than no-tax case (slope dampened by (1−t))</td>
+          </tr>
+          <tr>
+            <td>With Taxes AND Financial Distress Costs</td>
+            <td>V_L = V_U + tD − PV(distress costs)</td>
+            <td>Falls then rises (U-shaped) → optimal at D*</td>
+            <td>Rises; beyond D* distress costs dominate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: FINANCIAL DISTRESS COSTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Costs of Financial Distress</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Financial Distress</div>
+      <div class="def-body">Heightened uncertainty regarding a company's ability to meet its obligations because of diminished earnings power or actual losses. Even before formal bankruptcy, distressed companies face significant operational and financial damage.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Direct Costs of Financial Distress</div>
+        <ul>
+          <li>Legal fees (bankruptcy proceedings)</li>
+          <li>Administrative fees</li>
+          <li>Accounting and advisory costs</li>
+          <li>Other cash expenses associated with bankruptcy</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Indirect Costs of Financial Distress</div>
+        <ul>
+          <li>Lost business — customers stop buying (fear of no warranty, support)</li>
+          <li>Creditors tighten terms or withdraw credit</li>
+          <li>Suppliers demand cash payment instead of trade credit</li>
+          <li>Key employees leave (fear of job security)</li>
+          <li>Reputational damage</li>
+          <li>Foregone investment opportunities</li>
+          <li><strong>Agency costs of debt</strong>: manager-debtholder conflicts intensify near bankruptcy</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Which Firms Face Higher/Lower Financial Distress Costs?</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Lower Distress Costs — Better Debt Capacity</div>
+        <ul>
+          <li>Airlines, shipping companies, some manufacturers</li>
+          <li>Have <strong>tangible, liquid assets</strong> with ready secondary markets</li>
+          <li>Assets can be sold in bankruptcy without major value loss</li>
+          <li>E.g., aircraft, ships, real estate, receivables</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Higher Distress Costs — Less Debt Appropriate</div>
+        <ul>
+          <li>Technology, pharmaceutical, IT, service firms</li>
+          <li>Assets are primarily <strong>intangible</strong> (IP, brand, human capital)</li>
+          <li>Value evaporates quickly in distress — customers and employees leave</li>
+          <li>Difficult to use as collateral or sell</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Probability of financial distress rises with:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>More debt in the capital structure</li>
+        <li>Higher sales risk and operating leverage</li>
+        <li>Lower liquidity</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: STATIC TRADE-OFF THEORY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Optimal Capital Structure — Static Trade-Off Theory</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Static Trade-Off Theory — Firm Value with Taxes AND Distress Costs</div>
+      <div class="f">V_L = V_U + tD − PV(Costs of Financial Distress)</div>
+      <div class="note">
+        At LOW debt: tax benefit (tD) &gt; distress costs → V_L rises with debt → ADD more debt<br>
+        At HIGH debt: distress costs &gt; tax benefit → V_L falls with more debt → REDUCE debt<br>
+        OPTIMAL POINT D*: marginal benefit of tax shield = marginal cost of financial distress → V_L is maximized<br>
+        Beyond D*: more debt reduces firm value
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key implications of the static trade-off theory:</strong></p>
+      <ul style="margin-top:8px;">
+        <li><strong>Optimal capital structure exists at D*</strong> where MB(tax shield) = MC(financial distress)</li>
+        <li>Firms should target a range around D*, not a precise number (transaction costs, market fluctuations)</li>
+        <li>Example: "30–50% debt" range rather than "exactly 40% debt"</li>
+        <li>Actual capital structure may deviate from target: management exploits favorable market conditions; market value changes in equity/debt shift weights; transaction costs prevent continuous rebalancing</li>
+      </ul>
+    </div>
+
+    <h3>Target Capital Structure — Book vs. Market Values</h3>
+    <div class="card">
+      <p><strong>Why target is expressed in book values:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;">Market values fluctuate substantially and seldom impact the appropriate borrowing level. A rising stock price is an opportunity to raise equity, not a signal to reduce debt.</li>
+        <li style="margin-bottom:6px;">Management focuses on capital invested <em>by</em> the company, not in the company — how projects and WC will be funded.</li>
+        <li style="margin-bottom:6px;">Aligned with third-party measures — lenders, debt investors, and credit rating agencies use book values; management must align to these for covenants and ratings.</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Despite using book values for targets, management watches market prices and interest rates closely to gauge timing and optimal type of new financing.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Target Capital Structure — Common Expressions</div>
+      <p>Management typically expresses targets indirectly via: <strong>Maximum Debt/EBITDA ratio</strong> (e.g., "we target net debt/EBITDA ≤ 2.5×") or <strong>Minimum credit rating</strong> (e.g., "we aim to maintain BBB/Baa investment-grade rating"). These are more practical than a precise debt/equity percentage and align directly with lender and rating agency metrics.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: PECKING ORDER & AGENCY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Pecking Order Theory &amp; Agency Cost Implications</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Pecking Order Theory (Myers &amp; Majluf, 1984)</div>
+      <div class="def-body">Due to <strong>information asymmetry</strong> between managers and investors, firms prefer financing methods with the <strong>least potential information content</strong> (internal funds) over those with the most (public equity). Managers choose financing in a hierarchy based on what signals to outsiders.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Pecking Order — Financing Hierarchy (Most Preferred → Least Preferred)</div>
+      <div class="f">
+        1st: Internal financing (retained earnings / operating cash flows) — least information content<br>
+        2nd: Private debt (bank loans, private placements) — moderate information content<br>
+        3rd: Public debt (bonds) — higher information content<br>
+        4th: Public equity issuance — MOST information content; used last
+      </div>
+      <div class="note">Key insight: Investors are suspicious that managers issue equity when stock is overvalued → existing shareholders wouldn't want to share ownership if prospects are strong. Public equity issuance = negative signal. Debt issuance = commitment to pay → positive signal of confidence.</div>
+    </div>
+
+    <h3>Signaling Effects of Capital Structure Decisions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Signal to Market</th>
+            <th>Typical Investor Reaction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equity issuance (public)</td>
+            <td><span class="tag tag-red">Negative</span> — management believes stock is overvalued; willing to dilute existing owners; OR needs capital beyond what internal sources can fund</td>
+            <td>Stock price often falls on announcement of new equity issuance</td>
+          </tr>
+          <tr>
+            <td>Debt issuance / Dividends initiation</td>
+            <td><span class="tag tag-green">Positive</span> — management confident in future cash flows to service committed payments (too costly for poorly performing firms to afford)</td>
+            <td>Often interpreted as management confidence signal</td>
+          </tr>
+          <tr>
+            <td>Share repurchase</td>
+            <td><span class="tag tag-green">Positive</span> — management believes stock is undervalued; returning excess capital</td>
+            <td>Stock price often rises on buyback announcement</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Agency Costs and Jensen's Free Cash Flow Hypothesis</h3>
+    <div class="card">
+      <ul>
+        <li>High debt disciplines managers: committed interest and principal payments force efficient cash management → leaves less free cash flow for discretionary or wasteful spending</li>
+        <li><strong>Michael Jensen (1986) — Free Cash Flow Hypothesis:</strong> Higher debt levels force managers to manage efficiently and use cash wisely to meet debt service → reduces agency costs of equity (empire building, wasteful investment)</li>
+        <li>Savings in agency costs of equity can arise with more debt → a partial benefit of leverage beyond the tax shield</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Static Trade-Off vs. Pecking Order — Key Difference</div>
+      <p><strong>Static trade-off</strong>: optimal capital structure exists — firms have a target D* balancing tax benefit and distress cost → firms will adjust toward target over time. <strong>Pecking order</strong>: no single optimal structure — firms just take the cheapest available financing; observed leverage is a byproduct of historical financing choices, not a target. Both theories coexist in practice — real firms use both lenses.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>WACC = [r_d(1−t)×W_d] + [r_e×W_e].</strong> Used as r in NPV analysis and as the hurdle rate in IRR analysis. Minimize WACC to maximize firm value.</li>
+        <li>✅ <strong>Cost of debt &lt; cost of equity</strong> always: debt has priority, may be secured, and interest is tax-deductible. Dividends are NOT tax-deductible.</li>
+        <li>✅ <strong>After-tax cost of debt = Pre-tax rate × (1 − tax rate).</strong> The interest tax shield lowers effective debt cost.</li>
+        <li>✅ <strong>Weights:</strong> Use market value weights for WACC. Use book value weights for target capital structure (management, lenders, rating agencies all use book).</li>
+        <li>✅ <strong>D/E → weight conversion:</strong> W_d = (D/E) / (1 + D/E).</li>
+        <li>✅ <strong>Capital-intensive:</strong> low asset turnover, high capex/sales. <strong>Capital-light:</strong> high asset turnover, low capex/sales. Business model determines financing needs.</li>
+        <li>✅ <strong>Regulatory capital requirements</strong> (banks, utilities) typically increase WACC by forcing higher equity financing.</li>
+        <li>✅ <strong>Life cycle stages:</strong> Startup → equity only (VC, founders), convertible debt. Growth → equity dominant, conservative debt (secured). Mature → significant debt, unsecured, investment-grade, dividends/buybacks.</li>
+        <li>✅ <strong>Top-down factors:</strong> macro (rates, inflation, spreads, recession risk) and industry. <strong>Issuer-specific:</strong> sales stability, operating leverage (fixed costs/total costs), financial leverage, interest coverage (EBIT/interest), and collateral/asset type.</li>
+        <li>✅ <strong>Operating leverage = Fixed costs / Total costs.</strong> Higher operating leverage → more volatility in earnings → higher risk → higher required returns.</li>
+        <li>✅ <strong>Interest coverage = EBIT / Interest expense.</strong> Higher = better ability to service debt.</li>
+        <li>✅ <strong>MM 5 assumptions:</strong> Homogeneous expectations, perfect capital markets (no taxes/costs), risk-free borrowing, no agency costs, independent financing and investment decisions.</li>
+        <li>✅ <strong>MM Prop I (no taxes): V_L = V_U.</strong> Capital structure irrelevant. Firm value = PV of future cash flows. WACC unchanged by leverage. "Homemade leverage" argument.</li>
+        <li>✅ <strong>MM Prop II (no taxes): r_e = r_0 + (r_0 − r_d)(D/E).</strong> Adding debt → r_e rises to exactly offset → WACC stays flat.</li>
+        <li>✅ <strong>MM Prop I (with taxes): V_L = V_U + tD.</strong> Each dollar of debt adds tD in value via the tax shield. Extreme conclusion: 100% debt optimal (unrealistic).</li>
+        <li>✅ <strong>MM Prop II (with taxes): r_e = r_0 + (r_0 − r_d)(1−t)(D/E).</strong> r_e rises more slowly (dampened by (1−t)) → tax benefit of debt NOT fully offset → WACC falls as debt increases.</li>
+        <li>✅ <strong>Static trade-off theory: V_L = V_U + tD − PV(financial distress costs).</strong> Optimal at D* where MB(tax shield) = MC(distress). Beyond D*, adding debt destroys value.</li>
+        <li>✅ <strong>Financial distress — direct costs:</strong> legal/admin bankruptcy fees. <strong>Indirect costs:</strong> lost customers, suppliers tighten, employees leave, foregone investment, reputational damage.</li>
+        <li>✅ <strong>Lower distress costs:</strong> tangible, liquid assets (airlines, shipping, real estate). <strong>Higher distress costs:</strong> intangible-heavy firms (tech, pharma, services).</li>
+        <li>✅ <strong>Pecking order (Myers &amp; Majluf, 1984):</strong> Internal financing first → private debt → public debt → public equity (last resort). Driven by information asymmetry — managers avoid signaling overvaluation.</li>
+        <li>✅ <strong>Public equity issuance = negative signal</strong> (stock may be overvalued). <strong>Debt issuance = positive signal</strong> (management confident in ability to service payments).</li>
+        <li>✅ <strong>Jensen's Free Cash Flow Hypothesis:</strong> More debt → less free cash → disciplines managers → reduces agency costs of equity (empire building, waste).</li>
+        <li>✅ <strong>Primary driver of firm value:</strong> FUTURE CASH FLOWS — not capital structure (MM's core insight that survives all assumption relaxations).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        WACC = [r_d(1−t)×W_d] + [r_e×W_e]<br>
+        After-tax cost of debt = r_d × (1 − t)<br>
+        W_d = (D/E) / (1 + D/E)<br><br>
+        Operating leverage = Fixed costs / Total costs<br>
+        Interest coverage = EBIT / Interest expense<br><br>
+        MM Prop I (no tax): V_L = V_U<br>
+        MM Prop II (no tax): r_e = r_0 + (r_0 − r_d)(D/E)<br><br>
+        MM Prop I (with tax): V_L = V_U + tD<br>
+        MM Prop II (with tax): r_e = r_0 + (r_0 − r_d)(1−t)(D/E)<br><br>
+        Static trade-off: V_L = V_U + tD − PV(distress costs)<br>
+        Optimal D* where: MB(tax shield) = MC(financial distress)
+      </div>
+      <div class="note">Know all MM formulas and what changes between the no-tax and with-tax versions. The (1−t) factor in Prop II with taxes is the most tested modification.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Corporate Issuers · Module 6: Capital Structure · Exam Prep Notes
+</footer>
+
+</body>
+</html>

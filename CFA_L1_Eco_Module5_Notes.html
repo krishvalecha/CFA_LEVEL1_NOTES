@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 5: Introduction to Geopolitics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14; --surface:#13161e; --card:#1a1e28; --border:#252a38;
+    --accent:#c9a84c; --accent2:#4c8bc9; --accent3:#4cc98a; --danger:#c94c4c;
+    --purple:#9a7fdc; --orange:#d4824a; --teal:#4cb8c9;
+    --text:#e8eaf0; --muted:#8892a4;
+    --tip-bg:#1a2218; --tip-border:#4cc98a;
+    --warn-bg:#221a18; --warn-border:#c94c4c;
+    --formula-bg:#12151f; --formula-border:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#12100a 40%,#0a0d14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(201,168,76,0.07) 0%,transparent 70%);border-radius:50%;}
+  .badge{display:inline-block;background:rgba(212,130,74,0.12);color:var(--orange);border:1px solid rgba(212,130,74,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px;}
+  .page-header h1 span{color:var(--orange);}
+  .page-header p{color:var(--muted);font-size:14px;max-width:640px;}
+
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+  .toc-item:hover{color:var(--orange);border-color:var(--orange);}
+
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--orange);background:rgba(212,130,74,0.1);border:1px solid rgba(212,130,74,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin:24px 0 12px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px;}
+  .card p,.card li{color:var(--text);font-size:15px;}
+  .card ul,.card ol{padding-left:20px;}
+  .card ul li,.card ol li{margin-bottom:6px;}
+
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .formula-box .f{color:#e8c97a;font-size:15px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.65;}
+
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .tip .tip-label{font-weight:700;color:var(--accent3);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .tip p{color:#c8e8d4;}
+
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .warn .warn-label{font-weight:700;color:var(--danger);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .warn p{color:#e8c8c8;}
+
+  .mnemonic{background:#1a1628;border:1px solid #3d2f6e;border-radius:6px;padding:16px 20px;margin:14px 0;}
+  .mnemonic .m-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#a98adc;margin-bottom:6px;}
+  .mnemonic p{color:#d8ccf0;font-size:14px;margin:0;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  thead th{background:rgba(212,130,74,0.1);color:var(--orange);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--orange);}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  tbody td{padding:10px 14px;color:var(--text);vertical-align:top;}
+  tbody td:first-child{font-weight:700;color:var(--accent2);}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);}
+  .tag-orange{background:rgba(212,130,74,0.15);color:var(--orange);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mini-card .mc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .mini-card ul{padding-left:18px;}
+  .mini-card ul li{font-size:14px;margin-bottom:5px;color:var(--text);}
+
+  /* Archetype quadrant */
+  .quadrant{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+  .quad{border-radius:6px;padding:16px;border:1px solid;}
+  .quad .q-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;}
+  .quad .q-axes{font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:10px;}
+  .quad ul{padding-left:16px;}
+  .quad ul li{font-size:13px;margin-bottom:4px;color:var(--text);}
+  .quad-hegemony{background:rgba(154,127,220,0.06);border-color:rgba(154,127,220,0.3);}
+  .quad-hegemony .q-name{color:var(--purple);}
+  .quad-multilateral{background:rgba(76,201,138,0.06);border-color:rgba(76,201,138,0.3);}
+  .quad-multilateral .q-name{color:var(--accent3);}
+  .quad-autarky{background:rgba(201,76,76,0.06);border-color:rgba(201,76,76,0.3);}
+  .quad-autarky .q-name{color:var(--danger);}
+  .quad-bilateral{background:rgba(76,139,201,0.06);border-color:rgba(76,139,201,0.3);}
+  .quad-bilateral .q-name{color:var(--accent2);}
+
+  /* Risk types */
+  .risk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+  .risk-card{background:var(--card);border-radius:6px;padding:16px;border:1px solid var(--border);border-top:3px solid;}
+  .risk-card.event{border-top-color:var(--accent2);}
+  .risk-card.exogenous{border-top-color:var(--danger);}
+  .risk-card.thematic{border-top-color:var(--orange);}
+  .risk-card .r-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .risk-card.event .r-title{color:var(--accent2);}
+  .risk-card.exogenous .r-title{color:var(--danger);}
+  .risk-card.thematic .r-title{color:var(--orange);}
+  .risk-card ul{padding-left:16px;}
+  .risk-card ul li{font-size:13px;margin-bottom:4px;color:var(--text);}
+  @media(max-width:680px){.risk-row{grid-template-columns:1fr;}}
+
+  /* Org cards */
+  .org-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+  .org-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px;}
+  .org-card .org-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .org-card .org-founded{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:8px;}
+  .org-card ul{padding-left:16px;}
+  .org-card ul li{font-size:13px;margin-bottom:4px;color:var(--text);}
+  @media(max-width:680px){.org-grid{grid-template-columns:1fr;}}
+
+  /* Coop spectrum */
+  .spectrum{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin:16px 0;}
+  .spec-bar{height:8px;background:linear-gradient(90deg,var(--danger),var(--accent),var(--accent3));border-radius:4px;margin:12px 0 8px;}
+  .spec-labels{display:flex;justify-content:space-between;font-size:12px;font-family:'JetBrains Mono',monospace;}
+  .spec-labels span:first-child{color:var(--danger);}
+  .spec-labels span:last-child{color:var(--accent3);}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  p{margin-bottom:12px;}
+  strong{color:#fff;font-weight:700;}
+  em{color:var(--accent2);font-style:normal;font-weight:600;}
+
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 48px;font-size:12px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 5: <span>Introduction to Geopolitics</span></h1>
+  <p>Exam-ready notes covering cooperation vs. competition, globalization, international trade organizations (IMF, World Bank, WTO), country archetypes, geopolitical tools, and investment impact.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Core Concepts</a>
+  <a href="#s2" class="toc-item">02 · Cooperation & Globalization</a>
+  <a href="#s3" class="toc-item">03 · IMF, World Bank, WTO</a>
+  <a href="#s4" class="toc-item">04 · Country Archetypes</a>
+  <a href="#s5" class="toc-item">05 · Tools of Geopolitics</a>
+  <a href="#s6" class="toc-item">06 · Geopolitical Risk Types</a>
+  <a href="#s7" class="toc-item">07 · Investment Impact</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: CORE CONCEPTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Core Concepts & Actors</h2>
+    </div>
+
+    <h3>Key Definitions</h3>
+    <div class="card">
+      <p><strong>Geopolitics:</strong> The study of how <em>geography</em> affects politics and international relations. Analysts study actors and how they interact politically, economically, and financially.</p>
+      <p><strong>Geopolitical Risk:</strong> Risk associated with tensions or actions between actors (state and non-state) that affect the normal and peaceful course of international relations. Tends to rise when the geographic and political factors underpinning country relations shift.</p>
+    </div>
+
+    <h3>Two Types of Actors</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">State Actors</div>
+        <ul>
+          <li>National governments, political organizations, country leaders</li>
+          <li>Exert authority over national security and resources</li>
+          <li>Examples: President of South Africa, Sultan of Brunei, UK Prime Minister, Malaysia's Parliament</li>
+          <li>Drive political cooperation/non-cooperation decisions</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Non-State Actors</div>
+        <ul>
+          <li>Participate in global affairs but do NOT control national security or resources</li>
+          <li>Examples: NGOs, multinational companies, charities, influential individuals (business leaders, cultural icons)</li>
+          <li>Primary drivers of globalization</li>
+          <li>Subject to but do not make political cooperation rules</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>National Interest — Hierarchy of Priorities</h3>
+    <div class="card">
+      <p>Every country has a <strong>hierarchy of national interests</strong> — survival/essential needs at the top, "nice to have" at the bottom. Governments cooperate where it benefits the nation-state, but <em>higher priorities override lower ones</em> when they conflict.</p>
+      <p>Key influences on the hierarchy: resource endowment, leadership style, political cycle length, cultural factors. Short political cycles (few years) make it hard to prioritize long-term risks (e.g., climate change, income inequality).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cooperation Spectrum</div>
+      <div class="f">Non-Cooperation ← ────────────────── → Cooperation</div>
+      <div class="note">
+        Non-Cooperative: Arbitrary rules · restricted movement · capital controls · retaliation · no technology exchange<br>
+        Cooperative: Rules standardization · tariff harmonization · free movement of goods/services/capital/people · reciprocation · technology exchange
+      </div>
+    </div>
+
+    <h3>Why Countries Cooperate</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:7px;"><strong>National security / military interest</strong> — protect citizens, borders, and institutions from external threats. Geographic factors matter: landlocked countries (e.g., Switzerland) depend heavily on neighbors.</li>
+        <li style="margin-bottom:7px;"><strong>Economic interest</strong> — secure essential resources through trade; level the global playing field through standardization.</li>
+        <li style="margin-bottom:7px;"><strong>Resource endowment</strong> — countries with abundant resources have leverage; resource-scarce countries must cooperate to survive.</li>
+        <li style="margin-bottom:7px;"><strong>Standardization</strong> — creating common protocols for trade, capital flows, banking (e.g., Basel III via BCBS, SWIFT for financial messaging, containerization for shipping).</li>
+        <li style="margin-bottom:7px;"><strong>Soft power</strong> — influencing other countries without force: cultural programs, university exchanges, advertising (e.g., EU Erasmus+, South Korea global tourism campaigns).</li>
+        <li style="margin-bottom:0;"><strong>Strong institutions</strong> — rule of law, property rights, government accountability → more stable, more durable cooperative relationships.</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Soft Power vs. Hard Power</div>
+      <p><strong>Soft power</strong> = influencing others through cultural appeal, ideas, and values — without force or coercion. <strong>Hard power</strong> = military force or economic coercion. Most countries use a blend of both depending on their national interest hierarchy and resource endowment.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: COOPERATION & GLOBALIZATION -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Globalization vs. Nationalism</h2>
+    </div>
+
+    <h3>The Core Distinction</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Globalization</div>
+        <ul>
+          <li>Active trade of goods and services across borders</li>
+          <li>Free capital flows and currency exchange</li>
+          <li>Cultural and information exchange</li>
+          <li>Primarily driven by <strong>non-state actors</strong> (companies, individuals)</li>
+          <li>World Bank Openness Index: 27% (1970) → 60%+ (2019)</li>
+          <li>Post-2008: headwinds from GFC + nationalism</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Nationalism / Anti-Globalization</div>
+        <ul>
+          <li>Promotion of country's own economic interests to the detriment of others</li>
+          <li>Limited cross-border trade, investment, and capital flows</li>
+          <li>Restricted currency exchange</li>
+          <li>Focus on national production and sales</li>
+          <li>Example: "America First" policies (2018+), tariffs on imports, NAFTA renegotiation</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Motivations for Globalization (Non-State Actors)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Motivation</th><th>Description</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Increasing Profits</td>
+            <td>Either: ↑ sales (new markets, new customers) OR ↓ costs (lower taxes, cheaper labor, economies of scale)</td>
+            <td>Auto industry global consolidation; offshore manufacturing</td>
+          </tr>
+          <tr>
+            <td>Access to Resources & Markets</td>
+            <td>Secure sustainable access to raw materials, talent, or investment opportunities not available domestically. Includes portfolio flows (short-term) and FDI (long-term).</td>
+            <td>Mining companies, low-domestic-return investors seeking foreign returns</td>
+          </tr>
+          <tr>
+            <td>Intrinsic Gain</td>
+            <td>Benefits beyond profit — personal growth, education, productivity improvements from learning. A stabilizing force that increases empathy and reduces likelihood of geopolitical threats.</td>
+            <td>University exchange programs; cultural exposure; accelerated productivity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Benefits of Globalization</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:5px;">Increased profits through new markets and cost reduction</li>
+        <li style="margin-bottom:5px;">Greater product variety and consumer choice</li>
+        <li style="margin-bottom:5px;">Higher quality goods through global competition</li>
+        <li style="margin-bottom:5px;">Increased efficiency and labor mobility</li>
+        <li style="margin-bottom:5px;">Economies of scale in production (e.g., global auto industry)</li>
+        <li style="margin-bottom:5px;">Investment opportunities in foreign markets (portfolio flows and FDI)</li>
+      </ul>
+    </div>
+
+    <h3>Costs & Risks of Globalization</h3>
+    <div class="card" style="border-left:3px solid var(--danger);">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:7px;"><strong>Unequal economic gains</strong> — aggregate improvement ≠ improvement for everyone. Factory moves create jobs abroad but destroy them domestically; income inequality rises within countries.</li>
+        <li style="margin-bottom:7px;"><strong>Lower ESG standards</strong> — companies operating in lower-standard countries may adopt local (lower) standards for environmental protection, labor, or corporate governance.</li>
+        <li style="margin-bottom:7px;"><strong>Political backlash</strong> — income inequality and job displacement drive nationalism and political non-cooperation; a force for rollback of globalization.</li>
+        <li style="margin-bottom:7px;"><strong>Supply chain interdependence and vulnerability</strong> — dependence on single-country production for key inputs (e.g., rare earth metals from China, copper from Chile, semiconductors). COVID-19 semiconductor shortage → auto industry crisis.</li>
+      </ol>
+    </div>
+
+    <h3>Deglobalization Response Strategies</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;"><strong>Reshoring the essentials:</strong> Rebuild domestic supply chains for critical goods (PPE, pharmaceuticals). Reduces manufacturing and procurement risk.</li>
+        <li style="margin-bottom:6px;"><strong>Reglobalizing production:</strong> Duplicate or diversify supply chains across multiple countries to reduce single-point-of-failure risk.</li>
+        <li style="margin-bottom:6px;"><strong>Doubling down on key markets:</strong> For major markets (China, Canada, Mexico), production "In country, for the country" alongside external supply chains. Productivity gains may still outweigh political risk.</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Point — Portfolio vs. FDI Flows</div>
+      <p><strong>Portfolio investment flows</strong> = short-term investments in foreign assets (stocks, bonds). <strong>Foreign Direct Investment (FDI)</strong> = long-term investment in the productive capacity of a foreign country (factories, infrastructure). Both are important dimensions of globalization that can be affected by geopolitical risk.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: INTERNATIONAL ORGANIZATIONS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>International Trade Organizations</h2>
+    </div>
+
+    <h3>Bretton Woods Background</h3>
+    <div class="card">
+      <p>Following the Great Depression's disastrous policy mistakes (competitive devaluations, trade barriers, protectionism → global trade collapse + unemployment), 45 governments met in <strong>Bretton Woods, New Hampshire in July 1944</strong> to build a framework for international economic cooperation. Result: creation of the IMF (formally Dec 1945) and World Bank.</p>
+      <p>The planned third institution — the International Trade Organization (ITO) — was never ratified. Instead, the <strong>GATT (General Agreement on Tariffs and Trade)</strong>, signed October 1947 by 23 nations, governed international trade until the <strong>WTO replaced it on 1 January 1995</strong>.</p>
+    </div>
+
+    <div class="org-grid">
+      <div class="org-card">
+        <div class="org-name">IMF</div>
+        <div class="org-founded">Founded: Dec 1945 · Bretton Woods</div>
+        <ul>
+          <li><strong>Mandate:</strong> Stability of the international monetary system (exchange rates + international payments)</li>
+          <li>Lends foreign exchange to members with balance of payments problems</li>
+          <li>Only under strict conditions; monitors borrowers' macroeconomic policies</li>
+          <li>Provides forum for cooperation on monetary problems</li>
+          <li>Promotes exchange rate stability and open payments system</li>
+          <li>Surveillance of global/regional/country economies</li>
+          <li>Post-2008: enhanced lending, improved monitoring, resolving global imbalances</li>
+          <li><em>Examples:</em> Greek sovereign debt crisis (€110bn bailout 2010); East Asian Financial Crisis (Thailand 1997 currency peg collapse)</li>
+        </ul>
+      </div>
+      <div class="org-card">
+        <div class="org-name">World Bank</div>
+        <div class="org-founded">Founded: 1944 (Bretton Woods) · Operates via IBRD + IDA</div>
+        <ul>
+          <li><strong>Mandate:</strong> Help developing countries fight poverty and enhance environmentally sound economic growth</li>
+          <li><strong>IBRD:</strong> AAA-rated bonds; market-based lending to developing countries at low interest</li>
+          <li><strong>IDA:</strong> World's largest source of interest-free loans and grants to the poorest countries. Replenished every 3 years by 40 donor countries.</li>
+          <li>Neither IBRD nor IDA operates for profit</li>
+          <li>Also provides analysis, advice, and capacity building</li>
+          <li>Investment perspective: creates basic economic infrastructure for domestic financial markets in developing countries</li>
+        </ul>
+      </div>
+      <div class="org-card">
+        <div class="org-name">WTO</div>
+        <div class="org-founded">Founded: 1 Jan 1995 · Replaced GATT (1947)</div>
+        <ul>
+          <li><strong>Mandate:</strong> Legal and institutional foundation of the multinational trading system</li>
+          <li>Only international organization regulating cross-border trade globally</li>
+          <li>Covers ~60 agreements, annexes, decisions (GATT for goods + GATS for services + TRIPS for IP)</li>
+          <li>Implements, administers, and operates individual trade agreements</li>
+          <li>Platform for negotiations and <strong>dispute settlement</strong></li>
+          <li>Reviews members' trade policies (surveillance)</li>
+          <li>Technical cooperation for developing countries</li>
+          <li>China joined WTO: Dec 2001 — landmark event</li>
+          <li>Doha Round (2001): ambitious but no final agreement reached → led to more bilateral deals</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Organization</th><th>Primary Focus</th><th>Key Tool</th><th>Who Benefits Most</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>IMF</td>
+            <td>Monetary system stability; exchange rates; BoP crises</td>
+            <td>Conditional emergency lending; economic surveillance</td>
+            <td>Countries with balance of payments crises</td>
+          </tr>
+          <tr>
+            <td>World Bank</td>
+            <td>Poverty reduction; sustainable development</td>
+            <td>Low/no-interest loans (IBRD/IDA); grants; technical assistance</td>
+            <td>Developing and poorest countries</td>
+          </tr>
+          <tr>
+            <td>WTO</td>
+            <td>Rules-based multilateral trade</td>
+            <td>Trade agreements; tariff harmonization; dispute settlement</td>
+            <td>All trading countries; especially multinational corporations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "IMF = Monetary stability; World Bank = Development loans; WTO = Trade rules"</div>
+      <p>Quick memory check: <strong>I</strong>MF → International <strong>M</strong>onetary stability · <strong>W</strong>orld Bank → <strong>W</strong>elfare/development · <strong>W</strong>TO → <strong>W</strong>orld trade rules and disputes. All three work together but with distinct, non-overlapping mandates.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: COUNTRY ARCHETYPES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Archetypes of Country Behavior</h2>
+    </div>
+
+    <h3>Two-Axis Framework</h3>
+    <div class="card">
+      <p>Countries are plotted on two axes: <strong>Cooperation ↔ Non-Cooperation</strong> (political) and <strong>Globalization ↔ Nationalism</strong> (economic). This creates four archetypes. Countries rarely sit at pure extremes — they exist on spectrums and can move over time.</p>
+      <p><strong>Key insight for risk analysis:</strong> It matters not only which quadrant a country is in today but also its <em>direction of movement</em> and <em>stability within that quadrant</em>. A hegemon moving toward cooperation is less of a risk than a multilateral actor breaking away.</p>
+    </div>
+
+    <div class="quadrant">
+      <div class="quad quad-hegemony">
+        <div class="q-name">Hegemony</div>
+        <div class="q-axes">Non-Cooperative + Globalized</div>
+        <ul>
+          <li>Regional/global leaders using political/economic influence to control resources</li>
+          <li>State-owned enterprises control key export markets</li>
+          <li>Benefits: political dominance + stabilizing force on others who align</li>
+          <li>Risk: as hegemons gain/lose influence → may become more competitive</li>
+          <li><em>Examples:</em> Russia (natural gas leverage over Europe), China (technology transfer requirements)</li>
+        </ul>
+      </div>
+      <div class="quad quad-multilateral">
+        <div class="q-name">Multilateralism</div>
+        <div class="q-axes">Cooperative + Globalized</div>
+        <ul>
+          <li>Mutually beneficial trade relationships; extensive rules harmonization</li>
+          <li>Private firms fully integrated into global supply chains with multiple partners</li>
+          <li>Benefits: higher growth rates from global cooperation</li>
+          <li>Risk: vulnerable to geopolitical risks of partner countries (interdependence)</li>
+          <li><em>Examples:</em> Germany, Singapore, European Union, Japan (now)</li>
+        </ul>
+      </div>
+      <div class="quad quad-autarky">
+        <div class="q-name">Autarky</div>
+        <div class="q-axes">Non-Cooperative + Nationalist</div>
+        <ul>
+          <li>Political self-sufficiency; little or no external trade or finance</li>
+          <li>State-owned enterprises control strategic domestic industries</li>
+          <li>Benefits: complete control over technology, goods, services, media</li>
+          <li>Risk: economic and political isolation; poverty; lack of innovation</li>
+          <li><em>Examples:</em> North Korea (ongoing), Venezuela (sanctions-driven), China (much of 20th century)</li>
+        </ul>
+      </div>
+      <div class="quad quad-bilateral">
+        <div class="q-name">Bilateralism</div>
+        <div class="q-axes">Cooperative + Nationalist</div>
+        <ul>
+          <li>One-at-a-time agreements with individual countries; no multilateral treaties</li>
+          <li>May cooperate with many countries but separately</li>
+          <li><em>Regionalism</em> = mid-point: group of countries cooperating, possibly excluding others</li>
+          <li>Moving toward cooperation organically leads to globalization</li>
+          <li><em>Example:</em> Japan (historically); today considered multilateral</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Exam Tip — Interdependence Paradox</div>
+      <p>Countries that are <strong>more cooperative and globalized</strong> (multilateral) are: (1) <em>less likely</em> to be targeted by geopolitical attacks because the cost to partners is high, but (2) <em>more vulnerable</em> when risks do occur because they have more touchpoints across borders. Greater interconnection = greater risk exposure.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: TOOLS OF GEOPOLITICS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Tools of Geopolitics</h2>
+    </div>
+
+    <h3>Overview: Three Tool Categories</h3>
+    <div class="card">
+      <p>Geopolitical tools may be <strong>cooperative</strong> (increase flows: goods, services, capital, labor) or <strong>non-cooperative/conflictual</strong> (reduce these flows). Tracking which tools actors use signals their movement within the cooperation-globalization framework.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool Type</th><th>Cooperative Examples</th><th>Non-Cooperative Examples</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>National Security</td>
+            <td>Military alliances (NATO), collective security agreements, peacekeeping missions</td>
+            <td>Armed conflict (most extreme), espionage, terrorism, military coercion</td>
+          </tr>
+          <tr>
+            <td>Economic</td>
+            <td>Multilateral trade agreements (WTO, MERCOSUR), common market (EU), common currency (euro), tariff harmonization</td>
+            <td>Nationalization of industries, tariffs &amp; quotas, voluntary export restraints (VER), domestic content requirements, export subsidies</td>
+          </tr>
+          <tr>
+            <td>Financial</td>
+            <td>Free currency exchange across borders, allowing foreign investment, economic and monetary unions (EMU)</td>
+            <td>Limiting access to local currency markets, restricting foreign investment, economic &amp; financial sanctions, capital controls</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>National Security Tools — Key Points</h3>
+    <div class="card">
+      <p><strong>Armed conflict:</strong> Most extreme non-cooperative tool. Two impacts: (1) Destruction of physical infrastructure → long-term damage to capital stock (e.g., Syria: economy halved by 2016 from 2010 levels). (2) Migration/refugee flows → reshapes labor supply, capital flows, neighboring countries (e.g., Syria → Germany: 1 million refugees; long-term demographic and growth benefits for Germany).</p>
+      <p><strong>Espionage:</strong> Indirect national security tool — obtaining political/military information covertly.</p>
+      <p><strong>NATO:</strong> Cooperative security alliance (EU, US, UK, Canada). Originally formed against Soviet Union; now focuses on nuclear non-proliferation and collective security.</p>
+    </div>
+
+    <h3>Economic Tools — Key Points</h3>
+    <div class="card">
+      <p><strong>Nationalization:</strong> Transferring industry from private to state control. Most common in sectors vital to economic security (energy). Example: Argentina renationalized YPF (2012) to control fossil fuel revenue and foreign exchange.</p>
+      <p><strong>Voluntary Export Restraints (VER):</strong> Country voluntarily limits its own exports — a form of non-cooperation.</p>
+      <p><strong>Domestic Content Requirements:</strong> Requires a certain proportion of domestic input in exported goods — protectionist.</p>
+      <p><strong>Export subsidies:</strong> Government supports domestic companies competing internationally (e.g., Boeing vs. Airbus dispute).</p>
+    </div>
+
+    <h3>Financial Tools — Key Points</h3>
+    <div class="card">
+      <p><strong>Sanctions:</strong> Targeted restrictions on financial transactions, asset freezes, oil embargoes. Used as non-cooperative leverage (e.g., US/EU sanctions on Venezuela, Russia).</p>
+      <p><strong>US dollar dominance:</strong> International interbank market heavily USD-denominated. Cooperative benefit: liquidity and facilitation of global trade. Risk: countries without USD reserves become vulnerable to US monetary policy tightening → liquidity shortages.</p>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "NEF" = National Security, Economic, Financial (3 Tool Types)</div>
+      <p>For each type, ask: <strong>Does this tool increase or decrease flows?</strong> Cooperative = increases flows (trade, capital, people, info). Non-cooperative = decreases flows. This is the key organizing principle for the exam.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: GEOPOLITICAL RISK TYPES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Types of Geopolitical Risk</h2>
+    </div>
+
+    <div class="risk-row">
+      <div class="risk-card event">
+        <div class="r-title">Event Risk</div>
+        <ul>
+          <li>Revolves around <strong>set dates known in advance</strong></li>
+          <li>Elections, legislation, referenda, political anniversaries</li>
+          <li>Risk: outcome may diverge from consensus expectation</li>
+          <li>Predictability gives investors time to prepare — does NOT reduce likelihood, velocity, or impact</li>
+          <li><strong>Example:</strong> Brexit referendum (23 June 2016) — planned; "Leave" result surprised markets → immediate GBP decline, equity volatility, long-term structural disruption</li>
+        </ul>
+      </div>
+      <div class="risk-card exogenous">
+        <div class="r-title">Exogenous Risk</div>
+        <ul>
+          <li><strong>Sudden, unanticipated</strong> risk — cannot be planned for</li>
+          <li>Affects cooperative stance, ability to globalize, or both</li>
+          <li>Includes "black swan" events — rare, difficult to predict, high impact</li>
+          <li>Usually high-velocity (immediate market impact)</li>
+          <li><strong>Examples:</strong> Japan earthquake/tsunami (March 2011) → equities fell 20.4%; COVID-19 pandemic → S&P 500 fell ~34% (Feb–Mar 2020); sudden uprisings, invasions, natural disasters</li>
+        </ul>
+      </div>
+      <div class="risk-card thematic">
+        <div class="r-title">Thematic Risk</div>
+        <ul>
+          <li><strong>Known risks that evolve and expand over time</strong></li>
+          <li>Low-velocity, long-term impact</li>
+          <li>Difficult to act on because gradual development makes prioritization hard</li>
+          <li><strong>Examples:</strong> Climate change, pattern migration, rise of populism, terrorism, cyber threats (Equifax breach 2017: −34.9% in 1 week; broader industry cybersecurity cost increases)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Assessing Geopolitical Risk — Three Dimensions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Definition</th><th>Key Considerations</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Likelihood</td>
+            <td>Probability the risk will occur</td>
+            <td>More art than science. Collaborative/globalized countries: lower likelihood but more vulnerable when risk occurs. Internal stability, economic need, and leadership motivations increase likelihood.</td>
+          </tr>
+          <tr>
+            <td>Velocity</td>
+            <td>Speed at which risk affects investor portfolios</td>
+            <td><strong>High velocity (short-term):</strong> Black swan/exogenous events → market volatility, flight to quality. <strong>Medium-term:</strong> Company costs/valuations impaired. <strong>Low velocity (long-term):</strong> ESG impacts, structural changes to asset allocation. Note: some risks have BOTH speeds (Brexit: immediate GBP fall + long-term structural damage).</td>
+          </tr>
+          <tr>
+            <td>Size & Nature of Impact</td>
+            <td>Magnitude and breadth of the risk's effect on portfolios</td>
+            <td><strong>Discrete impact:</strong> One company/sector affected. <strong>Broad impact:</strong> Entire sector, country, or global economy. Impact is amplified during economic downturns. High-impact risks merit extensive analysis; low-impact risks may not.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Three Dimensions Together</div>
+      <p>Never assess likelihood, velocity, or impact in isolation — they must be considered <em>jointly</em>. A high-likelihood risk with low impact may not merit action. A low-likelihood risk with catastrophic impact warrants scenario planning even without regular monitoring. The combination determines portfolio action priority.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: INVESTMENT IMPACT -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Geopolitical Risk & the Investment Process</h2>
+    </div>
+
+    <h3>How Geopolitical Risk Manifests in Portfolios</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Velocity</th><th>Market Impact</th><th>Asset Classes Affected</th><th>Investor Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-red">High (Short-term)</span></td>
+            <td>Immediate asset price volatility; "flight to quality" (buy safe assets, sell risky assets)</td>
+            <td>Commodities, FX, equities, government bonds (yields fall)</td>
+            <td>Tactical portfolio changes; hedging; potential buying opportunity</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Medium-term</span></td>
+            <td>Impaired company processes, costs, and investment opportunities → lower valuations. Sector-specific effects.</td>
+            <td>Equities of specific sectors; corporate bonds</td>
+            <td>Sector rotation; revaluation of affected companies</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Low (Long-term)</span></td>
+            <td>Structural impacts on economic growth, revenue, supply chains; ESG concerns; higher required discount rates</td>
+            <td>Asset allocation across asset classes and geographies; investment styles</td>
+            <td>Strategic asset allocation shift; reduce geographic exposure; long-horizon positioning</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Investment Consequences</h3>
+    <div class="card">
+      <p><strong>Higher discount rate / risk premium:</strong> For countries/sectors perceived to be at consistent geopolitical risk, investors require higher compensation → higher discount rate → lower asset valuations. This is why EM/frontier market assets trade at a discount to developed markets.</p>
+      <p><strong>Flight to quality:</strong> During high-velocity events, investors sell risky assets (equities, EM currencies, commodities) and buy safe assets (US Treasuries, gold, CHF, JPY). US 10-yr yield fell ~68% (1.57% → 0.54%) during COVID March 2020 selloff.</p>
+      <p><strong>Comparative advantage disruption:</strong> Geopolitical tools can tilt comparative advantage — labor and capital flow away from high-risk regions → lower growth, higher required returns.</p>
+    </div>
+
+    <h3>Scenario Analysis & Signposting</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Scenario Analysis</div>
+        <ul>
+          <li>Evaluate portfolio outcomes across potential states of the world</li>
+          <li>Start with base case → upside and downside scenarios</li>
+          <li>Can be qualitative or quantitative (stylized factor sensitivity)</li>
+          <li>Risk: groupthink — teams must build creative, diverse processes</li>
+          <li>Goal: strengthen conviction and enable opportune investment action</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Signposting (Traffic Light System)</div>
+        <ul>
+          <li><span class="tag tag-green">Green</span> = Low likelihood/velocity/impact → no action needed</li>
+          <li><span class="tag tag-yellow">Amber</span> = Medium → higher caution and preparedness</li>
+          <li><span class="tag tag-red">Red</span> = High → action plan necessary</li>
+          <li>Key rule: distinguish <strong>politics</strong> (signposts) from <strong>policy</strong> (actual portfolio drivers). Policy changes create durable impacts; political noise often does not.</li>
+          <li>Example: Brexit signposts went green → amber (referendum announced 2015) → red (polls showed Leave majority, May 2016)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Acting on Geopolitical Risk</h3>
+    <div class="card">
+      <p><strong>Top-down (asset allocation):</strong> Adjust geographic exposures based on likelihood, velocity, and impact. Countries with consistent multilateral history → more reliable investments, higher capital flows. Countries with consistent military threat → lower growth potential, reduced allocation.</p>
+      <p><strong>Bottom-up (portfolio management):</strong> Use geopolitical risk as a factor in multifactor models. Highly diversified production → higher likelihood exposure but lower impact (multiple production alternatives). Use as binary yes/no factor or adjust confidence intervals in other factors.</p>
+      <p><strong>Investor-specific application:</strong> Low risk tolerance → reduce geopolitical exposure through low-volatility choices or hedging. Long time horizon → exogenous shocks may be buying opportunities. Short time horizon / near retirement → same shock could critically impair terminal portfolio value.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Key Exam Point — Politics vs. Policy</div>
+      <p>Big political differences between leaders don't automatically create large investment impacts. What matters is the <strong>policies enacted</strong>, not the political rhetoric. Analysts who focus on policy changes (trade rules, capital controls, sanctions, regulations) make better investment decisions than those distracted by political theater.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(212,130,74,0.1);border-color:rgba(212,130,74,0.3);color:var(--orange);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;line-height:2.1;">
+        <li>✅ Geopolitics = study of how geography affects politics and international relations.</li>
+        <li>✅ State actors = national govts controlling resources/security. Non-state actors = companies, NGOs, individuals (drivers of globalization).</li>
+        <li>✅ Cooperation spectrum: Non-cooperative (arbitrary rules, restricted flows) → Cooperative (rules standardization, free movement, reciprocation).</li>
+        <li>✅ Hierarchy of national interests: survival needs at top; nice-but-not-essential at bottom. Conflicts resolved by priority order.</li>
+        <li>✅ Soft power = influence without force (cultural programs, exchanges, advertising). Hard power = military/economic coercion.</li>
+        <li>✅ Globalization = trade, capital flows, currency exchange, cultural exchange. Primarily driven by non-state actors. Nationalism = promotes own interests to detriment of others.</li>
+        <li>✅ 3 motivations for globalization: ↑ profits (↑ sales or ↓ costs), access to resources/markets, intrinsic gain.</li>
+        <li>✅ 4 costs of globalization: unequal gains, lower ESG standards, political backlash/nationalism, supply chain interdependence.</li>
+        <li>✅ Portfolio flows = short-term (stocks, bonds). FDI = long-term (productive capacity).</li>
+        <li>✅ <strong>IMF:</strong> Monetary system stability + conditional emergency lending (BOP crises). Founded Bretton Woods 1945.</li>
+        <li>✅ <strong>World Bank:</strong> Poverty reduction + development. IBRD (AAA market-based loans) + IDA (interest-free loans/grants to poorest). Neither operates for profit.</li>
+        <li>✅ <strong>WTO:</strong> Multilateral trade rules + dispute settlement. Founded 1995, replaced GATT (1947). China joined Dec 2001.</li>
+        <li>✅ 4 archetypes: <strong>Autarky</strong> (non-coop + nationalist), <strong>Hegemony</strong> (non-coop + globalized), <strong>Multilateralism</strong> (coop + globalized), <strong>Bilateralism</strong> (coop + nationalist). Watch direction of movement, not just position.</li>
+        <li>✅ 3 tool types: National Security (armed conflict, espionage, alliances), Economic (trade agreements, nationalization, VERs, tariffs), Financial (currency exchange, foreign investment, sanctions).</li>
+        <li>✅ 3 risk types: <strong>Event</strong> (known date, unknown outcome — Brexit), <strong>Exogenous</strong> (sudden, black swan — Japan 2011, COVID 2020), <strong>Thematic</strong> (slow-building known — climate, cyber, terrorism).</li>
+        <li>✅ 3 assessment dimensions: Likelihood + Velocity + Size/Nature of Impact. Must be considered together.</li>
+        <li>✅ High-velocity risks → immediate asset price volatility; flight to quality (buy govts/safe assets, sell equities/EM).</li>
+        <li>✅ Consistent geopolitical risk → higher required discount rate → lower asset valuations → EM discount vs. developed markets.</li>
+        <li>✅ Signposting: Green → Amber → Red. Track policy changes, not political noise.</li>
+        <li>✅ Scenario analysis combats geopolitical risk non-linearity; requires diverse thinking to avoid groupthink.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 5: Introduction to Geopolitics · Exam Prep Notes
+</footer>
+</body>
+</html>

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 2: Security Market Indexes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1420 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .prop-block { border-radius: 6px; padding: 18px 22px; margin: 14px 0; }
+  .prop-blue { background: rgba(76,139,201,0.08); border: 1px solid rgba(76,139,201,0.3); }
+  .prop-green { background: rgba(76,201,138,0.08); border: 1px solid rgba(76,201,138,0.3); }
+  .prop-yellow { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); }
+  .prop-red { background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.3); }
+  .prop-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; text-transform: uppercase; }
+  .prop-blue .prop-label { color: var(--accent2); }
+  .prop-green .prop-label { color: var(--accent3); }
+  .prop-yellow .prop-label { color: var(--accent); }
+  .prop-red .prop-label { color: var(--danger); }
+  .prop-block ul, .prop-block ol { padding-left: 20px; }
+  .prop-block li { font-size: 14px; color: var(--text); margin-bottom: 5px; }
+
+  .weight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+  @media (max-width: 860px) { .weight-grid { grid-template-columns: 1fr 1fr; } }
+  .weight-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+  .weight-card .wc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .weight-card .wc-formula { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #e8c97a; margin-bottom: 10px; line-height: 1.6; }
+  .weight-card ul { padding-left: 14px; }
+  .weight-card li { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 2</div>
+  <h1>Security Market <span>Indexes</span></h1>
+  <p>Exam-ready notes: index definitions, price vs. total return calculations, multi-period chaining, all four weighting methods with formulas and pros/cons, rebalancing vs. reconstitution, uses of indexes, equity/fixed-income/alternative indexes.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Index Basics</a>
+  <a class="toc-item" href="#s2">02 · Price Return Formula</a>
+  <a class="toc-item" href="#s3">03 · Total Return Formula</a>
+  <a class="toc-item" href="#s4">04 · Multi-Period Calculations</a>
+  <a class="toc-item" href="#s5">05 · Index Construction — 5 Decisions</a>
+  <a class="toc-item" href="#s6">06 · Weighting Methods</a>
+  <a class="toc-item" href="#s7">07 · Weighting Comparison Table</a>
+  <a class="toc-item" href="#s8">08 · Rebalancing &amp; Reconstitution</a>
+  <a class="toc-item" href="#s9">09 · Uses of Market Indexes</a>
+  <a class="toc-item" href="#s10">10 · Equity Indexes</a>
+  <a class="toc-item" href="#s11">11 · Fixed-Income Indexes</a>
+  <a class="toc-item" href="#s12">12 · Alternative Investment Indexes</a>
+  <a class="toc-item" href="#s13">13 · Representative Indexes</a>
+  <a class="toc-item" href="#s14">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: INDEX BASICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Index Basics — Definitions</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Security Market Index</div>
+      <div class="def-body">Represents a given security market, market segment, or asset class. Constructed as a portfolio of <strong>constituent securities</strong>. Value is calculated regularly using actual or estimated market prices of constituents.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Price Return Index (Price Index)</div>
+        <ul>
+          <li>Reflects <strong>only prices</strong> of constituent securities</li>
+          <li>Does NOT include income (dividends/interest)</li>
+          <li>Value increases only when constituent prices rise</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Total Return Index</div>
+        <ul>
+          <li>Reflects prices <strong>PLUS reinvestment of all income</strong> received since inception (dividends and/or interest)</li>
+          <li>At inception: Total Return Index Value = Price Return Index Value</li>
+          <li>Over time: Total Return Index &gt; Price Return Index by increasing amount</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">The Divisor</div>
+      <div class="def-body">A number chosen at inception to set the index at a convenient initial value (e.g., 1,000). The index provider <strong>adjusts the divisor</strong> whenever non-price-related events occur (e.g., stock splits, constituent changes) to prevent artificial jumps or drops in the index value. Divisor adjustments preserve index continuity.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Quick History — First Indexes</div>
+      <p><strong>1884</strong>: Dow Jones Average (9 railroads + 2 industrials) introduced by Charles Dow and Edward Jones → eventually became the <strong>Dow Jones Transportation Average</strong>. <strong>May 1896</strong>: Dow Jones Industrial Average (DJIA) introduced with 12 stocks and initial value of <strong>40.94</strong>. Today: thousands of indexes across all asset classes worldwide.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: PRICE RETURN FORMULAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Price Return — Formulas &amp; Calculations</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Price Return Index Value</div>
+      <div class="f">V_PRI = Σ(nᵢ × Pᵢ) / D</div>
+      <div class="note">
+        V_PRI = value of the price return index<br>
+        nᵢ = number of units of constituent security i held in the index portfolio<br>
+        Pᵢ = unit price of constituent security i<br>
+        D = divisor (adjusted to preserve index continuity on non-price events)<br>
+        N = number of constituent securities
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Price Return of the Index (Single Period)</div>
+      <div class="f">PR_I = (V_PRI1 − V_PRI0) / V_PRI0</div>
+      <div class="note">
+        PR_I = price return of the index portfolio (decimal, e.g., 12% = 0.12)<br>
+        V_PRI1 = index value at end of period | V_PRI0 = index value at beginning<br><br>
+        Also equals the weighted average of individual security price returns:<br>
+        PR_I = Σ wᵢ × PRᵢ = w₁PR₁ + w₂PR₂ + ... + wₙPRₙ
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Price Return of Each Constituent Security</div>
+      <div class="f">PRᵢ = (Pᵢ1 − Pᵢ0) / Pᵢ0</div>
+      <div class="note">
+        PRᵢ = price return of constituent security i (decimal)<br>
+        Pᵢ1 = price of security i at end of period | Pᵢ0 = price at beginning of period
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: TOTAL RETURN FORMULAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Total Return — Formulas &amp; Calculations</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Total Return of the Index (Single Period)</div>
+      <div class="f">TR_I = (V_PRI1 − V_PRI0 + Inc_I) / V_PRI0</div>
+      <div class="note">
+        TR_I = total return of the index portfolio (decimal)<br>
+        Inc_I = total income (dividends and/or interest) from ALL securities in the index over the period<br>
+        Note: the denominator is V_PRI0 (price return index beginning value), NOT total return index beginning value<br><br>
+        Also equals the weighted average of individual security total returns:<br>
+        TR_I = Σ wᵢ × TRᵢ = w₁TR₁ + w₂TR₂ + ... + wₙTRₙ
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Total Return of Each Constituent Security</div>
+      <div class="f">TRᵢ = (P1ᵢ − P0ᵢ + Incᵢ) / P0ᵢ</div>
+      <div class="note">
+        TRᵢ = total return of constituent security i (decimal)<br>
+        P1ᵢ = price at end of period | P0ᵢ = price at beginning of period<br>
+        Incᵢ = dividends and/or interest from security i over the period
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Price Return vs. Total Return Index</div>
+      <p>Both versions use the <strong>same constituent securities and same weights</strong> — they differ only in whether income is included. At inception they are equal. The total return index grows faster than the price return index over time. On a CFA question, if the index pays dividends and the question asks for <strong>price return</strong> — do NOT add the income. If it asks for <strong>total return</strong> — you MUST add income to the numerator.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: MULTI-PERIOD CALCULATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Multi-Period Index Value Calculations</h2>
+    </div>
+
+    <div class="card">
+      <p>Calculating index values over multiple periods requires <strong>geometric linking</strong> (chain-multiplying) of period returns. Simple addition of returns is WRONG for multi-period calculations.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Multi-Period Price Return Index Value</div>
+      <div class="f">V_PRI_T = V_PRI_0 × (1 + PR_I1) × (1 + PR_I2) × ... × (1 + PR_IT)</div>
+      <div class="note">
+        V_PRI_0 = index value at inception | V_PRI_T = index value at time T<br>
+        PR_It = price return for period t (decimal)<br><br>
+        Example: Inception value = 1,000; Period 1 return = 5%; Period 2 return = 3%<br>
+        End of Period 1: 1,000 × 1.05 = 1,050<br>
+        End of Period 2: 1,000 × 1.05 × 1.03 = 1,081.50
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Multi-Period Total Return Index Value</div>
+      <div class="f">V_TRI_T = V_TRI_0 × (1 + TR_I1) × (1 + TR_I2) × ... × (1 + TR_IT)</div>
+      <div class="note">
+        V_TRI_0 = total return index value at inception<br>
+        TR_It = total return for period t (includes income)<br><br>
+        Example (same index, adding income): Period 1 total return = 6.5%; Period 2 = 5%<br>
+        End of Period 1: 1,000 × 1.065 = 1,065<br>
+        End of Period 2: 1,000 × 1.065 × 1.05 = 1,118.25<br><br>
+        Compare: Price return index = 1,081.50 vs. Total return index = 1,118.25<br>
+        The gap WIDENS over time as more income is reinvested.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Geometric Linking — Why Not Arithmetic?</div>
+      <p>If an index returns +50% in Year 1 and −50% in Year 2, arithmetic says 0% cumulative. But the real answer: 1,000 × 1.50 × 0.50 = 750. You have LOST 25%. Always chain-multiply. This is the same principle as compound returns in any investment context.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: INDEX CONSTRUCTION — 5 DECISIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Index Construction — 5 Key Decisions</h2>
+    </div>
+
+    <div class="card">
+      <p>Building an index is like building a portfolio. Index providers must decide:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Which target market</strong> should the index represent?</li>
+        <li style="margin-bottom:6px;"><strong>Which securities</strong> to select from that target market?</li>
+        <li style="margin-bottom:6px;"><strong>How much weight</strong> to allocate to each security?</li>
+        <li style="margin-bottom:6px;"><strong>When to rebalance</strong> the index?</li>
+        <li style="margin-bottom:6px;"><strong>When to reconstitute</strong> (re-examine security selection and weighting)?</li>
+      </ol>
+    </div>
+
+    <h3>Target Market &amp; Security Selection</h3>
+    <div class="card">
+      <p>The target market may be defined by:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Asset class</strong>: equities, fixed income, real estate, commodities, hedge funds</li>
+        <li><strong>Geography</strong>: Japan, South Africa, Latin America, Europe</li>
+        <li><strong>Exchange</strong>: Shanghai, Toronto, Tokyo</li>
+        <li><strong>Other characteristics</strong>: economic sector, company size, investment style, duration, credit quality</li>
+      </ul>
+      <p style="margin-top:10px;">Once target market is defined → determines the <strong>investment universe</strong>. Index may include all securities in target market OR a representative sample.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Fixed-Number Indexes</div>
+        <p>Number of securities stated in name. Examples: <strong>S&amp;P 500</strong> (500 stocks), <strong>FTSE 100</strong> (100 stocks), <strong>DJIA</strong> (30 stocks). Selection committee may use subjective criteria (e.g., S&amp;P 500, S&amp;P BSE SENSEX).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Variable-Number Indexes</div>
+        <p>Number varies to reflect changes in target market or to maintain a % of market. Example: <strong>TOPIX</strong> — includes ALL stocks in Tokyo Stock Exchange First Section meeting criteria (shares outstanding, shareholders, market cap). Stocks removed if they no longer meet criteria.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: WEIGHTING METHODS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Weighting Methods — Detail</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — 4 Weighting Methods: "PEMF"</div>
+      <p><strong>P</strong>rice weighting · <strong>E</strong>qual weighting · <strong>M</strong>arket-cap weighting (incl. float-adjusted) · <strong>F</strong>undamental weighting. Know the formula, advantage, disadvantage, and key example for each.</p>
+    </div>
+
+    <h3>1 — Price Weighting</h3>
+    <div class="prop-block prop-blue">
+      <div class="prop-label">Price Weighting</div>
+      <div class="formula-box" style="margin:0 0 12px;">
+        <div class="label">Weight Formula</div>
+        <div class="f">wᵢᴾ = Pᵢ / Σ Pᵢ (sum of all prices)</div>
+        <div class="note">Initial divisor = number of securities in the index. After stock split → adjust divisor so index value is unchanged.<br>
+        New divisor = Σ prices after split / index value before split</div>
+      </div>
+      <ul>
+        <li><strong>Key example</strong>: DJIA (30 stocks, price-weighted); Nikkei 225 (modified price-weighted)</li>
+        <li><span class="highlight3">Advantage</span>: Simple to calculate and understand</li>
+        <li><span class="danger-text">Disadvantage</span>: Weights are arbitrary — determined solely by price level, not economic significance. Higher-priced stocks dominate regardless of company size. A stock split causes arbitrary weight changes in ALL constituents. A $100 stock has 10× the weight of a $10 stock even if the $10 company is far larger by market cap</li>
+        <li><strong>Rebalancing</strong>: NOT rebalanced — weights self-adjust with prices</li>
+      </ul>
+    </div>
+
+    <h3>2 — Equal Weighting</h3>
+    <div class="prop-block prop-green">
+      <div class="prop-label">Equal Weighting</div>
+      <div class="formula-box" style="margin:0 0 12px;">
+        <div class="label">Weight Formula</div>
+        <div class="f">wᵢᴱ = 1 / N</div>
+        <div class="note">N = number of securities in the index. Initial investment is equal dollar amount in each security. Number of shares per security = (equal dollar investment) / (share price).</div>
+      </div>
+      <ul>
+        <li><span class="highlight3">Advantage</span>: Simple; gives small companies equal footing with large ones</li>
+        <li><span class="danger-text">Disadvantages</span>: (1) Large-cap stocks are <strong>underrepresented</strong>; small-cap stocks are <strong>overrepresented</strong> relative to their actual market weight. (2) Weights drift immediately after inception as prices change → requires <strong>frequent rebalancing</strong>. (3) Weights are arbitrarily assigned by index provider (not by market)</li>
+        <li><strong>Rebalancing</strong>: <span class="danger-text">Requires most frequent rebalancing</span> of all methods — continuously drifts from equal weights as prices change</li>
+      </ul>
+    </div>
+
+    <h3>3 — Market-Capitalization Weighting</h3>
+    <div class="prop-block prop-yellow">
+      <div class="prop-label">Market-Cap Weighting (Value Weighting)</div>
+      <div class="formula-box" style="margin:0 0 12px;">
+        <div class="label">Market Cap Weight Formula</div>
+        <div class="f">wᵢᴹ = (Qᵢ × Pᵢ) / Σ (Qⱼ × Pⱼ)</div>
+        <div class="note">Qᵢ = shares outstanding of security i | Pᵢ = share price<br>
+        Numerator = market cap of security i; Denominator = total market cap of all constituents</div>
+      </div>
+      <div class="formula-box" style="margin:0 0 12px;">
+        <div class="label">Float-Adjusted Market Cap Weight Formula</div>
+        <div class="f">wᵢᴹ = (fᵢ × Qᵢ × Pᵢ) / Σ (fⱼ × Qⱼ × Pⱼ)</div>
+        <div class="note">fᵢ = fraction of shares outstanding in market float (publicly available shares)<br>
+        Excludes: shares held by controlling shareholders, other corporations, governments, and (for global indexes) shares unavailable to foreign investors.<br>
+        <strong>Most modern market-cap indexes are float-adjusted.</strong> "Free-float-adjusted" is another term.</div>
+      </div>
+      <ul>
+        <li><strong>Key examples</strong>: S&amp;P 500, MSCI World, TOPIX, Russell 3000, FTSE 100 — virtually all major modern indexes</li>
+        <li><span class="highlight3">Advantage</span>: Constituent securities are held in proportion to their value in the target market → reflects actual economic weight</li>
+        <li><span class="danger-text">Disadvantages</span>: (1) Overweights stocks that have risen in price (may be overvalued) and underweights stocks that have fallen (may be undervalued). (2) <strong>Momentum effect</strong> — winning stocks get larger weight over time. (3) Closely-held stocks distort weights without float adjustment</li>
+        <li><strong>Rebalancing</strong>: <span class="highlight3">Largely self-rebalancing</span> — weights automatically adjust as prices change. Only adjusted manually for mergers, acquisitions, liquidations, and other corporate actions</li>
+      </ul>
+    </div>
+
+    <h3>4 — Fundamental Weighting</h3>
+    <div class="prop-block prop-red">
+      <div class="prop-label">Fundamental Weighting</div>
+      <div class="formula-box" style="margin:0 0 12px;">
+        <div class="label">Fundamental Weight Formula</div>
+        <div class="f">wᵢᶠ = Fᵢ / Σ Fⱼ</div>
+        <div class="note">Fᵢ = a fundamental size measure of company i (e.g., book value, earnings, revenues, cash flow, dividends, number of employees)<br>
+        Weight is based on economic fundamentals, NOT market price.</div>
+      </div>
+      <ul>
+        <li><span class="highlight3">Key properties</span>:
+          <ul>
+            <li><strong>"Value" tilt</strong>: higher ratios of book value/earnings/dividends to market value than market-cap-weighted counterpart → favors cheap (high-yield) stocks</li>
+            <li><strong>Contrarian effect</strong>: weights shift away from stocks that have risen in price (become expensive) and toward stocks that have fallen (become cheap) at rebalancing → opposite of market-cap momentum</li>
+            <li>Overweights high earnings yield stocks; underweights low earnings yield stocks relative to market cap weights</li>
+          </ul>
+        </li>
+        <li><span class="danger-text">Disadvantage</span>: More complex; requires fundamental data; may not reflect current market information; may overweight value traps</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Market-Cap vs. Fundamental: Momentum vs. Contrarian</div>
+      <p><strong>Market-cap weighted</strong> → <span class="danger-text">momentum effect</span>: rising stocks get larger weight → like buying more of what has already gone up. <strong>Fundamental weighted</strong> → <span class="highlight3">contrarian effect</span>: at rebalancing, trims winners (now more expensive) and adds to losers (now cheaper). This distinction is a common exam question. "Which weighting method has a value tilt?" → Fundamental. "Which mimics a momentum strategy?" → Market-cap.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: WEIGHTING COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Weighting Methods — Master Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Weight Determinant</th>
+            <th>Formula</th>
+            <th>Real Example</th>
+            <th>Key Advantage</th>
+            <th>Key Disadvantage</th>
+            <th>Rebalancing Need</th>
+            <th>Tilt / Effect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Price</td>
+            <td>Share price level</td>
+            <td>Pᵢ / Σ P</td>
+            <td>DJIA, Nikkei 225</td>
+            <td>Simple</td>
+            <td>Arbitrary weights; stock splits distort all weights; high price ≠ large company</td>
+            <td>None (self-adjusting)</td>
+            <td>Favors high-price stocks</td>
+          </tr>
+          <tr>
+            <td>Equal</td>
+            <td>1/N — equal to all</td>
+            <td>1/N</td>
+            <td>Some CRB indexes, HFRX Equal Weighted</td>
+            <td>Simple; small-cap representation</td>
+            <td>Large caps underrepresented; requires frequent rebalancing; small stocks overweighted</td>
+            <td><span class="tag tag-red">Highest — continuous drift</span></td>
+            <td>Small-cap tilt</td>
+          </tr>
+          <tr>
+            <td>Market-Cap</td>
+            <td>Market capitalization (shares × price)</td>
+            <td>QᵢPᵢ / Σ QP</td>
+            <td>S&amp;P 500, MSCI World, FTSE 100, Russell 3000</td>
+            <td>Reflects true market weight; largely self-rebalancing</td>
+            <td>Overweights overvalued stocks; momentum bias; closely-held distortion (fixed by float adjustment)</td>
+            <td><span class="tag tag-green">Low — largely self-rebalancing</span></td>
+            <td>Momentum effect</td>
+          </tr>
+          <tr>
+            <td>Float-Adjusted Market-Cap</td>
+            <td>Publicly available shares × price</td>
+            <td>fᵢQᵢPᵢ / Σ fQP</td>
+            <td>Most modern major indexes (S&amp;P 500, MSCI)</td>
+            <td>More accurately represents investable market; reduces closely-held stock distortion</td>
+            <td>Same momentum bias as market-cap; complex to calculate fᵢ</td>
+            <td><span class="tag tag-green">Low — largely self-rebalancing</span></td>
+            <td>Momentum effect</td>
+          </tr>
+          <tr>
+            <td>Fundamental</td>
+            <td>Economic size (earnings, book value, revenue, dividends, etc.)</td>
+            <td>Fᵢ / Σ F</td>
+            <td>RAFI indexes, GDP-weighted multi-market indexes</td>
+            <td>Value tilt; contrarian effect; not distorted by price momentum</td>
+            <td>Complex; requires fundamental data; may lag markets</td>
+            <td><span class="tag tag-yellow">Medium — rebalanced periodically</span></td>
+            <td>Value tilt + contrarian effect</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — Same Stocks, Different Returns</div>
+      <p>From the module's example: the <strong>same 5 securities</strong> produced price returns of <strong>3.45% (price-weighted)</strong>, <strong>10.40% (equal-weighted)</strong>, and <strong>1.49% (market-cap-weighted)</strong>. The weighting method alone determines the return. On the exam, if asked why two indexes of the same market have different returns, the answer is often the weighting method.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: REBALANCING & RECONSTITUTION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Rebalancing &amp; Reconstitution</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Rebalancing</div>
+        <p><strong>Definition</strong>: Adjusting the <em>weights</em> of existing constituent securities back to their target weights.</p>
+        <ul style="margin-top:8px;">
+          <li>Done on regularly scheduled dates — usually <strong>quarterly</strong></li>
+          <li>Necessary because prices change → weights drift from targets</li>
+          <li>Creates <strong>turnover</strong> in the index (sells winners, buys laggards for equal-weighted)</li>
+          <li><strong>Price-weighted</strong>: no rebalancing (weights = prices, self-updating)</li>
+          <li><strong>Market-cap-weighted</strong>: minimal rebalancing (self-rebalances via price changes; only manual adjustments for corporate actions)</li>
+          <li><strong>Equal-weighted</strong>: requires most frequent rebalancing</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Reconstitution</div>
+        <p><strong>Definition</strong>: Changing the <em>constituent securities</em> in the index (adding/removing securities).</p>
+        <ul style="margin-top:8px;">
+          <li>Occurs on <strong>reconstitution dates</strong> — index provider reviews all constituents, re-applies inclusion criteria</li>
+          <li>Securities that no longer qualify are removed; new qualifying securities are added</li>
+          <li>Reflects market changes: bankruptcies, de-listings, mergers, acquisitions</li>
+          <li>Creates <strong>turnover</strong> in the index; requires weight adjustments for all remaining constituents</li>
+          <li>Style indexes have <strong>higher turnover</strong> than broad market indexes — stocks frequently migrate between style categories</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Reconstitution — Market Impact (Russell 2000 Example)</h3>
+    <div class="card">
+      <p>The <strong>Russell 2000</strong> reconstitutes annually. Because many funds use it as a benchmark, managers <strong>front-run</strong> reconstitution:</p>
+      <ul style="margin-top:8px;">
+        <li>Buy stocks expected to be <strong>added</strong> → drives prices <strong>up</strong> before reconstitution date</li>
+        <li>Sell stocks expected to be <strong>removed</strong> → drives prices <strong>down</strong> before reconstitution date</li>
+        <li>Example: Uranium Energy Corporation (UEC) was anticipated to join Russell 2000 in 2009 → stock rose <span class="highlight3">+300% before announcement</span>, reaching <span class="highlight3">+400% by reconstitution date</span></li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Rebalancing vs. Reconstitution — Don't Confuse Them</div>
+      <p><strong>Rebalancing</strong> = changing weights (same securities, different proportions). <strong>Reconstitution</strong> = changing the securities themselves (add/remove constituents). Both create turnover. Reconstitution happens less frequently but has much larger price impacts, especially for widely-followed indexes. Remember: reconstitution is part of the rebalancing cycle.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: USES OF MARKET INDEXES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Uses of Security Market Indexes</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — 5 Uses of Indexes: "G-PABS"</div>
+      <p><strong>G</strong>auges of market sentiment · <strong>P</strong>roxies for measuring/modeling returns &amp; risk · <strong>A</strong>sset class proxies for asset allocation models · <strong>B</strong>enchmarks for active portfolio managers · <strong>S</strong>eed model portfolios for index funds/ETFs</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Use</th>
+            <th>Description</th>
+            <th>Key Detail / Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gauge of Market Sentiment</td>
+            <td>Original purpose — indicator of collective market opinion/confidence</td>
+            <td>DJIA: frequently quoted, long history, but only 30 stocks → not fully representative of all US equities</td>
+          </tr>
+          <tr>
+            <td>Proxy for Market Returns &amp; Systematic Risk</td>
+            <td>Used to represent market portfolio in CAPM; beta calculation; Sharpe/information ratio benchmarking</td>
+            <td>TOPIX = proxy for Japanese market; S&amp;P 500 = proxy for US market. Alpha = return of active portfolio − return of passive portfolio with same beta. Beta of active portfolio → construct equivalent passive benchmark (e.g., 95% MSCI World + 5% cash)</td>
+          </tr>
+          <tr>
+            <td>Asset Class Proxy (Asset Allocation Models)</td>
+            <td>Indexes represent risk/return profiles of asset classes; provide historical data for modeling</td>
+            <td>Enables mean-variance optimization — "what is the expected return and standard deviation of equities?" → use index historical data</td>
+          </tr>
+          <tr>
+            <td>Benchmark for Active Managers</td>
+            <td>Compare active manager's returns to the index the manager's strategy most closely resembles</td>
+            <td><strong>Critical</strong>: benchmark must match strategy. Small-cap manager → FTSE Global Small Cap Index (not S&amp;P 500). Wrong benchmark → wrong conclusion about manager skill. Manager might underperform S&amp;P 500 but outperform small-cap benchmark → correct evaluation depends on proper benchmark choice</td>
+          </tr>
+          <tr>
+            <td>Model Portfolio for Index Products</td>
+            <td>Indexes become the portfolio for index mutual funds and ETFs</td>
+            <td>CAPM → market portfolio → broad index funds. ETFs then created for existing indexes; later new narrow indexes created specifically for new ETFs. E.g., VanEck Vietnam ETF → enables exposure to Vietnamese equities</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: EQUITY INDEXES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Equity Indexes</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Broad Market Indexes</div>
+        <p>Represent an <strong>entire equity market</strong> — typically &gt;90% of selected market. Usually market-cap weighted.</p>
+        <ul style="margin-top:8px;">
+          <li><strong>SSE Composite</strong>: all Shanghai Stock Exchange stocks</li>
+          <li><strong>Wilshire 5000</strong>: all US equities with available prices (entire US market)</li>
+          <li><strong>Russell 3000</strong>: largest 3,000 US stocks ≈ 98% of US equity market</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Multi-Market Indexes</div>
+        <p>Comprise indexes from <strong>multiple countries/regions</strong> — represent multiple security markets simultaneously. Can be global, regional, or developmental.</p>
+        <ul style="margin-top:8px;">
+          <li>MSCI classifies: <strong>Developed</strong>, <strong>Emerging</strong>, <strong>Frontier</strong> markets</li>
+          <li>Geographic regions: Americas / Europe &amp; Middle East / Asia-Pacific</li>
+          <li>MSCI ACWI covers 23 developed + 24 emerging markets</li>
+          <li><strong>GDP-weighted</strong> multi-market indexes: weight countries by GDP (not market cap) → addresses concentration risk (e.g., Japan was 60% of MSCI EAFE in 1987)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Sector Indexes</div>
+        <p>Track <strong>specific economic sectors</strong>: consumer goods, energy, finance, health care, technology — on national, regional, or global basis.</p>
+        <ul style="margin-top:8px;">
+          <li>Organized as families (sum of sector indexes = broad market index)</li>
+          <li>Used for <strong>performance attribution</strong>: was manager better at stock selection or sector allocation?</li>
+          <li>Serve as model portfolios for sector ETFs</li>
+          <li>No universally agreed classification method</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Style Indexes</h3>
+    <div class="card">
+      <p>Represent securities classified by <strong>market cap</strong>, <strong>value/growth</strong>, or a combination. Reflect specific investing styles.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Market-Cap Categories</div>
+        <ul>
+          <li><strong>Large cap</strong></li>
+          <li><strong>Mid cap</strong></li>
+          <li><strong>Small cap</strong></li>
+        </ul>
+        <p style="margin-top:8px; font-size:13px; color:var(--muted);">No universal definition — cutoffs vary by provider. Classification can be absolute (e.g., &lt;€100M) or relative (e.g., smallest 2,500 stocks).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Value / Growth Classification</div>
+        <p>Providers use ratios to classify: low P/B, low P/E, high dividend yield → <strong>Value</strong>. High growth expectations → <strong>Growth</strong>. Different providers use different factors → same "small-cap value" label may have different constituents across providers.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">6 Style Index Categories (3 Cap × 2 Style)</div>
+      <div class="f">
+        Large-Cap Value  |  Large-Cap Growth<br>
+        Mid-Cap Value    |  Mid-Cap Growth<br>
+        Small-Cap Value  |  Small-Cap Growth
+      </div>
+      <div class="note">Style indexes have HIGHER turnover than broad market indexes — stocks frequently migrate between categories as valuations and market caps change on reconstitution dates.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: FIXED-INCOME INDEXES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Fixed-Income Indexes</h2>
+    </div>
+
+    <h3>Construction Challenges — Why Fixed Income is Harder than Equity</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;"><strong>Enormous number of securities</strong>: fixed-income universe is many times larger than equities — governments, agencies, and corporations each issue many different securities with varying characteristics</li>
+        <li style="margin-bottom:8px;"><strong>Pricing data availability</strong>: fixed-income markets are predominantly <strong>dealer markets</strong> → many securities don't trade frequently → index providers must contact dealers for prices OR estimate prices using similar traded securities</li>
+        <li style="margin-bottom:8px;"><strong>Illiquidity</strong>: many bonds are illiquid → difficult and costly to replicate → index tracking error tends to be higher than for equity indexes</li>
+        <li style="margin-bottom:8px;"><strong>Turnover from maturity</strong>: bonds mature regularly, creating constant turnover as they're replaced by new issues</li>
+      </ol>
+    </div>
+
+    <h3>Classification Dimensions for Fixed-Income Indexes</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">By Issuer / Type</div>
+        <ul>
+          <li>Government (sovereign)</li>
+          <li>Government agency</li>
+          <li>Corporate</li>
+          <li>Collateralized / Securitized</li>
+          <li>Municipal</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">By Other Characteristics</div>
+        <ul>
+          <li>Type of financing: general obligation vs. collateralized</li>
+          <li>Currency of payments</li>
+          <li>Maturity: short (1–3yr), intermediate (3–10yr), long (&gt;10yr)</li>
+          <li>Credit quality: investment grade (BBB– or better) vs. high yield</li>
+          <li>Inflation protection: nominal vs. inflation-linked (TIPS)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Types of Fixed-Income Indexes</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Key Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aggregate / Broad Market</td>
+            <td>Represent an entire bond market across multiple sectors and credit ratings</td>
+            <td><strong>Bloomberg Barclays US Aggregate</strong>: ~8,000 securities — US Treasuries, agency, corporate, MBS, ABS, CMBS. First fixed-income index created</td>
+          </tr>
+          <tr>
+            <td>Market Sector Indexes</td>
+            <td>Subdivisions of aggregate indexes by sector: government, agency, collateralized, corporate</td>
+            <td>US Treasury Index, US Corporate Bond Index</td>
+          </tr>
+          <tr>
+            <td>Style Indexes</td>
+            <td>Classified by maturity and/or credit quality</td>
+            <td>Short-term (1–3yr) investment-grade; Long-term BBB index</td>
+          </tr>
+          <tr>
+            <td>High-Yield Indexes</td>
+            <td>Sub-investment-grade bonds (below BBB– / Baa3)</td>
+            <td>Markit iBoxx Euro High-Yield Bond Index (rebalanced monthly)</td>
+          </tr>
+          <tr>
+            <td>Inflation-Linked Indexes</td>
+            <td>Inflation-protected securities (TIPS in US)</td>
+            <td>Bloomberg Barclays US TIPS Index</td>
+          </tr>
+          <tr>
+            <td>Emerging Market Indexes</td>
+            <td>Bonds issued by emerging market governments/corporations</td>
+            <td>JP Morgan EMBI (Emerging Market Bond Index)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Fixed-Income Replication is Harder than Equity</div>
+      <p>Because fixed-income indexes contain thousands of bonds, many of which are illiquid, <strong>exact replication is impractical</strong>. Fund managers typically use <strong>stratified sampling</strong> — hold a representative subset across maturity, credit quality, and sector cells — rather than buying every bond in the index. This is a key difference from equity index funds.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: ALTERNATIVE INVESTMENT INDEXES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h2>Indexes for Alternative Investments</h2>
+    </div>
+
+    <h3>Commodity Indexes</h3>
+    <div class="card">
+      <ul>
+        <li>Consist of <strong>futures contracts</strong> on commodities (NOT spot/physical commodities directly)</li>
+        <li>Cover: agricultural products, livestock, precious metals, common metals, energy</li>
+        <li>No obvious weighting mechanism → providers create own methods:
+          <ul style="margin-top:6px;">
+            <li><strong>TR/CC CRB Index</strong>: fixed number of commodities, equally weighted</li>
+            <li><strong>S&amp;P GSCI</strong>: combines liquidity measures + world production values; allocates more weight to higher-priced commodities; energy-heavy (~50% more than CRB)</li>
+            <li>Some use fixed weights determined by committee</li>
+          </ul>
+        </li>
+        <li><span class="danger-text">Key issue</span>: Commodity index returns ≠ spot price returns because futures must be <strong>"rolled over"</strong> (replace expiring contracts with new ones). Index return = risk-free rate + change in futures prices + <strong>roll yield</strong>. Roll yield can be negative (contango) or positive (backwardation)</li>
+        <li>Different weighting methods → large differences in commodity exposure → very different risk/return profiles. Unlike equity/bond indexes of same market (which converge) → <span class="danger-text">two commodity indexes on same market can have very different returns</span></li>
+      </ul>
+    </div>
+
+    <h3>Real Estate Investment Trust (REIT) Indexes</h3>
+    <div class="card">
+      <ul>
+        <li>Three types of real estate indexes:
+          <ol style="margin-top:6px; padding-left:20px;">
+            <li><strong>Appraisal indexes</strong>: based on periodic property valuations (infrequent)</li>
+            <li><strong>Repeat sales indexes</strong>: based on price changes of properties sold multiple times (e.g., Case-Shiller)</li>
+            <li><strong>REIT indexes</strong>: based on publicly traded REIT shares → continuous pricing</li>
+          </ol>
+        </li>
+        <li>REIT indexes use shares of publicly traded REITs → calculated <strong>continuously</strong> (unlike appraisal/repeat sales which are infrequent)</li>
+        <li>REITs = corporations organized to invest in real estate (properties or mortgages); shares trade on stock exchanges</li>
+        <li>Key example: <strong>FTSE EPRA/NAREIT</strong> global REIT index family</li>
+        <li>REIT shares may also be constituents of broader equity market indexes</li>
+      </ul>
+    </div>
+
+    <h3>Hedge Fund Indexes</h3>
+    <div class="card">
+      <ul>
+        <li>Reflect returns on hedge funds; maintained by research organizations from voluntary databases</li>
+        <li>Most are <strong>equal-weighted</strong>; represent performance within a database at global or strategy level</li>
+        <li><span class="danger-text">Critical problems with hedge fund indexes:</span>
+          <ol style="margin-top:6px; padding-left:20px;">
+            <li><strong>Voluntary reporting</strong>: hedge funds are unregulated → not required to report to databases → each fund chooses which database(s) to report to → little overlap between indexes → different global hedge fund indexes can show very different performance for same period</li>
+            <li><strong>Survivorship bias</strong>: funds with poor performance are less likely to report or stop reporting → index overstates actual hedge fund performance (only surviving/successful funds tend to be included)</li>
+            <li><strong>Self-selection bias</strong>: constituents determine the index, not the index provider → index composition is not controlled</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Hedge Fund Index Survivorship Bias — High-Frequency Exam Topic</div>
+      <p>Survivorship bias causes hedge fund indexes to <strong>overstate true industry performance</strong>. Funds that blow up quietly stop reporting. Only the survivors (or the strong performers who choose to publicize results) appear in the index. This makes hedge fund benchmarking fundamentally different from equity/bond benchmarking and a go-to exam topic. Also: because <strong>constituents determine the index</strong> (not the provider), different databases have little overlap → two "global" hedge fund indexes may reflect vastly different performance.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 13: REPRESENTATIVE INDEXES WORLDWIDE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <h2>Representative Indexes — Quick Reference</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th># Securities</th>
+            <th>Weighting</th>
+            <th>Represents</th>
+            <th>Key Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DJIA</td>
+            <td>30</td>
+            <td>Price</td>
+            <td>US blue-chip companies</td>
+            <td>Oldest &amp; most widely known US equity index; WSJ editors choose stocks</td>
+          </tr>
+          <tr>
+            <td>Nikkei 225</td>
+            <td>225</td>
+            <td>Modified price</td>
+            <td>Japanese blue chips</td>
+            <td>High-priced shares weighted as a fraction → modification to reduce distortion</td>
+          </tr>
+          <tr>
+            <td>TOPIX</td>
+            <td>Varies</td>
+            <td>Float-adjusted market cap</td>
+            <td>All Tokyo SE First Section stocks (~93% of Japanese equity market)</td>
+            <td>Large number of very small, illiquid stocks → exact replication difficult</td>
+          </tr>
+          <tr>
+            <td>MSCI ACWI</td>
+            <td>Varies</td>
+            <td>Free-float-adjusted market cap</td>
+            <td>23 developed + 24 emerging markets</td>
+            <td>Price return and total return versions; USD and local currency versions</td>
+          </tr>
+          <tr>
+            <td>S&amp;P 500</td>
+            <td>500</td>
+            <td>Float-adjusted market cap</td>
+            <td>Large US companies</td>
+            <td>Committee-selected; proxy for US market in CAPM applications</td>
+          </tr>
+          <tr>
+            <td>Russell 3000</td>
+            <td>3,000</td>
+            <td>Market cap</td>
+            <td>~98% of US equity market</td>
+            <td>Reconstitutes annually → significant front-running effects</td>
+          </tr>
+          <tr>
+            <td>Bloomberg Barclays Global Aggregate</td>
+            <td>Varies</td>
+            <td>Market cap</td>
+            <td>Investment-grade bonds: North America, Europe, Asia</td>
+            <td>Formerly Lehman Brothers Global Aggregate</td>
+          </tr>
+          <tr>
+            <td>Markit iBoxx Euro High-Yield</td>
+            <td>Varies</td>
+            <td>Market cap (variations)</td>
+            <td>Sub-investment-grade EUR corporate bonds</td>
+            <td>Rebalanced monthly; provides yield, duration, convexity analytics</td>
+          </tr>
+          <tr>
+            <td>FTSE EPRA/NAREIT Global</td>
+            <td>Varies</td>
+            <td>Float-adjusted market cap</td>
+            <td>Real estate securities globally</td>
+            <td>REITs that constitute index also trade on stock exchanges; may appear in equity indexes</td>
+          </tr>
+          <tr>
+            <td>HFRX Global Hedge Fund Index</td>
+            <td>Varies</td>
+            <td>Asset-weighted</td>
+            <td>Overall HFR database (all hedge fund strategies)</td>
+            <td>Strategies: convertible arbitrage, distressed, market neutral, macro, relative value, etc.</td>
+          </tr>
+          <tr>
+            <td>HFRX Equal Weighted Strategies EUR</td>
+            <td>Varies</td>
+            <td>Equal-weighted</td>
+            <td>Same as HFRX Global but equal-weighted</td>
+            <td>EUR-denominated version of HFRX Global strategy set</td>
+          </tr>
+          <tr>
+            <td>Morningstar Style Indexes</td>
+            <td>Varies</td>
+            <td>Float-adjusted market cap</td>
+            <td>US stocks by cap × value/growth (9 categories)</td>
+            <td>Mutually exclusive constituents; exhaustive of Morningstar US Market Index; each is model for an iShares ETF</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 14: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s14">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Price return index</strong> = prices only. <strong>Total return index</strong> = prices + reinvested income. At inception they are equal; total return index grows faster over time.</li>
+        <li>✅ <strong>Divisor</strong>: set at inception for convenient starting value; adjusted for non-price events (stock splits, constituent changes) to preserve index continuity. New divisor after split = Σ post-split prices / index value before split.</li>
+        <li>✅ <strong>Price return of index</strong> = (V_PRI1 − V_PRI0) / V_PRI0 = Σ wᵢ × PRᵢ (weighted average of constituent price returns).</li>
+        <li>✅ <strong>Total return of index</strong> = (V_PRI1 − V_PRI0 + Inc_I) / V_PRI0 = Σ wᵢ × TRᵢ. Denominator is V_PRI0 (beginning price index value).</li>
+        <li>✅ <strong>Total return of security</strong>: TRᵢ = (P1ᵢ − P0ᵢ + Incᵢ) / P0ᵢ. Don't forget to add income to numerator.</li>
+        <li>✅ <strong>Multi-period calculation</strong>: geometric linking only — V_T = V_0 × (1+R₁)(1+R₂)...(1+Rₙ). NEVER simple arithmetic addition of returns.</li>
+        <li>✅ <strong>5 index construction decisions</strong>: target market → security selection → weighting method → rebalancing schedule → reconstitution schedule.</li>
+        <li>✅ <strong>Price weighting</strong>: wᵢ = Pᵢ / Σ P. High-price stocks dominate. Stock split → adjust divisor. No rebalancing needed. Arbitrary weights. Examples: DJIA, Nikkei 225.</li>
+        <li>✅ <strong>Equal weighting</strong>: wᵢ = 1/N. Simple; small-cap tilted; large caps underrepresented; requires most frequent rebalancing (highest turnover). Examples: CRB Index, HFRX Equal Weighted.</li>
+        <li>✅ <strong>Market-cap weighting</strong>: wᵢ = QᵢPᵢ / Σ QP. Reflects actual market weight; largely self-rebalancing. Disadvantage: momentum effect (overweights rising/potentially overvalued stocks). Most major indexes use this (S&amp;P 500, MSCI World, FTSE 100).</li>
+        <li>✅ <strong>Float-adjusted market-cap weighting</strong>: uses fᵢQᵢPᵢ in numerator — excludes closely held shares (controlling shareholders, corporations, governments, foreign-restricted shares). Most modern indexes are float-adjusted.</li>
+        <li>✅ <strong>Fundamental weighting</strong>: wᵢ = Fᵢ / Σ F (F = book value, earnings, revenues, dividends, etc.). Value tilt + contrarian effect (trims winners, adds to losers at rebalancing). Opposite of market-cap momentum effect.</li>
+        <li>✅ <strong>Momentum effect</strong> = market-cap weighted. <strong>Contrarian effect</strong> = fundamentally weighted. This is a very common exam question.</li>
+        <li>✅ <strong>Rebalancing</strong> = adjusting weights of existing constituents back to targets (usually quarterly). <strong>Reconstitution</strong> = changing which securities are in the index (less frequent; bigger market impact). Both create turnover.</li>
+        <li>✅ <strong>Style indexes have higher turnover</strong> than broad market indexes — stocks migrate across cap and value/growth categories frequently on reconstitution dates.</li>
+        <li>✅ <strong>5 uses of indexes</strong> (G-PABS): Gauge market sentiment, Proxy for market returns/risk, Asset class proxy for allocation models, Benchmark for active managers, Seed for index funds/ETFs.</li>
+        <li>✅ <strong>Benchmark must match strategy</strong>: small-cap manager → small-cap benchmark. Wrong benchmark → wrong performance conclusion. Alpha = active return − passive return with same systematic risk.</li>
+        <li>✅ <strong>Equity index types</strong>: Broad market (&gt;90% of market), Multi-market (multiple countries; MSCI ACWI = 23 developed + 24 emerging), Sector (economic sectors; families sum to broad market), Style (6 categories: 3 cap × 2 style).</li>
+        <li>✅ <strong>MSCI market classifications</strong>: Developed → Emerging → Frontier. MSCI periodically reviews and reclassifies countries.</li>
+        <li>✅ <strong>GDP-weighting in multi-market indexes</strong>: weights countries by GDP rather than market cap → reduces concentration in large markets (e.g., cut Japan's 60% EAFE weight in half in 1987).</li>
+        <li>✅ <strong>Fixed-income index challenges</strong>: (1) huge number of securities, (2) dealer market → limited price transparency, (3) illiquidity → need price estimation, (4) maturity-driven turnover. Harder to replicate than equity indexes.</li>
+        <li>✅ <strong>Bloomberg Barclays US Aggregate</strong>: first fixed-income index; ~8,000 securities; Treasuries + agency + corporate + MBS + ABS + CMBS. Investment-grade only.</li>
+        <li>✅ <strong>Fixed-income classifications</strong>: by issuer type, financing type, currency, maturity, credit quality (investment grade = BBB– or better), inflation protection.</li>
+        <li>✅ <strong>Commodity indexes</strong>: based on futures contracts (NOT spot prices). Returns = risk-free rate + futures price change + roll yield. Roll yield can be positive or negative. Different commodity indexes on same market can have very different returns due to different weighting methods (unlike equity/bond indexes).</li>
+        <li>✅ <strong>REIT index types</strong>: Appraisal (infrequent) → Repeat sales (periodic) → REIT index (continuous — publicly traded shares). REIT indexes calculated continuously unlike other real estate indexes.</li>
+        <li>✅ <strong>Hedge fund index problems</strong>: (1) Voluntary reporting → little overlap between databases → different indexes show different performance for same period. (2) Survivorship bias → overstates performance (poor performers stop reporting). (3) Constituents determine index, not index provider.</li>
+        <li>✅ <strong>DJIA</strong>: 30 stocks, price-weighted, Wall Street Journal editor-selected, oldest US equity index. <strong>S&amp;P 500</strong>: 500 stocks, float-adjusted market cap, committee-selected. <strong>Russell 2000/3000</strong>: market cap, annually reconstituted → front-running effect. <strong>TOPIX</strong>: all Tokyo SE First Section stocks, float-adjusted market cap.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        V_PRI = Σ(nᵢ × Pᵢ) / D<br><br>
+        PR_I = (V_PRI1 − V_PRI0) / V_PRI0 = Σ wᵢ × PRᵢ<br>
+        PRᵢ = (Pᵢ1 − Pᵢ0) / Pᵢ0<br><br>
+        TR_I = (V_PRI1 − V_PRI0 + Inc_I) / V_PRI0 = Σ wᵢ × TRᵢ<br>
+        TRᵢ = (P1ᵢ − P0ᵢ + Incᵢ) / P0ᵢ<br><br>
+        Multi-period: V_T = V_0 × (1+R₁)(1+R₂)...(1+Rₙ)  [geometric linking]<br><br>
+        Price weight:       wᵢᴾ = Pᵢ / Σ Pᵢ<br>
+        Equal weight:       wᵢᴱ = 1 / N<br>
+        Market-cap weight:  wᵢᴹ = (Qᵢ × Pᵢ) / Σ (Qⱼ × Pⱼ)<br>
+        Float-adj mkt cap:  wᵢᴹ = (fᵢ × Qᵢ × Pᵢ) / Σ (fⱼ × Qⱼ × Pⱼ)<br>
+        Fundamental weight: wᵢᶠ = Fᵢ / Σ Fⱼ
+      </div>
+      <div class="note">
+        For divisor adjustment after stock split: New D = Σ prices after split / index value before split<br>
+        Weights always sum to 1.0 (100%). All returns expressed as decimals in formulas.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 2: Security Market Indexes · Exam Prep Notes
+</footer>
+
+</body>
+</html>

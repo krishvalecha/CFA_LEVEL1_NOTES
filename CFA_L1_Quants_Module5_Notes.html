@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 5: Portfolio Mathematics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --cov-bg: #111620; --cov-border: #4c8bc9;
+    --sf-bg: #1a1120; --sf-border: #9b59b6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e0d16 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(155,89,182,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(155,89,182,0.12); color: #c39ef5; border: 1px solid rgba(155,89,182,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: #c39ef5; }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: #c39ef5; border-color: #c39ef5; }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #c39ef5; background: rgba(155,89,182,0.1); border: 1px solid rgba(155,89,182,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: #c39ef5; text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .cov-box { background: var(--cov-bg); border-left: 3px solid var(--cov-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .cov-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .cov-box .f { color: #9ecef5; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .cov-box .note { color: #7898b4; font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .sf-box { background: var(--sf-bg); border-left: 3px solid var(--sf-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .sf-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #c39ef5; margin-bottom: 8px; }
+  .sf-box .f { color: #d8b8f8; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .sf-box .note { color: #a888cc; font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .sf-worked { background: #150f1e; border: 1px solid rgba(155,89,182,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .sf-worked .calc { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #d8b8f8; line-height: 2.0; margin: 8px 0; }
+  .sf-worked .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #c39ef5; font-weight: 700; margin-top: 8px; }
+  .sf-worked p { font-size: 14px; color: #b898d8; margin-bottom: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid #c39ef5; border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: #c39ef5; font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .purple { color: #c39ef5; font-weight: 600; }
+
+  /* Covariance matrix visual */
+  .matrix-wrap { background: #111620; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; overflow-x: auto; }
+  .matrix-wrap table { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .matrix-wrap thead th { color: var(--accent2); background: transparent; border-bottom: 1px solid var(--border); }
+  .matrix-wrap tbody td { color: var(--text); padding: 8px 16px; text-align: center; }
+  .matrix-wrap tbody td:first-child { color: var(--accent2); font-weight: 700; }
+  .diag { color: var(--accent) !important; font-weight: 700; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 5</div>
+  <h1>Portfolio <span>Mathematics</span></h1>
+  <p>Exam-ready notes: portfolio expected return, portfolio variance with covariance terms, covariance and correlation formulas, the covariance matrix, joint probability function for computing covariance, independence vs. uncorrelatedness, shortfall risk, Roy's safety-first criterion, SFRatio calculation, and the link to Sharpe ratio and VaR.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Key Definitions</a>
+  <a class="toc-item" href="#s2">02 · Portfolio Expected Return</a>
+  <a class="toc-item" href="#s3">03 · Covariance</a>
+  <a class="toc-item" href="#s4">04 · Correlation</a>
+  <a class="toc-item" href="#s5">05 · Portfolio Variance</a>
+  <a class="toc-item" href="#s6">06 · Covariance Matrix</a>
+  <a class="toc-item" href="#s7">07 · Joint Probability Function</a>
+  <a class="toc-item" href="#s8">08 · Independence vs. Uncorrelated</a>
+  <a class="toc-item" href="#s9">09 · Safety-First &amp; Roy's Criterion</a>
+  <a class="toc-item" href="#s10">10 · Master Tables</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: KEY DEFINITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Key Definitions — At a Glance</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Portfolio Expected Return — E(Rp)</div>
+      <div class="def-body">A <strong>weighted average</strong> of the expected returns on the individual securities, using each security's portfolio weight as the weight. The weights must sum to 1.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Portfolio Variance — σ²(Rp)</div>
+      <div class="def-body">Measures expected investment risk. Depends on both the individual asset variances AND the covariances between assets. NOT simply a weighted average of individual variances.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Covariance — Cov(Rᵢ, Rⱼ)</div>
+      <div class="def-body">The probability-weighted average of the cross-products of each asset's deviation from its own expected value. Measures the <strong>direction and degree</strong> of the co-movement of two returns. Can be negative, zero, or positive. No fixed range.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Correlation — ρ(Rᵢ, Rⱼ)</div>
+      <div class="def-body">Covariance standardized by dividing by the product of the two standard deviations. <strong>Dimensionless</strong> (no units). Bounded between −1 and +1. Measures the <em>strength and direction</em> of linear association.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Shortfall Risk</div>
+      <div class="def-body">The risk that portfolio value (or return) will fall below some <strong>minimum acceptable level (R_L)</strong> over some time horizon. Focuses only on downside risk, unlike standard deviation which captures both upside and downside.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Safety-First Ratio (SFRatio)</div>
+      <div class="def-body">Measures how far the expected portfolio return is above the threshold level R_L, in standard deviation units. The higher the SFRatio, the lower the probability of falling below R_L.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Joint Probability Function — P(X, Y)</div>
+      <div class="def-body">Gives the probability of <strong>joint occurrences</strong> of values of two random variables X and Y. For example, P(X=3, Y=2) = probability that X equals 3 AND Y equals 2 simultaneously.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: PORTFOLIO EXPECTED RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Portfolio Expected Return</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Portfolio Expected Return Formula</div>
+      <div class="f">
+        E(Rp) = w₁E(R₁) + w₂E(R₂) + ... + wₙE(Rₙ)<br><br>
+        E(Rp) = Σ wᵢ · E(Rᵢ)&nbsp;&nbsp;(summed from i = 1 to n)
+      </div>
+      <div class="note">
+        wᵢ = weight of asset i in the portfolio (proportion of total portfolio value in currency units).<br>
+        Constraint: Σ wᵢ = 1 (weights must sum to 1; can include short positions with negative weights).<br>
+        E(Rᵢ) = expected return on asset i.<br>
+        <strong>Portfolio expected return IS a simple weighted average of individual expected returns.</strong><br>
+        Portfolio variance is NOT — it also requires covariance terms.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — 2-Asset Portfolio Expected Return</div>
+      <p>Portfolio: 60% in Stock A (E(Rₐ) = 12%), 40% in Stock B (E(R_b) = 8%)</p>
+      <div class="calc">
+        E(Rp) = 0.60 × 12% + 0.40 × 8%<br>
+              = 7.2% + 3.2%<br>
+              = 10.4%
+      </div>
+      <div class="result">→ Portfolio Expected Return = 10.4%</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — E(Rp) is Easy; Variance is the Challenge</div>
+      <p>Once you have individual expected returns, portfolio E(Rp) is trivial — just a weighted sum. The real complexity of portfolio mathematics lies in the variance calculation, which requires covariances between every pair of assets. This is why covariance is so central to portfolio theory.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: COVARIANCE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Covariance</h2>
+    </div>
+
+    <div class="cov-box">
+      <div class="label">★ Covariance — Population (Forward-Looking)</div>
+      <div class="f">
+        Cov(Rᵢ, Rⱼ) = E[(Rᵢ − ERᵢ)(Rⱼ − ERⱼ)]<br><br>
+        Alternative notations: σ(Rᵢ, Rⱼ)  and  σᵢⱼ
+      </div>
+      <div class="note">
+        = probability-weighted average of the cross-products of each return's deviation from its own expected value.<br>
+        "Population" covariance = forward-looking (uses expected values and probabilities, not historical data).
+      </div>
+    </div>
+
+    <div class="cov-box">
+      <div class="label">★ Covariance — Sample (Historical)</div>
+      <div class="f">
+        Cov(Rᵢ, Rⱼ) = Σ (Rᵢ,ₜ − R̄ᵢ)(Rⱼ,ₜ − R̄ⱼ) / (n − 1)
+      </div>
+      <div class="note">
+        Based on past data of n observations. Uses sample means R̄ᵢ and R̄ⱼ instead of expected values.<br>
+        Denominator is (n − 1) — same as sample variance formula (degrees of freedom adjustment).
+      </div>
+    </div>
+
+    <h3>Interpreting the Sign of Covariance</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Cov &lt; 0 (Negative)</div>
+        <p>When return on one asset is above its expected value, the return on the other tends to be <strong>below</strong> its expected value. Average <strong>inverse</strong> relationship. Excellent for diversification — reduces portfolio variance.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#8892a4;">Cov = 0 (Zero)</div>
+        <p>Returns on the two assets are <strong>unrelated</strong> — no linear association. Neither helps nor hurts diversification beyond simply holding more assets. (NOTE: zero covariance does NOT necessarily mean independence.)</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Cov &gt; 0 (Positive)</div>
+        <p>Returns tend to move <strong>together</strong> — both above or both below expected values at the same time. Average <strong>direct</strong> relationship. Adds to portfolio variance — reduces diversification benefit.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Own Covariance = Variance</div>
+      <p>The covariance of a random variable with <em>itself</em> is its own variance:<br>
+      <strong>Cov(R, R) = E{[R − E(R)][R − E(R)]} = E{[R − E(R)]²} = σ²(R)</strong><br><br>
+      This is why the diagonal entries of a covariance matrix are variances. The covariance formula generalizes the variance formula.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Covariance Has No Fixed Range — That's Why We Need Correlation</div>
+      <p>Covariance can range from −∞ to +∞. Its magnitude depends on the scale of the returns and is not directly interpretable as "strong" or "weak." Correlation solves this by standardizing covariance to a −1 to +1 range.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: CORRELATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Correlation</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Correlation Formula &amp; Rearrangement</div>
+      <div class="f">
+        ρ(Rᵢ, Rⱼ) = Cov(Rᵢ, Rⱼ) / [σ(Rᵢ) × σ(Rⱼ)]<br><br>
+        Alternative notations: Corr(Rᵢ, Rⱼ)  and  ρᵢⱼ<br><br>
+        Rearranged (very useful — gives covariance from correlation):<br>
+        Cov(Rᵢ, Rⱼ) = ρ(Rᵢ, Rⱼ) × σ(Rᵢ) × σ(Rⱼ)
+      </div>
+      <div class="note">
+        Correlation is a PURE NUMBER — no units (the units cancel in the division).<br>
+        Range: −1 ≤ ρ ≤ +1. Always bounded, unlike covariance.<br>
+        <strong>The rearrangement Cov = ρ × σᵢ × σⱼ is extremely useful on the exam</strong> — plugs directly into the 2-asset variance formula.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Correlation Value</th><th>Interpretation</th><th>Portfolio Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ρ = +1</td><td>Perfect positive linear relationship; assets move exactly together</td><td>NO diversification benefit; portfolio variance = weighted average of individual variances</td></tr>
+          <tr><td>0 &lt; ρ &lt; +1</td><td>Positive linear relationship</td><td>Some diversification benefit; portfolio variance &lt; weighted average of variances</td></tr>
+          <tr><td>ρ = 0</td><td>No linear relationship (uncorrelated)</td><td>More diversification benefit; full unsystematic risk reduction possible</td></tr>
+          <tr><td>−1 &lt; ρ &lt; 0</td><td>Negative linear relationship</td><td>Strong diversification benefit</td></tr>
+          <tr><td>ρ = −1</td><td>Perfect negative linear relationship; assets move exactly opposite</td><td>MAXIMUM diversification benefit; can potentially eliminate all risk</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Correlation vs. Covariance — The Key Difference</div>
+      <p>Both measure linear association between two variables. <strong>Covariance</strong>: has units (e.g., %²), unbounded, tells direction but not strength. <strong>Correlation</strong>: no units, bounded [−1, +1], tells both direction AND standardized strength. Use covariance in portfolio variance calculations; use correlation for interpretation and comparison across pairs of assets.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: PORTFOLIO VARIANCE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Portfolio Variance — The Core Formula</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ 2-Asset Portfolio Variance (Most Tested)</div>
+      <div class="f">
+        σ²(Rp) = w₁²σ²(R₁) + w₂²σ²(R₂) + 2w₁w₂Cov(R₁, R₂)<br><br>
+        Substituting Cov = ρ × σ₁ × σ₂:<br>
+        σ²(Rp) = w₁²σ²₁ + w₂²σ²₂ + 2w₁w₂ρ₁₂σ₁σ₂<br><br>
+        Standard deviation: σ(Rp) = √σ²(Rp)
+      </div>
+      <div class="note">
+        3 terms: 2 variance terms (one for each asset) + 1 covariance term (the interaction).<br>
+        The covariance term is multiplied by 2 because Cov(R₁,R₂) = Cov(R₂,R₁) — it appears twice in the full expansion.<br>
+        <strong>The covariance term is how correlation affects portfolio risk.</strong> Lower ρ → lower portfolio variance.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ 3-Asset Portfolio Variance (Know the Structure)</div>
+      <div class="f">
+        σ²(Rp) = w₁²σ²(R₁) + w₂²σ²(R₂) + w₃²σ²(R₃)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2w₁w₂Cov(R₁,R₂)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2w₁w₃Cov(R₁,R₃)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 2w₂w₃Cov(R₂,R₃)<br><br>
+        = 3 variance terms + 6 covariance terms (3 unique pairs × 2)
+      </div>
+      <div class="note">
+        For n assets: n variance terms + n(n−1) covariance terms [i.e., n² − n off-diagonal entries].<br>
+        Example: 20 assets → 20 variance terms + 380 covariance terms.<br>
+        <strong>As n grows, covariance terms dominate — covariance becomes MORE important than individual variances.</strong>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ General n-Asset Portfolio Variance</div>
+      <div class="f">
+        σ²(Rp) = Σᵢ Σⱼ wᵢwⱼCov(Rᵢ, Rⱼ)&nbsp;&nbsp;(i and j each from 1 to n)<br><br>
+        Note: When i = j, Cov(Rᵢ, Rᵢ) = σ²(Rᵢ) (own variance on diagonal)
+      </div>
+      <div class="note">
+        This double-sum formula is the most general and compact form.<br>
+        Diagonal terms (i = j): variance of each asset.<br>
+        Off-diagonal terms (i ≠ j): covariance between each pair of assets.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — 2-Asset Portfolio Variance</div>
+      <p>w₁ = 60%, w₂ = 40%, σ₁ = 15%, σ₂ = 10%, ρ₁₂ = 0.30</p>
+      <div class="calc">
+        Step 1: Cov(R₁,R₂) = ρ₁₂ × σ₁ × σ₂ = 0.30 × 15% × 10% = 4.5 (%²)<br><br>
+        Step 2: σ²(Rp) = w₁²σ₁² + w₂²σ₂² + 2w₁w₂Cov(R₁,R₂)<br>
+                        = (0.60)²(225) + (0.40)²(100) + 2(0.60)(0.40)(4.5)<br>
+                        = (0.36)(225) + (0.16)(100) + (0.48)(4.5)<br>
+                        = 81 + 16 + 2.16<br>
+                        = 99.16 (%²)<br><br>
+        Step 3: σ(Rp) = √99.16 = 9.96%
+      </div>
+      <div class="result">→ Portfolio Variance = 99.16 (%²) | Portfolio Std Dev ≈ 9.96%</div>
+      <p style="margin-top:8px; color:#7ecfa4;">Note: Simple weighted-average std dev would be 0.60×15% + 0.40×10% = 13%, far higher. Diversification (ρ &lt; 1) reduces portfolio risk from 13% to 9.96% — the power of diversification.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Diversification Benefit — The Key Insight</div>
+      <p>
+        <strong>When ρ = +1:</strong> σ(Rp) = w₁σ₁ + w₂σ₂ (weighted average — no benefit from combining)<br>
+        <strong>When ρ &lt; +1:</strong> σ(Rp) &lt; w₁σ₁ + w₂σ₂ (portfolio risk is LESS than weighted average — diversification works)<br>
+        <strong>When ρ = −1:</strong> Can construct zero-variance portfolio (weights: w₁ = σ₂/(σ₁+σ₂), w₂ = σ₁/(σ₁+σ₂))<br><br>
+        The lower the correlation, the greater the diversification benefit — this is the fundamental principle of modern portfolio theory.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: COVARIANCE MATRIX -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Covariance Matrix &amp; Correlation Matrix</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>covariance matrix</strong> (also called a variance-covariance matrix) organizes all the variance and covariance terms needed to compute portfolio variance. For an n-asset portfolio, the matrix has n rows and n columns:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Diagonal entries (i = j):</strong> Variances σ²(Rᵢ) = Cov(Rᵢ, Rᵢ)</li>
+        <li><strong>Off-diagonal entries (i ≠ j):</strong> Covariances Cov(Rᵢ, Rⱼ)</li>
+        <li>Matrix is <strong>symmetric</strong>: Cov(Rᵢ, Rⱼ) = Cov(Rⱼ, Rᵢ), so the upper-right and lower-left triangles are mirrors</li>
+        <li>A complete covariance matrix contains ALL statistical data needed to compute portfolio variance</li>
+      </ul>
+    </div>
+
+    <h3>Example — 2-Asset Covariance Matrix</h3>
+    <div class="matrix-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>Asset 1</th><th>Asset 2</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Asset 1</td>
+            <td class="diag">σ²(R₁) = Cov(R₁,R₁)</td>
+            <td>Cov(R₁,R₂)</td>
+          </tr>
+          <tr>
+            <td>Asset 2</td>
+            <td>Cov(R₂,R₁)</td>
+            <td class="diag">σ²(R₂) = Cov(R₂,R₂)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Converting Between Covariance and Correlation Matrices</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Covariance → Correlation</div>
+        <p>ρᵢⱼ = Cov(Rᵢ,Rⱼ) / [σ(Rᵢ) × σ(Rⱼ)]</p>
+        <p style="margin-top:8px;">Diagonal of correlation matrix = 1.0 always (each variable is perfectly correlated with itself).</p>
+        <p style="margin-top:8px;">Need: σᵢ = √Cov(Rᵢ,Rᵢ) from the diagonal of the covariance matrix.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Correlation → Covariance</div>
+        <p>Cov(Rᵢ,Rⱼ) = ρᵢⱼ × σ(Rᵢ) × σ(Rⱼ)</p>
+        <p style="margin-top:8px;">Used to reconstruct the covariance matrix from a correlation matrix + standard deviations.</p>
+        <p style="margin-top:8px;">On the exam: often given correlation matrix + std devs → must compute covariances for variance formula.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Number of Terms in an n-Asset Portfolio Variance</div>
+      <p>
+        Total terms in covariance matrix = n² (n rows × n columns)<br>
+        Diagonal (variance) terms = n<br>
+        Off-diagonal (covariance) terms = n² − n = n(n−1)<br>
+        Unique covariance pairs = n(n−1)/2 (half the off-diagonal, by symmetry)<br><br>
+        <strong>Example: 20 assets → 20 variances + 380 covariances (20 × 19) → covariance terms outnumber variance terms 19:1.</strong><br>
+        This is why as portfolio size grows, individual asset risk matters less; covariances (correlations) dominate.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: JOINT PROBABILITY FUNCTION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Computing Covariance from a Joint Probability Function</h2>
+    </div>
+
+    <div class="card">
+      <p>When historical data is unavailable, covariance can be computed using a <strong>joint probability function</strong> P(Rₐ, R_b) that gives the probability of each combination of outcomes for two assets A and B.</p>
+    </div>
+
+    <div class="cov-box">
+      <div class="label">★ Covariance from Joint Probability Function</div>
+      <div class="f">
+        Cov(Rₐ, R_b) = Σᵢ Σⱼ P(Rₐ,ᵢ, R_b,ⱼ) × (Rₐ,ᵢ − ERₐ) × (R_b,ⱼ − ER_b)
+      </div>
+      <div class="note">
+        Steps:<br>
+        1. Calculate E(Rₐ) and E(R_b) from the joint probability function (sum all outcomes weighted by their marginal probabilities).<br>
+        2. For each joint outcome (Rₐ,ᵢ, R_b,ⱼ), compute the deviation cross-product: (Rₐ,ᵢ − ERₐ)(R_b,ⱼ − ER_b).<br>
+        3. Multiply each cross-product by its joint probability P(Rₐ,ᵢ, R_b,ⱼ).<br>
+        4. Sum all the probability-weighted cross-products → Cov(Rₐ, R_b).<br>
+        5. Once you have Cov and both σ values, compute ρ = Cov / (σₐ × σ_b).
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — Covariance from Joint Probability</div>
+      <p>Simple 2-scenario joint probability table for stocks A and B:</p>
+      <div class="calc">
+        Scenario   P      Rₐ     R_b<br>
+        ─────────────────────────────<br>
+        Good       0.60   15%    10%<br>
+        Bad        0.40   -5%    -2%<br><br>
+        Step 1 — E(Rₐ) = 0.60(15%) + 0.40(-5%) = 9.0% − 2.0% = 7.0%<br>
+        Step 1 — E(R_b) = 0.60(10%) + 0.40(-2%) = 6.0% − 0.8% = 5.2%<br><br>
+        Step 2/3/4 — Cov(Rₐ, R_b):<br>
+        = 0.60 × (15%−7%) × (10%−5.2%) + 0.40 × (-5%−7%) × (-2%−5.2%)<br>
+        = 0.60 × (8%) × (4.8%)          + 0.40 × (-12%) × (-7.2%)<br>
+        = 0.60 × 38.4                   + 0.40 × 86.4<br>
+        = 23.04 + 34.56<br>
+        = 57.6 (%²)
+      </div>
+      <div class="result">→ Cov(Rₐ, R_b) = 57.6 (%²)&nbsp;&nbsp;[positive → returns move together]</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: INDEPENDENCE VS UNCORRELATED -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Independence vs. Uncorrelatedness</h2>
+    </div>
+
+    <div class="card">
+      <p>Two random variables X and Y are <strong>independent</strong> if and only if: <span class="highlight">P(X, Y) = P(X) × P(Y)</span></p>
+      <p style="margin-top:10px;">Given independence, joint probabilities are simply the product of marginal probabilities: P(X=3, Y=2) = P(X=3) × P(Y=2).</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Independent</th><th>Uncorrelated (ρ = 0)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Definition</td>
+            <td>P(X,Y) = P(X)P(Y) for ALL values</td>
+            <td>Cov(X,Y) = 0 → ρ = 0</td>
+          </tr>
+          <tr>
+            <td>Strength</td>
+            <td><strong>Stronger condition</strong> — rules out ALL relationships (linear and non-linear)</td>
+            <td><strong>Weaker condition</strong> — rules out only LINEAR relationships; non-linear relationships can still exist</td>
+          </tr>
+          <tr>
+            <td>Implies the other?</td>
+            <td>Independence → uncorrelated (always)</td>
+            <td>Uncorrelated does NOT → independent</td>
+          </tr>
+          <tr>
+            <td>E(XY) rule</td>
+            <td>E(XY) = E(X) × E(Y)</td>
+            <td>E(XY) = E(X) × E(Y) [same rule applies]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Expected Value of Product — Key Rule</div>
+      <div class="f">
+        If X and Y are uncorrelated (or independent):<br>
+        E(XY) = E(X) × E(Y)<br><br>
+        Derivation: E(XY) = E(X)E(Y) + Cov(X,Y)<br>
+        When Cov(X,Y) = 0: E(XY) = E(X)E(Y)
+      </div>
+      <div class="note">
+        Useful for financial variables that are products of random quantities (e.g., Revenue = Price × Quantity).<br>
+        If price and quantity are uncorrelated, E(Revenue) = E(Price) × E(Quantity).
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Exam Distinction — Independence vs. Uncorrelated</div>
+      <p><strong>Independence is STRONGER than uncorrelatedness.</strong> A variable can be uncorrelated with another (ρ = 0) yet still NOT be independent — there could be a non-linear relationship.<br><br>
+      Example: Y = X² where X ~ symmetric around 0. Cov(X, Y) = 0 (uncorrelated), but Y is completely determined by X (not independent).<br><br>
+      On the exam: if told "independent," you can conclude uncorrelated. If told "uncorrelated," you CANNOT conclude independent.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: SAFETY-FIRST & ROY'S CRITERION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Shortfall Risk &amp; Roy's Safety-First Criterion</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Context:</strong> Mean-variance analysis (MPT) treats risk symmetrically (standard deviation captures both upside and downside variability). Safety-first rules focus only on <em>downside</em> risk — specifically the risk of falling below a minimum acceptable return level R_L.</p>
+      <p style="margin-top:10px;"><strong>Mean-variance analysis holds exactly when EITHER:</strong></p>
+      <ol style="padding-left:20px; margin-top:6px;">
+        <li>Returns are normally distributed, OR</li>
+        <li>Investors have quadratic utility functions</li>
+      </ol>
+      <p style="margin-top:8px;">It holds approximately even when these assumptions are violated — which is why it remains widely used.</p>
+    </div>
+
+    <div class="sf-box">
+      <div class="label">★ Safety-First Ratio (SFRatio)</div>
+      <div class="f">
+        SFRatio = [E(Rp) − R_L] / σp<br><br>
+        Where:<br>
+        E(Rp) = expected portfolio return<br>
+        R_L   = minimum acceptable threshold return (shortfall level)<br>
+        σp    = portfolio standard deviation<br><br>
+        Probability of falling below R_L:<br>
+        P(Rp &lt; R_L) = N(−SFRatio)
+      </div>
+      <div class="note">
+        Numerator [E(Rp) − R_L] = distance from expected return to the shortfall level.<br>
+        Dividing by σp converts this distance to standard deviation units.<br>
+        Higher SFRatio → greater distance from the threshold in std dev units → lower probability of shortfall.<br>
+        <strong>N(−SFRatio) = 1 − N(SFRatio)</strong> using standard normal table symmetry.<br>
+        Special case: When R_L = Rf (risk-free rate), SFRatio = Sharpe Ratio.
+      </div>
+    </div>
+
+    <h3>Roy's Safety-First Criterion — Decision Rule</h3>
+    <div class="card">
+      <p><strong>Roy's safety-first criterion:</strong> The optimal portfolio <strong>minimizes the probability that portfolio return falls below R_L.</strong></p>
+      <p style="margin-top:10px;"><strong>Assuming normally distributed returns, this is equivalent to choosing the portfolio with the HIGHEST SFRatio.</strong></p>
+      <p style="margin-top:10px;"><strong>Two-step implementation:</strong></p>
+      <ol style="padding-left:20px; margin-top:6px;">
+        <li>Calculate each portfolio's SFRatio = [E(Rp) − R_L] / σp</li>
+        <li>Choose the portfolio with the <strong>highest SFRatio</strong> → lowest shortfall probability</li>
+      </ol>
+    </div>
+
+    <div class="sf-worked">
+      <div class="worked-label" style="color:#c39ef5;">📊 Worked Example — Roy's Safety-First Criterion</div>
+      <p>Threshold R_L = 2%. Two portfolios to compare:</p>
+      <div class="calc">
+        Portfolio 1: E(R) = 12%, σ = 15%<br>
+        Portfolio 2: E(R) = 14%, σ = 16%<br><br>
+        SFRatio₁ = (12% − 2%) / 15% = 10/15 = 0.667<br>
+        SFRatio₂ = (14% − 2%) / 16% = 12/16 = 0.750<br><br>
+        Portfolio 2 has higher SFRatio → select Portfolio 2<br><br>
+        Probability of shortfall for Portfolio 2:<br>
+        P(Rp &lt; 2%) = N(−0.75) = 1 − N(0.75) = 1 − 0.7734 = 0.2266 ≈ 22.7%
+      </div>
+      <div class="result">→ Optimal: Portfolio 2 (SFRatio = 0.75, shortfall probability ≈ 22.7%)</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 SFRatio = Sharpe Ratio when R_L = Risk-Free Rate</div>
+      <p>Sharpe Ratio = [E(Rp) − Rf] / σp<br>
+      SFRatio = [E(Rp) − R_L] / σp<br><br>
+      When R_L = Rf: SFRatio = Sharpe Ratio exactly.<br><br>
+      Interpretation of Sharpe Ratio via safety-first: choosing the portfolio with the highest Sharpe Ratio minimizes the probability that portfolio return will fall below the risk-free rate (assuming normally distributed returns). This gives the Sharpe Ratio a new, intuitive downside-risk interpretation.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Link to Value at Risk (VaR)</div>
+      <p>VaR is also an application of the normal distribution to portfolio risk. VaR = minimum value of losses expected over a specified time period at a given probability level. The variance-covariance (analytical) method for estimating VaR assumes normally distributed returns — the same assumption underlying Roy's safety-first criterion and mean-variance analysis. Stress testing and scenario analysis complement VaR for tail-risk estimation.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Exam Traps — Safety-First</div>
+      <p>
+        1. <strong>Higher SFRatio = LOWER shortfall probability</strong> (not higher). Always select the portfolio with the HIGHEST SFRatio.<br><br>
+        2. <strong>P(Rp &lt; R_L) = N(−SFRatio)</strong> — the argument is NEGATIVE SFRatio, not positive. Use standard normal table: N(−z) = 1 − N(z).<br><br>
+        3. <strong>SFRatio requires normality assumption.</strong> Without normally distributed returns, this approach does not apply exactly.<br><br>
+        4. <strong>SFRatio ≠ Sharpe Ratio</strong> unless R_L = Rf specifically.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>All Key Formulas at a Glance</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Measure</th><th>Formula</th><th>Key Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Portfolio E(Rp)</td>
+            <td>Σ wᵢ · E(Rᵢ)</td>
+            <td>Simple weighted average; weights sum to 1</td>
+          </tr>
+          <tr>
+            <td>Portfolio σ²(Rp) — 2 assets</td>
+            <td>w₁²σ₁² + w₂²σ₂² + 2w₁w₂Cov(R₁,R₂)</td>
+            <td>NOT a weighted average; needs covariance</td>
+          </tr>
+          <tr>
+            <td>Portfolio σ²(Rp) — n assets</td>
+            <td>Σᵢ Σⱼ wᵢwⱼCov(Rᵢ,Rⱼ)</td>
+            <td>Diagonal: variances; off-diagonal: covariances</td>
+          </tr>
+          <tr>
+            <td>Covariance (population)</td>
+            <td>E[(Rᵢ − ERᵢ)(Rⱼ − ERⱼ)]</td>
+            <td>Alternative: σᵢⱼ or σ(Rᵢ,Rⱼ); unbounded; own cov = variance</td>
+          </tr>
+          <tr>
+            <td>Covariance (sample)</td>
+            <td>Σ (Rᵢ,ₜ − R̄ᵢ)(Rⱼ,ₜ − R̄ⱼ) / (n−1)</td>
+            <td>Historical; denominator n−1</td>
+          </tr>
+          <tr>
+            <td>Correlation</td>
+            <td>ρᵢⱼ = Cov(Rᵢ,Rⱼ) / [σᵢ × σⱼ]</td>
+            <td>Bounded [−1, +1]; dimensionless</td>
+          </tr>
+          <tr>
+            <td>Cov from correlation</td>
+            <td>Cov(Rᵢ,Rⱼ) = ρᵢⱼ × σᵢ × σⱼ</td>
+            <td>Most useful rearrangement on exam</td>
+          </tr>
+          <tr>
+            <td>Cov (joint probability)</td>
+            <td>Σᵢ Σⱼ P(Rₐ,ᵢ, R_b,ⱼ)(Rₐ,ᵢ−ERₐ)(R_b,ⱼ−ER_b)</td>
+            <td>Used when joint probability function is given</td>
+          </tr>
+          <tr>
+            <td>Independence condition</td>
+            <td>P(X,Y) = P(X)P(Y)</td>
+            <td>Stronger than uncorrelated; implies Cov = 0</td>
+          </tr>
+          <tr>
+            <td>E(XY) rule</td>
+            <td>E(XY) = E(X)E(Y) if uncorrelated</td>
+            <td>Since E(XY) = E(X)E(Y) + Cov(X,Y)</td>
+          </tr>
+          <tr>
+            <td>SFRatio</td>
+            <td>[E(Rp) − R_L] / σp</td>
+            <td>Higher = better; select max SFRatio portfolio</td>
+          </tr>
+          <tr>
+            <td>Shortfall probability</td>
+            <td>N(−SFRatio) = 1 − N(SFRatio)</td>
+            <td>Assumes normally distributed returns</td>
+          </tr>
+          <tr>
+            <td>Sharpe Ratio</td>
+            <td>[E(Rp) − Rf] / σp</td>
+            <td>= SFRatio when R_L = Rf</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Covariance vs. Correlation — Side-by-Side</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Covariance</th><th>Correlation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Formula</td><td>E[(Rᵢ−ERᵢ)(Rⱼ−ERⱼ)]</td><td>Cov / (σᵢ × σⱼ)</td></tr>
+          <tr><td>Units</td><td>Squared units (e.g., %²)</td><td>Dimensionless (pure number)</td></tr>
+          <tr><td>Range</td><td>−∞ to +∞</td><td>−1 to +1</td></tr>
+          <tr><td>Tells you</td><td>Direction of co-movement</td><td>Direction AND strength (standardized)</td></tr>
+          <tr><td>Used in</td><td>Portfolio variance formula directly</td><td>Interpretation and comparison; plug into Cov = ρσᵢσⱼ</td></tr>
+          <tr><td>Own value</td><td>Cov(Rᵢ,Rᵢ) = σ²(Rᵢ) (variance)</td><td>Corr(Rᵢ,Rᵢ) = 1.0 (always)</td></tr>
+          <tr><td>Matrix diagonal</td><td>Variances</td><td>All 1.0s</td></tr>
+          <tr><td>Matrix symmetry</td><td>Yes: Cov(i,j) = Cov(j,i)</td><td>Yes: ρ(i,j) = ρ(j,i)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Number of Terms in Portfolio Variance</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Assets (n)</th><th>Variance Terms</th><th>Covariance Terms (total off-diagonal)</th><th>Unique Pairs</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2</td><td>2</td><td>2</td><td>1</td></tr>
+          <tr><td>3</td><td>3</td><td>6</td><td>3</td></tr>
+          <tr><td>5</td><td>5</td><td>20</td><td>10</td></tr>
+          <tr><td>10</td><td>10</td><td>90</td><td>45</td></tr>
+          <tr><td>20</td><td>20</td><td>380</td><td>190</td></tr>
+          <tr><td>n</td><td>n</td><td>n(n−1)</td><td>n(n−1)/2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>E(Rp) = Σ wᵢ · E(Rᵢ)</strong> — simple weighted average of individual expected returns. Weights must sum to 1. This IS a weighted average (unlike variance).</li>
+        <li>✅ <strong>Portfolio variance is NOT a weighted average of individual variances</strong> — it also includes covariance (cross-product) terms between every pair of assets.</li>
+        <li>✅ <strong>2-asset variance: σ²(Rp) = w₁²σ₁² + w₂²σ₂² + 2w₁w₂Cov(R₁,R₂)</strong>. The covariance term has a factor of 2 because Cov(1,2) = Cov(2,1).</li>
+        <li>✅ <strong>Cov = ρ × σᵢ × σⱼ</strong> — the rearrangement of the correlation formula; plug this directly into the 2-asset variance formula when given ρ and individual σ values.</li>
+        <li>✅ <strong>Covariance: unbounded, has units (e.g., %²), tells direction of co-movement.</strong> Sign: negative = inverse relationship, 0 = unrelated, positive = moves together.</li>
+        <li>✅ <strong>Correlation: bounded [−1, +1], dimensionless, tells direction AND standardized strength.</strong> ρ = +1: no diversification benefit. ρ &lt; +1: portfolio σ &lt; weighted-average σ (diversification works).</li>
+        <li>✅ <strong>Cov(R, R) = σ²(R)</strong> — own covariance = own variance. Diagonal of covariance matrix = variances. Diagonal of correlation matrix = 1.0 always.</li>
+        <li>✅ <strong>Covariance matrix is symmetric:</strong> Cov(Rᵢ,Rⱼ) = Cov(Rⱼ,Rᵢ). n assets → n variance terms + n(n−1) covariance terms. As n grows, covariances dominate.</li>
+        <li>✅ <strong>General portfolio variance: σ²(Rp) = Σᵢ Σⱼ wᵢwⱼCov(Rᵢ,Rⱼ)</strong> — works for any number of assets; diagonal terms are variances, off-diagonal are covariances.</li>
+        <li>✅ <strong>Covariance from joint probability: Cov(Rₐ,R_b) = Σᵢ Σⱼ P(Rₐ,ᵢ, R_b,ⱼ)(Rₐ,ᵢ−ERₐ)(R_b,ⱼ−ER_b)</strong>. Sum all probability-weighted cross-products of deviations.</li>
+        <li>✅ <strong>Independence: P(X,Y) = P(X)P(Y)</strong> — stronger than uncorrelated. Independence → uncorrelated. Uncorrelated does NOT imply independent.</li>
+        <li>✅ <strong>E(XY) = E(X)E(Y) when X and Y are uncorrelated</strong> (since E(XY) = E(X)E(Y) + Cov(X,Y), and Cov = 0). Also holds for independent variables.</li>
+        <li>✅ <strong>Shortfall risk</strong> = risk that Rp falls below minimum acceptable level R_L. Safety-first rules focus only on downside risk (unlike std dev which is symmetric).</li>
+        <li>✅ <strong>SFRatio = [E(Rp) − R_L] / σp</strong>. Higher SFRatio = lower shortfall probability. Roy's criterion: select the portfolio with the HIGHEST SFRatio.</li>
+        <li>✅ <strong>P(Rp &lt; R_L) = N(−SFRatio)</strong> — uses standard normal table with NEGATIVE SFRatio as the argument. N(−z) = 1 − N(z).</li>
+        <li>✅ <strong>When R_L = Rf: SFRatio = Sharpe Ratio</strong>. Sharpe Ratio maximization ≡ minimizing probability of underperforming the risk-free rate (under normality).</li>
+        <li>✅ <strong>Mean-variance analysis requires</strong> either (1) normally distributed returns OR (2) quadratic utility functions. Holds approximately even when violated.</li>
+        <li>✅ <strong>VaR connection:</strong> VaR = minimum value of losses at a given probability. The analytical (variance-covariance) VaR method assumes normally distributed returns — same assumption as Roy's criterion.</li>
+        <li>✅ <strong>Diversification benefit increases as correlation DECREASES.</strong> At ρ = +1: no benefit (σp = weighted-average σ). At ρ = −1: maximum benefit (can reach σp = 0).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ PORTFOLIO EXPECTED RETURN ═══<br>
+        E(Rp) = Σ wᵢ · E(Rᵢ)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[weighted average; weights sum to 1]<br><br>
+
+        ═══ COVARIANCE ═══<br>
+        Cov(Rᵢ,Rⱼ) = E[(Rᵢ−ERᵢ)(Rⱼ−ERⱼ)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[population; forward-looking]<br>
+        Cov(Rᵢ,Rⱼ) = Σ(Rᵢ,ₜ−R̄ᵢ)(Rⱼ,ₜ−R̄ⱼ)/(n−1)&nbsp;&nbsp;[sample; historical]<br>
+        Cov(R,R)    = σ²(R)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[own covariance = variance]<br><br>
+
+        ═══ CORRELATION ═══<br>
+        ρᵢⱼ = Cov(Rᵢ,Rⱼ) / [σᵢ × σⱼ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[range: −1 to +1; dimensionless]<br>
+        Cov(Rᵢ,Rⱼ) = ρᵢⱼ × σᵢ × σⱼ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[rearrangement — use in variance formula]<br><br>
+
+        ═══ PORTFOLIO VARIANCE ═══<br>
+        2-asset:  σ²(Rp) = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρ₁₂σ₁σ₂<br>
+        n-asset:  σ²(Rp) = Σᵢ Σⱼ wᵢwⱼCov(Rᵢ,Rⱼ)<br>
+        n variance terms + n(n−1) covariance terms total<br><br>
+
+        ═══ JOINT PROBABILITY COVARIANCE ═══<br>
+        Cov(Rₐ,R_b) = Σᵢ Σⱼ P(Rₐ,ᵢ, R_b,ⱼ)(Rₐ,ᵢ−ERₐ)(R_b,ⱼ−ER_b)<br><br>
+
+        ═══ INDEPENDENCE / UNCORRELATED ═══<br>
+        Independent: P(X,Y) = P(X)P(Y)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[stronger condition]<br>
+        E(XY) = E(X)E(Y) if uncorrelated&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[since E(XY) = E(X)E(Y) + Cov(X,Y)]<br><br>
+
+        ═══ SAFETY-FIRST ═══<br>
+        SFRatio = [E(Rp) − R_L] / σp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[maximize to minimize shortfall risk]<br>
+        P(Rp &lt; R_L) = N(−SFRatio)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[normal distribution; argument is NEGATIVE]<br>
+        Sharpe Ratio = [E(Rp) − Rf] / σp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[= SFRatio when R_L = Rf]<br>
+        Roy's criterion: SELECT portfolio with HIGHEST SFRatio
+      </div>
+      <div class="note">
+        <strong>E(Rp) IS a weighted average; σ²(Rp) is NOT.</strong> Variance requires covariance terms between every pair.<br>
+        <strong>Covariance: unbounded, has units.</strong> Correlation: bounded [−1,+1], dimensionless. Cov = ρ × σᵢ × σⱼ is the key link.<br>
+        <strong>As number of assets grows:</strong> covariance terms (n²−n) dominate variance terms (n). For 20 assets: 380 covariances vs. 20 variances.<br>
+        <strong>Independence → uncorrelated. Uncorrelated ≠ independent</strong> (non-linear relationships can still exist).<br>
+        <strong>Roy's criterion:</strong> HIGHEST SFRatio = LOWEST shortfall probability. P(Rp &lt; R_L) = N(−SFRatio) — note NEGATIVE sign.<br>
+        <strong>SFRatio = Sharpe Ratio</strong> only when threshold R_L = risk-free rate Rf.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 5: Portfolio Mathematics · Exam Prep Notes
+</footer>
+
+</body>
+</html>

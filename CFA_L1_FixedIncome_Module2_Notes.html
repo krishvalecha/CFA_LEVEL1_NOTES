@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 2: Fixed-Income Cash Flows and Types</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --call-bg: #1a1111; --call-border: #c94c4c;
+    --put-bg: #111a18; --put-border: #4cc98a;
+    --conv-bg: #111620; --conv-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f0d14 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* Embedded option cards */
+  .call-card { background: var(--call-bg); border: 1px solid rgba(201,76,76,0.25); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 16px; }
+  .call-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #f57c7c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .put-card { background: var(--put-bg); border: 1px solid rgba(76,201,138,0.25); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 16px; }
+  .put-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .conv-card { background: var(--conv-bg); border: 1px solid rgba(76,139,201,0.25); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 16px; }
+  .conv-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #7eb8f5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .opt-section { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 10px 0 4px; }
+  .opt-content { font-size: 14px; color: var(--text); }
+  .opt-content ul { padding-left: 18px; margin-top: 4px; }
+  .opt-content li { margin-bottom: 5px; font-size: 13.5px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 2</div>
+  <h1>Fixed-Income Cash Flows <span>&amp; Types</span></h1>
+  <p>Exam-ready notes: all bond cash flow structures (bullet, amortizing, sinking fund, waterfall, variable, step-up, index-linked, zero-coupon, deferred), all embedded option types (callable, putable, convertible, CoCos, warrants), and legal/regulatory/tax considerations (domestic, foreign, Eurobond, global bonds, OID tax treatment).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Cash Flow Structures</a>
+  <a class="toc-item" href="#s2">02 · Amortizing Debt</a>
+  <a class="toc-item" href="#s3">03 · Variable &amp; Special Coupons</a>
+  <a class="toc-item" href="#s4">04 · Zero &amp; Deferred Coupon</a>
+  <a class="toc-item" href="#s5">05 · Callable Bonds</a>
+  <a class="toc-item" href="#s6">06 · Putable Bonds</a>
+  <a class="toc-item" href="#s7">07 · Convertible Bonds</a>
+  <a class="toc-item" href="#s8">08 · Special Provisions</a>
+  <a class="toc-item" href="#s9">09 · Legal &amp; Regulatory</a>
+  <a class="toc-item" href="#s10">10 · Tax Considerations</a>
+  <a class="toc-item" href="#s11">11 · Master Tables</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: CASH FLOW STRUCTURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Cash Flow Structures — Overview</h2>
+    </div>
+
+    <div class="card">
+      <p>A bond's cash flow structure is determined by how its principal is repaid and how its interest is calculated and paid. The <strong>bullet bond</strong> is the most common structure — the foundation against which all others are compared.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Structure</th><th>Principal Repayment</th><th>Interest</th><th>Key Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bullet Bond</td>
+            <td>100% at maturity (lump sum)</td>
+            <td>Fixed periodic coupon (interest only)</td>
+            <td>Most government and corporate bonds</td>
+          </tr>
+          <tr>
+            <td>Fully Amortizing</td>
+            <td>Equal portions every period; nothing at maturity</td>
+            <td>Declining interest + rising principal = level payment</td>
+            <td>Residential mortgages, commercial real estate loans</td>
+          </tr>
+          <tr>
+            <td>Partially Amortizing</td>
+            <td>Partial over life + balloon payment at maturity</td>
+            <td>Declining as principal reduces; higher than bullet early</td>
+            <td>Some corporate bonds, commercial mortgages</td>
+          </tr>
+          <tr>
+            <td>Sinking Fund</td>
+            <td>Issuer sets aside funds periodically to retire portions early</td>
+            <td>Fixed or variable; interest paid on remaining principal</td>
+            <td>Some government bonds, certain corporate bonds</td>
+          </tr>
+          <tr>
+            <td>Waterfall (ABS/MBS)</td>
+            <td>Sequential by tranche priority (senior → junior)</td>
+            <td>Interest paid to all tranches simultaneously; principal sequential</td>
+            <td>Asset-backed securities, mortgage-backed securities</td>
+          </tr>
+          <tr>
+            <td>Floating-Rate Note (FRN)</td>
+            <td>At maturity (like bullet)</td>
+            <td>Variable = MRR + credit spread; resets periodically</td>
+            <td>Bank loans, corporate FRNs</td>
+          </tr>
+          <tr>
+            <td>Step-Up Bond</td>
+            <td>At maturity</td>
+            <td>Increases by specified amounts on scheduled dates</td>
+            <td>Some corporate and sovereign bonds</td>
+          </tr>
+          <tr>
+            <td>Index-Linked Bond</td>
+            <td>Inflation-adjusted at maturity (capital-indexed)</td>
+            <td>Fixed rate on adjusted principal, or inflation-adjusted coupon</td>
+            <td>TIPS (US), linkers (UK/Australia/Canada)</td>
+          </tr>
+          <tr>
+            <td>Zero-Coupon Bond</td>
+            <td>Par at maturity</td>
+            <td>No periodic payments; issued at discount to par</td>
+            <td>Short-term government T-bills; strips</td>
+          </tr>
+          <tr>
+            <td>Deferred Coupon Bond</td>
+            <td>At maturity</td>
+            <td>No interest for first few years; higher coupon later</td>
+            <td>Construction project financing; some high-yield issuers</td>
+          </tr>
+          <tr>
+            <td>PIK Bond</td>
+            <td>At maturity (but principal grows)</td>
+            <td>Paid by increasing the principal outstanding, not cash</td>
+            <td>Highly leveraged issuers; LBO financing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: AMORTIZING DEBT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Amortizing Debt — Structures &amp; Trade-offs</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Fully Amortizing Periodic Payment Formula</div>
+      <div class="f">
+        A = (r × Principal) / [1 − (1 + r)^(−N)]<br><br>
+        Where:<br>
+        A         = periodic payment amount (constant throughout)<br>
+        r         = market interest rate per period<br>
+        Principal = original loan/bond principal<br>
+        N         = total number of payment periods<br><br>
+        BRWA example: Principal = 300, r = 1.6% per period, N = 10<br>
+        A = (0.016 × 300) / [1 − (1.016)^(−10)] = 32.7 per period
+      </div>
+      <div class="note">
+        The payment A is CONSTANT each period (level annuity). However, what changes each period:<br>
+        — Interest portion = r × Remaining principal (DECLINES each period as principal reduces)<br>
+        — Principal portion = A − Interest portion (INCREASES each period)<br>
+        This mirrors the structure of mortgage loan amortization schedules.
+      </div>
+    </div>
+
+    <h3>Comparison: Bullet vs. Partially vs. Fully Amortizing (BRWA Example, USD millions)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Bullet Bond</th><th>Partially Amortizing</th><th>Fully Amortizing Loan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0 (invest)</td><td>−300</td><td>−300</td><td>−300</td></tr>
+          <tr><td>0.5 → 4.5</td><td>4.8 (interest only)</td><td>18.75 (interest + partial principal)</td><td>32.7 (level payment)</td></tr>
+          <tr><td>5.0 (maturity)</td><td>304.8 (coupon + full principal)</td><td>168.75 (coupon + balloon 50% principal)</td><td>32.7 (final level payment)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Amortization Benefits for Investors</div>
+        <ul>
+          <li><strong>Lower credit risk:</strong> borrower's outstanding liability shrinks over time — less left to default on</li>
+          <li>Higher near-term cash flows vs. bullet bonds</li>
+          <li>More predictable return of capital</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Amortization Risks for Investors</div>
+        <ul>
+          <li><strong>Higher reinvestment risk:</strong> higher near-term cash flows must be reinvested at prevailing (potentially lower) market rates</li>
+          <li>Reduces effective duration — price sensitivity to rate changes lower than equivalent bullet</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Sinking Fund</h3>
+    <div class="card">
+      <p>A <strong>sinking fund</strong> arrangement has the issuer periodically setting aside funds in an escrow account to retire portions of the bond's principal early. Mechanics:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Issuer directs the bond trustee to redeem a <strong>predetermined principal amount selected at random from investors</strong></li>
+        <li>Alternatively, issuer may have the right to repurchase bonds at a predetermined fixed price (a call-like feature)</li>
+        <li><strong>Reduces credit risk</strong> (same as amortization — principal reduced over time)</li>
+        <li><strong>Increases reinvestment risk</strong> (same reasoning — investors receive early principal returns)</li>
+        <li>Used primarily by government issuers and some corporate issuers</li>
+      </ul>
+    </div>
+
+    <h3>Waterfall Structure (ABS / MBS)</h3>
+    <div class="card">
+      <p>A <strong>waterfall</strong> determines the timing of principal repayments to investor classes with different seniority claims. Most common structure:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Interest:</strong> paid to ALL tranches simultaneously (no preference)</li>
+        <li><strong>Principal:</strong> paid sequentially — most senior tranche (A) is fully repaid first, then Tranche B, then Tranche C</li>
+        <li><strong>Payment shortfalls</strong> are borne by the most junior tranches first — Tranche A has lowest credit risk, Tranche C has highest</li>
+        <li>Used in asset-backed securities (ABS) and mortgage-backed securities (MBS)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Distinction — Sinking Fund vs. Call Provision</div>
+      <p>Both retire bond principal early, but they differ in mechanism. <strong>Sinking fund:</strong> issuer systematically sets aside funds in escrow; bonds redeemed periodically at random from investors. <strong>Call provision:</strong> issuer exercises the option to redeem at a time of its choosing (typically when rates fall). Sinking funds are planned from inception; calls are opportunistic.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: VARIABLE & SPECIAL COUPONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Variable Interest &amp; Special Coupon Structures</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FRN Coupon Calculation</div>
+      <div class="f">
+        FRN coupon rate = MRR + Credit Spread<br><br>
+        Antelas AG FRN example (Quarter 15):<br>
+        MRR = 0.25%, Spread = 250 bps = 2.50%<br>
+        Coupon rate = 0.25% + 2.50% = 2.75%<br>
+        Quarterly interest = (2.75% × EUR 250,000,000) / 4 = EUR 1,718,750
+      </div>
+      <div class="note">
+        FRN structure: bullet principal (repaid at maturity). Only the coupon varies.<br>
+        MRR resets periodically (quarterly in this example). Credit spread is fixed at issuance.<br>
+        Banks prefer floating-rate loan assets because they match their variable-rate deposit liabilities (natural hedge).
+      </div>
+    </div>
+
+    <h3>Special Coupon Structures</h3>
+
+    <div class="def-block">
+      <div class="def-term">Step-Up Bond</div>
+      <div class="def-body">Coupon increases by <strong>specified amounts at specified future dates</strong> according to a predetermined schedule. Protects investors against rising rates. May also provide an incentive for issuers to call the bond before the step-up takes effect (issuer prefers to refinance rather than pay the higher coupon). NOT linked to a market rate — purely schedule-driven.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Credit-Linked Coupon (Leveraged Loans)</div>
+      <div class="def-body">Coupon adjusts based on changes in the issuer's <strong>credit quality</strong> — typically linked to financial ratios (leverage, interest coverage) or credit ratings. If credit quality deteriorates, investors receive a higher coupon to compensate. Allows less creditworthy issuers to borrow at lower initial spreads while giving investors protection against credit deterioration. Most common in <strong>leveraged loans</strong> (loans to lower-credit-quality issuers).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Payment-in-Kind (PIK)</div>
+      <div class="def-body">Issuer pays periodic interest by <strong>increasing the principal outstanding</strong> rather than paying cash. Allows cash-constrained issuers to preserve cash. Principal grows over time. Higher interest rate than cash-pay equivalent to compensate investors for greater principal risk. Most common in highly leveraged issuers (LBOs).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Index-Linked Bond ("Linker")</div>
+      <div class="def-body">Interest and/or principal payments <strong>linked to a specified index</strong>, most commonly a consumer price index (inflation). Two sub-types: (1) capital-indexed (principal adjusts; coupon = fixed % of adjusted principal) and (2) interest-indexed (fixed principal; coupon adjusts for inflation). Issued primarily by sovereign governments. Protect against inflation erosion of real returns.</div>
+    </div>
+
+    <h3>Capital-Indexed vs. Interest-Indexed Bonds</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Capital-Indexed Bond (e.g., TIPS)</div>
+        <ul>
+          <li>Principal adjusts periodically based on inflation index</li>
+          <li>Coupon = fixed rate × inflation-adjusted principal</li>
+          <li>Both coupon AND maturity payment adjust with inflation</li>
+          <li>Protects real value of principal</li>
+          <li>If deflation: principal declines, BUT investors receive max(adjusted principal, par) at maturity</li>
+          <li>Examples: US TIPS, UK index-linked gilts, Australian, Canadian bonds</li>
+          <li>Issued primarily by SOVEREIGN governments</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Interest-Indexed Bond</div>
+        <ul>
+          <li>Fixed nominal principal at maturity (no adjustment)</li>
+          <li>Only the coupon is index-linked (inflation adjustment)</li>
+          <li>Essentially an FRN where the MRR = rate of inflation</li>
+          <li>Does NOT protect real value of principal</li>
+          <li>More commonly issued by private financial intermediaries (not governments)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Real vs. Nominal Interest Rate</div>
+      <p><strong>Nominal interest rate:</strong> the stated rate; does not adjust for inflation.<br>
+      <strong>Real interest rate ≈ Nominal rate − Inflation rate</strong> (Fisher approximation)<br><br>
+      Fixed-income payments are <strong>nominal cash flows</strong> — their purchasing power declines as inflation rises. Index-linked bonds solve this by adjusting payments for inflation, protecting the investor's real purchasing power. TIPS investors hold the inflation risk at the government level rather than bearing it themselves.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ FRN vs. Fixed Bond — Interest Rate Risk Comparison</div>
+      <p><strong>FRN:</strong> Lower interest rate risk (coupon adjusts with MRR, so price stays near par). BUT still has full credit risk — if issuer's creditworthiness deteriorates, FRN price falls regardless of MRR changes.<br><br>
+      <strong>Fixed-coupon bond:</strong> Higher interest rate risk (price falls when rates rise). Also has credit risk.<br><br>
+      Key insight: FRNs eliminate MRR risk but NOT credit spread risk. If the credit spread widens (issuer deteriorates), the FRN's price falls even if MRR is unchanged.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: ZERO & DEFERRED COUPON -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Zero-Coupon &amp; Deferred Coupon Structures</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Zero-Coupon Bond</div>
+        <ul>
+          <li>No periodic interest payments</li>
+          <li>Also called: <strong>discount bond / pure discount bond</strong></li>
+          <li>Issued at a <strong>discount to par</strong>; repays par at maturity</li>
+          <li>Investor's return = par − issue price (cumulative interest at maturity)</li>
+          <li>No reinvestment risk (no coupons to reinvest) — <strong>ideal for funding fixed future obligations</strong></li>
+          <li>If rates fall, zero-coupon investors don't face shortfall from reinvestment risk (unlike fixed-coupon bondholders)</li>
+          <li>Common issuers: governments with tenor ≤12 months (T-bills)</li>
+          <li>Also created by "stripping" individual payments from sovereign bullet bonds</li>
+          <li>OID = par − issue price = Original Issue Discount (tax implications!)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Deferred Coupon Bond</div>
+        <ul>
+          <li>No interest for the <strong>first few years</strong></li>
+          <li>Higher coupon paid from a specified future date through maturity</li>
+          <li>Extreme form: zero-coupon bond (zero coupon = complete deferral)</li>
+          <li>Usually priced at a discount (higher coupon later insufficient to offset forgone early interest)</li>
+          <li>Issuers: companies conserving cash post-issuance, or financing construction projects not yet generating income</li>
+          <li>May signal lower credit quality (issuer cannot afford early cash interest)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Zero-Coupon Bonds — No Reinvestment Risk</div>
+      <p>With a standard fixed-coupon bond, if interest rates fall after purchase, coupon payments must be reinvested at the new (lower) rates — the realized return falls below the YTM. <strong>Zero-coupon bonds have no coupons to reinvest</strong>, so the realized return exactly equals the YTM (assuming held to maturity and no default). This makes them ideal for liability matching — e.g., funding a known future obligation (pension payment, tuition) without reinvestment uncertainty.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: CALLABLE BONDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Callable Bonds — Issuer-Favorable Embedded Option</h2>
+    </div>
+
+    <div class="call-card">
+      <div class="call-title">📞 Callable Bond — Right to Redeem Early</div>
+      <div class="opt-section">Who Holds the Right?</div>
+      <div class="opt-content"><strong>ISSUER</strong> — the right to redeem (call) all or part of the bond before maturity. Issuer-favorable option.</div>
+      <div class="opt-section">Why Issuers Want Call Features</div>
+      <div class="opt-content">
+        <ul>
+          <li>Flexibility to <strong>refinance if market interest rates fall</strong> — retire high-coupon debt and re-issue at lower rates</li>
+          <li>Allows debt management without market buybacks</li>
+        </ul>
+      </div>
+      <div class="opt-section">Call Protection Period</div>
+      <div class="opt-content">Period during which the call feature CANNOT be used. Protects investors for an initial period. VIVU example: call cannot be exercised for the first 3 years.</div>
+      <div class="opt-section">Call Price Schedule (VIVU Example)</div>
+      <div class="opt-content">
+        <ul>
+          <li>Year 3–4: 103.25% of par (highest premium — most investor protection)</li>
+          <li>Year 4–5: 102.50% of par</li>
+          <li>Year 5–6: 101.75% of par</li>
+          <li>Year 6–7: 101.00% of par (declining — closer to maturity = less valuable call protection)</li>
+        </ul>
+      </div>
+      <div class="opt-section">Effect on Price and Yield</div>
+      <div class="opt-content">
+        <ul>
+          <li>Callable bond price is <strong>capped at the call price</strong> — if market rates fall, non-callable price rises freely but callable price cannot exceed the fixed call price → <strong>negative convexity / price compression</strong></li>
+          <li>If YTM rises above coupon: call is not exercised → callable behaves like a non-callable bond</li>
+          <li>If YTM falls below coupon: call is likely → price capped at call price, investor loses upside</li>
+          <li>Callable bonds must offer a <strong>higher yield</strong> than otherwise identical non-callable bonds to compensate investors for <strong>call risk</strong> (uncertain maturity + capped price appreciation)</li>
+        </ul>
+      </div>
+      <div class="opt-section">Make-Whole Call</div>
+      <div class="opt-content">A special call provision requiring the issuer to compensate investors at a price based on the YTM of a sovereign bond of similar maturity — usually well above market price. Rarely exercised. Gives flexibility to repurchase debt without using market; offers issuers operational flexibility with minimal economic impact.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Callable Bond Pricing Principle</div>
+      <div class="f">
+        Price of Callable Bond &lt; Price of Equivalent Non-Callable Bond<br><br>
+        Yield of Callable Bond &gt; Yield of Equivalent Non-Callable Bond<br><br>
+        Value of call option (to issuer) = Price (non-callable) − Price (callable)<br><br>
+        Call risk to investor = uncertain maturity + price capped at call price
+      </div>
+      <div class="note">
+        The issuer PAYS for the call option through the LOWER PRICE at which it can sell the callable bond (i.e., it must offer a higher yield).<br>
+        Investor is COMPENSATED for the call option via the higher yield on the callable bond.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: PUTABLE BONDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Putable Bonds — Investor-Favorable Embedded Option</h2>
+    </div>
+
+    <div class="put-card">
+      <div class="put-title">📤 Putable Bond — Right to Sell Back Early</div>
+      <div class="opt-section">Who Holds the Right?</div>
+      <div class="opt-content"><strong>INVESTOR (bondholder)</strong> — the right to sell (put) the bond back to the issuer at a predetermined price on specified dates. Investor-favorable option. Put price is usually <strong>par value</strong>.</div>
+      <div class="opt-section">Why Investors Want Put Features</div>
+      <div class="opt-content">
+        <ul>
+          <li>Protection if <strong>interest rates rise</strong> — investor can put the bond back at par rather than holding a depreciated bond</li>
+          <li>Proceeds reinvested at the new, higher market rates</li>
+          <li>Provides a price FLOOR (= put price) for the bond</li>
+        </ul>
+      </div>
+      <div class="opt-section">Effect on Price and Yield</div>
+      <div class="opt-content">
+        <ul>
+          <li>Putable bond price is <strong>floored at the put price</strong> (usually par) — if market rates rise and prices fall, the bond cannot fall below the put price</li>
+          <li>If YTM &lt; coupon rate (price &gt; put price): put is less valuable → putable behaves like a non-putable bond</li>
+          <li>If YTM &gt; coupon rate (price &lt; put price): put price is activated as a floor → limits investor's downside</li>
+          <li>Putable bonds carry a <strong>lower yield</strong> than equivalent non-putable bonds because the put option has value to investors — the lower yield compensates the issuer for granting the put right</li>
+        </ul>
+      </div>
+      <div class="opt-section">Issuer Impact</div>
+      <div class="opt-content">If investors exercise the put, the issuer is forced to refinance at current (higher) yields — at an inconvenient time from the issuer's perspective.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Putable Bond Pricing Principle</div>
+      <div class="f">
+        Price of Putable Bond &gt; Price of Equivalent Non-Putable Bond<br><br>
+        Yield of Putable Bond &lt; Yield of Equivalent Non-Putable Bond<br><br>
+        Value of put option (to investor) = Price (putable) − Price (non-putable)<br><br>
+        Put price (usually par) = price FLOOR for the putable bond
+      </div>
+      <div class="note">
+        The investor PAYS for the put option through the LOWER YIELD on the putable bond (accepts lower return).<br>
+        Issuer is COMPENSATED for granting the put option by being able to issue at a lower yield.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Call vs. Put — Quick Comparison</div>
+      <p>
+        <strong>Call option:</strong> Issuer's right → issuer-favorable → callable bond has LOWER price, HIGHER yield → limits investor's price appreciation → creates call risk<br><br>
+        <strong>Put option:</strong> Investor's right → investor-favorable → putable bond has HIGHER price, LOWER yield → provides investor with price floor → forces issuer to refinance at bad time<br><br>
+        Memory trick: <strong>C</strong>all = <strong>C</strong>heap (lower price) for investor | <strong>P</strong>ut = <strong>P</strong>ricier for investor (higher price)
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: CONVERTIBLE BONDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Convertible Bonds — Debt with Equity Upside</h2>
+    </div>
+
+    <div class="conv-card">
+      <div class="conv-title">🔄 Convertible Bond — Right to Convert to Equity</div>
+      <div class="opt-section">Who Holds the Right?</div>
+      <div class="opt-content"><strong>INVESTOR (bondholder)</strong> — the right to exchange the bond for a predetermined number of common shares at a set conversion price. Investor-favorable option. If exercised, debt is replaced with equity (not retired with cash).</div>
+      <div class="opt-section">Why Issuers Use Convertibles</div>
+      <div class="opt-content">
+        <ul>
+          <li>Growth companies with limited current cash flow can offer <strong>very low coupon</strong> in exchange for the conversion right</li>
+          <li>Ability to raise equity at a <strong>higher price</strong> (conversion price &gt; current share price)</li>
+          <li>Investors accept lower yield now for potential equity upside</li>
+        </ul>
+      </div>
+      <div class="opt-section">Effect on Price and Yield</div>
+      <div class="opt-content">
+        <ul>
+          <li>Convertible bonds carry a <strong>much lower coupon/yield</strong> than equivalent non-convertible bonds — the conversion right has value</li>
+          <li>If share price is <strong>well below conversion price</strong>: bond trades like a regular bond (conversion worthless)</li>
+          <li>If share price <strong>well above conversion price</strong>: bond tracks its conversion value (trades like equity)</li>
+          <li>As share price rises, conversion value grows → bond price appreciation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Convertible Bond Key Formulas (ZTGB Example)</div>
+      <div class="f">
+        Conversion Ratio = Bond par value / Conversion price<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= EUR 1,000 / EUR 42.00 = 23.81 shares per bond<br><br>
+        Conversion Value  = Conversion ratio × Current share price<br><br>
+        Conversion Premium = (Conversion price − Current share price) / Current share price<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= (EUR 42 − EUR 28) / EUR 28 = 50%<br><br>
+        Example (1 year later, share price = EUR 35):<br>
+        Conversion value = 23.81 × EUR 35 = EUR 833.35 per EUR 1,000 bond<br>
+        Bond trading at par (EUR 1,000) &gt; conversion value (EUR 833.35)<br>
+        → Investor prefers to HOLD the bond (not convert yet)
+      </div>
+      <div class="note">
+        ZTGB issued at 1.25% coupon — far below what a standard ZTGB bond of same maturity would require → investors accepted lower yield for conversion rights.<br>
+        Conversion premium = 50% means the share price must rise 50% before conversion is immediately profitable.<br>
+        Conversion period: any business day starting 1 year from settlement through maturity.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ When to Convert vs. Hold — Decision Rule</div>
+      <p>Compare the <strong>conversion value</strong> to the <strong>bond's market price</strong>:<br>
+      — If conversion value &lt; bond price → do NOT convert (hold bond for interest + principal)<br>
+      — If conversion value &gt; bond price → CONVERT (get more value from shares than the bond is worth)<br><br>
+      In the ZTGB example: conversion value = EUR 833.35 &lt; bond price = EUR 1,000 → investor holds the bond.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: SPECIAL PROVISIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Special Provisions — Warrants, CoCos</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Warrant</div>
+      <div class="def-body">An option <strong>attached</strong> to a bond (not embedded) that entitles the bondholder to buy the issuer's stock at a fixed exercise price until an expiration date. Key distinctions from convertibles: (1) warrants are SEPARATELY TRADEABLE in financial markets (unlike embedded options); (2) warrant exercise results in new share issuance for cash (not conversion of the bond); (3) warrants are attached, not embedded. Used as yield enhancement to investors. Traded on exchanges such as Deutsche Börse and Hong Kong Stock Exchange.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Contingent Convertible Bonds (CoCos)</div>
+      <div class="def-body">A type of convertible bond issued primarily by European banks. Key distinctions from standard convertibles:
+        <ul style="padding-left:18px; margin-top:6px;">
+          <li><strong>Conversion direction:</strong> Standard convertibles convert when share price RISES (investor's choice for upside). CoCos convert when the bank's capital falls BELOW a minimum regulatory threshold (automatic, not investor's choice)</li>
+          <li><strong>Trigger:</strong> Specific regulatory event — e.g., core Tier 1 capital ratio falls below minimum. NOT based on equity price levels</li>
+          <li><strong>Purpose:</strong> Automatically convert debt to equity when the bank is stressed → increases capital → reduces likelihood of default → limits systemic risk</li>
+          <li><strong>Compensation:</strong> CoCos pay a higher yield than otherwise similar bonds (investor bears the risk of automatic conversion at a bad time)</li>
+          <li><strong>Conversion is NOT at investor's discretion</strong> — happens automatically</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Warrant vs. Embedded Convertible</div>
+        <ul>
+          <li>Warrant: <strong>separately tradeable</strong> on an exchange</li>
+          <li>Embedded option: <strong>cannot be traded separately</strong> from the bond</li>
+          <li>Warrant exercise: buy NEW shares for cash</li>
+          <li>Convertible exercise: exchange bond for existing/new shares</li>
+          <li>Both give access to issuer's equity upside</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">CoCo vs. Standard Convertible</div>
+        <ul>
+          <li>Standard convertible: investor's discretion; converts when shares rise</li>
+          <li>CoCo: automatic; converts when bank capital falls (downside event)</li>
+          <li>CoCo trigger: regulatory capital breach (NOT equity price)</li>
+          <li>CoCo purpose: systemic risk mitigation (banking regulation)</li>
+          <li>CoCo yield: HIGHER (compensates for automatic conversion risk)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: LEGAL & REGULATORY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Legal &amp; Regulatory Considerations</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond Type</th><th>Definition</th><th>Regulatory Status</th><th>Key Features / Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Domestic Bond</td>
+            <td>Issued by an entity incorporated in the SAME country as the issuance</td>
+            <td>Full local regulations, listing, and disclosure requirements apply</td>
+            <td>BRWA (US company) issuing USD bonds in the US. Most liquid in their respective local markets.</td>
+          </tr>
+          <tr>
+            <td>Foreign Bond</td>
+            <td>Issued by an entity incorporated in a DIFFERENT country from the issuance</td>
+            <td>Subject to local regulations of the country where issued</td>
+            <td>BRWA issuing EUR bonds in Germany or CNY bonds in China. Often matches currency to foreign operations (natural hedge).</td>
+          </tr>
+          <tr>
+            <td>Eurobond</td>
+            <td>Issued internationally in a currency different from the domestic currency of the issuance country (e.g., USD bonds issued in London)</td>
+            <td><strong>Fewer</strong> listing, disclosure, and regulatory requirements than domestic or foreign bonds. Not registered with any single country's regulator.</td>
+            <td>Named for their denomination: Eurodollar (USD), Euroyen (JPY), euro-denominated Eurobonds. Usually unsecured. IIF USD bonds issued in Singapore. Can be denominated in any currency. Cannot be sold to US retail investors at issuance (not SEC-registered), except to large qualified institutional investors.</td>
+          </tr>
+          <tr>
+            <td>Global Bond</td>
+            <td>Issued simultaneously in the Eurobond market AND at least one domestic bond market</td>
+            <td>Subject to both Eurobond and domestic bond regulations</td>
+            <td>World Bank is a regular issuer. Ensures sufficient demand from all investor types. Provides widest investor access.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Critical: Currency Denomination Matters More Than Where Issued</div>
+      <p>The <strong>currency in which a bond is denominated</strong> has a stronger effect on its price than where the bond is issued or traded. This is because market interest rates of the denomination currency drive pricing. Example: IIF's 5-year USD Eurobond coupon = 1.50%, while its Indonesian rupiah bonds of similar tenor had YTM = 6.97%. Same issuer, same maturity — dramatic difference because of the currency.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Sukuk</div>
+      <div class="def-body">Fixed-income instruments compliant with Islamic law (shari'a), which prohibits interest payments and financing of non-shari'a-compliant activities (alcohol, gambling). Instead of interest, sukuk pay <strong>periodic rental cash flows from underlying assets</strong>. First non-Muslim world sovereign sukuk: UK in 2014 (GBP 200 million, 5-year, listed on London Stock Exchange). Issued by supranational entities (Islamic Development Bank), sovereign (Turkey), and corporate (Saudi Aramco) issuers.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Eurobond Market Origin &amp; Key Features</div>
+      <p>Created in the <strong>1960s</strong> primarily to bypass legal, regulatory, and tax constraints imposed in the United States. Key characteristics: (1) issued outside any single country's jurisdiction; (2) usually unsecured; (3) may be in any currency including issuer's domestic currency; (4) underwritten by international financial intermediaries; (5) historically bearer bonds (no ownership records — now all registered bonds); (6) sold primarily to European, Middle Eastern, and Asian investors. Romania's 30-year EUR bond (2019) was issued as a Eurobond + Rule 144A private placement (allows qualified US institutional investors).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ International vs. Domestic Bond Terminology</div>
+      <p>Many market participants refer to foreign bonds, Eurobonds, and global bonds collectively as <strong>"international bonds"</strong> (as opposed to domestic bonds). Eurobonds were historically <strong>bearer bonds</strong> (only the clearing system knew the owner — no name records). Now, all bonds (domestic, foreign, Eurobond) are <strong>registered bonds</strong> with ownership recorded by name or serial number.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: TAX CONSIDERATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Tax Considerations</h2>
+    </div>
+
+    <div class="card">
+      <p>Tax treatment of fixed-income securities varies significantly by jurisdiction and bond type. Three key areas:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Interest income</strong> — usually taxed as ordinary income (same rate as wages)</li>
+        <li><strong>Capital gains/losses</strong> — different rate from interest income; may vary by holding period</li>
+        <li><strong>Original Issue Discount (OID)</strong> — special rules for zero-coupon bonds and bonds issued at a discount</li>
+      </ol>
+    </div>
+
+    <h3>Interest Income Tax Treatment</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Country / Jurisdiction</th><th>Interest Tax</th><th>Capital Gains Tax</th><th>Special Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>United States — Treasuries</td>
+            <td>Federal income tax applies</td>
+            <td>Yes (long-term at lower rate if held &gt;1 year)</td>
+            <td>EXEMPT from state and local tax → Treasuries more attractive to investors in high-tax states</td>
+          </tr>
+          <tr>
+            <td>United States — Municipal Bonds</td>
+            <td>Often exempt from federal income tax AND state/local tax of issuing state</td>
+            <td>Generally yes</td>
+            <td>Tax exemption encourages local residents to buy state/local bonds</td>
+          </tr>
+          <tr>
+            <td>United Kingdom</td>
+            <td>Income tax on accrued and paid interest</td>
+            <td><strong>Exempt</strong> from capital gains tax</td>
+            <td>No CGT on bond gains</td>
+          </tr>
+          <tr>
+            <td>Eurobonds (general)</td>
+            <td>Gross interest payments (no withholding at source)</td>
+            <td>Varies by investor's home country</td>
+            <td>Gross payment gives investors more flexibility on where/how taxes are paid</td>
+          </tr>
+          <tr>
+            <td>Some domestic bonds</td>
+            <td>Net interest (paid after withholding tax deducted)</td>
+            <td>Varies</td>
+            <td>Tax deducted at source before investor receives payment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Capital Gains on Bonds</h3>
+    <div class="card">
+      <p>When a bond is sold before maturity at a price different from the purchase price, a capital gain or loss is recognized:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Long-term capital gain</strong> (held &gt;1 year in US): taxed at a lower rate than ordinary income</li>
+        <li><strong>Short-term capital gain</strong> (held ≤1 year in US): taxed at ordinary income rate (same as interest)</li>
+        <li>Not all countries have a separate capital gains tax or holding period distinction</li>
+      </ul>
+    </div>
+
+    <h3>Original Issue Discount (OID) — Zero-Coupon Bonds</h3>
+    <div class="formula-box">
+      <div class="label">★ Original Issue Discount Calculation</div>
+      <div class="f">
+        OID = Bond par value − Issuance price<br><br>
+        Example:<br>
+        Par = USD 25,000,000 | Issue price = USD 92.83 per USD 100 par<br>
+        OID = 25,000,000 − (0.9283 × 25,000,000) = USD 1,792,500<br><br>
+        US treatment: prorated OID included as taxable INCOME each year<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ pay income tax annually; no capital gains at maturity<br><br>
+        No-OID jurisdiction: no income recognized during holding period<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ pay capital gains tax on full OID at maturity
+      </div>
+      <div class="note">
+        OID = the interest that accrues to the investor over the bond's life via price appreciation from discount to par.<br>
+        US OID tax provision: tax is paid on accrued interest annually even though no cash is received (phantom income).<br>
+        Non-OID jurisdiction (e.g., Japan): no annual tax; large lump-sum capital gains tax at maturity instead.<br>
+        This creates a significant after-tax return difference between investors in different jurisdictions.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Premium Bond Tax Treatment</div>
+      <p>For bonds purchased at a <strong>premium above par</strong>, some jurisdictions allow investors to deduct a prorated portion of the premium from taxable income each year (amortize the premium). This is often a choice, not a requirement. Alternatively, investors can take no deduction annually and recognize a capital loss at maturity when the bond is redeemed at par (below the purchase price). The optimal choice depends on the investor's tax situation and expected holding period.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Corporate Issuers — Interest Tax Deductibility</div>
+      <p>For corporate issuers, <strong>interest expense on bonds and loans is tax-deductible</strong> (unlike dividends on equity). This creates a tax shield on debt financing — the after-tax cost of debt is lower than the stated interest rate. This is a key reason companies prefer debt to equity from a tax perspective and is a fundamental concept in capital structure theory (covered in Corporate Issuers).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>Embedded Options — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Callable Bond</th><th>Putable Bond</th><th>Convertible Bond</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Option holder</td>
+            <td><span class="tag tag-red">ISSUER</span></td>
+            <td><span class="tag tag-green">INVESTOR</span></td>
+            <td><span class="tag tag-green">INVESTOR</span></td>
+          </tr>
+          <tr>
+            <td>Favorable to</td>
+            <td>Issuer (issuer-favorable)</td>
+            <td>Investor (investor-favorable)</td>
+            <td>Investor (investor-favorable)</td>
+          </tr>
+          <tr>
+            <td>Action if exercised</td>
+            <td>Issuer redeems bond early for cash</td>
+            <td>Investor sells bond back for cash (at put price)</td>
+            <td>Investor exchanges bond for issuer's shares</td>
+          </tr>
+          <tr>
+            <td>Result</td>
+            <td>Debt retired early</td>
+            <td>Debt retired early</td>
+            <td>Debt replaced by equity</td>
+          </tr>
+          <tr>
+            <td>Exercise motivation</td>
+            <td>Issuer exercises when rates fall (refinance cheaper)</td>
+            <td>Investor exercises when rates rise (reinvest at higher rates)</td>
+            <td>Investor exercises when share price rises above conversion price</td>
+          </tr>
+          <tr>
+            <td>Price vs. non-option equivalent</td>
+            <td>LOWER price (investor receives less)</td>
+            <td>HIGHER price (investor pays more)</td>
+            <td>HIGHER price (investor pays for conversion right via lower coupon)</td>
+          </tr>
+          <tr>
+            <td>Yield vs. non-option equivalent</td>
+            <td>HIGHER yield (investor demands compensation)</td>
+            <td>LOWER yield (investor accepts less)</td>
+            <td>MUCH LOWER yield (investor accepts very low coupon for equity upside)</td>
+          </tr>
+          <tr>
+            <td>Price effect</td>
+            <td>Capped at call price (negative convexity)</td>
+            <td>Floored at put price (price floor)</td>
+            <td>Tracks conversion value when share price &gt;&gt; conversion price</td>
+          </tr>
+          <tr>
+            <td>Key risk to investor</td>
+            <td>Call risk: uncertain maturity, limited upside</td>
+            <td>Issuer must refinance at high rates (issuer bears risk)</td>
+            <td>Equity risk; low coupon if shares don't appreciate</td>
+          </tr>
+          <tr>
+            <td>Common issuers</td>
+            <td>Corporate (esp. high yield like VIVU)</td>
+            <td>Various</td>
+            <td>Growth companies with limited cash flow</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Bond Classification — Domestic, Foreign, Eurobond, Global</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Issuer vs. Market</th><th>Regulation</th><th>Currency</th><th>Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Domestic</td>
+            <td>Same country</td>
+            <td>Full local rules</td>
+            <td>Domestic currency</td>
+            <td>BRWA USD bonds in USA</td>
+          </tr>
+          <tr>
+            <td>Foreign</td>
+            <td>Different country</td>
+            <td>Host country rules</td>
+            <td>Host country currency</td>
+            <td>BRWA EUR bonds in Germany</td>
+          </tr>
+          <tr>
+            <td>Eurobond</td>
+            <td>Outside any single jurisdiction</td>
+            <td><strong>Fewer rules</strong> than domestic/foreign</td>
+            <td>Any currency</td>
+            <td>IIF USD bonds in Singapore; Romania EUR bonds</td>
+          </tr>
+          <tr>
+            <td>Global</td>
+            <td>Eurobond market + ≥1 domestic market simultaneously</td>
+            <td>Both Eurobond + domestic rules</td>
+            <td>Any currency</td>
+            <td>World Bank bonds</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Bullet bond = standard structure</strong>: interest only during life, full principal at maturity. Most government and corporate bonds.</li>
+        <li>✅ <strong>Fully amortizing:</strong> equal periodic payments (level annuity); interest portion declines, principal portion increases each period. Formula: A = (r × Principal) / [1 − (1+r)^(−N)]. Example: mortgages.</li>
+        <li>✅ <strong>Partially amortizing:</strong> partial principal each period + balloon payment at maturity. Combines bullet and fully amortizing.</li>
+        <li>✅ <strong>Amortization benefits investors:</strong> lower credit risk (principal reduces). Harms investors: higher reinvestment risk (early cash flows reinvested at potentially lower rates).</li>
+        <li>✅ <strong>Sinking fund:</strong> issuer sets aside funds in escrow to retire principal early (randomly selected bonds). Reduces credit risk; increases reinvestment risk. Government and some corporate use.</li>
+        <li>✅ <strong>Waterfall (ABS/MBS):</strong> interest paid to ALL tranches; principal paid SEQUENTIALLY (senior first). Shortfalls borne by JUNIOR tranches. Tranche A = lowest credit risk.</li>
+        <li>✅ <strong>FRN coupon = MRR + Credit Spread.</strong> MRR resets; spread is constant. FRNs have lower interest rate risk but still have full credit risk.</li>
+        <li>✅ <strong>Step-up bonds:</strong> coupon increases at scheduled future dates. Protects investors against rising rates; incentivizes issuers to call before step-up.</li>
+        <li>✅ <strong>Credit-linked coupon:</strong> adjusts based on issuer credit quality/ratios. Most common in leveraged loans. Allows less creditworthy issuers to borrow at lower initial spreads.</li>
+        <li>✅ <strong>PIK bonds:</strong> interest paid by increasing principal outstanding (not cash). Used by highly leveraged issuers; higher interest rate to compensate investors.</li>
+        <li>✅ <strong>Capital-indexed bonds (e.g., TIPS):</strong> principal adjusts with inflation index; coupon = fixed rate × adjusted principal. Deflation protection: receive max(adjusted principal, par). Issued by sovereigns.</li>
+        <li>✅ <strong>Interest-indexed bonds:</strong> fixed nominal principal; only coupon is inflation-linked. Essentially FRN where MRR = inflation. More common from private financial intermediaries.</li>
+        <li>✅ <strong>Zero-coupon bonds = discount bonds = pure discount bonds.</strong> No periodic interest; issued at discount; sole return = par − issue price. No reinvestment risk. OID = par − issue price. Created by "stripping" sovereign bullet bonds.</li>
+        <li>✅ <strong>Deferred coupon bonds:</strong> no interest early on, higher coupon later. Usually at discount to par. Signals potential lower credit quality. Zero-coupon = extreme deferred coupon case.</li>
+        <li>✅ <strong>All embedded options (call, put, convert) cannot be traded separately from the bond.</strong> Value estimated by comparing to same bond without the provision.</li>
+        <li>✅ <strong>Callable bonds: ISSUER's right.</strong> Callable price &lt; non-callable price. Callable yield &gt; non-callable yield. Call protection period = period during which call cannot be exercised. Price capped at call price (negative convexity). Make-whole calls rarely executed.</li>
+        <li>✅ <strong>Putable bonds: INVESTOR's right.</strong> Putable price &gt; non-putable price. Putable yield &lt; non-putable yield. Put price = floor for bond price. Investor exercises when rates rise.</li>
+        <li>✅ <strong>Convertible bonds: INVESTOR's right to convert to shares.</strong> Low coupon accepted in exchange for equity upside. Conversion ratio = par / conversion price. Conversion value = ratio × current share price. Convert when conversion value &gt; bond price.</li>
+        <li>✅ <strong>Conversion premium = (conversion price − current share price) / current share price.</strong> ZTGB example: (42−28)/28 = 50%.</li>
+        <li>✅ <strong>Warrants are ATTACHED (not embedded) — separately tradeable.</strong> Entitles bondholder to buy issuer's shares at exercise price. Traded on exchanges (Deutsche Börse, HKEX).</li>
+        <li>✅ <strong>CoCos:</strong> issued by banks; convert automatically when capital falls below regulatory minimum (Tier 1). NOT at investor's discretion. Purpose: limit systemic risk. Higher yield than similar bonds.</li>
+        <li>✅ <strong>Domestic bonds:</strong> same country issuer and market. <strong>Foreign bonds:</strong> different country issuer. <strong>Eurobonds:</strong> issued outside any single jurisdiction; fewer regulations; can be any currency. <strong>Global bonds:</strong> Eurobond + domestic simultaneously.</li>
+        <li>✅ <strong>Eurobonds were created in the 1960s to bypass US regulatory constraints.</strong> Cannot be sold to US retail investors at issuance (not SEC registered). Originally bearer bonds; now all registered bonds.</li>
+        <li>✅ <strong>Currency denomination &gt; where issued for price determination.</strong> Market rates of the denomination currency drive bond pricing.</li>
+        <li>✅ <strong>Sukuk:</strong> shari'a-compliant bonds; pay rental income not interest; backed by specific assets. First non-Muslim sovereign: UK (2014).</li>
+        <li>✅ <strong>Bond interest → ordinary income tax.</strong> Capital gains → usually different (lower) rate; US long-term CG rate lower if held &gt;1 year.</li>
+        <li>✅ <strong>OID = par − issue price.</strong> US: prorated as taxable income annually (pay tax without receiving cash). Non-OID jurisdictions: no annual tax; capital gains tax on OID at maturity.</li>
+        <li>✅ <strong>US Treasuries exempt from state/local tax.</strong> US municipal bonds often exempt from federal tax and state tax of issuing state. UK bonds exempt from capital gains tax.</li>
+        <li>✅ <strong>Premium bonds:</strong> some jurisdictions allow annual amortization of premium as a deduction (reduces taxable income). Alternative: take capital loss at maturity.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA &amp; QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ AMORTIZATION ═══<br>
+        Periodic payment A = (r × Principal) / [1 − (1 + r)^(−N)]<br>
+        Fully amortizing: level payment; interest ↓ + principal ↑ each period<br>
+        Balloon payment = partial amortization + lump sum at maturity<br><br>
+
+        ═══ FRN ═══<br>
+        Coupon = MRR + Credit Spread&nbsp;&nbsp;[MRR resets; spread fixed at issuance]<br>
+        Lower interest rate risk than fixed bonds; still has full credit risk<br><br>
+
+        ═══ INDEX-LINKED ═══<br>
+        Real rate ≈ Nominal rate − Inflation rate (Fisher approximation)<br>
+        Capital-indexed (TIPS): principal adjusts; pays max(adjusted par, par) at maturity<br>
+        Interest-indexed: fixed principal; only coupon adjusts<br><br>
+
+        ═══ ZERO-COUPON ═══<br>
+        OID = Par − Issue price (= cumulative interest earned at maturity)<br>
+        No reinvestment risk; ideal for liability matching<br><br>
+
+        ═══ EMBEDDED OPTIONS ═══<br>
+        Callable:    ISSUER's right → price ↓, yield ↑ vs. non-callable; capped at call price<br>
+        Putable:     INVESTOR's right → price ↑, yield ↓ vs. non-putable; floored at put price<br>
+        Convertible: INVESTOR's right → low coupon; conversion ratio = par / conversion price<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conversion value = ratio × current share price<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conversion premium = (conv. price − share price) / share price<br>
+        Convert when: conversion value &gt; bond market price<br>
+        CoCo: automatic at regulatory trigger (Tier 1 capital breach); NOT investor's choice<br>
+        Warrant: ATTACHED (separately tradeable); entitles holder to BUY shares at exercise price<br><br>
+
+        ═══ BOND TYPES ═══<br>
+        Domestic = same country | Foreign = different country | Eurobond = outside any jurisdiction<br>
+        Global = Eurobond + ≥1 domestic simultaneously<br>
+        Currency denomination &gt; issuance location for price impact<br><br>
+
+        ═══ TAX ═══<br>
+        Interest → ordinary income tax rate<br>
+        Capital gains → usually lower rate; US: long-term if held &gt;1 yr<br>
+        OID (US) → prorated annual taxable income; no CG at maturity<br>
+        US Treasuries: exempt from state/local | US Munis: exempt from federal (+ state of issue)<br>
+        UK: exempt from capital gains tax on bonds<br>
+        Eurobonds: gross interest (no withholding at source)
+      </div>
+      <div class="note">
+        <strong>Amortizing vs. Bullet:</strong> Amortizing lowers credit risk but raises reinvestment risk — these two always go together.<br>
+        <strong>Callable vs. Putable:</strong> Call = issuer's option = lower price/higher yield for investor. Put = investor's option = higher price/lower yield.<br>
+        <strong>Convertible key metrics:</strong> Conversion ratio (shares per bond) = par / conversion price. Conversion value = ratio × current share price. Convert only if conversion value &gt; bond price.<br>
+        <strong>CoCo trigger:</strong> regulatory capital breach — not market prices. Automatic conversion; investor has no choice; higher yield compensates.<br>
+        <strong>OID tax:</strong> US taxes annually (phantom income); others tax as capital gain at maturity — major after-tax return difference.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 2: Fixed-Income Cash Flows and Types · Exam Prep Notes
+</footer>
+
+</body>
+</html>

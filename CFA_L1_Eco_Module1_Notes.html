@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 1: The Firm & Market Structures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --card: #1a1e28;
+    --border: #252a38;
+    --accent: #c9a84c;
+    --accent2: #4c8bc9;
+    --accent3: #4cc98a;
+    --danger: #c94c4c;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tip-bg: #1a2218;
+    --tip-border: #4cc98a;
+    --warn-bg: #221a18;
+    --warn-border: #c94c4c;
+    --formula-bg: #12151f;
+    --formula-border: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1520 40%, #0d1420 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(201,168,76,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 span { color: var(--accent); }
+
+  .page-header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 620px;
+  }
+
+  .toc-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .toc-strip::-webkit-scrollbar { display: none; }
+
+  .toc-item {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    padding: 14px 18px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 24px 0 12px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card ul { padding-left: 20px; }
+  .card ul li { margin-bottom: 6px; }
+
+  /* ─── FORMULA BOX ─── */
+  .formula-box {
+    background: var(--formula-bg);
+    border-left: 3px solid var(--formula-border);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .formula-box .label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  /* ─── TIP BOX ─── */
+  .tip {
+    background: var(--tip-bg);
+    border-left: 3px solid var(--tip-border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+
+  .tip .tip-label {
+    font-weight: 700;
+    color: var(--accent3);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .tip p { color: #c8e8d4; }
+
+  /* ─── WARN BOX ─── */
+  .warn {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--danger);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+
+  .warn .warn-label {
+    font-weight: 700;
+    color: var(--danger);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .warn p { color: #e8c8c8; }
+
+  /* ─── COMPARISON TABLE ─── */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 600px;
+  }
+
+  thead th {
+    background: rgba(201,168,76,0.12);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--formula-border);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  tbody td {
+    padding: 10px 14px;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tbody td:first-child {
+    font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); }
+
+  /* ─── TWO COLUMN ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+
+  .mini-card .mc-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mini-card ul { padding-left: 18px; }
+  .mini-card ul li { font-size: 14px; margin-bottom: 5px; color: var(--text); }
+
+  /* ─── PRICE DECISION FLOW ─── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 14px 0;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .flow-row .condition { color: var(--accent2); font-weight: 700; min-width: 120px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .flow-row .arrow { color: var(--muted); }
+  .flow-row .action { color: var(--text); }
+  .flow-row.green { border-left: 3px solid var(--accent3); }
+  .flow-row.yellow { border-left: 3px solid var(--accent); }
+  .flow-row.red { border-left: 3px solid var(--danger); }
+
+  /* ─── KEY TERM ─── */
+  .key-term {
+    display: inline;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  p { margin-bottom: 12px; }
+
+  strong { color: #fff; font-weight: 700; }
+  em { color: var(--accent2); font-style: normal; font-weight: 600; }
+
+  .highlight { color: var(--accent); font-weight: 700; }
+
+  .oligopoly-table td:first-child { white-space: nowrap; }
+
+  .mnemonic {
+    background: #1a1628;
+    border: 1px solid #3d2f6e;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+
+  .mnemonic .m-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a98adc;
+    margin-bottom: 6px;
+  }
+
+  .mnemonic p { color: #d8ccf0; font-size: 14px; margin: 0; }
+
+  .number-ranking {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .nr-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 13px;
+    min-width: 120px;
+  }
+
+  .nr-item .nr-num { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent); display: block; }
+  .nr-item .nr-label { color: var(--muted); font-size: 12px; }
+
+  /* ─── COURNOT STEP BOX ─── */
+  .steps {
+    counter-reset: step;
+    margin: 12px 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    counter-increment: step;
+  }
+
+  .step-num {
+    min-width: 28px;
+    height: 28px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content { font-size: 14px; color: var(--text); }
+  .step-content .f { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
+
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 48px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 1: <span>The Firm &</span><br>Market Structures</h1>
+  <p>Exam-ready notes covering breakeven/shutdown, market structure characteristics, monopolistic competition, oligopoly pricing models, and concentration measures.</p>
+</div>
+
+<!-- TABLE OF CONTENTS STRIP -->
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Core Concepts</a>
+  <a href="#s2" class="toc-item">02 · Breakeven & Shutdown</a>
+  <a href="#s3" class="toc-item">03 · Economies of Scale</a>
+  <a href="#s4" class="toc-item">04 · Market Structures</a>
+  <a href="#s5" class="toc-item">05 · Monopolistic Competition</a>
+  <a href="#s6" class="toc-item">06 · Oligopoly</a>
+  <a href="#s7" class="toc-item">07 · Concentration Measures</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: CORE CONCEPTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Core Concepts & Revenue Fundamentals</h2>
+    </div>
+
+    <h3>Revenue & Cost Definitions</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Revenue Concepts</div>
+        <ul>
+          <li><strong>TR</strong> = Price × Quantity</li>
+          <li><strong>AR</strong> = TR / Q = Price (always)</li>
+          <li><strong>MR</strong> = ΔTR / ΔQ</li>
+          <li>Perfect competition: <em>P = MR = AR</em></li>
+          <li>Imperfect competition: <em>MR &lt; P</em></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Profit Concepts</div>
+        <ul>
+          <li><strong>Accounting Profit</strong> = TR – Accounting Costs</li>
+          <li><strong>Economic Profit</strong> = TR – Total Economic Costs</li>
+          <li><strong>Normal Profit</strong> = Economic Profit = 0</li>
+          <li>Economic cost = Accounting cost + <em>Opportunity cost</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap</div>
+      <p>Normal profit ≠ zero accounting profit. A firm earning normal profit covers ALL opportunity costs including return on capital — it just earns zero <em>economic</em> profit. Accounting profit is still positive.</p>
+    </div>
+
+    <h3>The Golden Rule: Profit Maximization</h3>
+    <div class="formula-box">
+      <div class="label">Profit Maximization Condition</div>
+      <div class="f">MR = MC &nbsp;AND&nbsp; MC must be rising (not falling)</div>
+      <div class="note">The second condition is critical — there can be two points where MR = MC; only the one where MC is rising is the profit-maximizing output.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick</div>
+      <p>Think of it as: "Where MR meets rising MC." The rising MC condition rules out the other intersection point Q' on the left side of the cost curve.</p>
+    </div>
+
+    <h3>Perfect vs. Imperfect Competition — Revenue Curves</h3>
+    <div class="card">
+      <p><strong>Perfect Competition:</strong> Firm is a <em>price taker</em>. Demand curve is perfectly horizontal at market price. TR curve is a straight line (linear) with slope = P. MR = AR = P at all output levels.</p>
+      <p><strong>Imperfect Competition (Monopoly):</strong> Firm faces a downward-sloping demand curve. Price is a function of Q: P = f(Q). TR first rises (elastic demand, positive MR) then falls (inelastic demand, negative MR). MR curve lies below the demand curve.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Trick to Remember MR Relationship</div>
+      <p>For a linear demand curve: the MR curve has the same intercept but <strong>twice the slope</strong> (falls twice as fast). So if demand is P = 450 – Q, then MR = 450 – 2Q. This is directly tested in Cournot problems!</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: BREAKEVEN & SHUTDOWN -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Breakeven & Shutdown Points</h2>
+    </div>
+
+    <h3>Key Definitions</h3>
+    <div class="two-col">
+      <div class="formula-box" style="margin:0;">
+        <div class="label">Breakeven Point</div>
+        <div class="f">P = ATC (minimum ATC)</div>
+        <div class="note">TR = TC → Economic profit = 0 (normal profit only). Firm SHOULD continue operating.</div>
+      </div>
+      <div class="formula-box" style="margin:0; border-color:var(--danger);">
+        <div class="label" style="color:var(--danger);">Shutdown Point</div>
+        <div class="f" style="color:#e87a7a;">P = AVC (minimum AVC)</div>
+        <div class="note">If P falls below min AVC, shut down immediately. Losses exceed fixed costs.</div>
+      </div>
+    </div>
+
+    <h3>The Shutdown Decision Logic</h3>
+    <div class="flow">
+      <div class="flow-row green">
+        <span class="condition">P &gt; ATC</span>
+        <span class="arrow">→</span>
+        <span class="action">Positive economic profit. Operate and earn profit.</span>
+      </div>
+      <div class="flow-row yellow">
+        <span class="condition">AVC &lt; P &lt; ATC</span>
+        <span class="arrow">→</span>
+        <span class="action">Negative economic profit BUT continue operating in short run. Revenue covers all variable costs + part of fixed costs (sunk). Loss is less than fixed cost alone.</span>
+      </div>
+      <div class="flow-row red">
+        <span class="condition">P &lt; AVC</span>
+        <span class="arrow">→</span>
+        <span class="action">Shut down immediately. Cannot even cover variable costs. Losses are worse than just paying fixed costs.</span>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Intuition for Shutdown Rule</div>
+      <p>Fixed costs are sunk — you pay them whether you operate or not. The only question is: does producing cover variable costs? If yes, every unit sold contributes something toward those fixed costs. If no (P &lt; AVC), you're better off not producing at all.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Short Run vs. Long Run</div>
+      <p>In the <strong>short run</strong>: A firm may operate at a loss if P &gt; AVC (fixed costs are sunk).<br>
+      In the <strong>long run</strong>: A firm must earn at least zero economic profit or it exits the market. ALL costs are variable in the long run — nothing is sunk.</p>
+    </div>
+
+    <h3>Profit / Loss Visual Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Condition</th>
+            <th>Profit Status</th>
+            <th>Short-Run Action</th>
+            <th>Long-Run Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P &gt; ATC</td>
+            <td><span class="tag tag-green">Positive economic profit</span></td>
+            <td>Operate</td>
+            <td>New firms enter → P falls</td>
+          </tr>
+          <tr>
+            <td>P = ATC</td>
+            <td><span class="tag tag-yellow">Normal profit (breakeven)</span></td>
+            <td>Operate</td>
+            <td>Long-run equilibrium</td>
+          </tr>
+          <tr>
+            <td>AVC &lt; P &lt; ATC</td>
+            <td><span class="tag tag-red">Negative economic profit</span></td>
+            <td>Operate (P covers AVC)</td>
+            <td>Exit industry</td>
+          </tr>
+          <tr>
+            <td>P &lt; AVC</td>
+            <td><span class="tag tag-red">Loss exceeds fixed costs</span></td>
+            <td>Shut down</td>
+            <td>Exit industry</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "SB" = Shutdown Below, Breakeven Best</div>
+      <p><strong>S</strong>hutdown = below min <strong>AVC</strong> &nbsp;|&nbsp; <strong>B</strong>reakeven = at min <strong>ATC</strong><br>
+      The curve order from bottom to top: AVC → ATC → (with SMC passing through both minima). SMC crosses AVC at AVC's minimum, then crosses ATC at ATC's minimum.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: ECONOMIES OF SCALE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Economies & Diseconomies of Scale</h2>
+    </div>
+
+    <h3>Short Run vs. Long Run</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Short Run</div>
+        <ul>
+          <li>At least one factor is <strong>fixed</strong> (capital, plant size)</li>
+          <li>Firm adjusts only variable inputs (e.g., labor)</li>
+          <li>Subject to <em>diminishing marginal returns</em></li>
+          <li>Firm is always <em>operating</em> in short run</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Long Run</div>
+        <ul>
+          <li><strong>All</strong> factors are variable</li>
+          <li>Firm can enter or exit the market</li>
+          <li>Firm chooses optimal plant size</li>
+          <li>Firm is always <em>planning</em> in long run</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>LRAC (Envelope Curve)</h3>
+    <div class="card">
+      <p>The <strong>Long-Run Average Cost (LRAC)</strong> curve is an "envelope" of all short-run average total cost (SATC) curves — it picks the minimum SATC for each output level across all possible plant sizes.</p>
+      <p>The firm chooses the plant size (small, medium, large) that minimizes cost at its planned output level. The LRAC connects the lowest points across all SATC curves.</p>
+    </div>
+
+    <h3>Economies vs. Diseconomies of Scale</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Economies of Scale</div>
+        <ul>
+          <li>LRAC falls as output increases</li>
+          <li>Cost per unit decreases</li>
+          <li>LRAC slope is <strong>negative</strong></li>
+          <li><em>Causes:</em> specialization, bulk buying, technology, better management information, waste reduction, increasing returns to scale</li>
+          <li><em>Example:</em> Walmart, electric utilities</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Diseconomies of Scale</div>
+        <ul>
+          <li>LRAC rises as output increases</li>
+          <li>Cost per unit increases</li>
+          <li>LRAC slope is <strong>positive</strong></li>
+          <li><em>Causes:</em> management complexity, product overlap, communication breakdowns, supply constraints, decreasing returns to scale</li>
+          <li><em>Example:</em> Old General Motors</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Minimum Efficient Scale</div>
+      <div class="f">Minimum point on the LRAC curve</div>
+      <div class="note">This is the optimal long-run firm size under perfect competition. Market forces drive firms to this point — firms not operating here are threatened long-term.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 LRAC Shape in Reality</div>
+      <p>The LRAC curve is often U-shaped or "hockey stick" shaped: <strong>economies of scale first</strong> (LRAC falls) → <strong>constant returns</strong> (flat range) → <strong>diseconomies of scale</strong> (LRAC rises). The flat portion is where the firm enjoys maximum efficiency over a range of output.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: MARKET STRUCTURES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Market Structures — Overview</h2>
+    </div>
+
+    <h3>The Big Picture Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Perfect Competition</th>
+            <th>Monopolistic Competition</th>
+            <th>Oligopoly</th>
+            <th>Monopoly</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td># of Sellers</td>
+            <td>Many</td>
+            <td>Many</td>
+            <td>Few</td>
+            <td>One</td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td>Homogeneous</td>
+            <td>Differentiated</td>
+            <td>Homogeneous or differentiated</td>
+            <td>Unique (no substitutes)</td>
+          </tr>
+          <tr>
+            <td>Barriers to Entry</td>
+            <td><span class="tag tag-green">Very Low</span></td>
+            <td><span class="tag tag-green">Low</span></td>
+            <td><span class="tag tag-yellow">High</span></td>
+            <td><span class="tag tag-red">Very High</span></td>
+          </tr>
+          <tr>
+            <td>Pricing Power</td>
+            <td><span class="tag tag-green">None</span></td>
+            <td><span class="tag tag-yellow">Some</span></td>
+            <td><span class="tag tag-yellow">Considerable</span></td>
+            <td><span class="tag tag-red">Very High</span></td>
+          </tr>
+          <tr>
+            <td>Non-Price Competition</td>
+            <td>None</td>
+            <td>Advertising, branding</td>
+            <td>Advertising, features</td>
+            <td>Advertising</td>
+          </tr>
+          <tr>
+            <td>LR Economic Profit</td>
+            <td>Zero</td>
+            <td>Zero</td>
+            <td>Possible</td>
+            <td>Possible</td>
+          </tr>
+          <tr>
+            <td>Demand Curve</td>
+            <td>Perfectly elastic (flat)</td>
+            <td>Downward sloping</td>
+            <td>Kinked / complex</td>
+            <td>Downward sloping (market)</td>
+          </tr>
+          <tr>
+            <td>MR vs. P</td>
+            <td>MR = P</td>
+            <td>MR &lt; P</td>
+            <td>MR &lt; P</td>
+            <td>MR &lt; P</td>
+          </tr>
+          <tr>
+            <td>Real-World Examples</td>
+            <td>Agricultural commodities, wheat, corn</td>
+            <td>Restaurants, clothing brands, cosmetics</td>
+            <td>Airlines, telecom, petroleum, cars</td>
+            <td>Local utility companies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — From Most to Least Competitive: "PM-OM"</div>
+      <p><strong>P</strong>erfect competition → <strong>M</strong>onopolistic competition → <strong>O</strong>ligopoly → <strong>M</strong>onopoly<br>
+      As you move right: fewer sellers, more pricing power, higher barriers, more economic moat.</p>
+    </div>
+
+    <h3>5 Determinants of Market Structure</h3>
+    <div class="card">
+      <ol style="padding-left:20px; font-size:15px;">
+        <li style="margin-bottom:8px;"><strong>Number and relative size of firms</strong> — more firms = more competition</li>
+        <li style="margin-bottom:8px;"><strong>Degree of product differentiation</strong> — more differentiation = more pricing power</li>
+        <li style="margin-bottom:8px;"><strong>Pricing power of the seller</strong> — price maker vs. price taker</li>
+        <li style="margin-bottom:8px;"><strong>Barriers to entry and exit</strong> — capital requirements, patents, high exit costs</li>
+        <li style="margin-bottom:8px;"><strong>Degree of non-price competition</strong> — advertising, branding, features</li>
+      </ol>
+    </div>
+
+    <h3>Porter's Five Forces (Analyst Perspective)</h3>
+    <div class="card">
+      <p>Porter's Five Forces is a practical framework for analysts assessing competitive dynamics and firm profitability:</p>
+      <div class="two-col" style="margin-top:12px;">
+        <ul style="padding-left:20px; font-size:14px;">
+          <li style="margin-bottom:6px;"><strong>Threat of new entrants</strong></li>
+          <li style="margin-bottom:6px;"><strong>Power of suppliers</strong></li>
+          <li style="margin-bottom:6px;"><strong>Power of buyers (customers)</strong></li>
+        </ul>
+        <ul style="padding-left:20px; font-size:14px;">
+          <li style="margin-bottom:6px;"><strong>Threat of substitutes</strong></li>
+          <li style="margin-bottom:6px;"><strong>Rivalry among existing competitors</strong></li>
+        </ul>
+      </div>
+      <div style="margin-top:10px; font-size:14px; color:var(--muted);">Note: "Power of suppliers" is the only force without a direct parallel in economic theory — but it has high practical relevance. The concept of an <strong>"economic moat"</strong> (deep competitive advantage = high barriers + locked-in customers) is rooted in Porter's framework.</div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: MONOPOLISTIC COMPETITION -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Monopolistic Competition</h2>
+    </div>
+
+    <h3>Key Characteristics</h3>
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px;">
+        <li style="margin-bottom:6px;">Large number of buyers and sellers</li>
+        <li style="margin-bottom:6px;">Products are <strong>close substitutes but differentiated</strong> (each firm tries to appear unique)</li>
+        <li style="margin-bottom:6px;"><strong>Low barriers</strong> to entry and exit</li>
+        <li style="margin-bottom:6px;"><strong>Some pricing power</strong> due to differentiation</li>
+        <li style="margin-bottom:6px;">Non-price competition: advertising, branding (e.g., Harley-Davidson, Coca-Cola)</li>
+        <li style="margin-bottom:6px;"><strong>Downward-sloping demand curve</strong> (not perfectly flat like perfect competition)</li>
+      </ul>
+    </div>
+
+    <h3>Short-Run Equilibrium</h3>
+    <div class="formula-box">
+      <div class="label">Short-Run Profit Max</div>
+      <div class="f">Produce where MR = MC → find Q₁</div>
+      <div class="f" style="margin-top:6px;">Read price P₁ from the Demand Curve at Q₁</div>
+      <div class="note">Economic profit = (P₁ – C₁) × Q₁ &nbsp;where C₁ = ATC at Q₁. Can be positive, zero, or negative in SR.</div>
+    </div>
+
+    <h3>Long-Run Equilibrium</h3>
+    <div class="card">
+      <p>Positive economic profit attracts new entrants → demand for each existing firm shrinks → economic profit falls to <strong>zero</strong>.</p>
+      <p>In long-run equilibrium: <em>P₁ = C₁ = ATC</em> at the optimal output Q₁. Economic profit = 0 (same as perfect competition in this regard).</p>
+      <p><strong>Key difference from perfect competition:</strong> Q₁ in monopolistic competition is <em>less than</em> the minimum-ATC output (Q₂). The firm operates with <em>excess capacity</em> — it is not at the most efficient point on its cost curve.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Key Exam Point — Excess Capacity</div>
+      <p>In long-run equilibrium, a monopolistically competitive firm operates to the <strong>LEFT</strong> of minimum ATC. This means output is lower and price is higher than in perfect competition — this is the "cost" of variety and product differentiation.</p>
+    </div>
+
+    <h3>SR vs. LR Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Short Run</th><th>Long Run</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Economic Profit</td><td>Can be positive</td><td>Zero (P = ATC)</td></tr>
+          <tr><td>Entry/Exit</td><td>Restricted</td><td>Free (low barriers)</td></tr>
+          <tr><td>Output vs. min ATC</td><td>Can be at or below min ATC</td><td>Below min ATC (excess capacity)</td></tr>
+          <tr><td>Pricing rule</td><td>MR = MC</td><td>MR = MC, P = ATC</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why is Monopolistic Competition "Not So Bad"?</div>
+      <p>Even though prices are higher and output lower than perfect competition, monopolistic competition generates product variety and drives innovation (Schumpeter's innovation incentive). Think: restaurants, clothing, tech gadgets — variety has real consumer value.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: OLIGOPOLY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Oligopoly & Pricing Strategies</h2>
+    </div>
+
+    <h3>Key Characteristics</h3>
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px;">
+        <li style="margin-bottom:6px;"><strong>Few firms</strong> dominating the market</li>
+        <li style="margin-bottom:6px;">Pricing decisions are <strong>interdependent</strong> — each firm considers rivals' reactions</li>
+        <li style="margin-bottom:6px;"><strong>High barriers</strong> to entry (capital, patents, brand)</li>
+        <li style="margin-bottom:6px;">Substantial pricing power — long-run economic profits possible</li>
+        <li style="margin-bottom:6px;">Products may be homogeneous (petroleum, cement) or differentiated (beverages, cereals)</li>
+        <li style="margin-bottom:6px;">No single well-defined supply function (unlike perfect competition)</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Pricing Strategy 1 — Kinked Demand Curve</h3>
+    <div class="card">
+      <p><strong>Core assumption:</strong> Rivals will <em>match a price cut</em> but <em>ignore a price increase</em>.</p>
+      <p>This creates two demand segments for the firm:</p>
+      <ul style="padding-left:20px; font-size:14px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Above the prevailing price:</strong> Demand is highly elastic (rivals don't follow price increases → firm loses customers rapidly)</li>
+        <li style="margin-bottom:6px;"><strong>Below the prevailing price:</strong> Demand is inelastic (rivals match price cuts → firm gains few extra customers)</li>
+      </ul>
+      <p style="margin-top:10px;">Result: A <strong>"kink"</strong> in the demand curve at the prevailing price, and a <strong>discontinuous (gap) in the MR curve</strong>. The MC can shift within this gap without changing the optimal price or output.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Limitation of Kinked Demand Curve</div>
+      <p>The kinked demand curve <strong>explains price stability</strong> in oligopolies but <strong>cannot determine the original prevailing price</strong>. It's an incomplete pricing theory — useful, but limited.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Pricing Strategy 2 — Cournot Assumption</h3>
+    <div class="card">
+      <p>Each firm assumes rivals will <strong>keep their output constant</strong> as it changes its own output (no strategic retaliation assumed). Best suited for quantity-setting duopolies.</p>
+    </div>
+
+    <h3>Cournot Duopoly — Step-by-Step Method</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Write total demand: <span class="f">QD = a – P → rearrange to P = a – QD = a – q₁ – q₂</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">Find TR for each firm: <span class="f">TR₁ = P × q₁ = (a – q₁ – q₂)q₁</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">Find MR for each firm: differentiate TR with respect to own output:<br><span class="f">MR₁ = a – 2q₁ – q₂ &nbsp; MR₂ = a – q₁ – 2q₂</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">Set MR = MC for each firm and solve simultaneously (since q₁ = q₂ by symmetry in equal-cost duopoly).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">Plug Q back into demand to find equilibrium price P.</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cournot Numeric Example (from module)</div>
+      <div class="f">QD = 450 – P, MC = 30</div>
+      <div class="f" style="margin-top:8px;">P = 450 – q₁ – q₂ &nbsp;→&nbsp; MR₁ = 450 – 2q₁ – q₂ = 30</div>
+      <div class="f" style="margin-top:4px;">By symmetry: q₁ = q₂ → 450 – 3q₁ = 30 → q₁ = 140</div>
+      <div class="f" style="margin-top:4px;">Q = 280, P = 450 – 280 = <strong style="color:#fff;">170</strong></div>
+    </div>
+
+    <h3>Market Equilibrium Comparison</h3>
+    <div class="number-ranking">
+      <div class="nr-item">
+        <span class="nr-num" style="color:var(--accent2);">30</span>
+        <span class="nr-label">Perfect Competition<br>(P = MC)</span>
+      </div>
+      <div class="nr-item">
+        <span class="nr-num">170</span>
+        <span class="nr-label">Cournot Oligopoly<br>(2 firms, Q=280)</span>
+      </div>
+      <div class="nr-item">
+        <span class="nr-num" style="color:var(--danger);">240</span>
+        <span class="nr-label">Monopoly<br>(Q=210, MR=MC)</span>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Cournot Key Insight</div>
+      <p>As the number of firms increases toward infinity, Cournot equilibrium approaches perfect competition. As the number decreases toward 1, it approaches monopoly. More firms → lower price, higher output.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Pricing Strategy 3 — Nash Equilibrium</h3>
+    <div class="card">
+      <p><strong>Definition:</strong> A state where no firm can increase its profit by <em>unilaterally</em> changing its strategy, given the strategies of all other firms.</p>
+      <p>Each firm does the best it can given what rivals are doing. Actions are non-cooperative (each firm maximizes its own profit, not joint profit).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Nash Payoff Matrix (ArcCo vs BatCo)</div>
+      <div class="f">
+        Both Low: ArcCo=50, BatCo=70<br>
+        ArcCo Low / BatCo High: ArcCo=80, BatCo=0<br>
+        ArcCo High / BatCo Low: ArcCo=300, BatCo=350 ← Nash Equilibrium<br>
+        Both High: ArcCo=500, BatCo=300
+      </div>
+      <div class="note">Nash Equilibrium: ArcCo High / BatCo Low → BatCo improves to 350 by going low when ArcCo plays high. Neither can unilaterally improve further → equilibrium.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Not Both High Price? — The Collusion Temptation</div>
+      <p>Both high gives maximum joint profit (800), but it requires trust. BatCo can "cheat" and earn 350 vs. 300. This is the core instability of cartels — every member has an incentive to cheat. Collusion is most stable when: few firms, homogeneous products, similar costs, small/frequent orders, severe retaliation threat.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Stackelberg Model</h3>
+    <div class="card">
+      <p><strong>Key difference vs. Cournot:</strong> Cournot = simultaneous decisions. Stackelberg = <em>sequential</em> decisions.</p>
+      <p>The <strong>leader firm</strong> moves first, choosing output. The <strong>follower firm</strong> observes and responds. The leader has a <em>first-mover advantage</em> — it earns more than in Cournot, while the follower earns less. The leader can overproduce to force the follower to scale back ("top dog" strategy).</p>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Collusion & Cartels</h3>
+    <div class="card">
+      <p>When firms collude openly and formally → they form a <strong>cartel</strong> (e.g., OPEC). Collusion is generally illegal in most countries.</p>
+      <p><strong>6 Factors that increase collusion success:</strong></p>
+      <ol style="padding-left:20px; font-size:14px; margin-top:8px;">
+        <li style="margin-bottom:5px;">Fewer, more similarly sized firms</li>
+        <li style="margin-bottom:5px;">Homogeneous products</li>
+        <li style="margin-bottom:5px;">Similar cost structures across firms</li>
+        <li style="margin-bottom:5px;">Small and frequent orders (less incentive to cheat)</li>
+        <li style="margin-bottom:5px;">Severe threatened retaliation</li>
+        <li style="margin-bottom:5px;">Low degree of external competition</li>
+      </ol>
+    </div>
+
+    <h3>Long-Run Tendencies in Oligopoly</h3>
+    <div class="card">
+      <p>Economic profits attract new entrants over time → dominant firm's market share erodes → profits decline. Example: US Steel had 66% market share in 1901, falling to 42% by 1925.</p>
+      <p><strong>Key rule:</strong> Price wars hurt all participants — any market share gain is temporary. Long-run pricing strategy must account for rivals' reactions. Innovation can maintain leadership but is costly.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — No Well-Defined Supply Curve in Oligopoly</div>
+      <p>Like monopolistic competition, oligopolists do NOT have a well-defined supply function. Optimal price and quantity depend jointly on demand conditions AND rivals' strategies — not just cost curves alone.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: CONCENTRATION MEASURES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Identifying Market Structure & Concentration Measures</h2>
+    </div>
+
+    <h3>Concentration Ratio (CR)</h3>
+    <div class="formula-box">
+      <div class="label">Concentration Ratio Formula</div>
+      <div class="f">CR(N) = Sum of market shares of the largest N firms</div>
+      <div class="note">Range: 0% (perfect competition) to 100% (monopoly). Simple to compute. Common versions: CR3, CR4, CR10.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Advantages</div>
+        <ul>
+          <li>Simple and fast to calculate</li>
+          <li>Easy to understand and communicate</li>
+          <li>Useful for quick market assessment</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Disadvantages</div>
+        <ul>
+          <li>Doesn't capture barriers to entry</li>
+          <li>Doesn't reflect demand elasticity</li>
+          <li>Insensitive to mergers among top firms</li>
+          <li>High CR doesn't automatically mean monopoly power</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Herfindahl-Hirschman Index (HHI)</h3>
+    <div class="formula-box">
+      <div class="label">HHI Formula</div>
+      <div class="f">HHI = Σ (market shareᵢ)²</div>
+      <div class="note">
+        Market shares expressed as decimals (0 to 1).<br>
+        HHI = 1 → Pure monopoly (one firm, 100% share)<br>
+        HHI = 1/M → M firms with equal shares (e.g., 5 equal firms → HHI = 0.20)<br>
+        HHI near 0 → highly competitive market
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Numerical Example from Module:</strong><br>
+      Market shares: 35%, 25%, 20%, 10%, 2.5% × 4</p>
+      <p><strong>CR3</strong> = 35 + 25 + 20 = <em>80%</em> &nbsp;&nbsp; <strong>CR4</strong> = 35 + 25 + 20 + 10 = <em>90%</em></p>
+      <p><strong>HHI (top 3)</strong> = 0.35² + 0.25² + 0.20² = 0.1225 + 0.0625 + 0.04 = <em>0.225</em></p>
+      <p style="margin-top:10px;"><strong>After merger of top 2 firms (60% share):</strong></p>
+      <p><strong>CR3</strong> = 60 + 20 + 10 = <em>90%</em> (barely changed!)</p>
+      <p><strong>HHI</strong> = 0.60² + 0.20² + 0.10² = 0.36 + 0.04 + 0.01 = <em>0.410</em> (nearly doubled!)</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why HHI > CR for Mergers</div>
+      <p>When two large firms merge, CR barely moves (sums stay similar), but HHI jumps dramatically because squaring amplifies large shares. HHI is much more sensitive to market concentration changes — this is why regulators prefer it.</p>
+    </div>
+
+    <h3>Comparison: CR vs. HHI</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Concentration Ratio (CR)</th><th>HHI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Calculation</td><td>Sum of top N market shares</td><td>Sum of squared market shares</td></tr>
+          <tr><td>Range</td><td>0% – 100%</td><td>0 (near) – 1.0</td></tr>
+          <tr><td>Sensitivity to mergers</td><td><span class="tag tag-red">Low</span></td><td><span class="tag tag-green">High</span></td></tr>
+          <tr><td>Captures elasticity?</td><td>No</td><td>No</td></tr>
+          <tr><td>Captures barriers to entry?</td><td>No</td><td>No</td></tr>
+          <tr><td>Used by regulators?</td><td>Sometimes</td><td>Widely used (antitrust)</td></tr>
+          <tr><td>Ease of calculation</td><td><span class="tag tag-green">Very easy</span></td><td><span class="tag tag-yellow">Moderate</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Limitations of Both Measures</div>
+      <p>Neither CR nor HHI accounts for <strong>barriers to entry</strong> or <strong>demand elasticity</strong>. A firm may be the only one in a market (high CR/HHI) yet behave competitively if new entrants can easily enter. The <em>threat</em> of entry can discipline pricing even without actual competition. Econometric elasticity estimation is theoretically superior but practically difficult due to endogeneity and data limitations.</p>
+    </div>
+
+    <h3>Quick Reference — Analyst Application</h3>
+    <div class="card">
+      <p>When analyzing a firm for investment, ask:</p>
+      <ol style="padding-left:20px; font-size:14px; margin-top:8px;">
+        <li style="margin-bottom:6px;">How many sellers? → Determines base structure</li>
+        <li style="margin-bottom:6px;">Is the product differentiated? → Determines pricing power</li>
+        <li style="margin-bottom:6px;">Are there regulatory constraints (monopoly case)? → Limits profit potential</li>
+        <li style="margin-bottom:6px;">What is the threat from new entrants? → Determines long-run profit sustainability</li>
+        <li style="margin-bottom:6px;">Does a proposed merger change HHI significantly? → Antitrust risk</li>
+      </ol>
+      <p style="margin-top:10px; font-size:14px; color:var(--muted);">Monopolists and oligopolists → potential for large margins and positive cash flows → attractive for equity investors but subject to regulatory risk.</p>
+    </div>
+
+  </div>
+
+  <!-- FINAL SUMMARY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(76,139,201,0.1); border-color:rgba(76,139,201,0.3); color:var(--accent2);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2;">
+        <li>✅ MR = MC is the universal profit-max rule. In perfect competition only, P = MR = AR.</li>
+        <li>✅ Breakeven = min ATC; Shutdown = min AVC.</li>
+        <li>✅ Sunk fixed costs are irrelevant to shutdown decision. Only variable costs matter short-term.</li>
+        <li>✅ Normal profit = Economic profit of zero (accounting profit is still positive!).</li>
+        <li>✅ LRAC is the envelope of all SATC curves. Minimum LRAC point = minimum efficient scale.</li>
+        <li>✅ Long-run equilibrium: perfect competition → P = min ATC; monopolistic competition → P = ATC but NOT at minimum ATC (excess capacity).</li>
+        <li>✅ Oligopoly: no single supply function; price depends on rivals' strategies.</li>
+        <li>✅ Cournot: MR = 450 – 2q₁ – q₂ (own quantity doubled, rivals' single). Solve simultaneously.</li>
+        <li>✅ Nash equilibrium: no firm can improve by unilaterally changing strategy.</li>
+        <li>✅ Stackelberg: sequential moves; leader has first-mover advantage.</li>
+        <li>✅ HHI is more sensitive to mergers than CR. Neither captures entry barriers or elasticity.</li>
+        <li>✅ Kinked demand: explains price stability, NOT the original price level. MR has a gap at the kink.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 1: The Firm and Market Structures · Exam Prep Notes
+</footer>
+
+</body>
+</html>

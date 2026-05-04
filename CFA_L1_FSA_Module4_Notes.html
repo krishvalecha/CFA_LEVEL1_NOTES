@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 4: Analyzing Statements of Cash Flows I</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --cfo-bg: #111a16; --cfo-border: #4cc98a;
+    --cfi-bg: #14111a; --cfi-border: #9b7fd4;
+    --cff-bg: #12141f; --cff-border: #4c8bc9;
+    --link-bg: #181412; --link-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'CF'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(76,201,138,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .num { font-family: 'JetBrains Mono', monospace; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  /* Section-specific colored cards */
+  .cfo-card { background: var(--cfo-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cfo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cfi-card { background: var(--cfi-bg); border: 1px solid rgba(155,127,212,0.2); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cfi-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #9b7fd4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cff-card { background: var(--cff-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cff-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .link-card { background: var(--link-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .link-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(201,168,76,0.08); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 16px 14px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content .st-title { font-weight: 700; color: #fff; font-size: 14.5px; margin-bottom: 6px; }
+  .step-content strong { color: var(--accent); }
+
+  .worked { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .worked table { font-size: 13px; }
+  .worked thead th { background: #141926; font-size: 10px; }
+  .worked .total-row td { border-top: 2px solid var(--accent); font-weight: 700; color: var(--accent); }
+  .worked .sub-row td { border-top: 1px solid var(--border); font-weight: 600; color: #aab0c0; background: rgba(255,255,255,0.02); }
+  .worked .result-row td { background: rgba(201,168,76,0.08); font-weight: 700; font-size: 14px; color: #e8c97a; }
+  .worked .neg { color: var(--danger) !important; }
+  .worked .pos { color: var(--accent3) !important; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 4</div>
+  <h1>Analyzing Statements of <span>Cash Flows I</span></h1>
+  <p class="subtitle">Complete module replacement: financial statement linkages (balance sheet ↔ income statement ↔ cash flow), direct method cash flow preparation (cash from customers, suppliers, employees, interest, taxes), indirect method reconciliation (net income → CFO), conversion from indirect to direct, investing and financing activities, and IFRS vs. US GAAP classification differences. Heavy calculation focus — all worked examples fully included.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Statement Overview &amp; Structure</a>
+  <a class="toc-item" href="#s2">02 · Linkages Between Financial Statements</a>
+  <a class="toc-item" href="#s3">03 · Direct Method — CFO</a>
+  <a class="toc-item" href="#s4">04 · Indirect Method — CFO</a>
+  <a class="toc-item" href="#s5">05 · Indirect → Direct Conversion</a>
+  <a class="toc-item" href="#s6">06 · Investing Activities (CFI)</a>
+  <a class="toc-item" href="#s7">07 · Financing Activities (CFF)</a>
+  <a class="toc-item" href="#s8">08 · IFRS vs. US GAAP Differences</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: OVERVIEW & STRUCTURE            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Cash Flow Statement — Overview &amp; Structure</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>statement of cash flows</strong> reports the change in an entity's cash, cash equivalents, and restricted cash between balance sheet dates. Unlike the income statement (accrual basis), the cash flow statement shows actual cash received and paid — critical for valuation (company payments to investors are made in cash), liquidity assessment, and detecting earnings quality issues.</p>
+      <p>It is a <strong>flow statement</strong> (like the income statement) — it covers a period of time, not a single point.</p>
+    </div>
+
+    <h3>The Three Sections — What Each Covers</h3>
+
+    <div class="three-col">
+      <div class="cfo-card">
+        <div class="cfo-title">① CFO — Operating Activities</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>Cash effects of transactions that enter into the determination of net income</li>
+          <li>Cash from customers, to suppliers, to employees, for taxes, for interest (US GAAP)</li>
+          <li>The "engine" of the business — should be the primary source of cash for a healthy company</li>
+          <li>Can be presented: <strong>Direct</strong> (gross receipts/payments) or <strong>Indirect</strong> (start from net income, adjust)</li>
+          <li>Indirect method is most common in practice</li>
+        </ul>
+      </div>
+      <div class="cfi-card">
+        <div class="cfi-title">② CFI — Investing Activities</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#d4c8f0;">
+          <li>Cash from purchase/sale of long-term assets (PP&amp;E, investments, businesses)</li>
+          <li>Purchase of equipment → cash outflow (investing)</li>
+          <li>Sale of equipment → cash inflow (investing, regardless of gain/loss on IS)</li>
+          <li>Capital expenditures (capex) are here — key for understanding growth investment</li>
+          <li>Always presented using <strong>direct method</strong> regardless of CFO presentation</li>
+        </ul>
+      </div>
+      <div class="cff-card">
+        <div class="cff-title">③ CFF — Financing Activities</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#9ecef5;">
+          <li>Cash flows related to the company's capital structure</li>
+          <li>Issuance/repurchase of debt and equity</li>
+          <li>Dividends paid to shareholders (US GAAP: always CFF)</li>
+          <li>Repayment of borrowings (principal only — interest is CFO under US GAAP)</li>
+          <li>Always presented using <strong>direct method</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cash Flow Statement — The Bottom Line Reconciliation</div>
+      <div class="f">
+        Beginning Cash Balance<br>
+        + Net Cash from Operating Activities (CFO)<br>
+        + Net Cash from Investing Activities (CFI)<br>
+        + Net Cash from Financing Activities (CFF)<br>
+        ─────────────────────────────────────────<br>
+        = Ending Cash Balance  (must equal Cash on ending Balance Sheet)
+      </div>
+      <div class="note">This is the fundamental integrity check of the cash flow statement. If the beginning cash + net changes does not equal the ending cash per the balance sheet, there is an error. The cash flow statement is the bridge that explains how the cash balance moved from one balance sheet date to the next.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Direct vs. Indirect — Who Uses What?</div>
+      <p>Both IFRS and US GAAP <em>encourage</em> the direct method but allow either. In practice, the <strong>indirect method dominates</strong> — most companies use it because it's easier to prepare (just start with net income and adjust). Under US GAAP, even if a company uses the direct method, it must also provide a reconciliation of net income to CFO (i.e., an indirect method reconciliation as a supplement). Key insight for the exam: <strong>CFI and CFF are always presented the same way regardless of which method is used for CFO.</strong></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: LINKAGES BETWEEN STATEMENTS     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Linkages Between the Financial Statements</h2>
+    </div>
+
+    <div class="card">
+      <p>The four financial statements are <strong>deeply interconnected</strong>. Understanding these linkages is not just conceptual — it allows analysts to detect accounting irregularities by identifying inconsistencies across statements. For example: revenue growing rapidly while cash collections stagnate (receivables building) could signal premature revenue recognition.</p>
+    </div>
+
+    <h3>The Big Picture — How Statements Connect</h3>
+
+    <div class="link-card">
+      <div class="link-title">Statement Linkages — The Flow</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c890;">
+        <li><strong>Balance Sheet → Cash Flow Statement:</strong> The beginning and ending cash balances on the balance sheet are reconciled by the cash flow statement. BS (yr1) cash + net CFS flows = BS (yr2) cash.</li>
+        <li><strong>Income Statement → Balance Sheet (via retained earnings):</strong> Net income flows into retained earnings (equity). Statement of shareholders' equity shows this linkage explicitly.</li>
+        <li><strong>Income Statement → Cash Flow Statement:</strong> Under the indirect method, net income from the IS is the starting point for CFO. Adjustments bridge accrual income to cash flows.</li>
+        <li><strong>Balance Sheet changes → Cash Flow Statement:</strong> Changes in working capital accounts (∆ receivables, ∆ inventory, ∆ payables) directly appear as adjustments in CFO. Changes in long-term assets explain CFI. Changes in debt/equity explain CFF.</li>
+        <li><strong>Statement of Shareholders' Equity → Balance Sheet &amp; IS:</strong> The equity statement reconciles opening to closing equity using net income (from IS) and dividends (from CFS).</li>
+      </ul>
+    </div>
+
+    <h3>The Key Accrual-to-Cash Linkage Rule</h3>
+
+    <div class="card">
+      <p>Differences between accrual accounting (IS) and cash accounting (CFS) always manifest as changes in <strong>current assets or current liabilities</strong> on the balance sheet. This is the core mechanical logic behind all CFO adjustments:</p>
+      <div class="two-col" style="margin-top:14px;">
+        <div class="mini-card">
+          <div class="mc-title" style="color:#4cc98a;">Revenue &gt; Cash Collected</div>
+          <p>→ Accounts Receivable <strong>increases</strong> (company earned revenue but hasn't received cash yet)</p>
+          <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Cash from customers = Revenue − ∆ A/R (subtract the increase)</p>
+        </div>
+        <div class="mini-card">
+          <div class="mc-title" style="color:#9b7fd4;">Cash Received &gt; Revenue</div>
+          <p>→ Deferred Revenue <strong>increases</strong> (company received cash before earning it)</p>
+          <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Cash from customers = Revenue + ∆ Deferred Revenue (add the increase)</p>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:10px;">
+        <div class="mini-card">
+          <div class="mc-title" style="color:#c94c4c;">Expense &gt; Cash Paid</div>
+          <p>→ Accrued Liability <strong>increases</strong> (expense accrued but not yet paid in cash)</p>
+          <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Cash paid = Expense − ∆ Accrued Liability (subtract the increase)</p>
+        </div>
+        <div class="mini-card">
+          <div class="mc-title" style="color:#c9a84c;">Cash Paid &gt; Expense</div>
+          <p>→ Prepaid Asset <strong>increases</strong> (cash paid but benefit not yet recognized as expense)</p>
+          <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Cash paid = Expense + ∆ Prepaid (add the increase)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Universal Accrual → Cash Conversion Formula</div>
+      <div class="f">
+        Cash collected = Revenue − ∆ Accounts Receivable + ∆ Deferred Revenue<br>
+        Cash paid      = Expense + ∆ Prepaid − ∆ Accrued Liability<br><br>
+        For Working Capital adjustments (Indirect Method rule):<br>
+        ∆ Current Operating ASSET  ↑  →  SUBTRACT from net income  (used more cash than IS shows)<br>
+        ∆ Current Operating ASSET  ↓  →  ADD to net income         (used less cash than IS shows)<br>
+        ∆ Current Operating LIAB   ↑  →  ADD to net income         (paid less cash than IS shows)<br>
+        ∆ Current Operating LIAB   ↓  →  SUBTRACT from net income  (paid more cash than IS shows)
+      </div>
+      <div class="note">Memory trick: "Asset up = cash down (subtract). Liability up = cash up (add)." Think of it as: if receivables go up, you earned revenue but didn't collect it — so real cash received is LESS than the IS revenue → subtract. If payables go up, you expensed items but didn't pay for them → real cash paid is LESS than the IS expense → add back.</div>
+    </div>
+
+    <h3>Transaction-Level Linkage Examples (The LES Examples)</h3>
+
+    <div class="worked">
+      <div class="worked-title">Example 1 — Inventory Purchase &amp; Sale (ABC Company)</div>
+      <div class="table-wrap" style="margin:0; border:none;">
+        <table>
+          <thead><tr><th>Date</th><th>Balance Sheet Impact</th><th>Income Statement</th><th>Cash Flow Statement</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Jan 1 (Purchase on credit)</td>
+              <td>Inventory ↑ $100; Accounts Payable ↑ $100</td>
+              <td>No impact</td>
+              <td>No impact (no cash yet)</td>
+            </tr>
+            <tr>
+              <td>Jan 30 (Pay supplier)</td>
+              <td>Cash ↓ $100; Accounts Payable ↓ $100</td>
+              <td>No impact</td>
+              <td class="neg">CFO ↓ $100 (cash paid to supplier)</td>
+            </tr>
+            <tr>
+              <td>Feb 1 (Sell on credit)</td>
+              <td>A/R ↑ $150; Inventory ↓ $100</td>
+              <td>Revenue ↑ $150; COGS ↑ $100; Gross Profit ↑ $50</td>
+              <td>No impact (no cash yet)</td>
+            </tr>
+            <tr>
+              <td>Feb 15 (Collect from customer)</td>
+              <td>Cash ↑ $150; A/R ↓ $150</td>
+              <td>No impact</td>
+              <td class="pos">CFO ↑ $150 (cash from customers)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin-top:12px;"><strong>Key insight:</strong> The income statement recognizes profit on Feb 1 (delivery) but cash only arrives on Feb 15. The CFS bridges this gap — it only moves when cash moves. The A/R account is the buffer between revenue recognition and cash collection.</p>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Example 4 — Deferred Revenue / Down Payment (Mountain Company: $1,000 equipment order)</div>
+      <div class="table-wrap" style="margin:0; border:none;">
+        <table>
+          <thead><tr><th>Date</th><th>Balance Sheet</th><th>Income Statement</th><th>Cash Flow</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Oct 1 (Deposit received)</td>
+              <td>Cash ↑ $300; Deferred Revenue ↑ $300</td>
+              <td>No revenue yet (not earned)</td>
+              <td class="pos">CFO ↑ $300</td>
+            </tr>
+            <tr>
+              <td>Nov 30 (Equipment delivered)</td>
+              <td>Cash ↑ $700; Deferred Revenue ↓ $300</td>
+              <td>Revenue ↑ $1,000 (full amount recognized on delivery)</td>
+              <td class="pos">CFO ↑ $700</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin-top:12px;"><strong>Key insight:</strong> Cash inflow of $300 hits the CFS in October but revenue is only $0 on the IS in October. The deferred revenue liability absorbs the difference. When the equipment is delivered in November, revenue is recognized ($1,000) but only $700 in new cash arrives — the other $300 was already received. Total cash = $1,000, total revenue = $1,000, total CFO = $1,000. The timing differs but totals match.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: DIRECT METHOD — CFO             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Direct Method — Cash Flows from Operating Activities</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>direct method</strong> shows operating cash flows by their major categories: gross cash receipts and gross cash payments. It answers the question: "where did the cash actually come from and go to?" It is more informative than the indirect method for trend analysis but harder to prepare — which is why most companies use indirect. However, the <em>mechanics</em> of computing each direct method line item are highly testable.</p>
+      <p>The approach: start with an accrual-basis income statement amount → adjust for changes in the related balance sheet accounts → arrive at the cash-basis figure.</p>
+    </div>
+
+    <h3>① Cash Received from Customers</h3>
+
+    <div class="cfo-card">
+      <div class="cfo-title">Formula: Cash from Customers</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#c8dfd0; line-height:2.2;">
+        Cash from Customers = Revenue<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;− Increase in Accounts Receivable  (or + Decrease in A/R)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;− Increase in Deferred Revenue collected but not yet earned... wait:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;+ Increase in Deferred Revenue  (more cash collected than revenue recognized)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;− Decrease in Deferred Revenue  (less cash collected; earning prior period deposits)
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash from Customers (Revenue $23,598; A/R ↑ $55)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue (accrual)</td><td class="num">$23,598</td><td>Starting point from income statement</td></tr>
+          <tr><td>Less: Increase in A/R</td><td class="num neg">($55)</td><td>Earned $55 more than collected → subtract</td></tr>
+          <tr class="result-row"><td>Cash received from customers</td><td class="num">$23,543</td><td>Actual cash in the door from customers</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">T-account verification: Beg A/R $957 + Revenue $23,598 − Cash collected $23,543 = End A/R $1,012 ✓</p>
+    </div>
+
+    <h3>② Cash Paid to Suppliers</h3>
+
+    <div class="tip">
+      <div class="tip-label">💡 Two-Step Process for Suppliers</div>
+      <p><strong>Step 1:</strong> Convert COGS to Purchases: Purchases = COGS + ∆ Inventory (if inventory rises, you bought more than you sold). <strong>Step 2:</strong> Convert Purchases to Cash Paid: Cash paid = Purchases − ∆ Accounts Payable (if A/P rises, you bought more on credit than you paid for in cash → subtract). Both steps are combined in the final formula below.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Cash Paid to Suppliers — Full Formula</div>
+      <div class="f">
+        Step 1: Purchases = COGS + Increase in Inventory  (or − Decrease in Inventory)<br>
+        Step 2: Cash Paid = Purchases − Increase in A/P  (or + Decrease in A/P)<br><br>
+        Combined: Cash Paid = COGS + ∆ Inventory − ∆ Accounts Payable
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash Paid to Suppliers (COGS $11,456; Inventory ↑ $707; A/P ↑ $263)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>COGS (accrual)</td><td class="num">$11,456</td><td>Starting point</td></tr>
+          <tr><td>Plus: Increase in inventory</td><td class="num">+$707</td><td>Bought more than sold — extra purchases</td></tr>
+          <tr class="sub-row"><td>= Purchases from suppliers</td><td class="num">$12,163</td><td>Total amount of inventory purchased this year</td></tr>
+          <tr><td>Less: Increase in A/P</td><td class="num neg">($263)</td><td>Bought on credit, haven't paid yet — subtract</td></tr>
+          <tr class="result-row"><td>Cash paid to suppliers</td><td class="num">$11,900</td><td>Actual cash out to suppliers</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">T-account verification (A/P): Beg A/P $3,325 + Purchases $12,163 − Cash paid $11,900 = End A/P $3,588 ✓</p>
+    </div>
+
+    <h3>③ Cash Paid to Employees</h3>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash Paid to Employees (Salary Expense $4,123; Wages Payable ↑ $10)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>Salary &amp; wage expense</td><td class="num">$4,123</td><td>Accrual basis</td></tr>
+          <tr><td>Less: Increase in wages payable</td><td class="num neg">($10)</td><td>Accrued more expense than paid in cash → subtract</td></tr>
+          <tr class="result-row"><td>Cash paid to employees</td><td class="num">$4,113</td><td>Actual cash out to employees</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">General Formula — Any Expense to Cash Paid</div>
+      <div class="f">
+        Cash Paid = Accrual Expense + Increase in Prepaid  (or − Decrease in Prepaid)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− Increase in Accrued Liability  (or + Decrease in Accrued Liability)<br><br>
+        Intuition: Prepaid ↑ → paid MORE cash than expensed (add). Accrued liab ↑ → paid LESS cash than expensed (subtract).
+      </div>
+    </div>
+
+    <h3>④ Cash Paid for Other Operating Expenses</h3>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash for Other Opex (Expense $3,577; Prepaid ↓ $23; Other Accruals ↑ $22)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>Other operating expenses</td><td class="num">$3,577</td><td>Accrual basis</td></tr>
+          <tr><td>Less: Decrease in prepaid expenses</td><td class="num neg">($23)</td><td>Prepaid ↓ = prepaid asset used up → paid less cash → subtract (benefit consumed from prior payment)</td></tr>
+          <tr><td>Less: Increase in other accrued liabilities</td><td class="num neg">($22)</td><td>Accrued more than paid → subtract</td></tr>
+          <tr class="result-row"><td>Cash paid for other operating expenses</td><td class="num">$3,532</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>⑤ Cash Paid for Interest</h3>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash for Interest (Expense $246; Interest Payable ↓ $12)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>Interest expense</td><td class="num">$246</td><td>Accrual basis</td></tr>
+          <tr><td>Plus: Decrease in interest payable</td><td class="num">+$12</td><td>Payable ↓ → paid MORE cash than expensed → add</td></tr>
+          <tr class="result-row"><td>Cash paid for interest</td><td class="num">$258</td><td>US GAAP: CFO. IFRS: CFO or CFF (company's choice)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>⑥ Cash Paid for Income Taxes</h3>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash for Taxes (Tax Expense $1,139; Tax Payable ↑ $5)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td>Income tax expense</td><td class="num">$1,139</td><td>Accrual basis</td></tr>
+          <tr><td>Less: Increase in income tax payable</td><td class="num neg">($5)</td><td>Accrued more than paid → subtract</td></tr>
+          <tr class="result-row"><td>Cash paid for income taxes</td><td class="num">$1,134</td><td>US GAAP: always CFO</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Note: If there are changes in deferred tax assets/liabilities, those adjustments are also needed here. DTL ↑ → paid less tax in cash (tax benefit deferred) → subtract from tax expense to get cash paid.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: INDIRECT METHOD — CFO           -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Indirect Method — Cash Flows from Operating Activities</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>indirect method</strong> reconciles net income (accrual basis) to net cash from operating activities (cash basis). It makes three categories of adjustments to net income: (1) remove non-operating items, (2) add back non-cash items, and (3) adjust for working capital changes. The result is the same CFO figure as the direct method — just arrived at differently.</p>
+    </div>
+
+    <h3>The Three Adjustment Categories</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <div class="st-title">Remove Non-Operating Items</div>
+          Items already included in net income that belong in CFI or CFF, not CFO — their cash effects are shown elsewhere.
+          <ul style="margin-top:8px; padding-left:16px; font-size:13.5px;">
+            <li><strong>Subtract gains</strong> on sale of assets (cash from sale belongs in CFI; the gain inflated net income → remove it)</li>
+            <li><strong>Add back losses</strong> on sale of assets (loss reduced net income → add back; cash received still in CFI)</li>
+            <li>Gains/losses on debt retirement: same logic — remove from CFO</li>
+            <li>Income from equity method investments (if cash dividend was less than income recognized): complex — remove income, add back actual dividends received</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <div class="st-title">Add Back Non-Cash Charges (Subtract Non-Cash Credits)</div>
+          Items that reduced (or increased) net income but involved no cash movement.
+          <ul style="margin-top:8px; padding-left:16px; font-size:13.5px;">
+            <li><strong>Add back:</strong> Depreciation, amortization, depletion (non-cash expense)</li>
+            <li><strong>Add back:</strong> Amortization of bond discount (increases interest expense above cash paid)</li>
+            <li><strong>Add back:</strong> Impairment losses on assets (non-cash)</li>
+            <li><strong>Add back:</strong> Increase in deferred tax liability (tax accrued but not yet paid in cash)</li>
+            <li><strong>Subtract:</strong> Amortization of bond premium (reduces interest expense below cash paid)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <div class="st-title">Working Capital Changes</div>
+          Adjustments for the difference between accrual-basis income items and their cash equivalents.
+          <ul style="margin-top:8px; padding-left:16px; font-size:13.5px;">
+            <li><strong>Current Operating Asset ↑ → Subtract</strong> (e.g., A/R ↑ → collected less cash than revenue earned)</li>
+            <li><strong>Current Operating Asset ↓ → Add</strong> (e.g., inventory ↓ → sold more than purchased → cash positive)</li>
+            <li><strong>Current Operating Liability ↑ → Add</strong> (e.g., A/P ↑ → paid less cash than purchased)</li>
+            <li><strong>Current Operating Liability ↓ → Subtract</strong> (e.g., wages payable ↓ → paid more cash than expensed)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Acme Corporation — Full Indirect Method Cash Flow Statement</h3>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Indirect Method CFO (Year ended 31 December 2018)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Category</th></tr></thead>
+        <tbody>
+          <tr><td>Net income</td><td class="num">$2,210</td><td>Starting point</td></tr>
+          <tr><td style="color:#9b7fd4;">Add: Depreciation expense</td><td class="num pos">+$1,052</td><td>Non-cash charge — add back</td></tr>
+          <tr><td style="color:#c94c4c;">Less: Gain on sale of equipment</td><td class="num neg">($205)</td><td>Non-operating gain — remove (cash in CFI)</td></tr>
+          <tr><td style="color:#c94c4c;">Less: Increase in accounts receivable</td><td class="num neg">($55)</td><td>WC: Asset ↑ → subtract</td></tr>
+          <tr><td style="color:#c94c4c;">Less: Increase in inventory</td><td class="num neg">($707)</td><td>WC: Asset ↑ → subtract</td></tr>
+          <tr><td style="color:#4cc98a;">Add: Decrease in prepaid expenses</td><td class="num pos">+$23</td><td>WC: Asset ↓ → add</td></tr>
+          <tr><td style="color:#4cc98a;">Add: Increase in accounts payable</td><td class="num pos">+$263</td><td>WC: Liability ↑ → add</td></tr>
+          <tr><td style="color:#4cc98a;">Add: Increase in salary &amp; wage payable</td><td class="num pos">+$10</td><td>WC: Liability ↑ → add</td></tr>
+          <tr><td style="color:#c94c4c;">Less: Decrease in interest payable</td><td class="num neg">($12)</td><td>WC: Liability ↓ → subtract</td></tr>
+          <tr><td style="color:#4cc98a;">Add: Increase in income tax payable</td><td class="num pos">+$5</td><td>WC: Liability ↑ → add</td></tr>
+          <tr><td style="color:#4cc98a;">Add: Increase in other accrued liabilities</td><td class="num pos">+$22</td><td>WC: Liability ↑ → add</td></tr>
+          <tr class="result-row"><td>Net Cash from Operating Activities (CFO)</td><td class="num">$2,606</td><td>Same result as direct method ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Complete Summary: All Indirect Method Adjustments</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Adjustment</th><th>Add or Subtract?</th><th>Why?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Depreciation / Amortization / Depletion</td><td class="pos">ADD</td><td>Non-cash expense reduced net income — add it back</td></tr>
+          <tr><td>Impairment losses</td><td class="pos">ADD</td><td>Non-cash write-down reduced net income — add back</td></tr>
+          <tr><td>Amortization of bond discount</td><td class="pos">ADD</td><td>Non-cash — increases interest expense above cash paid</td></tr>
+          <tr><td>Amortization of bond premium</td><td class="neg">SUBTRACT</td><td>Non-cash — reduces interest expense below cash paid</td></tr>
+          <tr><td>Gain on sale of assets</td><td class="neg">SUBTRACT</td><td>Non-operating — cash from sale appears in CFI</td></tr>
+          <tr><td>Loss on sale of assets</td><td class="pos">ADD</td><td>Non-operating — loss removed; cash in CFI</td></tr>
+          <tr><td>Deferred tax liability ↑</td><td class="pos">ADD</td><td>Tax accrued but not yet paid — non-cash expense</td></tr>
+          <tr><td>Deferred tax liability ↓</td><td class="neg">SUBTRACT</td><td>Paying prior period deferred taxes — more cash out than expense</td></tr>
+          <tr><td>Current Operating Asset ↑ (A/R, Inventory, Prepaid)</td><td class="neg">SUBTRACT</td><td>Asset increase = used more cash than IS shows</td></tr>
+          <tr><td>Current Operating Asset ↓</td><td class="pos">ADD</td><td>Asset decrease = used less cash than IS shows</td></tr>
+          <tr><td>Current Operating Liability ↑ (A/P, Wages Payable, etc.)</td><td class="pos">ADD</td><td>Liability increase = paid less cash than IS shows</td></tr>
+          <tr><td>Current Operating Liability ↓</td><td class="neg">SUBTRACT</td><td>Liability decrease = paid more cash than IS shows</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Indirect Method Adjustments</div>
+      <p>This is one of the highest-frequency calculation areas in FSA. The exam often asks which adjustments to net income are required under the indirect method. The two most commonly tested traps: (1) <strong>Depreciation is added back</strong> — it's non-cash, it reduced net income, so we add it back to get to cash. But depreciation is NOT a source of cash; it simply means "this expense didn't require cash." (2) <strong>Gain on sale is subtracted</strong> — the gain inflated net income, but the entire cash proceeds from the sale appear in CFI (investing activities). To avoid double-counting, the gain is removed from CFO. The cash itself is not "lost" — it just shows up in CFI. Similarly, a loss on sale is added back because the cash in CFI represents the actual proceeds (which already reflect the loss).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: INDIRECT → DIRECT CONVERSION    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Converting Indirect to Direct Method</h2>
+    </div>
+
+    <div class="card">
+      <p>Most companies publish only the indirect method. An analyst who wants to analyze trends in specific cash flows (e.g., "are cash collections growing faster than revenue?") can convert to an approximate direct format using a 3-step process. The conversion is an approximation — accurate enough for most analytical purposes.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">STEP 1</div>
+        <div class="step-content">
+          <div class="st-title">Disaggregate Net Income into Revenues and Expenses</div>
+          Break net income back into its components. Total revenues and total expenses from the income statement. They should sum to net income: Revenues − Expenses = Net Income.
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Acme: Total revenues = $23,803; Total expenses = $21,593; Net income = $2,210 ✓</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 2</div>
+        <div class="step-content">
+          <div class="st-title">Remove All Non-Cash and Non-Operating Items</div>
+          Strip out items that don't belong in the direct method operating section.
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Remove gain on sale of equipment ($205) from revenues → adjusts revenues to $23,598</li>
+            <li>Remove depreciation expense ($1,052) from expenses → adjusts expenses to $20,541</li>
+            <li>This leaves only the accrual-basis operating revenues and expenses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 3</div>
+        <div class="step-content">
+          <div class="st-title">Convert Accrual Amounts to Cash Flows Using Working Capital Changes</div>
+          Apply the same balance sheet adjustments used in the direct method to each revenue/expense line.
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Revenue → Cash from customers: Revenue − ∆A/R</li>
+            <li>COGS → Cash to suppliers: COGS + ∆Inventory − ∆A/P</li>
+            <li>Salary expense → Cash to employees: Expense − ∆Wages Payable</li>
+            <li>Other expenses → Cash for expenses: Expense − ∆Prepaid − ∆Accrued Liab</li>
+            <li>Interest expense → Cash for interest: Expense ± ∆Interest Payable</li>
+            <li>Tax expense → Cash for taxes: Expense ± ∆Tax Payable ± ∆Deferred Tax</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Complete Indirect → Direct Conversion (Final Result)</div>
+      <table>
+        <thead><tr><th>Direct Method Line</th><th>Accrual Base</th><th>Adjustments</th><th>Cash Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Cash from customers</td><td class="num">Rev $23,598</td><td class="num">− A/R ↑ $55</td><td class="num pos">$23,543</td></tr>
+          <tr><td>Cash paid to suppliers</td><td class="num">COGS $11,456</td><td class="num">+ Inv ↑ $707 − A/P ↑ $263</td><td class="num neg">($11,900)</td></tr>
+          <tr><td>Cash paid to employees</td><td class="num">S&amp;W $4,123</td><td class="num">− Wages pay ↑ $10</td><td class="num neg">($4,113)</td></tr>
+          <tr><td>Cash for other opex</td><td class="num">Opex $3,577</td><td class="num">− Prepaid ↓ $23 − Accruals ↑ $22</td><td class="num neg">($3,532)</td></tr>
+          <tr><td>Cash paid for interest</td><td class="num">Int exp $246</td><td class="num">+ Int pay ↓ $12</td><td class="num neg">($258)</td></tr>
+          <tr><td>Cash paid for taxes</td><td class="num">Tax exp $1,139</td><td class="num">− Tax pay ↑ $5</td><td class="num neg">($1,134)</td></tr>
+          <tr class="result-row"><td>Net CFO (Direct)</td><td class="num">—</td><td class="num">—</td><td class="num">$2,606</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Same $2,606 as the indirect method ✓. The two methods are reconcilable — they tell the same story in different formats.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: INVESTING ACTIVITIES (CFI)      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Cash Flows from Investing Activities (CFI)</h2>
+    </div>
+
+    <div class="card">
+      <p>CFI captures all cash flows from the purchase and sale of <strong>long-term assets</strong> (PP&amp;E, investments in securities, acquisitions of businesses). It is always presented using the direct method regardless of how CFO is presented. A consistently negative CFI is generally healthy for a growing company — it means they're investing in future productive capacity.</p>
+    </div>
+
+    <div class="cfi-card">
+      <div class="cfi-title">Common CFI Items</div>
+      <div class="two-col" style="margin-top:8px;">
+        <div>
+          <p style="font-size:13px; color:#d4c8f0; font-weight:700; margin-bottom:6px;">INFLOWS (positive CFI)</p>
+          <ul style="padding-left:16px; font-size:13.5px; color:#d4c8f0;">
+            <li>Cash proceeds from sale of PP&amp;E (regardless of gain or loss)</li>
+            <li>Cash proceeds from sale of investments/securities</li>
+            <li>Cash proceeds from sale of businesses</li>
+            <li>Repayment of loans made to others</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13px; color:#d4c8f0; font-weight:700; margin-bottom:6px;">OUTFLOWS (negative CFI)</p>
+          <ul style="padding-left:16px; font-size:13.5px; color:#d4c8f0;">
+            <li>Capital expenditures (purchase of PP&amp;E)</li>
+            <li>Purchase of investments/securities</li>
+            <li>Purchase of businesses/acquisitions</li>
+            <li>Loans made to other entities</li>
+            <li>Capitalized interest (under some IFRS treatments)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Computing Cash from Sale of Equipment — The Key Calculation</h3>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Equipment Sale Calculation — Three Steps</div>
+      <p>When a company sells equipment mid-year, you need to figure out the cash received. The approach: (1) Find the original cost of equipment sold using the equipment account T-account; (2) Find accumulated depreciation on the sold equipment using the accum. depreciation account T-account; (3) Cash received = Book value of sold asset + Gain (or − Loss) on sale.</p>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash from Equipment Sale (New equipment purchased: $1,300; Gain on sale: $205)</div>
+      <table>
+        <thead><tr><th>Step</th><th>Calculation</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>① Find cost of equipment sold</td>
+            <td class="num">Beg equip $8,555 + Purchased $1,300 − End equip $8,798</td>
+            <td class="num">= $1,057 (cost of disposed equipment)</td>
+          </tr>
+          <tr>
+            <td>② Find accum. depreciation on sold equipment</td>
+            <td class="num">Beg accum. dep $2,891 + Dep expense $1,052 − End accum. dep $3,443</td>
+            <td class="num">= $500 (dep on disposed equipment)</td>
+          </tr>
+          <tr>
+            <td>③ Book value of sold equipment</td>
+            <td class="num">Cost $1,057 − Accum. dep $500</td>
+            <td class="num">= $557 (net book value)</td>
+          </tr>
+          <tr class="total-row">
+            <td>④ Cash proceeds from sale</td>
+            <td class="num">Book value $557 + Gain $205</td>
+            <td class="num">= $762 ← CFI inflow</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;"><strong>Why this matters:</strong> The $205 gain appeared in net income (IS) and was REMOVED from CFO in the indirect method. The actual $762 cash from the sale appears here in CFI. Total cash is fully captured — it's just in CFI, not CFO.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equipment T-Account Method — Universal Template</div>
+      <div class="f">
+        Equipment Account:  Beg + Purchases − Cost of Disposals = End<br>
+        → Cost of Disposals = Beg + Purchases − End<br><br>
+        Accum. Depreciation: Beg + Dep Expense − Accum. Dep on Disposals = End<br>
+        → Accum. Dep on Disposals = Beg + Dep Expense − End<br><br>
+        Book Value of Asset Sold = Cost − Accum. Dep on Asset Sold<br>
+        Cash Proceeds = Book Value + Gain  (or − Loss)
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Full CFI Section</div>
+      <table>
+        <thead><tr><th>CFI Item</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td class="pos">Cash received from sale of equipment</td><td class="num pos">+$762</td></tr>
+          <tr><td class="neg">Cash paid for purchase of equipment</td><td class="num neg">($1,300)</td></tr>
+          <tr class="result-row"><td>Net Cash Used in Investing Activities</td><td class="num neg">($538)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: FINANCING ACTIVITIES (CFF)      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Cash Flows from Financing Activities (CFF)</h2>
+    </div>
+
+    <div class="card">
+      <p>CFF reflects cash flows from <strong>capital structure changes</strong> — issuing or repaying debt, issuing or repurchasing equity, and paying dividends. Like CFI, it's always presented using the direct method. Understanding CFF is key for assessing how a company funds itself and returns capital to investors.</p>
+    </div>
+
+    <div class="cff-card">
+      <div class="cff-title">Common CFF Items</div>
+      <div class="two-col" style="margin-top:8px;">
+        <div>
+          <p style="font-size:13px; color:#9ecef5; font-weight:700; margin-bottom:6px;">INFLOWS (positive CFF)</p>
+          <ul style="padding-left:16px; font-size:13.5px; color:#9ecef5;">
+            <li>Proceeds from issuing debt (bonds, notes, loans)</li>
+            <li>Proceeds from issuing equity (common stock, preferred stock)</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13px; color:#9ecef5; font-weight:700; margin-bottom:6px;">OUTFLOWS (negative CFF)</p>
+          <ul style="padding-left:16px; font-size:13.5px; color:#9ecef5;">
+            <li>Repayment of debt principal (principal only; interest → CFO under US GAAP)</li>
+            <li>Repurchase of common stock (buybacks)</li>
+            <li>Payment of dividends (US GAAP: always CFF; IFRS: CFF or CFO)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Computing Dividends Paid — The Retained Earnings T-Account</h3>
+
+    <div class="formula-box">
+      <div class="label">Dividends Paid Calculation — Always From Retained Earnings</div>
+      <div class="f">
+        Retained Earnings: Beg + Net Income − Dividends = End<br>
+        → Dividends = Beg Retained Earnings + Net Income − End Retained Earnings<br><br>
+        Acme: $2,876 + $2,210 − $3,966 = $1,120 in dividends paid → CFF outflow
+      </div>
+      <div class="note">This is the standard way to "back into" dividends paid when the CFS is not directly provided but the balance sheet and income statement are available. Watch out: if there are other items that affect retained earnings (e.g., correction of error restated through retained earnings), those need to be included in the formula.</div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Full CFF Section</div>
+      <table>
+        <thead><tr><th>CFF Item</th><th>Amount</th><th>Derived From</th></tr></thead>
+        <tbody>
+          <tr><td class="neg">Cash paid to retire long-term debt</td><td class="num neg">($500)</td><td>LT debt ↓ $500 (Beg $3,575 − End $3,075)</td></tr>
+          <tr><td class="neg">Cash paid to retire common stock</td><td class="num neg">($600)</td><td>Common stock ↓ $600 (Beg $4,350 − End $3,750)</td></tr>
+          <tr><td class="neg">Cash paid for dividends</td><td class="num neg">($1,120)</td><td>R/E: Beg $2,876 + NI $2,210 − End $3,966</td></tr>
+          <tr class="result-row"><td>Net Cash Used in Financing Activities</td><td class="num neg">($2,220)</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Full Cash Flow Statement Summary</div>
+      <table>
+        <thead><tr><th>Section</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Net Cash from Operating Activities (CFO)</td><td class="num pos">+$2,606</td></tr>
+          <tr><td>Net Cash from Investing Activities (CFI)</td><td class="num neg">($538)</td></tr>
+          <tr><td>Net Cash from Financing Activities (CFF)</td><td class="num neg">($2,220)</td></tr>
+          <tr class="total-row"><td>Net Decrease in Cash</td><td class="num neg">($152)</td></tr>
+          <tr><td>Beginning Cash (31 Dec 2017)</td><td class="num">$1,163</td></tr>
+          <tr class="result-row"><td>Ending Cash (31 Dec 2018)</td><td class="num">$1,011</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Verify: $1,163 − $152 = $1,011 = Cash on 2018 Balance Sheet ✓. The cash flow statement perfectly reconciles to the balance sheet.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8: IFRS vs. US GAAP                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>IFRS vs. US GAAP — Cash Flow Classification Differences</h2>
+    </div>
+
+    <div class="card">
+      <p>This is a <strong>high-frequency exam topic</strong>. The key differences between IFRS and US GAAP cash flow statements concern the <em>classification</em> of certain items as CFO, CFI, or CFF. Under IFRS, companies have more flexibility. Under US GAAP, the rules are more rigid.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>US GAAP</th><th>IFRS</th><th>Exam Significance</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Interest Received</td>
+            <td><span class="tag tag-green">CFO (only)</span></td>
+            <td><span class="tag tag-green">CFO</span> or <span class="tag tag-purple">CFI</span></td>
+            <td>Under IFRS, can be CFI if viewed as a return on investment. US GAAP: always CFO.</td>
+          </tr>
+          <tr>
+            <td>Interest Paid</td>
+            <td><span class="tag tag-green">CFO (only)</span></td>
+            <td><span class="tag tag-green">CFO</span> or <span class="tag tag-blue">CFF</span></td>
+            <td>Under IFRS, some companies put interest paid in CFF (it relates to financing debt). US GAAP: always CFO — even though principal is CFF.</td>
+          </tr>
+          <tr>
+            <td>Dividends Received</td>
+            <td><span class="tag tag-green">CFO (only)</span></td>
+            <td><span class="tag tag-green">CFO</span> or <span class="tag tag-purple">CFI</span></td>
+            <td>Under IFRS, can be CFI (return on investment). US GAAP: always CFO.</td>
+          </tr>
+          <tr>
+            <td>Dividends Paid</td>
+            <td><span class="tag tag-blue">CFF (only)</span></td>
+            <td><span class="tag tag-blue">CFF</span> or <span class="tag tag-green">CFO</span></td>
+            <td>Under IFRS, some companies show dividends paid as CFO (it's a cost of obtaining equity capital). US GAAP: always CFF.</td>
+          </tr>
+          <tr>
+            <td>Income Taxes</td>
+            <td><span class="tag tag-green">CFO (only)</span></td>
+            <td><span class="tag tag-green">Generally CFO</span></td>
+            <td>IFRS: If taxes can be specifically identified with investing or financing (e.g., tax on gain from discontinued operation sale), can classify there. US GAAP: ALL taxes → CFO.</td>
+          </tr>
+          <tr>
+            <td>Bank Overdrafts</td>
+            <td><span class="tag tag-blue">CFF</span> (not part of cash)</td>
+            <td>Part of <span class="tag tag-green">Cash &amp; equivalents</span></td>
+            <td>Under IFRS, bank overdrafts that are repayable on demand and form an integral part of cash management are treated as a component of cash, not financing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Why IFRS Flexibility Matters for Analysts</div>
+      <p>When IFRS companies make different elections (e.g., Company A puts interest paid in CFO; Company B puts it in CFF), the CFO figures are NOT directly comparable even for companies in the same industry and country. Analysts must adjust for these classification differences before comparing CFO across IFRS companies. For example: a company that classifies dividends paid as CFO will show lower CFO than one that classifies them as CFF — even with identical underlying cash flows. Always check the cash flow statement notes for classification policies.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — IFRS vs. US GAAP Cash Flow Classification</div>
+      <p>This table is frequently tested with questions like: "Under IFRS, interest paid can be classified as ___." Or: "Which of the following is a difference between IFRS and US GAAP cash flow statements?" The most tested items: <strong>interest paid</strong> (CFO under US GAAP; CFO or CFF under IFRS) and <strong>dividends paid</strong> (CFF under US GAAP; CFF or CFO under IFRS). Also commonly tested: <strong>dividends received</strong> (CFO under US GAAP; CFO or CFI under IFRS). Remember: under US GAAP, all of these are fixed. Under IFRS, they're all flexible (management choice).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 4: Cash Flows I</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>CFS structure:</strong> CFO + CFI + CFF = Net change in cash. Ending cash = Beginning cash + net changes. Must match cash on ending balance sheet.</li>
+        <li>✅ <strong>CFO</strong> = operating cash flows (customer collections, supplier payments, employee payments, interest/taxes under US GAAP). <strong>CFI</strong> = long-term asset purchases/sales. <strong>CFF</strong> = debt issuance/repayment, equity issuance/buybacks, dividends paid (US GAAP).</li>
+        <li>✅ <strong>Direct method:</strong> Shows gross operating cash receipts and payments. Adjusts accrual IS items using balance sheet changes. More informative but less common in practice.</li>
+        <li>✅ <strong>Indirect method:</strong> Starts with net income; adjusts for (1) non-operating items, (2) non-cash items, (3) working capital changes. Most common in practice.</li>
+        <li>✅ <strong>CFI and CFF are always presented using the direct method</strong> regardless of whether direct or indirect is used for CFO.</li>
+        <li>✅ <strong>Cash from customers = Revenue − ∆A/R + ∆Deferred Revenue.</strong> A/R ↑ → subtract (earned but not collected).</li>
+        <li>✅ <strong>Cash paid to suppliers = COGS + ∆Inventory − ∆A/P.</strong> Inventory ↑ → add (bought more than sold). A/P ↑ → subtract (bought on credit, haven't paid).</li>
+        <li>✅ <strong>Cash paid to employees = Salary expense − ∆Wages Payable.</strong> Wages payable ↑ → subtract (accrued more than paid).</li>
+        <li>✅ <strong>Cash for interest = Interest expense ± ∆Interest Payable.</strong> Payable ↑ → subtract; payable ↓ → add.</li>
+        <li>✅ <strong>Cash for taxes = Tax expense ± ∆Tax Payable ± ∆Deferred Tax Liab.</strong> DTL ↑ → subtract (taxed less than expense).</li>
+        <li>✅ <strong>Indirect method: Depreciation/amortization/impairment → ADD BACK</strong> (non-cash charge, reduced net income).</li>
+        <li>✅ <strong>Indirect method: Gain on sale of assets → SUBTRACT</strong> (non-operating; cash from sale is in CFI).</li>
+        <li>✅ <strong>Indirect method: Loss on sale of assets → ADD BACK</strong> (non-operating; loss removed; cash in CFI).</li>
+        <li>✅ <strong>Working capital indirect method rule:</strong> Current operating asset ↑ → subtract. Current operating liability ↑ → add. (Opposites for decreases.)</li>
+        <li>✅ <strong>Equipment sale — cash proceeds = Book value + Gain (or − Loss).</strong> Book value = Cost − Accum. depreciation on sold asset. Use T-accounts on equipment and accum. dep accounts to derive cost and dep on disposed items.</li>
+        <li>✅ <strong>Dividends paid = Beg R/E + Net Income − End R/E.</strong> Always back into dividends from retained earnings when not directly given.</li>
+        <li>✅ <strong>Indirect → Direct conversion (3 steps):</strong> (1) Disaggregate net income to revenues/expenses; (2) Remove non-cash/non-operating items; (3) Adjust each line for working capital changes.</li>
+        <li>✅ <strong>IFRS flexibility:</strong> Interest received (CFO or CFI), interest paid (CFO or CFF), dividends received (CFO or CFI), dividends paid (CFF or CFO), taxes (generally CFO, but portion can be CFI/CFF if identifiable). All fixed under US GAAP.</li>
+        <li>✅ <strong>US GAAP fixed rules:</strong> Interest received = CFO. Interest paid = CFO. Dividends received = CFO. Dividends paid = CFF. All taxes = CFO. Bank overdrafts = CFF (not cash).</li>
+        <li>✅ <strong>Bank overdrafts:</strong> IFRS = part of cash and cash equivalents. US GAAP = financing activity (not part of cash).</li>
+        <li>✅ <strong>IFRS requires disclosure of direct method equivalent</strong> when indirect is used. US GAAP also encourages direct but requires reconciliation even if direct is used.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 4 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ CFS STRUCTURE ═══<br>
+        Beg Cash + CFO + CFI + CFF = End Cash (must = balance sheet cash)<br><br>
+
+        ═══ DIRECT METHOD — KEY FORMULAS ═══<br>
+        Cash from customers  = Revenue − ∆A/R + ∆Deferred Revenue<br>
+        Cash paid suppliers  = COGS + ∆Inventory − ∆A/P<br>
+        Cash paid employees  = Salary exp − ∆Wages payable<br>
+        Cash paid int (US GAAP CFO) = Int exp ± ∆Int payable  (payable ↑ = subtract)<br>
+        Cash paid taxes      = Tax exp ± ∆Tax payable ± ∆DTL  (DTL ↑ = subtract)<br>
+        Cash paid other opex = Other exp + ∆Prepaid − ∆Accrued liab<br><br>
+
+        ═══ INDIRECT METHOD ADJUSTMENTS ═══<br>
+        Start: Net income<br>
+        +  Depreciation / Amortization / Impairment  (non-cash)<br>
+        −  Gain on asset sale  (non-operating → appears in CFI)<br>
+        +  Loss on asset sale  (non-operating → add back)<br>
+        +  Amortization of bond discount  (non-cash interest add-on)<br>
+        −  Amortization of bond premium  (non-cash interest reduction)<br>
+        +  DTL increase  /  − DTL decrease<br>
+        −  Current operating asset ↑  /  + Current operating asset ↓<br>
+        +  Current operating liability ↑  /  − Current operating liability ↓<br>
+        = Net CFO<br><br>
+
+        ═══ EQUIPMENT SALE PROCEEDS ═══<br>
+        Cost of sold asset: Beg equip + Purchases − End equip<br>
+        Dep on sold asset:  Beg accum dep + Dep exp − End accum dep<br>
+        Book value:         Cost − Accum dep on sold asset<br>
+        Cash proceeds:      Book value + Gain (or − Loss)<br><br>
+
+        ═══ DIVIDENDS PAID ═══<br>
+        Beg R/E + Net Income − Dividends = End R/E<br>
+        → Dividends = Beg R/E + NI − End R/E<br><br>
+
+        ═══ IFRS vs. US GAAP CLASSIFICATION ═══<br>
+        Item              US GAAP     IFRS<br>
+        Interest received  CFO         CFO or CFI<br>
+        Interest paid      CFO         CFO or CFF<br>
+        Dividends received CFO         CFO or CFI<br>
+        Dividends paid     CFF         CFF or CFO<br>
+        Taxes paid         CFO         Generally CFO (portion can be CFI/CFF)<br>
+        Bank overdrafts    CFF         Part of cash &amp; equivalents
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 4:</strong><br>
+        (1) Depreciation is added back in indirect method — but it is NOT a source of cash. It merely means "this expense required no cash."<br>
+        (2) Gain on sale is SUBTRACTED from CFO (indirect) — the actual cash proceeds appear in CFI. Don't double-count.<br>
+        (3) Interest paid is ALWAYS CFO under US GAAP — even though the principal repaid is CFF. IFRS allows CFO or CFF.<br>
+        (4) Dividends paid are ALWAYS CFF under US GAAP. IFRS allows CFF or CFO.<br>
+        (5) Cash paid to suppliers: two-step process — COGS → Purchases (adjust for ∆Inventory), then Purchases → Cash (adjust for ∆A/P).<br>
+        (6) A/P ↑ = ADD in indirect method (paid less cash than purchased). Inventory ↑ = SUBTRACT (used more cash to build stock).<br>
+        (7) Ending cash on CFS must ALWAYS equal cash on ending balance sheet — if not, there's an error somewhere.<br>
+        (8) Bank overdrafts: IFRS = cash equivalent; US GAAP = financing activity.<br>
+        (9) DTL ↑ = ADD back in indirect method (taxes accrued but not yet paid — like a non-cash tax expense).<br>
+        (10) Dividends paid backed into via retained earnings: Beg R/E + NI − End R/E = Dividends.<br>
+        (11) Equipment sale proceeds = Book value + Gain. The gain was removed from CFO (indirect); the gross cash proceeds land in CFI.<br>
+        (12) CFI and CFF always use the direct method — only CFO can use direct OR indirect.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 4: Analyzing Statements of Cash Flows I · Exam Prep Notes
+</footer>
+
+</body>
+</html>

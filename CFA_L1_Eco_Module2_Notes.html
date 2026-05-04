@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 2: Understanding Business Cycles</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --card: #1a1e28;
+    --border: #252a38;
+    --accent: #c9a84c;
+    --accent2: #4c8bc9;
+    --accent3: #4cc98a;
+    --danger: #c94c4c;
+    --purple: #9a7fdc;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tip-bg: #1a2218;
+    --tip-border: #4cc98a;
+    --warn-bg: #221a18;
+    --warn-border: #c94c4c;
+    --formula-bg: #12151f;
+    --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #101520 40%, #0d1a15 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative; overflow: hidden;
+  }
+  .page-header::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .badge {
+    display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3);
+    border: 1px solid rgba(76,201,138,0.28); font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    padding: 4px 12px; border-radius: 2px; margin-bottom: 16px;
+  }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 640px; }
+
+  .toc-strip {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 0 48px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item {
+    font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+    color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent;
+    white-space: nowrap; cursor: pointer; text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    color: var(--accent3); background: rgba(76,201,138,0.1);
+    border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px;
+    border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap;
+  }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem;
+    color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px;
+  }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box {
+    background: var(--formula-bg); border-left: 3px solid var(--formula-border);
+    border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent);
+  }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; }
+  .tip .tip-label { font-weight: 700; color: var(--accent3); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .tip p { color: #c8e8d4; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--danger); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; }
+  .warn .warn-label { font-weight: 700; color: var(--danger); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .warn p { color: #e8c8c8; }
+
+  .mnemonic { background: #1a1628; border: 1px solid #3d2f6e; border-radius: 6px; padding: 16px 20px; margin: 14px 0; }
+  .mnemonic .m-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #a98adc; margin-bottom: 6px; }
+  .mnemonic p { color: #d8ccf0; font-size: 14px; margin: 0; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 500px; }
+  thead th {
+    background: rgba(76,201,138,0.1); color: var(--accent3);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px;
+    text-align: left; border-bottom: 1px solid var(--accent3);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 14px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { font-weight: 700; color: var(--accent2); white-space: nowrap; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); }
+  .tag-purple { background: rgba(154,127,220,0.15); color: var(--purple); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mini-card .mc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .mini-card ul { padding-left: 18px; }
+  .mini-card ul li { font-size: 14px; margin-bottom: 5px; color: var(--text); }
+
+  /* CYCLE PHASES TIMELINE */
+  .phase-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .phase-card {
+    border-radius: 6px;
+    padding: 16px;
+    border: 1px solid;
+    font-size: 13.5px;
+  }
+  .phase-card .ph-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .phase-card .ph-desc { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+  .phase-card ul { padding-left: 16px; }
+  .phase-card ul li { margin-bottom: 4px; color: var(--text); font-size: 13px; }
+  .phase-recovery { background: rgba(76,201,138,0.06); border-color: rgba(76,201,138,0.3); }
+  .phase-recovery .ph-name { color: var(--accent3); }
+  .phase-expansion { background: rgba(76,139,201,0.06); border-color: rgba(76,139,201,0.3); }
+  .phase-expansion .ph-name { color: var(--accent2); }
+  .phase-slowdown { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.3); }
+  .phase-slowdown .ph-name { color: var(--accent); }
+  .phase-contraction { background: rgba(201,76,76,0.06); border-color: rgba(201,76,76,0.3); }
+  .phase-contraction .ph-name { color: var(--danger); }
+
+  @media (max-width: 750px) { .phase-row { grid-template-columns: 1fr 1fr; } }
+
+  .indicator-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .ind-card {
+    background: var(--card);
+    border-radius: 6px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-top: 3px solid;
+  }
+  .ind-card.leading { border-top-color: var(--accent3); }
+  .ind-card.coincident { border-top-color: var(--accent2); }
+  .ind-card.lagging { border-top-color: var(--accent); }
+  .ind-card .ind-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .ind-card.leading .ind-title { color: var(--accent3); }
+  .ind-card.coincident .ind-title { color: var(--accent2); }
+  .ind-card.lagging .ind-title { color: var(--accent); }
+  .ind-card ul { padding-left: 16px; }
+  .ind-card ul li { font-size: 13px; margin-bottom: 4px; color: var(--text); }
+  @media (max-width: 680px) { .indicator-grid { grid-template-columns: 1fr; } }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  p { margin-bottom: 12px; }
+  strong { color: #fff; font-weight: 700; }
+  em { color: var(--accent2); font-style: normal; font-weight: 600; }
+
+  .diffusion-box {
+    background: #141820;
+    border: 1px solid #2a3050;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .diffusion-box .db-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .cycle-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .ca-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .ca-arrow {
+    color: var(--muted);
+    font-size: 20px;
+    padding: 0 6px;
+  }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 24px 48px; font-size: 12px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 2: <span>Understanding</span><br>Business Cycles</h1>
+  <p>Exam-ready notes covering the four phases of the business cycle, credit cycles, and economic indicators — leading, coincident, lagging, and diffusion indexes.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Cycle Types</a>
+  <a href="#s2" class="toc-item">02 · Four Phases</a>
+  <a href="#s3" class="toc-item">03 · Phase Details</a>
+  <a href="#s4" class="toc-item">04 · Credit Cycles</a>
+  <a href="#s5" class="toc-item">05 · Resource Use</a>
+  <a href="#s6" class="toc-item">06 · Economic Indicators</a>
+  <a href="#s7" class="toc-item">07 · Diffusion Index</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: CYCLE TYPES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Business Cycle — Definition & Types</h2>
+    </div>
+
+    <h3>Core Definition</h3>
+    <div class="card">
+      <p><strong>Business cycles</strong> are <em>recurrent</em> expansions and contractions in economic activity affecting broad segments of the economy. Key features:</p>
+      <ul>
+        <li>Characteristic of <strong>market-based economies</strong> (not agrarian or centrally planned)</li>
+        <li>Phases occur broadly <strong>simultaneously across the economy</strong></li>
+        <li><strong>Recurrent but not periodic</strong> — they repeat but vary in intensity and duration (1 to 10–12 years)</li>
+        <li>Two primary turning points: <em>Peak</em> (top) and <em>Trough</em> (bottom)</li>
+      </ul>
+    </div>
+
+    <h3>Three Cycle Concepts</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Cycle Type</th><th>What It Measures</th><th>Key Feature</th><th>Used By</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Classical Cycle</td>
+            <td>Absolute level of GDP (volume)</td>
+            <td>Contraction = actual decline in GDP. Peaks/troughs are absolute levels.</td>
+            <td><span class="tag tag-red">Rarely used</span></td>
+          </tr>
+          <tr>
+            <td>Growth Cycle</td>
+            <td>GDP relative to long-run trend/potential</td>
+            <td>Measures output <em>gap</em> (actual minus trend). Peaks earlier, troughs later vs. classical.</td>
+            <td><span class="tag tag-green">Most common</span></td>
+          </tr>
+          <tr>
+            <td>Growth Rate Cycle</td>
+            <td>Rate of change of GDP (growth rate)</td>
+            <td>Peaks/troughs recognized earliest. No need to estimate trend path.</td>
+            <td><span class="tag tag-blue">Also used</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — Growth Cycle is the Standard</div>
+      <p>For CFA purposes, the <strong>growth cycle</strong> is the primary framework. Business cycles = fluctuations around <em>potential output</em> (the trend). Output gaps (positive or negative) drive the phase descriptions. Remember: the cycle measures deviation from trend, not just absolute output levels.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Output Gap (Growth Cycle Concept)</div>
+      <div class="f">Output Gap = Actual GDP – Potential GDP</div>
+      <div class="note">
+        Positive gap: Actual &gt; Potential → Economy overheating (Expansion/Slowdown peak)<br>
+        Negative gap: Actual &lt; Potential → Economy underperforming (Contraction/Recovery trough)
+      </div>
+    </div>
+
+    <h3>Recession Definition</h3>
+    <div class="card">
+      <p><strong>Simple rule:</strong> Two consecutive quarters of negative real GDP growth = recession.</p>
+      <p><strong>Limitation:</strong> Misleading if pattern is negative → slightly positive → negative. NBER (National Bureau of Economic Research) uses a broader approach — analyzing employment, industrial production, and sales data — to officially date US business cycle peaks and troughs. NBER determinations often occur well <em>after</em> turning points due to data revision lags.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap</div>
+      <p>The "two consecutive quarters of negative GDP" rule is a <strong>simple rule of thumb</strong>, not the official definition. The NBER committee analyzes multiple economic variables, not just GDP. Know both, and know the limitation of the simple rule.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: FOUR PHASES OVERVIEW -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Four Phases — Quick Reference</h2>
+    </div>
+
+    <div class="cycle-arrow">
+      <div class="ca-item" style="color:var(--accent3); border-color:rgba(76,201,138,0.3);">Recovery<br><small style="color:var(--muted); font-weight:400;">Trough → closing –gap</small></div>
+      <div class="ca-arrow">→</div>
+      <div class="ca-item" style="color:var(--accent2); border-color:rgba(76,139,201,0.3);">Expansion<br><small style="color:var(--muted); font-weight:400;">+gap opens → Boom</small></div>
+      <div class="ca-arrow">→</div>
+      <div class="ca-item" style="color:var(--accent); border-color:rgba(201,168,76,0.3);">Slowdown<br><small style="color:var(--muted); font-weight:400;">Peak → +gap narrows</small></div>
+      <div class="ca-arrow">→</div>
+      <div class="ca-item" style="color:var(--danger); border-color:rgba(201,76,76,0.3);">Contraction<br><small style="color:var(--muted); font-weight:400;">–gap reopens → recession</small></div>
+    </div>
+
+    <h3>Summary Table: All Key Variables by Phase</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th style="color:var(--accent3);">Recovery</th>
+            <th style="color:var(--accent2);">Expansion</th>
+            <th style="color:var(--accent);">Slowdown</th>
+            <th style="color:var(--danger);">Contraction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Output Gap</td>
+            <td>Negative, narrowing</td>
+            <td>Positive, widening → peak</td>
+            <td>Largest positive, narrowing</td>
+            <td>Becomes negative again</td>
+          </tr>
+          <tr>
+            <td>GDP Growth</td>
+            <td>Below avg, improving</td>
+            <td>Above average</td>
+            <td>Above avg but slowing</td>
+            <td>Below potential / negative</td>
+          </tr>
+          <tr>
+            <td>Employment</td>
+            <td>Layoffs slow; overtime before hiring; unemp still high</td>
+            <td>Shift from overtime to new hires; unemp falls</td>
+            <td>Hiring slows; unemp still falling slowly</td>
+            <td>Cut hours → freeze → layoffs; unemp rises</td>
+          </tr>
+          <tr>
+            <td>Inflation</td>
+            <td>Moderate</td>
+            <td>Picks up modestly</td>
+            <td>Accelerates further</td>
+            <td>Decelerates (with a lag)</td>
+          </tr>
+          <tr>
+            <td>Business confidence</td>
+            <td>Low but improving</td>
+            <td>Strong and growing</td>
+            <td>Still positive but peaking</td>
+            <td>Declining</td>
+          </tr>
+          <tr>
+            <td>Consumer spending</td>
+            <td>Starting to increase</td>
+            <td>Strong growth</td>
+            <td>Still optimistic</td>
+            <td>Falling</td>
+          </tr>
+          <tr>
+            <td>Interest rates</td>
+            <td>Low / being cut</td>
+            <td>Starting to rise</td>
+            <td>Rising / high</td>
+            <td>Being cut to stimulate</td>
+          </tr>
+          <tr>
+            <td>Inventories</td>
+            <td>Falling; production lags sales</td>
+            <td>Rising; restocking stage</td>
+            <td>Rising; slowdown signals</td>
+            <td>Unwanted inventory builds up</td>
+          </tr>
+          <tr>
+            <td>Equity markets</td>
+            <td>Trough ~3–6 months <em>before</em> economy (leading)</td>
+            <td>Strong performance</td>
+            <td>Peak, then declining</td>
+            <td>Falling; government bonds preferred</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — Phase Sequence: "RESC" = Recovery, Expansion, Slowdown, Contraction</div>
+      <p><strong>R</strong>ide (Recovery) → <strong>E</strong>njoy (Expansion) → <strong>S</strong>low (Slowdown) → <strong>C</strong>rash (Contraction) → back to Ride again.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: PHASE DETAILS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Phase-by-Phase Deep Dive</h2>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-card phase-recovery">
+        <div class="ph-name">Recovery</div>
+        <div class="ph-desc">Economy at/near trough. Negative output gap narrowing.</div>
+        <ul>
+          <li>Output below potential but improving</li>
+          <li>Layoffs slow; firms use overtime</li>
+          <li>Unemployment still above average</li>
+          <li>Inflation moderate</li>
+          <li>Interest rates low / being cut</li>
+          <li>Risky assets repriced upward</li>
+          <li><strong>Equity market troughs 3–6 months early</strong></li>
+          <li>Capex: efficiency focus, software/hardware reinstated first</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-expansion">
+        <div class="ph-name">Expansion</div>
+        <div class="ph-desc">Growth above average. Positive output gap opens → Boom.</div>
+        <ul>
+          <li>Actual output exceeds potential</li>
+          <li>Firms move from overtime → new hires</li>
+          <li>Unemployment falls and stabilizes</li>
+          <li>Inflation picks up modestly</li>
+          <li>Interest rates start rising</li>
+          <li>Possible supply shortages, overinvestment</li>
+          <li>Capex: heavy equipment, warehouses, factories</li>
+          <li>Central bank may tighten to prevent overheating</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-slowdown">
+        <div class="ph-name">Slowdown</div>
+        <div class="ph-desc">Output at peak relative to potential. Gap begins to narrow.</div>
+        <ul>
+          <li>Largest positive output gap</li>
+          <li>Growth decelerates (still above-average)</li>
+          <li>Consumers still optimistic</li>
+          <li>Firms use overtime, not new hires</li>
+          <li>Unemployment slowly declining</li>
+          <li>Inflation still accelerating</li>
+          <li>Interest rates high; encouraging slowdown</li>
+          <li>Capex: new orders signal late-stage overinvestment</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-contraction">
+        <div class="ph-name">Contraction</div>
+        <div class="ph-desc">Output falls below potential. Recession if severe enough.</div>
+        <ul>
+          <li>Negative output gap reopens</li>
+          <li>Confidence declines; spending falls</li>
+          <li>Cut hours → freeze hiring → layoffs</li>
+          <li>Unemployment rises</li>
+          <li>Inflation decelerates (with a <strong>lag</strong>)</li>
+          <li>Banks reluctant to lend</li>
+          <li>Inventories: unwanted build-up</li>
+          <li>Investors prefer safe assets: govt bonds, utilities, staples</li>
+          <li>Capex: new orders halted; light equipment cut first</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Critical Exam Points on Lags</div>
+      <p><strong>Employment lags the cycle</strong> — firms are slow to hire in recovery (want confirmation) and slow to fire early in contraction (want to retain trained workers). Unemployment rate is a <em>lagging indicator</em>.</p>
+      <p style="margin-top:8px;"><strong>Inflation lags the cycle</strong> — inflation decelerates in contraction but <em>with a lag</em>. It may still be rising even as output is already falling.</p>
+      <p style="margin-top:8px;"><strong>Equity markets lead by 3–6 months</strong> — financial markets reprice expectations ahead of economic data.</p>
+    </div>
+
+    <h3>Investor Strategy by Phase</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Preferred Assets</th><th>Avoid</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--accent3);">Recovery</td>
+            <td>Cyclical equities, corporate bonds; risky assets repriced upward</td>
+            <td>Government bonds (priced high from recession)</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent2);">Expansion</td>
+            <td>Equities (especially cyclicals), high-yield bonds</td>
+            <td>Safe haven assets</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Slowdown</td>
+            <td>Begin rotating to defensives; start reducing cyclical exposure</td>
+            <td>Late-cycle, overvalued cyclicals</td>
+          </tr>
+          <tr>
+            <td style="color:var(--danger);">Contraction</td>
+            <td>Government bonds, utilities, consumer staples ("steady cash flows")</td>
+            <td>Cyclical equities, high-yield bonds</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: CREDIT CYCLES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Credit Cycles</h2>
+    </div>
+
+    <h3>Definition & Mechanism</h3>
+    <div class="card">
+      <p><strong>Credit cycles</strong> describe the changing <em>availability and pricing</em> of credit (private sector credit: loans for business investment and real estate purchases).</p>
+      <p><strong>When economy is strong:</strong> Lenders extend credit freely on favorable terms → asset prices rise (especially real estate) → further economic expansion.</p>
+      <p><strong>When economy weakens:</strong> Lenders tighten credit → asset values fall → further weakness + higher defaults → deeper recession.</p>
+    </div>
+
+    <h3>Key Properties of Credit Cycles</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Characteristics</div>
+        <ul>
+          <li>Longer, deeper, and sharper than business cycles</li>
+          <li>Not always synchronized with the business cycle</li>
+          <li>Closely linked to housing and real estate markets</li>
+          <li>Strong peaks → associated with subsequent systemic banking crises</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Why Analysts Monitor Credit Cycles</div>
+        <ul>
+          <li>Understand housing/construction market dynamics</li>
+          <li>Assess depth of business cycle expansion or contraction</li>
+          <li>Anticipate policy responses (macroprudential policy)</li>
+          <li>Recessions with financial disruption → longer and deeper</li>
+          <li>Recoveries with rapid credit growth → stronger</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Critical Relationship</div>
+      <div class="f">Strong credit cycle peak → Systemic banking crisis risk ↑↑</div>
+      <div class="note">Historical examples: Latin America 1980s, Asian crisis 1997–98, Global Financial Crisis 2008–09. Expansive credit → asset bubbles → bust when outflows occur.</div>
+    </div>
+
+    <h3>Credit Cycle vs. Business Cycle</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Business Cycle</th><th>Credit Cycle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Primary measure</td><td>Real GDP</td><td>Private sector credit & property prices</td></tr>
+          <tr><td>Duration</td><td>1–12 years</td><td>Generally longer</td></tr>
+          <tr><td>Amplitude</td><td>Moderate</td><td>Deeper and sharper peaks/troughs</td></tr>
+          <tr><td>Synchronization</td><td>—</td><td>Not always in sync with business cycle</td></tr>
+          <tr><td>Amplification</td><td>Base</td><td>Amplifies business cycle (deeper recessions or stronger expansions)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Policy Implication</div>
+      <p>Traditional monetary/fiscal policy targets business cycle volatility. <strong>Macroprudential policy</strong> specifically targets credit cycle booms (e.g., capital requirements, LTV limits) to prevent systemic banking crises. This is a newer and increasingly important tool.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: RESOURCE USE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Resource Use Over the Business Cycle</h2>
+    </div>
+
+    <h3>Workforce & Employment — Pattern Logic</h3>
+    <div class="card">
+      <p>Employment lags the cycle because of the <strong>cost of hiring and training</strong>. Firms prefer to adjust hours (overtime → cut hours) before adjusting headcount. This explains why unemployment is a <em>lagging indicator</em>.</p>
+      <p><strong>Order of adjustment:</strong></p>
+      <ol style="padding-left:20px; font-size:14px; margin-top:8px;">
+        <li style="margin-bottom:5px;">Adjust <em>overtime hours</em> first (quickest, no fixed cost)</li>
+        <li style="margin-bottom:5px;">Adjust <em>temporary/contract workers</em></li>
+        <li style="margin-bottom:5px;">Adjust <em>permanent full-time headcount</em> last</li>
+      </ol>
+    </div>
+
+    <h3>Capital Spending (Capex) Over the Cycle</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Capex Behavior</th><th>Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--accent3);">Recovery</td>
+            <td>Low but increasing. Focus on <strong>efficiency</strong> rather than capacity. Software, hardware, high-obsolescence equipment reinstated first.</td>
+            <td>IT systems, software upgrades</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent2);">Expansion</td>
+            <td>Increasing strongly. Focus shifts to <strong>capacity expansion</strong>. Orders precede shipments (new orders = leading indicator).</td>
+            <td>Warehouses, factories, heavy equipment</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Slowdown</td>
+            <td>Still placing new orders at or near capacity — possible <strong>late-stage overinvestment</strong>. Fiber-optic overinvestment in tech bubble is a classic example.</td>
+            <td>Fiber optic, tech infra overbuilding</td>
+          </tr>
+          <tr>
+            <td style="color:var(--danger);">Contraction</td>
+            <td>New orders halted; some existing orders canceled. Light equipment with short lead times cut first; heavy equipment cuts follow.</td>
+            <td>Construction and heavy equipment cuts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Analyst Note on New Orders</div>
+      <p>Use <strong>"core" capital goods orders</strong> (excluding defense and aircraft) for a cleaner economic signal. Defense orders are driven by government policy; aircraft orders are lumpy multi-year contracts. Both distort the underlying trend.</p>
+    </div>
+
+    <h3>Inventory Dynamics</h3>
+    <div class="card">
+      <p>Key metric: <strong>Inventory-to-Sales Ratio</strong> — measures inventories available for sale relative to actual sales. A rising ratio can signal economic slowdown; a falling ratio signals recovery.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Sales vs. Production</th><th>Inventories</th><th>Inventory-Sales Ratio</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--accent3);">Recovery</td>
+            <td>Sales recover; production lags</td>
+            <td>Falling (excess cleared)</td>
+            <td>Falling toward low levels</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent2);">Expansion</td>
+            <td>Production rises fast to restock</td>
+            <td>Rising (restocking phase)</td>
+            <td>Stabilizes at normal level</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Slowdown</td>
+            <td>Sales slow faster than production</td>
+            <td>Rising (unintended build-up)</td>
+            <td>Rising — signals weakening economy</td>
+          </tr>
+          <tr>
+            <td style="color:var(--danger);">Contraction</td>
+            <td>Production cut below sales</td>
+            <td>Unwanted, being liquidated</td>
+            <td>Falls back toward normal</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Inventory Trick: High I/S ratio = Bad signal; Falling I/S ratio = Recovery brewing</div>
+      <p>Think of inventory as unsold goods piling up on shelves. When the ratio rises, demand is slowing. When it falls, demand is recovering. Analysts watch this ratio as an early signal of turning points.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: ECONOMIC INDICATORS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Economic Indicators</h2>
+    </div>
+
+    <h3>Three Types</h3>
+    <div class="indicator-grid">
+      <div class="ind-card leading">
+        <div class="ind-title">Leading Indicators</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Turning points <strong>precede</strong> the economy. Used to <em>predict</em> future state.</p>
+        <ul>
+          <li>Stock market index (S&P 500)</li>
+          <li>Avg. weekly hours (manufacturing)</li>
+          <li>Avg. weekly initial claims for unemployment insurance</li>
+          <li>Manufacturers' new orders (consumer goods)</li>
+          <li>ISM new order index</li>
+          <li>Manufacturers' new orders (capital goods, ex-defense & aircraft)</li>
+          <li>Building permits (new housing)</li>
+          <li>Interest rate spread (10-yr vs. overnight)</li>
+          <li>Leading Credit Index</li>
+          <li>Consumer expectations</li>
+        </ul>
+      </div>
+      <div class="ind-card coincident">
+        <div class="ind-title">Coincident Indicators</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Turning points <strong>match</strong> the economy. Used to identify <em>current</em> state.</p>
+        <ul>
+          <li>Industrial Production Index</li>
+          <li>Real personal incomes</li>
+          <li>Retail sales</li>
+          <li>Manufacturing and trade sales</li>
+          <li>Non-farm payrolls (employment)</li>
+        </ul>
+      </div>
+      <div class="ind-card lagging">
+        <div class="ind-title">Lagging Indicators</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Turning points <strong>follow</strong> the economy. Used to <em>confirm</em> past trends.</p>
+        <ul>
+          <li>Average duration of unemployment</li>
+          <li>Inventory-to-sales ratio</li>
+          <li>Change in unit labor costs</li>
+          <li>Average prime lending rate</li>
+          <li>Ratio of consumer instalment debt to income</li>
+          <li>Commercial & industrial loans outstanding</li>
+          <li>Inflation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "SOP" for Leading Indicators</div>
+      <p><strong>S</strong>tock market, <strong>O</strong>rders (new), <strong>P</strong>ermits (building) — three of the most commonly tested leading indicators. Add <strong>Spread</strong> (yield curve) and <strong>Claims</strong> (unemployment insurance, inverse) to complete the core list.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Unemployment Insurance Claims</div>
+      <p>Average weekly initial <strong>claims</strong> for unemployment insurance is a <strong>leading indicator</strong> and moves <em>inversely</em> with the economy (rising claims → weakening economy). Do not confuse with the <em>unemployment rate</em> itself, which is a <strong>lagging indicator</strong>.</p>
+    </div>
+
+    <h3>Key Leading Indicator Logic — Why They Lead</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Indicator</th><th>Why It Leads</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Avg. weekly hours (manufacturing)</td>
+            <td>Firms cut overtime before laying off — hours fall before employment changes</td>
+          </tr>
+          <tr>
+            <td>Unemployment insurance claims</td>
+            <td>Layoffs show up in claims before broader unemployment stats</td>
+          </tr>
+          <tr>
+            <td>New orders (consumer goods)</td>
+            <td>Companies order before producing — signals future production</td>
+          </tr>
+          <tr>
+            <td>Building permits</td>
+            <td>Permits required before construction begins — signals future housing activity</td>
+          </tr>
+          <tr>
+            <td>S&P 500 stock index</td>
+            <td>Markets price in future expected earnings; equity troughs 3–6 months before GDP</td>
+          </tr>
+          <tr>
+            <td>Interest rate spread (10yr – overnight)</td>
+            <td>Inverted yield curve (negative spread) anticipates short rate cuts → economic slowdown ahead</td>
+          </tr>
+          <tr>
+            <td>Consumer expectations</td>
+            <td>Optimism/pessimism directly precedes changes in consumer spending</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Conference Board Leading Economic Index (LEI) — US</h3>
+    <div class="card">
+      <p>Published by The Conference Board. Combines the 10 leading indicators listed above into a single composite. Uses the <em>classical business cycle</em> concept. New orders for capital goods <strong>exclude defense and aircraft</strong> for cleaner signal.</p>
+    </div>
+
+    <h3>OECD Composite Leading Indicator (CLI)</h3>
+    <div class="card">
+      <p>Published for ~30 countries and aggregates (EU, G7). Uses the <strong>growth cycle concept</strong>. Methodology is consistent across countries → easy cross-country comparison. Includes PMI surveys for services (Euro area) and business failures (Japan) — country-specific components.</p>
+    </div>
+
+    <h3>Other Key Composite Indicators</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Survey-Based Indicators</div>
+        <ul>
+          <li><strong>PMI</strong> (Purchasing Managers' Index) — IHS Markit; global business surveys; widely used</li>
+          <li><strong>Tankan Report</strong> — Bank of Japan quarterly business survey</li>
+          <li><strong>ISM new order index</strong> — US manufacturing orders; diffusion-based</li>
+          <li><strong>Consumer confidence</strong> — Conference Board (global)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--purple);">Big Data / Nowcasting</div>
+        <ul>
+          <li><strong>CFNAI</strong> (Chicago Fed) — 85 monthly series; principal components analysis</li>
+          <li><strong>EuroCOIN</strong> (Bank of Italy/CEPR) — 100+ series for Euro area</li>
+          <li><strong>GDPNow</strong> (Atlanta Fed) — real-time running estimate of current quarter GDP; converges to BEA advance estimate</li>
+          <li><strong>Nowcasting</strong> = forecasting the present using high-frequency data</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 PMI Threshold to Know</div>
+      <p>A PMI reading above <strong>50</strong> signals expansion; below 50 signals contraction. This is a commonly tested fact for PMI-type survey indicators. It works the same for ISM indexes.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: DIFFUSION INDEX -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Diffusion Index</h2>
+    </div>
+
+    <h3>Definition & Purpose</h3>
+    <div class="card">
+      <p>A <strong>diffusion index</strong> measures the <em>breadth</em> of change in a composite indicator — what proportion of components are moving in the same direction as the overall index. It supplements the level of the index by showing whether a move is broad-based or driven by outliers.</p>
+    </div>
+
+    <h3>Conference Board Diffusion Index — Calculation Method</h3>
+    <div class="diffusion-box">
+      <div class="db-title">Component Scoring Rules (Conference Board)</div>
+      <p>For each of the 10 LEI components in a given month:</p>
+      <ul style="padding-left: 20px; margin-top: 8px; font-size: 14px;">
+        <li style="margin-bottom: 5px;"><span style="font-family:'JetBrains Mono',monospace; color:var(--accent3);">1.0</span> &nbsp;if component rises by more than 0.05%</li>
+        <li style="margin-bottom: 5px;"><span style="font-family:'JetBrains Mono',monospace; color:var(--accent);">0.5</span> &nbsp;if component changes by less than 0.05% (flat)</li>
+        <li style="margin-bottom: 5px;"><span style="font-family:'JetBrains Mono',monospace; color:var(--danger);">0.0</span> &nbsp;if component falls by more than 0.05%</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Diffusion Index Formula</div>
+      <div class="f">Diffusion Index = (Sum of assigned values ÷ Number of components) × 100</div>
+      <div class="note">Range: 0 (all falling) to 100 (all rising). A reading of 50 means half rising, half falling. Higher = broader economic expansion.</div>
+    </div>
+
+    <h3>Worked Example</h3>
+    <div class="card">
+      <p><strong>Month 1:</strong> 4 components: stock prices +2% (→1.0), money growth +1% (→1.0), orders flat (→0.5), confidence −0.6% (→0.0)</p>
+      <p>Sum = 2.5 ÷ 4 × 100 = <strong>62.5</strong></p>
+      <p style="margin-top:10px;"><strong>Month 2:</strong> stock prices −0.8% (→0.0), money growth +0.5% (→1.0), orders +0.5% (→1.0), confidence +3.5% (→1.0)</p>
+      <p>Sum = 3.0 ÷ 4 × 100 = <strong>75.0</strong></p>
+      <p style="margin-top:10px; color:var(--accent3);">→ Index rose from 62.5 to 75.0: more components rising → broader economic momentum confirmed.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Diffusion Index vs. Simple Index?</div>
+      <p>A straight composite can be pulled up by one massive outlier component. The diffusion index ignores magnitude — only counts <em>direction</em>. A high diffusion index means broad participation in the trend, making the signal more reliable. An analyst uses both: composite level + diffusion breadth = complete picture.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — What Diffusion Index Doesn't Show</div>
+      <p>The diffusion index does NOT reflect the magnitude of changes in individual components — only their direction. A component rising by 0.06% gets the same score (1.0) as one rising by 50%. Use it for breadth signals, not magnitude signals.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(76,139,201,0.1); border-color:rgba(76,139,201,0.3); color:var(--accent2);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.1;">
+        <li>✅ Business cycles are <strong>recurrent but not periodic</strong> — varying intensity and duration.</li>
+        <li>✅ Standard cycle framework = <strong>growth cycle</strong> (actual vs. potential GDP). Know the output gap concept.</li>
+        <li>✅ Four phases in order: <strong>Recovery → Expansion → Slowdown → Contraction</strong>.</li>
+        <li>✅ Recession = 2 consecutive quarters of negative real GDP growth (rule of thumb, not official NBER definition).</li>
+        <li>✅ <strong>Employment lags the cycle</strong> → unemployment rate is a lagging indicator.</li>
+        <li>✅ <strong>Inflation lags in contraction</strong> — it keeps decelerating but with a delay.</li>
+        <li>✅ <strong>Equity markets lead by 3–6 months</strong> → classified as a leading indicator.</li>
+        <li>✅ Credit cycles are <strong>longer, deeper, and sharper</strong> than business cycles. Strong peaks → banking crises.</li>
+        <li>✅ Inventory-to-sales ratio: rising = warning sign; falling = recovery signal. Lagging indicator.</li>
+        <li>✅ Leading: stock market, new orders, building permits, yield spread, consumer expectations, avg. weekly hours.</li>
+        <li>✅ Coincident: industrial production, real personal income, retail sales, non-farm payrolls.</li>
+        <li>✅ Lagging: unemployment duration, inventory/sales ratio, unit labor costs, prime lending rate, consumer debt/income.</li>
+        <li>✅ PMI &gt; 50 = expansion; PMI &lt; 50 = contraction.</li>
+        <li>✅ Inverted yield curve (short rate &gt; long rate) = leading signal of economic slowdown.</li>
+        <li>✅ Diffusion index = breadth of movement (direction only, not magnitude). Formula: (scores / n) × 100.</li>
+        <li>✅ GDPNow = Atlanta Fed nowcast; converges to BEA advance estimate as quarter-end data flows in.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 2: Understanding Business Cycles · Exam Prep Notes
+</footer>
+
+</body>
+</html>

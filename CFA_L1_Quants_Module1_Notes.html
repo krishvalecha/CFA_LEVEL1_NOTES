@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 1: Rates and Returns</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --purple: #a04cc9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d0d18 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(160,76,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(160,76,201,0.12); color: var(--purple); border: 1px solid rgba(160,76,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--purple); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--purple); border-color: var(--purple); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--purple); background: rgba(160,76,201,0.1); border: 1px solid rgba(160,76,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--purple); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+  .five-col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+  @media (max-width: 900px) { .five-col { grid-template-columns: 1fr 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(160,76,201,0.15); color: var(--purple); border: 1px solid rgba(160,76,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .highlight-p { color: var(--purple); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--purple); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--purple); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Mean type cards */
+  .mean-card { border-radius: 6px; padding: 16px 18px; margin-bottom: 10px; }
+  .mean-arith { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .mean-geo   { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .mean-harm  { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .mean-trim  { background: rgba(201,76,76,0.06); border: 1px solid rgba(201,76,76,0.3); }
+  .mean-wins  { background: rgba(160,76,201,0.06); border: 1px solid rgba(160,76,201,0.3); }
+  .mean-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .mean-arith .mean-label { color: var(--accent3); }
+  .mean-geo   .mean-label { color: var(--accent2); }
+  .mean-harm  .mean-label { color: var(--accent); }
+  .mean-trim  .mean-label { color: var(--danger); }
+  .mean-wins  .mean-label { color: var(--purple); }
+  .mean-card p, .mean-card li { font-size: 14px; color: var(--text); }
+  .mean-card ul { padding-left: 16px; margin-top:6px; }
+  .mean-card li { margin-bottom: 4px; }
+
+  /* Return type cards */
+  .ret-card { border-radius: 6px; padding: 14px 18px; margin-bottom: 8px; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--purple); }
+  .ret-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple); margin-bottom: 6px; }
+  .ret-card p, .ret-card li { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 1</div>
+  <h1>Rates and <span>Returns</span></h1>
+  <p>Exam-ready notes: interest rate components (real risk-free + 4 premiums), holding period return, 5 mean types (arithmetic, geometric, harmonic, trimmed, winsorized), money-weighted vs. time-weighted return, annualizing returns, continuously compounded returns, and gross/net/real/leveraged return measures.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Interest Rates — 3 Interpretations</a>
+  <a class="toc-item" href="#s2">02 · Interest Rate Components</a>
+  <a class="toc-item" href="#s3">03 · Holding Period Return</a>
+  <a class="toc-item" href="#s4">04 · Five Mean Return Types</a>
+  <a class="toc-item" href="#s5">05 · Which Mean to Use?</a>
+  <a class="toc-item" href="#s6">06 · Money-Weighted Return (MWR)</a>
+  <a class="toc-item" href="#s7">07 · Time-Weighted Return (TWR)</a>
+  <a class="toc-item" href="#s8">08 · MWR vs. TWR Comparison</a>
+  <a class="toc-item" href="#s9">09 · Annualizing Returns</a>
+  <a class="toc-item" href="#s10">10 · Continuously Compounded Returns</a>
+  <a class="toc-item" href="#s11">11 · Other Return Measures</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: INTEREST RATES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Interest Rates — Three Interpretations</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Interest Rate (r)</div>
+      <div class="def-body">A rate of return that reflects the relationship between differently dated (timed) cash flows. It establishes equivalence between cash flows occurring at different points in time. Example: if USD 9,500 today = USD 10,000 in one year, then r = USD500 / USD9,500 = 5.26%.</div>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">1 — Required Rate of Return</div>
+        <p>The <strong>minimum rate of return</strong> an investor must receive to accept an investment. Compensates for time value of money and risk.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">2 — Discount Rate</div>
+        <p>The rate used to find the <strong>present value</strong> of a future cash flow. "What rate makes future cash flows equivalent to a present amount?"</p>
+        <p style="margin-top:6px; font-size:12px; color:var(--muted);">"Interest rate" and "discount rate" are used almost interchangeably.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">3 — Opportunity Cost</div>
+        <p>The value <strong>forgone</strong> by choosing one course of action over another. If you spend USD 9,500 today instead of saving it, you forgo the 5.26% return.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Concept — All Three Are the Same Rate</div>
+      <p>Whether we call it required rate of return, discount rate, or opportunity cost — it's the <strong>same number</strong>, just viewed from three different angles. The rate always embeds the real risk-free rate + applicable risk premia.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: INTEREST RATE COMPONENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Interest Rate Components — The Building Blocks</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Interest Rate Decomposition (The Master Formula)</div>
+      <div class="f">
+        r = Real risk-free rate + Inflation premium + Default risk premium + Liquidity premium + Maturity premium<br><br>
+        Nominal risk-free rate (exact):   (1 + nominal) = (1 + real risk-free)(1 + inflation premium)<br>
+        Nominal risk-free rate (approx):  Nominal ≈ Real risk-free rate + Inflation premium
+      </div>
+      <div class="note">
+        Mnemonic: "RIDLM" — Real · Inflation · Default · Liquidity · Maturity<br>
+        Or: "Real Investors Demand Large Margins"
+      </div>
+    </div>
+
+    <div class="five-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Real Risk-Free Rate</div>
+        <p>Single-period rate for a <strong>completely risk-free security with zero inflation</strong>. Reflects time preferences for current vs. future real consumption.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Inflation Premium</div>
+        <p>Compensates for <strong>expected inflation</strong> over the maturity of the debt. Reflects the average expected inflation rate. Inflation erodes purchasing power.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Default Risk Premium</div>
+        <p>Compensates for the possibility that the borrower will <strong>fail to make a promised payment</strong> at the contracted time and amount.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Liquidity Premium</div>
+        <p>Compensates for the risk of <strong>loss vs. fair value</strong> if the investment must be converted to cash quickly. US T-bills have NO liquidity premium (highly liquid). Small issuer bonds have a liquidity premium.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--purple);">Maturity Premium</div>
+        <p>Compensates for the <strong>increased price sensitivity</strong> of longer-maturity debt to changes in market interest rates. Longer maturity = greater price volatility = higher maturity premium.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Nominal risk-free rate in practice:</strong> Short-term government debt interest rates represent the nominal risk-free rate. Examples:</p>
+      <ul>
+        <li>USA: 90-day T-bill rate = nominal risk-free rate for the US over the next 3 months</li>
+        <li>France: BTFs (Bons du Trésor) with maturities up to one year</li>
+        <li>Japan: Short-term Treasury bills with maturities of 6 and 12 months</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Important:</strong> Interest rates quoted at 3% for a 90-day security are <strong>annualized rates</strong> — not the actual rate earned over 90 days.</p>
+      <p style="margin-top:10px;">All premia vary continuously over time with changes in economic fundamentals and expectations. All interest rates therefore fluctuate.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exact vs. Approximate Nominal Rate</div>
+      <p>The <strong>exact</strong> formula is: (1 + nominal) = (1 + real)(1 + inflation). The <strong>approximation</strong> is: nominal ≈ real + inflation. The approximation underestimates slightly because it ignores the cross-product term (real × inflation). For the exam, know both and use exact unless told to approximate.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: HOLDING PERIOD RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Holding Period Return (HPR)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Holding Period Return (R)</div>
+      <div class="def-body">The return earned from holding an asset for a single specified period of time — one day, one week, one month, five years, or any period. Total return = capital gain/loss + income yield.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Holding Period Return Formulas</div>
+      <div class="f">
+        Single Period:    R = (P₁ − P₀ + I₁) / P₀<br><br>
+        Where:  P₀ = beginning price,  P₁ = ending price,  I₁ = income (dividends/interest) received<br><br>
+        Multi-Period (compounded over T periods):<br>
+        R = [(1 + R₁) × (1 + R₂) × ... × (1 + Rₜ)] − 1
+      </div>
+      <div class="note">
+        Two components of total return:<br>
+        • Capital gain component: (P₁ − P₀) / P₀<br>
+        • Income yield component: I₁ / P₀<br>
+        Total return = capital gain % + income yield % (only if income received at end of period; if received earlier and reinvested, total return could be higher)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Return Notation</div>
+      <p>Returns can be expressed equivalently as: decimals (0.07), fractions (7/100), or percentages (7%). For multi-period compounding, always use the (1 + R) format — never just multiply returns directly.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: FIVE MEAN TYPES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Five Types of Mean Returns</h2>
+    </div>
+
+    <div class="mean-card mean-arith">
+      <div class="mean-label">1 — Arithmetic Mean Return (R̄)</div>
+      <p><strong>Simple average of holding period returns.</strong> Easiest to compute; has well-known statistical properties.</p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        R̄ᵢ = (R₁ + R₂ + ... + Rₜ) / T = (1/T) × Σ Rᵢₜ
+      </div>
+      <ul>
+        <li>Assumes the <strong>same amount is invested at the beginning of each period</strong></li>
+        <li><strong>Always ≥ geometric mean</strong> (equal only if all returns are identical)</li>
+        <li><span class="danger-text">Biased upward</span> unless all returns are equal; bias is especially severe with mixed positive and negative returns</li>
+        <li>Best for estimating the <strong>average return over a single future period</strong></li>
+        <li>Example: Returns of −50%, +35%, +27% → Arithmetic mean = (−50+35+27)/3 = <strong>4%</strong></li>
+      </ul>
+    </div>
+
+    <div class="mean-card mean-geo">
+      <div class="mean-label">2 — Geometric Mean Return (R̄G)</div>
+      <p><strong>Compound rate of growth — the "true" multi-period return.</strong></p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        R̄Gᵢ = [(1+R₁)(1+R₂)...(1+Rₜ)]^(1/T) − 1
+      </div>
+      <ul>
+        <li>Accounts for compounding — base changes each period</li>
+        <li>More accurate representation of <strong>portfolio growth over multiple periods</strong></li>
+        <li>Example: Returns of −50%, +35%, +27% → Geometric mean = [(0.5)(1.35)(1.27)]^(1/3) − 1 = <strong>−5.00%</strong></li>
+        <li>EUR1 invested → EUR0.8574 after 3 years (matches actual). Using arithmetic mean (4%) → EUR1.1249 (wrong!)</li>
+        <li>Best for <strong>estimating average returns over multiple future periods</strong> and reporting historical performance</li>
+        <li>Difference between arithmetic and geometric means increases with <strong>greater variability</strong> in the data</li>
+      </ul>
+    </div>
+
+    <div class="mean-card mean-harm">
+      <div class="mean-label">3 — Harmonic Mean Return (X̄H)</div>
+      <p><strong>Reciprocal-based mean. Used for averaging rates and ratios; less affected by large outliers.</strong></p>
+      <div style="margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8c97a;">
+        X̄H = n / Σ(1/Xᵢ)   [where Xᵢ > 0]
+      </div>
+      <ul>
+        <li>Weight of each observation is <strong>inversely proportional to its magnitude</strong> → reduces influence of large values</li>
+        <li>Used most often when data consist of <strong>rates and ratios (e.g., P/E ratios)</strong></li>
+        <li>Classic application: <strong>cost averaging</strong> — periodic investment of a fixed dollar amount (average cost per share)</li>
+        <li>Example: P/Es of 45, 15, 15 → Arithmetic mean = 25, Harmonic mean = <strong>19.3</strong> (lower; down-weights the outlier 45)</li>
+        <li>For negative returns: convert to (1+R), compute harmonic mean, subtract 1</li>
+        <li>Only works for <strong>non-negative numbers</strong></li>
+      </ul>
+    </div>
+
+    <div class="mean-card mean-trim">
+      <div class="mean-label">4 — Trimmed Mean</div>
+      <p>Removes a defined percentage of the <strong>largest and smallest values</strong> before calculating the arithmetic mean. Minimizes impact of extreme outliers but <strong>discards</strong> them entirely.</p>
+      <ul>
+        <li>Example: "5% trimmed mean" = remove the top 5% and bottom 5% of observations, then average the rest</li>
+        <li>Use when: there are extreme outliers AND you want to <strong>exclude</strong> them from the analysis</li>
+      </ul>
+    </div>
+
+    <div class="mean-card mean-wins">
+      <div class="mean-label">5 — Winsorized Mean</div>
+      <p>Replaces extreme observations with the values of their <strong>nearest non-extreme observations</strong>, then takes the arithmetic mean. Limits but <strong>does not discard</strong> outliers.</p>
+      <ul>
+        <li>Example: In a dataset, the top and bottom 5% of observations are replaced by the 95th and 5th percentile values respectively, then averaged</li>
+        <li>Use when: there are extreme outliers AND you want to <strong>include but dampen</strong> their impact</li>
+        <li>Key difference from trimmed mean: winsorized replaces; trimmed removes</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: WHICH MEAN TO USE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Which Mean to Use? — Decision Framework</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Situation / Question</th>
+            <th>Use This Mean</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Estimating average return for a single future period</td>
+            <td><span class="tag tag-green">Arithmetic</span></td>
+            <td>Arithmetic mean = average of one-period returns</td>
+          </tr>
+          <tr>
+            <td>Estimating average returns over multiple future periods / historical performance</td>
+            <td><span class="tag tag-blue">Geometric</span></td>
+            <td>Captures compounding; shows compound rate of growth</td>
+          </tr>
+          <tr>
+            <td>Averaging ratios or rates (e.g., P/E ratios, prices in cost averaging)</td>
+            <td><span class="tag tag-yellow">Harmonic</span></td>
+            <td>Appropriate for "amount per unit" ratios; reduces outlier impact</td>
+          </tr>
+          <tr>
+            <td>Extreme outliers present — want to EXCLUDE them</td>
+            <td><span class="tag tag-red">Trimmed</span></td>
+            <td>Removes extreme observations before averaging</td>
+          </tr>
+          <tr>
+            <td>Extreme outliers present — want to INCLUDE but dampen them</td>
+            <td><span class="tag tag-purple">Winsorized</span></td>
+            <td>Replaces extremes with nearest non-extreme values</td>
+          </tr>
+          <tr>
+            <td>No outliers; symmetric distribution; compounding irrelevant</td>
+            <td><span class="tag tag-green">Arithmetic</span></td>
+            <td>Simplest; efficient; known statistical properties</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Inequality — Always True (Unless All Returns Are Equal)</div>
+      <div class="f">
+        Harmonic Mean ≤ Geometric Mean ≤ Arithmetic Mean
+      </div>
+      <div class="note">
+        All three means are equal only when all observations in the dataset are identical.<br>
+        The gap between arithmetic and geometric means increases with greater variability (dispersion) in the returns.<br>
+        The arithmetic mean is always ≥ geometric mean — it is biased upward as a measure of multi-period performance.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: MONEY-WEIGHTED RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Money-Weighted Return (MWR)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Money-Weighted Return (MWR) = Internal Rate of Return (IRR)</div>
+      <div class="def-body">The discount rate that makes the sum of present values of all cash flows equal to zero. Reflects the actual return earned on the actual money invested, accounting for the size and timing of cash flows. Equivalent to a bond's yield to maturity calculation.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Money-Weighted Return — IRR Formula</div>
+      <div class="f">
+        Σ [CFₜ / (1 + IRR)ᵗ] = 0   for t = 0 to T<br><br>
+        CF convention (from investor's perspective):<br>
+        Outflows (money leaving investor) = NEGATIVE: −purchases, −additional investments<br>
+        Inflows (money coming to investor) = POSITIVE: +dividends, +proceeds from sales, +ending value
+      </div>
+      <div class="note">
+        Solve using financial calculator or Excel =IRR(values) function.<br>
+        The MWR gives the annualized return on the actual dollars invested for the entire period.
+      </div>
+    </div>
+
+    <h3>Step-by-Step MWR Process</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li><strong>Identify all cash flows</strong> by time period — investments (outflows, negative) and receipts (inflows, positive)</li>
+        <li><strong>Net cash flows</strong> at each time point (e.g., at t=1: −new purchase + dividend received)</li>
+        <li><strong>Include ending portfolio value</strong> as a positive cash flow at the final period</li>
+        <li><strong>Solve for IRR</strong> using calculator or Excel =IRR()</li>
+      </ol>
+    </div>
+
+    <h3>Worked Example — Dividend-Paying Stock</h3>
+    <div class="card">
+      <p>Buy 1 share at t=0 for USD200. Buy 1 more at t=1 for USD225. Sell both at t=2 for USD235/share. Dividend = USD5/share/year. t=1 dividend not reinvested.</p>
+      <ul style="margin-top:8px;">
+        <li>CF₀ = −200 (buy 1 share)</li>
+        <li>CF₁ = −225 + 5 = −220 (buy 2nd share, receive dividend on 1st share)</li>
+        <li>CF₂ = +470 + 10 = +480 (sell 2 shares × $235, receive dividends on 2 shares)</li>
+      </ul>
+      <p style="margin-top:8px;">Solve: −200/(1+IRR)⁰ + (−220)/(1+IRR)¹ + 480/(1+IRR)² = 0 → <strong>MWR = 9.39%</strong></p>
+      <p style="margin-top:8px;">Individual HPRs: Year 1 = (5+225−200)/200 = <strong>15%</strong>. Year 2 = (10+470−450)/450 = <strong>6.67%</strong>. Mean HPR = 10.84%.</p>
+      <p style="margin-top:8px;">MWR (9.39%) &lt; Mean HPR (10.84%) because more money was invested in Year 2 when returns were lower (6.67%) → MWR down-weights good performance, up-weights poor performance when more is invested at that time.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Limitation of MWR — Not Comparable Across Investors</div>
+      <p>Two investors in the <strong>same fund</strong> can have <strong>different MWRs</strong> simply because they invested different amounts at different times. MWR is not suitable for comparing portfolio manager skill — it reflects the investor's cash flow decisions, not the manager's investment decisions.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: TIME-WEIGHTED RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Time-Weighted Return (TWR)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Time-Weighted Return (TWR)</div>
+      <div class="def-body">Measures the compound rate of growth of USD1 (or any single unit of currency) invested in the portfolio over a stated measurement period. NOT sensitive to the timing and amount of cash flows. The <strong>preferred performance measure for evaluating portfolio managers</strong> because cash withdrawals/additions are generally outside the manager's control.</div>
+    </div>
+
+    <h3>3-Step Process for Exact TWR</h3>
+    <div class="card">
+      <ol style="padding-left:20px; line-height:2.2;">
+        <li><strong>Price the portfolio immediately before any significant cash flow</strong> (addition or withdrawal). Break the overall evaluation period into sub-periods based on cash flow dates.</li>
+        <li><strong>Calculate the HPR for each sub-period</strong> using: HPR = (Ending value + CF out − CF in) / Beginning value</li>
+        <li><strong>Link (compound) the sub-period HPRs:</strong>
+          <ul>
+            <li>For a single year: TWR = [(1+HPR₁)(1+HPR₂)...(1+HPRₙ)] − 1</li>
+            <li>For multiple years: take the geometric mean of the annual TWRs</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">TWR Formulas</div>
+      <div class="f">
+        TWR (single year, n sub-periods):<br>
+        TWR = [(1+HPR₁)(1+HPR₂)...(1+HPRₙ)] − 1<br><br>
+        TWR (annualized over N years):<br>
+        R_TW = [(1+R₁)(1+R₂)...(1+Rₙ)]^(1/N) − 1<br><br>
+        Using our dividend stock example (HPR₁ = 15%, HPR₂ = 6.67%):<br>
+        TWR = √[(1.15)(1.0667)] − 1 = √(1.2267) − 1 = 10.76%
+      </div>
+      <div class="note">
+        TWR (10.76%) > MWR (9.39%) in this example because more money was invested in the lower-return year.<br>
+        Daily portfolio valuation is standard practice — the more frequent the valuation, the more accurate the TWR approximation.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: MWR vs TWR -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>MWR vs. TWR — The Critical Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Money-Weighted Return (MWR)</th>
+            <th>Time-Weighted Return (TWR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Also known as</td>
+            <td>Internal Rate of Return (IRR)</td>
+            <td>Geometric mean of sub-period HPRs</td>
+          </tr>
+          <tr>
+            <td>Sensitive to cash flow timing?</td>
+            <td><span class="tag tag-red">YES</span> — heavily influenced by size &amp; timing</td>
+            <td><span class="tag tag-green">NO</span> — neutralizes cash flow effects</td>
+          </tr>
+          <tr>
+            <td>What it measures</td>
+            <td>Actual return earned on actual money invested</td>
+            <td>Compound growth rate of USD1 invested throughout</td>
+          </tr>
+          <tr>
+            <td>Best used for</td>
+            <td>What <strong>the investor</strong> actually earned</td>
+            <td>Evaluating <strong>portfolio manager</strong> skill</td>
+          </tr>
+          <tr>
+            <td>Can two investors in same fund differ?</td>
+            <td><span class="tag tag-red">YES</span> — different cash flow timing → different MWR</td>
+            <td><span class="tag tag-green">NO</span> — same TWR regardless of cash flows</td>
+          </tr>
+          <tr>
+            <td>Effect of investing MORE at a bad time</td>
+            <td>MWR is depressed (hurt)</td>
+            <td>TWR is unaffected</td>
+          </tr>
+          <tr>
+            <td>Effect of investing MORE at a good time</td>
+            <td>MWR is elevated (helped)</td>
+            <td>TWR is unaffected</td>
+          </tr>
+          <tr>
+            <td>Calculation method</td>
+            <td>Solve for IRR (trial and error / Excel)</td>
+            <td>Geometric mean of linked HPRs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Exam Shortcut — MWR vs TWR Direction</div>
+      <p>If MORE money is invested <strong>before a period of POOR performance</strong> → MWR &lt; TWR.<br>
+      If MORE money is invested <strong>before a period of GOOD performance</strong> → MWR &gt; TWR.<br>
+      If cash flows are small or returns are similar → MWR ≈ TWR.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: ANNUALIZING RETURNS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Annualizing Returns</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">General Annualization Formula</div>
+      <div class="f">
+        R_annual = (1 + R_period)^c − 1<br><br>
+        where c = number of periods in one year<br><br>
+        Period conventions:<br>
+        Daily  → c = 365 (calendar) or ~250 (trading days)<br>
+        Weekly → c = 52<br>
+        Monthly → c = 12<br>
+        Quarterly → c = 4<br>
+        18-month → c = 2/3  (since 1 year = 2/3 of an 18-month period)
+      </div>
+      <div class="note">
+        PV formula with non-annual compounding: PV = FV_N × (1 + Rs/m)^(−mN)<br>
+        where m = compounding periods/year, Rs = quoted annual rate, N = years
+      </div>
+    </div>
+
+    <h3>Worked Examples</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Weekly return of 0.2%:</strong> R_annual = (1.002)⁵² − 1 = <span class="highlight">10.95%</span></li>
+        <li><strong>15-day return of 0.4%:</strong> R_annual = (1.004)^(365/15) − 1 = <span class="highlight">10.20%</span></li>
+        <li><strong>18-month return of 20%:</strong> R_annual = (1.20)^(2/3) − 1 = <span class="highlight">12.92%</span></li>
+        <li><strong>Annual → weekly:</strong> R_weekly = (1 + R_annual)^(1/52) − 1</li>
+        <li><strong>Daily → weekly (5 trading days):</strong> R_weekly = (1 + R_daily)⁵ − 1</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Limitation of Annualizing Short-Period Returns</div>
+      <p>Annualizing assumes returns can be <strong>repeated precisely</strong> every period. This is unrealistic for short-period returns. A 5% weekly return → annualized = 1,164% — clearly unrealistic. Use annualized short-term returns for comparison purposes only, with this limitation in mind.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: CONTINUOUSLY COMPOUNDED -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Continuously Compounded Returns</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Continuously Compounded Return (r)</div>
+      <div class="def-body">The natural logarithm of 1 plus the holding period return, or equivalently, the natural log of the ending price divided by the beginning price (the "price relative"). As the number of compounding periods approaches infinity, this is the limiting value. Always LESS than the associated HPR.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Continuously Compounded Return Formulas</div>
+      <div class="f">
+        One-period:    r(t,t+1) = ln(P(t+1) / Pₜ) = ln(1 + R(t,t+1))<br><br>
+        Multi-period:  r(0,T) = ln(Pₜ / P₀)<br><br>
+        Recover ending price: Pₜ = P₀ × exp(r(0,T))<br><br>
+        KEY PROPERTY — Additive over time:<br>
+        r(0,T) = r(T−1,T) + r(T−2,T−1) + ... + r(0,1)<br>
+        (Sum of continuously compounded returns = total continuously compounded return)
+      </div>
+      <div class="note">
+        Continuously compounded return is always SMALLER than HPR: ln(1.04) = 0.0392 &lt; 4%<br>
+        Using HPRs requires MULTIPLICATION of (1+R) terms. Using cc returns requires only ADDITION — a desirable mathematical property.<br>
+        Example: P₀ = USD30, P₁ = USD34.50 → cc return = ln(34.50/30) = ln(1.15) = 13.98%
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Continuous Compounding Matters</div>
+      <p>The <strong>additive property</strong> of continuously compounded returns is mathematically convenient — it means multi-period cc returns are simply the sum of single-period cc returns. This makes them useful in options pricing (Black-Scholes), risk models, and statistical analysis throughout the curriculum.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: OTHER RETURN MEASURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Other Major Return Measures</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="ret-card">
+        <div class="ret-title">Gross Return</div>
+        <p>Return on assets managed <strong>less trading expenses and commissions only</strong>. Does NOT deduct management fees, custody fees, or taxes (these vary by investor). Used to evaluate and compare <strong>investment manager skill</strong>.</p>
+      </div>
+      <div class="ret-card">
+        <div class="ret-title">Net Return</div>
+        <p>Gross return <strong>minus ALL managerial and administrative expenses</strong>. What the investor actually receives. Small funds are disadvantaged vs. large funds (fixed admin costs spread over smaller asset base → many small funds waive expenses to compete).</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="ret-card">
+        <div class="ret-title">Pre-Tax Nominal Return</div>
+        <p>The DEFAULT — all returns are pre-tax nominal unless otherwise stated. No adjustment for taxes or inflation.</p>
+      </div>
+      <div class="ret-card">
+        <div class="ret-title">After-Tax Nominal Return</div>
+        <p>Total return minus taxes on dividends, interest, and realized capital gains. Taxable investors evaluate managers on after-tax returns. Tax treatment varies: long-term capital gains often receive preferential rates; interest = ordinary income in most jurisdictions; dividends vary by country.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="ret-card">
+        <div class="ret-title">Nominal Return</div>
+        <p>Return NOT adjusted for inflation. Default return unless stated otherwise.</p>
+      </div>
+      <div class="ret-card">
+        <div class="ret-title">Real Return</div>
+        <p>Return adjusted for inflation. Useful for comparing returns <strong>across time periods</strong> (inflation varies) and <strong>across countries</strong> (different local inflation rates). Formula: (1 + nominal) = (1 + real)(1 + inflation).</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Nominal vs. Real Return — Key Formulas</div>
+      <div class="f">
+        Exact:   (1 + nominal risk-free) = (1 + real risk-free)(1 + inflation premium)<br>
+        Approx:  Nominal ≈ Real + Inflation<br><br>
+        For risky assets:<br>
+        (1 + nominal return) = (1 + real return)(1 + risk premium)<br><br>
+        Note: Real return = nominal return adjusted for inflation only<br>
+        After-tax real return = what investor truly receives after taxes AND inflation<br>
+        (Not commonly calculated by managers — depends on each investor's marginal tax rate, holding period, account type)
+      </div>
+    </div>
+
+    <h3>Leveraged Return</h3>
+    <div class="def-block">
+      <div class="def-term">Leveraged Return (RL)</div>
+      <div class="def-body">Return on the investor's own equity when borrowed funds are used to amplify the position. If portfolio return > borrowing cost → leverage increases return. If portfolio return &lt; borrowing cost → leverage decreases return. Both gains AND losses are amplified.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Leveraged Return Formula</div>
+      <div class="f">
+        RL = RP + (VB / VE) × (RP − rD)<br><br>
+        where:<br>
+        RP = total portfolio return on leveraged portfolio<br>
+        VB = borrowed funds (debt)<br>
+        VE = investor's own equity<br>
+        rD = borrowing cost (interest rate on debt)<br><br>
+        Example: EUR10M portfolio, 8% return, financed 30% debt at 5%<br>
+        → VB = EUR3M, VE = EUR7M<br>
+        → RL = 8% + (3/7)(8% − 5%) = 8% + 0.43 × 3% = 8% + 1.29% = 9.29%
+      </div>
+      <div class="note">
+        Two ways to create leverage: (1) Futures contracts — margin as little as 10% of notional, so return is up to 10× amplified.<br>
+        (2) Borrowing to invest — common in stocks, bonds, real estate.<br>
+        If RP > rD → leverage is positive (enhances return). If RP &lt; rD → leverage is negative (destroys return).
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Leverage Amplifies BOTH Gains AND Losses</div>
+      <p>Leverage does not selectively amplify gains. If the portfolio loses money and the borrowing cost must still be paid, the loss to the investor's equity can be far greater than the portfolio loss itself. Futures contracts can amplify by a factor of 10× — a 5% adverse move becomes a 50% loss on the margin posted.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>3 interpretations of interest rate:</strong> (1) Required rate of return — minimum to accept investment. (2) Discount rate — PV of future cash flows. (3) Opportunity cost — value forgone. All three are the same rate viewed differently.</li>
+        <li>✅ <strong>Interest rate decomposition:</strong> r = Real risk-free + Inflation premium + Default risk premium + Liquidity premium + Maturity premium. Mnemonic: <strong>"Real Investors Demand Liquid Margins"</strong> (RIDLM).</li>
+        <li>✅ <strong>Nominal risk-free rate (exact):</strong> (1 + nominal) = (1 + real)(1 + inflation). <strong>Approx:</strong> nominal ≈ real + inflation (underestimates slightly). Government short-term debt = nominal risk-free rate proxy for that country.</li>
+        <li>✅ <strong>Liquidity premium:</strong> T-bills have NONE (too liquid). Small issuer bonds have liquidity premiums. <strong>Maturity premium:</strong> compensates for price sensitivity of longer-maturity bonds to interest rate changes.</li>
+        <li>✅ <strong>Holding period return:</strong> R = (P₁ − P₀ + I₁) / P₀. Two components: capital gain (P₁−P₀)/P₀ + income yield I₁/P₀. Multi-period: R = [(1+R₁)(1+R₂)...(1+Rₜ)] − 1. Never multiply returns directly — always use (1+R) format.</li>
+        <li>✅ <strong>Arithmetic mean:</strong> Simple average; best for single-period forecasts; ALWAYS ≥ geometric mean; biased upward when returns mix positive and negative. Formula: R̄ = (ΣRᵢₜ) / T.</li>
+        <li>✅ <strong>Geometric mean:</strong> Compound rate of growth; best for multi-period performance; what you actually earn. Formula: R̄G = [(1+R₁)(1+R₂)...(1+Rₜ)]^(1/T) − 1. Gap vs. arithmetic mean increases with return variability.</li>
+        <li>✅ <strong>Harmonic mean:</strong> n / Σ(1/Xᵢ). For rates and ratios (P/E, cost averaging). Weights each observation inversely to its magnitude → reduces outlier impact. Only for non-negative values.</li>
+        <li>✅ <strong>Trimmed mean:</strong> Removes top and bottom X% of observations, then averages remaining. <strong>Winsorized mean:</strong> Replaces top and bottom X% with nearest non-extreme values, then averages. Both minimize outlier impact.</li>
+        <li>✅ <strong>Inequality:</strong> Harmonic ≤ Geometric ≤ Arithmetic (equal only when all observations are identical).</li>
+        <li>✅ <strong>MWR = IRR:</strong> Solve Σ[CFₜ/(1+IRR)ᵗ] = 0. Investor outflows (purchases) = negative; inflows (dividends, proceeds, ending value) = positive. Net cash flows at each time point. Use Excel =IRR(). MWR is affected by timing/size of cash flows — NOT appropriate for comparing manager skill.</li>
+        <li>✅ <strong>TWR steps:</strong> (1) Price portfolio just before each CF. (2) Calculate HPR for each sub-period. (3) Compound HPRs geometrically → link them. Preferred for evaluating portfolio managers — neutralizes cash flow effects outside manager's control.</li>
+        <li>✅ <strong>MWR vs. TWR:</strong> More money before BAD period → MWR &lt; TWR. More money before GOOD period → MWR &gt; TWR. TWR = same for all investors in same fund. MWR can differ. Daily valuation = standard approximation for TWR.</li>
+        <li>✅ <strong>Annualizing:</strong> R_annual = (1 + R_period)^c − 1, where c = periods per year. Monthly c=12, weekly c=52, daily c=365. For 18-month period: c = 2/3. Limitation: assumes return can be repeated each period — unrealistic for short periods.</li>
+        <li>✅ <strong>Non-annual compounding PV:</strong> PV = FV × (1 + Rs/m)^(−mN). Rs = quoted annual rate, m = periods/year, N = years. Periodic rate = Rs/m; total periods = mN.</li>
+        <li>✅ <strong>Continuously compounded return:</strong> r(t,t+1) = ln(P(t+1)/Pₜ) = ln(1 + HPR). Always LESS than HPR (e.g., HPR=4% → cc return = ln(1.04) = 3.92%). Key property: cc returns are ADDITIVE over time (vs. HPRs which are multiplicative). P_T = P₀ × e^(r₀,T).</li>
+        <li>✅ <strong>Gross return:</strong> Less trading costs only; for comparing manager skill. <strong>Net return:</strong> Less ALL expenses; what investor actually earns. Small funds disadvantaged vs. large funds (fixed admin costs ÷ fewer assets).</li>
+        <li>✅ <strong>Default return type:</strong> All returns are pre-tax nominal UNLESS stated otherwise.</li>
+        <li>✅ <strong>Real return:</strong> (1 + nominal) = (1 + real)(1 + inflation). Useful to compare across time periods (variable inflation) and across countries (different local inflation). After-tax real return = what investor truly earns after inflation AND taxes.</li>
+        <li>✅ <strong>Leveraged return:</strong> RL = RP + (VB/VE)(RP − rD). If RP > rD → leverage amplifies gains. If RP &lt; rD → leverage amplifies losses. Futures: margin as low as 10% → 10× amplification of gains AND losses.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        r = Real risk-free + Inflation + Default risk + Liquidity + Maturity premiums<br>
+        (1 + nominal) = (1 + real risk-free)(1 + inflation)   [exact]<br>
+        Nominal ≈ Real + Inflation   [approximate]<br><br>
+        HPR single-period:  R = (P₁ − P₀ + I₁) / P₀<br>
+        HPR multi-period:   R = [(1+R₁)(1+R₂)...(1+Rₜ)] − 1<br><br>
+        Arithmetic mean:  R̄ = (1/T) × ΣRᵢₜ<br>
+        Geometric mean:   R̄G = [(1+R₁)(1+R₂)...(1+Rₜ)]^(1/T) − 1<br>
+        Harmonic mean:    X̄H = n / Σ(1/Xᵢ)   [Xᵢ > 0]<br>
+        Inequality:  Harmonic ≤ Geometric ≤ Arithmetic<br><br>
+        MWR:  Σ[CFₜ/(1+IRR)ᵗ] = 0   (solve for IRR)<br>
+        TWR:  R_TW = [(1+R₁)(1+R₂)...(1+Rₙ)]^(1/N) − 1<br><br>
+        Annualize:  R_annual = (1 + R_period)^c − 1   [c = periods per year]<br>
+        PV non-annual:  PV = FV × (1 + Rs/m)^(−mN)<br><br>
+        Continuously compounded: r = ln(P₁/P₀) = ln(1 + R)   [additive over time]<br>
+        Ending price: P_T = P₀ × e^(r₀,T)<br><br>
+        Leveraged return: RL = RP + (VB/VE)(RP − rD)<br>
+        (1 + nominal return) = (1 + real return)(1 + risk premium)
+      </div>
+      <div class="note">
+        Use Arithmetic mean for: single-period forecasts | ratios + no compounding | symmetric distribution, no major outliers<br>
+        Use Geometric mean for: multi-period performance | reporting historical returns | compound growth rate<br>
+        Use Harmonic mean for: averaging P/E ratios | cost averaging (fixed-dollar periodic investment)<br>
+        Use Trimmed mean for: outliers present + want to EXCLUDE them<br>
+        Use Winsorized mean for: outliers present + want to INCLUDE but DAMPEN them<br><br>
+        MWR = investor's actual return (IRR). TWR = manager's performance measure (geometric HPR). Preferred for manager evaluation = TWR.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 1: Rates and Returns · Exam Prep Notes
+</footer>
+
+</body>
+</html>

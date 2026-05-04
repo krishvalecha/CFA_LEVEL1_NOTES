@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard III(B): Fair Dealing & III(C): Suitability</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'III(B/C)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:7rem;font-weight:900;color:rgba(201,168,76,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--accent);border:1px solid rgba(201,168,76,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent);border-color:var(--accent);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(201,168,76,0.3);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#ddd0a8;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#e8c97a;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#e8c97a;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .divider{border:none;border-top:2px solid var(--border);margin:56px 0;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD III · MODULE 3</div>
+  <h1>Standards <span>III(B)</span>: Fair Dealing &amp; <span>III(C)</span>: Suitability</h1>
+  <p class="subtitle">III(B) covers the obligation to treat all clients fairly — not equally — in distributing recommendations, allocating trades, and disseminating investment actions. III(C) covers the suitability determination: developing and updating the IPS, judging investments in the context of the total portfolio, handling unsolicited trades, and managing to a mandate. Both sources synthesised with all examples.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#b1">III(B) Standard</a>
+  <a class="toc-item" href="#b2">Fairly, Not Equally</a>
+  <a class="toc-item" href="#b3">Recommendations</a>
+  <a class="toc-item" href="#b4">Investment Action</a>
+  <a class="toc-item" href="#b5">III(B) Procedures</a>
+  <a class="toc-item" href="#b6">III(B) Examples</a>
+  <a class="toc-item" href="#c1">III(C) Standard</a>
+  <a class="toc-item" href="#c2">The IPS</a>
+  <a class="toc-item" href="#c3">Unsolicited Trades</a>
+  <a class="toc-item" href="#c4">III(C) Examples</a>
+  <a class="toc-item" href="#checklist">★ Checklists</a>
+</div>
+<div class="container">
+
+<!-- ═══════════ III(B) ═══════════ -->
+<div class="section" id="b1">
+  <div class="section-header"><span class="section-num">III(B)</span><h2>Standard III(B): Fair Dealing — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard III(B) — Fair Dealing</div>
+    <p>Members and Candidates must deal fairly and objectively with all clients when providing investment analysis, making investment recommendations, taking investment action, or engaging in other professional activities.</p>
+  </div>
+  <div class="card">
+    <p>III(B) covers two categories of conduct: investment recommendations and investment action. The standard applies across all client interactions — not just formal reports. The critical distinction: the standard uses "fairly" not "equally" — recognising that identical treatment in timing and content is practically impossible.</p>
+  </div>
+</div>
+
+<div class="section" id="b2">
+  <div class="section-header"><span class="section-num">B2</span><h2>"Fairly" Not "Equally" — The Core Distinction</h2></div>
+  <div class="card">
+    <p>"Fairly" = take care not to discriminate against any clients in disseminating recommendations or taking investment action. "Equally" is not required because:</p>
+    <ul>
+      <li>Members cannot reach all clients at exactly the same time through all communication channels</li>
+      <li>Each client has unique needs, investment criteria, and objectives — not all opportunities are suitable for all clients</li>
+      <li>Members may provide more personal, specialised, or in-depth service to clients who pay higher fees or have larger account balances</li>
+    </ul>
+    <p><strong>But:</strong> Different service levels must not disadvantage or negatively affect other clients. And different service levels must be disclosed to all clients and prospective clients — they should not be offered selectively. The Weng example (Example 6) illustrates: broad dissemination to all clients first, then additional personalised service to large clients who pay for it = acceptable. Reverse order = violation.</p>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — The LES Addition: Hot Issues</div>
+    <p>The LES adds important guidance on hot issues not found in the Handbook: "Members and candidates are prohibited from withholding such securities for their own benefit and must not use such securities as a reward or incentive to gain benefit." Hot issues = securities of a public offering trading at a premium in the secondary market because of great demand. Members must make bona fide public distributions. IPO allocations to personal accounts at the expense of clients are prohibited under both II(B) and III(B).</p>
+  </div>
+</div>
+
+<div class="section" id="b3">
+  <div class="section-header"><span class="section-num">B3</span><h2>Investment Recommendations</h2></div>
+  <div class="card">
+    <p>An investment recommendation = any opinion expressed relating to purchasing, selling, or holding a given security or other investment. This covers: detailed research reports, brief update reports, additions/deletions from recommended lists, and verbal communications. Any recommendation distributed to anyone outside the organisation = communication for general distribution under III(B).</p>
+    <p>Key obligation: ensure information is disseminated in such a manner that <strong>all clients have a fair opportunity to act on every recommendation.</strong></p>
+  </div>
+  <div class="warn">
+    <div class="warn-label">⚠️ Changed Recommendations: Higher Duty</div>
+    <p>The LES emphasises that the duty may be more critical when members change recommendations than when making initial ones. Material changes must be communicated to all current clients — particularly those who have acted on or are affected by the earlier advice. Clients who do not know of a recommendation change and place orders contrary to the new recommendation must be advised of the changed recommendation <em>before the order is accepted.</em></p>
+  </div>
+</div>
+
+<div class="section" id="b4">
+  <div class="section-header"><span class="section-num">B4</span><h2>Investment Action — Allocation and Trade Execution</h2></div>
+  <div class="card">
+    <p>For investment actions (portfolio management based on recommendations), key rules:</p>
+    <ul>
+      <li><strong>New offerings / secondary financings:</strong> Must distribute to all customers for whom the investment is appropriate, consistent with firm allocation policies. If oversubscribed: prorate to all suitable accounts on a round-lot basis.</li>
+      <li><strong>Oversubscribed offerings — forgo self:</strong> Members must forgo any sales to themselves or their immediate families to free up additional shares for clients. Exception: if family-member accounts are managed similarly to other client accounts, family accounts must NOT be excluded from buying shares.</li>
+      <li><strong>Pre-allocation:</strong> Trades should be allocated BEFORE execution, or as soon as practical after on a systematic basis. Allocating profitable trades to favoured accounts after seeing which ones moved favourably = III(B) violation. (Preston example)</li>
+      <li><strong>Block trades:</strong> All participating accounts get the same execution price and same commission. Partial fills allocated pro rata based on order size (subject to minimum lot sizes).</li>
+    </ul>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 LES Addition: Disclosure of Allocation Procedures</div>
+    <p>The LES includes a specific note on the Preston (Example 4) scenario: "Among other things, Preston must disclose to the client that the adviser may act as broker for, receive commissions from, and have a potential conflict of interest regarding both parties in agency cross-transactions. After the disclosure, she should obtain from the client consent authorising such transactions in advance." This cross-transaction disclosure obligation is specific to the LES version of Example 4 — adding a conflicts disclosure dimension beyond the simple fair allocation violation.</p>
+  </div>
+</div>
+
+<div class="section" id="b5">
+  <div class="section-header"><span class="section-num">B5</span><h2>Recommended Procedures — III(B)</h2></div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Recommendation Dissemination</div>
+      <ul>
+        <li>Communicate recommendations simultaneously within the firm and to customers</li>
+        <li>Limit number of people who know about a pending recommendation before dissemination</li>
+        <li>Shorten time between decision and dissemination — use "flash" reports if detailed report takes weeks</li>
+        <li>Publish guidelines for pre-dissemination behaviour</li>
+        <li>Maintain list of all clients and their holdings to facilitate change notifications</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Trade Allocation</div>
+      <ul>
+        <li>Document and time-stamp all orders</li>
+        <li>Process orders on a first-in, first-out basis</li>
+        <li>Give all block trade participants same execution price and commission</li>
+        <li>Partial fills: pro rata based on order size (subject to minimum lot sizes)</li>
+        <li>New issues: advance indications of interest; allocate by client (not portfolio manager)</li>
+        <li>Disclose trade allocation procedures to all clients and prospective clients</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Ongoing Compliance</div>
+      <ul>
+        <li>Systematic account review to detect preferential treatment</li>
+        <li>Document reasons for placing in one account while selling from another</li>
+        <li>Disclose levels of service to all clients (cannot offer selectively)</li>
+        <li>When announcing a new recommendation, send to all branch offices simultaneously; impose employee trading restrictions until distribution complete</li>
+        <li>Disclose inequitable allocation methods — but disclosure does NOT cure an unfair method</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="b6">
+  <div class="section-header"><span class="section-num">B6</span><h2>III(B) Worked Examples — All 10</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-title">Ames — Luncheon Recommendation One Week Before General Distribution</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Ames schedules a luncheon with his best clients while the research report is being reviewed for factual accuracy. He mentions the purchase recommendation at the luncheon — one week before it will be sent to all the firm's clients.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> Disseminating the purchase recommendation to select clients a week before all clients receive it = unfair selective disclosure. Even though the report isn't finalised, orally communicating the conclusion to some clients gives them an unfair advantage.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Recommendations must be disseminated simultaneously (or as close to simultaneously as practical) to all clients. Pre-dissemination communication of conclusions to select clients — even verbally, even informally — violates III(B). The form of communication (lunch conversation vs. written report) doesn't change the analysis.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-title">Jackson — Commingled Fund Gets Priority in All Transactions</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Jackson first purchases new recommended securities for the commingled account, then pro-rata for other pension accounts. Sales: commingled sold first. Hot issues placed only in the commingled account when insufficient to go around. Non-discretionary accounts and personal trusts have even lower priority. The LES version adds: disclosure of this policy would not change the unfairness.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> The systematic priority given to the commingled account over all other accounts is inherently unfair. Must execute orders on a systematic basis that treats all clients fairly.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES adds)</div>Disclosure of an unfair allocation procedure does NOT cure the unfairness — a member's duty of fairness and loyalty can never be overridden by client consent to patently unfair allocation procedures. The LES version makes this explicit: "Of course, in this case, disclosure of the bank's policy would not change the fact that the policy is unfair."</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-title">Morris — Takes Own Allocation and Reduces Client Shares in Hot IPO</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Morris has personal options in PickleDilly (a hot IPO he helped bring public). When institutional buyers oversubscribe, he fills all orders including his own and decreases the institutional blocks.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> Must not take any shares himself and must prorate the distribution among all clients. Must also disclose the options to firm and clients per VI(A).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>In oversubscribed offerings: members must forgo personal allocations to free up shares for clients. Morris's self-allocation at the expense of client allocations = priority violation. The undisclosed options = separate VI(A) conflict violation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-title">Preston — Post-Execution Cherry-Picking of Profitable MBS Trades</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Preston buys MBS for several accounts including Colby (her at-risk client). She fails to allocate trades immediately. A few days later, she allocates profitable MBS trades to Colby and distributes the loss-making ones among other accounts.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> Must allocate trades before executing, or use a systematic approach (e.g., pro-rata) as soon as practical after execution. Post-trade cherry-picking of profitable trades for a favoured client = the paradigmatic fair dealing violation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The allocation decision must be made BEFORE the market moves reveal which trades are profitable. Waiting to see outcomes and then allocating = manipulation of the allocation process to favour a client at the expense of others.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-title">Roberts — Different Research Conclusions for Large vs. Small Clients</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Roberts repeats the official SIWM earnings estimate (US$1.16) in his research report to all clients, but privately tells large clients his view of a significant upside surprise — making SIWM a good buy.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> By sharing his actual investment opinion (potential upside) only with large clients while giving all clients the company's lower official number, Roberts failed to treat all clients fairly. All clients should receive the same investment recommendation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The distinction between official company guidance and the analyst's own investment opinion is important — but the analyst's actual recommendation must be the same for all clients. Roberts cannot share his true view with some clients while withholding it from others. The fact that the favoured clients are larger doesn't make selective disclosure acceptable.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6</div><div class="ex-title">Weng — Broad Email First, Then Personal Calls = Acceptable</div><div class="ex-tag"><span class="tag tag-green">NO VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Weng emails a new recommendation to all clients first. He then calls his three largest institutional clients to discuss it in detail, compensated for the personal outreach.</div>
+      <div class="ex-verdict"><strong>No violation.</strong> The recommendation reached all clients simultaneously before the personalised follow-up with larger clients. The differentiated service (personal call) is acceptable because: (a) it came AFTER general dissemination, and (b) it is compensated by higher fees. If Weng had called large clients first, he would have violated III(B).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Order matters critically. Broad distribution first → personalised follow-up with select clients = acceptable differentiation. Personalised access first → general distribution = violation. Fee-paying differentiation in service level is permitted as long as: (1) it is disclosed, and (2) it doesn't disadvantage other clients.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7</div><div class="ex-title">Hampton — Pro-Rata Allocation with Minimum Lot Constraint</div><div class="ex-tag"><span class="tag tag-green">NO VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">5 clients want bonds; issue is oversubscribed; Hampton receives only US$55,000. She allocates US$5,000 to each of the three smaller-request clients and US$20,000 each to the two larger-request clients — not perfectly pro-rata but respecting the US$5,000 minimum lot.</div>
+      <div class="ex-verdict"><strong>No violation.</strong> Allocation is not perfectly pro-rata due to the minimum lot requirement, but Hampton ensured each client received at least the minimum and that filled allocations were close in percentage to the requested amounts. This approach allows efficient future liquidation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Pro-rata is the standard, but minimum lot sizes (which affect future liquidity) are a legitimate reason for deviation. The key is that the allocation is systematic, not based on favouritism, and each client receives a fair share subject to the minimum lot constraint.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 8</div><div class="ex-title">Chan — Trading More in Other Accounts to Minimise Father's Pension Costs</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Chan manages pension accounts including his father's employer's plan. To minimise brokerage costs for his father's plan, he intentionally trades more frequently in other accounts — generating commissions that fund research used by all pension plans.</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> Chan is disadvantaging other clients to benefit a preferred client (his father's employer's plan). All clients benefit from the research and should incur their fair share of costs. Excessive trading in some accounts to subsidise another account's costs = discrimination.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Fair dealing applies across accounts. Cannot shift costs from one client to another — even if the benefiting "client" is a pension plan in which the member has a personal family connection. Trading should occur only as required by the strategy — not to cross-subsidise commission costs.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 9</div><div class="ex-title">Burdette — Social Media Recommendation Before General Distribution</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Burdette, excited about her first research report, posts a summary "buy" recommendation for Sun Drive Auto on FIM's LinkedIn page before the formal report is distributed to all clients. The LinkedIn page only reaches a subset of clients (followers).</div>
+      <div class="ex-verdict"><strong>Violation of III(B).</strong> Sending an investment recommendation to a select group of LinkedIn followers prior to distributing it to all clients = selective disclosure. The LES version adds: Graf (her supervisor) also violated IV(C) Responsibilities of Supervisors by failing to establish social media policies.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Social media platforms reach only the subset of clients who follow them. Posting a recommendation to a social media platform before formally distributing to all clients = pre-dissemination to a select group. Channel (social media vs. email vs. phone) doesn't change the fairness obligation — must reach all clients at approximately the same time.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 10</div><div class="ex-title">Rove — Performance Reports to Detect Unfair Treatment</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT / GOOD PRACTICE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Rove (performance analyst) proposes two reports: (1) securities owned across similar client accounts and their portfolio percentages, (2) monthly performance comparison of similar-strategy portfolios. Outliers submitted to the CIO for review.</div>
+      <div class="ex-verdict"><strong>Appropriate.</strong> These reports comply with III(B) and help the firm conduct after-the-fact reviews of how effectively advisers deal with clients' portfolios. Performance analysis reports that monitor fair treatment = important oversight tool.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Systematic monitoring of client treatment is consistent with III(B). Even members with no direct client contact (like performance analysts) can contribute to the firm's fair dealing compliance through monitoring and reporting tools. Regular account review is a required compliance practice.</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ III(C) ═══════════ -->
+<div class="section" id="c1">
+  <div class="section-header"><span class="section-num">III(C)</span><h2>Standard III(C): Suitability — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard III(C) — Suitability</div>
+    <p>1. When Members and Candidates are in an advisory relationship with a client, they must: (a) Make a reasonable inquiry into a client's or prospective client's investment experience, risk and return objectives, and financial constraints prior to making any investment recommendation or taking investment action and must reassess and update this information regularly. (b) Determine that an investment is suitable to the client's financial situation and consistent with the client's written objectives, mandates, and constraints before making an investment recommendation or taking investment action. (c) Judge the suitability of investments in the context of the client's total portfolio. 2. When Members and Candidates are responsible for managing a portfolio to a specific mandate, strategy, or style, they must make only investment recommendations or take only investment actions that are consistent with the stated objectives and constraints of the portfolio.</p>
+  </div>
+  <div class="card">
+    <p>III(C) has two parts applying to different roles: (1) advisory relationship — requires inquiry, suitability determination, and total portfolio context; (2) mandate management — requires consistency with the stated mandate (no individual client suitability obligation applies to mandate managers for the fund as a whole).</p>
+  </div>
+</div>
+
+<div class="section" id="c2">
+  <div class="section-header"><span class="section-num">C2</span><h2>The Investment Policy Statement — Development and Updates</h2></div>
+  <div class="card">
+    <p>The IPS is the foundational document for advisory relationships. Must be established at the inception of the relationship and include:</p>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">IPS Required Elements</div>
+      <ul>
+        <li><strong>Client identification:</strong> type of client, existence of separate beneficiaries, portion of total assets managed</li>
+        <li><strong>Return objectives:</strong> income, growth in principal, maintenance of purchasing power</li>
+        <li><strong>Risk tolerance:</strong> suitability, stability of values</li>
+        <li><strong>Constraints:</strong> liquidity needs, expected cash flows, investable funds, time horizon, tax considerations, regulatory and legal circumstances</li>
+        <li><strong>Unique needs:</strong> ESG factors, prohibited securities, religious or ethical constraints</li>
+        <li><strong>Proxy voting responsibilities</strong></li>
+        <li><strong>Performance measurement benchmarks</strong></li>
+        <li>Roles and responsibilities of parties; review schedules</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">IPS Update Requirements</div>
+      <ul>
+        <li>Review at least annually</li>
+        <li>Review prior to material changes to specific investment recommendations or decisions</li>
+        <li>Triggers for individual clients: changes in dependents, tax status, health, liquidity needs, risk tolerance, wealth level, income changes</li>
+        <li>Triggers for institutional clients: unfunded pension liabilities, withdrawal privilege changes, distribution requirement changes</li>
+        <li>ESG preferences may evolve — update accordingly</li>
+        <li>Client should disclose complete financial portfolio (including portions not managed by the member) for effective suitability analysis</li>
+        <li>If client withholds information: suitability analysis is limited to what was provided</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Total Portfolio Context</div>
+    <p>Standard III(C)(1)(c) requires judging suitability in the context of the <em>client's total portfolio</em>, not individual investments. The McDowell example (Example 2) illustrates: covered call options for a risk-averse client — assessed properly by evaluating how the options fit into and affect the overall portfolio (income enhancement + partial downside protection), not just the inherent characteristics of options as instruments. An investment that appears risky in isolation may be suitable in the context of a well-diversified portfolio. Conversely, a "safe" investment may be unsuitable if the client's portfolio is already highly concentrated in the same risk. The member may be responsible for only a portion of the client's total portfolio — suitability is assessed based on the information provided.</p>
+  </div>
+
+  <h3>Diversification</h3>
+  <div class="card">
+    <p>Combining several different investments generally provides more acceptable risk exposure than concentration in a single investment. The unique risks of individual securities may be partially or entirely neutralised in a portfolio context. Members should diversify unless:</p>
+    <ul>
+      <li>Diversification is not consistent with plan guidelines, or</li>
+      <li>Diversification is contrary to the account objectives (e.g., concentrated stock strategy)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="c3">
+  <div class="section-header"><span class="section-num">C3</span><h2>Unsolicited Trading Requests and Managing to a Mandate</h2></div>
+  <h3>Unsolicited Requests</h3>
+  <div class="card">
+    <ul>
+      <li>If unsolicited trade request is unsuitable: refrain from making the trade until discussing concerns with the client</li>
+      <li>Focus the discussion on educating the investor on how the request deviates from the current IPS</li>
+      <li>Require the client to acknowledge the discussion — including that the trade is against the member's advice because it is unsuitable</li>
+      <li>If the request will have a material impact on the portfolio: use the opportunity to update the IPS</li>
+      <li>If the client insists and declines to update the IPS: evaluate whether to continue the advisory arrangement</li>
+      <li>LES adds: some firms allow the unsuitable trade in a new unmanaged account — evaluate available options based on the firm's policies</li>
+    </ul>
+  </div>
+
+  <h3>Managing to a Mandate</h3>
+  <div class="card">
+    <p>Fund managers managing to a specific mandate, index, or style have a different obligation than advisory managers. Their duty: invest in a manner consistent with the stated mandate. <strong>They are NOT responsible for determining the suitability of the fund as an investment for individual investors who purchase shares.</strong> That responsibility rests with the advisory managers who have a direct relationship with those investors.</p>
+    <p>Example: a large-cap income fund manager cannot invest heavily in small-cap speculative companies — regardless of the manager's view on their prospects. The mandate constrains.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 LES Addition: Shrub / Conduit Example</div>
+    <p>The LES adds the Shrub/Conduit example (Example 8 LES): Shrub creates a fund of funds product and accepts all investors without assessing suitability — reasoning that the underlying funds are strong performers. Violation of III(C) — as an investment adviser, Shrub must establish an IPS for each client and recommend only investments that match each client's risk and return profile. He cannot simply act as a "sales agent" for an investment product regardless of its historical performance. The LES also notes: "Shrub is required to act as more than a simple sales agent for Elite."</p>
+  </div>
+</div>
+
+<div class="section" id="c4">
+  <div class="section-header"><span class="section-num">C4</span><h2>III(C) Worked Examples — All (Including LES-Only)</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-title">Smith — Applying One Client's Strategy to a Different Client</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Smith has Robertson (60, large assets, high risk tolerance, aggressive investor) and Lanai (40, education savings goal, low volatility preferred). Smith recommends 20% in zero-yield small-cap high-tech to both.</div>
+      <div class="ex-verdict"><strong>Violation for Lanai.</strong> The investment may be appropriate for Robertson (circumstances and objectives support aggressive allocation) but is unsuitable for Lanai (low-volatility objective for children's education). Smith applied one client's strategy to a materially different client without considering their different circumstances and objectives.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Suitability is client-specific. Even if an investment is appropriate for one client, it cannot be mechanically applied to another client with different financial circumstances and objectives without a separate suitability analysis.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-title">Evans/Jones — Inheritance Changes IPS Requirements</div><div class="ex-tag"><span class="tag tag-yellow">ACTION REQUIRED</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Jones's wealthy uncle dies, leaving him an inheritance that increases his net worth fourfold to US$1 million. Evans (Jones's portfolio manager) learns of the change.</div>
+      <div class="ex-verdict"><strong>Evans must review and update Jones's IPS.</strong> The fourfold increase in net worth has significantly increased Jones's ability (and possibly willingness) to assume risk and likely reduced his required income yield. The LES version adds specific recommendations: consider a higher equity ratio and bias toward low-yield, growth-oriented issues — reflecting how the IPS update translates into portfolio changes.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Material changes in client circumstances require IPS updates. Any significant life event (inheritance, divorce, job change, health change, new dependents) must be assessed for its impact on investment objectives and constraints. The IPS is not a one-time document.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-title">Perkowski — Zero-Dividend Stock in a High-Income Fund</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Perkowski manages a high-income mutual fund. He buys zero-dividend stock in a financial services company because he believes it is undervalued and in a growth industry.</div>
+      <div class="ex-verdict"><strong>Violation of III(C).</strong> A zero-dividend stock does not fit the mandate of a high-income fund. Unless the investment fits within the mandate or is in the realm of explicitly allowable investments disclosed by the fund, this violates the obligation to manage consistently with the stated mandate.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Mandate management = invest consistently with the stated mandate. The manager's personal view that an investment is attractive doesn't override the mandate constraints. A high-income fund's investors selected it specifically for income generation — the manager cannot reinterpret this to buy growth stocks they personally favour.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-title">Gubler — Private Equity with Lockup in a Liquidity-Required Portfolio</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Gubler's IPS requires highly liquid investments (large-cap equities, AA-rated bonds, max 5-year maturity). He invests 4% in a private equity seed fund with a 3-year minimum lockup and laddered exit — believing this optimises returns on the equity allocation while keeping total equity exposure below its upper limit.</div>
+      <div class="ex-verdict"><strong>Violation of III(C)</strong> (and III(A) per the LES). The investment locks up assets for 3-5+ years, violating the liquidity requirement. Even if the portfolio's total equity exposure is within limits, the asset class (illiquid private equity) is outside the permitted asset classes in the IPS.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES adds III(A))</div>The LES identifies this as BOTH a III(C) and III(A) violation — the latter because "the manager must also make every effort to understand the client's business and circumstances" beyond just the literal IPS text. Understanding the insurance subsidiary's need for actual liquidity (to meet claims) goes beyond reading the IPS.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6 (LES-Only)</div><div class="ex-title">Ostrowski — Selecting a Subadviser Based Solely on Fees</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Ostrowski's business grows and clients want international diversification. He searches for a subadviser, reviews 7 questionnaires in detail, and selects the firm with the lowest fees — reasoning this minimises the impact on his firm's bottom line.</div>
+      <div class="ex-verdict"><strong>Potential violation of III(C)</strong> (and V(A) per the LES). When selecting an external manager, must ensure the manager's services are appropriate for clients — including comparing the risk profile of clients with the investment strategy of the manager. Selecting based on fees alone without suitability assessment = potential violation. Also: when clients request international diversification, this is an appropriate time to review and update their IPSs to determine if international investments are consistent with their risk profiles.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>Subadviser selection is a suitability decision. The same rigor applied to individual investment suitability must be applied to manager selection — the manager's style and risk profile must match the client's objectives. Fee minimisation as the sole criterion fails this test.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7</div><div class="ex-title">Snead — Changing Strategy to Earn Short-Term Compensation Bonus</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Snead manages public retirement funds with long-term objectives. Her firm introduces a quarterly performance-based bonus. She purchases high-beta stocks — contrary to the clients' long-term IPSs — to improve short-term performance metrics and earn the bonus.</div>
+      <div class="ex-verdict"><strong>Violation of III(C)</strong> (and VI(A) per the LES). The high-risk investments are contrary to the long-term risk profile in the clients' IPSs. The change was motivated by the new compensation arrangement, not by changes in clients' circumstances or objectives.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>A member's compensation structure does not change the obligation to manage in accordance with the client's IPS. When the firm's incentive structure conflicts with clients' best interests, this must be disclosed (VI(A)) — and the conflict cannot be resolved by violating the IPS. The LES cross-references VI(A) Disclosure of Conflicts.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7 (Handbook) / Example 8 (LES)</div><div class="ex-title">Van Cleef + Shrub — ESG Constraint and Fund-of-Funds Suitability</div><div class="ex-tag"><span class="tag tag-red">BOTH VIOLATIONS</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Van Cleef:</strong> MPG pension fund updates IPS with ESG framework restricting tobacco investments. Van Cleef (external manager) buys tobacco stock anyway — arguing attractive risk/return profile. <strong>Shrub:</strong> creates a fund-of-funds product and accepts all clients without conducting suitability analysis — reasoning the underlying funds have great performance records.</div>
+      <div class="ex-verdict"><strong>Van Cleef:</strong> Violation — failed to follow the updated IPS constraints. Return expectations don't override explicitly stated ESG restrictions. DeVries (trustee) must ensure Van Cleef sells the inappropriate tobacco securities. <strong>Shrub:</strong> Violation — must establish an IPS for each client and recommend only investments matching each client's risk profile. Not every client is suitable for a hedge fund-of-funds product regardless of past performance.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div><strong>Van Cleef:</strong> ESG constraints in the IPS are binding — cannot be overridden by return expectations alone. <strong>Shrub:</strong> "Past performance is attractive" is not a substitute for a suitability analysis. Every client needs an IPS and a client-specific suitability determination before making recommendations.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMBINED CHECKLIST ═══════════ -->
+<div class="section" id="checklist">
+  <div class="section-header"><span class="section-num">★</span><h2>Combined Exam Checklists — III(B) and III(C)</h2></div>
+  <div class="card" style="border-color:rgba(201,168,76,0.3);">
+    <h3 style="margin-top:0;">Standard III(B): Fair Dealing</h3>
+    <ul class="checklist">
+      <li>✅ <strong>"Fairly" not "equally"</strong> — simultaneous identical treatment is not required or possible. The obligation is non-discrimination and no adverse impact on other clients.</li>
+      <li>✅ <strong>Recommendation dissemination:</strong> All clients must have a fair opportunity to act on every recommendation. Pre-dissemination communication to select clients = violation regardless of form (verbal, social media, email).</li>
+      <li>✅ <strong>Changed recommendations:</strong> Must reach all current clients — especially those who have acted on the earlier recommendation. Advise clients of a change before accepting orders contrary to the new recommendation.</li>
+      <li>✅ <strong>Oversubscribed offerings:</strong> Prorate to all suitable accounts on a round-lot basis. Member must forgo personal allocation. Family accounts managed like other accounts must NOT be excluded.</li>
+      <li>✅ <strong>Trade allocation:</strong> Must be done before execution (or as soon as practical after on a systematic basis). Post-execution cherry-picking = violation. (Preston)</li>
+      <li>✅ <strong>Block trades:</strong> All participants receive same price and commission. Partial fills allocated pro-rata subject to minimum lot sizes.</li>
+      <li>✅ <strong>Different levels of service:</strong> Acceptable if disclosed, available to everyone, and don't disadvantage other clients. (Weng: email all clients first, then personal calls to large clients = acceptable)</li>
+      <li>✅ <strong>Social media:</strong> Reaches only followers — posting a recommendation there before general dissemination = selective disclosure = violation. (Burdette)</li>
+      <li>✅ <strong>Disclosure doesn't cure unfair procedures.</strong> Client consent to patently unfair allocation procedures does not override the fairness obligation. (Jackson)</li>
+      <li>✅ <strong>Hot issues:</strong> Must make bona fide public distributions. Cannot withhold for personal benefit or use as reward/incentive.</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard III(C): Suitability</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Advisory relationship obligation:</strong> Inquiry into client experience, risk/return objectives, and financial constraints — before making any recommendation or taking action. Reassess and update regularly.</li>
+      <li>✅ <strong>IPS:</strong> Must be written; must include return objectives, risk tolerance, all constraints (liquidity, time horizon, tax, legal, unique circumstances, ESG). Review at least annually.</li>
+      <li>✅ <strong>Total portfolio context:</strong> Suitability determined for the total portfolio, not individual securities in isolation. An inherently risky security may be suitable in a well-diversified portfolio.</li>
+      <li>✅ <strong>IPS updates:</strong> Material changes in client circumstances require IPS review and update — inheritances, health changes, job changes, new dependents, ESG preference changes. (Jones/Evans)</li>
+      <li>✅ <strong>Clients who withhold information:</strong> Suitability analysis is limited to the information provided — members cannot be expected to assess what they don't know.</li>
+      <li>✅ <strong>Unsolicited unsuitable requests:</strong> Don't execute; discuss; educate the client on the deviation from the IPS; require client to acknowledge. If material impact: update the IPS. If client insists without IPS update: evaluate whether to continue the advisory relationship.</li>
+      <li>✅ <strong>Managing to a mandate:</strong> Must invest consistently with the stated mandate. Not responsible for suitability of the fund as an investment for individual investors (that's the advisory manager's job).</li>
+      <li>✅ <strong>Compensation conflicts:</strong> A firm's new bonus structure doesn't permit changing client strategies to earn the bonus. IPS controls — disclose the conflict. (Snead)</li>
+      <li>✅ <strong>ESG constraints are binding.</strong> Cannot be overridden by return expectations. (Van Cleef)</li>
+      <li>✅ <strong>Subadviser selection:</strong> Must assess suitability of the subadviser's strategy for the client's profile — fee alone is insufficient basis. (Ostrowski)</li>
+      <li>✅ <strong>"Past performance" doesn't substitute for suitability analysis.</strong> Every client needs an IPS and individual suitability determination. (Shrub)</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ III(B) + III(C) QUICK REFERENCE</div>
+    <div class="f">
+      ══ III(B): FAIR DEALING ══<br>
+      FAIRLY ≠ EQUALLY:     Non-discrimination + no adverse impact; simultaneous distribution not required<br>
+      RECOMMENDATIONS:      All clients fair opportunity to act; changed recs → all current clients immediately<br>
+      ALLOCATION ORDER:     BEFORE execution (or systematic immediately after); no post-execution cherry-picking<br>
+      OVERSUBSCRIBED:       Pro-rata to suitable accounts; forgo personal; family accounts same as others<br>
+      BLOCK TRADES:         Same price + commission for all participants; partial fills pro-rata<br>
+      PREMIUM SERVICE:      Acceptable if disclosed + not selectively offered + doesn't disadvantage others<br>
+      SOCIAL MEDIA:         Reaches subset only → same as selective pre-dissemination if used first<br>
+      DISCLOSURE:           Does NOT cure unfair procedures<br><br>
+      ══ III(C): SUITABILITY ══<br>
+      IPS:                  Written; return + risk + ALL constraints; review annually + at material changes<br>
+      TOTAL PORTFOLIO:      Suitability in context of entire portfolio, not individual securities<br>
+      UNSOLICITED:          Don't execute; educate; client acknowledges; update IPS if material; evaluate relationship if insists<br>
+      MANDATE:              Invest per mandate; NOT responsible for individual investor suitability<br>
+      ESG:                  IPS constraints are binding — return expectations cannot override<br>
+      COMPENSATION CONFLICT: Doesn't change IPS obligations; disclose the conflict<br>
+      SUBADVISER:           Must assess strategy fit with client profile; fees alone insufficient
+    </div>
+    <div class="note">
+      <strong>Top III(B) exam traps:</strong><br>
+      (1) "He distributed to all clients eventually, so no violation" — the violation is in the pre-dissemination communication to select clients, not the eventual distribution<br>
+      (2) "He disclosed the unfair allocation policy to clients" — disclosure doesn't cure an unfair procedure<br>
+      (3) "Weng called large clients first, then sent email to all" — reverse order would be a violation; broad distribution must come first<br><br>
+      <strong>Top III(C) exam traps:</strong><br>
+      (1) "The investment has great return potential, so it's suitable" — return potential alone doesn't determine suitability; must assess risk profile, total portfolio, constraints<br>
+      (2) "Van Cleef chose tobacco for its attractive risk/return profile" — ESG constraints in the IPS override return considerations<br>
+      (3) "Snead bought high-beta stocks appropriate for the client's long-term needs" — no IPS change was made; the change was driven by compensation, not by changes in client circumstances
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standards III(B): Fair Dealing &amp; III(C): Suitability · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

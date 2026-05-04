@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 4: Probability Trees & Conditional Expectations</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --bayes-bg: #121a14; --bayes-border: #4cc98a;
+    --ev-bg: #111620; --ev-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .bayes-box { background: var(--bayes-bg); border-left: 3px solid var(--bayes-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .bayes-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .bayes-box .f { color: #a8f0c8; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .bayes-box .note { color: #7ecfa4; font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; padding: 0; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; gap: 0; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,201,138,0.1); color: var(--accent3); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent3); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent3); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  /* Tree visualization */
+  .tree-wrap { background: #111620; border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2.0; color: var(--text); overflow-x: auto; }
+  .tree-node { color: var(--accent2); font-weight: 700; }
+  .tree-prob { color: var(--accent); }
+  .tree-outcome { color: var(--accent3); }
+  .tree-joint { color: #f57ca4; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 4</div>
+  <h1>Probability Trees &amp; <span>Conditional Expectations</span></h1>
+  <p>Exam-ready notes: expected value and variance of a random variable, probability trees, conditional expected values and the total probability rule, and Bayes' formula for updating probabilities with new information — with fully worked investment examples and step-by-step problem-solving frameworks.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Key Definitions</a>
+  <a class="toc-item" href="#s2">02 · Expected Value</a>
+  <a class="toc-item" href="#s3">03 · Variance &amp; Std Dev</a>
+  <a class="toc-item" href="#s4">04 · Conditional Probability</a>
+  <a class="toc-item" href="#s5">05 · Probability Trees</a>
+  <a class="toc-item" href="#s6">06 · Total Probability Rule</a>
+  <a class="toc-item" href="#s7">07 · Bayes' Formula</a>
+  <a class="toc-item" href="#s8">08 · Worked Examples</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: KEY DEFINITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Key Definitions — At a Glance</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Random Variable (X)</div>
+      <div class="def-body">A quantity whose outcome is uncertain. Takes one of several possible values, each with an associated probability. Examples: stock return, EPS, portfolio value.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Expected Value — E(X)</div>
+      <div class="def-body">The <strong>probability-weighted average</strong> of all possible outcomes of a random variable. Our best forecast of the variable's future value. Looks forward (forecast) or to the population mean — NOT the same as the historical/sample mean.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Variance — σ²(X)</div>
+      <div class="def-body">The probability-weighted average of <strong>squared deviations</strong> from the expected value. Measures dispersion of outcomes around E(X). Always ≥ 0. Units: squared units of X (e.g., percent²).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Standard Deviation — σ(X)</div>
+      <div class="def-body">The <strong>positive square root of variance</strong>. Measures dispersion in the SAME units as X. Preferred over variance for interpretation (e.g., if X is return in %, σ is also in %).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Conditional Probability — P(A | B)</div>
+      <div class="def-body">The probability of event A <strong>given that event B has occurred</strong>. Formula: P(A | B) = P(AB) / P(B), where P(B) ≠ 0. The "|" symbol means "given that."</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Conditional Expected Value — E(X | S)</div>
+      <div class="def-body">The expected value of X given a specific scenario or event S. Updates the expected value to reflect the occurrence of S.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Mutually Exclusive &amp; Exhaustive Events</div>
+      <div class="def-body"><strong>Mutually exclusive:</strong> only one event can occur at a time. <strong>Exhaustive:</strong> together they cover ALL possible outcomes (probabilities sum to 1). Required for applying the total probability rule and Bayes' formula.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Prior Probability vs. Posterior Probability</div>
+      <div class="def-body"><strong>Prior probability:</strong> initial probability before receiving new information. <strong>Posterior probability:</strong> updated probability AFTER incorporating new information (output of Bayes' formula).</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Expected Value vs. Sample Mean</div>
+      <p><strong>Expected value E(X):</strong> probability-weighted; forward-looking forecast; uses population probabilities.<br>
+      <strong>Sample mean:</strong> equally-weighted average of past observations; backward-looking; historical.<br>
+      These are <strong>fundamentally different concepts.</strong> Do not confuse them on the exam.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: EXPECTED VALUE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Expected Value — E(X)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Expected Value Formula</div>
+      <div class="f">
+        E(X) = P(X₁)·X₁ + P(X₂)·X₂ + ... + P(Xₙ)·Xₙ<br><br>
+        E(X) = Σ P(Xᵢ) · Xᵢ&nbsp;&nbsp;(summed from i = 1 to n)
+      </div>
+      <div class="note">
+        Where Xᵢ = each possible outcome | P(Xᵢ) = probability of that outcome<br>
+        All probabilities must sum to 1: Σ P(Xᵢ) = 1<br>
+        <strong>Units:</strong> Same units as X (e.g., if X is stock return in %, E(X) is in %)
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — Expected Stock Return</div>
+      <p>A stock has three possible annual returns depending on economic conditions:</p>
+      <div class="calc">
+        Scenario       Probability   Return<br>
+        ─────────────────────────────────<br>
+        Strong growth    P = 0.30     R = 20%<br>
+        Moderate growth  P = 0.50     R = 10%<br>
+        Recession        P = 0.20     R = -5%<br>
+        ─────────────────────────────────<br>
+        Sum of P = 1.00  ✓ (must verify this first)<br><br>
+        E(R) = 0.30(20%) + 0.50(10%) + 0.20(-5%)<br>
+             = 6.0% + 5.0% + (-1.0%)<br>
+             = 10.0%
+      </div>
+      <div class="result">→ Expected return = 10.0%</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Investment Application of E(X)</div>
+      <p>Expected value is used to: estimate future stock/portfolio returns, forecast EPS and other financial variables, compare investment alternatives on a risk-adjusted basis, and set price targets. It is a <em>probability-weighted forecast</em> — not a guarantee. Individual outcomes will differ from E(X); hence we also measure risk via variance.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: VARIANCE & STANDARD DEVIATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Variance &amp; Standard Deviation</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Variance Formula</div>
+      <div class="f">
+        σ²(X) = E[X − E(X)]²<br><br>
+        σ²(X) = P(X₁)·[X₁ − E(X)]² + P(X₂)·[X₂ − E(X)]² + ... + P(Xₙ)·[Xₙ − E(X)]²<br><br>
+        σ²(X) = Σ P(Xᵢ) · [Xᵢ − E(X)]²&nbsp;&nbsp;(summed from i = 1 to n)
+      </div>
+      <div class="note">
+        Notations: σ²(X) and Var(X) are interchangeable.<br>
+        Units: squared units of X (e.g., percent² if X is a return)<br>
+        Always σ²(X) ≥ 0. If σ² = 0 → no risk, outcome is certain.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Standard Deviation Formula</div>
+      <div class="f">
+        σ(X) = √σ²(X) = √Var(X)
+      </div>
+      <div class="note">
+        Standard deviation is always the POSITIVE square root of variance.<br>
+        Units: same as X — so it IS directly comparable to the outcomes and E(X).<br>
+        This is why σ is preferred over σ² for interpretation and communication.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — Variance &amp; Std Dev (continuing prior example)</div>
+      <p>Using the same stock: E(R) = 10.0%</p>
+      <div class="calc">
+        Scenario       P      R      [R − E(R)]    [R − E(R)]²    P × [R−E(R)]²<br>
+        ──────────────────────────────────────────────────────────────────────<br>
+        Strong growth  0.30   20%    20−10 = 10%   100%²          0.30 × 100 = 30.0<br>
+        Moderate       0.50   10%    10−10 =  0%     0%²          0.50 ×   0 =  0.0<br>
+        Recession      0.20   -5%   -5−10 = -15%   225%²          0.20 × 225 = 45.0<br>
+        ──────────────────────────────────────────────────────────────────────<br>
+        σ²(R) = 30.0 + 0.0 + 45.0 = 75.0 (%²)<br><br>
+        σ(R)  = √75.0 = 8.66%
+      </div>
+      <div class="result">→ Variance = 75 (%²) | Standard Deviation = 8.66%</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Variance — Key Properties</div>
+        <ul>
+          <li>Always ≥ 0 (sum of squared terms)</li>
+          <li>= 0 means no risk; outcome is certain</li>
+          <li>Greater variance = greater dispersion = more risk</li>
+          <li>Units are SQUARED units of X (not directly comparable to X)</li>
+          <li>σ²(X) and Var(X) are the same thing</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Standard Deviation — Key Properties</div>
+        <ul>
+          <li>Always the POSITIVE square root of variance</li>
+          <li>Same units as X → directly interpretable</li>
+          <li>Also called "volatility" in finance</li>
+          <li>Preferred measure for communicating risk</li>
+          <li>Has conditional version: conditional std dev given scenario S</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Calculation Shortcut — Step-by-Step Order</div>
+      <p><strong>Step 1:</strong> Calculate E(X) = Σ P(Xᵢ)·Xᵢ<br>
+      <strong>Step 2:</strong> For each outcome, compute the deviation: [Xᵢ − E(X)]<br>
+      <strong>Step 3:</strong> Square each deviation: [Xᵢ − E(X)]²<br>
+      <strong>Step 4:</strong> Weight each squared deviation by its probability: P(Xᵢ) × [Xᵢ − E(X)]²<br>
+      <strong>Step 5:</strong> Sum all weighted squared deviations → σ²(X)<br>
+      <strong>Step 6:</strong> Take the positive square root → σ(X)<br><br>
+      Always verify probabilities sum to 1 before starting.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: CONDITIONAL PROBABILITY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Conditional Probability &amp; Conditional Expected Value</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Conditional Probability</div>
+      <div class="f">
+        P(A | B) = P(AB) / P(B),&nbsp;&nbsp;where P(B) ≠ 0<br><br>
+        Read as: "Probability of A GIVEN THAT B has occurred"<br><br>
+        Rearranged (Multiplication Rule):<br>
+        P(AB) = P(A | B) × P(B)  =  P(B | A) × P(A)
+      </div>
+      <div class="note">
+        P(AB) = joint probability of both A and B occurring.<br>
+        Conditional probability updates the probability of A once we know B has occurred.<br>
+        The denominator P(B) restricts the sample space to only outcomes where B occurred.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Conditional Expected Value</div>
+      <div class="f">
+        E(X | S) = P(X₁ | S)·X₁ + P(X₂ | S)·X₂ + ... + P(Xₙ | S)·Xₙ
+      </div>
+      <div class="note">
+        E(X | S) = expected value of X given scenario S has occurred.<br>
+        Uses conditional probabilities P(Xᵢ | S) instead of unconditional P(Xᵢ).<br>
+        Each scenario S also has its own conditional variance σ²(X | S) and conditional standard deviation σ(X | S).
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why conditional expected values matter in investments:</strong> When we refine our expectations or forecasts based on new information or events, we are computing conditional expected values. For example:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>E(stock return | recession) vs. E(stock return | expansion)</li>
+        <li>E(EPS | management beats guidance) vs. E(EPS | management misses)</li>
+        <li>E(bond return | rate hike) vs. E(bond return | rate cut)</li>
+      </ul>
+      <p style="margin-top:10px;">Conditional expected values are the building blocks of probability trees and the total probability rule.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: PROBABILITY TREES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Probability Trees</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>probability tree</strong> is a visual diagram that maps out the results of two or more events in sequence. Each branch shows a possible outcome and its probability. The tree makes it easy to calculate joint probabilities (probability of a sequence of events) and is the visual representation of the total probability rule.</p>
+      <p style="margin-top:10px;"><strong>Key rule:</strong> The probabilities on branches leaving any single node must sum to 1. Joint probability of any path = product of all probabilities along that path.</p>
+    </div>
+
+    <div class="tree-wrap">
+      <pre style="font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.9; color:var(--text);">
+<span style="color:#4c8bc9;">Start</span>
+  │
+  ├──<span style="color:#c9a84c;">[P(Good Economy) = 0.60]</span>──→ <span style="color:#4c8bc9;">Good Economy</span>
+  │                                    │
+  │                                    ├──<span style="color:#c9a84c;">[P(Beat EPS | Good) = 0.80]</span>──→ <span style="color:#4cc98a;">Beat EPS</span>  Joint P = 0.60 × 0.80 = <span style="color:#f57ca4;">0.48</span>
+  │                                    │
+  │                                    └──<span style="color:#c9a84c;">[P(Miss EPS | Good) = 0.20]</span>──→ <span style="color:#c94c4c;">Miss EPS</span>  Joint P = 0.60 × 0.20 = <span style="color:#f57ca4;">0.12</span>
+  │
+  └──<span style="color:#c9a84c;">[P(Bad Economy) = 0.40]</span>──→ <span style="color:#4c8bc9;">Bad Economy</span>
+                                       │
+                                       ├──<span style="color:#c9a84c;">[P(Beat EPS | Bad) = 0.30]</span>──→ <span style="color:#4cc98a;">Beat EPS</span>  Joint P = 0.40 × 0.30 = <span style="color:#f57ca4;">0.12</span>
+                                       │
+                                       └──<span style="color:#c9a84c;">[P(Miss EPS | Bad) = 0.70]</span>──→ <span style="color:#c94c4c;">Miss EPS</span>  Joint P = 0.40 × 0.70 = <span style="color:#f57ca4;">0.28</span>
+                                                                                                             ──────
+                                                              Total (all joint probs must sum to 1):         <span style="color:#4cc98a;">1.00 ✓</span>
+      </pre>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Reading a Probability Tree — Rules</div>
+      <p>
+        <strong>Rule 1:</strong> At any node, all branch probabilities must sum to 1.<br>
+        <strong>Rule 2:</strong> Joint probability of any complete path = multiply all probabilities along that path.<br>
+        <strong>Rule 3:</strong> All joint probabilities across all complete paths must sum to 1.<br>
+        <strong>Rule 4:</strong> Probabilities on later branches are CONDITIONAL (given the earlier event happened).<br>
+        <strong>Rule 5:</strong> Unconditional probability of any event = sum of all joint probabilities leading to that event.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Confusing Unconditional and Conditional Probabilities in Trees</div>
+      <p>In a two-stage tree, the second-stage probabilities are <strong>CONDITIONAL</strong> on the first-stage outcome — they are NOT unconditional. For example, P(Beat EPS | Good Economy) = 0.80 ≠ P(Beat EPS) unconditionally. The unconditional P(Beat EPS) requires the total probability rule.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: TOTAL PROBABILITY RULE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Total Probability Rule — For Probabilities &amp; Expected Values</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Total Probability Rule — For Probabilities</div>
+      <div class="f">
+        P(A) = P(A | S₁)·P(S₁) + P(A | S₂)·P(S₂) + ... + P(A | Sₙ)·P(Sₙ)<br><br>
+        Simple 2-scenario version:<br>
+        P(A) = P(A | S)·P(S) + P(A | Sᶜ)·P(Sᶜ)
+      </div>
+      <div class="note">
+        S₁, S₂, ..., Sₙ must be MUTUALLY EXCLUSIVE and EXHAUSTIVE scenarios.<br>
+        Sᶜ = complement of S (i.e., "S does not occur"), so P(S) + P(Sᶜ) = 1.<br>
+        This is how you find the unconditional probability of A from a probability tree.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Total Probability Rule — For Expected Values</div>
+      <div class="f">
+        E(X) = E(X | S₁)·P(S₁) + E(X | S₂)·P(S₂) + ... + E(X | Sₙ)·P(Sₙ)<br><br>
+        Simple 2-scenario version:<br>
+        E(X) = E(X | S)·P(S) + E(X | Sᶜ)·P(Sᶜ)
+      </div>
+      <div class="note">
+        The unconditional expected value equals the probability-weighted average of the CONDITIONAL expected values.<br>
+        This is the "total probability rule for expected value" — the expected value version of the probability rule above.<br>
+        Used in probability trees: compute E(X | each scenario) first, then weight by scenario probabilities.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📊 Worked Example — Total Probability Rule for Expected Return</div>
+      <p>Using the tree above. Given:</p>
+      <div class="calc">
+        E(R | Good Economy) = 15%,  P(Good Economy) = 0.60<br>
+        E(R | Bad Economy)  = -5%,  P(Bad Economy)  = 0.40<br><br>
+        E(R) = E(R | Good) × P(Good) + E(R | Bad) × P(Bad)<br>
+             = 15% × 0.60 + (-5%) × 0.40<br>
+             = 9.0% + (-2.0%)<br>
+             = 7.0%
+      </div>
+      <div class="result">→ Unconditional Expected Return = 7.0%</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Connection: Total Probability Rule + Probability Tree</div>
+      <p>A probability tree is just the <em>visual representation</em> of the total probability rule. Reading across all paths of a tree and summing joint-probability-weighted outcomes gives you the unconditional expected value. The tree makes it easy to verify that you haven't missed any scenario (all joint probabilities sum to 1).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: BAYES' FORMULA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Bayes' Formula — Updating Probabilities</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>What Bayes' formula does:</strong> Updates a prior probability using new information to produce a posterior probability. It "reverses the given-that" — instead of asking P(Information | Event), it answers P(Event | Information).</p>
+      <p style="margin-top:10px;"><strong>Also called:</strong> inverse probability (because it reverses the conditional direction). Used whenever new observations lead you to update your beliefs about underlying causes.</p>
+    </div>
+
+    <div class="bayes-box">
+      <div class="label">★ Bayes' Formula — Three Equivalent Forms</div>
+      <div class="f">
+        <span style="color:#4cc98a;">Form 1 — Words:</span><br>
+        Updated P(Event | Info) = [P(Info | Event) / P(Info)] × P(Event)<br><br>
+        <span style="color:#4cc98a;">Form 2 — Notation:</span><br>
+        P(Event | Information) = [P(Information | Event) / P(Information)] × P(Event)<br><br>
+        <span style="color:#4cc98a;">Form 3 — With Total Probability Rule in denominator:</span><br>
+        P(Event | Info) = P(Info | Event) × P(Event)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;────────────────────────────────────────────<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Σ [P(Info | Eventᵢ) × P(Eventᵢ)] for all i
+      </div>
+      <div class="note">
+        Numerator = joint probability of BOTH the information AND the event occurring.<br>
+        Denominator = unconditional probability of the information (total probability rule).<br>
+        The ratio [P(Info | Event) / P(Info)] is the "updating factor" — scales the prior probability up or down.<br>
+        If ratio &gt; 1 → posterior &gt; prior (new info makes the event more likely).<br>
+        If ratio &lt; 1 → posterior &lt; prior (new info makes the event less likely).
+      </div>
+    </div>
+
+    <h3>Step-by-Step Bayes' Formula Process</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>State the prior probabilities</strong> for each mutually exclusive and exhaustive event/scenario (these must sum to 1).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>State the likelihoods:</strong> P(New Information | each event/scenario). These are the conditional probabilities of observing the new information, given each scenario.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Calculate the unconditional probability of the new information</strong> using the total probability rule: P(Info) = Σ P(Info | Eventᵢ) × P(Eventᵢ). This is the denominator.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Apply Bayes' formula</strong> for the event of interest: P(Event | Info) = [P(Info | Event) / P(Info)] × P(Event). This gives the posterior probability.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Verify:</strong> All posterior probabilities across all mutually exclusive events must sum to 1. This is a useful sanity check.</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Interpreting the Updating Factor</div>
+      <p>The ratio <strong>P(Info | Event) / P(Info)</strong> is the key to Bayes' formula:<br><br>
+      — If the new information is <em>more likely</em> given the event than in general → ratio &gt; 1 → posterior &gt; prior (event becomes more probable).<br>
+      — If the new information is <em>less likely</em> given the event than in general → ratio &lt; 1 → posterior &lt; prior (event becomes less probable).<br>
+      — If the new information is equally likely regardless of the event → ratio = 1 → no update (information is irrelevant to this event).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Exam Points — Bayes' Formula</div>
+      <p>
+        1. <strong>Likelihoods ≠ probabilities of scenarios.</strong> P(Info | Event) is the probability of seeing the information IF the event occurred — not the probability of the event itself.<br><br>
+        2. <strong>The denominator P(Info) is the total (unconditional) probability of the new information</strong> — calculated using the total probability rule across ALL scenarios, not just the one you're interested in.<br><br>
+        3. <strong>Always work with mutually exclusive and exhaustive scenarios.</strong> If scenarios don't cover all possibilities, the denominator will be wrong.<br><br>
+        4. <strong>Bayesian updating is continuous</strong> — today's posterior becomes tomorrow's prior when new information arrives again.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: WORKED EXAMPLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Fully Worked Examples</h2>
+    </div>
+
+    <h3>Example 1 — Tech vs. Non-Tech (Frequency Approach)</h3>
+    <div class="worked-box">
+      <div class="worked-label">📊 Setup: 500 firms — 100 Tech, 400 Non-Tech</div>
+      <div class="calc">
+        Returns:  Tech: 60 firms R &gt; 10%,  40 firms R ≤ 10%
+                  Non-Tech: 100 firms R &gt; 10%, 300 firms R ≤ 10%
+                  Total R &gt; 10%: 60 + 100 = 160 firms<br><br>
+
+        From frequencies:<br>
+        P(Tech)                = 100/500 = 0.20<br>
+        P(Non-Tech)            = 400/500 = 0.80<br>
+        P(R &gt; 10% | Tech)     =  60/100 = 0.60<br>
+        P(R &gt; 10% | Non-Tech) = 100/400 = 0.25<br>
+        P(R &gt; 10%)            = 160/500 = 0.32  ← verify with total prob rule below<br><br>
+
+        Total Probability Rule check:<br>
+        P(R &gt; 10%) = 0.60 × 0.20 + 0.25 × 0.80 = 0.12 + 0.20 = 0.32 ✓<br><br>
+
+        Bayes' Formula — P(Tech | R &gt; 10%) = ?<br>
+        = [P(R &gt; 10% | Tech) / P(R &gt; 10%)] × P(Tech)<br>
+        = [0.60 / 0.32] × 0.20<br>
+        = 1.875 × 0.20<br>
+        = 0.375
+      </div>
+      <div class="result">→ P(Tech | R &gt; 10%) = 37.5%</div>
+      <p style="margin-top:10px; color:#7ecfa4;">Intuition: Although only 20% of all firms are tech firms, among high-returning firms, 37.5% are tech firms. The new information (high return) updates the probability of being a tech firm upward from 20% to 37.5%. Verify: 60 out of 160 high-return firms are tech = 60/160 = 0.375 ✓</p>
+    </div>
+
+    <h3>Example 2 — DriveMed EPS (Full Bayes' with 3 Scenarios)</h3>
+    <div class="worked-box">
+      <div class="worked-label">📊 Setup: DriveMed announces factory capacity expansion</div>
+      <p><strong>Step 1 — Prior probabilities:</strong></p>
+      <div class="calc">
+        P(EPS exceeded consensus) = 0.45<br>
+        P(EPS met consensus)      = 0.30<br>
+        P(EPS fell short)         = 0.25<br>
+        Sum = 1.00 ✓
+      </div>
+      <p><strong>Step 2 — Likelihoods (P(Expands | each EPS outcome)):</strong></p>
+      <div class="calc">
+        P(Expands | EPS exceeded) = 0.75  ← high likelihood (strong sales → expansion)<br>
+        P(Expands | EPS met)      = 0.20  ← moderate<br>
+        P(Expands | EPS fell short) = 0.05 ← low (poor results → unlikely to expand)
+      </div>
+      <p><strong>Step 3 — Unconditional P(Expands) via total probability rule:</strong></p>
+      <div class="calc">
+        P(Expands) = 0.75(0.45) + 0.20(0.30) + 0.05(0.25)<br>
+                   = 0.3375    + 0.0600    + 0.0125<br>
+                   = 0.4100  (= 41%)
+      </div>
+      <p><strong>Step 4 — Apply Bayes' formula for "EPS exceeded":</strong></p>
+      <div class="calc">
+        P(EPS exceeded | Expands) = [P(Expands | EPS exceeded) / P(Expands)] × P(EPS exceeded)<br>
+                                  = [0.75 / 0.41] × 0.45<br>
+                                  = 1.8293 × 0.45<br>
+                                  = 0.8232  (≈ 82.3%)
+      </div>
+      <div class="result">→ Posterior P(EPS exceeded | Expands) ≈ 82.3% (vs. prior of 45%)</div>
+      <p style="margin-top:10px; color:#7ecfa4;">The expansion announcement is strong evidence of a good EPS result — the probability of EPS exceeding consensus jumped from 45% to 82.3%. The ratio 1.829 &gt; 1 confirms the new information makes this event MORE likely.</p>
+
+      <p style="margin-top:14px;"><strong>Step 5 — Verify: compute all three posterior probabilities and check they sum to 1:</strong></p>
+      <div class="calc">
+        P(EPS exceeded | Expands) = [0.75/0.41] × 0.45 = 0.8232<br>
+        P(EPS met | Expands)      = [0.20/0.41] × 0.30 = 0.1463<br>
+        P(EPS fell short | Expands)= [0.05/0.41] × 0.25 = 0.0305<br>
+        ─────────────────────────────────────────────────────<br>
+        Sum = 0.8232 + 0.1463 + 0.0305 = 1.0000 ✓
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>EPS Scenario</th>
+            <th>Prior P</th>
+            <th>Likelihood P(Expands | Scenario)</th>
+            <th>Joint P (Prior × Likelihood)</th>
+            <th>Posterior P</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EPS Exceeded Consensus</td>
+            <td>0.45</td>
+            <td>0.75</td>
+            <td>0.45 × 0.75 = 0.3375</td>
+            <td><strong style="color:#4cc98a;">0.3375 / 0.41 = 0.823</strong></td>
+          </tr>
+          <tr>
+            <td>EPS Met Consensus</td>
+            <td>0.30</td>
+            <td>0.20</td>
+            <td>0.30 × 0.20 = 0.0600</td>
+            <td>0.0600 / 0.41 = 0.146</td>
+          </tr>
+          <tr>
+            <td>EPS Fell Short</td>
+            <td>0.25</td>
+            <td>0.05</td>
+            <td>0.25 × 0.05 = 0.0125</td>
+            <td>0.0125 / 0.41 = 0.030</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>1.00</strong></td>
+            <td>—</td>
+            <td><strong>P(Expands) = 0.41</strong></td>
+            <td><strong style="color:#4cc98a;">1.000 ✓</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Tabular Method for Bayes (Exam Efficiency Tip)</div>
+      <p>The table above is the most exam-efficient way to solve Bayes' problems with 3+ scenarios. Columns: (1) Prior, (2) Likelihood, (3) Joint = Prior × Likelihood, (4) Posterior = Joint / Sum of Joints. Sum of the Joint column = unconditional P(Information). Divide each joint by this sum to get the posterior. All posteriors must sum to 1.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>E(X) = Σ P(Xᵢ) · Xᵢ</strong> — probability-weighted average of all outcomes. It is a FORWARD-LOOKING forecast, NOT the historical sample mean.</li>
+        <li>✅ <strong>σ²(X) = Σ P(Xᵢ) · [Xᵢ − E(X)]²</strong> — always ≥ 0. Units are SQUARED units of X. If σ² = 0, the outcome is certain (no risk).</li>
+        <li>✅ <strong>σ(X) = √σ²(X)</strong> — always the positive square root. Same units as X. Preferred for interpretation and communication over variance.</li>
+        <li>✅ <strong>Conditional probability P(A | B) = P(AB) / P(B)</strong> — probability of A given B occurred. Restricts sample space to outcomes where B occurred.</li>
+        <li>✅ <strong>Multiplication rule: P(AB) = P(A | B) × P(B)</strong> — used to find joint probabilities from conditional ones.</li>
+        <li>✅ <strong>Conditional E(X | S) = Σ P(Xᵢ | S) · Xᵢ</strong> — uses conditional probabilities; has its own conditional variance and standard deviation.</li>
+        <li>✅ <strong>Total probability rule (probabilities):</strong> P(A) = Σ P(A | Sᵢ) · P(Sᵢ) over all mutually exclusive and exhaustive scenarios.</li>
+        <li>✅ <strong>Total probability rule (expected values):</strong> E(X) = Σ E(X | Sᵢ) · P(Sᵢ) — unconditional E(X) is the weighted average of conditional expected values.</li>
+        <li>✅ <strong>Probability tree:</strong> visual tool for 2+ sequential events. Branch probabilities leaving any node sum to 1. Joint probability of any path = product of all branch probabilities along that path. All joint probabilities across all paths sum to 1.</li>
+        <li>✅ <strong>Scenarios for trees/total probability rule must be mutually exclusive AND exhaustive.</strong> If not exhaustive, probabilities won't sum to 1 and the rules don't apply correctly.</li>
+        <li>✅ <strong>Bayes' formula:</strong> P(Event | Info) = [P(Info | Event) / P(Info)] × P(Event). Updates prior probability to posterior probability using new information.</li>
+        <li>✅ <strong>Bayes' formula reverses the conditional:</strong> turns P(Info | Event) into P(Event | Info). Also called "inverse probability."</li>
+        <li>✅ <strong>Prior probability</strong> = before new information. <strong>Posterior probability</strong> = after incorporating new information (the answer from Bayes').</li>
+        <li>✅ <strong>Likelihood</strong> = P(new information | scenario). NOT the probability of the scenario itself. Required for Bayes' updating.</li>
+        <li>✅ <strong>Denominator in Bayes' = unconditional P(Information)</strong>, computed using the total probability rule across all scenarios. It normalizes the posteriors so they sum to 1.</li>
+        <li>✅ <strong>Updating factor = P(Info | Event) / P(Info).</strong> If &gt; 1 → posterior &gt; prior. If &lt; 1 → posterior &lt; prior. If = 1 → no update (information irrelevant).</li>
+        <li>✅ <strong>All posterior probabilities from Bayes' must sum to 1</strong> — use this as your verification check in exam questions.</li>
+        <li>✅ <strong>Bayesian updating is continuous</strong> — today's posterior becomes tomorrow's prior when new information arrives. Beliefs are never fixed.</li>
+        <li>✅ <strong>Tabular method for multi-scenario Bayes':</strong> Columns = Prior | Likelihood | Joint (Prior × Likelihood) | Posterior (Joint / Sum of Joints). Fastest exam approach.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ EXPECTED VALUE ═══<br>
+        E(X) = Σ P(Xᵢ) · Xᵢ<br>
+        E(X | S) = Σ P(Xᵢ | S) · Xᵢ&nbsp;&nbsp;&nbsp;&nbsp;[conditional version]<br><br>
+
+        ═══ VARIANCE &amp; STANDARD DEVIATION ═══<br>
+        σ²(X) = Σ P(Xᵢ) · [Xᵢ − E(X)]²<br>
+        σ(X)  = √σ²(X)&nbsp;&nbsp;[always positive]<br><br>
+
+        ═══ CONDITIONAL PROBABILITY ═══<br>
+        P(A | B) = P(AB) / P(B)&nbsp;&nbsp;[P(B) ≠ 0]<br>
+        P(AB)    = P(A | B) × P(B)&nbsp;&nbsp;[multiplication rule]<br><br>
+
+        ═══ TOTAL PROBABILITY RULE ═══<br>
+        P(A) = Σ P(A | Sᵢ) · P(Sᵢ)&nbsp;&nbsp;[for probabilities]<br>
+        E(X) = Σ E(X | Sᵢ) · P(Sᵢ)&nbsp;&nbsp;[for expected values]<br><br>
+
+        ═══ BAYES' FORMULA ═══<br>
+        P(Event | Info) = [P(Info | Event) / P(Info)] × P(Event)<br><br>
+        Where: P(Info) = Σ P(Info | Eventᵢ) × P(Eventᵢ)&nbsp;&nbsp;← total prob rule<br><br>
+
+        ═══ TABULAR BAYES SETUP ═══<br>
+        [1] Prior P(Eventᵢ)<br>
+        [2] Likelihood P(Info | Eventᵢ)<br>
+        [3] Joint = [1] × [2]<br>
+        [4] P(Info) = Σ [3] (sum of all joints = denominator)<br>
+        [5] Posterior = [3] / [4]&nbsp;&nbsp;← final answer; all must sum to 1
+      </div>
+      <div class="note">
+        <strong>E(X) vs. Sample Mean:</strong> E(X) is probability-weighted, forward-looking (forecast / population). Sample mean is equally-weighted, backward-looking (historical / observed).<br>
+        <strong>Variance = 0:</strong> No dispersion, no risk, outcome is certain.<br>
+        <strong>Bayes' key intuition:</strong> The ratio P(Info | Event) / P(Info) is the "updating factor" — how much the new information changes your prior belief.<br>
+        <strong>Posterior probabilities must always sum to 1</strong> — instant exam sanity check.<br>
+        <strong>Probability tree:</strong> All branch probabilities from any node sum to 1. All joint probabilities across all terminal nodes sum to 1.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 4: Probability Trees &amp; Conditional Expectations · Exam Prep Notes
+</footer>
+
+</body>
+</html>

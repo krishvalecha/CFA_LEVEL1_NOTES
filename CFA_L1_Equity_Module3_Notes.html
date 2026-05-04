@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 3: Market Efficiency</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14100d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .emh-block { border-radius: 6px; padding: 20px 24px; margin: 14px 0; }
+  .emh-weak { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.35); }
+  .emh-semi { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.35); }
+  .emh-strong { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.35); }
+  .emh-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 12px; text-transform: uppercase; }
+  .emh-weak .emh-label { color: var(--accent3); }
+  .emh-semi .emh-label { color: var(--accent2); }
+  .emh-strong .emh-label { color: var(--accent); }
+  .emh-block ul { padding-left: 20px; }
+  .emh-block li { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+
+  .bias-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+  .bias-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--accent2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .bias-body { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 3</div>
+  <h1>Market <span>Efficiency</span></h1>
+  <p>Exam-ready notes: efficient market hypothesis, market value vs. intrinsic value, factors affecting efficiency, three forms of EMH, implications for technical/fundamental analysis and active/passive management, market anomalies, and behavioral finance biases.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Market Efficiency Defined</a>
+  <a class="toc-item" href="#s2">02 · Market vs. Intrinsic Value</a>
+  <a class="toc-item" href="#s3">03 · Factors Affecting Efficiency</a>
+  <a class="toc-item" href="#s4">04 · Three Forms of EMH</a>
+  <a class="toc-item" href="#s5">05 · EMH Master Comparison</a>
+  <a class="toc-item" href="#s6">06 · Implications: Tech, Fund &amp; Active/Passive</a>
+  <a class="toc-item" href="#s7">07 · Market Anomalies — Time-Series</a>
+  <a class="toc-item" href="#s8">08 · Market Anomalies — Cross-Sectional &amp; Other</a>
+  <a class="toc-item" href="#s9">09 · Anomaly Implications</a>
+  <a class="toc-item" href="#s10">10 · Behavioral Finance</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: MARKET EFFICIENCY DEFINED -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Market Efficiency — Core Concepts</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Informationally Efficient Market</div>
+      <div class="def-body">A market in which asset prices <strong>reflect new information quickly and rationally</strong>. An efficient market is one in which asset prices reflect all past and present information. Prices are said to "fully reflect" all available information.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key implications of market efficiency:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Consistent, superior, <strong>risk-adjusted returns net of all expenses</strong> are NOT achievable in an efficient market</li>
+        <li>In an efficient market → <span class="highlight3">passive strategy</span> (buy-and-hold market portfolio) is preferred over active because of lower costs</li>
+        <li>In an inefficient market → <span class="highlight2">active strategy</span> may outperform passive on a risk-adjusted basis (net of all expenses)</li>
+        <li>Market efficiency falls on a <strong>continuum</strong> — markets are generally neither completely efficient nor completely inefficient</li>
+        <li>Efficiency can vary by time, geography, and type of market (equity vs. bond vs. FX)</li>
+      </ul>
+    </div>
+
+    <h3>What Information Are Prices Reacting To?</h3>
+    <div class="card">
+      <p>In an efficient market, prices react <strong>only to the unexpected (surprise) element</strong> of information releases — not to the anticipated portion. The anticipated part is already incorporated in prices.</p>
+      <ul style="margin-top:8px;">
+        <li>If an earnings announcement is exactly as expected → no price change</li>
+        <li>If earnings are better than expected → price rises (the "surprise" triggers revision of expectations)</li>
+        <li>Investors process unexpected information → revise valuations → trade → new price reflects revised expectations</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Formula — Abnormal Return</div>
+      <div class="f">Abnormal Return = Actual Return − Expected Return</div>
+      <div class="note">
+        Expected return is derived from a pricing model (e.g., CAPM). A finding that investors can consistently earn abnormal returns using a particular information set is evidence AGAINST market efficiency for that information set.<br>
+        "Consistent" and "net of all expenses" are critical qualifiers.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Speed of Price Adjustment</div>
+      <p>The minimum time frame for price adjustment is the shortest time a trader needs to execute a transaction. In FX and developed equity markets, efficiency has been studied with time frames as short as <strong>one minute or less</strong>. If many traders can profit with little risk during the adjustment period → market is relatively inefficient.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: MARKET VALUE vs INTRINSIC VALUE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Market Value vs. Intrinsic Value</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Market Value</div>
+        <p>The price at which an asset can currently be <strong>bought or sold</strong>. Represents the intersection of supply and demand — low enough to induce a buyer, high enough to induce a seller. Changes continuously as new information flows to investors.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Intrinsic Value (Fundamental Value)</div>
+        <p>The value placed on an asset by investors with a <strong>complete understanding</strong> of all investment characteristics. Estimated (never known for certain) using models like DDM, DCF, CAPM. Requires judgment about size, timing, and riskiness of future cash flows.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Relationship between the two:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>In a <span class="highlight3">highly efficient market</span>: market price ≈ intrinsic value. Investors accept market price as accurately reflecting value</li>
+        <li>In an <span class="danger-text">inefficient market</span>: market price can deviate significantly from intrinsic value → creates profit opportunities for active investors</li>
+        <li>Active investors seek to <strong>buy</strong> assets where market price &lt; estimated intrinsic value; <strong>sell or short</strong> where market price &gt; estimated intrinsic value</li>
+        <li>The more complex an asset's cash flows → harder to estimate intrinsic value → more scope for mispricing</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Intrinsic Value is Always an Estimate</div>
+      <p>The CFA curriculum is explicit: intrinsic value can be <strong>estimated but is never known for certain</strong>. Models like DDM and DCF require judgment inputs. When a question says "investors with complete understanding," that is a theoretical construct, not a practical reality. In practice, intrinsic value estimates diverge among analysts — which is exactly why markets have active trading.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: FACTORS AFFECTING MARKET EFFICIENCY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Factors Affecting Market Efficiency</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — Factors Affecting Efficiency: "PILT"</div>
+      <p><strong>P</strong>articipants (number of market participants) · <strong>I</strong>nformation availability &amp; disclosure · <strong>L</strong>imits to trading (arbitrage restrictions, short-selling) · <strong>T</strong>ransaction &amp; information-acquisition costs</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Promotes Efficiency</th>
+            <th>Impedes Efficiency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Number of Market Participants</td>
+            <td>More investors &amp; analysts → faster detection of mispricings → quicker correction. More buy orders on positive news → faster price adjustment</td>
+            <td>Restrictions on foreign trading → fewer participants → slower price discovery. Thin coverage of small-cap stocks → slower adjustment</td>
+          </tr>
+          <tr>
+            <td>Information Availability &amp; Disclosure</td>
+            <td>Active financial news media, mandatory financial disclosure (SEC Reg FD), insider trading rules → fair access → promotes efficiency. NYSE, LSE, TSE: readily available info → quite efficient</td>
+            <td>Dealer/OTC markets (bonds, FX, swaps, forwards): information quality from market makers varies → less transparency → less efficient. Smaller/emerging market exchanges: limited disclosure</td>
+          </tr>
+          <tr>
+            <td>Limits to Trading (Arbitrage Restrictions)</td>
+            <td>Arbitrageurs correct mispricings by buying underpriced and selling overpriced → prices converge. Short selling allows mispricing to be corrected from both directions</td>
+            <td>Execution difficulties, high trading costs, lack of price transparency → arbitrage less profitable → mispricings persist. Restrictions on short selling → overvalued securities may not be corrected downward → prices deviate from intrinsic value</td>
+          </tr>
+          <tr>
+            <td>Transaction Costs</td>
+            <td>Low transaction costs → narrow "bounds of arbitrage" → small mispricings corrected quickly (e.g., US T-bills)</td>
+            <td>High transaction costs → wide bounds of arbitrage → mispricings within those bounds are not exploitable. Illiquid markets have wide bounds</td>
+          </tr>
+          <tr>
+            <td>Information-Acquisition Costs</td>
+            <td>Grossman-Stiglitz (1980): prices must offer a return to information acquisition. In equilibrium, gross of expenses, active investing earns a return sufficient to cover research costs → market remains efficient</td>
+            <td>Classic (strict) view: all info already in prices → research costs wasted → futile. Modern view: market is inefficient only if active investing earns superior returns <em>after</em> all costs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">SEC Regulation FD (Fair Disclosure)</div>
+      <div class="def-body">If security issuers provide non-public information to some market professionals or investors, they <strong>must simultaneously disclose</strong> it to the public. Promotes equal access → supports market efficiency. Relates to the broader prohibition on illegal insider trading (trading on material, non-public information).</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Grossman-Stiglitz Paradox (1980)</div>
+      <p>If markets are perfectly efficient (prices already reflect all info), there is no incentive to gather information. But without information gatherers, prices stop being efficient. The resolution: in equilibrium, the return to information-gathering must be just sufficient to cover those costs. So gross of expenses, active investing earns a return in an efficient market — but net of expenses, active investing earns only a fair risk-adjusted return.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: THREE FORMS OF EMH -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Three Forms of Market Efficiency (Fama's EMH)</h2>
+    </div>
+
+    <div class="card">
+      <p>Eugene Fama developed the <strong>Efficient Market Hypothesis (EMH)</strong> framework. Markets are efficient when prices reflect all relevant information at any point in time. Three forms, each defined by the set of information reflected in prices:</p>
+    </div>
+
+    <div class="emh-block emh-weak">
+      <div class="emh-label">WEAK FORM — Prices Reflect: Past Market Data (prices + volume)</div>
+      <ul>
+        <li><strong>Information set</strong>: all historical price and trading volume data</li>
+        <li><strong>Implication</strong>: cannot earn abnormal returns by analyzing past price patterns (technical analysis is futile)</li>
+        <li><strong>Test method</strong>: serial correlation tests; tests of specific trading rules using historical data (technical analysis)</li>
+        <li><strong>Evidence</strong>: developed markets ARE weak-form efficient. Some evidence of profitability in developing markets (Hungary, Bangladesh, Turkey). Some serial correlation in daily returns but not enough to profit after transaction costs</li>
+        <li><strong>What still works</strong>: fundamental analysis (uses different, non-price information)</li>
+        <li><strong>Who is defeated</strong>: technical analysts relying purely on past prices/volume</li>
+      </ul>
+    </div>
+
+    <div class="emh-block emh-semi">
+      <div class="emh-label">SEMI-STRONG FORM — Prices Reflect: Past Market Data + All Public Information</div>
+      <ul>
+        <li><strong>Information set</strong>: all publicly known information — financial statements, earnings, dividends, management changes, closing prices, shares traded, macroeconomic data, etc.</li>
+        <li><strong>Encompasses</strong>: weak form (if semi-strong efficient → also weak-form efficient)</li>
+        <li><strong>Implication</strong>: analyzing public information (fundamental analysis) is futile for earning abnormal returns — it's already priced in. No single investor has access to information others don't have</li>
+        <li><strong>Test method</strong>: event studies — measure excess returns around public announcements (earnings, dividends, stock splits, mergers). Excess return = actual return − expected return at announcement date</li>
+        <li><strong>Evidence</strong>: developed markets are generally semi-strong efficient. Some anomalies remain (earnings surprise, IPO, closed-end fund discount). Developing markets may NOT be semi-strong efficient</li>
+        <li><strong>What still works</strong>: trading on private/insider information (strong form not achieved)</li>
+        <li><strong>Who is defeated</strong>: fundamental analysts using only public information</li>
+      </ul>
+    </div>
+
+    <div class="emh-block emh-strong">
+      <div class="emh-label">STRONG FORM — Prices Reflect: Past Data + Public + Private (Insider) Information</div>
+      <ul>
+        <li><strong>Information set</strong>: ALL information including material non-public (insider) information</li>
+        <li><strong>Encompasses</strong>: both weak and semi-strong forms</li>
+        <li><strong>Implication</strong>: even insiders cannot earn abnormal returns — prices reflect everything management knows</li>
+        <li><strong>Test method</strong>: do insiders earn abnormal profits? Studies of insider trading disclosures</li>
+        <li><strong>Evidence</strong>: markets are <span class="danger-text">NOT strong-form efficient</span>. Studies consistently find insiders CAN earn abnormal profits. Strong prohibitions against insider trading prevent this in practice (not because prices already reflect private info)</li>
+        <li><strong>Who is defeated</strong>: nobody — this form is not achieved in practice. Even insiders can profit (illegally)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical: The Hierarchy Is Nested</div>
+      <p>Strong form ⊃ Semi-strong form ⊃ Weak form. If a market is <strong>strong-form efficient</strong> → it must also be semi-strong and weak-form efficient. If a market is <strong>NOT weak-form efficient</strong> → it cannot be semi-strong or strong-form efficient either. This nesting is directly tested.</p>
+    </div>
+
+    <h3>Event Study — How to Test Semi-Strong Efficiency</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:6px;"><strong>Identify</strong> the period of study</li>
+        <li style="margin-bottom:6px;"><strong>Identify</strong> the stocks associated with the event within the study period</li>
+        <li style="margin-bottom:6px;"><strong>Estimate</strong> the expected return for each company for the announcement date (using CAPM, market model, or market index)</li>
+        <li style="margin-bottom:6px;"><strong>Calculate</strong> excess (abnormal) return = Actual return − Expected return for each company</li>
+        <li style="margin-bottom:6px;"><strong>Statistical test</strong>: are the abnormal returns significantly different from zero?</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Key interpretation: Excess returns only at the announcement date = consistent with semi-strong efficiency (quick reaction). Excess returns CONTINUING after the announcement = evidence of INEFFICIENCY (slow adjustment = trading opportunity).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: EMH MASTER COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>EMH — Master Comparison Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Weak Form</th>
+            <th>Semi-Strong Form</th>
+            <th>Strong Form</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Information reflected</td>
+            <td>Past prices &amp; volume</td>
+            <td>All public information</td>
+            <td>All public + private (insider) info</td>
+          </tr>
+          <tr>
+            <td>Encompasses</td>
+            <td>—</td>
+            <td>Weak form</td>
+            <td>Weak + Semi-strong forms</td>
+          </tr>
+          <tr>
+            <td>Technical analysis useful?</td>
+            <td><span class="tag tag-red">No</span></td>
+            <td><span class="tag tag-red">No</span></td>
+            <td><span class="tag tag-red">No</span></td>
+          </tr>
+          <tr>
+            <td>Fundamental analysis useful?</td>
+            <td><span class="tag tag-green">Yes</span></td>
+            <td><span class="tag tag-red">No</span> (public info already priced)</td>
+            <td><span class="tag tag-red">No</span></td>
+          </tr>
+          <tr>
+            <td>Insider trading profitable?</td>
+            <td><span class="tag tag-green">Yes</span></td>
+            <td><span class="tag tag-green">Yes</span></td>
+            <td><span class="tag tag-red">No</span> (hypothetically)</td>
+          </tr>
+          <tr>
+            <td>Test method</td>
+            <td>Serial correlation; technical trading rules on historical data</td>
+            <td>Event studies around public announcements</td>
+            <td>Studies of insider trading returns</td>
+          </tr>
+          <tr>
+            <td>Empirical evidence for developed markets</td>
+            <td><span class="tag tag-green">Supported</span> — consistent with weak-form efficiency</td>
+            <td><span class="tag tag-green">Generally supported</span> — some anomalies persist</td>
+            <td><span class="tag tag-red">Not supported</span> — insiders earn abnormal returns</td>
+          </tr>
+          <tr>
+            <td>Active mgmt. can beat market?</td>
+            <td><span class="tag tag-red">No</span> (using past prices)</td>
+            <td><span class="tag tag-red">No</span> (using public info)</td>
+            <td><span class="tag tag-red">No</span> (even with private info — theoretical)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Real-World Consensus on EMH</div>
+      <p>Developed markets: <span class="highlight3">weak-form ✓, semi-strong roughly ✓, strong-form ✗</span>. Developing markets: may not even be semi-strong efficient. The practical takeaway: <strong>public information is already priced in for major markets</strong>, but private information still enables abnormal profits (which is why insider trading laws exist and why enforcement matters for market integrity).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: IMPLICATIONS FOR ANALYSIS & PORTFOLIO MGMT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Implications for Analysis &amp; Portfolio Management</h2>
+    </div>
+
+    <h3>Technical Analysis</h3>
+    <div class="card">
+      <ul>
+        <li>Technical analysis = analysis of historical trading data (price and volume patterns) to predict future prices</li>
+        <li>If markets are <strong>weak-form efficient</strong> → past price patterns are already reflected in current prices → technical analysis cannot consistently generate abnormal profits</li>
+        <li>Technical analysts <em>assist</em> markets in maintaining weak-form efficiency by detecting and exploiting patterns — when they trade on patterns, they arbitrage them away</li>
+        <li>Patterns CAN be detected and may temporarily yield profits, but cannot do so <strong>consistently</strong> because arbitrageurs quickly eliminate the opportunity</li>
+        <li>Technicians argue: statistical tests don't capture sophisticated strategies + subjective judgment not testable → cannot definitively refute technical analysis</li>
+        <li><strong>Evidence</strong>: in developed markets, cannot consistently earn abnormal profits using technical analysis. Some evidence of profitability in developing markets</li>
+      </ul>
+    </div>
+
+    <h3>Fundamental Analysis</h3>
+    <div class="card">
+      <ul>
+        <li>Fundamental analysis = examination of public information + formulation of forecasts to estimate intrinsic value. Uses earnings forecasts, sales data, risk estimates, industry/economic conditions</li>
+        <li>Buy when market price &lt; estimated intrinsic value; sell when market price &gt; estimated intrinsic value</li>
+        <li>If markets are <strong>semi-strong efficient</strong> → all public info already priced → fundamental analysis cannot consistently generate abnormal profits on average</li>
+        <li><span class="highlight3">BUT</span>: fundamental analysis is still <strong>necessary and valuable</strong> because it:
+          <ul>
+            <li>Helps market participants understand value implications of new information → facilitates semi-strong efficiency</li>
+            <li>Can be profitable if the analyst creates a <strong>comparative advantage</strong> through superior information processing, unique insights, or better models (alpha from skill, not just information)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h3>Active vs. Passive Portfolio Management</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Passive Management</div>
+        <ul>
+          <li>Buy-and-hold a broad market portfolio (index fund)</li>
+          <li>Does NOT attempt to beat the market</li>
+          <li>Preferred in weak-form + semi-strong efficient markets due to <strong>lower costs</strong></li>
+          <li>Mutual funds on average do NOT outperform market on risk-adjusted basis</li>
+          <li>Before fees: mutual funds ≈ market performance. After fees: <span class="danger-text">mutual funds underperform the market</span></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Active Management</div>
+        <ul>
+          <li>Attempts to earn abnormal risk-adjusted returns</li>
+          <li>More costly (research, transaction costs)</li>
+          <li>Justified if market is sufficiently inefficient to allow net-of-cost outperformance</li>
+          <li>Role of portfolio manager is NOT just to beat the market but to: manage risk per objectives, ensure proper diversification, asset allocation, account for tax situation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Role of Portfolio Manager</div>
+      <p>Even in an efficient market, portfolio managers have a role: they establish and manage portfolios consistent with the investor's <strong>objectives, risk preferences, diversification needs, and tax situation</strong>. The CFA exam may ask what the role of a portfolio manager is in an efficient market — the answer is NOT "none." It's to provide customized portfolio management, not necessarily to beat the market.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: TIME-SERIES ANOMALIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Market Anomalies — Time-Series</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Market Anomaly</div>
+      <div class="def-body">An apparent market inefficiency — a pattern in asset prices that cannot be directly linked to current or new information. If persistent, anomalies are exceptions to market efficiency. Evidence must be consistent over <strong>reasonably long periods</strong> to be valid.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Data Mining (Data Snooping) — Critical Concept</div>
+      <p><strong>Proper research</strong>: develop hypothesis first → test on objective data. <strong>Data mining</strong>: examine data first → find patterns → build hypothesis to fit → results are NOT reliable. With enough data snooping, you can always find a strategy that worked in the past by chance. Such strategies are unlikely to generate abnormal returns in the future in an efficient market. Many documented anomalies are artifacts of data mining or statistical methodology.</p>
+    </div>
+
+    <h3>Calendar Anomalies</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Anomaly</th>
+            <th>Observation</th>
+            <th>Proposed Explanation(s)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>January Effect (Turn-of-Year)</td>
+            <td>Stock returns significantly higher in January, especially in first 5 trading days. Most pronounced for <strong>small-cap stocks</strong></td>
+            <td>(1) Tax-loss selling in December (sell losers for capital loss) → prices depressed → rebound in January. (2) Window dressing (managers sell risky stocks before Dec 31 year-end reporting → rebuy in January)</td>
+            <td><span class="tag tag-yellow">Diminished</span> — recent evidence shows no abnormal returns after proper risk adjustment. Neither explanation fully accounts for the anomaly</td>
+          </tr>
+          <tr>
+            <td>Turn-of-the-Month Effect</td>
+            <td>Returns higher on last trading day of the month and first 3 days of next month</td>
+            <td>Cash inflows (payroll, institutional) concentrated at month-end</td>
+            <td><span class="tag tag-red">Largely eliminated</span></td>
+          </tr>
+          <tr>
+            <td>Day-of-the-Week Effect</td>
+            <td>Average Monday return is <strong>negative</strong>; all other days are positive on average</td>
+            <td>Accumulation of bad news over weekends released on Monday opening</td>
+            <td><span class="tag tag-red">Largely eliminated</span></td>
+          </tr>
+          <tr>
+            <td>Weekend Effect</td>
+            <td>Returns on weekends lower than weekdays</td>
+            <td>Related to day-of-week effect</td>
+            <td><span class="tag tag-red">Largely eliminated</span></td>
+          </tr>
+          <tr>
+            <td>Holiday Effect</td>
+            <td>Returns on trading day before market holidays tend to be higher</td>
+            <td>Positive sentiment; short-sellers covering positions before holiday</td>
+            <td><span class="tag tag-red">Largely eliminated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Calendar Anomalies Disappear</div>
+      <p>Two competing views: (1) Once identified and publicized, traders exploit the anomaly → arbitrage eliminates it. (2) More sophisticated statistical methods simply fail to detect what was never a true inefficiency — just a chance pattern in data. Both explanations are plausible and the CFA curriculum treats both as valid.</p>
+    </div>
+
+    <h3>Momentum and Overreaction Anomalies</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Overreaction Effect (DeBondt &amp; Thaler)</div>
+        <p>Investors <strong>overreact</strong> to unexpected public information → prices overshoot intrinsic value.</p>
+        <ul style="margin-top:8px;">
+          <li>Strategy: buy "loser" portfolios, sell "winner" portfolios (contrarian)</li>
+          <li>Winners defined by prior 3–5 year total returns</li>
+          <li>Subsequent period: losers outperform, winners underperform</li>
+          <li>Observed in many but not all global markets and bond markets</li>
+          <li>Contradicts semi-strong efficiency</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Momentum Effect</div>
+        <p>Securities with <strong>high recent short-term returns</strong> tend to continue generating higher returns subsequently.</p>
+        <ul style="margin-top:8px;">
+          <li>Contradicts weak-form efficiency (exploits past price data)</li>
+          <li>Well-documented globally</li>
+          <li>Counter-argument: momentum may be rational — shocks to expected growth rates create short-lived, rational serial correlation in returns (not necessarily inefficiency)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Overreaction vs. Underreaction</div>
+      <p>Behavioral finance argues investors overreact (loss aversion, herding). But evidence shows <strong>underreaction is just as prevalent as overreaction</strong>. If both occur equally, then on average the market is efficient — over- and under-reactions cancel out. This is a key counter-argument against behavioral explanations of anomalies being a consistent profit source.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: CROSS-SECTIONAL & OTHER ANOMALIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Market Anomalies — Cross-Sectional &amp; Other</h2>
+    </div>
+
+    <h3>Cross-Sectional Anomalies</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Size Effect</div>
+        <p>Small-cap stocks have historically <strong>outperformed large-cap stocks</strong> on a risk-adjusted basis.</p>
+        <ul style="margin-top:8px;">
+          <li>First documented in 1981 → many replications initially</li>
+          <li>Effect NOT confirmed in subsequent studies → may have been chance or may have been arbitraged away</li>
+          <li>Most calendar anomalies (including some size-related ones) have been eliminated over time</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Value Effect</div>
+        <p>Value stocks (low P/E, low M/B, high dividend yield) have consistently <strong>outperformed growth stocks</strong> over long periods globally.</p>
+        <ul style="margin-top:8px;">
+          <li>Contradicts semi-strong efficiency — uses only publicly available financial ratios</li>
+          <li><strong>Fama-French 3-Factor Model</strong>: adds size (SMB) and value (HML = book/market) to CAPM's market factor. When 3-factor model is applied instead of CAPM, the value anomaly <span class="highlight3">disappears</span> → suggests value stocks carry additional systematic risk not captured by CAPM</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Other Anomalies</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Anomaly</th>
+            <th>Observation</th>
+            <th>Explanation / Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Closed-End Fund Discount</td>
+            <td>Closed-end funds trade at a <strong>discount to NAV</strong> on average (4–10%; some exceeding 50%). Should theoretically equal NAV</td>
+            <td>Cannot be profitably exploited: (1) transaction costs of buying all shares and liquidating exceed profit; (2) discounts revert to zero over time. Partial explanations: management fees, unrealized tax liabilities, illiquidity of underlying assets — none fully explain the discount</td>
+          </tr>
+          <tr>
+            <td>Earnings Surprise</td>
+            <td>Stocks with large positive earnings surprises subsequently outperform; negative surprise stocks underperform. Price adjustment is not always efficient — some adjustment occurs AFTER announcement</td>
+            <td>Post-announcement drift suggests trading opportunity. However, some evidence suggests observed abnormal returns are artifacts of insufficient controls for transaction costs and risk. Contradicts semi-strong efficiency</td>
+          </tr>
+          <tr>
+            <td>IPO Underpricing</td>
+            <td>IPOs priced too low on average → prices rise dramatically on first day of trading. Investors who get IPO at offering price may earn abnormal profits. Subsequent long-term performance of IPOs is <strong>below average</strong></td>
+            <td>Short-term: underpricing is real but only beneficial to those who buy at offering price (not in open market). Long-term underperformance suggests initial overoptimism (overreaction). After initial offering, price adjusts quickly → no abnormal returns for open-market buyers (supports semi-strong)</td>
+          </tr>
+          <tr>
+            <td>Predictability from Prior Information</td>
+            <td>Equity returns related to prior interest rates, inflation, stock volatility, dividend yields</td>
+            <td>NOT evidence of inefficiency — returns varying with economic fundamentals is rational. Relationship not consistent over time → cannot generate consistent abnormal trading returns</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Fama-French 3-Factor Model (Context)</div>
+      <div class="f">
+        E(Rᵢ) = Rf + β₁[E(Rmkt) − Rf] + β₂(SMB) + β₃(HML)
+      </div>
+      <div class="note">
+        SMB = Small Minus Big (size factor: small-cap premium)<br>
+        HML = High Minus Low (value factor: high book/market minus low book/market)<br>
+        When value stocks' higher returns are explained by their higher HML beta (more systematic risk), the "anomaly" disappears — it was just compensation for risk, not mispricing.
+      </div>
+    </div>
+
+    <h3>Full Anomaly Map</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Time-Series Anomalies</div>
+        <ul>
+          <li>January effect</li>
+          <li>Day-of-the-week effect</li>
+          <li>Weekend effect</li>
+          <li>Turn-of-the-month effect</li>
+          <li>Holiday effect</li>
+          <li>Time-of-day effect</li>
+          <li>Momentum</li>
+          <li>Overreaction</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Cross-Sectional Anomalies</div>
+        <ul>
+          <li>Size effect</li>
+          <li>Value effect</li>
+          <li>Book-to-market ratios</li>
+          <li>P/E ratio effect</li>
+          <li>Value Line enigma</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Other Anomalies</div>
+        <ul>
+          <li>Closed-end fund discount</li>
+          <li>Earnings surprise</li>
+          <li>IPOs</li>
+          <li>Distressed securities effect</li>
+          <li>Stock splits</li>
+          <li>Super Bowl indicator</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: ANOMALY IMPLICATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Implications of Market Anomalies</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Why anomalies are mostly unexploitable in practice:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Transaction costs</strong>: most anomalies disappear after accounting for trading costs. Price reversals (day-after overreaction) are within the bid-ask spread</li>
+        <li style="margin-bottom:6px;"><strong>Risk adjustment</strong>: many apparent anomalies are just proxies for uncompensated risk. When properly risk-adjusted (e.g., Fama-French), the anomaly vanishes</li>
+        <li style="margin-bottom:6px;"><strong>Data mining</strong>: many anomalies are statistical artifacts — chance patterns in historical data that do not persist out-of-sample</li>
+        <li style="margin-bottom:6px;"><strong>Self-destruction</strong>: once an anomaly is published and exploited, arbitrage activity eliminates it (e.g., size effect, calendar effects)</li>
+        <li style="margin-bottom:6px;"><strong>Inconsistency over time</strong>: some anomalies work for a few years, then fail. Not reliable as trading strategies</li>
+        <li style="margin-bottom:6px;"><strong>No economic rationale</strong>: buying on Mondays (negative returns on average) has no compelling fundamental justification and generates large trading costs</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Bottom Line on Anomalies</div>
+      <p>Most researchers conclude that observed anomalies are <strong>not true violations of market efficiency</strong> — they are products of: (1) flawed statistical methodology, (2) data mining, (3) inadequate risk adjustment, or (4) transaction costs that prevent exploitation. Where anomalies ARE real, their identification and publication causes them to be arbitraged away. On average, markets are efficient — overreactions and under-reactions cancel each other out.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: BEHAVIORAL FINANCE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Behavioral Finance</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Behavioral Finance</div>
+      <div class="def-body">Examines investor behavior to understand how people make decisions, individually and collectively. Does NOT assume rational utility maximization or Bayesian updating. Focuses on <strong>behavioral biases</strong> that affect investment decisions and potentially explain market anomalies.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key distinction</strong>: Market efficiency does NOT require that EVERY individual investor is rational — only that the <strong>market as a whole</strong> is rational. If individuals deviate from rationality, other rational investors observe and correct the deviation. If this correction mechanism breaks down, behavioral biases can create persistent mispricings.</p>
+    </div>
+
+    <h3>Key Behavioral Biases</h3>
+
+    <div class="bias-card">
+      <div class="bias-name">Loss Aversion</div>
+      <div class="bias-body">The dissatisfaction from a loss <strong>exceeds</strong> the satisfaction from a gain of the same magnitude. People prefer avoiding losses over achieving equivalent gains. Can explain overreaction anomalies — investors overreact to bad news because losses are disproportionately painful. Counter: under-reaction is equally prevalent, so on average markets are efficient.</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Herding</div>
+      <div class="bias-body">Investors trade on the same side of the market in the same securities, or ignore their own analysis and imitate other investors. Clustered trading that may or may not be information-based. Can cause <strong>both under- and over-reaction</strong> depending on direction of herd. Does not necessarily mean markets are inefficient — a market can still be efficient even if participants exhibit herding.</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Overconfidence</div>
+      <div class="bias-body">Investors overestimate their ability to process and interpret information. Leads to mispricing if widespread. Predominantly affects <strong>higher-growth companies</strong> (prices react slowly to new information). Mispricing is typically temporary — prices eventually correct. Evidence documented in US, UK, Germany, France, Japan.</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Information Cascades</div>
+      <div class="bias-body">Transmission of information from those who act first → influences decisions of others who ignore their own preferences to imitate. Especially common when accounting information is <strong>complex or noisy</strong> (hard to interpret earnings). Can create serial correlation in returns (consistent with overreaction). May result in correct OR incorrect pricing — if cascade leads to incorrect value it is "fragile" and will eventually self-correct. If informed traders act first → uninformed imitate → information incorporated into prices → actually improves efficiency.</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Representativeness</div>
+      <div class="bias-body">Investors assess probabilities based on similarity to current state or familiar categories rather than base rates. Leads to over-extrapolation of recent trends (e.g., assuming a hot stock will continue to be hot).</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Mental Accounting</div>
+      <div class="bias-body">Investors track gains and losses in separate mental accounts for different investments and treat them differently. Example: reluctant to sell losing stocks (realize a loss in that "account") but quick to sell winners (lock in gain). Leads to suboptimal portfolio decisions.</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Conservatism</div>
+      <div class="bias-body">Investors are <strong>slow to update beliefs</strong> in response to new information — they cling to prior forecasts or views. Contributes to under-reaction anomalies (prices adjust slowly to new information).</div>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-name">Narrow Framing</div>
+      <div class="bias-body">Investors focus on issues in isolation, and their decisions depend on how the issue is framed/posed rather than the underlying substance. Leads to inconsistent decisions for economically equivalent situations.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Behavioral Finance vs. Market Efficiency — The Key Relationship</div>
+      <p>Behavioral finance explains <em>why</em> individual investors behave irrationally. But a market can still be <strong>efficient even if individual participants are irrational</strong> — as long as the market collectively prevents consistent abnormal returns. The two are not mutually exclusive. Behavioral biases help explain anomalies but don't necessarily mean those anomalies can be profitably exploited. The question remains: <strong>can knowledge of behavioral biases enable consistent abnormal profits?</strong> The answer from evidence is largely no — or at best, very difficult.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Behavioral Finance Does NOT Disprove EMH</div>
+      <p>A common exam mistake is to conclude that because behavioral biases exist, markets cannot be efficient. This is wrong. Market efficiency only requires that investors <strong>cannot consistently beat the market on a risk-adjusted basis</strong> — not that every individual investor is perfectly rational. Herding, loss aversion, and overconfidence are documented but don't automatically create exploitable, persistent mispricings.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Efficient market</strong>: prices reflect new information quickly and rationally. Prices react only to the UNEXPECTED portion of information releases.</li>
+        <li>✅ <strong>Abnormal return</strong> = Actual return − Expected return. Evidence of consistent abnormal returns contradicts the corresponding form of efficiency.</li>
+        <li>✅ <strong>Market value</strong> = current buy/sell price. <strong>Intrinsic value</strong> = estimated true value based on complete information (never known with certainty, always estimated). Active investors profit from gaps between the two.</li>
+        <li>✅ <strong>Market efficiency is a continuum</strong> — not binary. Varies by time, geography, and market type.</li>
+        <li>✅ <strong>Factors promoting efficiency</strong>: more market participants/analyst coverage, information availability, active arbitrageurs, low transaction costs. <strong>Factors impeding</strong>: trading restrictions, short-selling restrictions, high transaction costs, low information availability.</li>
+        <li>✅ <strong>Reg FD</strong>: if issuers give non-public info to some investors, must simultaneously disclose to public → promotes fairness and efficiency.</li>
+        <li>✅ <strong>Bounds of arbitrage</strong>: mispricings within transaction costs are not exploitable. Efficient "within the bounds of transaction costs." Narrow in liquid markets (T-bills), wide in illiquid markets.</li>
+        <li>✅ <strong>Grossman-Stiglitz (1980)</strong>: in equilibrium, gross of expenses active investing earns a return sufficient to cover information-acquisition costs. Net of expenses = fair risk-adjusted return only. Not a violation of efficiency.</li>
+        <li>✅ <strong>Weak form</strong>: prices reflect past prices + volume. Technical analysis futile. Evidence: developed markets ARE weak-form efficient.</li>
+        <li>✅ <strong>Semi-strong form</strong>: prices reflect all PUBLIC information. Fundamental analysis on public data is futile. Test: event studies. Evidence: developed markets are generally semi-strong efficient (some anomalies persist).</li>
+        <li>✅ <strong>Strong form</strong>: prices reflect ALL information (public + private). Even insiders cannot profit. Evidence: markets are NOT strong-form efficient — insiders DO earn abnormal returns.</li>
+        <li>✅ <strong>Nesting rule</strong>: Strong ⊃ Semi-strong ⊃ Weak. If semi-strong → must also be weak. If NOT weak → cannot be semi-strong or strong.</li>
+        <li>✅ <strong>Event study steps</strong>: identify period → identify stocks with event → estimate expected return → calculate excess return (actual − expected) → test if abnormal returns ≠ 0. Excess return ONLY at announcement = efficient. Excess return AFTER announcement = inefficient.</li>
+        <li>✅ <strong>Technical analysis</strong>: useful in detecting patterns → arbitrages them away → maintains weak-form efficiency. Cannot consistently earn abnormal profits in developed markets. Some evidence in developing markets.</li>
+        <li>✅ <strong>Fundamental analysis</strong>: still NECESSARY even in semi-strong efficient markets — disseminates information, facilitates correct pricing. Can earn abnormal profits only if analyst has comparative advantage (superior insight/model).</li>
+        <li>✅ <strong>Active vs. passive</strong>: in weak + semi-strong efficient markets → passive preferred (lower costs). Mutual funds on average ≈ market before fees; <strong>below market after fees</strong>. Portfolio manager's role: objectives, diversification, risk, tax — not necessarily beating the market.</li>
+        <li>✅ <strong>Data mining</strong>: searching data for patterns without prior hypothesis → finds patterns by chance → not reliable. Valid anomaly research requires hypothesis first, then testing.</li>
+        <li>✅ <strong>January effect</strong>: higher returns in January (especially small caps). Explanations: tax-loss selling, window dressing. Recent evidence: not persistent after proper risk adjustment. Also known as turn-of-year effect.</li>
+        <li>✅ <strong>Calendar anomalies</strong> (day-of-week, weekend, holiday, turn-of-month): mostly eliminated over time — either arbitraged away or never truly significant.</li>
+        <li>✅ <strong>Momentum</strong>: recent winners continue to win (short-term). Contradicts weak-form. Counter-argument: may be rational response to growth rate shocks.</li>
+        <li>✅ <strong>Overreaction (DeBondt &amp; Thaler)</strong>: investors overreact to news → buy losers, sell winners (contrarian strategy). Prior 3–5 year losers subsequently outperform. Semi-strong contradiction.</li>
+        <li>✅ <strong>Size effect</strong>: small-cap outperforms large-cap risk-adjusted. Not confirmed in subsequent studies — may have been chance or arbitraged away.</li>
+        <li>✅ <strong>Value effect</strong>: low P/E, low M/B, high dividend yield stocks outperform. Contradicts semi-strong. <strong>Fama-French 3-Factor model</strong> (adds SMB + HML factors) eliminates the anomaly — value premium = compensation for additional systematic risk.</li>
+        <li>✅ <strong>Closed-end fund discount</strong>: trades 4–10% below NAV on average. Not exploitable: transaction costs + discounts revert to zero. Partial explanations: management fees, tax liabilities, illiquidity — none fully explains it.</li>
+        <li>✅ <strong>Earnings surprise</strong>: post-announcement drift (prices continue adjusting after announcement) contradicts semi-strong efficiency. But observed abnormal returns may be artifacts of inadequate risk and cost controls.</li>
+        <li>✅ <strong>IPO anomaly</strong>: average underpricing (large first-day gain) benefits only investors who buy at offering price. After offering, prices adjust quickly (semi-strong). Long-term IPO performance is below average (initial overoptimism).</li>
+        <li>✅ <strong>Loss aversion</strong>: losses hurt more than equal gains feel good → overreaction. Counter: underreaction equally prevalent → on average efficient.</li>
+        <li>✅ <strong>Herding</strong>: investors imitate each other → clustered trading → can cause over- or under-reaction. Market can still be efficient even with herding behavior.</li>
+        <li>✅ <strong>Overconfidence</strong>: overestimate ability to process information → mispricing → typically temporary. Especially in growth stocks.</li>
+        <li>✅ <strong>Information cascades</strong>: early actors influence later actors who ignore own information. Creates serial correlation. If informed traders act first → actually helps incorporate information → can improve efficiency. Most prevalent when information is complex/noisy.</li>
+        <li>✅ <strong>Other biases</strong>: Representativeness (judge by similarity), Mental accounting (track gains/losses separately), Conservatism (slow to update beliefs → under-reaction), Narrow framing (context-dependent decisions).</li>
+        <li>✅ <strong>Behavioral finance does NOT disprove EMH</strong>: EMH only requires that markets prevent consistent abnormal returns — not that all individuals are rational. Biases are documented but markets can still be collectively efficient.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Formulas &amp; Definitions — Quick Reference</div>
+      <div class="f">
+        Abnormal Return = Actual Return − Expected Return<br><br>
+        Fama-French 3-Factor Model:<br>
+        E(Rᵢ) = Rf + β₁[E(Rmkt) − Rf] + β₂(SMB) + β₃(HML)<br>
+        SMB = Small Minus Big (size premium)<br>
+        HML = High Minus Low book/market (value premium)<br><br>
+        EMH Nesting: Strong ⊃ Semi-Strong ⊃ Weak<br>
+        If A ⊃ B: being efficient at level A requires being efficient at level B<br><br>
+        Event Study Excess Return = Actual Return (event date) − Expected Return (CAPM/model)<br>
+        Excess at announcement only → efficient. Excess after announcement → inefficient.
+      </div>
+      <div class="note">
+        Developed markets evidence: Weak ✓ | Semi-Strong ≈ ✓ (with anomalies) | Strong ✗<br>
+        Developing markets: may not even be semi-strong efficient<br>
+        Most anomalies disappear after: proper risk adjustment, transaction costs, and data mining correction
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 3: Market Efficiency · Exam Prep Notes
+</footer>
+
+</body>
+</html>

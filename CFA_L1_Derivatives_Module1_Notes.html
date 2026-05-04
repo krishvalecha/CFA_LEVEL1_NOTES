@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 1: Derivative Instrument and Derivative Market Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --otc-bg: #111a16; --otc-border: #4cc98a;
+    --etd-bg: #1a1020; --etd-border: #4c8bc9;
+    --firm-bg: #1a1510; --firm-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .otc-card { background: var(--otc-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .otc-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .etd-card { background: var(--etd-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .etd-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .firm-card { background: var(--firm-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .firm-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 1</div>
+  <h1>Derivative Instrument &amp; <span>Derivative Market Features</span></h1>
+  <p>Exam-ready notes: definition and core features of a derivative, firm commitments vs. contingent claims, derivative underlyings (equities, fixed income, FX, commodities, credit), OTC vs. exchange-traded derivative markets, clearing and settlement, central clearing (CCP), and the novation process.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What is a Derivative?</a>
+  <a class="toc-item" href="#s2">02 · Key Derivative Features</a>
+  <a class="toc-item" href="#s3">03 · Firm Commitments vs. Contingent Claims</a>
+  <a class="toc-item" href="#s4">04 · Why Use Derivatives?</a>
+  <a class="toc-item" href="#s5">05 · Derivative Underlyings</a>
+  <a class="toc-item" href="#s6">06 · OTC vs. Exchange-Traded Markets</a>
+  <a class="toc-item" href="#s7">07 · Central Clearing &amp; the CCP</a>
+  <a class="toc-item" href="#s8">08 · OTC vs. ETD — Master Comparison</a>
+  <a class="toc-item" href="#s9">09 · Investor Scenarios</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: WHAT IS A DERIVATIVE?          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What Is a Derivative?</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Derivative</div>
+      <div class="def-body">A <strong>financial instrument that derives its value from the performance of an underlying asset</strong> (or variable). Derivatives involve the future exchange of cash flows whose value is based on an underlying — rather than the immediate exchange of the underlying itself (which occurs in cash/spot markets). The asset or variable referenced is called the <strong>underlying</strong>.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Cash market (spot market):</strong> Specific assets are exchanged immediately at current prices (cash prices / spot prices). You buy a stock today and receive it today.</p>
+      <p style="margin-top:10px;"><strong>Derivative market:</strong> An agreement today to exchange cash flows in the future, based on the value of an underlying. You do NOT necessarily exchange the underlying itself — you exchange cash flows derived from it.</p>
+      <p style="margin-top:10px;"><strong>Key distinction:</strong> A derivative does NOT directly pass through the returns of the underlying — it <strong>transforms</strong> the performance of the underlying. For example, a forward contract on a stock lets you agree today to buy or sell the stock at a fixed price in the future — isolating the price risk without requiring immediate capital outlay.</p>
+    </div>
+
+    <h3>Forward Contract Example — AMY Investments</h3>
+
+    <div class="auction-box">
+      <div class="label">AMY Investments Forward Contract on Airbus (AIR) Shares</div>
+      <div class="f">
+        At t=0 (today):<br>
+        AMY (Forward Seller) agrees with Financial Intermediary (Forward Purchaser)<br>
+        to deliver 1,000 AIR shares at €30/share in 6 months<br><br>
+        At t=T (6 months):<br>
+        If spot price ST = €25: AIR now worth €25,000 but AMY delivers at €30,000<br>
+        → AMY receives €5,000 gain (or cash-settles the €5,000 difference)<br><br>
+        If spot price ST = €35: AIR now worth €35,000 but AMY delivers at €30,000<br>
+        → AMY absorbs €5,000 loss (or cash-settles the €5,000 difference)<br><br>
+        Settlement can be PHYSICAL (actual share delivery) or CASH (net difference only)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Cash Settlement vs. Physical Settlement</div>
+      <p>Most derivatives settle in <strong>cash</strong> — only the net profit or loss changes hands, not the underlying asset itself. Physical settlement (actual delivery of the underlying) is less common and typically occurs in commodity derivatives or when the contract specifically requires it. Cash settlement is simpler, cheaper, and avoids the logistics of physically delivering shares, barrels of oil, or metric tons of lithium.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: KEY DERIVATIVE FEATURES        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Key Derivative Features</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Underlying</td>
+            <td>The reference asset or variable from which the derivative derives its value. May be a single asset, a group of assets, or a variable (like an interest rate or credit index).</td>
+            <td>AIR stock, S&P 500 index, SOFR, EUR/USD exchange rate, crude oil, credit default index</td>
+          </tr>
+          <tr>
+            <td>Counterparties</td>
+            <td>The two legal entities entering the contract. Derivative transactions typically involve at least one financial intermediary (dealer/bank) as a counterparty.</td>
+            <td>AMY Investments (forward seller) + Financial Intermediary (forward purchaser)</td>
+          </tr>
+          <tr>
+            <td>Maturity / Settlement Date</td>
+            <td>The specific future date on which cash flows are exchanged and/or the contract closes. Also called the expiry date for options.</td>
+            <td>"Six months from Start Date" in AMY's forward term sheet</td>
+          </tr>
+          <tr>
+            <td>Contract Size (Notional)</td>
+            <td>The amount used to calculate the contract's payments and value. Often called notional principal or notional amount. May remain constant or change over time.</td>
+            <td>1,000 AIR shares at €30 = €30,000 notional; CAD250 million in Esterr's swap</td>
+          </tr>
+          <tr>
+            <td>Buyer (Long)</td>
+            <td>Enters a contract whose value changes like a long position in the underlying — benefits when the underlying rises.</td>
+            <td>Financial Intermediary in AMY's forward (forward purchaser)</td>
+          </tr>
+          <tr>
+            <td>Seller (Short)</td>
+            <td>Has exposure similar to a short position — benefits when the underlying falls.</td>
+            <td>AMY Investments (forward seller) — benefits if AIR falls below €30</td>
+          </tr>
+          <tr>
+            <td>Counterparty Credit Risk</td>
+            <td>The risk that one counterparty cannot meet its financial obligations under the derivative contract. A critical consideration — especially in OTC markets.</td>
+            <td>If the financial intermediary defaults before settlement, AMY may not collect its profit</td>
+          </tr>
+          <tr>
+            <td>Stand-alone vs. Embedded</td>
+            <td>Stand-alone: a distinct, separate derivative contract. Embedded: a derivative within an underlying security (cannot be separated and traded independently).</td>
+            <td>Stand-alone: AMY's forward contract. Embedded: call option in a callable bond, conversion right in a convertible bond.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Stand-Alone vs. Embedded Derivatives</div>
+      <p><strong>Stand-alone derivatives</strong> (forward contracts, futures, swaps, options) are distinct contracts that can be entered and exited independently. <strong>Embedded derivatives</strong> are part of a host instrument (e.g., the call option in a callable bond, the conversion right in a convertible bond, the put option in a putable bond) — they <strong>cannot be removed and traded separately</strong>. The exam frequently tests this distinction. Recall from Fixed Income: callable/putable/convertible bonds have embedded options that affect pricing and yield measures (YTW, OAS).</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key ISDA Documentation Note</div>
+      <p>OTC derivative contracts are typically governed by an <strong>ISDA Master Agreement</strong> (International Swaps and Derivatives Association). This is a standardized legal framework that defines the terms of OTC derivatives between two parties — covering netting, termination events, and credit terms. The existence of ISDA documentation is a signal that a contract is an OTC derivative. On the exam, seeing "ISDA Agreement" in a term sheet = OTC market context.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: FIRM COMMITMENTS vs. CONTINGENT CLAIMS     -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Firm Commitments vs. Contingent Claims</h2>
+    </div>
+
+    <div class="card">
+      <p>All derivatives fall into one of two fundamental categories based on <strong>who decides if and when settlement occurs</strong>:</p>
+    </div>
+
+    <div class="two-col">
+      <div class="firm-card">
+        <div class="firm-title">Firm Commitment</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>A <strong>pre-determined amount is agreed to be exchanged at settlement</strong> — both parties are obligated to perform</li>
+          <li>Neither party can unilaterally walk away from the agreement</li>
+          <li>Settlement will occur — the only question is the direction and magnitude of payment</li>
+          <li><strong>Types: Forward contracts, futures contracts, swaps</strong></li>
+          <li>Example: AMY's forward — AMY MUST deliver 1,000 shares at €30; counterparty MUST pay €30,000 (or cash settle)</li>
+          <li>Esterr's interest rate swap — Esterr MUST pay fixed and receive floating for 3.5 years</li>
+        </ul>
+      </div>
+      <div class="etd-card">
+        <div class="etd-title">Contingent Claim</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+          <li><strong>One of the counterparties determines whether and when the trade will settle</strong> — the holder has a right, not an obligation</li>
+          <li>The holder will only exercise if it is favorable to do so</li>
+          <li>Settlement is contingent on the holder's decision — not guaranteed</li>
+          <li><strong>Primary type: Options</strong> (calls and puts)</li>
+          <li>Example: Hightest's index option — Hightest has the RIGHT (not obligation) to buy SIXV at a 5% premium to spot in 6 months; will only exercise if the market rises above the strike price</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Firm Commitment vs. Contingent Claim — Master Summary</div>
+      <div class="f">
+        FIRM COMMITMENTS: Forwards, Futures, Swaps<br>
+        → Both parties OBLIGATED to perform at settlement<br>
+        → Settlement WILL occur (direction/amount may vary)<br>
+        → AMY's forward contract = firm commitment<br>
+        → Esterr's interest rate swap = firm commitment<br><br>
+        CONTINGENT CLAIMS: Options (calls and puts)<br>
+        → HOLDER has a RIGHT, not an obligation<br>
+        → Settlement is CONTINGENT on holder exercising the right<br>
+        → Holder exercises only if profitable (in-the-money)<br>
+        → Hightest's SIXV index call option = contingent claim
+      </div>
+      <div class="note">
+        <strong>Key exam signal:</strong> "right to buy/sell" → contingent claim (option). "agree to buy/sell" or "obligated to" → firm commitment (forward/futures/swap).<br>
+        <strong>Swaps as firm commitments:</strong> An interest rate swap involves periodic exchange of cash flows (fixed vs. floating) — both parties are obligated for the full tenor. Each payment date is a mini-firm commitment.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why "Contingent"? The Option Buyer Always Wins or Breaks Even</div>
+      <p>An option holder will only exercise if doing so is profitable — they can always choose not to exercise if the option is out-of-the-money. This asymmetric payoff is the defining feature of a contingent claim. But this asymmetry comes at a cost: the option buyer pays an upfront <strong>option premium</strong> to the seller to compensate for bearing the one-sided risk. Firm commitments require no upfront payment — they are symmetric obligations.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: WHY USE DERIVATIVES?           -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Why Use Derivatives? — Purposes &amp; Benefits</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivatives expand the set of opportunities available to market participants <strong>beyond the cash market</strong> to create or modify exposure to an underlying. They do NOT merely replicate cash market positions — they offer distinct advantages.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Purpose</th><th>How Derivatives Help</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hedging</td>
+            <td>Offset or neutralize an existing or anticipated exposure to an underlying. The derivative used for this purpose is called a hedge. Hedging transfers risk to another party.</td>
+            <td>Airline buys oil futures to hedge rising fuel costs. Exporter sells currency forward to lock in domestic revenue. Esterr uses interest rate swap to fix floating loan payments.</td>
+          </tr>
+          <tr>
+            <td>Short Selling / Directional Bets</td>
+            <td>Benefit from an expected DECLINE in the value of the underlying without needing to short-sell the actual asset (which may be complex or restricted).</td>
+            <td>Investor sells equity index futures expecting a market decline. Bank buys CDS on a bond issuer expecting a credit deterioration.</td>
+          </tr>
+          <tr>
+            <td>Portfolio Diversification</td>
+            <td>Gain exposure to new asset classes, regions, or sectors quickly and cheaply using derivatives — without having to physically buy every underlying security.</td>
+            <td>Fund manager buys commodity index futures for diversification. Investor uses equity index swap to shift from domestic to international equity exposure.</td>
+          </tr>
+          <tr>
+            <td>Create Large Exposures (Leverage)</td>
+            <td>Derivatives typically require only a small upfront cash outlay (margin or premium) to control a large notional exposure — creating leverage.</td>
+            <td>Futures on S&P 500 with a small margin deposit control hundreds of thousands of dollars of equity exposure.</td>
+          </tr>
+          <tr>
+            <td>Lower Transaction Costs &amp; Better Liquidity</td>
+            <td>Derivative markets are often more liquid and have lower transaction costs than the underlying spot markets — especially for index exposures.</td>
+            <td>Trading S&P 500 index futures is cheaper and faster than buying all 500 stocks. CDS trading is faster than bond market trading.</td>
+          </tr>
+          <tr>
+            <td>Alter Exposure Profile Without Spot Market Trading</td>
+            <td>Modify the risk profile of a portfolio (e.g., duration, currency exposure, credit risk) without actually buying or selling the underlying assets.</td>
+            <td>Fund manager increases portfolio duration using interest rate futures instead of buying long-term bonds. Manager uses equity swap to change sector allocation without trading individual stocks.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Hedging</div>
+      <div class="def-body">Use of a derivative to <strong>offset or neutralize existing or anticipated exposure</strong> to an underlying. The derivative itself is called a "hedge." Hedging does not eliminate risk — it transfers the risk to another counterparty who is willing to bear it. Example: AMY uses the forward contract to transfer the price risk of Airbus shares to the financial intermediary.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Hedgers vs. Speculators vs. Arbitrageurs</div>
+      <p><strong>Hedgers</strong> use derivatives to REDUCE risk — they have an existing exposure they want to offset.<br>
+      <strong>Speculators</strong> use derivatives to TAKE ON risk — they have no existing exposure and are betting on price direction. They provide liquidity when hedgers need counterparties.<br>
+      <strong>Arbitrageurs</strong> use derivatives to EXPLOIT mispricings — they seek risk-free profits from price discrepancies between the derivative and the underlying. Their activity keeps markets efficient.<br>
+      All three participant types are needed for liquid, well-functioning derivative markets.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: DERIVATIVE UNDERLYINGS         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Derivative Underlyings — The Five Major Categories</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivatives are grouped by the underlying from which their value is derived. A derivative contract may reference more than one underlying. The five major categories are:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Asset Class</th><th>Examples of Underlyings</th><th>Common Derivative Types</th><th>Key Uses</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equities</td>
+            <td>Individual stocks; equity indexes (FTSE 100, S&P 500); equity price volatility; equity index sectors</td>
+            <td>Options (most common for individual stocks); forwards, futures, swaps on indexes; volatility swaps</td>
+            <td>Investors: change exposure profile, directional bets. Issuers: employee compensation (stock options, warrants). Index swaps for asset allocation.</td>
+          </tr>
+          <tr>
+            <td>Fixed Income &amp; Interest Rates</td>
+            <td>Government bonds (Treasuries, JGBs); market reference rates (SOFR, €STR, SONIA); bond indexes</td>
+            <td>Options, forwards, futures, interest rate swaps (fixed-for-floating)</td>
+            <td>Investors: change portfolio duration without trading bonds. Issuers: alter interest rate exposure profile (e.g., convert floating debt to fixed via swap).</td>
+          </tr>
+          <tr>
+            <td>Currencies (FX)</td>
+            <td>Exchange rates (EUR/USD, GBP/JPY); foreign sovereign bonds</td>
+            <td>Options, forwards, futures, cross-currency swaps</td>
+            <td>Investors: hedge global portfolio FX risk. Issuers/Exporters: hedge revenue from foreign commercial transactions. Importers: lock in purchase prices.</td>
+          </tr>
+          <tr>
+            <td>Commodities</td>
+            <td>Soft: cattle, corn, soybeans, coffee. Hard: crude oil, gold, copper, lithium. Commodity indexes.</td>
+            <td>Options, forwards, futures (most common). Commodity index swaps.</td>
+            <td>Consumers/Producers: manage operating price risk (e.g., airline buys oil futures). Investors: portfolio diversification without physical delivery.</td>
+          </tr>
+          <tr>
+            <td>Credit</td>
+            <td>Single-reference entities (individual company credit); credit indexes (CDX, iTraxx)</td>
+            <td>Credit default swaps (CDS) — primary instrument</td>
+            <td>Investors: manage credit risk separately from the bond market; change credit exposure profile. Banks/intermediaries: offset credit exposure to specific borrowers.</td>
+          </tr>
+          <tr>
+            <td>Other (Emerging)</td>
+            <td>Weather; cryptocurrencies; longevity (life expectancy)</td>
+            <td>Various — less common and harder to price</td>
+            <td>Issuers: manage operating risks (weather affects energy, agriculture). Insurance companies/pension plans: hedge longevity risk (increased life expectancy liability).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Important Specifics to Know Per Category</h3>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Equities</div>
+        <ul>
+          <li>Options most common on individual stocks</li>
+          <li>Stock options used as <strong>executive/employee compensation</strong></li>
+          <li><strong>Warrants</strong>: options granted by the issuer directly (buyback from issuer, not market)</li>
+          <li><strong>Equity swaps</strong>: swap return of one index for another (or for interest rate) — used in top-down asset allocation</li>
+          <li>Volatility derivatives: trade realized volatility separately from price direction</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Fixed Income / Rates</div>
+        <ul>
+          <li><strong>Interest rate</strong> is NOT an asset — it is a variable used as underlying</li>
+          <li>Government bond futures often allow multiple bond issues to be delivered (delivery basket)</li>
+          <li><strong>Interest rate swaps</strong>: convert fixed to floating (or vice versa)</li>
+          <li>MRR (SOFR, €STR, SONIA) replaced old survey-based LIBOR rates</li>
+          <li>Use for duration management without trading bonds</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Credit</div>
+        <ul>
+          <li><strong>CDS (Credit Default Swap)</strong>: primary credit derivative</li>
+          <li>Trades on a spread = implied probability of default</li>
+          <li>Allows managing default risk SEPARATELY from bond market</li>
+          <li>Buy CDS = buy protection (benefits if issuer defaults)</li>
+          <li>Sell CDS = sell protection (takes on credit risk, earns spread)</li>
+          <li>Index CDS: change exposure to broad high-yield or IG credit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Stock Options vs. Warrants — Key Difference</div>
+      <p><strong>Stock options</strong> traded in markets are contracts between two investors (or an investor and an intermediary) — the issuing company is NOT involved. When exercised, the buyer buys existing shares from another market participant.<br>
+      <strong>Warrants</strong> are options issued directly BY the company to employees or investors. When exercised, the company issues NEW shares to the holder (diluting existing shareholders). Warrants are therefore a corporate finance tool that directly affects the company's equity structure.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ESG Derivatives — LME Lithium Contract</div>
+      <p>The LME Lithium Futures Contract (introduced 2021) illustrates how derivative markets adapt to ESG trends. As electric vehicle (EV) adoption grows, lithium demand for battery production has surged. The LME contract: cash settled in USD, based on battery-grade lithium hydroxide monohydrate (56.5% LiOH.H₂O), lot size = 1 metric ton, monthly maturities from 1–15 months, final settlement based on Fastmarkets' weekly spot price average for China/Japan/Korea. This is a testable example of a commodity futures contract adapting to new environmental market needs.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 6: OTC vs. EXCHANGE-TRADED MARKETS        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>OTC vs. Exchange-Traded Derivative (ETD) Markets</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivatives trade in two distinct market structures with very different characteristics. The exam heavily tests these differences — know them cold.</p>
+      <p style="margin-top:10px;"><strong>Historical evolution:</strong> Derivatives began with exchange-traded futures in commodities (soft and hard). In the 1980s, OTC financial derivatives in interest rates and currencies emerged. In the 1990s, credit derivatives were added. Today, both markets co-exist, with post-2008 regulation pushing OTC derivatives toward central clearing.</p>
+    </div>
+
+    <div class="otc-card">
+      <div class="otc-title">Over-the-Counter (OTC) Derivative Markets</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Participants:</strong> Derivative end users (corporations, investors, sovereigns) deal directly with <strong>dealers / financial intermediaries</strong> (commercial banks, investment banks)</li>
+        <li><strong>Market makers:</strong> OTC dealers who enter offsetting bilateral transactions with each other to transfer risk; stand ready to buy and sell</li>
+        <li><strong>Customization:</strong> Contract terms can be tailored to match specific risk exposures — non-standard maturities, sizes, payment dates, underlying specifications. This is the key advantage for hedgers.</li>
+        <li><strong>Documentation:</strong> Governed by ISDA Master Agreement and credit annexes between the two parties</li>
+        <li><strong>Transparency:</strong> Lower — not all transactions are publicly disclosed</li>
+        <li><strong>Counterparty credit risk:</strong> Higher — no automatic guarantee against default; bilateral risk between the two parties (unless centrally cleared)</li>
+        <li><strong>Liquidity:</strong> Can be lower, especially for bespoke (highly customized) instruments</li>
+        <li><strong>Examples:</strong> Interest rate swaps, currency forwards, custom equity swaps, credit default swaps, bespoke options</li>
+      </ul>
+    </div>
+
+    <div class="etd-card">
+      <div class="etd-title">Exchange-Traded Derivative (ETD) Markets</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li><strong>Participants:</strong> Market makers (dealers) hold exchange memberships; end users access through broker/dealers. Speculators/risk-takers provide liquidity when dealers can't find counterparties.</li>
+        <li><strong>Standardization:</strong> All contract terms are set by the exchange — contract size, underlying specifications, maturity dates, delivery type (physical or cash), settlement procedures</li>
+        <li><strong>Exchanges:</strong> NSE (India), B3 (Brazil), CME (US), CBOE (US options), Euronext, LME (London Metal Exchange for commodities)</li>
+        <li><strong>Transparency:</strong> Full — all transactions disclosed to exchange and national regulators</li>
+        <li><strong>Counterparty credit risk:</strong> Low — exchange requires <strong>collateral deposit (margin)</strong> at inception and throughout the life of the trade; exchange provides guarantee against default</li>
+        <li><strong>Clearing &amp; settlement:</strong> Efficient — standardized process verifying execution, exchange of payments, recording participants</li>
+        <li><strong>Liquidity:</strong> Generally higher due to standardization and active markets; market makers earn bid-offer spread</li>
+        <li><strong>Examples:</strong> S&P 500 index futures, Treasury bond futures, gold futures, LME lithium futures, equity index options (CBOE), currency futures</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Clearing vs. Settlement — Know the Difference:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Clearing:</strong> The exchange's process of <strong>verifying</strong> the execution of a transaction, exchange of payments, and recording the participants — occurs before settlement</li>
+        <li><strong>Settlement:</strong> The actual <strong>payment of final amounts and/or delivery</strong> of securities or physical commodities between counterparties based on exchange rules</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 7: CENTRAL CLEARING & THE CCP             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Central Clearing &amp; the Central Counterparty (CCP)</h2>
+    </div>
+
+    <div class="card">
+      <p>Following the <strong>2008 global financial crisis</strong>, regulators recognized that bilateral OTC derivative credit risk had become systemic — a major dealer defaulting (like Lehman Brothers) could cascade through the financial system. In response, global regulatory authorities instituted a <strong>central clearing mandate</strong> for most OTC derivatives.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Central Counterparty (CCP)</div>
+      <div class="def-body">A financial institution that interposes itself between the two counterparties of a derivative transaction, assuming the <strong>counterparty credit risk</strong> of both sides. The CCP provides clearing and settlement services. It becomes the buyer to every seller and the seller to every buyer — eliminating bilateral counterparty credit risk between dealers.</div>
+    </div>
+
+    <h3>Central Clearing Process — Three Steps</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Trade executed on a Swap Execution Facility (SEF).</strong><br>
+          A Swap Execution Facility (SEF) is a swap trading platform accessed by multiple dealers. The two financial intermediaries execute the trade between themselves on the SEF. At this point, the trade is a bilateral OTC transaction.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>SEF trade information submitted to the CCP.</strong><br>
+          The original transaction details from the SEF are shared with the Central Counterparty. The CCP reviews and accepts the trade for clearing.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Novation — CCP replaces the original trade.</strong><br>
+          The <strong>novation process</strong> substitutes the initial SEF contract with two identical new contracts, each facing the CCP. The original bilateral trade between the two dealers is extinguished. The CCP becomes the <strong>counterparty to BOTH financial intermediaries</strong> simultaneously — eliminating bilateral credit risk between them. The CCP now bears all the credit risk (with appropriate collateral and safeguards).
+        </div>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Novation</div>
+      <div class="def-body">The legal process by which the original bilateral trade between two parties is replaced ("novated") by two new trades, each between one of the original parties and the CCP. After novation, each counterparty faces the CCP — not each other. The bilateral counterparty credit risk between the two dealers is completely eliminated.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Benefits of Central Clearing</div>
+        <ul>
+          <li>Eliminates bilateral counterparty credit risk between dealers</li>
+          <li>CCP manages credit risk more efficiently through netting and collateral management</li>
+          <li>Issuers/investors retain flexibility and customization of OTC contracts when facing their dealer</li>
+          <li>Transparency and standardization benefits of ETD markets applied to OTC space</li>
+          <li>Reduced systemic risk — no single dealer default cascades through the system</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Risks &amp; Limitations of Central Clearing</div>
+        <ul>
+          <li><strong>Risk concentration:</strong> Systemic credit risk transfers FROM many dealers TO the CCP — concentrating it in one place</li>
+          <li>If the CCP itself faces financial stress, the consequences are severe and systemic</li>
+          <li>"Too big to fail" problem now applies to CCPs</li>
+          <li>Proper safeguards (margin requirements, default funds, capital buffers) are essential to prevent CCP failure</li>
+          <li>Some bespoke OTC contracts are difficult to centrally clear (remain bilateral)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Central Clearing Doesn't Eliminate Risk — It Concentrates It</div>
+      <p>Central clearing was designed to reduce systemic risk from dealer-to-dealer bilateral exposures. However, it creates a new form of systemic risk: the CCP itself becomes a critical node in the financial system. If a major CCP were to fail (due to inadequate collateral, catastrophic market events, or operational failures), the consequences would be more severe than any individual dealer default. This is why robust CCP safeguards — initial margin, variation margin, default funds, and loss-sharing arrangements — are essential regulatory requirements.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 8: OTC vs. ETD MASTER COMPARISON TABLE    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>OTC vs. ETD — Complete Master Comparison Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>OTC (Over-the-Counter)</th><th>ETD (Exchange-Traded)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Contract Terms</td>
+            <td><strong>Customized</strong> — tailored to the exact needs of the end user (non-standard maturities, sizes, payment dates)</td>
+            <td><strong>Standardized</strong> — all terms set by the exchange (size, maturity, delivery type, underlying specifications)</td>
+          </tr>
+          <tr>
+            <td>Participants</td>
+            <td>End users + dealers/financial intermediaries (market makers). ISDA agreements govern relationships.</td>
+            <td>Exchange members (market makers/dealers) + end users via brokers. Speculators provide liquidity.</td>
+          </tr>
+          <tr>
+            <td>Transparency</td>
+            <td><span class="tag tag-red">Lower</span> — not all transactions publicly disclosed; bilateral information only</td>
+            <td><span class="tag tag-green">Higher</span> — full information disclosed to exchange and national regulators</td>
+          </tr>
+          <tr>
+            <td>Counterparty Credit Risk</td>
+            <td><span class="tag tag-red">Higher</span> — bilateral risk; no automatic guarantee. Mitigated by central clearing post-2008.</td>
+            <td><span class="tag tag-green">Lower</span> — exchange guarantees against default; collateral required at inception and throughout</td>
+          </tr>
+          <tr>
+            <td>Collateral / Margin</td>
+            <td>Negotiated between parties (credit support annexes under ISDA). CCPs require margin for centrally cleared OTC.</td>
+            <td>Mandatory margin (initial margin + variation margin) paid to exchange via financial intermediary</td>
+          </tr>
+          <tr>
+            <td>Clearing &amp; Settlement</td>
+            <td>Bilateral (or via CCP under central clearing mandate post-2008)</td>
+            <td>Efficient standardized process through exchange's clearing house</td>
+          </tr>
+          <tr>
+            <td>Liquidity</td>
+            <td>Variable — can be less liquid for bespoke instruments; more liquid for standard products</td>
+            <td>Generally higher — standardization + active market makers + transparent pricing</td>
+          </tr>
+          <tr>
+            <td>Transaction Costs</td>
+            <td>Higher for customized contracts; involves dealer bid-offer spread</td>
+            <td>Lower — competitive exchange environment; market makers earn small bid-offer spread</td>
+          </tr>
+          <tr>
+            <td>Flexibility</td>
+            <td><span class="tag tag-green">High</span> — can match any specific risk profile; critical for corporate hedgers</td>
+            <td><span class="tag tag-red">Low</span> — must accept standard terms; may not perfectly match hedger's exposure</td>
+          </tr>
+          <tr>
+            <td>Typical Instruments</td>
+            <td>Interest rate swaps, currency forwards, credit default swaps, bespoke options, commodity swaps</td>
+            <td>Futures (equity index, Treasuries, commodities), standardized options (CBOE), LME metal futures</td>
+          </tr>
+          <tr>
+            <td>Post-2008 Regulation</td>
+            <td>Most OTC derivatives now subject to central clearing mandate — reduces bilateral credit risk; SEF execution required</td>
+            <td>Already had exchange-level safeguards; less impacted by post-2008 reform</td>
+          </tr>
+          <tr>
+            <td>Best for</td>
+            <td>Corporate hedgers with specific non-standard exposures; large institutional investors with bespoke needs</td>
+            <td>Speculative trading; standardized hedges; investors seeking liquidity and price transparency</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ OTC vs. ETD Key Exam Points</div>
+      <div class="f">
+        OTC:  MORE flexible, LESS transparent, MORE counterparty risk, HIGHER costs (usually)<br>
+        ETD:  LESS flexible, MORE transparent, LESS counterparty risk, LOWER costs (usually)<br><br>
+        OTC counterparty credit risk is mitigated by:<br>
+        → ISDA credit terms (bilateral credit support)<br>
+        → Central clearing mandate post-2008 (CCP interposes via novation)<br><br>
+        ETD counterparty credit risk is mitigated by:<br>
+        → Mandatory margin (collateral) at inception and throughout trade life<br>
+        → Exchange guarantee against counterparty default<br><br>
+        Clearing = verifying execution + recording participants (BEFORE settlement)<br>
+        Settlement = actual payment/delivery of securities or commodities
+      </div>
+      <div class="note">
+        <strong>Post-2008 hybrid structure:</strong> End users still trade customized OTC contracts with their dealer (maintaining OTC flexibility). The dealer then executes offsetting hedges on an SEF and novates those to a CCP (gaining ETD-like credit risk management at the dealer level). End users get the best of both worlds.<br>
+        <strong>Risk of CCP centralization:</strong> While bilateral risk is reduced, systemic risk concentrates at the CCP — proper safeguards are critical.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 9: INVESTOR SCENARIOS                     -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Investor Scenarios — Applying the Concepts</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="otc-card">
+        <div class="otc-title">Scenario 1 — Hightest Capital (ETD)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0; margin-bottom:12px;">
+          <li>US-based equity fund; believes health care stocks will outperform</li>
+          <li>Buys a call option on the S&P 500 Health Care Select Sector Index (SIXV)</li>
+          <li>Underlying: spot SIXV price (≈60 health care stocks in S&P 500)</li>
+          <li>Strike: spot SIXV × 1.05 (5% above current price)</li>
+          <li>Maturity: 6 months</li>
+          <li>Counterparty: Ace Limited (CBOE member)</li>
+        </ul>
+        <p style="font-size:13px; color:#9ecef5; font-weight:700;">→ CONTINGENT CLAIM (option) on ETD market</p>
+        <p style="font-size:13px; color:#c8dfd0; margin-top:6px;">Why ETD? Standard contract size, standard exercise price, standard maturity date — all features of an ETD contract. Traded on CBOE (exchange).</p>
+      </div>
+      <div class="etd-card">
+        <div class="etd-title">Scenario 2 — Esterr Inc. (OTC)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8d0df; margin-bottom:12px;">
+          <li>Toronto company with CAD250M floating-rate term loan (CORRA + 150 bps)</li>
+          <li>Remaining maturity: 3.5 years; wants to fix interest expense</li>
+          <li>Enters CAD250M interest rate swap: pay FIXED, receive CORRA (floating MRR)</li>
+          <li>Net result: fixed-rate equivalent exposure on the loan</li>
+          <li>Swap matches loan's payment dates and remaining maturity exactly</li>
+        </ul>
+        <p style="font-size:13px; color:#c9a84c; font-weight:700;">→ FIRM COMMITMENT (swap) on OTC market</p>
+        <p style="font-size:13px; color:#c8d0df; margin-top:6px;">Why OTC? Non-standard maturity (3.5 years), non-standard payment dates (must match the loan). Requires customization impossible in ETD markets. Dealer then hedges via SEF + CCP novation.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 How to Identify OTC vs. ETD on the Exam</div>
+      <p>The exam will describe a derivative and ask you to classify the market. Use these signals:<br>
+      <strong>→ ETD:</strong> "standard contract size," "exchange traded," "listed option," mentions a specific exchange (CBOE, CME, NSE), no special customization needed.<br>
+      <strong>→ OTC:</strong> "customized terms," "tailored to match," non-standard maturity or payment dates, "ISDA agreement," involves corporate hedging of a specific commercial exposure, interest rate swaps (almost always OTC).<br>
+      <strong>Key heuristic:</strong> If the instrument could trade on a public exchange without modification → ETD. If it requires any customization to match a specific exposure → OTC.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE       -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Derivative</strong> = financial instrument that derives its value from the performance of an underlying asset or variable. Derivatives involve the FUTURE exchange of cash flows — not immediate exchange of the underlying itself (that's the cash/spot market).</li>
+        <li>✅ <strong>Underlying</strong> = the reference asset or variable from which the derivative's value is derived. May be a single asset, group of assets, or non-asset variable (e.g., an interest rate, credit index). A derivative contract may reference more than one underlying.</li>
+        <li>✅ <strong>Derivatives transform the performance of the underlying</strong> — they do NOT directly pass through returns. Example: a forward contract on a stock isolates the price risk of the stock without requiring current capital outlay or ownership.</li>
+        <li>✅ <strong>Counterparty credit risk</strong> = the risk that a counterparty cannot meet its financial obligations under the derivative contract. A critical consideration, especially in OTC markets.</li>
+        <li>✅ <strong>Stand-alone derivative</strong> = a distinct, separate derivative contract (forward, future, swap, option). Can be entered and exited independently. Contrast with <strong>embedded derivatives</strong> (within an underlying, like a callable bond's call option — cannot be separated and traded independently).</li>
+        <li>✅ <strong>Firm commitment</strong> = BOTH parties obligated to perform at settlement. Includes: forwards, futures, swaps. Settlement WILL occur — both parties are bound.</li>
+        <li>✅ <strong>Contingent claim</strong> = ONE party has a right (not obligation) to decide if/when settlement occurs. Primary type: OPTIONS. Holder exercises only if profitable. Seller must perform if holder exercises.</li>
+        <li>✅ <strong>Hedging</strong> = use of a derivative to offset or neutralize an existing or anticipated exposure. The derivative is the "hedge." Transfers risk to the counterparty — does NOT eliminate risk entirely.</li>
+        <li>✅ <strong>Five major derivative underlyings:</strong> Equities (stocks, indexes, volatility), Fixed Income/Interest Rates (bonds, MRRs like SOFR/€STR/SONIA), Currencies (exchange rates, foreign sovereign bonds), Commodities (soft: agricultural; hard: natural resources), Credit (CDS on single entities or indexes). Others: weather, crypto, longevity.</li>
+        <li>✅ <strong>Interest rate is NOT an asset</strong> — it is a variable used as an underlying in interest rate derivatives (swaps, caps, floors, swaptions).</li>
+        <li>✅ <strong>Interest rate swaps</strong> = firm commitment converting fixed to floating (or vice versa). Used by investors to change duration without trading bonds; by issuers to alter debt profile.</li>
+        <li>✅ <strong>Stock options vs. warrants:</strong> Stock options = contracts between investors (company not involved). Warrants = issued BY the company directly; new shares are issued upon exercise (dilutive to existing shareholders).</li>
+        <li>✅ <strong>MRRs replaced LIBOR:</strong> SOFR (US, overnight, collateralized by Treasuries), €STR (Euro), SONIA (Sterling). These are transaction-based overnight rates — not survey-based like old LIBOR.</li>
+        <li>✅ <strong>Credit Default Swap (CDS)</strong> = primary credit derivative. Allows managing default risk separately from bond markets. Buyer of CDS = buying protection (benefits if issuer defaults). Seller = selling protection (earns spread, bears credit risk). Trades on a spread reflecting implied default probability.</li>
+        <li>✅ <strong>OTC derivative markets:</strong> Customized terms; between end users and dealers; ISDA agreements; less transparent; higher counterparty credit risk; may be less liquid; best for corporate hedgers with specific exposures.</li>
+        <li>✅ <strong>ETD (Exchange-Traded Derivatives):</strong> Standardized terms set by exchange; mandatory margin (collateral); exchange guarantees against default; full transparency; generally more liquid; lower transaction costs; less flexible.</li>
+        <li>✅ <strong>Clearing ≠ Settlement:</strong> Clearing = verifying execution + recording participants (pre-settlement). Settlement = actual payment/delivery of assets or cash between counterparties.</li>
+        <li>✅ <strong>Post-2008 central clearing mandate:</strong> Most OTC derivatives must be centrally cleared. A CCP interposes between counterparties via NOVATION — replacing the bilateral trade with two trades each facing the CCP.</li>
+        <li>✅ <strong>Novation</strong> = original bilateral trade is legally replaced by two new trades, each facing the CCP. Bilateral counterparty credit risk between dealers is eliminated. CCP becomes buyer to every seller and seller to every buyer.</li>
+        <li>✅ <strong>Swap Execution Facility (SEF)</strong> = a regulated electronic trading platform where multiple dealers can execute swap trades. Part of the central clearing workflow: trade executed on SEF → details sent to CCP → CCP novates the trade.</li>
+        <li>✅ <strong>CCP risk concentration:</strong> Central clearing reduces bilateral risk but concentrates systemic risk at the CCP. Proper safeguards (margin, default funds, capital) are essential to prevent CCP failure from cascading through the system.</li>
+        <li>✅ <strong>Hightest Capital (Scenario 1):</strong> Index call option → CONTINGENT CLAIM → ETD (standardized contract, CBOE). Hightest Capital buys the RIGHT to purchase SIXV at 105% of spot in 6 months.</li>
+        <li>✅ <strong>Esterr Inc. (Scenario 2):</strong> Interest rate swap (pay fixed, receive CORRA) → FIRM COMMITMENT → OTC (customized maturity and payment dates to match loan terms). Dealer hedges via SEF + CCP novation.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ DERIVATIVE FUNDAMENTALS ═══<br>
+        Derivative = contract whose value derives from an underlying asset/variable<br>
+        Underlying: equities, fixed income/rates, currencies, commodities, credit, other<br>
+        Cash market = immediate exchange. Derivative = future exchange of cash flows.<br>
+        Derivative TRANSFORMS underlying performance (doesn't pass it through directly)<br><br>
+
+        ═══ TYPES OF DERIVATIVES ═══<br>
+        Firm commitments: Forwards, Futures, Swaps (both parties obligated — WILL settle)<br>
+        Contingent claims: Options — holder has RIGHT, not obligation (MAY settle)<br>
+        Stand-alone: separate contract (forward, future, swap, listed option)<br>
+        Embedded: within host instrument (callable bond, convertible bond, putable bond)<br><br>
+
+        ═══ WHY USE DERIVATIVES? ═══<br>
+        Hedging: offset/neutralize existing exposure | Short selling: benefit from decline<br>
+        Diversification: access new markets cheaply | Leverage: large exposure, small outlay<br>
+        Lower costs: cheaper than spot market | Alter exposure without spot trading<br><br>
+
+        ═══ OTC vs. ETD ═══<br>
+        OTC: customized, bilateral, ISDA, less transparent, more credit risk, flexible<br>
+        ETD: standardized, exchange guarantee, mandatory margin, transparent, liquid<br>
+        OTC best for: corporate hedgers with specific/non-standard exposures<br>
+        ETD best for: speculative trading, standard hedges, price transparency<br><br>
+
+        ═══ CENTRAL CLEARING ═══<br>
+        Post-2008 mandate: most OTC derivatives → centrally cleared via CCP<br>
+        Step 1: Trade on SEF | Step 2: Submit to CCP | Step 3: Novation (CCP replaces trade)<br>
+        Novation: bilateral trade replaced → two trades each facing CCP<br>
+        Benefit: eliminates bilateral dealer credit risk<br>
+        Risk: concentrates systemic risk at CCP (must have proper safeguards)
+      </div>
+      <div class="note">
+        <strong>Firm commitment signal words:</strong> "agrees to," "obligated to," "will deliver/pay," "swap," "forward," "futures contract"<br>
+        <strong>Contingent claim signal words:</strong> "right to," "option to," "may choose to," "at the holder's discretion"<br>
+        <strong>OTC signal words:</strong> "customized terms," "ISDA agreement," "tailored to match," interest rate swaps, non-standard maturity<br>
+        <strong>ETD signal words:</strong> "exchange-listed," "standardized contract," mentions specific exchange (CBOE, CME, NSE), standard contract size/maturity
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 1: Derivative Instrument and Derivative Market Features · Exam Prep Notes
+</footer>
+
+</body>
+</html>

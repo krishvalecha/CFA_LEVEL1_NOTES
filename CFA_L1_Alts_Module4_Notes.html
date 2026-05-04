@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 4: Real Estate & Infrastructure</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #c97a4c; --danger: #c94c4c;
+    --green: #4cc98a;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #140d0a 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,122,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,122,76,0.12); color: var(--accent3); border: 1px solid rgba(201,122,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(201,122,76,0.1); border: 1px solid rgba(201,122,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 14px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 14px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { font-weight: 600; color: var(--accent2); }
+
+  .highlight { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); border-radius: 4px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); }
+  strong { color: #f0f2f8; }
+  em { color: var(--accent3); font-style: normal; font-weight: 600; }
+
+  .spectrum-bar { display: flex; margin: 16px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .spectrum-seg { flex: 1; padding: 12px 10px; text-align: center; font-size: 12px; font-weight: 700; }
+  .seg1 { background: #12253a; color: #4c8bc9; }
+  .seg2 { background: #192a1e; color: #4cc98a; }
+  .seg3 { background: #25221a; color: #c9a84c; }
+  .seg4 { background: #2a1e18; color: #c97a4c; }
+  .seg5 { background: #2a1418; color: #c94c4c; }
+  .seg-label { font-size: 10px; font-weight: 400; opacity: 0.8; display: block; margin-top: 3px; }
+
+  .infra-stage { display: flex; gap: 0; margin: 16px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .stage { flex: 1; padding: 16px 14px; text-align: center; }
+  .stage-green { background: #0f2318; border-right: 1px solid var(--border); }
+  .stage-brown { background: #1a1608; border-right: 1px solid var(--border); }
+  .stage-sec { background: #0d1520; }
+  .stage-title { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .stage-green .stage-title { color: #c94c4c; }
+  .stage-brown .stage-title { color: #c9a84c; }
+  .stage-sec .stage-title { color: #4c8bc9; }
+  .stage ul { padding-left: 14px; font-size: 12.5px; color: var(--muted); text-align: left; }
+  .stage li { margin-bottom: 4px; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 4</div>
+  <h1>Real Estate &amp; <span>Infrastructure</span></h1>
+  <p>Exam-ready notes · All key concepts, structures, risk/return characteristics, and investment features covered · No need to re-read the LES</p>
+</div>
+
+<nav class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Overview</a>
+  <a class="toc-item" href="#s2">02 · RE Features</a>
+  <a class="toc-item" href="#s3">03 · RE Structures</a>
+  <a class="toc-item" href="#s4">04 · REITs</a>
+  <a class="toc-item" href="#s5">05 · RE Returns &amp; Risk</a>
+  <a class="toc-item" href="#s6">06 · Infra Features</a>
+  <a class="toc-item" href="#s7">07 · Infra Categories</a>
+  <a class="toc-item" href="#s8">08 · Infra Stages</a>
+  <a class="toc-item" href="#s9">09 · Infra Characteristics</a>
+  <a class="toc-item" href="#s10">10 · Key Data Tables</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</nav>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Overview — Real Estate &amp; Infrastructure</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Real estate</strong> comprises land and buildings. It includes developed commercial/industrial/residential land. <strong>Infrastructure</strong> involves land, buildings, and other fixed assets developed by public entities or public–private partnerships for economic use.</p>
+      <p><strong>Raw land, agriculture, and forestry</strong> → categorized as <em>natural resource investments</em>, NOT real estate.</p>
+      <p>Both asset classes are included in portfolios because they tend to exhibit <strong>low correlations</strong> with traditional asset classes and provide risk/return combinations across a broad spectrum.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Real Estate — Key Facts</div>
+        <ul>
+          <li>Residential = <strong>75%</strong> of global RE market by value</li>
+          <li>Commercial = offices, shopping centers, warehouses</li>
+          <li>Returns: income + capital appreciation</li>
+          <li><strong>&gt;50%</strong> of commercial RE returns = from income</li>
+          <li>Income more consistent than capital appreciation over a cycle</li>
+          <li>Offers inflation protection via lease adjustments</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Infrastructure — Key Facts</div>
+        <ul>
+          <li>Capital intensive, long-lived, essential services</li>
+          <li>Categories: economic (transport, ICT, utility) and social</li>
+          <li>Stages: greenfield, brownfield, secondary-stage</li>
+          <li>BOT life cycle = build–operate–transfer (PPP model)</li>
+          <li>Stable long-term cash flows + inflation linkage</li>
+          <li>Low correlation with public equities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Memory Anchor</div>
+      <p><strong>RE vs. Infrastructure vs. Natural Resources:</strong> Land with buildings for economic use = Infrastructure. Land alone (farming, forestry) = Natural Resources. Everything else (residential/commercial with structures for investment) = Real Estate.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Real Estate — Features &amp; Characteristics</h2>
+    </div>
+
+    <h3>Unique Features of Real Estate</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Heterogeneity:</strong> No two properties are identical — each is unique in location, age, tenant mix, lease terms, and market demographics.</li>
+        <li><strong>Fixed location:</strong> Cannot be moved; value heavily dependent on local supply/demand.</li>
+        <li><strong>Long lives:</strong> Properties are durable, long-lived assets.</li>
+        <li><strong>Large initial investment:</strong> High capital requirement creates barriers to entry.</li>
+        <li><strong>Fragmented markets:</strong> Local conditions drive value; no single national/global market.</li>
+        <li><strong>Opaque price discovery:</strong> No centralized exchange; historical prices may not reflect current conditions.</li>
+        <li><strong>High transaction costs:</strong> Legal, appraisal, agent, and closing fees — slow and expensive to trade.</li>
+        <li><strong>Non-investable private indexes:</strong> Private market indexes replicating RE performance are not directly investable.</li>
+        <li><strong>Requires specialized knowledge:</strong> Local market understanding is essential.</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap</div>
+      <p>Diversification across ALL types of real estate investment alternatives may be <strong>difficult to attain</strong> — don't assume RE automatically gives you full diversification within the asset class itself.</p>
+    </div>
+
+    <h3>Residential vs. Commercial Real Estate</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Residential</th><th>Commercial</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Typical property</td><td>Owner-occupied single homes; condos, townhouses, co-ops</td><td>Offices, retail, industrial, warehouse, hospitality, mixed-use</td></tr>
+          <tr><td>Market share</td><td><strong>~75% of global RE by value</strong></td><td>~25% of global RE by value</td></tr>
+          <tr><td>Source of equity</td><td>Individual owners</td><td>Private owners OR public investors</td></tr>
+          <tr><td>Source of debt</td><td>Residential mortgages; packaged into MBS</td><td>Commercial mortgages; packaged into CMBS</td></tr>
+          <tr><td>Source of return</td><td>Enjoyment + price appreciation</td><td>Income (lease/rent) + price appreciation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Tip</div>
+      <p><strong>Why is residential the largest sector even though commercial properties are individually bigger?</strong> Because the aggregate space needed to house people vastly exceeds office and retail space. Think of how many homes vs. office buildings exist in any city.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Real Estate Investment Structures</h2>
+    </div>
+
+    <h3>The 2×2 Framework: Public/Private × Debt/Equity</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Market</th><th>Debt</th><th>Equity</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Private</td><td>Mortgage debt, Construction loans, Mezzanine debt</td><td>Direct ownership (sole), Joint ventures, LPs, RE funds, Private REITs</td></tr>
+          <tr><td>Public</td><td>MBS / CMBS / CMOs, Covered bonds, Mortgage REITs, Mortgage ETFs</td><td>Publicly traded shares (construction/operating/development), Public REITs, UCITS/Mutual funds/ETFs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Direct Real Estate Investment</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">✅ Advantages (Direct)</div>
+        <ul>
+          <li><strong>Control:</strong> Full decisions on buy/sell, tenants, capex, lease terms</li>
+          <li><strong>Tax benefits:</strong> Non-cash depreciation deductions + tax-deductible interest</li>
+          <li><strong>Diversification:</strong> Low historical correlation with other asset classes</li>
+          <li>Cash flows from use, lease income, and capital appreciation</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">❌ Disadvantages (Direct)</div>
+        <ul>
+          <li><strong>Complexity:</strong> Due diligence, title search, contract review, inspection</li>
+          <li><strong>Specialized knowledge</strong> needed for local markets</li>
+          <li><strong>Significant capital</strong> required upfront</li>
+          <li><strong>Concentration risk:</strong> Hard to diversify via direct ownership</li>
+          <li><strong>Illiquidity:</strong> Slow to buy/sell; high transaction costs</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Indirect Real Estate Investment</h3>
+    <div class="card">
+      <p>Indirect investments pool assets from multiple investors. Vehicles include: <strong>limited partnerships, mutual funds, equities, REITs, ETFs, and joint ventures</strong>.</p>
+      <p><strong>Joint ventures</strong> are especially common when one party contributes something unique — land, capital, development expertise, or debt due diligence.</p>
+      <p><strong>Separate account structures</strong> allow institutional investors who hire managers to retain control over timing and value of acquisitions/dispositions.</p>
+    </div>
+
+    <h3>Open-End vs. Closed-End Real Estate Funds</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Open-End (Infinite Life)</th><th>Closed-End (Finite Life)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Structure</td><td>Investors can contribute/redeem throughout life (like mutual fund)</td><td>Fixed capital raise; investors locked in for fund life</td></tr>
+          <tr><td>Strategy focus</td><td>Core real estate — stable, well-leased, high-quality properties</td><td>Value-add, opportunistic, development</td></tr>
+          <tr><td>Return profile</td><td>Stable income-focused returns</td><td>Higher target returns; more speculative</td></tr>
+          <tr><td>Examples</td><td>REITs, private open-end funds</td><td>PE-style real estate funds</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Strategy Spectrum Mnemonic: "CVVO"</div>
+      <p><strong>C</strong>ore → <strong>C</strong>ore-Plus → <strong>V</strong>alue-Add → <strong>V</strong>alue-Add+ → <strong>O</strong>pportunistic. Risk and return increase left to right. Core = income-focused, stable. Opportunistic = development, major redevelopment, speculative.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>REITs — Real Estate Investment Trusts</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Definition:</strong> Tax-advantaged trusts that own, operate, and sometimes develop income-producing real estate. They eliminate double corporate taxation by distributing <strong>90%–100% of taxable net rental income</strong> as dividends — so the REIT itself pays no corporate income tax.</p>
+    </div>
+
+    <h3>Three Types of REITs</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">Equity REITs</div>
+        <ul>
+          <li>Invest directly in properties (or through JVs/partnerships)</li>
+          <li>Income from rents; capital appreciation from property values</li>
+          <li>Strategy: maximize occupancy and rents, minimize operating costs</li>
+          <li>Report EPS (GAAP/IFRS) + non-traditional metrics: <strong>FFO</strong>, NAV</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Mortgage REITs</div>
+        <ul>
+          <li>Invest in real estate debt: mortgages or MBS</li>
+          <li>Income from interest payments</li>
+          <li>Can be private or publicly traded</li>
+          <li>Essentially a fixed-income vehicle</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Hybrid REITs</div>
+        <ul>
+          <li>Combine equity and mortgage REIT strategies</li>
+          <li>Hold both properties and real estate debt</li>
+          <li>Mixed income profile</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Funds From Operations (FFO)</h3>
+    <div class="formula-box">
+      <div class="label">FFO — Key Non-GAAP Metric for Equity REITs</div>
+      <div class="f">FFO = Net Income + Depreciation − Gains on Property Sales</div>
+      <div class="note">
+        Why use FFO? Real estate has high non-cash depreciation charges that depress GAAP net income but don't reflect actual cash generation. FFO adds back depreciation (non-cash) and removes gains from property sales (non-recurring) to better estimate sustainable dividend-paying capacity.<br><br>
+        Also used: NAV (Net Asset Value) — market value of properties minus liabilities, reflecting true economic value vs. book value.
+      </div>
+    </div>
+
+    <h3>Public REITs vs. Private Real Estate</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Public REITs</th><th>Private Real Estate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Liquidity</td><td>High — shares trade on exchange daily</td><td>Low — illiquid, long hold periods</td></tr>
+          <tr><td>Transparency</td><td>High — SEC filings, analyst coverage</td><td>Low — limited disclosure</td></tr>
+          <tr><td>Forced selling</td><td>NOT forced to sell properties for redemptions</td><td>Open-end funds may be forced to sell</td></tr>
+          <tr><td>Correlation with equities</td><td><strong>Higher</strong> — especially during downturns</td><td>Lower — appraised annually</td></tr>
+          <tr><td>Valuation timing</td><td>Continuous market pricing</td><td>Annual appraisals (smoothed returns)</td></tr>
+          <tr><td>Management expertise</td><td>Professional managers align interests</td><td>Varies; owner-managed or hired adviser</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Correlation Illusion</div>
+      <p>Private real estate appears to have <strong>artificially low correlation</strong> with public markets because it is only appraised ~once per year. This smoothing effect does NOT mean private RE is truly uncorrelated — it's a measurement timing mismatch, not genuine independence.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 REIT Tax Advantage — Key Rule</div>
+      <p>REITs avoid corporate income tax by distributing <strong>90%–100% of taxable net rental income</strong>. This is the key structural advantage. Corporations pay tax, then distribute after-tax dividends which are taxed again at the individual level — REITs eliminate that first layer of tax.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Real Estate — Return &amp; Risk Characteristics</h2>
+    </div>
+
+    <h3>Sources of Return</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Income return:</strong> Rental/lease payments (primary source for most strategies; &gt;50% of commercial RE returns)</li>
+        <li><strong>Capital appreciation:</strong> Price gains when property value increases</li>
+        <li><strong>Combination:</strong> Most strategies involve both, with proportion varying by strategy type</li>
+      </ul>
+      <p style="margin-top:10px;">Income from RE is a <strong>more consistent return source</strong> than capital appreciation throughout an economic cycle — this makes RE partially bond-like.</p>
+    </div>
+
+    <h3>The Real Estate Risk–Return Spectrum</h3>
+    <p style="color:var(--muted); font-size:13px; margin-bottom:8px;">From lowest risk/return (left) to highest risk/return (right):</p>
+    <div class="spectrum-bar">
+      <div class="spectrum-seg seg1">Senior Debt<span class="seg-label">First mortgages, IG CMBS<br>Bond-like returns</span></div>
+      <div class="spectrum-seg seg2">Core<span class="seg-label">Stable income REITs<br>Long leases / sale-leaseback</span></div>
+      <div class="spectrum-seg seg3">Core-Plus<span class="seg-label">Leases + modest redevelopment<br>Some refurbishment costs</span></div>
+      <div class="spectrum-seg seg4">Value-Add<span class="seg-label">Larger redevelopment<br>Equity-like returns</span></div>
+      <div class="spectrum-seg seg5">Opportunistic<span class="seg-label">Development, distressed<br>Highest risk/return</span></div>
+    </div>
+
+    <div class="card">
+      <ul>
+        <li><strong>Senior debt (CMBS/first mortgages):</strong> Lowest risk; bond-like underlying assets; bond-like returns.</li>
+        <li><strong>Core:</strong> Stable income-producing REITs. Long-term leases with many lessors, or sale-leaseback structures. Low default risk; stable, bond-like returns.</li>
+        <li><strong>Core-plus:</strong> Main return still from leases, but property maintenance/refurbishment costs become significant. Returns start moving toward equity-like.</li>
+        <li><strong>Value-add:</strong> Returns increasingly equity-like. Price appreciation component progressively more meaningful. Larger-scale redevelopment and repositioning.</li>
+        <li><strong>Opportunistic:</strong> Highest risk and return potential. Distressed properties, major development. Subject to: regulatory issues, construction delays, cost overruns, economic cycle changes, zoning/permit failures. Can significantly reduce IRR vs. expectation.</li>
+      </ul>
+    </div>
+
+    <h3>Sale-Leaseback Structures</h3>
+    <div class="card">
+      <p>A <strong>sale-leaseback</strong> occurs when a property owner <em>sells the property to an investor</em> and <em>leases it back</em> for continued use. Key features:</p>
+      <ul>
+        <li>Low default risk for the investor (tenant/seller needs the property to operate)</li>
+        <li>Provides stable, safe returns (essentially bond-like from long-term lease)</li>
+        <li>Seller uses proceeds for cost-efficient financing OR to reduce leverage</li>
+      </ul>
+    </div>
+
+    <h3>Real Estate Diversification Benefits</h3>
+    <div class="card">
+      <ul>
+        <li>Low historical correlation with stocks and bonds → reduces portfolio volatility</li>
+        <li>Like a <strong>convertible bond</strong>: steady cash flows (bond side) + capital appreciation potential (equity side)</li>
+        <li>Inflation protection: lease step-ups and mark-to-market rent reviews</li>
+        <li><strong>Caveat:</strong> During steep market downturns (e.g., 2007–08 GFC, COVID recovery), equity REIT correlations with market benchmarks <strong>increase significantly</strong> — diversification benefit weakens precisely when you need it most</li>
+        <li>Private RE and listed RE correlations are artificially low due to appraisal timing mismatch</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Leverage Effect</div>
+      <p>The use of leverage in RE strategies shifts the risk/return trade-off by <strong>magnifying both gains AND losses</strong>. For speculative strategies, this increases default risk particularly during unexpected changes in interest rates, financing access, or government land-use regulations. Higher leverage ≠ automatically higher IRR.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 RE as "Convertible Bond" Analogy</div>
+      <p>Think of RE investment like a convertible bond: <strong>income = coupon</strong> (predictable, bond-like), <strong>capital appreciation = equity conversion upside</strong>. Stock market returns mostly come from capital appreciation; RE income is more consistent. This is why RE adds diversification — its primary return driver is different from equities.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Infrastructure — Features &amp; Characteristics</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Definition:</strong> Real, capital-intensive, long-lived assets intended for <em>public use</em>, providing <em>essential services</em>. Examples: airports, health care facilities, sewage treatment plants, roads, power grids.</p>
+      <p style="margin-top:10px;">Infrastructure investments often involve a <strong>consortium</strong> combining strategic partners (with specialized operational/technical skills) and financial investors.</p>
+    </div>
+
+    <h3>Infrastructure Cash Flow Sources</h3>
+    <div class="card">
+      <p>Unlike RE (which uses leases/rentals), infrastructure cash flows typically arise from:</p>
+      <ul>
+        <li><strong>Availability payments:</strong> Received simply to make the facility available (regardless of usage)</li>
+        <li><strong>Usage-based payments:</strong> Tolls, airport/seaport charges, rail fares — linked to actual demand → carry market/demand risk</li>
+        <li><strong>"Take-or-pay" arrangements:</strong> Buyers obligated to pay a minimum purchase price for a pre-agreed volume — locks in revenue even if buyer doesn't use the supply; buyers have recourse if provider underperforms</li>
+      </ul>
+    </div>
+
+    <h3>Public vs. Private Infrastructure Ownership</h3>
+    <div class="card">
+      <ul>
+        <li>Most infrastructure assets are <strong>financed, owned, and operated by governments</strong></li>
+        <li>Trend: increasingly financed privately through <strong>Public–Private Partnerships (PPPs)</strong></li>
+        <li>PPP = long-term contractual relationship between public and private sectors for private sector to deliver services traditionally provided by government</li>
+        <li>Infrastructure investors may: (a) lease assets back to government, (b) sell newly constructed assets to government, or (c) hold and operate until operational maturity</li>
+        <li><strong>Development finance institutions</strong> (e.g., EBRD) provide risk capital for economic development on a non-commercial basis</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Mnemonic — PPP Structure</div>
+      <p>Think of PPPs as: <strong>P</strong>rivate builds it, <strong>P</strong>rivate operates it, <strong>P</strong>ublic eventually gets it. The private sector does the heavy lifting; the government provides the concession/contract; eventually the asset transfers back (Build-Operate-<strong>Transfer</strong>).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Infrastructure — Categories</h2>
+    </div>
+
+    <h3>Economic vs. Social Infrastructure</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Sub-Category</th><th>Examples</th><th>Income Type</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Economic</td><td>Transportation</td><td>Roads, bridges, tunnels, airports, seaports, railways</td><td>Demand-based: tolls, airport charges, rail fares → market risk</td></tr>
+          <tr><td>Economic</td><td>ICT (Info &amp; Comms Tech)</td><td>Telecom towers, data centers</td><td>Usage/availability payments</td></tr>
+          <tr><td>Economic</td><td>Utility &amp; Energy</td><td>Power generation/transmission, water, gas storage, LNG terminals, solid waste</td><td>Demand risk OR take-or-pay arrangements</td></tr>
+          <tr><td>Social</td><td>Human activities</td><td>Educational, healthcare, social housing, correctional facilities, govt buildings</td><td>Availability payments + performance-based lease; services provided separately by public/private operator</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Economic vs. Social Income Profile</div>
+      <p><strong>Economic infra (transport)</strong> = demand-based income → carries market risk (fewer users = less income). <strong>Social infra</strong> = availability payments → gets paid just for having the facility available, regardless of usage. Social infra is therefore more predictable and lower-risk from an income perspective.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Utility investments</strong> increasingly focus on renewable technologies: solar, wind, waste-to-energy. Energy assets include downstream oil/gas infrastructure and the electrical grid. Utilities can use <strong>take-or-pay</strong> arrangements to lock buyers into minimum purchases, reducing demand risk.</p>
+    </div>
+
+    <h3>Forms of Infrastructure Investment</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Direct Investment</div>
+        <ul>
+          <li>Full control; captures full value</li>
+          <li>Requires large capital outlay</li>
+          <li>Concentration and liquidity risks</li>
+          <li>Usually done through a <strong>consortium</strong> (pension funds, sovereign wealth funds)</li>
+          <li>Partners share financial risk and/or roles in building/operating</li>
+          <li>Often invest under specific domestic infrastructure mandates</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Indirect Investment</div>
+        <ul>
+          <li>Infrastructure funds (closed-end or open-end; like PE funds)</li>
+          <li>Infrastructure ETFs</li>
+          <li>Publicly traded infrastructure company shares</li>
+          <li><strong>Master Limited Partnerships (MLPs)</strong></li>
+          <li>Publicly traded = liquidity, transparency, diversification; but small segment globally (~USD 2.23T market cap per S&P)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Master Limited Partnerships (MLPs)</h3>
+    <div class="card">
+      <ul>
+        <li>Trade on exchanges (like stocks) → liquid</li>
+        <li>Pass-through entities like REITs → minimize double taxation</li>
+        <li>Most commonly used in <strong>energy transportation, processing, or storage</strong></li>
+        <li>Generate stable cash flows from <strong>fee-based income</strong></li>
+        <li>Distribute large portions of free cash flow to investors</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Infrastructure — Stages of Development</h2>
+    </div>
+
+    <div class="infra-stage">
+      <div class="stage stage-green">
+        <div class="stage-title">🔴 GREENFIELD</div>
+        <ul>
+          <li>New assets / new infrastructure</li>
+          <li>Opportunistic investments</li>
+          <li>BOT life cycle (PPPs)</li>
+          <li>Initial: negative cash flows (construction)</li>
+          <li>Then: income from concession agreement</li>
+          <li>Transfer at end to govt or 3rd party</li>
+          <li><strong>HIGHEST risk &amp; return</strong></li>
+          <li>Target returns: <strong>14%+</strong></li>
+        </ul>
+      </div>
+      <div class="stage stage-brown">
+        <div class="stage-title">🟡 BROWNFIELD</div>
+        <ul>
+          <li>Expand/redevelop existing assets</li>
+          <li>May involve privatization of public assets</li>
+          <li>Or sale-leaseback of completed greenfield</li>
+          <li>Shorter investment period</li>
+          <li>Immediate cash flows</li>
+          <li>Some operating history available</li>
+          <li><strong>Medium risk &amp; return</strong></li>
+          <li>Target returns: <strong>10%–12%</strong></li>
+        </ul>
+      </div>
+      <div class="stage stage-sec">
+        <div class="stage-title">🔵 SECONDARY-STAGE</div>
+        <ul>
+          <li>Fully operational, existing assets</li>
+          <li>No further investment/development needed</li>
+          <li>Immediate, steady cash flows</li>
+          <li>Existing track record</li>
+          <li>Bond-like cash flow profile</li>
+          <li><strong>LOWEST risk &amp; return</strong></li>
+          <li>Target returns: <strong>6%–8%</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">BOT (Build-Operate-Transfer) Life Cycle</div>
+      <div class="f">
+        Phase 1 — BUILD:   Long approval + construction period → Negative cash flows<br>
+        Phase 2 — OPERATE: Concession agreement → Income at pre-agreed parameters → Positive cash flows<br>
+        Phase 3 — TRANSFER: Asset transferred to government, sold to 3rd party, OR decommissioned
+      </div>
+      <div class="note">BOT is the greenfield life cycle common among PPPs. The concession agreement governs the operate phase — it sets the terms for how and how much the private investor can earn.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Risk Ranking Mnemonic: "Green Burns, Brown Smolders, Secondary Settled"</div>
+      <p><strong>Greenfield</strong> = highest risk (construction + no demand guarantee). <strong>Brownfield</strong> = medium risk (some history but capex needs). <strong>Secondary-stage</strong> = lowest risk (fully operational, proven cash flows). Think traffic light in reverse: red = highest risk, yellow = medium, green = low/go.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Note on Secondary-Stage</div>
+      <p>Some infrastructure assets <strong>never reach secondary-stage</strong> because they continuously require additional capital and development. Do not assume all infrastructure eventually becomes low-risk secondary-stage assets.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Infrastructure — Investment Characteristics</h2>
+    </div>
+
+    <h3>Risk &amp; Return Profile</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Risk Profile</th><th>Stage/Type</th><th>Location</th><th>Return Mix</th><th>Target Equity Return</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>High</td><td>Greenfield (no demand guarantees, variable revenues)</td><td>OECD + Emerging markets</td><td>High weighting to capital appreciation</td><td><strong>14%+</strong></td></tr>
+          <tr><td>Medium</td><td>Mostly brownfield + some greenfield (limited construction/demand risk)</td><td>Primarily OECD</td><td>Mix of yield and capital appreciation</td><td><strong>10%–12%</strong></td></tr>
+          <tr><td>Low</td><td>Brownfield (fully constructed, contracted/regulated revenues)</td><td>Most stable OECD countries</td><td>High weighting to current yield</td><td><strong>6%–8%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>Most infrastructure funds</strong> gravitate toward medium- and low-risk profiles, generating average long-term annual returns of around <strong>10%</strong>.</p>
+      <p style="margin-top:8px;">Less liquid direct equity ownership → <strong>highest expected return with greatest risk</strong>. Publicly traded debt → <strong>lowest potential returns</strong>. Assets backed by stable long-term concession arrangements → <strong>most stable returns</strong>.</p>
+    </div>
+
+    <h3>Infrastructure Diversification Benefits</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Inelastic demand:</strong> Essential services → demand doesn't fall much when prices rise → stable revenues</li>
+        <li><strong>High barriers to entry:</strong> Massive capital requirements, regulatory approvals, geographical constraints</li>
+        <li><strong>Low correlation</strong> with public market equities (private infra correlation with S&P 500 ≈ <strong>0.12</strong>)</li>
+        <li><strong>GDP protection:</strong> Infrastructure provides some protection against changes in GDP growth</li>
+        <li><strong>Inflation protection:</strong> Many contracts link fees to inflation via regulation, concession agreements, or fee contracts → rates rise with inflation</li>
+        <li><strong>Liability matching:</strong> Long-duration, stable cash flows suit pension funds, insurance companies, and sovereign wealth funds (who allocate ~5%–6% to infrastructure)</li>
+        <li>Infrastructure debt: lower default rates + higher recovery than comparable fixed income; less cyclical</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Historical Data (March 2008 – June 2021) — Know These Numbers</div>
+      <div class="f">
+        Preqin Infrastructure (private):  Avg Return = 8.57% | Std Dev = 0.07 | CoV = 0.82<br>
+        MSCI US REIT Total Return:         Avg Return = 7.77% | Std Dev = 0.26 | CoV = 3.38<br>
+        S&P Infrastructure Total Return:   Avg Return = 3.52% | Std Dev = 0.19 | CoV = 5.52<br>
+        Preqin Real Estate (private):      Avg Return = 3.43% | Std Dev = 0.10 | CoV = 2.86<br>
+        Preqin Natural Resources:          Avg Return = 3.29% | Std Dev = 0.09 | CoV = 2.66
+      </div>
+      <div class="note">
+        Coefficient of Variation (CoV) = Std Dev / Avg Return — measures risk per unit of return. LOWER CoV = better risk-adjusted return.<br>
+        Private infra has the LOWEST CoV (0.82) → best risk-adjusted return among these asset classes over this period.<br>
+        Key correlation data: Private infra vs. S&P 500 = 0.12; vs. MSCI World = 0.08 → very low, confirming diversification value.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Sovereign Wealth Funds Dominate Infrastructure?</div>
+      <p>SWFs have the <strong>longest investment horizons</strong> (no short-term redemption pressure), can absorb illiquidity, and match the long-duration cash flows of infrastructure with their own long-term liabilities. They also have the scale to invest directly in consortia. ~5%–6% allocation to infrastructure.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Side-by-Side Comparison — RE vs. Infrastructure</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Real Estate</th><th>Infrastructure</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Asset type</td><td>Land and buildings (residential/commercial)</td><td>Long-lived public-use assets (roads, airports, utilities)</td></tr>
+          <tr><td>Cash flow source</td><td>Rents, leases, capital appreciation</td><td>Availability payments, usage fees, take-or-pay contracts</td></tr>
+          <tr><td>Demand sensitivity</td><td>High for development; lower for core leases</td><td>Inelastic for essential services; variable for transport</td></tr>
+          <tr><td>Ownership</td><td>Primarily private/institutional</td><td>Primarily governments; increasingly private via PPP</td></tr>
+          <tr><td>Inflation protection</td><td>Lease step-ups; varies by location/segment</td><td>Strong — regulation/concession agreements link to inflation</td></tr>
+          <tr><td>Equity correlation (public)</td><td>REITs: higher (esp. in downturns); private: lower</td><td>Very low (0.12 with S&P 500)</td></tr>
+          <tr><td>Diversification</td><td>Good (private); weaker for REITs in downturns</td><td>Strong; resilient to equity market swings</td></tr>
+          <tr><td>Liquidity</td><td>Public REITs: high; direct/private: very low</td><td>Publicly traded: reasonable; direct: very low</td></tr>
+          <tr><td>Typical investors</td><td>Individuals, institutions, REITs</td><td>Pension funds, SWFs, insurance companies</td></tr>
+          <tr><td>Return driver</td><td>&gt;50% income; rest capital appreciation</td><td>Primarily stable long-term income; secondary capital appreciation</td></tr>
+          <tr><td>Key risk (development)</td><td>Regulatory, construction delays, cost overruns</td><td>Same + demand uncertainty (greenfield)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>REIT vs. MLP Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>REIT</th><th>MLP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Asset focus</td><td>Real estate properties</td><td>Energy transportation, processing, storage</td></tr>
+          <tr><td>Exchange traded</td><td>Yes (public REITs)</td><td>Yes</td></tr>
+          <tr><td>Pass-through tax</td><td>Yes — distribute 90–100% of income</td><td>Yes — minimize double taxation</td></tr>
+          <tr><td>Cash flow type</td><td>Rental/lease income</td><td>Fee-based income (stable)</td></tr>
+          <tr><td>Distribution policy</td><td>Mandated high dividend payout</td><td>Distribute large portion of free cash flow</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Real estate definition:</strong> Land and buildings. Residential = 75% of global RE by value. Raw land / agriculture / forestry = natural resources, NOT real estate.</li>
+        <li>✅ <strong>Unique RE features:</strong> Heterogeneity (no two properties identical), fixed location, long lives, fragmented markets, opaque price discovery, high transaction costs, large initial investment, requires specialized knowledge, non-investable private indexes.</li>
+        <li>✅ <strong>RE investment structures (2×2):</strong> Public vs. Private × Debt vs. Equity. Private debt = mortgages, construction loans, mezzanine. Private equity = direct ownership, JVs, LPs, private REITs. Public debt = MBS/CMBS, mortgage REITs. Public equity = public REITs, ETFs.</li>
+        <li>✅ <strong>Direct RE advantages:</strong> Control, tax benefits (depreciation + interest deduction), diversification. Disadvantages: complexity, specialized knowledge, large capital, concentration risk, illiquidity.</li>
+        <li>✅ <strong>REIT key rule:</strong> Distribute 90%–100% of taxable net rental income → avoid corporate income tax. Three types: Equity, Mortgage, Hybrid. Equity REITs report FFO (net income + depreciation − gains on sales) as better measure of dividend capacity.</li>
+        <li>✅ <strong>Open-end RE funds:</strong> Infinite-life; investors can contribute/redeem; core real estate (stable, well-leased). <strong>Closed-end RE funds:</strong> Finite-life; locked in; value-add / opportunistic strategies.</li>
+        <li>✅ <strong>RE return spectrum (low→high risk):</strong> Senior debt → Core → Core-Plus → Value-Add → Opportunistic. Income is primary source for core/core-plus; capital appreciation dominates for value-add/opportunistic.</li>
+        <li>✅ <strong>Sale-leaseback:</strong> Owner sells property to investor and leases back for continued use. Low default risk. Seller gains cost-efficient financing or reduces leverage. Investor gets stable income stream.</li>
+        <li>✅ <strong>RE diversification caveat:</strong> During steep market downturns, equity REIT correlations with market benchmarks increase — diversification benefit weakens when most needed. Private RE correlations are artificially low (annual appraisal smoothing).</li>
+        <li>✅ <strong>RE = "convertible bond":</strong> Income = bond-like coupon (stable); capital appreciation = equity upside. &gt;50% of commercial RE returns come from income. Income more consistent than capital appreciation over cycle.</li>
+        <li>✅ <strong>Infrastructure definition:</strong> Real, capital-intensive, long-lived assets for public use providing essential services. Cash flows from: availability payments, usage-based fees (tolls, airport charges), or take-or-pay arrangements.</li>
+        <li>✅ <strong>Infrastructure categories:</strong> Economic (transport, ICT, utility/energy) vs. Social (education, healthcare, housing, correctional). Transport income = demand-based (market risk). Social income = availability payments (more stable).</li>
+        <li>✅ <strong>BOT life cycle (PPP greenfield):</strong> Build (negative cash flows, construction) → Operate (concession agreement, positive income) → Transfer (to government, 3rd party, or decommission).</li>
+        <li>✅ <strong>Infrastructure stages (risk ranking, highest to lowest):</strong> Greenfield (14%+, new, construction risk) → Brownfield (10–12%, expand/privatize existing) → Secondary-Stage (6–8%, fully operational, bond-like). Mnemonic: Red→Yellow→Blue (G→B→S).</li>
+        <li>✅ <strong>Infrastructure risk profiles:</strong> High = greenfield, no demand guarantees, OECD + EM, capital appreciation focus. Medium = mostly brownfield, primarily OECD, mix of yield/appreciation. Low = brownfield fully constructed, contracted revenues, stable OECD, yield focus.</li>
+        <li>✅ <strong>Infra diversification benefits:</strong> Inelastic demand, high barriers to entry, low correlation with equities (private infra vs. S&P 500 = 0.12), GDP protection, strong inflation protection (regulation/concession links), matches long-term liabilities (pension funds, SWFs).</li>
+        <li>✅ <strong>MLPs:</strong> Exchange-traded, pass-through tax (like REITs), mainly energy transport/processing/storage, fee-based stable income, distribute large share of free cash flow.</li>
+        <li>✅ <strong>Key historical data:</strong> Private infra avg return = 8.57%, CoV = 0.82 (best risk-adjusted). MSCI US REIT = 7.77% return, CoV = 3.38. Private infra vs. S&P 500 correlation = 0.12 (very low = good diversifier).</li>
+        <li>✅ <strong>Leverage in RE:</strong> Magnifies both gains AND losses. Higher leverage increases default risk, especially with unexpected interest rate changes or financing access changes. Does not always improve IRR.</li>
+        <li>✅ <strong>Inflation hedging:</strong> RE — varies by geography, market segment, time period; more evident in high-inflation periods. Infrastructure — stronger, built into concession/regulation contracts. Both provide <em>some</em> inflation protection but infrastructure is generally more reliable.</li>
+        <li>✅ <strong>SWFs and infrastructure:</strong> Largest allocators (~5%–6% of AUM). Long horizon + scale for direct investment + ability to absorb illiquidity = ideal fit for infrastructure.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas &amp; Numbers — Quick Reference</div>
+      <div class="f">
+        FFO = Net Income + Depreciation − Gains on Property Sales<br><br>
+        REIT tax rule: distribute 90%–100% of taxable net rental income → no corporate tax<br><br>
+        Residential RE = 75% of global RE market by value<br>
+        Commercial RE income: &gt;50% of total returns come from income (not appreciation)<br><br>
+        Infrastructure target returns:<br>
+        &nbsp;&nbsp;High risk (Greenfield):    14%+<br>
+        &nbsp;&nbsp;Medium risk (Brownfield):  10%–12%<br>
+        &nbsp;&nbsp;Low risk (Secondary):      6%–8%<br>
+        Most infra funds average: ~10% long-term annual return<br><br>
+        Preqin private infra: 8.57% return | StdDev = 0.07 | CoV = 0.82 (best risk-adjusted)<br>
+        Private infra vs. S&amp;P 500 correlation: 0.12 (very low)<br>
+        Private infra vs. MSCI World correlation: 0.08 (extremely low)<br>
+        SWF allocation to infrastructure: ~5%–6% of AUM<br>
+        Global publicly traded infra market cap: ~USD 2.23T (2021, S&amp;P)
+      </div>
+      <div class="note">
+        Risk ranking (highest to lowest): Greenfield &gt; Brownfield &gt; Secondary-Stage<br>
+        Correlation ranking (highest to lowest correlation with equities): Private RE (0.51) &gt; Private Infra (0.12)<br>
+        RE income consistency: Income &gt; Capital Appreciation over the full economic cycle<br>
+        REIT disadvantage vs. private RE: Higher correlation with public equity markets
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 4: Real Estate &amp; Infrastructure · Exam Prep Notes
+</footer>
+
+</body>
+</html>

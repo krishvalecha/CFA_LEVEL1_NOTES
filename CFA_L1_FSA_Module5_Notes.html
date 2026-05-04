@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 5: Analyzing Statements of Cash Flows II</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --cfo-bg: #111a16; --cfo-border: #4cc98a;
+    --cfi-bg: #14111a; --cfi-border: #9b7fd4;
+    --cff-bg: #12141f; --cff-border: #4c8bc9;
+    --perf-bg: #181412; --perf-border: #c9a84c;
+    --cov-bg: #121618; --cov-border: #c94c4c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'CF'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .num { font-family: 'JetBrains Mono', monospace; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  /* Section-specific colored cards */
+  .cfo-card { background: var(--cfo-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cfo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .perf-card { background: var(--perf-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .perf-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cov-card { background: var(--cov-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cov-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .fcf-card { background: #111620; border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fcf-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(201,168,76,0.08); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 16px 14px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content .st-title { font-weight: 700; color: #fff; font-size: 14.5px; margin-bottom: 6px; }
+  .step-content strong { color: var(--accent); }
+
+  .worked { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .worked table { font-size: 13px; }
+  .worked thead th { background: #141926; font-size: 10px; }
+  .worked .total-row td { border-top: 2px solid var(--accent); font-weight: 700; color: var(--accent); }
+  .worked .sub-row td { border-top: 1px solid var(--border); font-weight: 600; color: #aab0c0; background: rgba(255,255,255,0.02); }
+  .worked .result-row td { background: rgba(201,168,76,0.08); font-weight: 700; font-size: 14px; color: #e8c97a; }
+  .worked .neg { color: var(--danger) !important; }
+  .worked .pos { color: var(--accent3) !important; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 5</div>
+  <h1>Analyzing Statements of <span>Cash Flows II</span></h1>
+  <p class="subtitle">Complete module replacement: evaluating sources and uses of cash (4-step framework), common-size cash flow statement analysis (two methods: inflows/outflows approach and net revenue approach), free cash flow to the firm (FCFF) and free cash flow to equity (FCFE) — full derivations and worked examples, and performance and coverage cash flow ratios with interpretation. Companion to Module 4.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Evaluating Sources &amp; Uses of Cash</a>
+  <a class="toc-item" href="#s2">02 · Earnings Quality &amp; CFO vs. NI</a>
+  <a class="toc-item" href="#s3">03 · Common-Size Cash Flow Analysis</a>
+  <a class="toc-item" href="#s4">04 · Free Cash Flow to the Firm (FCFF)</a>
+  <a class="toc-item" href="#s5">05 · Free Cash Flow to Equity (FCFE)</a>
+  <a class="toc-item" href="#s6">06 · Cash Flow Performance Ratios</a>
+  <a class="toc-item" href="#s7">07 · Cash Flow Coverage Ratios</a>
+  <a class="toc-item" href="#s8">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: EVALUATING SOURCES & USES OF CASH   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Evaluating Sources and Uses of Cash — The 4-Step Framework</h2>
+    </div>
+
+    <div class="card">
+      <p>Analyzing a cash flow statement requires a structured approach: start with the big picture (where does cash come from and go?), then drill into each section to understand the <em>drivers</em>. This 4-step framework is the systematic approach the LES presents — and the lens through which exam questions about CFS analysis are structured.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">STEP 1</div>
+        <div class="step-content">
+          <div class="st-title">Evaluate Major Sources and Uses of Cash (CFO, CFI, CFF)</div>
+          Identify which section is the PRIMARY source of cash and which sections are uses. Ask:
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Is <strong>CFO positive</strong>? Mature, healthy companies should generate positive CFO consistently.</li>
+            <li>Is CFO <strong>sufficient to cover capital expenditures</strong> (i.e., does the company have positive free cash flow)?</li>
+            <li>Is the company funding operations with external financing (debt/equity issuance)? This is a red flag if persistent.</li>
+            <li>What stage of growth is the company in? Growth-stage companies may have negative CFO temporarily — that's expected but not sustainable.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 2</div>
+        <div class="step-content">
+          <div class="st-title">Evaluate Primary Determinants of Operating Cash Flow</div>
+          Drill into the CFO section. For the indirect method, examine each working capital adjustment. Ask:
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Is <strong>CFO &gt; Net Income</strong>? Expected and healthy for a mature company (D&amp;A is non-cash; CFO should exceed NI).</li>
+            <li>Is CFO &lt; Net Income? Could signal aggressive revenue recognition (receivables building), excessive accruals, or other earnings quality issues.</li>
+            <li>Are working capital changes consistent with the business narrative? (e.g., inventory growing faster than sales is a potential red flag).</li>
+            <li>How <strong>consistent</strong> are operating cash flows over time? Volatile CFO = higher risk and harder to forecast for valuation.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 3</div>
+        <div class="step-content">
+          <div class="st-title">Evaluate Primary Determinants of Investing Cash Flow</div>
+          Examine each CFI line item. Ask:
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>How much is being invested in <strong>PP&amp;E</strong> (maintenance vs. growth capex)? Is it funded by excess CFO?</li>
+            <li>Are assets being acquired (acquisitions)? At what scale? Does CFO cover it, or is the company relying on financing?</li>
+            <li>Are assets being <strong>sold</strong>? Why? Is it a strategic divestiture or a distressed sale of assets needed for operations?</li>
+            <li>Are investments in securities being made? (Significant for cash-rich companies like Apple.)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 4</div>
+        <div class="step-content">
+          <div class="st-title">Evaluate Primary Determinants of Financing Cash Flow</div>
+          Examine each CFF line item. Ask:
+          <ul style="margin-top:8px; padding-left:14px; font-size:13.5px;">
+            <li>Is the company <strong>raising or repaying capital</strong>? Is debt increasing or decreasing?</li>
+            <li>When does debt mature? Is refinancing risk significant?</li>
+            <li>Is capital being <strong>returned to shareholders</strong> (dividends + buybacks)? Is it funded from CFO or from new borrowing?</li>
+            <li>Is the mix of debt vs. equity financing changing? What does this imply for financial risk?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Expected CFO/CFI/CFF Patterns by Company Stage</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Company Stage</th><th>CFO</th><th>CFI</th><th>CFF</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mature / Established</td>
+            <td class="num pos">Strong positive</td>
+            <td class="num neg">Negative (investing in assets)</td>
+            <td class="num neg">Negative (returning capital: buybacks, dividends, debt repayment)</td>
+            <td>Ideal pattern. Business self-funds and returns excess to investors. Most S&amp;P 500 companies.</td>
+          </tr>
+          <tr>
+            <td>Growth Stage</td>
+            <td class="num">Positive but modest — or even negative</td>
+            <td class="num neg">Very negative (heavy capex)</td>
+            <td class="num pos">Positive (issuing debt/equity to fund growth)</td>
+            <td>Normal for growth phase. Not sustainable long-term — CFO must eventually dominate. Watch: does growth translate to FCF?</td>
+          </tr>
+          <tr>
+            <td>Early Stage / Startup</td>
+            <td class="num neg">Negative (burning cash)</td>
+            <td class="num neg">Negative (building infrastructure)</td>
+            <td class="num pos">Positive (funded by VC/debt)</td>
+            <td>Typical for pre-revenue companies. Survival depends on access to capital. CFO must turn positive before capital runs out.</td>
+          </tr>
+          <tr>
+            <td>Distressed</td>
+            <td class="num neg">Negative or declining</td>
+            <td class="num pos">Positive (selling assets)</td>
+            <td class="num pos">Positive (emergency borrowing) or negative (forced debt repayment)</td>
+            <td>Selling assets and borrowing to fund operations — unsustainable. CFO must recover or default risk rises.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Danone 2017 Case — Seeing the 4-Step Framework in Action</div>
+      <p><strong>Step 1:</strong> In 2016, CFO ($2,652m) was the primary source. In 2017, CFF ($8,289m) was primary — a massive shift driven by bond issuance. <strong>Step 2:</strong> CFO grew from $2,652m to $2,958m — solid, growing operating cash generation. Net income also grew ($1,827m → $2,563m). CFO &gt; NI both years — good earnings quality. <strong>Step 3:</strong> CFI was −$11,437m in 2017 (vs. −$848m in 2016) — dominated by the WhiteWave acquisition ($10,949m in subsidiary purchases). The company spent ~10× normal investing levels. <strong>Step 4:</strong> CFF swung from −$1,616m to +$8,289m as Danone issued bonds to fund the WhiteWave deal. The 2017 picture: major acquisition funded entirely by new debt. The analyst question: will post-acquisition CFO growth justify the leverage taken on?</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: EARNINGS QUALITY — CFO vs. NI       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Earnings Quality — The CFO vs. Net Income Relationship</h2>
+    </div>
+
+    <div class="card">
+      <p>Comparing CFO to net income is one of the most powerful tools for assessing <strong>earnings quality</strong>. For a mature, profitable company operating normally, CFO should consistently <em>exceed</em> net income because of non-cash charges (primarily depreciation and amortization) that reduce net income but not cash flow. When CFO persistently lags net income, something is wrong.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">CFO &gt; Net Income — The Healthy Pattern</div>
+        <ul>
+          <li>D&amp;A reduces net income but NOT cash → CFO should be higher</li>
+          <li>Other non-cash charges (impairment, stock comp) further inflate CFO vs. NI</li>
+          <li>Strong signal of <strong>high earnings quality</strong> — accrual income is backed by actual cash</li>
+          <li>The larger the gap (D&amp;A relative to asset base), the more CFO exceeds NI — common in capital-intensive businesses</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">CFO &lt; Net Income — The Warning Signal</div>
+        <ul>
+          <li>Receivables building faster than revenue → possible aggressive revenue recognition</li>
+          <li>Inventory building → possible overstocking or slow-moving goods</li>
+          <li>One-time non-operating gains inflated NI (e.g., asset sale gains) — these bypass CFO</li>
+          <li>May indicate company is generating "paper profits" without real cash flow</li>
+          <li><strong>Persistent pattern of CFO &lt; NI is a serious earnings quality red flag</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ The Classic Earnings Manipulation Signal</div>
+      <p>A company reports strong and growing net income, but operating cash flow is flat or declining, and accounts receivable are growing rapidly. This classic pattern suggests the company is recognizing revenue before it should be — booking sales that haven't collected in cash. Eventually, either the receivables must be written off (hitting future income) or the manipulation is exposed. The CFS is the hardest financial statement to manipulate because cash is cash. Comparing revenue growth, A/R growth, and CFO growth together is one of the most powerful fraud-detection tools in financial analysis.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Earnings Quality via CFO/NI Comparison</div>
+      <p>The exam will present a scenario where a company reports high net income but low (or negative) CFO and ask what this suggests. The correct answer: it may indicate <strong>low earnings quality</strong> — the company may be using aggressive accounting to boost reported profits without generating real cash. Key phrase the exam uses: "the relationship between net income and operating cash flow is an indicator of earnings quality." Also important: because D&amp;A is non-cash, the exam may ask why CFO should exceed NI for a mature company — answer: non-cash expenses (D&amp;A) reduce NI but not CFO.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: COMMON-SIZE CASH FLOW ANALYSIS      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Common-Size Cash Flow Statement Analysis</h2>
+    </div>
+
+    <div class="card">
+      <p>Common-size analysis standardizes the cash flow statement to enable comparison across companies of different sizes and across time periods. Unlike the income statement (% of revenue) and balance sheet (% of total assets), the CFS has <strong>two different common-size approaches</strong> — and knowing the difference is testable.</p>
+    </div>
+
+    <h3>Method 1: Total Inflows/Total Outflows Approach</h3>
+
+    <div class="cfo-card">
+      <div class="cfo-title">Inflows/Outflows Approach — How It Works</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Each <strong>cash inflow</strong> is expressed as a percentage of <strong>total cash inflows</strong></li>
+        <li>Each <strong>cash outflow</strong> is expressed as a percentage of <strong>total cash outflows</strong></li>
+        <li>Best used with the <strong>direct method</strong> — because operating inflows and outflows are separately presented, allowing meaningful percentage breakdown of each source/use</li>
+        <li>With the <strong>indirect method</strong>, only the <em>net</em> CFO (not its components) can be expressed as a % of total inflows/outflows — less granular</li>
+        <li>Useful for: identifying the dominant sources and uses of cash; seeing if a company is over-reliant on one inflow source (e.g., 97% of inflows from customers = healthy; 60% from asset sales = concern)</li>
+      </ul>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Common-Size (Inflows/Outflows): Direct Method</div>
+      <div class="two-col" style="margin-top:0;">
+        <div>
+          <table>
+            <thead><tr><th>Cash Inflows</th><th>Amount</th><th>% of Total</th></tr></thead>
+            <tbody>
+              <tr><td>Cash from customers</td><td class="num">$23,543</td><td class="num pos">96.86%</td></tr>
+              <tr><td>Sale of equipment</td><td class="num">$762</td><td class="num">3.14%</td></tr>
+              <tr class="total-row"><td>Total Inflows</td><td class="num">$24,305</td><td class="num">100.0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Cash Outflows</th><th>Amount</th><th>% of Total</th></tr></thead>
+            <tbody>
+              <tr><td>To suppliers</td><td class="num">$11,900</td><td class="num">48.66%</td></tr>
+              <tr><td>To employees</td><td class="num">$4,113</td><td class="num">16.82%</td></tr>
+              <tr><td>Other opex</td><td class="num">$3,532</td><td class="num">14.44%</td></tr>
+              <tr><td>Income taxes</td><td class="num">$1,134</td><td class="num">4.64%</td></tr>
+              <tr><td>Purchase equipment</td><td class="num">$1,300</td><td class="num">5.32%</td></tr>
+              <tr><td>Dividends paid</td><td class="num">$1,120</td><td class="num">4.58%</td></tr>
+              <tr><td>Retire stock</td><td class="num">$600</td><td class="num">2.45%</td></tr>
+              <tr><td>Retire LT debt</td><td class="num">$500</td><td class="num">2.04%</td></tr>
+              <tr><td>Interest paid</td><td class="num">$258</td><td class="num">1.05%</td></tr>
+              <tr class="total-row"><td>Total Outflows</td><td class="num">$24,457</td><td class="num">100.0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;"><strong>Insight:</strong> 96.86% of Acme's cash comes from customers (healthy). Suppliers consume 48.66% of outflows — the biggest single use. Capital investments (equipment) represent only 5.32% of outflows, suggesting modest capex intensity. Financing outflows (dividends + buybacks + debt repayment) total ~9% of outflows.</p>
+    </div>
+
+    <h3>Method 2: Net Revenue Approach</h3>
+
+    <div class="cfo-card">
+      <div class="cfo-title">Net Revenue Approach — How It Works</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Every line item on the cash flow statement is expressed as a <strong>percentage of net revenue</strong></li>
+        <li>Works for <strong>both direct and indirect format</strong> statements</li>
+        <li>The common-size denominator is <strong>net revenue (net sales)</strong> — same as the income statement common-size</li>
+        <li>Key advantage: enables <strong>direct forecasting</strong>. Once you forecast revenue, individual items expressed as % of revenue (capex, D&amp;A, working capital changes) provide a basis for projecting cash flows</li>
+        <li>Enables comparison of CFO as a % of revenue across companies — a profitability measure (cash conversion from sales)</li>
+      </ul>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Common-Size (Net Revenue Approach, net revenue = $23,543)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>% of Revenue</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>Net income</td><td class="num">$2,210</td><td class="num">9.37%</td><td>Net profit margin (cash IS view)</td></tr>
+          <tr><td>Depreciation</td><td class="num">$1,052</td><td class="num">4.46%</td><td>D&amp;A intensity as % of sales</td></tr>
+          <tr><td>Gain on equip. sale</td><td class="num">($205)</td><td class="num neg">(0.87%)</td><td>Non-recurring — subtract</td></tr>
+          <tr><td>Working capital changes (net)</td><td class="num">($449)*</td><td class="num neg">(1.91%)</td><td>Net WC drag on cash</td></tr>
+          <tr class="sub-row"><td>Net CFO</td><td class="num">$2,606</td><td class="num pos">11.04%</td><td>CFO margin — cash generated per $1 of sales</td></tr>
+          <tr><td>Equipment purchase</td><td class="num">($1,300)</td><td class="num neg">(5.51%)</td><td>Capex intensity as % of sales</td></tr>
+          <tr><td>Equipment sale</td><td class="num">$762</td><td class="num">3.23%</td><td></td></tr>
+          <tr class="sub-row"><td>Net CFI</td><td class="num">($538)</td><td class="num neg">(2.28%)</td><td></td></tr>
+          <tr><td>Dividends paid</td><td class="num">($1,120)</td><td class="num neg">(4.75%)</td><td>Dividend burden as % of sales</td></tr>
+          <tr><td>Debt repayment</td><td class="num">($500)</td><td class="num neg">(2.12%)</td><td></td></tr>
+          <tr><td>Stock repurchase</td><td class="num">($600)</td><td class="num neg">(2.54%)</td><td></td></tr>
+          <tr class="sub-row"><td>Net CFF</td><td class="num">($2,220)</td><td class="num neg">(9.41%)</td><td></td></tr>
+          <tr class="result-row"><td>Net decrease in cash</td><td class="num">($152)</td><td class="num">(0.64%)</td><td></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">*Net WC changes: −$55 (A/R) − $707 (Inv) + $23 (Prepaid) + $263 (A/P) + $10 (Wages) − $12 (Int Pay) + $5 (Tax Pay) + $22 (Accruals) = −$451. CFO margin of 11.04% means Acme converts 11 cents of every revenue dollar into operating cash.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Which Common-Size Method for Which Purpose?</div>
+      <p><strong>Inflows/Outflows approach:</strong> Best for understanding the relative importance of each cash source and use. "What % of my cash comes from customers vs. asset sales?" <strong>Net Revenue approach:</strong> Best for trend analysis, forecasting, and cross-company comparison. "How efficiently does this company convert revenue into operating cash? How does capex compare to peers as a % of sales?" The Apple common-size example uses net revenue — note how Apple's CFO margin declined from 34.8% (2015) to 27.7% (2017) while Microsoft's rose from 31.7% to 43.9% over the same period. That trend comparison is only visible via the net revenue approach.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Common-Size Cash Flow</div>
+      <p>The exam will test whether you know: (1) the two methods (inflows/outflows vs. net revenue); (2) what each is used for; (3) with the indirect method, <strong>only net CFO (not its components)</strong> can be expressed as % of total inflows — because individual operating inflows and outflows are not shown; (4) the net revenue approach enables forecasting because each item is expressed as % of a projected revenue base. A typical exam question: "Which common-size approach would be most useful for comparing a company's capital expenditure intensity to industry peers?" Answer: net revenue approach (capex ÷ net revenue).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: FREE CASH FLOW TO THE FIRM (FCFF)   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Free Cash Flow to the Firm (FCFF)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Free Cash Flow to the Firm (FCFF)</strong> is the cash flow available to <em>all</em> capital providers — both debt holders and equity holders — after all operating expenses (including taxes) have been paid and all necessary investments in working capital and fixed capital have been made. It is the cash available to service both debt and equity. FCFF is used in valuation models (specifically the FCFF discounted cash flow model where you discount at WACC).</p>
+    </div>
+
+    <div class="fcf-card">
+      <div class="fcf-title">FCFF — Two Derivation Approaches</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#9ecef5; line-height:2.2;">
+        <strong style="color:#4c8bc9;">Starting from Net Income:</strong><br>
+        FCFF = NI + NCC + Int(1 − Tax rate) − FCInv − WCInv<br><br>
+        <strong style="color:#4c8bc9;">Starting from CFO (simpler — preferred when CFO is given):</strong><br>
+        FCFF = CFO + Int(1 − Tax rate) − FCInv
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">FCFF — Component Definitions &amp; Logic</div>
+      <div class="f">
+        NI       = Net income<br>
+        NCC      = Non-cash charges (depreciation, amortization — add back because no cash out)<br>
+        Int      = Interest expense (add back after-tax because FCFF is pre-debt-service)<br>
+        Tax rate = Effective tax rate = Tax expense ÷ Pretax income<br>
+        FCInv    = Fixed capital investment (net capex = capex − proceeds from asset sales)<br>
+        WCInv    = Net investment in working capital = ∆WC operating assets − ∆WC operating liabilities<br><br>
+        Why add back after-tax interest?<br>
+        FCFF is available to BOTH debt AND equity holders. Interest is a payment TO debt holders.<br>
+        Adding it back gives us cash flow BEFORE paying debt holders (pre-interest).<br>
+        We use after-tax interest because interest expense is tax-deductible → tax benefit reduces cost.<br><br>
+        Why subtract FCInv?<br>
+        These are required investments to maintain and grow the business — not discretionary.<br>
+        FCInv is NET: if company sold assets, those proceeds reduce the net investment.<br><br>
+        The CFO-based formula is cleaner because CFO already includes NCC and WCInv adjustments.<br>
+        Only need to add back after-tax interest (which CFO deducted under US GAAP) and subtract FCInv.
+      </div>
+      <div class="note">IFRS nuance: If a company classified interest paid in FINANCING activities (not CFO), then CFO already does NOT include interest. In that case, do NOT add back Int(1-t) — the adjustment is only needed when interest was subtracted in CFO (US GAAP treatment). Similarly, if dividends received or interest received were placed in CFI, add those back to CFO before computing FCFF.</div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — FCFF Calculation (Tax rate = 34%, CFO = $2,606; Interest paid = $258; Net FCInv = $538)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td>CFO</td><td class="num">$2,606</td><td>Cash flow from operating activities — starting point</td></tr>
+          <tr><td>+ After-tax interest</td><td class="num pos">+$170</td><td>Interest paid $258 × (1 − 0.34) = $258 × 0.66 = $170</td></tr>
+          <tr><td>− Net fixed capital investment</td><td class="num neg">($538)</td><td>Capex $1,300 − Proceeds from sale $762 = $538 net</td></tr>
+          <tr class="result-row"><td>FCFF</td><td class="num">$2,238</td><td>Cash available to BOTH debt AND equity holders</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Effective tax rate: Tax expense $1,139 ÷ Pretax income $3,349 = 34.0%. Net FCInv: Capital expenditure $1,300 − proceeds from sale $762 = $538 (net investment in fixed capital).</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Net Capex (Not Gross Capex) for FCInv?</div>
+      <p>FCInv = Net investment in fixed capital = Capex − Proceeds from asset sales. When a company sells old equipment, it raises cash from those assets. The net figure captures the true change in fixed capital investment: if you buy $1,300 of new equipment but sell $762 of old equipment, your net fixed capital investment is only $538. Using gross capex ($1,300) would overstate how much cash was consumed by investing activities.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: FREE CASH FLOW TO EQUITY (FCFE)     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Free Cash Flow to Equity (FCFE)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Free Cash Flow to Equity (FCFE)</strong> is the cash flow available to the company's <em>common stockholders</em> — after all operating expenses, taxes, debt service (interest and principal repayment), and necessary capital investments have been made. It is the cash that could theoretically be distributed to equity holders without impairing the business. FCFE is used in equity valuation (discount at required return on equity, not WACC).</p>
+    </div>
+
+    <div class="fcf-card">
+      <div class="fcf-title">FCFE Formula</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#9ecef5; line-height:2.2;">
+        FCFE = CFO − FCInv + Net Borrowing<br><br>
+        Where:  Net Borrowing = New debt issued − Debt repaid<br>
+        If net borrowing is negative (repaid more than borrowed):<br>
+        FCFE = CFO − FCInv − Net Debt Repayment
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">FCFE — Logic Behind Each Component</div>
+      <div class="f">
+        CFO:            Cash generated from operations (already after interest and taxes)<br>
+        − FCInv:        Subtract net capex (required investment; same as FCFF)<br>
+        + Net Borrowing: Debt raised ADDS to equity-holder cash (lenders funded some capex)<br>
+        − Net Repayment: Debt repaid REDUCES equity-holder cash (cash used to repay lenders)<br><br>
+        Key difference from FCFF:<br>
+        FCFF: adds back interest (pre-debt service)  →  Available to debt + equity<br>
+        FCFE: does NOT add back interest (already deducted in CFO)  →  Available to equity only<br>
+        FCFE accounts for debt financing: if company borrows $X to fund capex, equity holders have<br>
+        more cash available (lenders paid for part of the capex).<br><br>
+        FCFE ≤ FCFF when company has net debt repayment (using equity-holder cash to pay back debt)<br>
+        FCFE ≥ FCFF when company has net new borrowing (lenders adding to equity's cash pool)
+      </div>
+      <div class="note">FCFE is the maximum amount that could be paid as dividends without reducing the company's asset base or borrowing capacity. A company paying dividends greater than FCFE must either borrow or sell assets to fund those dividends — a potential solvency concern over time.</div>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — FCFE Calculation (CFO = $2,606; Net FCInv = $538; Debt repaid = $500)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Amount</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td>CFO</td><td class="num">$2,606</td><td>Starting point — already after interest and taxes</td></tr>
+          <tr><td>− Net fixed capital investment</td><td class="num neg">($538)</td><td>Capex $1,300 − Proceeds $762 = $538</td></tr>
+          <tr><td>− Debt repayment (net borrowing = −$500)</td><td class="num neg">($500)</td><td>Acme retired $500 of LT debt — a use of equity cash</td></tr>
+          <tr class="result-row"><td>FCFE</td><td class="num">$1,568</td><td>Cash available to common stockholders</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">Acme's FCFE of $1,568 is positive — meaning equity holders have $1,568 of free cash flow available. Note: Acme actually paid $1,120 in dividends + $600 in stock repurchases = $1,720 total to equity holders, which EXCEEDS FCFE of $1,568. The shortfall was partly funded by debt repayment (they used remaining CFO). Also note: FCFF $2,238 &gt; FCFE $1,568 because Acme repaid $500 of debt (reducing equity-holder cash), and the after-tax interest adjustment is added to FCFF but not to FCFE.</p>
+    </div>
+
+    <h3>FCFF vs. FCFE — Side-by-Side Comparison</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>FCFF</th><th>FCFE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Available to</td><td>ALL capital providers (debt + equity)</td><td>Common equity holders only</td></tr>
+          <tr><td>Interest treatment</td><td>Add back after-tax interest (pre-debt-service)</td><td>Interest already deducted in CFO — not added back</td></tr>
+          <tr><td>Debt financing</td><td>Ignored — both before and after net borrowing is same</td><td>Net borrowing ADDED; net repayment SUBTRACTED</td></tr>
+          <tr><td>Valuation model</td><td>FCFF DCF: Discount at WACC → Enterprise value</td><td>FCFE DCF: Discount at ke (cost of equity) → Equity value</td></tr>
+          <tr><td>Formula (from CFO)</td><td class="num">FCFF = CFO + Int(1−t) − FCInv</td><td class="num">FCFE = CFO − FCInv + Net Borrowing</td></tr>
+          <tr><td>Relative size</td><td>Generally FCFF ≥ FCFE (before net borrowing adds); depends on leverage</td><td>Lower than FCFF when company has net debt repayment; higher when borrowing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — FCFF and FCFE</div>
+      <p>Both formulas are heavily tested. Key distinctions: (1) FCFF adds back <strong>after-tax</strong> interest — not pre-tax. Using pre-tax interest is a common error. (2) FCFE uses <strong>net borrowing</strong> (new debt minus repayments) — for Acme, net borrowing = −$500 because they repaid $500 and issued nothing. (3) Under IFRS, if interest paid was classified as CFF (not CFO), you do NOT add it back in the FCFF formula from CFO — because CFO doesn't already include it. (4) FCInv = net investment in fixed assets = capex − proceeds from asset sales. (5) FCFF is the pre-leverage measure (available to all); FCFE is the post-leverage measure (available to equity only). Higher leverage → larger gap between FCFF and FCFE.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: PERFORMANCE RATIOS                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Cash Flow Performance Ratios</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Cash flow performance ratios</strong> measure the company's profitability and cash-generating ability using CFO rather than accrual-based income measures. Because CFO is harder to manipulate than net income, these ratios often provide a cleaner view of underlying performance. They are used for both time-series analysis (tracking a company over time) and cross-sectional analysis (comparing companies).</p>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-title">Performance Ratios — All 5 Formulas</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#e8c890; line-height:2.4;">
+        Cash Flow to Revenue  =  CFO ÷ Net Revenue<br>
+        Cash Return on Assets  =  CFO ÷ Average Total Assets<br>
+        Cash Return on Equity  =  CFO ÷ Average Shareholders' Equity<br>
+        Cash to Income         =  CFO ÷ Operating Income<br>
+        Cash Flow per Share    =  (CFO − Preferred Dividends) ÷ Shares Outstanding
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>What It Measures</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cash Flow to Revenue</td>
+            <td class="num">CFO ÷ Net Revenue</td>
+            <td>Operating cash generated per dollar of revenue</td>
+            <td>Cash-based version of net profit margin. Higher = company converts more revenue into actual cash. Declining trend = possible margin compression or earnings quality deterioration.</td>
+          </tr>
+          <tr>
+            <td>Cash Return on Assets</td>
+            <td class="num">CFO ÷ Average Total Assets</td>
+            <td>Operating cash generated per dollar of assets</td>
+            <td>Cash-based ROA. Measures asset utilization efficiency. Average total assets = (Beg + End) ÷ 2. Compares how well assets generate cash vs. accrual income.</td>
+          </tr>
+          <tr>
+            <td>Cash Return on Equity</td>
+            <td class="num">CFO ÷ Average Shareholders' Equity</td>
+            <td>Operating cash generated per dollar of equity</td>
+            <td>Cash-based ROE. Higher leverage amplifies this ratio (same CFO over smaller equity base). Must compare to industry norms for meaningful interpretation.</td>
+          </tr>
+          <tr>
+            <td>Cash to Income</td>
+            <td class="num">CFO ÷ Operating Income</td>
+            <td>Cash-generating ability of operations</td>
+            <td>Converts operating income to a cash flow multiple. Ratio &gt; 1 expected (D&amp;A adds to CFO without reducing operating income). Ratio &lt; 1 = warning signal (operations generating paper income but not cash).</td>
+          </tr>
+          <tr>
+            <td>Cash Flow per Share</td>
+            <td class="num">(CFO − Pref. Div.) ÷ Common Shares</td>
+            <td>Operating cash on a per-share basis</td>
+            <td>Cash-based EPS equivalent. Used to assess if share price is supported by cash generation. IFRS note: if dividends paid are in CFO, add them back before subtracting preferred dividends.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Apple vs. Microsoft — CFO to Revenue Analysis (from LES)</div>
+      <table>
+        <thead><tr><th>Metric</th><th>2015</th><th>2016</th><th>2017</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td style="color:#4cc98a;">Microsoft — CFO/Revenue</td><td class="num">31.7%</td><td class="num">39.1%</td><td class="num pos">43.9%</td><td>Strongly improving ↑</td></tr>
+          <tr><td style="color:#4c8bc9;">Apple — CFO/Revenue</td><td class="num">34.8%</td><td class="num">30.5%</td><td class="num neg">27.7%</td><td>Declining ↓</td></tr>
+          <tr><td style="color:#4cc98a;">Microsoft — CFO/Avg Assets</td><td class="num">17.1%</td><td class="num">18.1%</td><td class="num pos">18.2%</td><td>Stable, slight improvement ↑</td></tr>
+          <tr><td style="color:#4c8bc9;">Apple — CFO/Avg Assets</td><td class="num">31.1%</td><td class="num">21.5%</td><td class="num neg">18.2%</td><td>Sharply declining ↓</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;"><strong>Analysis:</strong> Microsoft has overtaken Apple on both cash metrics. Microsoft's trend is improving (cloud transition generating better cash conversion). Apple's decline in CFO/Assets is heavily influenced by massive accumulation of financial assets (securities) — the asset base grows faster than CFO because excess cash is being invested in marketable securities, not in the operating business. This illustrates why interpretation of ratios requires understanding the underlying business model.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: COVERAGE RATIOS                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Cash Flow Coverage Ratios</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Cash flow coverage ratios</strong> measure the company's ability to meet specific obligations — interest payments, debt repayment, capital expenditures, dividend payments — using operating cash flow. They are solvency-focused: can the company service its commitments with cash from operations?</p>
+    </div>
+
+    <div class="cov-card">
+      <div class="cov-title">Coverage Ratios — All 6 Formulas</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#dfc8c8; line-height:2.4;">
+        Debt Coverage      =  CFO ÷ Total Debt<br>
+        Interest Coverage  =  (CFO + Interest paid + Taxes paid) ÷ Interest paid<br>
+        Reinvestment       =  CFO ÷ Cash paid for long-term assets<br>
+        Debt Payment       =  CFO ÷ Cash paid for long-term debt repayment<br>
+        Dividend Payment   =  CFO ÷ Dividends paid<br>
+        Investing &amp; Financing = CFO ÷ Cash outflows for investing and financing activities
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>What It Measures</th><th>Higher = ?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Debt Coverage</td>
+            <td class="num">CFO ÷ Total Debt</td>
+            <td>Financial risk and leverage. How quickly can the company repay total debt from CFO?</td>
+            <td>Lower financial risk. If = 0.25, takes ~4 years to repay debt from CFO.</td>
+          </tr>
+          <tr>
+            <td>Interest Coverage</td>
+            <td class="num">(CFO + Int paid + Tax paid) ÷ Int paid</td>
+            <td>Ability to meet interest obligations from cash flow (cash-based coverage).</td>
+            <td>Higher = more comfortable interest coverage. Numerator restores pre-interest, pre-tax CFO.</td>
+          </tr>
+          <tr>
+            <td>Reinvestment</td>
+            <td class="num">CFO ÷ Capex (cash paid for LT assets)</td>
+            <td>Ability to fund capital expenditures from operating cash flow.</td>
+            <td>&gt;1 = self-funding capex from operations. &lt;1 = needs external funding for capex.</td>
+          </tr>
+          <tr>
+            <td>Debt Payment</td>
+            <td class="num">CFO ÷ Cash paid for LT debt repayment</td>
+            <td>Ability to repay long-term debt from operating cash flows.</td>
+            <td>Higher = more able to service debt obligations from operations.</td>
+          </tr>
+          <tr>
+            <td>Dividend Payment</td>
+            <td class="num">CFO ÷ Dividends paid</td>
+            <td>Ability to pay dividends from operating cash flow.</td>
+            <td>&gt;1 = dividends covered by CFO. &lt;1 = borrowing or selling assets to pay dividends.</td>
+          </tr>
+          <tr>
+            <td>Investing &amp; Financing</td>
+            <td class="num">CFO ÷ (CFI outflows + CFF outflows)</td>
+            <td>Overall ability to cover all investing and financing obligations from operations.</td>
+            <td>Higher = operations generate sufficient cash for all obligations.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="worked">
+      <div class="worked-title">Acme Corp — Cash Flow Coverage Ratios (CFO = $2,606; all data from prior modules)</div>
+      <table>
+        <thead><tr><th>Ratio</th><th>Calculation</th><th>Result</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Debt Coverage</td>
+            <td class="num">$2,606 ÷ $3,075*</td>
+            <td class="num pos">0.85×</td>
+            <td>CFO covers 85% of total debt annually — ~14 months to repay all debt from CFO</td>
+          </tr>
+          <tr>
+            <td>Interest Coverage (CFO-based)</td>
+            <td class="num">($2,606 + $258 + $1,134) ÷ $258</td>
+            <td class="num pos">15.5×</td>
+            <td>Robust — CFO (pre-interest, pre-tax) covers interest 15.5 times</td>
+          </tr>
+          <tr>
+            <td>Reinvestment</td>
+            <td class="num">$2,606 ÷ $1,300</td>
+            <td class="num pos">2.0×</td>
+            <td>CFO is 2× capex — company self-funds capital expenditures with room to spare</td>
+          </tr>
+          <tr>
+            <td>Debt Payment</td>
+            <td class="num">$2,606 ÷ $500</td>
+            <td class="num pos">5.2×</td>
+            <td>Strong ability to repay debt from operations</td>
+          </tr>
+          <tr>
+            <td>Dividend Payment</td>
+            <td class="num">$2,606 ÷ $1,120</td>
+            <td class="num pos">2.3×</td>
+            <td>CFO covers dividends 2.3× — dividends are well-supported by cash generation</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:10px;">*Total debt = ending long-term debt $3,075. In practice, total debt includes both current and long-term portions of all interest-bearing obligations.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Interest Coverage Ratio — IFRS Nuance</div>
+      <p>The cash-based interest coverage ratio formula adds back interest paid and taxes paid to CFO: <strong>(CFO + Interest paid + Taxes paid) ÷ Interest paid</strong>. This restores CFO to a pre-interest, pre-tax basis, making it comparable to an EBIT-based interest coverage ratio. <strong>IFRS exception:</strong> If the company classified interest paid in CFF (not CFO), then interest paid should NOT be added back to the numerator — because it wasn't deducted from CFO in the first place. The LES footnote specifically calls this out. Always check where interest was classified before applying the formula.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Cash Flow Ratios</div>
+      <p>The exam will test you on: (1) knowing which formula to use for which ratio — the names are intuitive but formulas must be memorized; (2) the interest coverage numerator: <strong>CFO + interest paid + taxes paid</strong> (not just CFO ÷ interest). This unusual numerator reconstructs pre-interest, pre-tax CFO to match an EBIT-equivalent; (3) the reinvestment ratio interpretation: &gt;1 means CFO exceeds capex (company self-funds). The exam may give you a company with reinvestment ratio &lt;1 and ask what this implies (company must borrow or sell assets to fund capital expenditures); (4) dividend coverage: if this ratio is &lt;1, the company is paying dividends it cannot fund from operations — a sustainability concern; (5) IFRS nuance for interest coverage — don't add back interest if it was in CFF.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: EXAM CHECKLIST                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 5: Cash Flows II</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>4-Step cash flow evaluation framework:</strong> (1) Major sources/uses — is CFO primary source? (2) CFO determinants — CFO vs. NI comparison, working capital drivers. (3) CFI determinants — capex, acquisitions, asset sales. (4) CFF determinants — capital raising vs. repayment, dividends, buybacks.</li>
+        <li>✅ <strong>Mature company ideal pattern:</strong> CFO positive and primary source → CFI negative (investing in assets) → CFF negative (returning capital). CFO &gt; capex = positive free cash flow = healthy.</li>
+        <li>✅ <strong>Growth company pattern:</strong> CFO may be negative → CFI very negative → CFF positive (raising external capital). Temporary and acceptable, but must transition to CFO-led eventually.</li>
+        <li>✅ <strong>Distressed pattern:</strong> CFO negative → CFI positive (selling assets) → CFF mixed. Unsustainable — watch for this in exam scenarios.</li>
+        <li>✅ <strong>CFO vs. Net Income — earnings quality:</strong> For mature companies, CFO &gt; NI expected (D&amp;A is non-cash). CFO &lt; NI persistently = low earnings quality signal. Company may be booking "paper profits" not backed by cash.</li>
+        <li>✅ <strong>Common-size Method 1 — Inflows/Outflows:</strong> Each inflow as % of total inflows; each outflow as % of total outflows. Best with direct method (individual operating items separately shown). With indirect method: only <em>net</em> CFO appears (not its components).</li>
+        <li>✅ <strong>Common-size Method 2 — Net Revenue:</strong> Every CFS item as % of net revenue. Works for both direct and indirect. Best for trend analysis, forecasting, and cross-company comparison. Each item as % of revenue = a basis for projecting future cash flows once revenue is forecasted.</li>
+        <li>✅ <strong>FCFF = CFO + Int(1 − t) − FCInv.</strong> Available to ALL capital providers (debt + equity). Add after-tax interest because FCFF is pre-debt-service. FCInv = net capex (capex − asset sale proceeds).</li>
+        <li>✅ <strong>FCFF from Net Income = NI + NCC + Int(1 − t) − FCInv − WCInv.</strong> NCC = depreciation + amortization. WCInv = net increase in operating working capital.</li>
+        <li>✅ <strong>FCFE = CFO − FCInv + Net Borrowing.</strong> Available to EQUITY holders only. No interest add-back (interest already deducted in CFO). Net borrowing adds (lenders helped fund capex); net repayment subtracts.</li>
+        <li>✅ <strong>FCFF vs. FCFE:</strong> FCFF &gt; FCFE when net debt repaid. FCFE &gt; FCFF when net new borrowing. FCFF → discount at WACC → enterprise value. FCFE → discount at cost of equity → equity value.</li>
+        <li>✅ <strong>IFRS interest classification nuance for FCFF:</strong> If interest paid was in CFF (not CFO), do NOT add back Int(1−t) — it wasn't subtracted from CFO. If interest received was in CFI, add it back to CFO to compute FCFF.</li>
+        <li>✅ <strong>Performance ratios (all based on CFO):</strong> CFO/Revenue (cash profit margin), CFO/Avg Assets (cash ROA), CFO/Avg Equity (cash ROE), CFO/Operating Income (cash conversion), (CFO − Pref. Div.) / Shares (CFO per share).</li>
+        <li>✅ <strong>Coverage ratios:</strong> Debt coverage = CFO/Total Debt. Interest coverage = (CFO + Int paid + Tax paid)/Int paid. Reinvestment = CFO/Capex. Debt payment = CFO/Debt repaid. Dividend = CFO/Dividends. I&amp;F = CFO/(CFI + CFF outflows).</li>
+        <li>✅ <strong>Interest coverage IFRS nuance:</strong> If interest paid is in CFF, do NOT add it back to numerator — it was never subtracted from CFO.</li>
+        <li>✅ <strong>Reinvestment ratio &gt; 1:</strong> CFO exceeds capex — company self-funds. &lt; 1: must borrow or sell assets to fund capex.</li>
+        <li>✅ <strong>Dividend coverage &lt; 1:</strong> Dividends not supported by CFO — unsustainable without borrowing or asset sales.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 5 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ CFO vs. NI — EARNINGS QUALITY ═══<br>
+        CFO &gt; NI → Expected (D&amp;A non-cash) → High earnings quality<br>
+        CFO &lt; NI → Warning signal → Possible aggressive revenue recognition or accrual manipulation<br><br>
+
+        ═══ COMMON-SIZE APPROACHES ═══<br>
+        Method 1 (Inflows/Outflows): Each inflow ÷ Total inflows; each outflow ÷ Total outflows<br>
+        &nbsp;&nbsp;→ Best with direct method; with indirect, only net CFO is shown<br>
+        Method 2 (Net Revenue):     Each item ÷ Net revenue<br>
+        &nbsp;&nbsp;→ Works for all; best for forecasting and cross-company comparison<br><br>
+
+        ═══ FCFF ═══<br>
+        From CFO:  FCFF = CFO + Int(1 − t) − FCInv<br>
+        From NI:   FCFF = NI + NCC + Int(1 − t) − FCInv − WCInv<br>
+        FCInv = Capex − Proceeds from asset sales  (NET investment in fixed capital)<br>
+        t = effective tax rate = Tax expense ÷ Pretax income<br>
+        IFRS: if Int paid in CFF → do NOT add back Int(1−t) in CFO-based formula<br><br>
+
+        ═══ FCFE ═══<br>
+        FCFE = CFO − FCInv + Net Borrowing<br>
+        Net Borrowing = New debt − Debt repaid  (negative if net repayer)<br>
+        No interest add-back (interest already subtracted in CFO)<br>
+        FCFF − FCFE = Int(1−t) − Net Borrowing  (the leverage difference)<br><br>
+
+        ═══ PERFORMANCE RATIOS ═══<br>
+        CFO/Revenue         → Cash profit margin<br>
+        CFO/Avg Total Assets → Cash ROA<br>
+        CFO/Avg Equity       → Cash ROE<br>
+        CFO/Operating Income → Cash conversion<br>
+        (CFO − Pref Div)/Shares → CFO per share<br><br>
+
+        ═══ COVERAGE RATIOS ═══<br>
+        Debt coverage       = CFO ÷ Total Debt<br>
+        Interest coverage   = (CFO + Int paid + Taxes paid) ÷ Int paid<br>
+        Reinvestment        = CFO ÷ Capex<br>
+        Debt payment        = CFO ÷ LT Debt repaid<br>
+        Dividend payment    = CFO ÷ Dividends paid<br>
+        Investing &amp; Financing = CFO ÷ (CFI outflows + CFF outflows)
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 5:</strong><br>
+        (1) FCFF adds back AFTER-TAX interest (not pre-tax). Int(1−t), not Int. Tax benefit from interest reduces its true cost.<br>
+        (2) FCFE does NOT add back interest — CFO already deducted it. The add-back is only in FCFF.<br>
+        (3) IFRS companies classifying interest in CFF: do NOT add Int(1−t) to CFO in the FCFF formula — it wasn't subtracted from CFO.<br>
+        (4) FCInv = NET capital investment = capex − proceeds from asset sales. Not gross capex.<br>
+        (5) Net borrowing in FCFE: positive (new borrowing) ADDS to FCFE. Negative (net repayment) SUBTRACTS.<br>
+        (6) Interest coverage numerator = CFO + Int paid + Taxes paid (restores pre-tax, pre-interest CFO). It's NOT just CFO ÷ Int.<br>
+        (7) Common-size with indirect method: only NET CFO (not individual operating inflows/outflows) expressed as % — components not separately disclosed.<br>
+        (8) CFO &lt; NI persistently → low earnings quality. D&amp;A should make CFO &gt; NI normally.<br>
+        (9) Reinvestment ratio &lt;1 = CFO cannot cover capex → must use external funding.<br>
+        (10) Dividend coverage &lt; 1 = dividends exceed CFO → funded by borrowing or asset sales → sustainability risk.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 5: Analyzing Statements of Cash Flows II · Exam Prep Notes
+</footer>
+
+</body>
+</html>

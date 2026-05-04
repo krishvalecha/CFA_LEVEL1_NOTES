@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Ethics | Module 4: Introduction to GIPS</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --gips-bg: #12141f; --gips-border: #4c8bc9;
+    --comp-bg: #111a14; --comp-border: #4cc98a;
+    --verif-bg: #181412; --verif-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'GIPS'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(201,168,76,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 13.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  .gips-card { background: var(--gips-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .gips-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .comp-card { background: var(--comp-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .comp-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .verif-card { background: var(--verif-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .verif-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* OK vs NOT OK */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .ok-card { background: #0f1a12; border: 1px solid rgba(76,201,138,0.3); border-top: 2px solid #4cc98a; border-radius: 6px; padding: 16px 18px; }
+  .ok-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #4cc98a; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .notok-card { background: #1a0f0f; border: 1px solid rgba(201,76,76,0.3); border-top: 2px solid #c94c4c; border-radius: 6px; padding: 16px 18px; }
+  .notok-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #c94c4c; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .ok-card li, .notok-card li { font-size: 13.5px; margin-bottom: 8px; list-style: none; padding-left: 0; }
+  .ok-card li::before { content: '✓ '; color: #4cc98a; font-weight: 700; }
+  .notok-card li::before { content: '✗ '; color: #c94c4c; font-weight: 700; }
+
+  /* Who CAN / CANNOT grid */
+  .can-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .can-card { background: #0f1a12; border: 1px solid rgba(76,201,138,0.25); border-radius: 6px; padding: 14px 16px; }
+  .cannot-card { background: #1a0f0f; border: 1px solid rgba(201,76,76,0.25); border-radius: 6px; padding: 14px 16px; }
+  .maybe-card { background: #14141a; border: 1px solid rgba(201,168,76,0.25); border-radius: 6px; padding: 14px 16px; }
+  .can-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .can-label.green { color: var(--accent3); }
+  .can-label.red { color: var(--danger); }
+  .can-label.gold { color: var(--accent); }
+  .can-card li, .cannot-card li, .maybe-card li { font-size: 13px; margin-bottom: 6px; list-style: none; color: var(--text); line-height: 1.55; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  .abuse-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .abuse-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .abuse-row:last-child { border-bottom: none; }
+  .abuse-icon { background: rgba(201,76,76,0.08); color: var(--danger); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; padding: 14px 12px; min-width: 110px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-transform: uppercase; letter-spacing: 0.04em; }
+  .abuse-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .abuse-content .ab-title { font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 4px; }
+  .abuse-content .ab-fix { font-size: 13px; color: var(--accent3); margin-top: 6px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ETHICS · MODULE 4</div>
+  <h1>Introduction to the <span>Global Investment Performance Standards (GIPS)</span></h1>
+  <p class="subtitle">Complete module: Why GIPS were created and what problems they solve · Who can and cannot claim compliance · The composite requirement and its anti-cherry-picking purpose · Firm definition, discretion, and the fundamentals of compliance · Independent verification — what it covers and what it does not. High-density exam trap coverage throughout.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why GIPS Were Created</a>
+  <a class="toc-item" href="#s2">02 · The Three Old Abuses GIPS Solved</a>
+  <a class="toc-item" href="#s3">03 · Who Can Claim Compliance</a>
+  <a class="toc-item" href="#s4">04 · Who Benefits from Compliance</a>
+  <a class="toc-item" href="#s5">05 · Composites — The Core Mechanism</a>
+  <a class="toc-item" href="#s6">06 · Fundamentals of Compliance</a>
+  <a class="toc-item" href="#s7">07 · Definition of the Firm</a>
+  <a class="toc-item" href="#s8">08 · Discretion & Non-Discretionary Portfolios</a>
+  <a class="toc-item" href="#s9">09 · Independent Verification</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 1: WHY GIPS             -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why GIPS Were Created — The Problem They Solve</h2>
+    </div>
+
+    <div class="card">
+      <p>Before GIPS, investment firms reported performance however they chose. There was no standardised methodology, no requirement to present complete track records, and no way for a prospective client to make a fair apples-to-apples comparison between two competing firms. Widespread manipulation of performance data was possible — and common.</p>
+      <p>GIPS are a <strong>practitioner-driven set of ethical principles</strong> that establish a standardised, industry-wide approach for calculating and presenting historical investment results to prospective clients. They are built on two core principles: <strong>fair representation</strong> and <strong>full disclosure</strong>.</p>
+    </div>
+
+    <div class="gips-card">
+      <div class="gips-title">GIPS Mission Statement</div>
+      <p style="font-size:14px; color:#c8d4e0; font-style:italic;">"To promote ethics and integrity and instill trust through the use of the GIPS standards by achieving universal demand for compliance by asset owners, adoption by asset managers, and support from regulators for the ultimate benefit of the global investment community."</p>
+    </div>
+
+    <h3>Five Objectives of GIPS</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">1 · Investor Protection</div>
+        <p>Promote investor interests and instill investor confidence in reported performance.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">2 · Data Accuracy</div>
+        <p>Ensure accurate and consistent performance data that can be relied upon for decision-making.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">3 · Single Global Standard</div>
+        <p>Obtain worldwide acceptance of one standard for calculating and presenting performance.</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">4 · Fair Global Competition</div>
+        <p>Promote fair competition among investment firms globally — regardless of country of domicile.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">5 · Industry Self-Regulation</div>
+        <p>Promote self-regulation within the industry on a global basis — reducing dependence on government mandates.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 GIPS in Context of the CFA Standards</div>
+      <p>GIPS relate directly to Standard III(D) — Performance Presentation. Under III(D), members must make "reasonable efforts to ensure that performance information is fair, accurate, and complete." GIPS compliance is <strong>not required by the Standards</strong> — but it represents best practice. If a firm claims GIPS compliance, that claim must be accurate (otherwise it's a III(D) or I(C) misrepresentation violation).</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 2: THREE OLD ABUSES     -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Three Pre-GIPS Abuses GIPS Were Designed to Eliminate</h2>
+    </div>
+
+    <div class="card">
+      <p>These three misleading practices are the entire reason GIPS exists. The exam tests whether you recognise each one and understand exactly which GIPS requirement eliminates it. Learn them as a set — they are frequently presented in scenario form.</p>
+    </div>
+
+    <div class="abuse-block">
+      <div class="abuse-row">
+        <div class="abuse-icon">Abuse #1</div>
+        <div class="abuse-content">
+          <div class="ab-title">Representative Accounts — Cherry-Picking</div>
+          Selecting a single top-performing portfolio to represent the firm's overall results for a strategy. A firm managing 20 Global Equity accounts presents only the best-performing one to prospects, creating a false impression of firm-wide results.
+          <div class="ab-fix">✓ GIPS Fix: <strong>Composite requirement.</strong> ALL fee-paying, discretionary accounts managed under the same strategy must be included in the composite — no selection bias permitted.</div>
+        </div>
+      </div>
+      <div class="abuse-row">
+        <div class="abuse-icon">Abuse #2</div>
+        <div class="abuse-content">
+          <div class="ab-title">Survivorship Bias — Hiding Poor Performers</div>
+          Calculating an "average" performance track record that excludes accounts that were terminated because of poor performance. This systematically overstates the firm's typical results — only the "survivors" (better performers) remain in the sample.
+          <div class="ab-fix">✓ GIPS Fix: <strong>Historical inclusion requirement.</strong> Terminated accounts must remain in historical composite records for the periods they were managed. Cannot retroactively remove failed accounts from history.</div>
+        </div>
+      </div>
+      <div class="abuse-row">
+        <div class="abuse-icon">Abuse #3</div>
+        <div class="abuse-content">
+          <div class="ab-title">Varying Time Periods — Cherry-Picking Windows</div>
+          Presenting performance only for a cherry-picked time period during which the strategy performed exceptionally well or beat its benchmark. Comparing firms with different time period selections is impossible.
+          <div class="ab-fix">✓ GIPS Fix: <strong>Standardised, continuous, complete performance history.</strong> Must present a minimum 5-year history (or since inception if shorter) and build up to 10 years. Consistent methodology across all periods.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Recognising the Three Abuses in Scenarios</div>
+      <p>The exam will describe a firm's performance reporting practice and ask which abuse it represents, or ask which GIPS requirement eliminates a described problem. <strong>Cherry-picking accounts = Representative Accounts / solved by composites. Removing failed accounts from history = Survivorship Bias / solved by mandatory historical inclusion. Best time period only = Varying Time Periods / solved by standardised complete history.</strong> These are distinct — do not conflate "picking accounts" with "picking time periods."</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 3: WHO CAN CLAIM        -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Who Can (and Cannot) Claim GIPS Compliance</h2>
+    </div>
+
+    <div class="card">
+      <p>This is one of the most heavily tested areas of this module. The rules about who can claim compliance are very specific and the exam loves to test edge cases — particularly consultants, software vendors, and asset owners.</p>
+    </div>
+
+    <div class="can-grid">
+      <div class="can-card">
+        <div class="can-label green">✓ CAN Claim Compliance</div>
+        <ul>
+          <li><strong>Investment management firms</strong> that manage actual assets</li>
+          <li>Asset owners that <strong>compete for business</strong> (same as firms)</li>
+          <li>Asset owners that don't compete but report to an oversight body — using the <em>GIPS Standards for Asset Owners</em></li>
+        </ul>
+      </div>
+      <div class="cannot-card">
+        <div class="can-label red">✗ CANNOT Claim Compliance</div>
+        <ul>
+          <li><strong>Consultants</strong> — unless they actually manage the assets</li>
+          <li><strong>Software vendors</strong> — software cannot "comply"</li>
+          <li><strong>Individuals</strong> — compliance is firm-wide, not individual</li>
+          <li><strong>Single composites or products</strong> — cannot comply in isolation</li>
+        </ul>
+      </div>
+      <div class="maybe-card">
+        <div class="can-label gold">◎ Special Cases</div>
+        <ul>
+          <li>Consultants can <strong>endorse</strong> GIPS and require their managers to comply</li>
+          <li>Software can <strong>assist</strong> firms in achieving compliance</li>
+          <li>Non-competing asset owners use <em>GIPS Standards for Asset Owners</em> (different chapter)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ The Binary Compliance Rule — No Middle Ground</div>
+      <p>A firm has exactly two options:</p>
+      <p><strong>Option 1:</strong> Fully comply with ALL requirements of GIPS → claim compliance using the exact GIPS Compliance Statement.</p>
+      <p><strong>Option 2:</strong> Not comply with all requirements → make NO claim of compliance whatsoever and make NO reference to GIPS standards.</p>
+      <p>There is no "substantially compliant," "mostly compliant," or "compliant with most requirements." Partial compliance = no compliance claim. This is the single most important rule about GIPS compliance and it appears on nearly every exam.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 GIPS Compliance is Voluntary — But Not Costless</div>
+      <p>Compliance with GIPS is <strong>voluntary</strong> — it is not required by law or regulation in most jurisdictions. However, once a firm chooses to claim compliance, it is bound by all requirements. And if it falsely claims compliance, it violates GIPS and Standard I(C) Misrepresentation and III(D) Performance Presentation simultaneously.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — The Consultant and Software Traps</div>
+      <p>Two edge cases that consistently appear: <strong>(1) Can a consultant claim GIPS compliance?</strong> Only if the consultant actually manages the assets. A pure advisory/consulting role = cannot claim compliance. They can claim to "endorse" or "require" GIPS compliance by their managers. <strong>(2) Can software be GIPS compliant?</strong> No — only a firm can be compliant. Software can be designed to assist compliance but the compliance claim rests with the firm, not the tool. Watch for answer choices saying "the firm uses GIPS-compliant software therefore it is compliant" — this is wrong.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 4: WHO BENEFITS         -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Who Benefits from GIPS Compliance</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Beneficiary</th><th>How They Benefit</th><th>Key Nuance</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Investment Firms</td>
+            <td>Assures prospects track record is complete and fairly presented. Enables participation in competitive bids globally. May strengthen internal controls.</td>
+            <td>Compliance creates a marketing advantage — especially in cross-border mandates where comparability matters.</td>
+          </tr>
+          <tr>
+            <td>Prospective Clients & Investors</td>
+            <td>Greater confidence in performance presentations. Easier comparison across compliant firms worldwide.</td>
+            <td>GIPS does NOT eliminate the need for due diligence — it enhances credibility but does not guarantee investment returns or manager quality.</td>
+          </tr>
+          <tr>
+            <td>Asset Owners</td>
+            <td>Can require external managers to comply with GIPS. Reporting to oversight bodies using same principles facilitates understanding of risk and excess return sources.</td>
+            <td>Asset owners that compete for business follow the same GIPS standards as firms. Non-competing asset owners have their own chapter.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — What GIPS Does NOT Guarantee</div>
+      <p>Critical nuance the exam exploits: <strong>GIPS compliance does not guarantee investment performance, does not eliminate the need for due diligence, and does not ensure that any specific performance report is accurate.</strong> It ensures the framework for presenting performance is sound — but a firm can follow GIPS perfectly and still have terrible returns. Prospective clients still need to evaluate the quality of the manager, not just the integrity of the reporting. Answer choices suggesting "GIPS eliminates the need for due diligence" are always wrong.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 5: COMPOSITES           -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Composites — The Core Anti-Cherry-Picking Mechanism</h2>
+    </div>
+
+    <div class="card">
+      <p>The composite requirement is the single most important technical feature of GIPS. Everything about composites is designed to prevent firms from cherry-picking which portfolios represent their strategy. If you understand why composites exist, the specific rules follow logically.</p>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-title">Definition — What Is a Composite?</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;">A <strong>composite</strong> is an aggregation of one or more portfolios managed according to a <strong>similar investment mandate, objective, or strategy</strong>.</p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Must include <strong>ALL actual, fee-paying, discretionary portfolios</strong> managed under that strategy</li>
+        <li>Pooled funds must also be included in any composite for which they meet the composite definition</li>
+        <li>Inclusion criteria must be established <strong>ex ante</strong> (in advance), not after the fact — prevents retroactive selection</li>
+        <li>Cannot subjectively select which accounts go in or out of the composite</li>
+        <li>Historical composites must include terminated accounts — cannot be removed retroactively</li>
+      </ul>
+    </div>
+
+    <h3>What Must Be Included in a Composite</h3>
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Must Be Included</div>
+        <ul>
+          <li>All <strong>actual</strong> portfolios (not simulated/back-tested)</li>
+          <li>All <strong>fee-paying</strong> portfolios (fees actually charged)</li>
+          <li>All <strong>discretionary</strong> portfolios (firm can implement its strategy)</li>
+          <li>Accounts that were later terminated — for the period they were managed</li>
+          <li>All pooled funds that meet the composite definition</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Must Be Excluded</div>
+        <ul>
+          <li>Non-fee-paying accounts (e.g., firm's own money — unless firm chooses to include)</li>
+          <li>Non-discretionary portfolios (client restrictions prevent strategy implementation)</li>
+          <li>Back-tested or simulated portfolios</li>
+          <li>Accounts the firm selects after the fact based on performance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — The Ex Ante Criterion Rule</div>
+      <p>This is the most technically precise rule in composites and it's directly testable. Composite membership criteria must be established <strong>before</strong> the performance period, not after observing performance. <strong>Why?</strong> Because allowing after-the-fact assignment would enable cherry-picking — a firm could observe which accounts performed best, then retroactively define those as the "composite." The GIPS requirement that criteria be set ex ante eliminates this loophole entirely. Exam scenario: "A firm reviews its Global Equity accounts at year-end and assigns the best performers to the composite." This violates GIPS — assignment must follow pre-established criteria applied at account opening or strategy assignment, not based on observed performance.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Terminated Accounts Cannot Be Removed from History</div>
+      <p>This directly addresses the survivorship bias problem. If a poorly performing account is closed by the client, that account's performance during the period it was managed must remain in the composite's historical record. A firm cannot "clean up" its history by removing failed accounts. The composite's past performance must reflect all accounts that were managed under that strategy — winners and losers alike. Watch for exam scenarios where a firm "excludes closed accounts" — this is a GIPS violation.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Fee-Paying vs. Non-Fee-Paying</div>
+      <p>The composite requirement applies to <strong>fee-paying</strong> discretionary accounts. Non-fee-paying accounts (e.g., the firm managing its own money, or a pro bono account for a charitable foundation) are not required to be in composites — though firms may choose to include them with appropriate disclosure. The key: GIPS is about fair presentation to <em>prospective fee-paying clients</em>, so the composite must reflect the experience of actual paying clients, not internal or complimentary accounts which may be managed with different care or constraints.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 6: FUNDAMENTALS         -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Fundamentals of Compliance</h2>
+    </div>
+
+    <div class="card">
+      <p>Several core principles form the foundation for GIPS compliance. Beyond composites and firm definition, the GIPS standards require that firms provide GIPS Reports to all prospective clients and certain pooled fund prospective investors, adhere to applicable laws and regulations, and ensure all information presented is not false or misleading.</p>
+    </div>
+
+    <div class="gips-card">
+      <div class="gips-title">Key Compliance Principles</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d4e0;">
+        <li><strong>Firm-wide process:</strong> GIPS compliance cannot be achieved on a single composite, product, or strategy — it must apply to the entire firm</li>
+        <li><strong>All requirements must be met:</strong> includes the main GIPS standards text, Guidance Statements, interpretations, and Q&As published by CFA Institute and GIPS governing bodies</li>
+        <li><strong>Fair representation and full disclosure are the overarching goals.</strong> Meeting minimum requirements may not be sufficient to achieve these goals — firms should also follow GIPS recommendations (best practice), not just requirements (mandatory minimum)</li>
+        <li><strong>GIPS will continue to evolve:</strong> the standards do not address every aspect of performance measurement; they are updated periodically</li>
+        <li><strong>Input data integrity:</strong> underlying valuations of portfolio holdings drive performance — the quality of input data is critical. Accurate valuations are the foundation of accurate performance.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Requirements vs. Recommendations — A Key GIPS Distinction</div>
+      <p>GIPS has two tiers of guidance. <strong>Requirements</strong> are mandatory — firms must follow them to claim compliance. <strong>Recommendations</strong> are best practice — firms are encouraged but not required to follow them. Meeting only requirements may not be sufficient to fully achieve "fair representation and full disclosure." Exam: if asked whether a firm is GIPS compliant because it follows all requirements, the answer is: yes for compliance purposes — but the spirit of GIPS encourages following recommendations too.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Requirements</th><th>Recommendations</th></tr></thead>
+        <tbody>
+          <tr><td>Nature</td><td>Mandatory — must follow to claim compliance</td><td>Best practice — encouraged but optional</td></tr>
+          <tr><td>Effect on claim</td><td>Not following = cannot claim compliance</td><td>Not following = still compliant, but not best practice</td></tr>
+          <tr><td>Goal</td><td>Minimum standard for integrity</td><td>Full achievement of fair representation and disclosure</td></tr>
+          <tr><td>Examples</td><td>Composite construction, calculation methodology, GIPS Report provision</td><td>Specific calculation enhancements, additional disclosures, verification</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 7: DEFINITION OF FIRM   -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Definition of the Firm</h2>
+    </div>
+
+    <div class="card">
+      <p>Because GIPS compliance is firm-wide, the first critical question is: what counts as "the firm"? The definition of the firm establishes the boundary within which total firm assets must be counted and across which compliance must apply. Without a clear firm definition, a company could manipulate compliance by claiming only its best-performing division is "the firm."</p>
+    </div>
+
+    <div class="gips-card">
+      <div class="gips-title">The GIPS Definition of the Firm</div>
+      <p style="font-size:14px; color:#c8d4e0; font-style:italic; margin-bottom:12px;">"The firm should adopt the broadest, most meaningful definition of the firm. The scope of this definition should include all geographical (country, regional, etc.) offices operating under the same brand name, regardless of the actual name of the individual investment management company."</p>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d4e0;">
+        <li><strong>Broadest, most meaningful definition</strong> — the default is to include more, not less</li>
+        <li>All <strong>geographical offices under the same brand</strong> are included — even if legally separate entities</li>
+        <li>The legal name of the subsidiary does not override the brand — if it operates as "XYZ Asset Management London," it is included with "XYZ Asset Management New York" even if they are different legal entities</li>
+        <li>This prevents a firm from claiming GIPS compliance for only its best-performing regional office or division</li>
+      </ul>
+    </div>
+
+    <div class="compare-grid">
+      <div class="ok-card">
+        <div class="ok-title">✓ Correct Firm Definition</div>
+        <ul>
+          <li>All global offices under the same brand included</li>
+          <li>All strategies/mandates offered by the firm included</li>
+          <li>Definition applied consistently and broadly</li>
+          <li>All assets under management counted firm-wide</li>
+        </ul>
+      </div>
+      <div class="notok-card">
+        <div class="notok-title">✗ Manipulated Firm Definition</div>
+        <ul>
+          <li>Claiming only the equity division is "the firm"</li>
+          <li>Excluding underperforming regional offices from firm scope</li>
+          <li>Defining "firm" narrowly to match only strong-performing units</li>
+          <li>Separating by legal entity to escape firm-wide requirement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Why Firm Definition Matters</div>
+      <p>If a firm could define itself narrowly, it would simply exclude its worst-performing divisions or offices and claim compliance only for the "good" part of the business. GIPS prevents this by requiring the broadest reasonable definition. Exam scenario: "Apex Asset Management has offices in London and New York under the same brand name, but they are legally separate companies. Can the New York office claim GIPS compliance independently?" Answer: <strong>no — they are both part of "the firm" and compliance must be firm-wide, covering both offices.</strong> Legal separation does not override brand-level firm definition.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 8: DISCRETION           -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Discretion — Which Portfolios Must Be in a Composite</h2>
+    </div>
+
+    <div class="card">
+      <p>The composite requirement applies only to <em>discretionary</em> accounts. Discretion determines whether a portfolio must be included in a composite. If client-imposed restrictions prevent the firm from implementing its intended strategy, the portfolio may be classified as non-discretionary and excluded from the composite.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Discretionary Portfolio</div>
+        <ul>
+          <li>Firm can implement its investment strategy without material interference</li>
+          <li><strong>Must</strong> be included in the appropriate composite</li>
+          <li>Minor client constraints (e.g., "no tobacco stocks") that don't significantly change the strategy = still discretionary</li>
+          <li>The firm exercises meaningful control over the portfolio's construction</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Non-Discretionary Portfolio</div>
+        <ul>
+          <li>Client-imposed restrictions <strong>interfere materially</strong> with the intended strategy</li>
+          <li><strong>Must NOT</strong> be included in a firm's composites</li>
+          <li>Example: a client says "only hold stocks from this pre-approved list" — the firm cannot implement its strategy</li>
+          <li>Portfolio is no longer representative of the firm's strategy</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — The Discretion Line</div>
+      <p>The exam tests where minor restrictions end and non-discretion begins. The standard: <strong>if client-imposed restrictions prevent the portfolio from being representative of the firm's intended strategy, it is non-discretionary.</strong> Minor constraints that don't materially affect strategy implementation = still discretionary, still must be included in the composite. Major constraints that fundamentally change the portfolio = non-discretionary, must be excluded. Watch for: a firm excluding an account from its composite because the account performed poorly — this is a GIPS violation unless the account was genuinely non-discretionary. Poor performance alone is not grounds for exclusion.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Non-Discretionary Exclusion Cannot Be Used to Game the Composite</div>
+      <p>Firms cannot abuse the non-discretionary classification to exclude underperformers. If a client's restrictions are minor — even if the firm dislikes the constraint — the portfolio remains discretionary and must be in the composite. The firm's definition of discretion must be applied consistently and documented. Using the "non-discretionary" label selectively on poor performers while including outperformers with similar restriction levels = GIPS violation.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 9: VERIFICATION         -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Independent Verification</h2>
+    </div>
+
+    <div class="card">
+      <p>Verification is a separate, voluntary process distinct from the firm's own claim of compliance. It is conducted by an independent third party and tests the firm's policies and procedures at the firm-wide level. Verification is one of the most tested topics in the GIPS module — particularly what it covers, what it doesn't cover, and what it cannot guarantee.</p>
+    </div>
+
+    <div class="verif-card">
+      <div class="verif-title">What Verification Is</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd8c0;">
+        <li>A process by which an <strong>independent third-party verifier</strong> conducts testing of a firm on a <strong>firm-wide basis</strong></li>
+        <li>Tests whether the firm's <strong>policies and procedures</strong> related to composite/pooled fund maintenance, calculation, presentation, and distribution of performance <strong>have been designed in compliance</strong> with GIPS and <strong>implemented on a firm-wide basis</strong></li>
+        <li>Brings additional credibility to the firm's claim of compliance</li>
+        <li>May improve the firm's internal processes and performance measurement knowledge</li>
+        <li>Provides marketing advantages — tells prospects an independent party has reviewed the firm's compliance framework</li>
+        <li>Verification is <strong>voluntary</strong> — not required to claim GIPS compliance</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ What Verification Does NOT Do — Exam Critical</div>
+      <p><strong>Verification does NOT ensure the accuracy of any specific performance report.</strong> It verifies the firm-wide policies and procedures — not the numbers in any individual composite or report. A firm can have fully GIPS-compliant procedures but still have an error in a specific composite's reported figures — verification would not necessarily catch this specific error. Verification also does NOT guarantee that the firm is fully compliant in every detail — it provides reasonable assurance about the framework.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Who performs it</td><td>An <strong>independent third party</strong> — firms CANNOT perform their own verification. Self-verification is not permitted.</td></tr>
+          <tr><td>Scope</td><td><strong>Firm-wide</strong> — not on specific composites or pooled funds individually</td></tr>
+          <tr><td>What it tests</td><td>Policies and procedures for composite maintenance, calculation, presentation, and distribution — i.e., the framework, not individual numbers</td></tr>
+          <tr><td>What it does NOT do</td><td>Does NOT ensure the accuracy of any specific performance report. Does NOT guarantee full compliance in every detail.</td></tr>
+          <tr><td>Voluntary or required</td><td><strong>Voluntary.</strong> A firm can claim GIPS compliance without ever being verified. But verification adds credibility.</td></tr>
+          <tr><td>Result</td><td>Verified firms may communicate the verification to clients/prospects as an additional assurance. Cannot claim "verified to be accurate" — only "policies and procedures verified."</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">🎯 Examiner Focus — Verification: The Four Key Rules</div>
+      <p><strong>Rule 1 — Voluntary:</strong> GIPS compliance does not require verification. Many compliant firms are not verified. <strong>Rule 2 — Firm-wide:</strong> verification is performed on the entire firm, not one composite or product. A firm cannot "verify" its best composite and leave others unverified. <strong>Rule 3 — Independent:</strong> A firm cannot verify itself. Must be an external, independent verifier. <strong>Rule 4 — Specific report accuracy NOT guaranteed:</strong> The biggest trap. Verification tests policies and procedures. A specific composite report could still have an error even in a verified firm. Exam question: "A verified firm's GIPS Report must therefore be accurate." → FALSE. Verification provides firm-level procedural assurance, not report-level numerical accuracy.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Benefits of Verification (to the Firm)</div>
+        <ul>
+          <li>Increased credibility of compliance claim</li>
+          <li>Marketing differentiation — "independently verified"</li>
+          <li>Improved internal knowledge of GIPS requirements</li>
+          <li>Better consistency and quality of performance reporting systems</li>
+          <li>Greater assurance to prospective clients and investors</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Limitations of Verification</div>
+        <ul>
+          <li>Does not guarantee compliance in every detail</li>
+          <li>Does not ensure accuracy of specific reports</li>
+          <li>Does not guarantee investment performance</li>
+          <li>Does not eliminate client due diligence obligation</li>
+          <li>Does not confirm individual composite figures are error-free</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST      -->
+  <!-- ════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 4: Introduction to GIPS</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>GIPS mission:</strong> Promote ethics and integrity and instill trust — for the ultimate benefit of the global investment community. Built on two principles: <em>fair representation</em> and <em>full disclosure</em>.</li>
+        <li>✅ <strong>GIPS are voluntary.</strong> Not required by law or regulation in most jurisdictions. But once claimed, all requirements must be met — no partial compliance.</li>
+        <li>✅ <strong>Three pre-GIPS abuses:</strong> (1) Representative accounts (cherry-picked portfolios) → solved by composite requirement. (2) Survivorship bias (removing failed accounts) → solved by mandatory historical inclusion. (3) Varying time periods (best window only) → solved by standardised full history requirement.</li>
+        <li>✅ <strong>Who can claim compliance:</strong> Only investment management firms that actually manage assets. NOT consultants (unless they manage the assets), NOT software vendors, NOT individuals, NOT single composites or products.</li>
+        <li>✅ <strong>Binary compliance rule:</strong> A firm either fully complies and claims compliance using the exact GIPS Compliance Statement — or it does not comply and makes no reference to GIPS at all. No middle ground, no "substantially compliant."</li>
+        <li>✅ <strong>Asset owners:</strong> Those competing for business comply like firms. Those that don't compete but report to oversight bodies use the GIPS Standards for Asset Owners (a separate chapter).</li>
+        <li>✅ <strong>Composite definition:</strong> An aggregation of portfolios managed under a similar investment mandate, objective, or strategy. Must include ALL actual, fee-paying, discretionary portfolios and eligible pooled funds. No subjective selection.</li>
+        <li>✅ <strong>Ex ante criterion:</strong> Composite membership criteria must be set BEFORE the performance period — not after observing which accounts performed best. This is the core anti-cherry-picking mechanism.</li>
+        <li>✅ <strong>Terminated accounts stay in history:</strong> Once an account has been in a composite, it cannot be retroactively removed — even if the client terminated due to poor performance. This directly prevents survivorship bias.</li>
+        <li>✅ <strong>Composites include fee-paying discretionary portfolios.</strong> Non-fee-paying accounts are excluded by default (may be voluntarily included with disclosure). Non-discretionary accounts MUST be excluded.</li>
+        <li>✅ <strong>Definition of the firm:</strong> Must adopt the broadest, most meaningful definition. Includes all geographical offices under the same brand name, regardless of legal entity name. Cannot claim compliance for just one office or division.</li>
+        <li>✅ <strong>Discretion:</strong> If client-imposed restrictions prevent the firm from implementing its intended strategy, the portfolio is non-discretionary and must NOT be included in composites. Minor restrictions that don't change the character of the strategy = still discretionary = must include.</li>
+        <li>✅ <strong>Requirements vs. Recommendations:</strong> Requirements = mandatory (must follow to claim compliance). Recommendations = best practice (encouraged but not required). Meeting only requirements may not fully achieve fair representation and full disclosure — recommendations bridge the gap.</li>
+        <li>✅ <strong>Verification is voluntary.</strong> A firm can claim GIPS compliance without ever being verified. Verification adds credibility but does not make compliance mandatory.</li>
+        <li>✅ <strong>Verification is firm-wide.</strong> Cannot verify a single composite. An independent third party performs it — a firm cannot self-verify.</li>
+        <li>✅ <strong>Verification does NOT ensure accuracy of any specific performance report.</strong> It tests policies and procedures at the firm-wide level — not individual numbers. A specific GIPS Report could still contain errors even in a verified firm.</li>
+        <li>✅ <strong>GIPS does not eliminate due diligence.</strong> Prospective clients still need to evaluate manager quality, investment process, and track record — GIPS enhances credibility of the presentation but does not replace analysis.</li>
+        <li>✅ <strong>GIPS compliance ≠ investment performance guarantee.</strong> A fully compliant firm with perfect reporting can have terrible investment returns. GIPS is about how you present results, not what those results are.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ GIPS MODULE 4 — COMPLETE QUICK REFERENCE & EXAM TRAP LIST ★</div>
+      <div class="f">
+        ═══ GIPS FUNDAMENTALS ═══<br>
+        Purpose:       Fair representation + Full disclosure of investment performance<br>
+        Voluntary:     Yes — but once claimed, ALL requirements must be met<br>
+        Compliance:    Firm-wide only — cannot comply product-by-product<br>
+        Claim options: (1) Fully comply + claim OR (2) Not comply + make no reference<br>
+        Who claims:    Only firms managing actual assets (not consultants, not software)<br><br>
+
+        ═══ THREE PRE-GIPS ABUSES ═══<br>
+        1. Representative accounts → cherry-picked portfolios → GIPS fix: composite requirement (all accounts in)<br>
+        2. Survivorship bias       → removed failed accounts  → GIPS fix: terminated accounts stay in history<br>
+        3. Varying time periods    → cherry-picked windows    → GIPS fix: standardised complete history required<br><br>
+
+        ═══ COMPOSITE RULES ═══<br>
+        Include:  ALL actual + fee-paying + discretionary segregated accounts + eligible pooled funds<br>
+        Exclude:  Non-fee-paying (unless firm chooses), NON-DISCRETIONARY (must exclude)<br>
+        Criteria: Set EX ANTE — before the performance period, not after observing results<br>
+        History:  Terminated accounts must remain in historical composite — cannot be removed<br><br>
+
+        ═══ FIRM DEFINITION ═══<br>
+        Rule:     Broadest, most meaningful definition<br>
+        Scope:    ALL geographical offices under the SAME BRAND NAME<br>
+        Legal:    Legal entity name irrelevant — brand name controls<br>
+        Trap:     Cannot define "firm" as just one office or division<br><br>
+
+        ═══ DISCRETION ═══<br>
+        Discretionary:     Firm implements intended strategy → MUST be in composite<br>
+        Non-discretionary: Client restrictions prevent strategy implementation → MUST be excluded<br>
+        Key:               Minor restrictions ≠ non-discretionary. Must be material enough to make portfolio non-representative of strategy<br>
+        Abuse trap:        Cannot classify poor performers as "non-discretionary" to exclude them — must apply consistently<br><br>
+
+        ═══ VERIFICATION ═══<br>
+        Voluntary:    Not required to claim compliance<br>
+        Who:          Independent third party ONLY — firm cannot self-verify<br>
+        Scope:        Firm-wide — NOT individual composites or reports<br>
+        What it does: Tests policies/procedures for composite maintenance + calculation + presentation<br>
+        What it DOESN'T: Ensure accuracy of any specific performance report<br>
+        Benefit:      Additional credibility, marketing advantage, improved internal processes
+      </div>
+      <div class="note">
+        <strong>Top GIPS exam traps (know all 10 cold):</strong><br>
+        (1) "A consultant managing to GIPS requirements can claim compliance." → FALSE — consultants cannot claim unless they manage the assets.<br>
+        (2) "Our performance software is GIPS compliant." → FALSE — only firms managing assets can be compliant. Software assists but cannot comply.<br>
+        (3) "The firm follows most GIPS requirements — it can claim compliance." → FALSE. All-or-nothing. No partial compliance claims.<br>
+        (4) "The firm's New York office is GIPS compliant; the London office is not." → Impossible — compliance is firm-wide and covers all brand-name offices.<br>
+        (5) "The firm removed a closed (terminated) account from the composite to keep history clean." → GIPS violation — terminated accounts remain in historical composites.<br>
+        (6) "At year-end the firm reviewed which accounts performed best and assigned them to the composite." → GIPS violation — criteria must be set ex ante (in advance), not based on observed performance.<br>
+        (7) "The account has some client restrictions, so it's non-discretionary and excluded from the composite." → Not necessarily — only material restrictions that prevent strategy implementation qualify. Minor constraints = still discretionary.<br>
+        (8) "The firm is GIPS verified, so its composite performance figures must be accurate." → FALSE. Verification tests policies/procedures, not the accuracy of specific reports.<br>
+        (9) "GIPS compliance removes the need for prospective client due diligence." → FALSE. GIPS enhances credibility but does not replace analysis or due diligence.<br>
+        (10) "GIPS compliance means the firm has good investment performance." → FALSE. GIPS governs how performance is presented, not what the performance actually is.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Ethics · Module 4: Introduction to the Global Investment Performance Standards (GIPS) · Exam Prep Notes
+</footer>
+
+</body>
+</html>

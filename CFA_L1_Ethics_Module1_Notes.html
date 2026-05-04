@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Ethics | Module 1: Ethics and Trust in the Investment Profession</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #131620 40%, #0e0d14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 680px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Framework phase boxes */
+  .framework-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .framework-grid { grid-template-columns: 1fr; } }
+  .phase-box { border-radius: 6px; padding: 16px 18px; }
+  .phase-1 { background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.3); }
+  .phase-2 { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); }
+  .phase-3 { background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.3); }
+  .phase-4 { background: rgba(201,76,76,0.1); border: 1px solid rgba(201,76,76,0.3); }
+  .phase-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .phase-1 .phase-label { color: var(--accent2); }
+  .phase-2 .phase-label { color: var(--accent); }
+  .phase-3 .phase-label { color: var(--accent3); }
+  .phase-4 .phase-label { color: var(--danger); }
+  .phase-box ul { padding-left: 16px; }
+  .phase-box li { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+
+  /* Profession characteristics */
+  .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+  @media (max-width: 700px) { .char-grid { grid-template-columns: 1fr; } }
+  .char-item { background: #171b26; border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 4px 4px 0; padding: 10px 14px; }
+  .char-item .char-name { font-size: 12px; font-weight: 700; color: var(--accent2); margin-bottom: 3px; }
+  .char-item p { font-size: 12.5px; color: var(--muted); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ETHICS · MODULE 1</div>
+  <h1>Ethics &amp; <span>Trust</span> in the<br>Investment Profession</h1>
+  <p>Exam-ready notes covering ethics definitions, professionalism, challenges to ethical conduct, legal vs. ethical standards, and the ethical decision-making framework.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What Is Ethics?</a>
+  <a class="toc-item" href="#s2">02 · Key Definitions</a>
+  <a class="toc-item" href="#s3">03 · Code of Ethics</a>
+  <a class="toc-item" href="#s4">04 · Professions &amp; Trust</a>
+  <a class="toc-item" href="#s5">05 · Characteristics of Professions</a>
+  <a class="toc-item" href="#s6">06 · Investment Management Profession</a>
+  <a class="toc-item" href="#s7">07 · Challenges to Ethical Conduct</a>
+  <a class="toc-item" href="#s8">08 · Situational Influences</a>
+  <a class="toc-item" href="#s9">09 · Legal vs. Ethical Standards</a>
+  <a class="toc-item" href="#s10">10 · Ethical Decision-Making Framework</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WHAT IS ETHICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What Is Ethics?</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Ethics</div>
+      <div class="def-body">A set of moral principles and rules of conduct that provide guidance for our behavior. From the Greek word "ethos" meaning <em>character</em>. The study of ethics examines the role of <strong>consequences</strong> and <strong>personal character</strong> in defining what is considered good, or ethical, conduct.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Ethical Conduct</div>
+      <div class="def-body">Behavior that follows moral principles and <strong>balances self-interest with both the direct and indirect consequences of the behavior on others</strong>. Ethical actions are those perceived as beneficial and conforming to the ethical expectations of society.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Stakeholders</div>
+      <div class="def-body">Individuals or groups who could be affected either directly or indirectly by a decision and thus have an interest, or stake, in the decision. In investment management: colleagues, clients, employers, communities, the profession, regulators, trade associations, and other financial market participants.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>The ethical reasoning chain:</strong></p>
+      <div style="margin-top:10px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:#e8c97a;">
+        Beliefs → Values → Principles → Ethical conduct
+      </div>
+      <ul style="margin-top:14px;">
+        <li><strong>Beliefs:</strong> assumptions or thoughts we hold to be true</li>
+        <li><strong>Values:</strong> things we deem to have worth or merit (formed from beliefs)</li>
+        <li><strong>Principles (ethical/moral):</strong> beliefs regarding what is good/acceptable vs. bad/unacceptable behavior</li>
+        <li><strong>Ethical conduct:</strong> behavior aligned with principles, balancing self-interest vs. impact on others</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Widely acknowledged ethical principles (know these for the exam):</strong></p>
+      <ul style="margin-top:8px;">
+        <li><strong>Honesty</strong> — telling the truth about risks, costs, and recommendations</li>
+        <li><strong>Transparency</strong> — open, clear disclosure; no hidden agendas</li>
+        <li><strong>Fairness / Justice</strong> — treating all stakeholders equitably</li>
+        <li><strong>Diligence</strong> — thorough, careful effort in carrying out responsibilities</li>
+        <li><strong>Respect for the rights of others</strong> — acknowledging autonomy and dignity</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Most societal groups share these fundamental principles and build on them, establishing shared rules for behavior within their communities.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Trust Is Central to Investment Management</div>
+      <p>Businesses and financial markets thrive on <strong>trust</strong> — a strong belief in the reliability of a person or institution. A 2016 investor study found the top two attributes investors require from investment managers: (1) <strong>transparent and open business practices</strong> and (2) <strong>ethical business practices</strong>. Investment management is based almost entirely on trust — clients hand over their assets to professionals they cannot constantly monitor.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: KEY DEFINITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Key Definitions to Memorize</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trust</td>
+            <td>A strong belief in the reliability of a person or institution. The foundation of financial markets.</td>
+          </tr>
+          <tr>
+            <td>Stakeholder</td>
+            <td>Any individual or group that could be directly or indirectly affected by a decision — they have a "stake" in the outcome.</td>
+          </tr>
+          <tr>
+            <td>Ethics</td>
+            <td>A set of moral principles and rules of conduct providing guidance for behavior. From Greek "ethos" (character).</td>
+          </tr>
+          <tr>
+            <td>Ethical Conduct</td>
+            <td>Behavior following moral principles that balances self-interest with consequences for others.</td>
+          </tr>
+          <tr>
+            <td>Code of Ethics</td>
+            <td>A written set of principles communicating a community's values and expected behavior of its members. Serves as a general guide.</td>
+          </tr>
+          <tr>
+            <td>Standards of Conduct</td>
+            <td>Explicit rules that identify specific behaviors required of community members; benchmarks for minimally acceptable behavior. Expand on the code of ethics.</td>
+          </tr>
+          <tr>
+            <td>Profession</td>
+            <td>An occupational community with specific education, expert knowledge, and a framework of practice and behavior that underpins community trust, respect, and recognition.</td>
+          </tr>
+          <tr>
+            <td>Fiduciary Duty</td>
+            <td>The obligation to deliver a high standard of care when acting for the benefit of another party. Must always put client's interests ahead of own or employer's interests.</td>
+          </tr>
+          <tr>
+            <td>Behavioral Bias</td>
+            <td>A tendency to behave in a way that is not strictly rational, often resulting from beliefs and emotions interfering with cognitive reasoning.</td>
+          </tr>
+          <tr>
+            <td>Situational Influences</td>
+            <td>External factors (environmental or cultural elements) that shape our thinking, decision making, and behavior — often without our awareness.</td>
+          </tr>
+          <tr>
+            <td>Overconfidence Bias</td>
+            <td>The tendency to overestimate the morality of our own behavior and our ability to make good ethical decisions — especially in unfamiliar situations.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Fiduciary Standard</div>
+        <p>Investment adviser must act in the <strong>client's best interest</strong> — always put client interests ahead of own or employer's. Must understand objectives, research multiple options, recommend the best overall option, and monitor ongoing suitability.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Suitability Standard</div>
+        <p>Investment professional must recommend investments <strong>suitable for the client</strong>. Legal to recommend a suitable investment even if a better, lower-fee alternative exists. Lower standard than fiduciary.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: CODE OF ETHICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Code of Ethics — Role and Function</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>code of ethics</strong> is a written set of principles communicating an organization's values and the expected behavior of its members. It serves as a <strong>general guide</strong> for how community members should act — not a detailed rulebook.</p>
+      <p style="margin-top:10px;"><strong>Standards of conduct</strong> expand on the code — they identify specific, explicit behaviors required and serve as benchmarks for minimally acceptable behavior.</p>
+    </div>
+
+    <h3>What a Code of Ethics Does</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;"><strong>Communicates values</strong> — tells members and the public what the organization stands for</li>
+        <li style="margin-bottom:8px;"><strong>Sets expectations</strong> — clarifies the behaviors required of members</li>
+        <li style="margin-bottom:8px;"><strong>Fosters public confidence</strong> — assures clients that professionals will use specialized skills to serve them</li>
+        <li style="margin-bottom:8px;"><strong>Provides decision guidance</strong> — a framework when no specific rule exists</li>
+        <li style="margin-bottom:8px;"><strong>Creates accountability</strong> — violations can be investigated, damages repaired, and violators disciplined or expelled</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Code of Ethics vs. Standards of Conduct</div>
+      <p><strong>Code of ethics</strong> = the general principles (the "what we stand for"). <strong>Standards of conduct</strong> = specific, explicit behavioral requirements (the "what exactly you must/must not do"). Standards are the operational tools that bring the code to life. Members can always choose behaviors that demonstrate <em>even higher</em> standards than the minimum benchmarks.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Violations of Code of Ethics — Consequences</div>
+      <p>Ethics violations can: (1) <strong>damage the community's external reputation</strong> (clients, public); (2) <strong>damage internal trust</strong> among community members; (3) <strong>cause the organization to fracture</strong>. The community can investigate, repair damage, discipline the violator, or in severe cases <strong>revoke membership</strong>. Even innocent members suffer career setbacks from colleagues' unethical behavior.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: PROFESSIONS & TRUST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Professions — Definition &amp; How They Establish Trust</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Profession</div>
+      <div class="def-body">An occupational community with <strong>specific education, expert knowledge, and a framework of practice and behavior</strong> that underpins community trust, respect, and recognition. Most professions emphasize an ethical approach, the importance of good service, and empathy with the client.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>What distinguishes professions from trade bodies and craft guilds:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Professions require members to uphold <strong>high ethical standards</strong> — trade bodies generally do not</li>
+        <li>Professions have a <strong>mission to serve society</strong> — trade bodies do not</li>
+        <li>Professions <strong>set and enforce professional conduct rules</strong> — trade bodies generally do not</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Driving forces behind the creation of new professions:</strong></p>
+      <ul style="margin-top:8px;">
+        <li><strong>Governments and regulators</strong> — encourage ethical relationships between professionals and society</li>
+        <li><strong>Individuals</strong> — see advantages in working as professionals (status, protection, career benefits)</li>
+        <li><strong>Clients</strong> — desire to work with professionals who can be held accountable</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Professions Earn Trust — The Commercial Benefit</div>
+      <p>Professions have realized that earning community trust: (1) creates professional pride and acceptance, (2) <strong>delivers commercial benefits</strong> (more clients, better fees), and (3) can ultimately provide <strong>greater flexibility and independence from government regulators</strong> — allowing the profession to self-govern and develop its own service models. Trust is not just an ethical goal; it is also a business advantage.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: CHARACTERISTICS OF PROFESSIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Characteristics of Professions — How They Establish Trust</h2>
+    </div>
+
+    <div class="card">
+      <p>A primary goal of professions is to <strong>establish trust among clients and society in general</strong>. The following characteristics, when combined, greatly increase confidence and credibility in professionals.</p>
+    </div>
+
+    <div class="char-grid">
+      <div class="char-item">
+        <div class="char-name">1. Normalize Practitioner Behavior</div>
+        <p>Codes and standards developed by professional bodies; complementary to government regulations; often more detailed and sophisticated than regulatory high-level principles.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">2. Provide a Service to Society</div>
+        <p>Beyond codes — professionals must advocate for higher educational and ethical standards. Professions widen access to services and support economic activity by building trust.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">3. Client Focus</div>
+        <p>Integrity of profession and interests of clients placed above personal interests. At minimum: act in client's best interest with reasonable care, skill, and diligence. This is <strong>fiduciary duty</strong>.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">4. High Entry Standards</div>
+        <p>Membership signals high-quality service beyond academic credentials. Curricula equip members with technical skills, knowledge, AND ethics.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">5. Body of Expert Knowledge</div>
+        <p>Repository of knowledge from experienced practitioners made available to all members. Helps members work effectively and ethically based on best practice.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">6. Continuing Education (CPD)</div>
+        <p>Entry doesn't guarantee ongoing competence. Continuing Professional Development (CPD) is typically required annually — specific time commitment by competency and learning type. Increases human capital value.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">7. Monitor Professional Conduct</div>
+        <p>Members held accountable through self-regulation by professional bodies — monitoring and imposition of sanctions. Essential for maintaining integrity and reputation.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">8. Collegiality</div>
+        <p>Professionals must be respectful to each other even when competing. Must respect the rights, dignity, and autonomy of others.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">9. Recognized Oversight Bodies</div>
+        <p>Usually not-for-profit with mission of excellence, integrity, and public service. Monitors competence, provides educational resources, and imposes discipline framework.</p>
+      </div>
+      <div class="char-item">
+        <div class="char-name">10. Encourage Member Engagement</div>
+        <p>Volunteer participation is part of the essence of a profession. Members help develop values → more likely to adhere to them. Mentoring, volunteering, and peer education are expected.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — 10 Profession Characteristics: "NSCHEMC-COE"</div>
+      <p><strong>N</strong>ormalize behavior · <strong>S</strong>ociety service · <strong>C</strong>lient focus · <strong>H</strong>igh entry standards · <strong>E</strong>xpert knowledge · <strong>C</strong>ontinuing education · <strong>M</strong>onitor conduct · <strong>C</strong>ollegiality · <strong>O</strong>versight bodies · <strong>E</strong>ncourage engagement. These are all tested — particularly the distinction from trade bodies.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: INVESTMENT MANAGEMENT PROFESSION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Professionalism in Investment Management</h2>
+    </div>
+
+    <div class="card">
+      <p>Investment management is a <strong>relatively young profession</strong>. The publication of Graham and Dodd's Security Analysis (1934) was an important early step in establishing a body of knowledge. Public understanding of its practice and codes is still developing.</p>
+      <p style="margin-top:10px;">The investment management profession <strong>meets most but not currently all</strong> expectations of a profession — it is "on a journey" to improve implementation.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">What Makes It a Profession</div>
+        <ul>
+          <li>Some certification or licensing required in most countries</li>
+          <li>Body of knowledge established (CFA Program, GBIK/CBOK)</li>
+          <li>Increasing global trend toward examined entry to practice</li>
+          <li>CFA Institute as the largest global professional body</li>
+          <li>Has become increasingly global — capital market opening, regulatory coordination, technology</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Remaining Challenges</div>
+        <ul>
+          <li>Not everyone engaged in investment management is a professional</li>
+          <li>Some practitioners have no specific investment training</li>
+          <li>No universal requirement to join a professional body in all countries</li>
+          <li>Regulatory recognition lags established professions (medicine, law)</li>
+          <li>Creates a trust challenge — not all practitioners bound by high ethical standards</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>CFA Institute — Role as Professional Body</h3>
+    <div class="card">
+      <p><strong>CFA Institute mission:</strong> "To lead the investment profession globally, by promoting the highest standards of ethics, education, and professional excellence for the <em>ultimate benefit of society</em>."</p>
+      <ul style="margin-top:10px;">
+        <li>Largest body for investment management professionals worldwide</li>
+        <li>Moved beyond North America in the 1980s as investment management globalized</li>
+        <li>Global Body of Investment Knowledge (GBIK) + Candidate Body of Knowledge (CBOK) updated via ongoing <strong>practice analysis</strong> with practitioners</li>
+        <li>Candidates and charterholders must meet the <strong>highest standard</strong> among those set by CFA Institute, regulators, or their employer</li>
+        <li>Where client interests and market interests conflict → <strong>duty to market integrity is the overriding obligation</strong></li>
+        <li>Charterholders must sign an annual attestation of continued adherence to the Code and Standards</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Key CFA Rule — Highest Standard Applies</div>
+      <p>CFA candidates and charterholders must meet the <strong>most stringent standard</strong> among CFA Institute, regulators, and their employer — NOT merely what their local employer or local law requires. If a local law permits something the CFA Standards forbid, the CFA Standard governs. This is tested repeatedly.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: CHALLENGES TO ETHICAL CONDUCT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Challenges to Ethical Conduct</h2>
+    </div>
+
+    <div class="card">
+      <p>Even well-intentioned professionals face ethical failures. Understanding the <em>reasons</em> why people fail ethically is the first step to overcoming them.</p>
+    </div>
+
+    <h3>Challenge 1 — Overconfidence in Own Morality</h3>
+    <div class="card">
+      <ul>
+        <li>People tend to believe their ethical standards are <strong>higher than average</strong> — but everyone cannot be above average</li>
+        <li>This is the <strong>overconfidence bias</strong> — a common behavioral bias leading to faulty decision making</li>
+        <li>Results in overestimating the morality of your own behavior, particularly in <strong>unfamiliar situations</strong></li>
+        <li>Leads to placing too much importance on internal traits ("I'm honest and wouldn't lie") — but studies show internal traits are generally <strong>NOT the main determinant</strong> of whether someone behaves ethically in a given situation</li>
+        <li>Can result in failure to consider important inputs and variables needed for the best ethical decision</li>
+      </ul>
+    </div>
+
+    <h3>Challenge 2 — Underestimating Situational Influences</h3>
+    <div class="card">
+      <ul>
+        <li>Decision makers often fail to recognize or significantly underestimate how much external factors shape their behavior</li>
+        <li>Studies show even good people with honorable motives <strong>can and often will</strong> be influenced to do unethical things in difficult situations</li>
+        <li>Even strong, independent free thinkers will conform to social pressures in many situations</li>
+        <li><strong>Bystander effect:</strong> people are less likely to intervene in an emergency when others are present</li>
+        <li>People tend to behave MORE ethically when they believe someone is watching or when a mirror is nearby</li>
+      </ul>
+    </div>
+
+    <h3>Challenge 3 — Short-Term vs. Long-Term Focus</h3>
+    <div class="card">
+      <ul>
+        <li>Situational influences shift focus from <strong>long-term considerations</strong> (integrity, market integrity) to <strong>short/immediate term</strong> (bonus, promotion, prestige)</li>
+        <li>Our brains more easily identify short-term situational influences than long-term consequences</li>
+        <li>When decision making is too narrowly focused on short-term factors and/or self-interest → likelihood of ethical lapses increases</li>
+        <li>Long-term risks and consequences for both self and others are ignored or minimized</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ The "Compliance Check-Box" Trap</div>
+      <p>A well-intentioned strong compliance culture can itself become a <strong>situational influence that blinds employees to other considerations</strong>. Employees in a compliance-heavy firm may adopt a "check the box" mentality — asking <strong>"What can I do?"</strong> rather than <strong>"What should I do?"</strong>. Compliance is a necessary starting point but NOT sufficient for ethical behavior. Ethics requires asking the harder question.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: SITUATIONAL INFLUENCES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Situational Influences in the Investment Industry</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Situational Influences</div>
+      <div class="def-body">External factors, such as environmental or cultural elements, that shape our thinking, decision making, and behavior — often without our full awareness. The key insight: situational influences have a <strong>very powerful and often unrecognized effect</strong> on our behavior. Learning to recognize them is critical to making good decisions.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Situational Influence</th>
+            <th>How It Creates Ethical Risk</th>
+            <th>Real-World Investment Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Money &amp; Financial Rewards</td>
+            <td>Simply mentioning money can reduce ethical behavior (e.g., "Wall Street Game" vs. "Community Game" experiment). Large rewards motivate self-interest over ethical conduct.</td>
+            <td>Large bonuses, investment gains can drive analysts to recommend unsuitable products, misrepresent risks, or inflate valuations to benefit themselves or the firm.</td>
+          </tr>
+          <tr>
+            <td>Prestige &amp; Status</td>
+            <td>Desire to be seen as successful by peers, family, or supervisors can override ethical judgment.</td>
+            <td>Issuing favorable research to attract investment banking fees; chasing "best analyst" rankings by making aggressive recommendations.</td>
+          </tr>
+          <tr>
+            <td>Loyalty (to employer/colleagues)</td>
+            <td>An extremely powerful influence. Loyalty can tempt individuals to make compromises they would reject under different circumstances or judge harshly in others.</td>
+            <td>Covering up a colleague's misconduct to protect the team; following the supervisor's instructions to violate standards out of loyalty; not reporting suspicious trades of a friend.</td>
+          </tr>
+          <tr>
+            <td>Social Conformity</td>
+            <td>People conform to what those around them are doing — even strong independent thinkers are susceptible.</td>
+            <td>An entire trading desk following what appears to be common practice — even if the practice violates regulations. "Everyone does it" mentality.</td>
+          </tr>
+          <tr>
+            <td>Compliance Culture (Check-Box)</td>
+            <td>Overly rule-focused culture leads to "What can I do?" rather than "What should I do?" thinking. Rules are seen as the ceiling rather than the floor.</td>
+            <td>A firm whose employees treat the Code and Standards as a checklist to satisfy rather than principles to genuinely internalize.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Situational Influences Can Work Both Ways</div>
+      <p>Situational influences are not always negative — they can also induce MORE ethical behavior. People behave more ethically when they <strong>believe someone is watching</strong> or when there is a <strong>mirror nearby</strong> (increases self-awareness). Organizations can harness positive situational influences by creating cultures of accountability, visible ethical role models, and environments where ethical behavior is visibly rewarded.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: LEGAL VS. ETHICAL STANDARDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Legal Standards vs. Ethical Standards</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">The Key Relationship</div>
+      <div class="f">
+        Legal ≠ Ethical (they frequently overlap but are not the same)<br><br>
+        ✅ Legal AND Ethical → Most common conduct (follow rules and do the right thing)<br>
+        ❌ Legal but UNETHICAL → Permitted by law but violates ethical principles<br>
+        ✅ Ethical but ILLEGAL → Civil disobedience, whistleblowing (varies by jurisdiction)<br>
+        ❌ Illegal AND Unethical → Both legally prohibited and morally wrong
+      </div>
+      <div class="note">CFA Standard: Ethical conduct GOES BEYOND what is legally required. Always ask "Is this ethical?" not just "Is this legal?"</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">When Legal = Ethical (Often)</div>
+        <ul>
+          <li>Laws often codify widely shared ethical actions</li>
+          <li>Disclosure requirements, anti-fraud rules, fair dealing requirements</li>
+          <li>Complying with these creates better outcomes for clients, regulators, and the firm</li>
+          <li>Laws reflect moral beliefs of a society at a given time</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">When Legal ≠ Ethical (Important Cases)</div>
+        <ul>
+          <li><strong>Trading on material nonpublic information (MNPI):</strong> Some countries have no law against it — but CFA Institute and most investment professionals consider it <strong>unethical</strong></li>
+          <li><strong>Whistleblowing:</strong> May violate organizational policies or local laws yet be considered ethical by many</li>
+          <li><strong>Civil disobedience:</strong> Peaceful protests against unjust laws may be illegal yet considered ethical</li>
+          <li>Suitability standard (legal) vs. fiduciary standard (more ethical)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Why Laws Alone Are Insufficient for Ethical Behavior</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;"><strong>Laws lag market practices</strong> — regulators react to crises; the problematic practice may continue for years before regulation catches up</li>
+        <li style="margin-bottom:8px;"><strong>New laws can be vague, conflicting, or narrow</strong> — may eliminate one problematic activity while creating opportunities for similar ones</li>
+        <li style="margin-bottom:8px;"><strong>Laws vary by jurisdiction</strong> — questionable practices migrate to places that lack relevant laws ("regulatory arbitrage")</li>
+        <li style="margin-bottom:8px;"><strong>Interpretation and delay</strong> — market participants may interpret laws in the most advantageous way or delay compliance</li>
+        <li style="margin-bottom:8px;"><strong>Laws cannot cover every situation</strong> — no definitive rule exists for many ethical dilemmas investment professionals face</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Ethics Requires Judgment — Not Just Rule Application</div>
+      <p>Ethical conduct requires the <strong>ability to make considered decisions and reach sensible conclusions</strong> even when no specific rule exists. There is often no simple algorithm. Good ethical judgment requires <strong>actively considering the interests of all stakeholders</strong> and trying to benefit multiple parties while minimizing risk — including reputational risk.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: ETHICAL DECISION-MAKING FRAMEWORK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>The Ethical Decision-Making Framework</h2>
+    </div>
+
+    <div class="card">
+      <p>An ethical decision-making framework helps professionals:</p>
+      <ul style="margin-top:8px;">
+        <li>See a situation from <strong>multiple perspectives</strong></li>
+        <li>Pay attention to aspects <strong>less evident with a short-term, self-focused view</strong></li>
+        <li>Identify important issues they might otherwise miss</li>
+        <li><strong>Explain and justify actions</strong> to a broader audience of stakeholders</li>
+        <li>Develop sound judgment and decision-making skills over time (<strong>"muscle memory"</strong>)</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">The most important single factor in promoting ethical behavior: <strong>development, maintenance, and demonstration of a strong culture of integrity by senior management</strong>.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The 4-Phase Ethical Decision-Making Framework</div>
+      <div class="f">
+        Phase 1: IDENTIFY<br>
+        Phase 2: CONSIDER<br>
+        Phase 3: DECIDE AND ACT<br>
+        Phase 4: REFLECT
+      </div>
+      <div class="note">The process is often ITERATIVE — you may move between phases in non-sequential order and repeat phases multiple times as new information emerges or consequences become apparent.</div>
+    </div>
+
+    <div class="framework-grid">
+      <div class="phase-box phase-1">
+        <div class="phase-label">Phase 1 — Identify</div>
+        <ul>
+          <li>Relevant <strong>facts</strong> available (and information you wish you had)</li>
+          <li>Distinguish facts from personal opinion, judgments, biases</li>
+          <li><strong>Stakeholders</strong> and duties owed to each</li>
+          <li>Relevant <strong>ethical principles</strong> and/or legal requirements</li>
+          <li><strong>Conflicts of interest</strong> — e.g., duty to client vs. duty to employer</li>
+        </ul>
+      </div>
+      <div class="phase-box phase-2">
+        <div class="phase-label">Phase 2 — Consider</div>
+        <ul>
+          <li><strong>Situational influences</strong> and personal behavioral biases affecting thinking (bonus desire, desire for acceptance, peer pressure, loyalty)</li>
+          <li>Seek <strong>additional guidance</strong> from trusted sources — mentor, family member, compliance, outside legal counsel</li>
+          <li>Guidance seeker should be <strong>external to the firm</strong> or unaffected by same situational influences for fresh perspective</li>
+          <li>Consult firm's policies, CFA Institute Code and Standards</li>
+          <li>Evaluate <strong>alternative actions</strong></li>
+          <li>Imagine how an <strong>ethical peer or role model</strong> would act</li>
+        </ul>
+      </div>
+      <div class="phase-box phase-3">
+        <div class="phase-label">Phase 3 — Decide and Act</div>
+        <ul>
+          <li>Make a decision based on thorough analysis from Phases 1 and 2</li>
+          <li>Act on the decision</li>
+          <li>Note: Using the framework is <strong>no guarantee of a positive outcome</strong> but helps avoid unethical decisions</li>
+        </ul>
+      </div>
+      <div class="phase-box phase-4">
+        <div class="phase-label">Phase 4 — Reflect</div>
+        <ul>
+          <li>Was the outcome <strong>what you anticipated</strong>? Why or why not?</li>
+          <li>Had you properly identified all facts, stakeholders, duties, conflicts, ethical principles?</li>
+          <li>Had you considered all situational influences and biases?</li>
+          <li>Had you sought sufficient guidance?</li>
+          <li>Had you properly evaluated all alternative actions?</li>
+          <li>Reflect <strong>multiple times</strong> as immediate and longer-term consequences become apparent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Framework Is Iterative, Not Linear</div>
+      <p>After Phase 1 (identify), you may realize you cannot decide without more information → seek guidance (Phase 2) → begin evaluating alternatives based on what new information might reveal → reflect → restart the process. In complex cases, multiple iterations may reveal that <strong>no totally acceptable solution exists</strong> — the framework still helps you make the best possible decision among imperfect options.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ The Junior Analyst Case — Real-World Consequences</div>
+      <p>A junior analyst forwarded confidential IPO analysis to an outside party without approval during a restricted period — violating firm policy. Result: analyst was <strong>terminated and reported to regulators</strong>; supervisor lost his job for <strong>failure to supervise</strong>; firm fined <strong>millions of dollars</strong>; termination record posted permanently on the regulator's website visible to future employers. All of this from one email sent without seeking guidance. The framework's Phase 2 (seek guidance before acting) would have prevented all of it.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Ethics</strong> = set of moral principles and rules of conduct providing guidance for behavior. From Greek "ethos" (character). Examines role of consequences AND personal character.</li>
+        <li>✅ <strong>Ethical conduct</strong> = balances self-interest with BOTH direct AND indirect consequences on others. Not just following rules — requires judgment.</li>
+        <li>✅ <strong>Stakeholders</strong> = anyone directly or indirectly affected by a decision (clients, colleagues, employers, communities, regulators, market participants).</li>
+        <li>✅ <strong>5 widely acknowledged ethical principles:</strong> Honesty · Transparency · Fairness/Justice · Diligence · Respect for rights of others.</li>
+        <li>✅ <strong>Code of ethics</strong> = general guide for behavior (principles). <strong>Standards of conduct</strong> = specific behavioral benchmarks (minimum acceptable behavior). Members can always exceed the minimum.</li>
+        <li>✅ <strong>Trust</strong> = strong belief in the reliability of a person or institution. Investors' top 2 required attributes: transparent practices + ethical practices.</li>
+        <li>✅ <strong>Fiduciary duty</strong> = obligation to deliver high standard of care for another party's benefit. Always put client's interest first. Higher standard than suitability.</li>
+        <li>✅ <strong>Fiduciary vs. suitability:</strong> Fiduciary = best interest (must find best option); Suitability = can recommend any suitable option even if better/cheaper alternatives exist.</li>
+        <li>✅ <strong>Profession</strong> = occupational community with specific education, expert knowledge, and practice/behavior framework. Distinguishing features vs. trade bodies: uphold high ethical standards + serve society + set/enforce conduct rules.</li>
+        <li>✅ <strong>10 profession characteristics:</strong> Normalize behavior, Society service, Client focus (fiduciary), High entry standards, Expert knowledge, Continuing education (CPD), Monitor conduct, Collegiality, Oversight bodies, Encourage engagement.</li>
+        <li>✅ <strong>Investment management profession:</strong> young, still developing, meets MOST but not all profession criteria. CFA Institute is the largest global professional body. Graham and Dodd's Security Analysis (1934) was a key foundational moment.</li>
+        <li>✅ <strong>CFA Institute mission:</strong> "Lead the investment profession globally by promoting highest standards of ethics, education, and professional excellence for the ultimate benefit of society."</li>
+        <li>✅ <strong>CFA Standard on conflicts:</strong> Where client interests conflict with market integrity → <strong>market integrity is the overriding obligation.</strong></li>
+        <li>✅ <strong>CFA Standard on applicable rules:</strong> Must meet the HIGHEST standard among CFA Institute, regulators, and employer.</li>
+        <li>✅ <strong>3 challenges to ethical conduct:</strong> (1) Overconfidence in own morality (2) Underestimating situational influences (3) Short-term focus overriding long-term considerations.</li>
+        <li>✅ <strong>Overconfidence bias:</strong> overestimating own ethical standards. Key error: placing too much weight on internal traits ("I'm honest") when studies show internal traits are NOT the main determinant of ethical behavior.</li>
+        <li>✅ <strong>Situational influences:</strong> external factors shaping behavior. Key examples: money, prestige, loyalty to employer/colleagues, social conformity. Very powerful and often UNRECOGNIZED. Can work both ways (mirror effect induces more ethical behavior).</li>
+        <li>✅ <strong>Bystander effect:</strong> people less likely to intervene in an emergency when others are present — classic example of situational influence overriding individual morality.</li>
+        <li>✅ <strong>Compliance culture risk:</strong> "check the box" mentality — asking "What CAN I do?" rather than "What SHOULD I do?" Compliance is necessary but NOT sufficient for ethical behavior.</li>
+        <li>✅ <strong>Legal ≠ Ethical (key examples):</strong> Trading on MNPI legal in some countries but widely considered unethical. Whistleblowing may be illegal but ethical. Suitability (legal) ≠ fiduciary (ethical best practice).</li>
+        <li>✅ <strong>5 reasons laws alone are insufficient:</strong> Laws lag practices; new laws may be vague/narrow; jurisdictional variation; interpretation and delay; laws can't cover every situation.</li>
+        <li>✅ <strong>4-Phase Framework:</strong> IDENTIFY (facts, stakeholders, duties, ethical principles, conflicts) → CONSIDER (situational influences, seek external guidance, evaluate alternatives) → DECIDE AND ACT → REFLECT (was outcome expected? what was missed?). Process is ITERATIVE.</li>
+        <li>✅ <strong>Framework benefit:</strong> Helps see from multiple perspectives, identify issues not otherwise considered, explain actions to stakeholders. Using it is no guarantee of perfect outcomes but reduces likelihood of unethical decisions.</li>
+        <li>✅ <strong>Most important factor in ethical culture:</strong> Senior management demonstrating and maintaining a strong culture of integrity.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Quick Reference — Ethics Framework at a Glance</div>
+      <div class="f">
+        Beliefs → Values → Principles → Ethical Conduct<br><br>
+        Ethical ≠ Legal: Overlap is large but not complete<br>
+        CFA Standard: Highest of {CFA, Regulator, Employer} always applies<br><br>
+        Challenges: (1) Overconfidence (2) Situational influences (3) Short-termism<br>
+        Key situational influences: Money · Prestige · Loyalty · Conformity · Compliance culture<br><br>
+        4-Phase Framework: IDENTIFY → CONSIDER → DECIDE &amp; ACT → REFLECT (iterative)<br>
+        Phase 2 is critical: seek external guidance before acting; imagine an ethical role model
+      </div>
+      <div class="note">Ethics questions in the CFA exam test JUDGMENT, not just rule memorization. Always ask: "What would the most ethical course of action be?" and use the stakeholder framework to evaluate choices.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Ethics · Module 1: Ethics and Trust in the Investment Profession · Exam Prep Notes
+</footer>
+
+</body>
+</html>

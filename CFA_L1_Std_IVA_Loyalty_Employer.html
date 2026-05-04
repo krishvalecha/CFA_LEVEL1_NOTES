@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard IV(A): Loyalty to Employer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'IV(A)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:9rem;font-weight:900;color:rgba(201,168,76,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--accent);border:1px solid rgba(201,168,76,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent);border-color:var(--accent);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(201,168,76,0.3);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#ddd0a8;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .warn p+p{margin-top:8px;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#e8c97a;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-source{font-size:10px;color:var(--accent);font-family:'JetBrains Mono',monospace;background:rgba(201,168,76,0.1);padding:2px 7px;border-radius:3px;border:1px solid rgba(201,168,76,0.2);}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#e8c97a;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD IV · MODULE 3</div>
+  <h1>Standard <span>IV(A)</span>: Loyalty to Employer</h1>
+  <p class="subtitle">Covers the full lifecycle of the employment relationship — the duty of loyalty during employment, independent practice restrictions, the leaving-an-employer framework (what can and cannot be taken or done), social media use during departures, whistleblowing, and the nature of employment (employee vs. independent contractor). Both sources synthesised — 15 worked examples including LES-only additions not in the Handbook.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">The Standard</a>
+  <a class="toc-item" href="#s2">Core Obligations</a>
+  <a class="toc-item" href="#s3">Independent Practice</a>
+  <a class="toc-item" href="#s4">Leaving an Employer</a>
+  <a class="toc-item" href="#s5">What Can Be Taken</a>
+  <a class="toc-item" href="#s6">Social Media</a>
+  <a class="toc-item" href="#s7">Whistleblowing</a>
+  <a class="toc-item" href="#s8">Nature of Employment</a>
+  <a class="toc-item" href="#s9">Worked Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+<div class="container">
+
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>The Standard — Verbatim Text</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard IV(A) — Loyalty</div>
+    <p>In matters related to their employment, Members and Candidates must act for the benefit of their employer and not deprive their employer of the advantage of their skills and abilities, divulge confidential information, or otherwise cause harm to their employer.</p>
+  </div>
+  <div class="card">
+    <p>IV(A) covers only <em>matters related to employment</em> — not all personal conduct. Three specific prohibitions:</p>
+    <ol>
+      <li>Must not <strong>deprive the employer of the advantage of their skills and abilities</strong> — cannot be absent, neglectful, or divert their professional capacity to competitive activities</li>
+      <li>Must not <strong>divulge confidential information</strong> — firm's strategies, client data, proprietary research, and trade secrets are confidential</li>
+      <li>Must not <strong>otherwise cause harm to their employer</strong> — this is a broad catch-all covering disparagement, self-dealing, diverting business opportunities, and other injurious conduct</li>
+    </ol>
+    <p>Importantly: client interests rank above employer interests (III(A) takes precedence). And IV(A) is not a blanket requirement to place employer interests above <em>personal</em> interests — personal and family obligations are legitimate. The duty runs to matters related to employment.</p>
+  </div>
+</div>
+
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>Core Obligations During Employment</h2></div>
+  <div class="card">
+    <p>Members must comply with the employer's policies and procedures as long as those policies don't conflict with applicable laws, rules, regulations, or the Code and Standards. The employer-employee relationship is mutual — employers owe members and candidates a positive working environment and an ethical workplace. Senior management has the additional responsibility to design compensation structures that don't incentivise unethical behaviour.</p>
+    <p>Recommended actions for members and candidates:</p>
+    <ul>
+      <li>Provide the employer with a copy of the Code and Standards — this informs them of the member's obligations and serves as a basis for questioning conflicting employer policies</li>
+      <li>Understand restrictions on offering similar services outside the firm while employed</li>
+      <li>Comply with termination and resignation policies including client notification procedures</li>
+      <li>Be aware of whistleblowing policies and encourage the firm to adopt best practices in this area</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Independent Practice — Working While Still Employed</h2></div>
+  <div class="card">
+    <p>IV(A) does <em>not</em> prohibit entering an independent business while still employed — but the conditions are strict:</p>
+    <ul>
+      <li><strong>Must notify the employer</strong> and describe: (a) the types of services to be rendered, (b) the expected duration, and (c) the compensation</li>
+      <li><strong>Must receive consent</strong> from the employer to all the terms of the arrangement before rendering any services</li>
+      <li><strong>"Practice" = any service the employer currently makes available for remuneration</strong> — if the employer doesn't offer that service, it may not be "competitive" in the same sense</li>
+      <li><strong>Preparing to compete ≠ competing</strong> — registering a new company, developing a business plan, or other preparatory steps done on the member's own time, outside the office, without soliciting clients, does not violate IV(A)</li>
+    </ul>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 LES Adds: Part-Time Status</div>
+    <p>The LES explicitly addresses part-time employees. "Part-time" applies to employees who do not commit the full number of hours required for a normal work week. Members with part-time status should discuss possible limitations to their abilities to provide services that may be competitive with their employer during the negotiation and hiring process. The requirements of IV(B) (additional compensation arrangements) would apply to limitations identified at that time.</p>
+  </div>
+</div>
+
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Leaving an Employer — The Full Framework</h2></div>
+  <div class="card">
+    <p>When planning to leave, members and candidates must continue to act in the employer's best interest <strong>until the employment relationship ends</strong>. The Handbook clarifies: a letter of resignation does not necessarily signify the end — the relationship ends once the employee is no longer being paid or no longer has responsibilities at the company.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Prohibited Activities While Still Employed</div>
+      <ul>
+        <li>Unauthorized use of trade secrets</li>
+        <li>Misuse of confidential information</li>
+        <li>Explicit or implicit solicitation of the employer's clients</li>
+        <li>Promotion of a new employer prior to cessation of employment</li>
+        <li>Self-dealing — appropriating for one's own benefit a property, business opportunity, or information belonging to the employer</li>
+        <li>Unauthorized use of any firm property, including clients or client lists</li>
+        <li>Disparaging the current employer in a manner that could cause harm to the firm's interests</li>
+        <li>Responding to a competitive RFP without employer permission (even if the RFP was sent publicly)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Permitted Pre-Departure Activities</div>
+      <ul>
+        <li>Registering a new business with regulatory authorities (on own time, outside the office)</li>
+        <li>Developing a business plan in private</li>
+        <li>After giving notice: informing clients you are leaving and naming the new firm — but NOT providing new contact information without employer permission</li>
+        <li>After giving notice: informing clients the name of the new firm — but NOT describing services available at the new firm, implicitly or explicitly soliciting business</li>
+        <li>Signing a new employment contract</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Handbook-Only: Post-Resignation Nuances</div>
+    <p>The Handbook adds important guidance on the period between giving notice and leaving. After providing notice of intent to resign, members: <strong>may</strong> inform clients they are leaving and going to a new firm; <strong>may</strong> provide the name of the new employer; <strong>may NOT</strong> provide their contact information at the new employer before employment ends without current employer permission; <strong>may NOT</strong> describe services available at the new firm; <strong>may NOT</strong> implicitly or explicitly promote the new employer to current firm clients. The Nash example (Handbook-only) shows the outer limit: describing the employer's unethical practices AND giving the client information about the new firm AND encouraging the client to transfer = clear IV(A) violation — even if the client would genuinely be better off at the new firm. The remedy: after leaving, Nash can inform former clients of his concerns and suggest they change managers.</p>
+  </div>
+</div>
+
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>What Can and Cannot Be Taken When Leaving</h2></div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Cannot Take (Without Written Permission)</div>
+      <ul>
+        <li>Any employer records — books, reports, research, client lists, account statements, computer models, spreadsheets — regardless of whether the member created them</li>
+        <li>Records stored in any medium: hard copy, home computers, portable storage devices, cell phones, laptops, tablets</li>
+        <li>Records must be returned to the employer or erased unless the employer gives permission to keep them after employment ends</li>
+        <li>Work performed on behalf of the employer = employer property, even if stored on a personal device for convenience</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Can Take / Use After Leaving</div>
+      <ul>
+        <li>Skills and experience gained while employed — NOT confidential or privileged</li>
+        <li>General knowledge of the names and existence of former clients — NOT confidential unless deemed so by agreement or law</li>
+        <li>Public information about the former firm — can be used to contact former clients if no noncompete agreement prohibits it</li>
+        <li>Memory of work done, methodologies learned, analytical frameworks developed — these are mental skills, not firm records</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ The Unpaid Intern Rule (Madeline Example)</div>
+    <p>Receiving no monetary compensation does NOT make someone a non-employee for IV(A) purposes. Madeline is an unpaid intern who receives work experience and knowledge as compensation — this is sufficient to create an employment relationship. She used firm resources (software tools, research infrastructure) to create the GIPS compliance software. Copying that software before leaving = misappropriation of firm property = IV(A) violation regardless of her lack of monetary pay.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 LES-Only: Protocol for Broker Recruiting</div>
+    <p>The LES mentions an industry agreement (the "Protocol for Broker Recruiting" in the US) between many US brokers that outlines information departing employees are permitted to take upon resignation — including some general client contact information. Members who move between firms that have signed this protocol may rely on its protections as long as they faithfully adhere to all the outlined procedures. Under the protocol, a copy of the information being taken must be provided to local management for review, and the client information may only be used by the departing employee, not other staff at the new firm. This industry-specific agreement provides a safe harbour but requires strict procedural compliance.</p>
+  </div>
+</div>
+
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Social Media — Departure Complications</h2></div>
+  <div class="card">
+    <p>Social media creates unique compliance challenges when leaving an employer. Key principles:</p>
+    <ul>
+      <li><strong>Firm-approved business social media accounts</strong> (created for professional client engagement) = firm assets → must be transferred or deleted per firm policies</li>
+      <li><strong>Personal accounts with client connections:</strong> members must discuss with the employer how profiles should be treated when a single account includes personal connections and also conduct professional activities</li>
+      <li><strong>Best practice:</strong> maintain separate accounts for personal and professional social media activities</li>
+      <li><strong>Profile updates after departure:</strong> updating a LinkedIn profile after employment ends is acceptable — LinkedIn automatically notifying the network of the employment status change does not constitute solicitation (Webb example)</li>
+      <li><strong>Timing matters:</strong> updating the profile after RSI has already informed clients AND after employment has ended = no violation. Updating during employment or before the employer notifies clients could be problematic</li>
+    </ul>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Webb LinkedIn Example</div>
+    <p>Webb's non-solicitation agreement required a 2-year wait before soliciting RSI clients. She updated her LinkedIn profile several days after her departure and after RSI notified clients. LinkedIn's automatic notification to her entire network (including clients) that her employment status changed = <strong>NOT solicitation</strong>. Simply notifying the network of an employment change is different from actively soliciting clients. However, best practice would have been to maintain separate personal and professional accounts, and at minimum, Webb should have discussed with RSI how to address client information in her social media networks before departing.</p>
+  </div>
+</div>
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Whistleblowing — When Disloyalty Is Justified</h2></div>
+  <div class="card">
+    <p>Member and candidate personal interests, as well as employer interests, are <strong>secondary</strong> to protecting the integrity of capital markets and the interests of clients. When an employer is engaged in illegal or unethical activity, circumstances may arise where members must act contrary to their employer's interests. Specifically permitted if the intent is aimed at protecting clients or the integrity of the market, <strong>not for personal gain</strong>:</p>
+    <ul>
+      <li>Contradicting employer instructions</li>
+      <li>Violating certain employer policies and procedures</li>
+      <li>Preserving a record by copying employer records (specifically to support whistleblowing)</li>
+    </ul>
+    <p>The LES adds: members should consult the firm's whistleblowing policy to determine the appropriate next step. Rasmussen (Examples 11/5 in LES/Handbook) — when internal escalation to supervisor and compliance officer both fail, pursuing whistleblowing through appropriate channels is justified and does NOT violate IV(A).</p>
+  </div>
+</div>
+
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Nature of Employment — Employee vs. Independent Contractor</h2></div>
+  <div class="card">
+    <p>IV(A) applies in the employment context. Members must determine whether they are employees or independent contractors — this determines the applicability of IV(A). Factors determining control/employee status:</p>
+    <ul>
+      <li>Whether hours, work location, and job parameters are set by the employer</li>
+      <li>Whether facilities are provided</li>
+      <li>Whether expenses are reimbursed</li>
+      <li>Whether the member seeks work from other employers simultaneously</li>
+      <li>The number of clients or employers the member works for</li>
+    </ul>
+    <p>For independent contractors: duties are governed by the oral or written agreement between the member and the client. Must clearly define scope of responsibilities and expectations within each relationship. Once a relationship with a client is established, the member has a duty to abide by the terms of the agreement.</p>
+  </div>
+</div>
+
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Worked Examples — All 15 (LES + Handbook)</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">Magee — Soliciting Current Clients and Prospects Before Resigning</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Magee is frustrated with Trust Assets, Inc. Before resigning, he asks four big accounts to leave the firm and open accounts with his prospective new employer Fiduciary Management. He also persuades several prospective clients (whom he had previously approached on behalf of Trust Assets) to sign agreements with Fiduciary.</div>
+      <div class="ex-verdict"><strong>Violation of IV(A).</strong> Magee's duty runs to Trust Assets as long as he is employed there. Soliciting current clients and prospective clients while still employed = a fundamental breach of the duty of loyalty to the employer.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The timing is the critical factor. While employed: cannot solicit current or prospective clients for a new employer. After leaving: may contact former clients using publicly available information (absent a noncompete agreement). Solicitation before departure = IV(A) violation regardless of the employee's personal frustration with the employer.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Hightower — Taking All Records When Leaving to Start Own Firm</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Hightower plans to copy and take seven categories of Jason Investment records when he leaves: client list with contact info, account statements, marketing presentations with firm performance records, recommended securities list, asset allocation computer models, stock selection models, and personal spreadsheets for corporate recommendations he developed as an analyst.</div>
+      <div class="ex-verdict"><strong>Violation of IV(A) for all seven categories.</strong> Even records he personally developed while employed are employer property. Taking them — in any medium — without consent interferes with the employer's business opportunities.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>"Even those the member or candidate prepared" = still employer property. The test is not "who created it" — it is "was it created in the course of employment?" If yes, it belongs to the employer. Includes records stored on personal devices for convenience. The only exception: written permission from the employer.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3 (LES) / Example 3 (Handbook)</div><div class="ex-source">Both (different numbering)</div><div class="ex-title">Madeline — Unpaid Intern Copying GIPS Software</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Madeline is an unpaid summer intern at Murdoch and Lowell helping with GIPS compliance software development. Before leaving for a paid job at McMillan (which also wants GIPS compliance), she copies the software she helped develop.</div>
+      <div class="ex-verdict"><strong>Violation of IV(A).</strong> Although Madeline receives no monetary compensation, she receives work experience and knowledge = compensation. She used firm resources in creating the software. She is an employee for IV(A) purposes. Copying the firm's software without permission = misappropriation of firm property.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Employment for IV(A) purposes is not limited to monetary compensation. Any form of compensation — including work experience, training, and professional development — can create the employer-employee relationship. The firm's property (software, research tools, models) belongs to the firm regardless of who contributed to its creation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3 (LES-Only) / Not in Handbook</div><div class="ex-source">LES Only</div><div class="ex-title">Winston — Employee Buyout After Rumours of Firm Sale</div><div class="ex-tag"><span class="tag tag-yellow">CONSULT LEGAL COUNSEL</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Winston manages equity portfolios at TAM. After a merger, rumours circulate that Philpott is selling TAM's equity management business. Internal inquiries are met with denials but rumours persist. Winston contemplates leading an employee buyout of TAM's equity business.</div>
+      <div class="ex-verdict">An employee-led buyout <strong>could be consistent with IV(A)</strong> because it would rest on the permission of the employer and ultimately the clients. However, because Winston suspects senior managers are not being truthful, he should consult legal counsel to determine appropriate action. The key: an employee buyout is a business transaction that the employer can consent to — if the employer genuinely consents, it is not a breach of loyalty.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>Business transactions (including buyouts) between employees and employers are possible without violating IV(A) — they just require employer consent. The complication here is the potential for dishonesty by senior management, which changes the calculus. When there is reason to doubt whether management is acting in good faith, legal counsel should determine the appropriate next steps.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4 (LES) / Not in Handbook</div><div class="ex-source">LES Only</div><div class="ex-title">Clay — Contractor Using Bradley Research for Winston Recommendation</div><div class="ex-tag"><span class="tag tag-red">VIOLATION IF DOESN'T WAIT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Clay does a consulting study for Bradley Associates using their research files and office resources. Bradley's research director did not seek exclusivity but the arrangement was on a handshake. Before submitting the report to Bradley, Clay is offered a job at Winston. She considers submitting the draft for publication by Winston.</div>
+      <div class="ex-verdict"><strong>Clay has an obligation to let Bradley act on the output first.</strong> Unless Bradley gives permission and waives its rights to the wireless report, Clay would violate IV(A) by immediately recommending to Winston the same transactions recommended in the Bradley report. She also must not take any Bradley research file material or other property.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>Even in informal (handshake) arrangements, work product created using an employer's resources belongs to the employer. A contractor who uses the employer's research files and office space has a duty to allow the employer to benefit from the resulting output before using it for personal or third-party advantage. The absence of a written contract doesn't remove this obligation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4 (Handbook) / Not in LES</div><div class="ex-source">Handbook Only</div><div class="ex-title">Nash — Disparaging Employer and Soliciting Client During Resignation</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Nash identifies churning practices at his firm, escalates internally without success, finds new employment, and hands in his resignation. Per firm direction, he notifies clients of his departure. One client asks about the circumstances of his departure. Nash describes the unethical practices in detail, gives the client information about his new employer, and encourages her to transfer her account to his new firm.</div>
+      <div class="ex-verdict"><strong>Violation of IV(A)</strong> — two violations: (1) disparaging the current employer in a manner that could cause harm to the firm's interests, and (2) soliciting the client for his future employer. Both violations apply even if the client would genuinely be better off at the new firm. <strong>After leaving:</strong> Nash may then inform former clients of his concerns about their treatment and suggest they change managers.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (Handbook-Only)</div>The timing rule is absolute: while still employed (even during notice period), cannot disparage the employer to clients or solicit business for the future employer. The ethical motivation (client's actual best interest) and the severity of the employer's misconduct do not override the duty during the notice period. The remedy is to leave first, then inform clients.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 5+6 (Handbook) / 6+10 (LES)</div><div class="ex-source">Both</div><div class="ex-title">Chisolm / McQuillen — Contacting Former Clients After Leaving</div><div class="ex-tag"><span class="tag tag-yellow">CONDITIONAL</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Chisolm:</strong> left his firm after 18 years, now works for a competitor, wants to contact former clients. <strong>McQuillen:</strong> left without signing a noncompete, didn't take any client lists or contact information, cleared her personal computer, obtains former clients' numbers through public records and contacts them.</div>
+      <div class="ex-verdict"><strong>Chisolm:</strong> May contact former clients IF he uses only public information — not client records from his former employer. If he took client lists or used firm records to contact them: violation. <strong>McQuillen:</strong> No violation — no noncompete agreement, did not use firm records, obtained contact info through public records. Using public information to contact former clients = acceptable.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div>Three conditions determine whether contacting former clients violates IV(A): (1) Was the contact information taken from firm records? (2) Does a noncompete agreement prohibit the contact? (3) Does the contact constitute solicitation while still employed? If all three are "no," post-departure contact is acceptable. Simple knowledge of former clients' names = not confidential. Skills = not confidential. Firm records = firm property.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 7+8 (Handbook) / 7+8 (LES)</div><div class="ex-source">Both</div><div class="ex-title">Allen / RFP Group — Preparations vs. Competition</div><div class="ex-tag"><span class="tag tag-yellow">NUANCED</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Allen:</strong> registers a competing investment company with government authorities without notifying her employer, but does not seek clients or operate the new company while still employed. <strong>RFP Group:</strong> several departing employees learn an employer client has issued an RFP (to employer and all competitors). They want to respond for their new firm before their resignations are effective.</div>
+      <div class="ex-verdict"><strong>Allen:</strong> No violation — registering on her own time outside the office, without soliciting clients or operating the business while employed = permissible preparation. <strong>RFP Group:</strong> Violation — responding to an RFP that the employer is also responding to = direct competition with the employer. Requires employer permission AND the permission of the entity sending the RFP.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The distinction: "preparing to compete" (registering, planning, developing) = acceptable. "Actually competing" (soliciting clients, bidding against the employer, providing services) = violation. An RFP that has been sent to the employer is a live competitive opportunity — bidding against the employer's response is direct competition, not mere preparation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 9 (LES-Only)</div><div class="ex-source">LES Only</div><div class="ex-title">Mota — Part-Time Mayor While Working as Research Analyst</div><div class="ex-tag"><span class="tag tag-green">CONSULT IF EXTENSIVE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Mota works as a research analyst at Tyson Investments and part-time as a mayor for his hometown, for which he receives compensation. Must he seek permission from Tyson to serve as mayor?</div>
+      <div class="ex-verdict"><strong>If</strong> Mota's mayoral duties are so extensive and time-consuming that they might detract from his ability to fulfil his responsibilities at Tyson, he should discuss his outside activities with his employer and come to a mutual agreement on how to manage personal commitments with employment responsibilities.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>IV(A) applies to matters <em>related to employment</em>. Non-competitive outside activities (like serving as mayor) don't inherently violate IV(A) — but if the time commitment is so substantial it deprives the employer of the member's skills and abilities, a dialogue is required. The test: does the outside activity harm the employer by reducing the member's professional capacity?</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 9 (Handbook)</div><div class="ex-source">Handbook Only</div><div class="ex-title">Webb — LinkedIn Profile Update After Departure</div><div class="ex-tag"><span class="tag tag-green">NO VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Webb leaves RSI under a 2-year non-solicitation agreement. RSI notified clients of her departure. Webb updated her LinkedIn profile several days after her departure. LinkedIn automatically notified her entire network (including former clients) of her changed employment status.</div>
+      <div class="ex-verdict"><strong>No violation.</strong> Webb updated her profile after employment ended and after RSI had already notified clients. LinkedIn's automatic notification = not solicitation. Best practice: maintain separate personal and professional social media accounts. At minimum: should have discussed with RSI before departure how to address client information in her social media networks.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (Handbook-Only)</div>Employment status update ≠ client solicitation. The key is timing: after departure AND after the employer has notified clients. Had Webb updated before departure or before RSI's notification, it could be viewed as circumventing the employer's preferred method of disclosure. Passive notification through platform features ≠ active solicitation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 11+15 (LES) / 10+Gupta (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Gupta / Confidential Firm Information on Personal Blog</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Gupta writes a personal blog to share experiences with friends and family. When he disagrees with NIM's team research opinions, he uses his personal blog to express counterpoint views — indirectly revealing what NIM's proprietary team research says (because the blog post contradicts it). NIM's client blog is on a password-protected site; Gupta's personal blog is publicly accessible.</div>
+      <div class="ex-verdict"><strong>Violation of IV(A).</strong> Two violations: (1) disclosing confidential firm information through his personal blog — because the personal blog post indirectly reveals the substance of NIM's proprietary recommendations; (2) using firm resources (research process, insights gained through employment) for personal advantage on his personal blog without employer consent.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Indirect disclosure of confidential information is still a violation. By posting a counterpoint to the firm's proprietary analysis, Gupta reveals that the firm has taken a different position — which itself reveals confidential information. Additionally, using firm research work product and insights to populate a personal platform = using firm resources for personal advantage without consent.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 11 (LES) / Not in Handbook</div><div class="ex-source">LES Only</div><div class="ex-title">Rasmussen — Whistleblowing After Internal Escalation Fails</div><div class="ex-tag"><span class="tag tag-green">APPROPRIATE WHISTLEBLOWING</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Rasmussen notices that the hedge fund's reported performance doesn't reflect a market decline she observed. She escalates to the head of trading and then to the compliance officer — both dismiss her concerns. She is fairly sure something is not right.</div>
+      <div class="ex-verdict"><strong>Rasmussen should consult the firm's whistleblowing policy</strong> to determine the appropriate next step. Pursuing further disclosure through appropriate channels (given the failure of internal escalation) <strong>does NOT violate IV(A)</strong> — the potentially unethical actions of the investment management division are appropriate grounds for further disclosure, not personal gain.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only note)</div>Whistleblowing is justified when: (1) the employer is engaged in illegal or unethical activity, (2) internal escalation has failed, and (3) the intent is to protect clients or market integrity (not for personal gain). In those circumstances, actions normally constituting disloyalty — including preserving records by copying employer documents — may be justified. See IV(C) for the supervisory dimension of this example.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 12+13 (LES) / Not in Handbook</div><div class="ex-source">LES Only</div><div class="ex-title">Crome (Using Records) / Smith (Code and Standards)</div><div class="ex-tag"><span class="tag tag-red">VIOLATION / COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Crome:</strong> leaving YBSafe Bank for a competitor that offers a signing bonus for "advisers with their own client portfolios." She plans to use her client records (built and maintained in her capacity as a YBSafe employee) to contact and solicit clients. <strong>Smith:</strong> concerned about the ethical environment around CDO construction, she talks to her supervisor, provides the Code and Standards, discusses client-interest obligations, and reviews the company's whistleblowing procedures.</div>
+      <div class="ex-verdict"><strong>Crome:</strong> Violation — client records built in her capacity as a YBSafe employee are proprietary information of her former employer. She may contact former clients using publicly available information but not by using the firm's records. <strong>Smith:</strong> Compliant — providing the supervisor with the Code and Standards is specifically encouraged as a way to inform employers of members' ethical obligations. Preparing to report through proper whistleblower channels = compliant.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div><strong>Crome:</strong> The signing bonus for "your own client portfolios" creates an incentive to misuse firm records — but the incentive doesn't create the right. Using firm records (in any form) to solicit former clients = IV(A) violation. <strong>Smith:</strong> Providing the Code and Standards to the employer is not just permitted but specifically encouraged. It informs the employer of the member's obligations and provides a basis for challenging conflicting firm policies.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">★</span><h2>Exam Checklist — Standard IV(A): Loyalty to Employer</h2></div>
+  <div class="card" style="border-color:rgba(201,168,76,0.3);">
+    <ul class="checklist">
+      <li>✅ <strong>Three prohibitions:</strong> Don't deprive employer of skills/abilities + Don't divulge confidential information + Don't otherwise harm the employer.</li>
+      <li>✅ <strong>Employment-related matters only</strong> — not all personal conduct. Personal and family obligations are legitimate and don't require employer priority.</li>
+      <li>✅ <strong>Client interests rank above employer interests</strong> — III(A) takes precedence over IV(A). But within employer relations, must act for the employer's benefit.</li>
+      <li>✅ <strong>Independent practice while employed:</strong> Must notify employer with service type, duration, and compensation details. Must receive consent before rendering services. "Practice" = service employer currently offers for remuneration.</li>
+      <li>✅ <strong>Preparing to compete ≠ competing.</strong> Registering a new business on own time, outside the office, without soliciting clients = acceptable. Responding to a competitive RFP while still employed = violation (requires employer permission).</li>
+      <li>✅ <strong>While still employed (including notice period):</strong> Cannot solicit current or prospective clients; cannot promote the new employer; cannot disparage the current employer; cannot take firm records without permission.</li>
+      <li>✅ <strong>After giving notice:</strong> May tell clients you are leaving and name the new firm. May NOT provide new contact information, describe new firm services, or implicitly solicit business — without employer permission.</li>
+      <li>✅ <strong>Employment relationship ends</strong> when the employee is no longer being paid or no longer has responsibilities — not necessarily when notice is given.</li>
+      <li>✅ <strong>Cannot take firm records without written permission</strong> — regardless of who created them, in any storage medium (including personal devices, home computers, cell phones).</li>
+      <li>✅ <strong>What can be taken (without permission):</strong> Mental skills and experience (not confidential), general knowledge of names/existence of former clients (not confidential unless covered by agreement or law). Public information may be used post-departure to contact former clients.</li>
+      <li>✅ <strong>Unpaid interns = employees for IV(A) purposes</strong> if they receive non-monetary compensation (work experience, training). Firm resources used in their work = firm property. (Madeline)</li>
+      <li>✅ <strong>Firm-approved social media accounts = firm assets</strong> — must transfer or delete per firm policies. Best practice: separate personal and professional accounts.</li>
+      <li>✅ <strong>LinkedIn profile update after departure ≠ solicitation</strong> — automatic notification is passive, not active solicitation. (Webb)</li>
+      <li>✅ <strong>Whistleblowing is justified</strong> when: employer engaged in illegal/unethical activity + internal escalation has failed + intent is protecting clients/market (not personal gain). Even copying employer records to support whistleblowing may be justified.</li>
+      <li>✅ <strong>Noncompete agreements:</strong> Members should review terms carefully. The existence of one can restrict post-departure client contact even when using public information.</li>
+      <li>✅ <strong>Indirect confidential disclosure = violation.</strong> Posting counterpoint analysis on a personal blog that reveals the substance of proprietary firm research = IV(A) violation. (Gupta)</li>
+    </ul>
+  </div>
+  <div class="formula-box">
+    <div class="label">★ IV(A) QUICK REFERENCE</div>
+    <div class="f">
+      THREE PROHIBITIONS:   Deprive employer of skills + Divulge confidential info + Otherwise harm employer<br>
+      SCOPE:                Employment-related matters only (not all personal conduct)<br>
+      PRIORITY:             Client interests > Employer interests > Personal interests<br><br>
+      INDEPENDENT PRACTICE: Notify employer (service type + duration + compensation) → get consent → then render<br>
+      "PRACTICE" =          Any service the employer currently offers for remuneration<br>
+      PREPARING ≠ COMPETING: Registration/planning on own time = OK; soliciting/bidding against employer = violation<br><br>
+      WHILE EMPLOYED:       No soliciting clients; no promoting new employer; no disparagement; no taking records<br>
+      POST-NOTICE:          May name new employer; may NOT provide new contact info / describe new services / solicit<br>
+      WHEN RELATIONSHIP ENDS: When no longer paid AND no longer has responsibilities<br><br>
+      CAN'T TAKE:           Any firm records (regardless of creator or storage medium) without written permission<br>
+      CAN TAKE:             Mental skills/experience; general knowledge of client names; public information<br>
+      NONCOMPETE:           Review terms carefully — can restrict even public-information contact<br><br>
+      UNPAID INTERN:        Employee for IV(A) purposes if receives non-monetary compensation<br>
+      FIRM SOCIAL MEDIA:    Firm-approved accounts = firm assets → transfer/delete per firm policies<br>
+      LINKEDIN UPDATE:      Passive notification after departure ≠ solicitation (Webb)<br><br>
+      WHISTLEBLOWING:       Justified when: employer illegal/unethical + internal escalation failed + protecting clients/market<br>
+      INDIRECT DISCLOSURE:  Counterpoint blog post that reveals firm's proprietary research = confidential breach
+    </div>
+    <div class="note">
+      <strong>Top IV(A) exam traps:</strong><br>
+      (1) "He created the spreadsheets himself, so they belong to him" — employer property regardless of who created it<br>
+      (2) "She's just an unpaid intern, so IV(A) doesn't apply" — non-monetary compensation (work experience) creates the employment relationship<br>
+      (3) "He told clients he was leaving and named his new firm, so that's solicitation" — naming the new employer is acceptable; providing contact info/describing new services is not<br>
+      (4) "She used public records to contact former clients, so no violation" — correct, UNLESS a noncompete agreement prohibits such contact<br>
+      (5) "The whistleblowing means he copied firm records, which violates IV(A)" — copying records to support whistleblowing of illegal employer conduct is justified<br>
+      (6) "The LinkedIn notification went to clients, so it's solicitation" — passive platform notification of employment status change ≠ active solicitation
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard IV(A): Loyalty to Employer · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

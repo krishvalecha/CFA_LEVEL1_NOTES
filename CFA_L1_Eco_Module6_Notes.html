@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 6: International Trade</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14; --surface:#13161e; --card:#1a1e28; --border:#252a38;
+    --accent:#c9a84c; --accent2:#4c8bc9; --accent3:#4cc98a; --danger:#c94c4c;
+    --purple:#9a7fdc; --teal:#4cb8c9;
+    --text:#e8eaf0; --muted:#8892a4;
+    --tip-bg:#1a2218; --tip-border:#4cc98a;
+    --warn-bg:#221a18; --warn-border:#c94c4c;
+    --formula-bg:#12151f; --formula-border:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0d1a12 40%,#0e0d18 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(76,201,138,0.07) 0%,transparent 70%);border-radius:50%;}
+  .badge{display:inline-block;background:rgba(76,184,201,0.12);color:var(--teal);border:1px solid rgba(76,184,201,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px;}
+  .page-header h1 span{color:var(--teal);}
+  .page-header p{color:var(--muted);font-size:14px;max-width:640px;}
+
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+  .toc-item:hover{color:var(--teal);border-color:var(--teal);}
+
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--teal);background:rgba(76,184,201,0.1);border:1px solid rgba(76,184,201,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin:24px 0 12px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px;}
+  .card p,.card li{color:var(--text);font-size:15px;}
+  .card ul,.card ol{padding-left:20px;}
+  .card ul li,.card ol li{margin-bottom:6px;}
+
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .formula-box .f{color:#e8c97a;font-size:15px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.65;}
+
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .tip .tip-label{font-weight:700;color:var(--accent3);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .tip p{color:#c8e8d4;}
+
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .warn .warn-label{font-weight:700;color:var(--danger);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .warn p{color:#e8c8c8;}
+
+  .mnemonic{background:#1a1628;border:1px solid #3d2f6e;border-radius:6px;padding:16px 20px;margin:14px 0;}
+  .mnemonic .m-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#a98adc;margin-bottom:6px;}
+  .mnemonic p{color:#d8ccf0;font-size:14px;margin:0;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  thead th{background:rgba(76,184,201,0.1);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--teal);}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  tbody td{padding:10px 14px;color:var(--text);vertical-align:top;}
+  tbody td:first-child{font-weight:700;color:var(--accent2);}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);}
+  .tag-teal{background:rgba(76,184,201,0.15);color:var(--teal);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mini-card .mc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .mini-card ul{padding-left:18px;}
+  .mini-card ul li{font-size:14px;margin-bottom:5px;color:var(--text);}
+
+  /* Tariff welfare diagram text representation */
+  .welfare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:16px 0;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .wg-cell{padding:10px 12px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .wg-cell:last-child{border-right:none;}
+  .wg-header{background:rgba(76,184,201,0.1);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;}
+  .wg-cell.a-box{background:rgba(76,201,138,0.06);}
+  .wg-cell.b-box{background:rgba(201,76,76,0.06);}
+  .wg-cell.c-box{background:rgba(76,139,201,0.06);}
+  .wg-cell.d-box{background:rgba(201,76,76,0.06);}
+
+  /* Trading bloc ladder */
+  .bloc-ladder{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+  .bl-row{display:flex;align-items:stretch;gap:0;}
+  .bl-num{min-width:36px;background:rgba(76,184,201,0.12);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--teal);border-right:1px solid var(--border);flex-shrink:0;}
+  .bl-content{flex:1;background:var(--card);border:1px solid var(--border);border-left:none;padding:12px 16px;}
+  .bl-row:not(:last-child) .bl-content{border-bottom:none;}
+  .bl-row:not(:last-child) .bl-num{border-bottom:none;}
+  .bl-row:first-child .bl-num{border-radius:6px 0 0 0;}
+  .bl-row:first-child .bl-content{border-radius:0 6px 0 0;}
+  .bl-row:last-child .bl-num{border-radius:0 0 0 6px;}
+  .bl-row:last-child .bl-content{border-radius:0 0 6px 0;}
+  .bl-title{font-weight:700;color:#fff;font-size:14px;}
+  .bl-desc{font-size:13px;color:var(--muted);margin-top:3px;}
+  .bl-examples{font-size:12px;color:var(--accent);margin-top:3px;font-family:'JetBrains Mono',monospace;}
+  .bl-added{font-size:12px;color:var(--accent3);margin-top:3px;}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  p{margin-bottom:12px;}
+  strong{color:#fff;font-weight:700;}
+  em{color:var(--accent2);font-style:normal;font-weight:600;}
+
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 48px;font-size:12px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 6: <span>International Trade</span></h1>
+  <p>Exam-ready notes covering benefits and costs of trade, tariffs, quotas, export subsidies, and trading blocs — with the critical welfare analysis diagrams decoded.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Benefits of Trade</a>
+  <a href="#s2" class="toc-item">02 · Costs of Trade</a>
+  <a href="#s3" class="toc-item">03 · Tariffs — Welfare Analysis</a>
+  <a href="#s4" class="toc-item">04 · Quotas & VERs</a>
+  <a href="#s5" class="toc-item">05 · Export Subsidies</a>
+  <a href="#s6" class="toc-item">06 · Trade Restriction Summary</a>
+  <a href="#s7" class="toc-item">07 · Trading Blocs</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: BENEFITS OF TRADE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Benefits of International Trade</h2>
+    </div>
+
+    <h3>Five Core Benefits</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:15px;">
+        <li style="margin-bottom:8px;"><strong>Gains from exchange and specialization</strong> — Each country can receive a higher price for its exports OR pay a lower price for imported goods than it would cost to produce them domestically. Enables more efficient resource allocation → larger consumption bundle → higher welfare.</li>
+        <li style="margin-bottom:8px;"><strong>Economies of scale</strong> — Industries with increasing returns to scale (autos, steel) benefit from larger market size. Average cost falls as output rises. Scale economies from global markets → lower costs for all.</li>
+        <li style="margin-bottom:8px;"><strong>Greater product variety</strong> — Consumers gain access to differentiated goods not produced domestically. Explains <em>intra-industry trade</em> (countries export AND import goods in the same product category, e.g., EU exports and imports different car types).</li>
+        <li style="margin-bottom:8px;"><strong>Increased competition</strong> — Foreign competition reduces monopoly power of domestic firms, forcing them to be more efficient. Open economy = more competitive than closed economy.</li>
+        <li style="margin-bottom:8px;"><strong>More efficient resource allocation</strong> — Resources flow to their most productive use according to comparative advantage. Learning by doing (e.g., semiconductors), knowledge spillovers, technology transfer, and institutional improvements all enhance productivity.</li>
+      </ol>
+    </div>
+
+    <h3>Traditional vs. Newer Trade Models</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Traditional Models</div>
+        <ul>
+          <li><strong>Ricardian Model:</strong> Trade based on comparative advantage arising from differences in <em>technology</em></li>
+          <li><strong>Heckscher-Ohlin Model:</strong> Trade based on comparative advantage arising from differences in <em>factor endowments</em> (land, labor, capital)</li>
+          <li>Focus: specialization in production and export of goods where you have comparative advantage</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Newer Models</div>
+        <ul>
+          <li>Focus on gains from <strong>economies of scale, product variety, and competition</strong></li>
+          <li>Explain <em>intra-industry trade</em> — why similar countries trade similar goods (monopolistic competition model)</li>
+          <li>Even countries with similar factor endowments and technology gain from trade through specialization in varieties</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Intra-Industry Trade — Key Concept</h3>
+    <div class="card">
+      <p>A country <em>both exports and imports goods in the same product category</em>. Example: Germany exports BMWs and imports Hondas. Explained by <strong>monopolistic competition</strong>: many firms producing differentiated products; no barriers to entry; zero long-run economic profit. Countries specialize in one or more varieties and trade other varieties → consumers gain variety; firms gain scale economies.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Principle — Winners Can Compensate Losers</div>
+      <p>Trade increases <em>overall</em> welfare — but not every individual is better off. The critical insight: the winners from trade gain enough to <strong>theoretically compensate the losers and still be better off</strong>. This is the economic case for trade even when some groups suffer. Whether compensation actually occurs is a political/policy question — it often doesn't, which fuels anti-trade sentiment.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: COSTS OF TRADE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Costs & Arguments Against Free Trade</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;">
+        <li style="margin-bottom:8px;"><strong>Income inequality:</strong> Trade benefits are distributed unequally — skilled workers, capital owners, and efficient firms gain; low-skilled workers and import-competing industries lose.</li>
+        <li style="margin-bottom:8px;"><strong>Job losses in developed countries:</strong> Import competition from lower-cost countries forces inefficient domestic firms to exit → unemployment and need for worker retraining. Short-to-medium-term disruption.</li>
+        <li style="margin-bottom:8px;"><strong>Resource reallocation costs:</strong> Capital and labor must move from contracting industries to expanding industries. This is costly and not frictionless.</li>
+        <li style="margin-bottom:8px;"><strong>Permanent displacement:</strong> Some workers (especially older workers in declining industries like autos) may never find comparable replacement jobs.</li>
+      </ul>
+    </div>
+
+    <h3>Why Countries Impose Trade Restrictions</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;"><strong>Protect established domestic industries</strong> from foreign competition</li>
+        <li style="margin-bottom:6px;"><strong>Infant industry argument:</strong> Protect new industries until they mature and become competitive</li>
+        <li style="margin-bottom:6px;"><strong>Protect and increase domestic employment</strong></li>
+        <li style="margin-bottom:6px;"><strong>National security:</strong> Protect strategic industries (defense, energy)</li>
+        <li style="margin-bottom:6px;"><strong>Revenue generation:</strong> Especially important for developing countries with limited tax bases</li>
+        <li style="margin-bottom:6px;"><strong>Retaliation:</strong> Respond to trade restrictions imposed by other countries</li>
+      </ol>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "PINRR" = 5 Reasons for Trade Restrictions</div>
+      <p><strong>P</strong>rotect established industries · <strong>I</strong>nfant industry protection · <strong>N</strong>ational security · <strong>R</strong>evenue (developing countries) · <strong>R</strong>etaliation</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: TARIFFS — WELFARE ANALYSIS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Tariffs — Welfare Analysis</h2>
+    </div>
+
+    <h3>Definition & Mechanics</h3>
+    <div class="card">
+      <p><strong>Tariff:</strong> A tax levied by the government on imported goods. Primary objective: protect domestic industries. Secondary: reduce trade deficit.</p>
+      <p><strong>Small country vs. large country:</strong> A <em>small country</em> is a price taker in world markets (cannot influence world price). A <em>large country</em> is a large enough importer that a tariff causes exporters to lower their price to retain market share → changes the terms of trade in the importer's favor.</p>
+    </div>
+
+    <h3>Tariff Welfare Analysis — The ABCD Framework</h3>
+    <div class="card">
+      <p>Under free trade: world price = <strong>P*</strong>. Domestic supply = Q1, domestic consumption = Q4, imports = Q1Q4.</p>
+      <p>After tariff <strong>t</strong>: domestic price rises to <strong>Pt = P* + t</strong>. Domestic production rises to Q2, domestic consumption falls to Q3, imports fall to Q2Q3.</p>
+      <p>The diagram is divided into four regions between P* and Pt:</p>
+    </div>
+
+    <div class="welfare-grid">
+      <div class="wg-cell wg-header">Area</div>
+      <div class="wg-cell wg-header">Who Gets It</div>
+      <div class="wg-cell wg-header">What It Represents</div>
+      <div class="wg-cell wg-header">Effect on Welfare</div>
+      <div class="wg-cell a-box"><strong style="color:var(--accent3);">A</strong></div>
+      <div class="wg-cell a-box">Domestic producers gain</div>
+      <div class="wg-cell a-box">Transfer from consumers to domestic producers (higher price on existing output)</div>
+      <div class="wg-cell a-box"><span class="tag tag-yellow">Redistribution</span></div>
+      <div class="wg-cell b-box"><strong style="color:var(--danger);">B</strong></div>
+      <div class="wg-cell b-box">Nobody — deadweight loss</div>
+      <div class="wg-cell b-box"><strong>Production inefficiency:</strong> Inefficient domestic producers (cost &gt; P*) now enter/stay. Resources misallocated.</div>
+      <div class="wg-cell b-box"><span class="tag tag-red">Lost forever</span></div>
+      <div class="wg-cell c-box"><strong style="color:var(--accent2);">C</strong></div>
+      <div class="wg-cell c-box">Government collects as tariff revenue</div>
+      <div class="wg-cell c-box">Transfer from consumers to government on imports Q2Q3</div>
+      <div class="wg-cell c-box"><span class="tag tag-yellow">Redistribution</span></div>
+      <div class="wg-cell d-box"><strong style="color:var(--danger);">D</strong></div>
+      <div class="wg-cell d-box">Nobody — deadweight loss</div>
+      <div class="wg-cell d-box"><strong>Consumption inefficiency:</strong> Consumers willing to pay &gt; P* but &lt; Pt can no longer buy. Mutually beneficial exchanges blocked.</div>
+      <div class="wg-cell d-box"><span class="tag tag-red">Lost forever</span></div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Tariff Welfare Summary (Small Country)</div>
+      <div class="f">Consumer surplus change: −(A + B + C + D)</div>
+      <div class="f" style="margin-top:4px;">Producer surplus change: +A</div>
+      <div class="f" style="margin-top:4px;">Government revenue: +C</div>
+      <div class="f" style="margin-top:4px; color:var(--danger);">Net welfare (deadweight loss): −(B + D)</div>
+      <div class="note">B = production DWL (inefficient domestic production). D = consumption DWL (blocked mutually beneficial trades). Both B and D are lost to society — not redistributed to anyone. This is why free trade is more efficient.</div>
+    </div>
+
+    <h3>Large Country Case — Special Consideration</h3>
+    <div class="card">
+      <p>When a <strong>large country</strong> imposes a tariff, exporters reduce their price to retain market share. This improves the terms of trade for the importing country (pays less per unit). <em>In theory</em>, a large country can increase its own welfare from a tariff IF: (1) trading partner doesn't retaliate, AND (2) terms-of-trade gain exceeds the deadweight loss. However, global welfare still falls because the importer's gain comes at the exporter's expense (zero-sum redistribution + DWL).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Large Country Tariff</div>
+      <p>A large country <em>can</em> improve its <strong>own</strong> welfare with a tariff (terms-of-trade gain > DWL, no retaliation). But <strong>global welfare always falls</strong>. The large country gains only by imposing an even larger loss on its trading partner. Retaliation (trade wars) eliminates even the domestic gain.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: QUOTAS & VERs -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Quotas & Voluntary Export Restraints (VERs)</h2>
+    </div>
+
+    <h3>Import Quota</h3>
+    <div class="card">
+      <p>A <strong>quota</strong> restricts the <em>quantity</em> of a good that can be imported (usually for a specified period). An <strong>import license</strong> specifies the quantity that can be imported.</p>
+      <p>Key difference from a tariff: An equivalent quota produces the same domestic price (Pt) and the same domestic quantity effects as a tariff — BUT the <strong>Area C (revenue/profit) goes to the foreign producer, not the domestic government</strong>. These profits are called <em>quota rents</em>.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Quota Welfare — Two Scenarios</div>
+      <div class="f">Foreign producer captures quota rent (C): DWL = B + D + C &nbsp; (worse than tariff)</div>
+      <div class="f" style="margin-top:6px; color:var(--accent3);">Govt auctions import licenses and captures C: DWL = B + D &nbsp; (same as tariff)</div>
+      <div class="note">Under a quota, welfare is usually worse than under an equivalent tariff because the domestic government typically does NOT capture the quota rents. The foreign exporter earns higher profits from the restricted supply.</div>
+    </div>
+
+    <h3>Voluntary Export Restraint (VER)</h3>
+    <div class="card">
+      <p>A <strong>VER</strong> is a quota imposed by the <em>exporting</em> country (not the importing country). The exporting country voluntarily agrees to limit its exports to a specified number of units.</p>
+      <p><strong>Key difference from quota:</strong> In a VER, the quota rents (Area C) are captured by the <em>exporter</em> (or exporting country government) by design — since the exporter controls the restriction. This guarantees the importing country suffers the welfare loss B + D + C.</p>
+      <p><em>Example:</em> 1981 — Japanese government imposed VERs on automobile exports to the United States.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Tariff</th><th>Import Quota</th><th>VER</th></tr></thead>
+        <tbody>
+          <tr><td>Imposed by</td><td>Importing country (tax)</td><td>Importing country (quantity limit)</td><td>Exporting country</td></tr>
+          <tr><td>Area C (Revenue)</td><td>Government of importing country</td><td>Ambiguous — may go to foreign producer OR govt if licenses auctioned</td><td>Exporting country (always)</td></tr>
+          <tr><td>Domestic price</td><td>Increases</td><td>Increases</td><td>Increases</td></tr>
+          <tr><td>Domestic production</td><td>Increases</td><td>Increases</td><td>Increases</td></tr>
+          <tr><td>Imports/Exports</td><td>Imports decrease</td><td>Imports decrease</td><td>Imports decrease</td></tr>
+          <tr><td>National welfare (importer)</td><td>−(B+D) only</td><td>−(B+D) if govt captures C; −(B+D+C) if foreign gets C</td><td>−(B+D+C) always</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "VER is Worse for the Importer"</div>
+      <p>VER = exporter sets the restriction → exporter captures the quota rent (Area C) → importing country always loses B + D + C. Quota = may or may not lose C depending on who captures rents. Tariff = government always captures C → smallest domestic welfare loss of the three (losing only B + D).</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: EXPORT SUBSIDIES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Export Subsidies</h2>
+    </div>
+
+    <div class="card">
+      <p>An <strong>export subsidy</strong> is a payment by the government to a domestic firm for each unit of a good exported. Goal: stimulate exports. Effect: distorts trade away from comparative advantage → reduces global welfare.</p>
+      <p>The exporter receives the international price <em>plus</em> the per-unit subsidy → incentive to shift sales from domestic to export market → domestic price rises by the amount of the subsidy (in small country case) → domestic consumers suffer higher prices while producers gain.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Export Subsidy Effects</div>
+      <div class="f">Small country: domestic price rises by subsidy amount. Net welfare = negative.</div>
+      <div class="f" style="margin-top:6px; color:#e87a7a;">Large country: world price declines (↑ supply → ↓ world price). Part of subsidy is transferred to foreign buyers. Net welfare loss is LARGER than in small country case.</div>
+      <div class="note">Countervailing duties: duties levied by the IMPORTING country against subsidized exports to offset the subsidy. A legitimate WTO-recognized response.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Point — Export Subsidy Affects the Exporting Country, Not the Importing Country</div>
+      <p>Unlike tariffs and import quotas (which affect the importing country), export subsidies primarily impact the <strong>exporting country</strong>. The government of the exporting country bears the cost; domestic producers gain but domestic consumers pay higher prices. Net welfare effect is negative for the exporting country in all cases.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: TRADE RESTRICTION SUMMARY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Master Comparison Table — All Trade Restrictions</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Tariff</th>
+            <th>Import Quota</th>
+            <th>Export Subsidy</th>
+            <th>VER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Country affected</td><td>Importing</td><td>Importing</td><td>Exporting</td><td>Importing</td></tr>
+          <tr><td>Domestic price</td><td><span class="tag tag-red">↑ Increases</span></td><td><span class="tag tag-red">↑ Increases</span></td><td><span class="tag tag-red">↑ Increases</span></td><td><span class="tag tag-red">↑ Increases</span></td></tr>
+          <tr><td>Domestic consumption</td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td></tr>
+          <tr><td>Domestic production</td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td></tr>
+          <tr><td>Producer surplus</td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td><td><span class="tag tag-green">↑ Increases</span></td></tr>
+          <tr><td>Consumer surplus</td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td><td><span class="tag tag-red">↓ Decreases</span></td></tr>
+          <tr><td>Government revenue</td><td><span class="tag tag-green">↑ Increases</span></td><td>Mixed (see below)</td><td><span class="tag tag-red">↓ Falls (spending rises)</span></td><td>No change (rent to foreigners)</td></tr>
+          <tr><td>Trade volume</td><td>Imports decrease</td><td>Imports decrease</td><td>Exports increase</td><td>Imports decrease</td></tr>
+          <tr><td>National welfare</td><td>−(B+D) small country</td><td>−(B+D) if C captured; −(B+D+C) if not</td><td>Decreases (all cases)</td><td>−(B+D+C) always</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Universal Rule for ALL Trade Restrictions</div>
+      <p>Every trade restriction increases domestic price, increases domestic production, decreases domestic consumption, and increases producer surplus at the expense of consumers. The only differences are: (1) who captures the "Area C" revenue/rents, and (2) who bears the cost. National welfare always falls in the small country case. Global welfare always falls in all cases.</p>
+    </div>
+
+    <h3>Capital Restrictions — Note</h3>
+    <div class="card">
+      <p><strong>Capital restrictions</strong> = controls on foreigners' ability to own domestic assets or domestic residents' ability to own foreign assets. These limit the openness of <em>financial markets</em> (contrast with trade restrictions, which limit goods markets). Covered separately in the curriculum.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: TRADING BLOCS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Trading Blocs & Regional Integration</h2>
+    </div>
+
+    <h3>Levels of Integration — Ladder of Depth</h3>
+    <div class="bloc-ladder">
+      <div class="bl-row">
+        <div class="bl-num">1</div>
+        <div class="bl-content">
+          <div class="bl-title">Free Trade Area (FTA)</div>
+          <div class="bl-added">Added: Eliminates barriers to trade in goods and services among members</div>
+          <div class="bl-desc">Each member keeps its OWN trade policies vs. non-members. Lowest level of integration.</div>
+          <div class="bl-examples">Examples: USMCA (US, Canada, Mexico)</div>
+        </div>
+      </div>
+      <div class="bl-row">
+        <div class="bl-num">2</div>
+        <div class="bl-content">
+          <div class="bl-title">Customs Union</div>
+          <div class="bl-added">Added: COMMON external trade policy against non-members (unified tariffs)</div>
+          <div class="bl-desc">FTA + harmonized trade barriers toward outsiders. Stronger coordination required.</div>
+          <div class="bl-examples">Examples: Benelux (Belgium, Netherlands, Luxembourg) — 1947; now part of EU</div>
+        </div>
+      </div>
+      <div class="bl-row">
+        <div class="bl-num">3</div>
+        <div class="bl-content">
+          <div class="bl-title">Common Market</div>
+          <div class="bl-added">Added: FREE MOVEMENT OF FACTORS OF PRODUCTION (labor, capital) among members</div>
+          <div class="bl-desc">Customs union + free movement of people and capital across member borders.</div>
+          <div class="bl-examples">Examples: MERCOSUR (Argentina, Brazil, Paraguay, Uruguay)</div>
+        </div>
+      </div>
+      <div class="bl-row">
+        <div class="bl-num">4</div>
+        <div class="bl-content">
+          <div class="bl-title">Economic Union</div>
+          <div class="bl-added">Added: COMMON ECONOMIC INSTITUTIONS + coordination of economic policies</div>
+          <div class="bl-desc">Common market + harmonized fiscal, regulatory, and economic policies. Individual monetary policy still possible.</div>
+          <div class="bl-examples">Examples: European Union (EU) — became EU in 1993</div>
+        </div>
+      </div>
+      <div class="bl-row">
+        <div class="bl-num">5</div>
+        <div class="bl-content">
+          <div class="bl-title">Monetary Union</div>
+          <div class="bl-added">Added: COMMON CURRENCY — individual monetary policy surrendered</div>
+          <div class="bl-desc">Economic union + single currency and central bank. No exchange rate tool to correct imbalances. Deepest integration.</div>
+          <div class="bl-examples">Examples: Eurozone (19 EU members with euro)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "FC³EM" = FTA → Customs → Common Market → Economic Union → Monetary Union</div>
+      <p>Each level ADDS the previous level's features PLUS one more dimension of integration. The key additions at each step: FTA (free trade in goods) → Customs (common external policy) → Common (free factor movement) → Economic (policy coordination) → Monetary (common currency).</p>
+    </div>
+
+    <h3>Why Regional Integration Instead of WTO?</h3>
+    <div class="card">
+      <p>Regional integration is popular because: (1) easier and quicker among a small group, (2) politically less contentious than global multilateral negotiations, (3) policy harmonization is simpler among fewer members. The WTO's Doha Round (launched 2001) has made limited progress on contentious issues like agricultural subsidies and developing country market access — driving the shift toward bilateral and regional deals.</p>
+    </div>
+
+    <h3>Trade Creation vs. Trade Diversion</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Trade Creation ✅</div>
+        <ul>
+          <li>Higher-cost domestic production is replaced by lower-cost imports from member countries</li>
+          <li>Resources reallocated to more efficient use</li>
+          <li><strong>Improves</strong> welfare — more efficient allocation</li>
+          <li>Example: Qualor replaces domestic shirt production with cheaper imports from member Vulcan after forming customs union</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Trade Diversion ❌</div>
+        <ul>
+          <li>Lower-cost imports from non-member countries are replaced by higher-cost imports from member countries (due to tariff preference)</li>
+          <li>Resources allocated <em>less</em> efficiently than under free trade</li>
+          <li><strong>Reduces</strong> welfare — trade diverted from most efficient producer</li>
+          <li>Example: Qualor stops importing from lowest-cost Aurelia (non-member, taxed) and switches to higher-cost Vulcan (member, tariff-free)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Net Welfare Effect of Regional Trading Bloc</div>
+      <div class="f">Net welfare = Trade Creation – Trade Diversion</div>
+      <div class="note">If trade creation &gt; trade diversion → net positive welfare effect. If trade diversion &gt; trade creation → net negative welfare effect. The welfare outcome depends on which effect dominates — not guaranteed to be positive.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Trade Creation vs. Diversion</div>
+      <p>Trade creation = replacing domestic (high-cost) production with member imports (good). Trade diversion = replacing non-member (lowest-cost) imports with member (higher-cost) imports (bad). An RTA does NOT automatically increase welfare — it depends on whether trade creation dominates. This is a frequently tested distinction.</p>
+    </div>
+
+    <h3>Benefits of Trading Blocs</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;">All free trade benefits: specialization, scale economies, competition, variety, technology transfer</li>
+        <li style="margin-bottom:6px;">Greater interdependence → reduces potential for conflict among members</li>
+        <li style="margin-bottom:6px;">Greater bargaining power in global economy (acting as a bloc vs. individual countries)</li>
+        <li style="margin-bottom:6px;">Growth spillovers among integrated members — strong growth in one country boosts others</li>
+        <li style="margin-bottom:6px;">Convergence in living standards through policy harmonization</li>
+        <li style="margin-bottom:6px;">Lower cost of doing business in a large, single regional market</li>
+      </ul>
+    </div>
+
+    <h3>Costs & Challenges of Integration</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;"><strong>Adjustment costs:</strong> Workers displaced as inefficient domestic firms exit. Long-term job losses in some sectors (e.g., US auto industry under USMCA).</li>
+        <li style="margin-bottom:6px;"><strong>Cultural/historical impediments:</strong> Past conflicts and cultural differences complicate social and political integration.</li>
+        <li style="margin-bottom:6px;"><strong>Loss of policy autonomy:</strong> Members cannot use exchange rate devaluation or independent monetary policy to correct imbalances (especially in monetary union). The Greek crisis (2010) is the prime example.</li>
+        <li style="margin-bottom:6px;"><strong>Contagion risk:</strong> Problems in one member country can quickly spread to others (Greek crisis threatened EU banking system; Ireland needed bailout too).</li>
+        <li style="margin-bottom:6px;"><strong>National sovereignty concerns:</strong> Especially where large and small economies coexist (e.g., India in South Asian bloc proposals).</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Monetary Union Trap — Greece 2010</div>
+      <p>In a monetary union, individual countries cannot devalue their currency or set independent interest rates. When Greece ran persistent deficits, it couldn't use exchange rate depreciation to restore competitiveness — it needed fiscal austerity (painful). This is the core structural weakness of monetary unions without fiscal union: asymmetric shocks can't be corrected through normal monetary tools. The EU/IMF bailout (€110bn) with strict austerity conditions was the only option.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(76,184,201,0.1);border-color:rgba(76,184,201,0.3);color:var(--teal);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;line-height:2.1;">
+        <li>✅ 5 benefits of free trade: exchange/specialization gains, economies of scale, product variety, increased competition, efficient resource allocation.</li>
+        <li>✅ Trade increases overall welfare but NOT every individual. Winners can theoretically compensate losers and still gain.</li>
+        <li>✅ Intra-industry trade = country exports AND imports same product category. Explained by monopolistic competition + scale economies (e.g., EU car trade).</li>
+        <li>✅ Traditional models: Ricardian (technology differences) and Heckscher-Ohlin (factor endowment differences).</li>
+        <li>✅ Tariff ABCD framework: A = producer surplus gain; B = production DWL; C = government tariff revenue; D = consumption DWL. Net loss = −(B+D).</li>
+        <li>✅ Large country can gain from tariff (terms of trade) IF partner doesn't retaliate AND DWL &lt; terms-of-trade gain. But GLOBAL welfare always falls.</li>
+        <li>✅ Quota vs. tariff: same price/quantity effects, BUT Area C may go to foreign producer (quota rent) not domestic government → quota welfare loss can be worse.</li>
+        <li>✅ VER = imposed by exporter → quota rent always captured by exporter → importer always loses B+D+C.</li>
+        <li>✅ Export subsidy: raises domestic price, increases exports, reduces domestic consumption, negative net welfare for exporting country. Countervailing duties = importing country's legitimate response.</li>
+        <li>✅ All trade restrictions: ↑ domestic price, ↑ domestic production, ↓ domestic consumption, ↑ producer surplus, ↓ consumer surplus.</li>
+        <li>✅ Integration ladder (lowest → deepest): <strong>FTA → Customs Union → Common Market → Economic Union → Monetary Union</strong>.</li>
+        <li>✅ FTA: free trade among members, each keeps own external policy (USMCA). Customs union: + common external policy (Benelux). Common market: + free factor movement (MERCOSUR). Economic union: + policy coordination (EU). Monetary union: + common currency (Eurozone).</li>
+        <li>✅ Trade creation (good) = replaces high-cost domestic production with cheaper member imports. Trade diversion (bad) = replaces cheapest non-member with higher-cost member imports due to tariff preference.</li>
+        <li>✅ Net welfare of RTA = trade creation − trade diversion. Positive only if creation &gt; diversion.</li>
+        <li>✅ Monetary union risk: no exchange rate or independent monetary policy to correct imbalances → fiscal austerity as only adjustment mechanism (Greek crisis 2010).</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 6: International Trade · Exam Prep Notes
+</footer>
+</body>
+</html>

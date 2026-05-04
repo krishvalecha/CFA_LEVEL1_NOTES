@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard III(A): Loyalty, Prudence, and Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'III(A)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;color:rgba(76,201,138,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(76,201,138,0.12);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent3);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent3);border-color:var(--accent3);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:60px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent3);background:rgba(76,201,138,0.1);border:1px solid rgba(76,201,138,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent3);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(76,201,138,0.3);border-left:4px solid var(--accent3);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent3);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#c8dfd0;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .warn p+p{margin-top:8px;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#90e4b4;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#90e4b4;}
+  .ex-key{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#ddd0a8;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#c9a84c;margin-bottom:5px;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD III · MODULE 3</div>
+  <h1>Standard <span>III(A)</span>: Loyalty, Prudence, and Care</h1>
+  <p class="subtitle">The foundational client-relationship standard. Covers identifying the actual client (beneficiaries vs. employer), the fiduciary duty question, soft commissions, directed brokerage, proxy voting, and the key distinction between different roles (execution-only, advisory, fund management). 11 worked examples from both LES and Handbook synthesised.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">The Standard</a>
+  <a class="toc-item" href="#s2">Three Duties Defined</a>
+  <a class="toc-item" href="#s3">Identifying the Client</a>
+  <a class="toc-item" href="#s4">Fiduciary Duty Question</a>
+  <a class="toc-item" href="#s5">Developing the Portfolio</a>
+  <a class="toc-item" href="#s6">Soft Commissions</a>
+  <a class="toc-item" href="#s7">Proxy Voting</a>
+  <a class="toc-item" href="#s8">Procedures</a>
+  <a class="toc-item" href="#s9">Worked Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+<div class="container">
+
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>The Standard — Verbatim Text</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard III(A) — Loyalty, Prudence, and Care</div>
+    <p>Members and Candidates have a duty of loyalty to their clients and must act with reasonable care and exercise prudent judgment. Members and Candidates must act for the benefit of their clients and place their clients' interests before their employer's or their own interests.</p>
+  </div>
+  <div class="card">
+    <p>III(A) establishes three core duties, all owed to clients:</p>
+    <ol>
+      <li><strong>Loyalty</strong> — place clients' interests before the employer's or the member's own interests in all dealings</li>
+      <li><strong>Prudence</strong> — act with the care, skill, and diligence of a reasonable person acting in a like capacity and familiar with such matters; follow client investment parameters; balance risk and return</li>
+      <li><strong>Care</strong> — act in a prudent and judicious manner to avoid harm to clients</li>
+    </ol>
+    <p>Client interests are paramount. Investment actions must be carried out for the <em>sole benefit of the client</em> and in a manner the member believes to be in the client's best interest given the known facts and circumstances.</p>
+  </div>
+</div>
+
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>Three Duties — What Each Requires in Practice</h2></div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Loyalty</div>
+      <ul>
+        <li>Client interests take precedence over employer AND member's own personal interests</li>
+        <li>Must avoid and manage real and potential conflicts of interest</li>
+        <li>Cannot use client assets (brokerage, commissions) to benefit yourself or your firm without corresponding client benefit</li>
+        <li>Must follow client-established guidelines for managing their assets</li>
+        <li>Must vote proxies in clients' interests</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Prudence</div>
+      <ul>
+        <li>Requires caution and discretion</li>
+        <li>Standard: reasonable person acting in a like capacity and familiar with such matters</li>
+        <li>Must follow investment parameters set by the client</li>
+        <li>Must balance risk and return appropriately for the client</li>
+        <li>Decisions judged in the context of the total portfolio, not individual securities</li>
+        <li>Must manage assets per governing documents (trust agreements, IMA)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Care</div>
+      <ul>
+        <li>Act in a prudent and judicious manner to avoid harm</li>
+        <li>Ensure client objectives and expectations are realistic and suitable</li>
+        <li>Consider risk of loss, opportunity for gain, tax implications, diversification, liquidity, cash flow, and return requirements</li>
+        <li>For execution-only: execute trades on the most favorable terms achievable within the client's instructions</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <p>III(A) is a <strong>minimum standard</strong> — it does not replace any higher legal or regulatory obligations. Members must abide by the strictest of: applicable law, legally imposed fiduciary duty, or the Code and Standards. Where applicable law imposes a higher duty, members must meet that higher duty. Members with custody or effective control of client assets face heightened responsibilities.</p>
+  </div>
+</div>
+
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Identifying the Client — The Critical First Step</h2></div>
+  <div class="card">
+    <p>Before any other duty can be discharged, the member must determine <strong>who the client is</strong>. This is not always obvious. Key principles:</p>
+    <ul>
+      <li><strong>Individual advisory clients:</strong> Client = the individual investor. Straightforward.</li>
+      <li><strong>Pension plans / trusts:</strong> Client = NOT the entity that hires the manager. Client = the <strong>ultimate beneficiaries</strong> of the plan or trust. The duty of loyalty runs to the beneficiaries, even though the hiring company or trustee may be the direct employer/client.</li>
+      <li><strong>Fund managers (index or mandate):</strong> No identifiable individual client. Duty = invest in a manner consistent with the stated mandate. The advisory relationship with individual fund investors is the responsibility of the advisor to those investors, not the fund manager.</li>
+      <li><strong>Expert witnesses:</strong> Hensley example — the law firm is the employer, but expert testimony must be independent. Duty of loyalty requires independence from the hiring party.</li>
+      <li><strong>Research analysts:</strong> Client may be the investing public as a whole — which makes independence and objectivity of research the primary obligation.</li>
+    </ul>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Pension Plans: The Beneficiary Is the Client</div>
+    <p>The Wiley example (Example 1) is the foundational illustration. First Country Bank serves as trustee for the Miller Company pension plan. When Miller's management pressures Wiley to buy overvalued Miller stock to ward off a takeover bid, Wiley complies — prioritising the interests of the corporate management over the pension plan beneficiaries. <strong>Clear violation of III(A).</strong> The client is the pension plan participants and beneficiaries — not the corporate management of Miller, not the bank's business relationship with Miller. The guiding principle: the appropriateness of the investment decision to the pension plan, not whether the decision benefits Wiley or the company that hired him. The corporate employer's interests are simply not relevant to the manager's investment decisions for the plan.</p>
+    <p>Also from Example 9 (Miller/Spears): Miller is a mutual fund manager. When Spears tells Miller that her client now invests in his fund and "we share a responsibility to this client," <strong>this is incorrect.</strong> Miller's duty is to manage the fund according to its IPS — not to serve any individual fund investor. Spears alone has the advisory relationship (and therefore the III(A) obligation) to her client. Miller cannot tailor the fund to individual investor needs.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 The LES Adds: Investing Public as Client</div>
+    <p>The LES version of III(A) adds an important nuance not found in the Handbook: "At other times, the client may be the investing public as a whole, in which case the goals of independence and objectivity of research surpass the goal of loyalty to a single organisation." This recognises that certain members — particularly research analysts writing public reports — have a broader obligation to the market's integrity that transcends any single client relationship.</p>
+  </div>
+</div>
+
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Fiduciary Duty — What III(A) Does and Does NOT Impose</h2></div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">What III(A) DOES Require</div>
+      <ul>
+        <li>Members and candidates must work in the client's best interest regardless of job function</li>
+        <li>A minimum benchmark of loyalty, prudence, and care applies to ALL members — regardless of whether a legal fiduciary duty exists</li>
+        <li>Must comply with any legally imposed fiduciary duty when applicable</li>
+        <li>Even execution-only brokers must seek best execution and operate within client parameters</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">What III(A) Does NOT Impose</div>
+      <ul>
+        <li>Does NOT render all members and candidates legal fiduciaries</li>
+        <li>Whether a member rises to the level of fiduciary depends on: type of client, whether investment advice is given, and the facts and circumstances of the relationship</li>
+        <li>Execution-only brokers (Sulejman example): duty centered on seeking best execution and following client parameters — NOT a fiduciary duty</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Custody = Heightened Responsibility</div>
+    <p>If a member has "custody" — any direct or indirect access to client funds — a heightened level of responsibility arises. Any pool of assets in a member's control must be managed in accordance with the governing documents (trust documents, investment management agreements). Actions contrary to those instruments or applicable law risk violating III(A).</p>
+  </div>
+</div>
+
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>Developing the Client's Portfolio</h2></div>
+  <div class="card">
+    <p>The disparity between the investment manager's knowledge and the client's knowledge places the client in a vulnerable position of trust. Key obligations in portfolio management:</p>
+    <ul>
+      <li><strong>Follow client guidelines:</strong> Clients may have strict investment policies (ESG criteria, prohibited securities, specific asset class constraints). These are binding. Van Cleef (III(C) Example 7): ESG framework was incorporated into the IPS; buying tobacco stock violates both III(A) and III(C).</li>
+      <li><strong>Conflict detection:</strong> Must detect whether firm or manager goals conflict with client interests. When unavoidable, must provide clear and factual disclosures. See VI(A).</li>
+      <li><strong>Total portfolio context:</strong> Investment decisions judged in the context of the entire portfolio — not individual security characteristics. Risk, tax, diversification, liquidity, cash flow, and return requirements all considered.</li>
+      <li><strong>Long-term objectives:</strong> In most circumstances, recommended investment strategies must relate to the long-term objectives and circumstances of the client.</li>
+    </ul>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Gubler (III(C) Example 5): Also a III(A) Violation</div>
+    <p>The LES identifies Gubler's investment in an illiquid private equity fund (in a portfolio requiring highly liquid investments) as a violation of BOTH III(A) and III(C) — unlike the Handbook which frames it only as III(C). The LES notes: "Although an IPS typically describes objectives and constraints in great detail, the manager must also make every effort to understand the client's business and circumstances." This highlights that III(A) requires not just following the literal text of the IPS but understanding the client's business context and circumstances holistically.</p>
+  </div>
+</div>
+
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Soft Commissions and Directed Brokerage</h2></div>
+  <div class="card">
+    <p>Investment managers often have discretion over broker selection. The soft commission framework is:</p>
+    <ul>
+      <li><strong>Core obligation:</strong> Unless directed by the client, must seek <strong>best price</strong> and <strong>best execution</strong> — a trading process that maximises the value of the client's portfolio within the client's stated objectives and constraints</li>
+      <li><strong>Soft dollars/soft commissions:</strong> Using client brokerage to purchase research services or other goods. Paying higher commissions than normal to obtain goods or services without corresponding client benefit = III(A) violation</li>
+      <li><strong>Test for soft dollar use:</strong> (1) Are the commissions charged reasonable in relation to the research benefit? (2) Does the research benefit the client's account?</li>
+      <li><strong>Directed brokerage:</strong> A client directs the manager to use a specific broker for all or some of the client's trades. Because brokerage commission is a client asset used for the client's benefit, this does NOT violate III(A). But the member must: (a) seek confirmation that the goods/services benefit the account beneficiaries, and (b) disclose to the client that best execution may not be obtained through the directed broker</li>
+    </ul>
+  </div>
+  <div class="warn">
+    <div class="warn-label">⚠️ Soft Dollars Used for Personal Benefit = Violation</div>
+    <p>Jackson (Example 2): directs client brokerage to Thompson Inc. because of a close personal friendship between firm executives, even though Thompson's services are average and commissions are high. Thompson absorbs JNI's overhead costs (including rent) in exchange. <strong>Clear violation of III(A)</strong> — using client brokerage for services that don't benefit clients, and failing to seek best price and execution. The rent absorption is a personal/firm benefit paid for with client assets. Rome (Example 4): uses a broker because that broker gives Rome personally favourable terms on her own trades — same analysis, same violation.</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 The Parker (Example 5) Soft Dollar Nuance</div>
+    <p>Parker uses client commissions to fund a South American research trip — which may be legitimate. The violations: (1) she didn't determine whether SouthAM's execution was competitive before directing commissions to them, (2) she didn't disclose to her supervisor, and (3) critically, she used commission dollars to pay for 5 additional vacation days in Rio — expenses that clearly don't benefit the client's investment decision-making process. The legitimate research component of the trip may be acceptable; the vacation component paid with client dollars is not.</p>
+  </div>
+</div>
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Proxy Voting</h2></div>
+  <div class="card">
+    <p>Voting proxies is part of the duty of loyalty to clients. Proxies have economic value and must be properly safeguarded and maximised. Violations include:</p>
+    <ul>
+      <li>Failing to vote proxies at all (without adequate reason)</li>
+      <li>Casting a vote without considering the impact of the question</li>
+      <li>Voting blindly with management on non-routine governance issues (e.g., change in company capitalisation)</li>
+    </ul>
+    <p><strong>But note:</strong> A cost-benefit analysis may show that voting all proxies does not benefit the client — so voting proxies may not be necessary in all instances. Members and candidates should disclose their proxy voting policies to clients.</p>
+  </div>
+</div>
+
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Recommended Procedures</h2></div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Account Information and Custody</div>
+      <ul>
+        <li>Submit itemised quarterly account statements to each client (showing funds, securities, debits, credits, transactions)</li>
+        <li>Disclose where assets are maintained and when they are moved</li>
+        <li>Separate client assets from any other party's assets (including member's own)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Client Approval and Doubt</div>
+      <ul>
+        <li>When uncertain, ask: "What would I expect if I were the client?"</li>
+        <li>If in doubt, disclose the questionable matter in writing to the client and obtain client approval</li>
+        <li>Consider all the information: client needs and circumstances + investment characteristics + total portfolio characteristics</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Firm Policies Required</div>
+      <ul>
+        <li>Follow all applicable rules and laws (I(A))</li>
+        <li>Establish client investment objectives before taking action</li>
+        <li>Diversify investments to reduce risk (unless contrary to plan guidelines)</li>
+        <li>Regular review schedule to ensure investments adhere to governing documents</li>
+        <li>Deal fairly with all clients re: investment actions</li>
+        <li>Disclose (or avoid) conflicts of interest</li>
+        <li>Disclose all forms of manager compensation</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Best Execution and Confidentiality</div>
+      <ul>
+        <li>Seek best execution unless directed by the client</li>
+        <li>Vote proxies in best interests of clients and ultimate beneficiaries</li>
+        <li>Maintain confidentiality of client information (III(E))</li>
+        <li>Place client interests first — always</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Worked Examples — All 11</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-title">Wiley — Pension Fund Used to Ward Off Takeover</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">First Country Bank (trustee for Miller Company's pension plan) is pressured by Miller's managers to purchase overvalued Miller stock to ward off Newton's hostile takeover bid. Wiley complies to maintain the bank's relationship with Miller and win new business. The purchases cause Newton to retract its bid.</div>
+      <div class="ex-verdict"><strong>Clear violation of III(A).</strong> Wiley used the pension plan to perpetuate existing management — potentially to the detriment of plan participants and shareholders — and to benefit himself and his bank's business. The guiding principle: the appropriateness of the investment decision to the pension plan, NOT whether the decision benefited Wiley or the company that hired him.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div>For pension plans and trusts: client = ultimate beneficiaries, NOT the hiring entity. Wiley had to evaluate the takeover offer on its own merits and make an independent investment decision. Corporate management's interest in remaining in control is irrelevant. Business development interests of the bank are irrelevant.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-title">Jackson — Directing Client Brokerage to Personal Friendship</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">JNI directs most client brokerage to Thompson Inc. because of a close friendship between executives. Thompson's commissions are high, research is average, and execution is average. Thompson absorbs JNI's overhead (rent) in exchange.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> Using client brokerage for services that do not benefit clients and failing to seek best price and execution. The rent absorbed by Thompson is a firm benefit paid indirectly by clients through above-market commissions.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Brokerage commissions are client assets. Directing them to benefit the firm's personal relationships — rather than to obtain the best execution and research for clients — is a clear breach of loyalty. The benefit (rent absorption) flows to the firm, not the client.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-title">Everett — Undisclosed Directed Trading to Reward a Referral Broker</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Everett directs trades from multiple client accounts to Scott Company — not because of instruction from those clients, but to reward Scott for referring new clients to her. She does not disclose this to the affected clients.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> The non-disclosure is the core violation. Everett may trade other accounts through Scott as a reward for referrals only if: (a) clients receive best price and execution, AND (b) the practice is disclosed to the affected accounts. Without disclosure, it is a breach of loyalty regardless of execution quality.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Directed brokerage for the benefit of clients = acceptable with disclosure. Directed brokerage to reward a broker who sends you business, using client commissions without their knowledge = violation. The distinction: whose benefit does the direction serve?</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-title">Rome — Using Favoured Broker Because of Personal Account Benefits</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Rome uses Gray almost exclusively for trust account brokerage because Gray gives Rome personally favourable prices (lower buy prices, higher sell prices) on Rome's personal transactions. Trust clients receive less favourable terms.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> Rome places her own interests before those of her clients. Using a broker for client accounts because that broker benefits the member's own personal trading = classic conflict of interest breach of loyalty.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Any arrangement where the manager benefits from directing client brokerage — directly or indirectly through personal account treatment — violates III(A). The client's best execution interest must come first. Rome's personal account benefit = the quid pro quo for directing client brokerage, at the client's expense.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-title">Parker — Soft Dollars for Research + Personal Vacation</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Parker directs client commissions to SouthAM to fund a South American research trip, without verifying SouthAM's execution quality and without informing her supervisor. She also uses commission dollars to pay for 5 extra vacation days in Rio de Janeiro at the end of the trip.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> Multiple issues: (1) failed to determine whether SouthAM's execution was competitive before directing commissions there; (2) failed to disclose the arrangement to her supervisor; (3) used client commission dollars for personal vacation expenses that have no bearing on investment decision-making.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Research soft dollars may be acceptable when: (a) the research genuinely benefits clients, and (b) execution is competitive (or client consents to less than best execution). But vacation expenses — however adjacent to the research trip — are not investment research. Using client assets for personal benefits = III(A) violation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6</div><div class="ex-title">Knauss — Excessive Trading to Meet Commission Minimums</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Knauss's fee is partly based on trading commissions. She trades excessively for each client to meet the minimum commission level set by her firm. Although the securities traded are appropriate, the volume of trading exceeds what is necessary to achieve the client's investment objectives.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> Knauss is using client assets to benefit her firm and herself. Trading above the level necessary to serve the client's objectives — specifically to generate commissions — = using client assets for the firm's/member's benefit.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>"Churning" — excessive trading for the purpose of generating commissions — is a classic III(A) violation. The investment appropriateness of the individual trades does not matter; what matters is that the aggregate volume of trading serves the member's interests rather than the client's investment objectives.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7</div><div class="ex-title">Dill — Not Allocating IPO to Family Account to Avoid "Appearance of Conflict"</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Dill's brother has a regular fee-paying account. An oversubscribed IPO is suitable for many clients including his brother. To avoid any appearance of a conflict of interest, Dill allocates no shares to his brother's account.</div>
+      <div class="ex-verdict"><strong>Violation of III(A).</strong> The brother's account is a regular fee-paying account comparable to all other clients. By not allocating shares proportionately, Dill disadvantaged his brother's account — trying to avoid one problem by creating another. He would be correct NOT to allocate if the brother's account were managed outside the normal fee structure.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Family accounts that are regular fee-paying accounts must be treated identically to non-family accounts. Excluding them to avoid the appearance of favouritism is itself a violation — it disadvantages the family member client. The only exception: if the family account is managed outside the firm's normal fee structure (e.g., no fee), it may be excluded from allocations to free up shares for paying clients.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 8 + 9</div><div class="ex-title">Hensley + Miller/Spears — Who Is the Client?</div><div class="ex-tag"><span class="tag tag-yellow">IDENTIFYING THE CLIENT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Hensley:</strong> hired by a law firm as expert witness. Concerned her testimony may have negative consequences for the hiring firm. <strong>Miller/Spears:</strong> Miller manages a mutual fund. Spears tells Miller they "share a responsibility" to Spears's client who invests in Miller's fund.</div>
+      <div class="ex-verdict"><strong>Hensley:</strong> when acting as expert witness, she is bound by the standard of independence and objectivity — like an independent research analyst. Must not let the law firm influence the testimony. The law firm is her employer, but her duty in the testimony context runs to the court/justice system, not to the firm. <strong>Miller/Spears:</strong> Spears is incorrect. Miller's responsibility is to manage the fund according to its IPS — not to serve any particular fund investor's needs. Spears alone has the advisory relationship (and thus III(A) obligation) to her client.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Client identity follows the nature of the relationship: (1) Expert witnesses — independence of testimony ≠ loyalty to the hiring firm. (2) Fund managers — the mandate governs; individual investor needs are not the fund manager's concern. Advisory responsibility to individual investors rests with the advisor, not the fund manager.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 10</div><div class="ex-title">Nguyen — Correcting a Performance Error Before Client Release</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Nguyen (performance analyst) notices a missed trade before the report is finalised for clients. Correcting it produces a large loss for a client already "watching" the firm for potential termination. Nguyen informs the appropriate individuals that the report needs updating before release.</div>
+      <div class="ex-verdict"><strong>Compliant with III(A).</strong> Even though correction may lead to the firm's termination by the client, withholding information about errors is not in the client's best interest. Nguyen correctly prioritised the client's right to accurate information over the firm's commercial interest in retaining the account.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Loyalty to the client includes providing them with accurate information even when it is commercially damaging to the firm or the member. The discomfort of delivering bad news does not justify suppressing accurate performance data. Client interests (accurate reporting) come before firm interests (client retention).</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 11</div><div class="ex-title">Sulejman — Execution-Only Broker: No Fiduciary Duty</div><div class="ex-tag"><span class="tag tag-green">CLARIFICATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Sulejman is an execution-only broker — provides no investment advice, only executes client-directed trades. He is concerned that the Code imposes a fiduciary duty on him. He emails the CFA Ethics Helpdesk for guidance.</div>
+      <div class="ex-verdict"><strong>III(A) does NOT impose a fiduciary duty on execution-only brokers.</strong> Sulejman's duty is centred on seeking best execution and operating within the client's trading parameters (quantity, price, timing). Acting in the client's best interest = executing trades on the most favorable terms achievable. No fiduciary duty arises from execution-only capacity.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The scope of III(A) obligations scales with the nature of the professional relationship. Execution-only = duty of skill and diligence in executing trades on favorable terms, within client parameters. Advisory = full loyalty, prudence, care. Fund management = consistency with mandate. The standard applies to all roles — but the specific duties vary by the role's nature.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">★</span><h2>Exam Checklist — Standard III(A)</h2></div>
+  <div class="card" style="border-color:rgba(76,201,138,0.3);">
+    <ul class="checklist">
+      <li>✅ <strong>Three duties:</strong> Loyalty (client interests before employer's and own) + Prudence (reasonable person standard, follow parameters, balance risk/return) + Care (avoid harm, consider total portfolio context).</li>
+      <li>✅ <strong>Client interests are paramount</strong> — take precedence over employer's AND member's own interests in all dealings.</li>
+      <li>✅ <strong>Pension plans / trusts:</strong> Client = the ultimate beneficiaries, NOT the hiring company or trustee. (Wiley)</li>
+      <li>✅ <strong>Fund managers:</strong> Duty = invest consistently with the stated mandate. Individual investor needs are the advisory manager's concern, not the fund manager's. (Miller/Spears)</li>
+      <li>✅ <strong>Execution-only:</strong> Duty = skill and diligence in executing trades on favorable terms within client parameters. Does NOT impose fiduciary duty. (Sulejman)</li>
+      <li>✅ <strong>III(A) is a minimum standard</strong> — does not replace higher legal/regulatory obligations. Members must comply with the stricter of the Code or applicable law.</li>
+      <li>✅ <strong>Custody = heightened responsibility.</strong> Assets must be managed per governing documents (trust agreements, IMA). Actions contrary to those instruments risk violation.</li>
+      <li>✅ <strong>III(A) does NOT make all members fiduciaries.</strong> Fiduciary status depends on type of client, whether investment advice is given, and the specific facts of the relationship.</li>
+      <li>✅ <strong>Best execution obligation:</strong> Unless directed by the client, must seek best price and best execution at all times. (Jackson, Rome)</li>
+      <li>✅ <strong>Soft commissions:</strong> Acceptable if research benefits the client's account and commissions are reasonable. Personal/firm benefits paid via client commissions = violation. (Parker, Jackson)</li>
+      <li>✅ <strong>Directed brokerage:</strong> Client-directed = acceptable; does not violate loyalty because commission is client asset directed by the client. Must still seek confirmation of client benefit and disclose risk of not getting best execution.</li>
+      <li>✅ <strong>Churning:</strong> Excessive trading to generate commissions = using client assets for member/firm benefit = III(A) violation. (Knauss)</li>
+      <li>✅ <strong>Family accounts that are regular fee-paying</strong> = must be treated identically to non-family accounts. Excluding to avoid appearance of favouritism = disadvantaging the family client = violation. (Dill)</li>
+      <li>✅ <strong>Client guidelines must be followed:</strong> ESG constraints, prohibited securities, asset class limitations — all binding. Cannot be overridden by return expectations alone.</li>
+      <li>✅ <strong>Proxy voting:</strong> Proxies have economic value; must vote in clients' interests. Blind voting with management on non-routine issues = potential violation. Cost-benefit analysis may justify not voting all proxies.</li>
+      <li>✅ <strong>Accurate reporting even when harmful to firm:</strong> Withholding errors or corrections that would damage the commercial relationship is not in the client's best interest. (Nguyen)</li>
+    </ul>
+  </div>
+  <div class="formula-box">
+    <div class="label">★ III(A) QUICK REFERENCE</div>
+    <div class="f">
+      THREE DUTIES:         Loyalty (client interests first) + Prudence (reasonable person standard) + Care (avoid harm)<br>
+      CLIENT PRIORITY:      Clients > Employer > Self — in that order<br><br>
+      WHO IS THE CLIENT:    Individual advisory = the investor<br>
+                            Pension/trust = the BENEFICIARIES (not hiring company)<br>
+                            Fund management = the mandate (not individual fund investors)<br>
+                            Execution-only = client giving trade instructions<br><br>
+      FIDUCIARY DUTY:       NOT automatically imposed — depends on role, advice type, facts<br>
+      EXECUTION-ONLY:       Duty = best execution + follow client parameters — NOT fiduciary<br>
+      CUSTODY:              Any access to client funds = heightened responsibility<br><br>
+      BEST EXECUTION:       Required unless client directs otherwise<br>
+      SOFT COMMISSIONS:     OK if research benefits client + commissions reasonable<br>
+      DIRECTED BROKERAGE:   Client-directed OK; must confirm benefit + disclose execution risk<br>
+      CHURNING:             Excessive trading for commissions = violation regardless of trade appropriateness<br><br>
+      FAMILY ACCOUNTS:      Regular fee-paying = identical treatment to all clients (no exclusions to avoid conflict)<br>
+      PROXIES:              Vote in clients' interests; cost-benefit analysis may justify not voting all<br>
+      ACCURATE REPORTING:   Must correct and disclose errors even when commercially damaging
+    </div>
+    <div class="note">
+      <strong>Top III(A) exam traps:</strong><br>
+      (1) "The pension plan administrator approved the investment" — client = beneficiaries, not administrator<br>
+      (2) "Execution is fine, so directing brokerage to a friend is OK" — must also disclose the arrangement; lack of disclosure = violation<br>
+      (3) "She excluded her brother's account to avoid conflict of interest" — excluding regular fee-paying family accounts = disadvantaging a client = violation<br>
+      (4) "The soft dollar arrangement funds useful research" — must verify commissions are reasonable AND research benefits the client's account specifically<br>
+      (5) "He is just an execution broker, so no duty applies" — duty applies; just a different (narrower) duty centred on best execution
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard III(A): Loyalty, Prudence, and Care · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

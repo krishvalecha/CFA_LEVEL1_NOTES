@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 6: Bond Valuation — Prices and Yields</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --price-bg: #111a16; --price-border: #4cc98a;
+    --discount-bg: #1a1510; --discount-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* Price state cards */
+  .price-card { background: var(--price-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .price-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .discount-card { background: var(--discount-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .discount-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .premium-card { background: #1a1020; border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .premium-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Matrix pricing steps */
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 6</div>
+  <h1>Bond Valuation: <span>Prices and Yields</span></h1>
+  <p>Exam-ready notes: bond pricing using discounted cash flow analysis, yield-to-maturity (YTM) and its three conditions, flat vs. full price, accrued interest, day-count conventions, price-yield relationships (inverse, coupon effect, maturity effect, convexity, pull-to-par), and matrix pricing for illiquid or new bonds.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Bond Pricing Framework</a>
+  <a class="toc-item" href="#s2">02 · The YTM — Definition &amp; Conditions</a>
+  <a class="toc-item" href="#s3">03 · Discount, Par &amp; Premium Bonds</a>
+  <a class="toc-item" href="#s4">04 · Flat Price, Full Price &amp; Accrued Interest</a>
+  <a class="toc-item" href="#s5">05 · Pricing Between Coupon Dates</a>
+  <a class="toc-item" href="#s6">06 · Price–Yield Relationships</a>
+  <a class="toc-item" href="#s7">07 · Constant-Yield Price Trajectory</a>
+  <a class="toc-item" href="#s8">08 · Convexity</a>
+  <a class="toc-item" href="#s9">09 · Matrix Pricing</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: BOND PRICING FRAMEWORK     -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Bond Pricing Framework — Discounted Cash Flow</h2>
+    </div>
+
+    <div class="card">
+      <p>Bond pricing is a direct application of <strong>discounted cash flow (DCF) analysis</strong>. A bond's price equals the present value of all its future promised cash flows — periodic coupon payments plus face value repayment at maturity — discounted at the <strong>market discount rate</strong> (also called the required yield or required rate of return).</p>
+      <p>The market discount rate is the rate of return required by investors given the risk of the bond. This is what makes pricing dynamic — as market rates change, bond prices move inversely.</p>
+      <p style="margin-top:10px;"><strong>Key assumption in this module:</strong> All coupon and principal cash flows occur as promised (no default risk modelled here).</p>
+    </div>
+
+    <h3>Core Bond Pricing Formula — On a Coupon Date</h3>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Single Coupon Cash Flow PV</div>
+      <div class="f">PV(Coupon) = PMT<sub>t</sub> / (1 + r)<sup>t</sup></div>
+      <div class="note">PMT = coupon payment per period | r = market discount rate per period | t = number of periods</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Full Bond Price on a Coupon Date (General Formula)</div>
+      <div class="f">
+        PV = PMT/(1+r)¹ + PMT/(1+r)² + ... + (PMT + FV)/(1+r)ᴺ
+      </div>
+      <div class="note">
+        <strong>Variables:</strong><br>
+        PV = bond price (present value of all cash flows)<br>
+        PMT = coupon payment per period (= annual coupon rate × face value ÷ coupons per year)<br>
+        FV = face value (par value) repaid at maturity<br>
+        r = market discount rate per period (= annual rate ÷ coupons per year for semi-annual bonds)<br>
+        N = total number of periods to maturity<br><br>
+        <strong>For semiannual bonds:</strong> use r = annual YTM ÷ 2, and N = years × 2<br>
+        <strong>Example:</strong> 5-year bond, 3.2% coupon, paid semiannually, market rate = 1.5% annual<br>
+        r = 0.75% per period, N = 10, PMT = 1.6 per period, FV = 100
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — The TVM Machine</div>
+      <p>Bond pricing IS a TVM (time value of money) calculation. Set your calculator: <strong>N = total periods, I/Y = rate per period, PMT = coupon per period, FV = face value → CPT PV</strong>. Remember to make sure I/Y and PMT are on the SAME period basis (both semiannual if bond pays semiannually). The answer is the bond price (will show as negative in most calculators — just flip the sign).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Common Exam Trap — Period vs. Annual Rate</div>
+      <p>The single most frequent calculation error: using the <strong>annual</strong> YTM as r when the bond pays semiannual coupons. Always divide the annual rate by the coupon frequency AND multiply N accordingly. A 5-year semiannual bond has N = 10 periods, not 5. This applies to PMT too — a 3.2% annual coupon paid semiannually is 1.6% per period.</p>
+    </div>
+
+    <h3>Excel / Google Sheets Functions</h3>
+
+    <div class="auction-box">
+      <div class="label">Excel YIELD Function — Calculate YTM from Price</div>
+      <div class="f">=YIELD(settlement, maturity, rate, pr, redemption, frequency, [basis])</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Parameter</th><th>What It Means</th><th>Example (BRWA Bond)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>settlement</td><td>Settlement date of the trade</td><td>DATE(2025,10,15)</td></tr>
+          <tr><td>maturity</td><td>Maturity date of the bond</td><td>DATE(2030,10,15)</td></tr>
+          <tr><td>rate</td><td>Periodic coupon rate (semiannual if frequency=2)</td><td>1.6% (semiannual coupon)</td></tr>
+          <tr><td>pr</td><td>Price per 100 face value</td><td>108.15</td></tr>
+          <tr><td>redemption</td><td>Face value at maturity (per 100)</td><td>100</td></tr>
+          <tr><td>frequency</td><td>Number of coupon payments per year</td><td>2 (semiannual)</td></tr>
+          <tr><td>[basis]</td><td>Day-count convention (0 = 30/360, 1 = actual/actual)</td><td>0 (US bonds)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 YTM = IRR of Bond Cash Flows</div>
+      <p>The YTM is the bond's <strong>internal rate of return (IRR)</strong> — the single discount rate that makes the sum of all discounted cash flows exactly equal to the bond's current price. You can use Excel's =IRR() function on the stream of cash flows (negative price at t=0, then coupons, then coupon + par at maturity) to get the same answer as =YIELD(). Both approaches are valid on the exam.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: YTM — DEFINITION & CONDITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Yield-to-Maturity — Definition &amp; The Three Conditions</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Yield-to-Maturity (YTM)</div>
+      <div class="def-body">The <strong>internal rate of return</strong> on a bond's cash flows — the single uniform discount rate that equates the present value of all future coupon and principal cash flows to the bond's current market price. It is an implied, observed market discount rate. Also called the "required yield," "promised yield," or simply "the yield."</div>
+    </div>
+
+    <div class="card">
+      <p>YTM is only meaningful as a <strong>return measure</strong> under three specific conditions. If any condition is violated, the actual realized return will differ from the YTM:</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Hold to Maturity</strong> — The investor holds the bond until it matures. If the bond is sold before maturity, the realized price may differ from par, changing the realized return versus YTM.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>No Default</strong> — The issuer makes all coupon and principal payments in full and on schedule. YTM is a "promised yield" — it assumes no default. If the issuer defaults (partial or full), the realized return will be less than YTM.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Reinvest All Coupons at the Same YTM</strong> — All coupon cash flows received are reinvested at the same YTM over the bond's life. In practice, reinvestment rates will change over time. This is the <strong>reinvestment risk</strong> embedded in YTM.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — YTM ≠ Actual Return Unless All 3 Conditions Hold</div>
+      <p>This is a classic exam trap. The YTM is a <strong>promised</strong> yield, not a guaranteed one. If: (a) the bond is sold early, (b) the issuer defaults, or (c) coupons are reinvested at rates different from the YTM — the actual realized return will differ. Zero-coupon bonds are the one case where reinvestment risk is eliminated (no coupons to reinvest) — making their YTM the most "certain" return if held to maturity with no default.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Market Language — "Yields Are Rising"</div>
+      <p>In practice, market participants say <strong>"yields are rising"</strong> instead of "market discount rates are rising" or "bond prices are falling." These three phrases mean the same thing and are used interchangeably. Getting comfortable with this language is essential for reading exam questions correctly — a question saying "yields rise by 50bps" is saying "discount rates increase" which means "bond prices fall."</p>
+    </div>
+
+    <h3>Bonds with Negative YTM</h3>
+    <div class="card">
+      <p>YTM can be positive, zero, or negative. Negative yields arose on many sovereign bonds starting in 2012 following central bank accommodative monetary policies in response to below-target inflation.</p>
+      <p style="margin-top:10px;"><strong>Two types of negative-yielding bonds:</strong></p>
+      <ul style="padding-left:20px; margin-top:6px;">
+        <li>Bonds originally issued at higher yields that have experienced <strong>significant price appreciation</strong> (price driven above par + all future coupons combined PV)</li>
+        <li>Newly issued <strong>zero-coupon sovereign bonds priced at a premium to par</strong> — investor pays more than 100 and receives exactly 100 at maturity → negative return by definition</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Important:</strong> Bonds are generally NOT issued with negative coupons — the coupon rate stays at zero minimum. It is the price that exceeds the sum of future cash flows that creates a negative yield.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Would Anyone Buy a Negative-Yielding Bond?</div>
+      <p>Non-economic buyers — central banks (for monetary policy), pension funds/insurance companies (regulatory requirements), foreign reserve managers (safety and liquidity over return) — hold bonds for reasons other than return maximization. Also, if a bond investor expects yields to fall even further (prices to rise further), they may buy a negative-yielding bond anticipating a capital gain. This is speculation on interest rate movements, not income investing.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: DISCOUNT, PAR, PREMIUM BONDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Discount, Par, and Premium Bonds</h2>
+    </div>
+
+    <div class="card">
+      <p>Comparing a bond's <strong>coupon rate</strong> to the <strong>market discount rate (YTM)</strong> immediately tells you whether the bond trades at a discount, at par, or at a premium. This is one of the most heavily tested relationships in Fixed Income.</p>
+    </div>
+
+    <div class="discount-card">
+      <div class="discount-title">📉 Discount Bond — Coupon Rate &lt; YTM → Price &lt; Par</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+        <li>The bond's fixed coupon is <strong>less than what the market demands</strong> (YTM)</li>
+        <li>Investors won't pay full par — they demand a lower price to boost their effective return up to the YTM</li>
+        <li>The bond is said to trade "below par" or "at a discount"</li>
+        <li><strong>Price increases toward par as maturity approaches</strong> (pull-to-par effect)</li>
+        <li>Example: 2% coupon bond in a 5% yield environment → price significantly below 100</li>
+      </ul>
+    </div>
+
+    <div class="price-card">
+      <div class="price-title">➡️ Par Bond — Coupon Rate = YTM → Price = Par (100)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>The bond's coupon rate exactly equals the market's required return</li>
+        <li>Investors pay exactly face value — no adjustment needed</li>
+        <li>Price remains at par throughout the bond's life (if YTM stays unchanged)</li>
+        <li>Example: 3.2% coupon bond in a 3.2% yield environment → price = 100</li>
+      </ul>
+    </div>
+
+    <div class="premium-card">
+      <div class="premium-title">📈 Premium Bond — Coupon Rate &gt; YTM → Price &gt; Par</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8d0df;">
+        <li>The bond's fixed coupon <strong>exceeds what the market demands</strong> (YTM)</li>
+        <li>Investors pay a premium above par for the above-market coupon income stream</li>
+        <li>The bond is said to trade "above par" or "at a premium"</li>
+        <li><strong>Price decreases toward par as maturity approaches</strong> (pull-to-par effect)</li>
+        <li>Example: 8% coupon bond in a 5% yield environment → price significantly above 100</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Rule of Three — Master This Cold</div>
+      <div class="f">
+        Coupon Rate &lt; YTM  →  Bond Price &lt; Par  (DISCOUNT bond)<br>
+        Coupon Rate = YTM  →  Bond Price = Par  (PAR bond)<br>
+        Coupon Rate &gt; YTM  →  Bond Price &gt; Par  (PREMIUM bond)
+      </div>
+      <div class="note">
+        <strong>Direction of pull-to-par:</strong><br>
+        Discount bond: price rises toward 100 over time ↑<br>
+        Premium bond: price falls toward 100 over time ↓<br>
+        Par bond: price stays at 100 (if YTM unchanged) →<br><br>
+        <strong>Why?</strong> As N → 0, the FV component (always paid at par) dominates — all bonds converge to face value at maturity regardless of starting price.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "Higher Rate, Lower Price"</div>
+      <p>Bond prices and yields move like a SEESAW — when one end goes up, the other goes down. If the market YTM is <strong>higher</strong> than your coupon, the market is penalizing you by offering a <strong>lower</strong> price. Think of it as: "You're not paying me enough (in coupons), so I'll pay you less (lower price)."</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 4: FLAT PRICE, FULL PRICE & ACCRUED INTEREST -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Flat Price, Full Price &amp; Accrued Interest</h2>
+    </div>
+
+    <div class="card">
+      <p>When a bond is bought or sold <strong>between coupon payment dates</strong>, the seller has held the bond for part of the coupon period and is entitled to the interest accrued during that time — even though the full coupon will be paid to the buyer on the next coupon date. To compensate the seller fairly, this accrued portion is added to the quoted price.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — The Full Price Relationship</div>
+      <div class="f">PV<sup>Full</sup> = PV<sup>Flat</sup> + AI</div>
+      <div class="note">
+        <strong>Full Price</strong> (also: Invoice Price, Dirty Price) = what the buyer actually PAYS / seller actually RECEIVES<br>
+        <strong>Flat Price</strong> (also: Quoted Price, Clean Price) = what bond dealers QUOTE; used in Bloomberg terminals and market data<br>
+        <strong>Accrued Interest (AI)</strong> = compensation paid by buyer to seller for interest earned during the partial coupon period
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Flat Price (Clean Price)</div>
+        <ul>
+          <li>= Full Price − Accrued Interest</li>
+          <li>This is what's <strong>quoted by dealers</strong></li>
+          <li>Used to avoid misleading price trend signals</li>
+          <li>If full price were quoted, investors would see price rise daily (even with unchanged YTM) due to accrual — then a sharp drop after each coupon payment</li>
+          <li>Flat price changes only when the <strong>YTM changes</strong></li>
+          <li>The flat price is the price that <strong>reflects interest rate market movements</strong></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Full Price (Dirty Price / Invoice Price)</div>
+        <ul>
+          <li>= Flat Price + Accrued Interest</li>
+          <li>This is <strong>what actually changes hands</strong> on trade settlement</li>
+          <li>Buyer pays the full price; seller receives the full price</li>
+          <li>Buyer will receive the FULL next coupon — so they compensate seller via accrued interest built into the full price</li>
+          <li>Changes daily even if YTM is unchanged (due to accrual)</li>
+          <li>Accrued interest portion is <strong>NOT affected</strong> by changes in YTM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Exam Point — What Changes with YTM vs. Time</div>
+      <p><strong>Only the flat price changes when interest rates/YTM change.</strong> The accrued interest portion of the full price is purely a function of elapsed days and does NOT depend on YTM. So: interest rate risk (duration, convexity analysis) is measured against the flat price. The full price rises each day due to accrual, and then drops sharply when the coupon is paid — this is NOT a market movement, it's just the mechanical reversal of accrual.</p>
+    </div>
+
+    <h3>Accrued Interest Calculation</h3>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Accrued Interest Formula</div>
+      <div class="f">AI = (t / T) × PMT</div>
+      <div class="note">
+        <strong>t</strong> = number of days from the PRIOR coupon payment date to the settlement date (days elapsed)<br>
+        <strong>T</strong> = total number of days in the coupon period (days between two consecutive coupon dates)<br>
+        <strong>t/T</strong> = fraction of the coupon period that has already elapsed<br>
+        <strong>PMT</strong> = coupon payment per period<br><br>
+        <strong>Example:</strong> Bond pays semiannual coupon of 2.0. Last coupon was 60 days ago. Period = 180 days.<br>
+        AI = (60/180) × 2.0 = 0.333 × 2.0 = 0.667<br>
+        The seller earns 0.667 of the next 2.0 coupon payment.
+      </div>
+    </div>
+
+    <h3>Day-Count Conventions</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Convention</th><th>How Days Are Counted</th><th>Days per Year Assumed</th><th>Typical Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>30/360</td>
+            <td>Each month assumed to have exactly 30 days (regardless of actual calendar). Feb, Apr, Jun, Aug, Oct, Dec all treated as 30 days.</td>
+            <td>360 days per year</td>
+            <td>US corporate bonds; US agency bonds; US municipal bonds; most fixed-rate sovereign bonds (basis = 0 in Excel YIELD)</td>
+          </tr>
+          <tr>
+            <td>Actual/Actual</td>
+            <td>Actual calendar days in each month and actual days in each year (365 or 366 for leap year)</td>
+            <td>Actual days (365 or 366)</td>
+            <td>US Treasury bonds; most government bonds; Euro-denominated bonds (basis = 1 in Excel YIELD)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Which Convention to Use — Quick Rule</div>
+      <p><strong>US Treasuries = Actual/Actual.</strong> Most US corporate bonds = 30/360. The exam will typically tell you which to use, or it won't matter for the concept being tested. For the YIELD function in Excel: basis = 0 → 30/360 (US); basis = 1 → actual/actual. The key testable point is knowing these two conventions exist and what they assume — not memorizing every bond market's convention.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 5: PRICING BETWEEN COUPON DATES       -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Pricing Between Coupon Dates — Full Price Formula</h2>
+    </div>
+
+    <div class="card">
+      <p>When a bond is priced between coupon dates, the standard on-coupon-date formula (Equation 2) must be modified. The key difference: the next coupon payment is NOT a full period away — it is only <strong>(1 − t/T)</strong> periods away, where t/T is the fraction of the period already elapsed.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 5 — Full Price Between Coupon Dates (Direct Form)</div>
+      <div class="f">
+        PV<sup>Full</sup> = PMT/(1+r)^(1−t/T) + PMT/(1+r)^(2−t/T) + ... + (PMT+FV)/(1+r)^(N−t/T)
+      </div>
+      <div class="note">
+        The next coupon (PMT) is discounted for only <strong>(1 − t/T)</strong> periods — the remaining fraction of the current coupon period.<br>
+        The second coupon is discounted for <strong>(2 − t/T)</strong> periods, and so on.<br>
+        t/T = fraction of current coupon period ALREADY elapsed since last coupon
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 6 — Full Price Between Coupon Dates (Simplified — EXAM FRIENDLY)</div>
+      <div class="f">
+        PV<sup>Full</sup> = PV × (1 + r)^(t/T)
+      </div>
+      <div class="note">
+        <strong>Where PV = bond price calculated AS IF it were a coupon date</strong> (using Equation 2 with N evenly spaced periods)<br>
+        This "PV" is the present value as of the LAST coupon date — it is NOT the flat price.<br><br>
+        <strong>How to use Equation 6:</strong><br>
+        Step 1: Calculate PV using Equation 2 (or Excel YIELD) as if you're on a coupon date<br>
+        Step 2: Multiply by (1 + r)^(t/T) to "grow" the price forward by the fraction of the period elapsed<br>
+        Step 3: PV<sup>Full</sup> = PV × (1 + r)^(t/T)<br>
+        Step 4: Calculate AI = (t/T) × PMT<br>
+        Step 5: PV<sup>Flat</sup> = PV<sup>Full</sup> − AI<br><br>
+        <strong>Excel advantage:</strong> The bracketed expression in Eq. 5 equals PV in Eq. 6 → can be computed directly with =YIELD()
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Step-by-Step Process for Between-Coupon-Date Pricing</div>
+      <p>
+        <strong>①</strong> Calculate PV (Eq. 2) at the last coupon date → this is price "as of" the last coupon.<br>
+        <strong>②</strong> Grow forward: PV<sup>Full</sup> = PV × (1 + r)^(t/T)<br>
+        <strong>③</strong> Calculate AI = (t/T) × PMT<br>
+        <strong>④</strong> PV<sup>Flat</sup> = PV<sup>Full</sup> − AI ← this is the quoted/clean price<br><br>
+        The flat price is what you'd see on Bloomberg. The full price is what the buyer actually pays.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ PV in Equation 6 ≠ Flat Price</div>
+      <p>The "PV" computed in Equation 6's brackets (using Equation 2 at the last coupon date) is <strong>not the same as PV<sup>Flat</sup></strong>. It's the present value AS OF the prior coupon date. The flat price is the full price MINUS accrued interest, calculated as of the settlement date. Don't confuse these — the exam tests this distinction.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 6: PRICE–YIELD RELATIONSHIPS         -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Price–Yield Relationships — The Four Effects</h2>
+    </div>
+
+    <div class="card">
+      <p>A bond's price sensitivity to yield changes is determined by several features of the bond. Understanding these relationships is critical for both conceptual exam questions and quantitative applications (duration, covered in later modules).</p>
+    </div>
+
+    <h3>Effect 1 — The Inverse Relationship (Always True)</h3>
+    <div class="card">
+      <p>Bond prices and yields move in <strong>opposite directions</strong> — always. This is a mathematical certainty from the DCF formula: a higher discount rate (YTM) reduces the present value of all future cash flows → lower price. A lower YTM → higher present value → higher price.</p>
+      <p style="margin-top:8px;"><span class="tag tag-red">YTM ↑ → Price ↓</span> &nbsp;&nbsp; <span class="tag tag-green">YTM ↓ → Price ↑</span></p>
+    </div>
+
+    <h3>Effect 2 — The Coupon Effect</h3>
+    <div class="card">
+      <p>For two bonds with the <strong>same maturity and same YTM change</strong>, the bond with the <strong>lower coupon will have a greater percentage price change</strong>.</p>
+      <p style="margin-top:8px;"><strong>Why?</strong> A lower-coupon bond has a higher proportion of its total cash flow occurring at maturity (as face value repayment). That distant final payment is discounted by (1+r)ᴺ — a larger exponent magnifies the impact of any given change in r. The extreme case: a <strong>zero-coupon bond</strong> has 100% of its cash flow at maturity → maximum price sensitivity to yield changes.</p>
+      <p style="margin-top:8px;"><strong>Intuition:</strong> Lower coupon = more "back-loaded" cash flows = cash flows that are farther away = more sensitive to interest rate changes (they wait longer to be received, so each year of discounting matters more).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Coupon Effect — Price Sensitivity Rule</div>
+      <div class="f">
+        Lower coupon → More back-loaded cash flows → Higher price sensitivity to yield changes<br>
+        Zero-coupon bond → ALL cash flow at maturity → MAXIMUM price sensitivity<br>
+        Higher coupon → More front-loaded cash flows → Lower price sensitivity<br>
+        (Same maturity, same yield change assumed throughout)
+      </div>
+      <div class="note">This is the conceptual foundation of <strong>duration</strong> — the lower-coupon bond has a longer "effective" weighted average time to cash flows, even if both bonds mature on the same date.</div>
+    </div>
+
+    <h3>Effect 3 — The Maturity Effect</h3>
+    <div class="card">
+      <p>For two bonds with the <strong>same coupon rate and same YTM change</strong>, the bond with the <strong>longer time-to-maturity will have a greater percentage price change</strong> — in general.</p>
+      <p style="margin-top:8px;"><strong>Why?</strong> Longer maturity = higher N in the PV formula. A higher exponent N magnifies the effect of any change in r on discounted cash flows.</p>
+      <p style="margin-top:8px;"><strong>Important exception:</strong> The maturity effect does NOT always hold for low-coupon (but NOT zero-coupon) long-term bonds trading at a discount. In this rare case, adding maturity can actually reduce price sensitivity. However, the maturity effect <strong>always holds</strong> for: zero-coupon bonds, par bonds, and premium bonds.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond Type</th><th>Does Maturity Effect Always Hold?</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Zero-coupon bond</td><td><span class="tag tag-green">YES — Always</span></td><td>All cash flow at maturity; longer = more sensitive, always</td></tr>
+          <tr><td>Par bond (coupon = YTM)</td><td><span class="tag tag-green">YES — Always</span></td><td>Maturity effect holds for par-priced bonds</td></tr>
+          <tr><td>Premium bond (coupon &gt; YTM)</td><td><span class="tag tag-green">YES — Always</span></td><td>Maturity effect holds for premium bonds</td></tr>
+          <tr><td>Low-coupon discount bond</td><td><span class="tag tag-yellow">EXCEPTION — Rare</span></td><td>Long-term low-coupon bonds at discount can reverse; very rare in practice</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Remember the Two Effects Together — "Longer and Leaner = More Sensitive"</div>
+      <p>Longer maturity = more sensitive. Lower coupon (leaner coupon stream) = more sensitive. Both effects work in the same direction: they both describe bonds whose cash flows are more distant in time. A 30-year zero-coupon bond is the most interest-rate-sensitive bond possible — longest maturity + lowest coupon (zero) combined. A 1-year high-coupon bond is the least sensitive.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 7: CONSTANT-YIELD PRICE TRAJECTORY   -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Constant-Yield Price Trajectory — Pull to Par</h2>
+    </div>
+
+    <div class="card">
+      <p>Even if the <strong>market discount rate (YTM) stays constant</strong>, a bond's price changes over time. As the bond's maturity date approaches, N decreases toward zero — and the face value to be received at maturity becomes increasingly close and therefore less discounted. All bonds converge to par (face value) at maturity, regardless of whether they started at a discount or premium. This is the <strong>"pull-to-par" effect.</strong></p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Discount Bond — Price RISES to Par</div>
+        <ul>
+          <li>Example: 2% coupon bond priced at 76.835 in a 5% yield environment</li>
+          <li>Price rises each year toward 100 as maturity approaches</li>
+          <li>The "discount" earned at purchase is gradually amortized into income</li>
+          <li>This price appreciation forms part of the investor's total return</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Premium Bond — Price FALLS to Par</div>
+        <ul>
+          <li>Example: 8% coupon bond priced at 123.165 in a 5% yield environment</li>
+          <li>Price falls each year toward 100 as maturity approaches</li>
+          <li>The "premium" paid at purchase is gradually amortized as a capital loss</li>
+          <li>This price erosion offsets the above-market coupon income received</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Pull-to-Par — The Key Intuition</div>
+      <div class="f">
+        At maturity (N = 0): ALL bonds are worth exactly their face value (e.g., 100)<br><br>
+        Discount bond (price &lt; 100): price must RISE to reach 100 by maturity ↑<br>
+        Premium bond (price &gt; 100): price must FALL to reach 100 by maturity ↓<br>
+        Par bond (price = 100): price stays at 100 throughout (if YTM unchanged) →<br><br>
+        This trajectory assumes YTM REMAINS CONSTANT — actual market price changes<br>
+        if YTM changes, which adds market risk on top of the pull-to-par mechanical path.
+      </div>
+      <div class="note">
+        <strong>Why does this matter for the exam?</strong> It explains why a discount bond investor earns more than just the coupon yield — they also earn capital appreciation. A premium bond investor earns less than the coupon yield in total return terms because they suffer capital depreciation. The YTM incorporates both effects into a single number.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 YTM Accounts for Pull-to-Par Automatically</div>
+      <p>The YTM already incorporates the pull-to-par effect. For a discount bond: YTM &gt; coupon rate (because YTM accounts for both the coupon income AND the capital gain to par). For a premium bond: YTM &lt; coupon rate (because YTM accounts for the coupon income reduced by the capital loss to par). This is why comparing bonds by coupon rate alone is misleading — always compare by YTM.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 8: CONVEXITY                         -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Convexity — The Curved Price–Yield Relationship</h2>
+    </div>
+
+    <div class="card">
+      <p>The relationship between bond prices and yields is <strong>not linear</strong> — it is curved, or <strong>"convex."</strong> This means that equal increases and decreases in yield do NOT produce equal changes in price.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Convexity Rule — Direction of Asymmetry</div>
+      <div class="f">
+        For the SAME absolute change in yield:<br><br>
+        Price INCREASE (when yield falls) &gt; Price DECREASE (when yield rises)<br><br>
+        In other words: bonds gain MORE when yields fall than they lose when yields rise<br>
+        This asymmetry is called CONVEXITY — and it is a DESIRABLE property for bondholders
+      </div>
+      <div class="note">
+        Example: If YTM falls by 100bps, price rises by 8%. If YTM rises by 100bps, price falls by only 7%.<br>
+        The price gain (8%) &gt; the price loss (7%) for the same absolute yield change.<br>
+        This "bonus" return from convexity increases with longer maturity and lower coupon.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Why Convexity Exists</div>
+        <p>As yields fall, bond prices rise, but by <em>increasing</em> amounts (the curve steepens). As yields rise, bond prices fall, but by <em>decreasing</em> amounts. This is a mathematical property of the PV formula — the denominator (1+r)ᴺ creates a non-linear relationship between r and PV.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Convexity in Practice</div>
+        <p>Convexity is always positive for standard (option-free) bonds — bondholders benefit from it. Duration (covered later) captures the LINEAR approximation of price–yield changes. Convexity captures the curvature — the additional gain beyond what duration predicts for large yield moves.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Visualizing the Convex Price–Yield Curve</div>
+      <p>Imagine a smile-shaped curve where the X-axis is YTM and the Y-axis is bond price. The curve is always downward-sloping (inverse relationship) but also bowing OUTWARD (convex) toward the origin. At any given point on this curve, the tangent line is the duration approximation. The gap between the tangent line and the actual curve is the convexity adjustment — always positive for option-free bonds.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Convexity vs. Duration — Don't Confuse Them at This Stage</div>
+      <p>At Module 6 level, you only need to know that the price-yield relationship is <strong>curved (convex)</strong> and that price increases exceed price decreases for equal yield changes. The formal measurement of convexity and the convexity adjustment to duration are covered in later modules. For now: know the concept and the direction of the asymmetry.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 9: MATRIX PRICING                    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Matrix Pricing — Valuing Illiquid or New Bonds</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Matrix Pricing</div>
+      <div class="def-body">A price estimation process for bonds that are <strong>not actively traded</strong> (illiquid) or <strong>not yet issued</strong> (new bonds), where no current market price or YTM is available. Uses the yields of comparable, more frequently traded bonds with similar credit quality, time-to-maturity, and coupon rates to estimate the target bond's YTM — then prices the bond using that estimated YTM.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why is matrix pricing needed?</strong> Unlike listed equities, most bonds are NOT actively traded on exchanges. They trade OTC and often infrequently — sometimes there may be NO recent transaction at all to use as a price reference. New bonds being issued don't yet have a market price. Matrix pricing bridges this gap using observable prices of comparable bonds.</p>
+    </div>
+
+    <h3>Matrix Pricing — Four-Step Process</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Identify comparable bonds.</strong> Find actively traded bonds with similar: (a) time-to-maturity, (b) coupon rates, and (c) credit quality as the target bond. These are the benchmark bonds from which YTMs will be extracted.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Calculate YTMs for each comparable bond.</strong> Use their known market prices to solve for each bond's YTM. Then compute the <strong>average YTM for each maturity year</strong> represented by the comparable bonds (average across bonds of the same maturity).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Linearly interpolate to find the estimated YTM</strong> for the target bond's specific maturity. If comparable bonds exist at 2-year and 5-year maturities but the target is 3-year, interpolate between the 2-year and 5-year average yields.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Price the target bond</strong> using the estimated YTM from Step 3. Discount all the target bond's coupon and principal cash flows at this interpolated yield to obtain the estimated price.</div>
+      </div>
+    </div>
+
+    <h3>Linear Interpolation Formula</h3>
+
+    <div class="formula-box">
+      <div class="label">Interpolation — Estimating YTM at an Intermediate Maturity</div>
+      <div class="f">
+        YTM<sub>target</sub> = YTM<sub>short</sub> + [(T<sub>target</sub> − T<sub>short</sub>) / (T<sub>long</sub> − T<sub>short</sub>)] × (YTM<sub>long</sub> − YTM<sub>short</sub>)
+      </div>
+      <div class="note">
+        <strong>Example from the module (Bond X — 3-year, 4% coupon):</strong><br>
+        Average YTM for 2-year comparable bonds: 3.8035%<br>
+        Average YTM for 5-year comparable bonds: 4.1885%<br><br>
+        Interpolated 3-year YTM = 0.038035 + [(3 − 2) / (5 − 2)] × (0.041885 − 0.038035)<br>
+        = 0.038035 + (1/3) × 0.003850<br>
+        = 0.038035 + 0.001283 = 0.039318 → 3.9318%<br><br>
+        Using 3.9318% as YTM → Bond X price = 100.191 per 100 face value<br><br>
+        <strong>Verify with Excel:</strong> =YIELD(DATE(2025,10,1),DATE(2028,10,1),0.04,100.191,100,2,1)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Interpolation Intuition — Straight Line Between Two Points</div>
+      <p>Linear interpolation simply assumes the yield curve is a straight line between two known points. If the 2-year yield is 3.80% and the 5-year yield is 4.19%, then the 3-year yield is assumed to be 1/3 of the way along that line (since 3 is 1/3 of the way from 2 to 5). The interpolation formula just formalizes this: start at the short point, add the proportional fraction of the distance to the long point.</p>
+    </div>
+
+    <h3>Matrix Pricing for New Bond Issuance — Yield Spread Approach</h3>
+
+    <div class="card">
+      <p>Matrix pricing is also used to estimate the <strong>required yield spread over the benchmark government bond</strong> for a new corporate bond issue. This is the most common use in underwriting.</p>
+      <p style="margin-top:10px;"><strong>Process:</strong></p>
+      <ol style="padding-left:22px; margin-top:6px;">
+        <li>Find the YTM of the issuer's existing actively traded bonds (of known maturities)</li>
+        <li>Find government benchmark bond yields at the same or nearby maturities</li>
+        <li>Calculate the credit spread = corporate YTM − government benchmark yield</li>
+        <li>Interpolate government yield to the target maturity if no exact-maturity benchmark exists</li>
+        <li>Use the estimated spread as a reference point for pricing the new issue</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Worked Example — Estimating Required Yield Spread</div>
+      <div class="f">
+        Corporate 4-year bond: price = 102.400, coupon = 3% annual → YTM = 2.36%<br><br>
+        No 4-year government bond exists. But:<br>
+        3-year government bond YTM = 0.75%<br>
+        5-year government bond YTM = 1.45%<br><br>
+        Estimated 4-year government YTM = (0.75% + 1.45%) / 2 = 1.10%<br><br>
+        Estimated required yield spread = 2.36% − 1.10% = 1.26% = 126 basis points<br><br>
+        → This 126 bps spread is the reference for pricing the NEW 5-year corporate bond
+      </div>
+      <div class="note">
+        <strong>Key concept:</strong> Matrix pricing doesn't give you an exact price for the new issue — it gives you a <strong>yield spread benchmark</strong> to anchor the new issue's pricing discussions with investors and underwriters. The actual spread on the 5-year new issue may be adjusted from this 126 bps 4-year reference based on the yield curve slope and market demand.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Matrix Pricing Use Case 1: Illiquid Existing Bond</th><th>Matrix Pricing Use Case 2: New Bond Issuance</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Goal</td><td>Estimate price of a bond that doesn't actively trade</td><td>Estimate the required yield spread for a new bond being underwritten</td></tr>
+          <tr><td>Output</td><td>An estimated price (e.g., 100.191 per 100 par)</td><td>An estimated yield spread over benchmark (e.g., 126 bps)</td></tr>
+          <tr><td>Comparables used</td><td>Actively traded bonds of similar maturity, coupon, credit quality</td><td>Issuer's existing bonds + government benchmark bonds</td></tr>
+          <tr><td>Method</td><td>Average YTMs by maturity → interpolate → discount target bond cash flows</td><td>Calculate existing corporate YTM → interpolate government benchmark → compute spread</td></tr>
+          <tr><td>Excel tool</td><td>=YIELD() to find comparable YTMs, then standard PV formula</td><td>=YIELD() to find existing corporate bond YTM</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Matrix Pricing is an Estimate — Not an Exact Market Price</div>
+      <p>Matrix pricing relies on assumptions: (1) the chosen comparable bonds actually have similar credit quality — any difference introduces error; (2) linear interpolation assumes a straight yield curve between two points, which may not reflect the actual shape of the yield curve; (3) bond-specific features (call provisions, covenants, liquidity) are not fully captured. Matrix pricing is a widely-used practical tool, but its output is always an approximation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE  -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Bond pricing = DCF analysis.</strong> Price = PV of all future coupons + PV of face value, discounted at the market discount rate (r). For semiannual bonds: r = annual rate ÷ 2, N = years × 2, PMT = annual coupon ÷ 2.</li>
+        <li>✅ <strong>Market discount rate = required yield = required rate of return</strong> — the three names mean the same thing. It reflects the risk of the bond investment.</li>
+        <li>✅ <strong>YTM = the IRR of a bond's cash flows.</strong> It's the single discount rate that makes PV of all cash flows equal to the bond's current price. YTM is both an implied market rate and a promised yield.</li>
+        <li>✅ <strong>YTM = actual investor return ONLY IF all three conditions hold:</strong> (1) bond held to maturity, (2) no default by issuer, (3) all coupons reinvested at the same YTM. Violation of any condition → realized return ≠ YTM.</li>
+        <li>✅ <strong>Zero-coupon bonds have no reinvestment risk</strong> — no coupons to reinvest. Their YTM is the most reliable return measure (assuming no default and held to maturity).</li>
+        <li>✅ <strong>Negative YTM bonds:</strong> possible when significant price appreciation pushes price above the sum of all future cash flows (PV), OR when zero-coupon bonds are priced at premium. Bonds are never issued with negative coupons.</li>
+        <li>✅ <strong>Full Price (Dirty / Invoice Price) = Flat Price + Accrued Interest.</strong> Full price = what buyer pays / seller receives. Flat price = what dealers quote. AI = (t/T) × PMT.</li>
+        <li>✅ <strong>Flat price is used for quoting</strong> because it only changes when YTM changes. If full price were quoted, investors would see daily price increases (from accrual) and then a sharp drop after each coupon — misleading for trend analysis.</li>
+        <li>✅ <strong>Accrued interest does NOT depend on YTM.</strong> AI changes only with elapsed time (t/T). Only the flat price responds to interest rate changes — this is what is relevant for duration/convexity analysis.</li>
+        <li>✅ <strong>Day-count conventions:</strong> 30/360 (each month = 30 days, year = 360) → US corporates. Actual/Actual (real calendar days) → US Treasuries. Exam will specify which to use.</li>
+        <li>✅ <strong>Between-coupon pricing:</strong> PV<sup>Full</sup> = PV × (1 + r)^(t/T), where PV is calculated as of the last coupon date. Then: PV<sup>Flat</sup> = PV<sup>Full</sup> − AI.</li>
+        <li>✅ <strong>Coupon Rate vs. YTM → Price vs. Par:</strong> Coupon &lt; YTM → Discount (price &lt; 100). Coupon = YTM → Par (price = 100). Coupon &gt; YTM → Premium (price &gt; 100). Memorize this unconditionally.</li>
+        <li>✅ <strong>Inverse relationship:</strong> Bond prices and YTM always move in opposite directions. Always. No exceptions for standard bonds.</li>
+        <li>✅ <strong>Coupon effect:</strong> Lower coupon → higher price sensitivity to yield changes (same maturity). Zero-coupon bond = maximum sensitivity. Higher coupon = lower sensitivity.</li>
+        <li>✅ <strong>Maturity effect:</strong> Longer maturity → higher price sensitivity to yield changes (same coupon). Holds for zero-coupon, par, and premium bonds always. Exception: rare for low-coupon long-term discount bonds.</li>
+        <li>✅ <strong>Pull-to-par:</strong> All bonds converge to face value at maturity, even with constant YTM. Discount bonds: price rises over time. Premium bonds: price falls over time. This is mechanical, not market-driven.</li>
+        <li>✅ <strong>Convexity:</strong> Price–yield relationship is curved (convex), not linear. For a given yield change: price increase (when yield falls) &gt; price decrease (when yield rises). This asymmetry benefits bondholders. Convexity is always positive for standard option-free bonds.</li>
+        <li>✅ <strong>Matrix pricing</strong> = price estimation for illiquid or new bonds using comparable traded bonds. Four steps: (1) find comparables, (2) calculate and average their YTMs by maturity, (3) linearly interpolate to target maturity, (4) price target bond at interpolated YTM.</li>
+        <li>✅ <strong>Matrix pricing interpolation formula:</strong> YTM<sub>target</sub> = YTM<sub>short</sub> + [(T<sub>target</sub> − T<sub>short</sub>) / (T<sub>long</sub> − T<sub>short</sub>)] × (YTM<sub>long</sub> − YTM<sub>short</sub>).</li>
+        <li>✅ <strong>Matrix pricing for new issuance:</strong> estimates the required yield spread over the government benchmark. Spread = corporate YTM − interpolated government benchmark YTM.</li>
+        <li>✅ <strong>On-the-run sovereign bonds</strong> are used as benchmark yield references. Most bonds trade OTC, are thinly traded, making matrix pricing essential for price discovery in practice.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ CORE PRICING FORMULA ═══<br>
+        PV = PMT/(1+r)¹ + PMT/(1+r)² + ... + (PMT+FV)/(1+r)ᴺ<br>
+        r = periodic market discount rate | N = total periods | PMT = periodic coupon | FV = face value<br>
+        For semiannual: r = annual YTM ÷ 2 | N = years × 2 | PMT = annual coupon ÷ 2<br><br>
+
+        ═══ YTM — THREE CONDITIONS FOR ACTUAL RETURN = YTM ═══<br>
+        ① Hold to maturity  ② No default  ③ Reinvest coupons at the same YTM<br>
+        Zero-coupon: no reinvestment risk (no coupons) → most reliable YTM as return measure<br><br>
+
+        ═══ COUPON RATE vs. YTM vs. PRICE ═══<br>
+        Coupon &lt; YTM  →  Price &lt; Par  (DISCOUNT) → price rises to par over time<br>
+        Coupon = YTM  →  Price = Par  (PAR)<br>
+        Coupon &gt; YTM  →  Price &gt; Par  (PREMIUM) → price falls to par over time<br><br>
+
+        ═══ FLAT PRICE, FULL PRICE &amp; ACCRUED INTEREST ═══<br>
+        AI = (t/T) × PMT   [t = days elapsed, T = days in coupon period]<br>
+        PV(Full) = PV(Flat) + AI<br>
+        Flat = quoted/clean price (dealers quote this) | Full = invoice/dirty price (buyer pays this)<br>
+        AI does NOT depend on YTM. Only flat price responds to rate changes.<br>
+        Day counts: 30/360 (US corporates) | Actual/Actual (US Treasuries)<br><br>
+
+        ═══ BETWEEN-COUPON PRICING ═══<br>
+        PV(Full) = PV × (1+r)^(t/T)  [PV = price as of last coupon date using Eq. 2]<br>
+        PV(Flat) = PV(Full) − AI<br><br>
+
+        ═══ PRICE–YIELD RELATIONSHIPS ═══<br>
+        Inverse: YTM ↑ → Price ↓ | YTM ↓ → Price ↑ (always, no exceptions)<br>
+        Coupon effect: lower coupon → more price-sensitive (same maturity)<br>
+        Maturity effect: longer maturity → more price-sensitive (same coupon); exception for low-coupon discounts<br>
+        Pull-to-par: all bonds → 100 at maturity regardless of starting price<br>
+        Convexity: price gain (when yield falls) &gt; price loss (when yield rises) — curved relationship<br><br>
+
+        ═══ MATRIX PRICING ═══<br>
+        Step 1: Find comparable bonds (similar maturity, coupon, credit quality)<br>
+        Step 2: Calculate and average YTMs by maturity for comparables<br>
+        Step 3: Interpolate → YTM = YTM(short) + [(T_target−T_short)/(T_long−T_short)] × (YTM_long−YTM_short)<br>
+        Step 4: Price target bond using interpolated YTM<br>
+        For new issuance: spread = corporate YTM − interpolated government benchmark YTM
+      </div>
+      <div class="note">
+        <strong>YTM vs. Market Discount Rate vs. Required Yield:</strong> Three names, same concept — the rate used to discount bond cash flows to get the price.<br>
+        <strong>YTM is "promised," not "guaranteed":</strong> It assumes no default, hold-to-maturity, and reinvestment at YTM — all three conditions must hold.<br>
+        <strong>Negative YTM:</strong> Possible. Not caused by negative coupons. Caused by price appreciation beyond the sum of future cash flows (old high-coupon bonds) or zero-coupon bonds issued at premium.<br>
+        <strong>Matrix pricing limitation:</strong> Based on comparable bonds — assumes similar credit quality and uses linear interpolation (may not reflect actual curve shape). An estimate, not a precise market price.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 6: Fixed-Income Bond Valuation — Prices and Yields · Exam Prep Notes
+</footer>
+
+</body>
+</html>

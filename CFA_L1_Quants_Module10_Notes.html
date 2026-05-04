@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 10: Simple Linear Regression</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1420 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p + p { margin-top: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .clt-box { background: #121a20; border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .clt-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .clt-box .f { color: #a8d4f0; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .clt-box .note { color: #7eaacf; font-size: 12.5px; margin-top: 10px; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(201,168,76,0.1); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent2); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* ANOVA table special styling */
+  .anova-table thead th { color: var(--accent2); }
+  .anova-table tbody td:first-child { color: var(--accent2); }
+  .anova-row-reg { background: rgba(76,139,201,0.05); }
+  .anova-row-err { background: rgba(201,76,76,0.04); }
+  .anova-row-tot { background: rgba(201,168,76,0.05); font-weight: 700; }
+  .mono { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 12.5px; }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 10</div>
+  <h1>Simple Linear <span>Regression</span></h1>
+  <p>OLS model &amp; coefficients · Four CLRM assumptions · ANOVA &amp; goodness of fit · Hypothesis tests on slope &amp; intercept · Prediction intervals · Log transformations. The most formula-dense module — all in one place.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · The SLR Model</a>
+  <a class="toc-item" href="#s2">02 · OLS Estimation</a>
+  <a class="toc-item" href="#s3">03 · Coefficient Interpretation</a>
+  <a class="toc-item" href="#s4">04 · Four Assumptions (CLRM)</a>
+  <a class="toc-item" href="#s5">05 · Sums of Squares</a>
+  <a class="toc-item" href="#s6">06 · ANOVA Table</a>
+  <a class="toc-item" href="#s7">07 · Goodness of Fit</a>
+  <a class="toc-item" href="#s8">08 · Testing Coefficients</a>
+  <a class="toc-item" href="#s9">09 · Prediction Intervals</a>
+  <a class="toc-item" href="#s10">10 · Functional Forms</a>
+  <a class="toc-item" href="#s11">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════ SECTION 1: THE SLR MODEL ══════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>The Simple Linear Regression Model</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Population Regression Model</div>
+      <div class="f">
+        Yᵢ = b₀ + b₁Xᵢ + εᵢ,&nbsp;&nbsp;&nbsp;&nbsp;i = 1, 2, …, n
+      </div>
+      <div class="note">
+        <strong>Yᵢ</strong> = dependent variable (explained variable) for observation i — what we want to explain. Plotted on vertical axis (Y-axis).<br>
+        <strong>Xᵢ</strong> = independent variable (explanatory variable) for observation i — what we use to explain Y. Plotted on horizontal axis (X-axis).<br>
+        <strong>b₀</strong> = intercept (population parameter) — value of Y when X = 0.<br>
+        <strong>b₁</strong> = slope coefficient (population parameter) — change in Y for a one-unit change in X.<br>
+        <strong>εᵢ</strong> = error term — difference between the observed Yᵢ and the true population relationship. E(ε) = 0 by assumption.<br>
+        <strong>b₀, b₁</strong> are unknown population parameters. We estimate them as b̂₀, b̂₁ from sample data (hats = estimated values).
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="def-block">
+        <div class="def-term">Dependent Variable (Y)</div>
+        <div class="def-body">The variable whose variation we are trying to explain. Also called the explained variable, regressand, or response variable. Examples: ROA, stock return, inflation rate, company revenue.</div>
+      </div>
+      <div class="def-block">
+        <div class="def-term">Independent Variable (X)</div>
+        <div class="def-body">The variable we use to explain the variation of Y. Also called the explanatory variable, regressor, or predictor variable. Examples: CAPEX, S&P 500 return, money supply growth.</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="def-block">
+        <div class="def-term">Error Term (εᵢ)</div>
+        <div class="def-body">The difference between the observed Yᵢ and the true (unobservable) population relationship b₀ + b₁Xᵢ. Represents all factors affecting Y other than X. Population concept — not directly observable.</div>
+      </div>
+      <div class="def-block">
+        <div class="def-term">Residual (eᵢ)</div>
+        <div class="def-body">The difference between observed Yᵢ and the fitted value Ŷᵢ from the estimated regression: eᵢ = Yᵢ − Ŷᵢ. Sample concept — calculated from the data. The vertical distances from data points to the regression line. Sum of residuals = 0.</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Simple vs. Multiple Regression</div>
+        <ul>
+          <li><strong>Simple linear regression (SLR):</strong> one independent variable X. Y = b₀ + b₁X + ε.</li>
+          <li><strong>Multiple regression:</strong> two or more independent variables X₁, X₂, ... Xₖ.</li>
+          <li>SLR is the special case of k = 1 independent variable.</li>
+          <li>Also called OLS regression (ordinary least squares).</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">Cross-Sectional vs. Time-Series Data</div>
+        <ul>
+          <li><strong>Cross-sectional:</strong> many observations of X and Y at the SAME time period (e.g., different companies in 2023). Subscript i = 1, 2, …, n.</li>
+          <li><strong>Time-series:</strong> many observations of X and Y at DIFFERENT time periods for the SAME entity (e.g., monthly returns over 10 years). Subscript t = 1, 2, …, T.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 2: OLS ESTIMATION ══════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>OLS Estimation — Calculating the Coefficients</h2>
+    </div>
+
+    <div class="card">
+      <p>The <span class="highlight">least squares criterion</span> (OLS = Ordinary Least Squares): choose b̂₀ and b̂₁ to minimize the <strong>sum of squared residuals (SSE)</strong> — the sum of the squared vertical distances from each data point to the fitted regression line.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Least Squares Criterion — What We Minimize</div>
+      <div class="f">
+        SSE = Σᵢ(Yᵢ − Ŷᵢ)² = Σᵢ[Yᵢ − (b̂₀ + b̂₁Xᵢ)]² = Σᵢeᵢ²  → MINIMIZE
+      </div>
+      <div class="note">
+        We minimize the sum of SQUARED residuals (not absolute values) for mathematical tractability. Squaring penalizes large deviations more, prevents positive and negative residuals from cancelling, and yields a unique closed-form solution.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">OLS Slope Coefficient (b̂₁) — Equation 5</div>
+      <div class="f">
+        b̂₁ = Covariance(Y, X) / Variance(X)<br><br>
+        b̂₁ = Σᵢ(Yᵢ − Ȳ)(Xᵢ − X̄) / Σᵢ(Xᵢ − X̄)²
+      </div>
+      <div class="note">
+        <strong>Numerator</strong> = sum of cross-products (captures how X and Y move together relative to their means).<br>
+        <strong>Denominator</strong> = variation of X around its mean (sum of squared deviations of X).<br>
+        <strong>Sign rule:</strong> if covariance(Y,X) &gt; 0 → b̂₁ &gt; 0 (positive slope). If covariance &lt; 0 → b̂₁ &lt; 0. Same sign as the correlation r.<br>
+        Difference from correlation: correlation denominator = s_X × s_Y; slope denominator = s²_X (variance of X only).
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">OLS Intercept (b̂₀) — Equation 6</div>
+      <div class="f">
+        b̂₀ = Ȳ − b̂₁X̄
+      </div>
+      <div class="note">
+        Always calculate the slope FIRST, then use it to find the intercept.<br>
+        Important mathematical result: the fitted regression line ALWAYS passes through the point (X̄, Ȳ) — the means of X and Y.<br>
+        <strong>Ȳ</strong> = sample mean of the dependent variable. <strong>X̄</strong> = sample mean of the independent variable.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Fitted (Predicted) Value and Residual</div>
+      <div class="f">
+        Ŷᵢ = b̂₀ + b̂₁Xᵢ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← predicted value of Y for observation i<br>
+        eᵢ = Yᵢ − Ŷᵢ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← residual for observation i<br><br>
+        Key properties: Σeᵢ = 0 (residuals sum to zero) and Ȳ = Ȳ̂ (mean of actual Y = mean of fitted Y)
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 ROA vs. CAPEX — Module Example: Computing the Coefficients</div>
+      <p>n = 6 companies. Dependent variable Y = ROA. Independent variable X = CAPEX.</p>
+      <div class="calc">
+        Cov(Y, X) = Σ(Yᵢ−Ȳ)(Xᵢ−X̄)/(n−1) = 153.30/5 = 30.6600<br>
+        Var(X)    = Σ(Xᵢ−X̄)²/(n−1)       = 122.64/5 = 24.528 → s²_X = 24.528<br><br>
+        b̂₁ = 30.6600 / 24.528 = 1.25  (slope)<br>
+        b̂₀ = Ȳ − b̂₁ × X̄ = 12.5 − 1.25 × 6.1 = 4.875  (intercept)
+      </div>
+      <div class="result">Estimated model: ROA = 4.875 + 1.25 × CAPEX</div>
+      <p>Also: r = Cov(Y,X) / (s_Y × s_X) = 30.66 / (6.9210 × 4.9526) = 0.8945. Check: R² = r² = 0.8945² = 0.8001 ✓</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Slope vs. Correlation — The Key Difference</div>
+      <p>Both b̂₁ and r have the same sign (both determined by the covariance of Y and X). But:<br>
+      <strong>Slope:</strong> b̂₁ = Cov(Y,X) / Var(X) → denominator is variance of X only.<br>
+      <strong>Correlation:</strong> r = Cov(Y,X) / (s_Y × s_X) → denominator is product of BOTH standard deviations.<br>
+      Important link: b̂₁ = r × (s_Y / s_X). Correlation is unit-free (−1 to +1); slope has units of Y per unit of X.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 3: COEFFICIENT INTERPRETATION ══════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Interpreting the Regression Coefficients</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Intercept (b̂₀)</div>
+        <ul>
+          <li>The <strong>predicted value of Y when X = 0</strong>.</li>
+          <li>May or may not be economically meaningful — if X = 0 is unrealistic (e.g., zero money supply), the intercept has no practical interpretation.</li>
+          <li>In ROA example: ROA = 4.875% if CAPEX = 0 (company makes no capital expenditures).</li>
+          <li>With an indicator variable (X = 0 or 1): intercept = mean of Y for the X = 0 group.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Slope (b̂₁)</div>
+        <ul>
+          <li>The <strong>change in Y for a one-unit change in X</strong>.</li>
+          <li>Positive slope → X and Y move in the same direction.</li>
+          <li>Negative slope → X and Y move in opposite directions.</li>
+          <li>In ROA example: a 1% increase in CAPEX → 1.25% increase in ROA.</li>
+          <li>With an indicator variable (X = 0 or 1): slope = difference in means between the X = 1 group and the X = 0 group.</li>
+          <li>Residual units = same units as Y (euros if Y in euros, % if Y in %).</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Indicator (Dummy) Variables as the Independent Variable</h3>
+    <div class="card">
+      <p>An <span class="highlight">indicator variable</span> (dummy variable) takes only the values 0 or 1. Example: EARN = 1 if month has an earnings announcement; EARN = 0 otherwise.</p>
+      <p style="margin-top:10px;"><strong>Model:</strong> RETᵢ = b₀ + b₁EARNᵢ + εᵢ</p>
+      <ul style="padding-left:20px; margin-top:8px; line-height:2.0;">
+        <li><strong>Intercept b̂₀:</strong> predicted Y when X = 0 → mean return for non-earnings-announcement months.</li>
+        <li><strong>Slope b̂₁:</strong> when X changes from 0 to 1 → difference in mean returns between earnings-announcement months and non-earnings-announcement months.</li>
+        <li>Hypothesis test of the slope tests whether there is a statistically significant difference in means between the two groups.</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Intercept May Be Meaningless</div>
+      <p>Always check whether X = 0 is a realistic scenario. If X = GDP growth rate, the intercept (revenue growth when GDP growth = 0%) is meaningful. If X = money supply level, the intercept (Y when money supply = 0) is not realistic and has no meaningful interpretation. The CFA exam often tests whether you recognize when the intercept is or isn't interpretable.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 4: FOUR CLRM ASSUMPTIONS ══════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Four Assumptions of the SLR Model (CLRM)</h2>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: LHIN (or "Learn How It's Normal")</div>
+      <p><strong>L</strong>inearity · <strong>H</strong>omoskedasticity · <strong>I</strong>ndependence · <strong>N</strong>ormality. These four assumptions must hold for OLS estimates to be valid, unbiased, and efficient (BLUE — Best Linear Unbiased Estimator).</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Assumption</th>
+            <th>What It Means</th>
+            <th>How to Detect Violation</th>
+            <th>Consequence of Violation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td style="color:var(--accent); font-weight:700;">Linearity</td>
+            <td>The true relationship between Y and X is linear. X must be non-stochastic (non-random).</td>
+            <td>Residual plot shows a pattern (e.g., curved shape, U-shape) vs. X. Residuals should look random, with no discernible pattern.</td>
+            <td>Model is biased — it over/under-estimates Y at different ranges of X. Invalid results.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td style="color:var(--accent); font-weight:700;">Homoskedasticity</td>
+            <td>Variance of residuals is constant across all observations: E(εᵢ²) = σ²ε for all i.</td>
+            <td>Residual plot shows residuals clustering into groups with different spreads, or a funnel/fan shape. Indicates multiple regimes with different variances.</td>
+            <td>Heteroskedasticity: OLS standard errors are incorrect → t-tests and F-tests are invalid. Coefficients still unbiased but tests are unreliable.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td style="color:var(--accent); font-weight:700;">Independence</td>
+            <td>Observations (Y, X pairs) are independent of each other. Residuals are uncorrelated across observations.</td>
+            <td>Residual plot shows a pattern over time (e.g., seasonal pattern, Q4 spike). Autocorrelation in residuals. Durbin-Watson test.</td>
+            <td>Autocorrelation: parameter variances estimated incorrectly → invalid hypothesis tests. Affects time-series regressions most.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td style="color:var(--accent); font-weight:700;">Normality</td>
+            <td>Regression residuals are normally distributed. (NOT that Y or X must be normal — only the residuals.)</td>
+            <td>QQ-plot of residuals departs from a straight line; histogram of residuals is skewed or fat-tailed. Outliers in data can severely distort the fitted line.</td>
+            <td>t-tests and F-tests may be unreliable for small samples. For large n, CLT allows relaxation of this assumption.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="tip">
+        <div class="tip-label">💡 Reading Residual Plots — What Good Looks Like</div>
+        <p>Plot residuals on the Y-axis vs. the independent variable X on the X-axis. <strong>Good (no violations):</strong> residuals appear random, scattered evenly around zero, no discernible pattern, approximately equal spread across all values of X. <strong>Bad:</strong> any systematic pattern — curved shape (linearity violation), funnel shape widening with X (heteroskedasticity), seasonal pattern (autocorrelation).</p>
+      </div>
+      <div class="warn">
+        <div class="warn-label">⚠️ Heteroskedasticity Regime Example</div>
+        <p>If a regression spans two distinct economic regimes (e.g., normal interest rates vs. QE/artificially low rates), the residuals will have different variances in each regime. This is clearly visible in a residual plot — wider band for one period vs. another. The homoskedasticity assumption is violated. The solution is to model each regime separately.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Normality &amp; Large Samples — CLT to the Rescue</div>
+      <p>The normality assumption is most critical for small samples. For large samples, the Central Limit Theorem guarantees that the sampling distributions of b̂₀ and b̂₁ are approximately normal regardless of the residual distribution. So in large samples, we can often relax the normality requirement and still have valid t-tests and F-tests.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 5: SUMS OF SQUARES ══════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Decomposition of Variation: SST = SSR + SSE</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Fundamental Variance Decomposition</div>
+      <div class="f">
+        SST = SSR + SSE<br><br>
+        SST = Σᵢ(Yᵢ − Ȳ)²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Total variation in Y (total sum of squares)<br>
+        SSR = Σᵢ(Ŷᵢ − Ȳ)²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Explained variation (regression sum of squares)<br>
+        SSE = Σᵢ(Yᵢ − Ŷᵢ)²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Unexplained variation (error/residual sum of squares)
+      </div>
+      <div class="note">
+        <strong>SST</strong> = total variation of Y around its mean. Measures what we're trying to explain.<br>
+        <strong>SSR</strong> = variation of the fitted values (Ŷ) around the mean of Y. Measures how much X explains.<br>
+        <strong>SSE</strong> = variation of actual Y values around the fitted line. Measures what X did NOT explain.<br>
+        Higher SSR / lower SSE → better model fit. Goal: make SSR as large as possible (explain more of SST).
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 ROA Example: Decomposition of Variation</div>
+      <div class="calc">
+        SST = 239.50  ← total variation in ROA we want to explain<br>
+        SSR = 191.63  ← variation explained by CAPEX<br>
+        SSE =  47.88  ← variation NOT explained by CAPEX<br>
+        Check: 191.63 + 47.88 = 239.51 ≈ 239.50 ✓ (rounding)
+      </div>
+      <div class="result">R² = SSR/SST = 191.63/239.50 = 0.8001 → 80.01% of ROA variation explained by CAPEX</div>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: SST = SSR + SSE</div>
+      <p><strong>T = R + E</strong>: <strong>T</strong>otal = <strong>R</strong>egression (explained) + <strong>E</strong>rror (unexplained). Think: "<strong>Total is Really Explained + Errors</strong>." The numerator of R² is SSR (what the Regression explained). The denominator is SST (the Total variation). SSE is what you couldn't explain — the <strong>E</strong>rrors left over.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 6: ANOVA TABLE ══════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>ANOVA Table for Simple Linear Regression</h2>
+    </div>
+
+    <div class="table-wrap anova-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Sum of Squares</th>
+            <th>Degrees of Freedom</th>
+            <th>Mean Square</th>
+            <th>F-Statistic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="anova-row-reg">
+            <td>Regression</td>
+            <td class="mono">SSR = Σ(Ŷᵢ−Ȳ)²</td>
+            <td class="mono">k = 1</td>
+            <td class="mono">MSR = SSR/1 = SSR</td>
+            <td class="mono">F = MSR/MSE</td>
+          </tr>
+          <tr class="anova-row-err">
+            <td>Error</td>
+            <td class="mono">SSE = Σ(Yᵢ−Ŷᵢ)²</td>
+            <td class="mono">n − k − 1 = n − 2</td>
+            <td class="mono">MSE = SSE/(n−2)</td>
+            <td></td>
+          </tr>
+          <tr class="anova-row-tot">
+            <td>Total</td>
+            <td class="mono">SST = Σ(Yᵢ−Ȳ)²</td>
+            <td class="mono">n − 1</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Standard Error of the Estimate (sₑ) — Square Root of MSE</div>
+      <div class="f">
+        sₑ = √MSE = √[ SSE / (n−2) ] = √[ Σ(Yᵢ−Ŷᵢ)² / (n−2) ]
+      </div>
+      <div class="note">
+        Also called: standard error of the regression, root mean square error (RMSE).<br>
+        <strong>Interpretation:</strong> absolute measure of the average distance between actual Y values and the fitted regression line. Units = same as Y.<br>
+        <strong>Lower sₑ → better model fit.</strong> Unlike R², sₑ is an absolute (not relative) measure of fit.<br>
+        Uses n−2 degrees of freedom because two parameters (b₀, b₁) are estimated.<br>
+        Used to: (1) calculate prediction intervals, (2) calculate standard error of slope and intercept, (3) assess goodness of fit.
+      </div>
+    </div>
+
+    <div class="clt-box">
+      <div class="label">ANOVA Table for ROA Example (Module Numbers)</div>
+      <div class="f">
+        Source&nbsp;&nbsp;&nbsp;SS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;&nbsp;&nbsp;MS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F<br>
+        Regression  191.63&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;191.63&nbsp;&nbsp;&nbsp;F = 191.63/11.97 = 16.01<br>
+        Error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47.88&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp; 11.97<br>
+        Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 239.50&nbsp;&nbsp; 5<br><br>
+        sₑ = √11.97 = 3.46 (standard error of the estimate)<br>
+        Critical F(5%, 1, 4) = 7.71. Since 16.01 &gt; 7.71 → Reject H₀: b₁ = 0 ✓
+      </div>
+      <div class="note">
+        Note: n=6, k=1, so df_error = 6−1−1 = 4, df_total = 6−1 = 5. Variance of Y = SST/(n−1) = 239.50/5 = 47.90.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Relationship: t² = F in Simple Linear Regression</div>
+      <p>In SLR, the F-statistic for testing whether b₁ = 0 equals the square of the t-statistic for the same test: <strong>t² = F</strong>. In the ROA example: t = 4.001, F = 16.01, and indeed 4.001² ≈ 16.01. This means the F-test and the t-test on the slope give identical conclusions for SLR. In multiple regression, they can differ.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 7: GOODNESS OF FIT ══════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Goodness of Fit Measures</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">R² (Coefficient of Determination)</div>
+        <p style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:13px; margin-bottom:8px;">R² = SSR/SST = 1 − SSE/SST</p>
+        <ul>
+          <li>Range: 0% to 100%.</li>
+          <li>% of variation in Y explained by X.</li>
+          <li>Descriptive — NOT a statistical test.</li>
+          <li>In SLR: R² = r² (square of Pearson correlation).</li>
+          <li>R² = 0.80 → X explains 80% of variation in Y.</li>
+          <li>Higher R² = better fit. But not sufficient alone.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">F-Statistic (Test of Overall Fit)</div>
+        <p style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:13px; margin-bottom:8px;">F = MSR/MSE = (SSR/1)/(SSE/(n−2))</p>
+        <ul>
+          <li>Tests H₀: b₁ = 0 (slope = 0 → no linear relationship).</li>
+          <li>F-distribution with df = (1, n−2) for SLR.</li>
+          <li>Always right-tail test (rejection region on right).</li>
+          <li>Reject H₀ if F &gt; F_critical.</li>
+          <li>Statistical test (unlike R²).</li>
+          <li>In SLR: F = t² where t is the slope t-statistic.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">sₑ (Standard Error of Estimate)</div>
+        <p style="font-family:'JetBrains Mono',monospace; color:#e8c97a; font-size:13px; margin-bottom:8px;">sₑ = √(SSE/(n−2)) = √MSE</p>
+        <ul>
+          <li>Absolute measure of fit (has units of Y).</li>
+          <li>Average distance of actual Y from the fitted line.</li>
+          <li>Lower sₑ = better fit.</li>
+          <li>Unlike R² and F, not relative — allows direct comparison of models with the same Y variable.</li>
+          <li>Used in prediction intervals and coefficient tests.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: R² is Not a Statistical Test</div>
+      <p>R² tells you <em>how much</em> variation is explained, but it does NOT tell you whether the relationship is statistically significant. A model can have high R² but statistically insignificant slope (e.g., with few observations). Always use the F-statistic or t-test on the slope to determine statistical significance — R² alone is insufficient.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 8: TESTING COEFFICIENTS ══════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Hypothesis Tests on Regression Coefficients</h2>
+    </div>
+
+    <h3>A. Testing the Slope Coefficient (b₁)</h3>
+
+    <div class="formula-box">
+      <div class="label">t-Test for the Slope Coefficient</div>
+      <div class="f">
+        t = (b̂₁ − B₁) / s_b̂₁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n − k − 1 = n − 2<br><br>
+        Standard error of the slope:&nbsp;s_b̂₁ = sₑ / √[Σ(Xᵢ−X̄)²]
+      </div>
+      <div class="note">
+        <strong>b̂₁</strong> = estimated slope from OLS. <strong>B₁</strong> = hypothesized population slope value (often B₁ = 0 to test if relationship exists).<br>
+        <strong>s_b̂₁</strong> = standard error of the slope coefficient. Depends on sₑ (model fit) and Σ(Xᵢ−X̄)² (variation of X).<br>
+        Key insight: <strong>greater variability of X → lower s_b̂₁ → larger t-statistic → easier to reject H₀</strong>. More spread in X gives better ability to estimate the slope.<br>
+        Most common test: H₀: b₁ = 0 vs. Hₐ: b₁ ≠ 0 (two-sided). Can also test one-sided or against non-zero hypothesized value.<br>
+        Note: t-test for slope (H₀: b₁ = 0) and t-test for correlation (H₀: ρ = 0) give the SAME calculated t-statistic in SLR.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 ROA Example: Testing H₀: b₁ = 0 (two-tailed, α = 5%)</div>
+      <p>b̂₁ = 1.25, B₁ = 0 (test if slope differs from zero). df = 6 − 2 = 4. Critical values: ±2.776.</p>
+      <div class="calc">
+        s_b̂₁ = sₑ / √Σ(Xᵢ−X̄)² = 3.46 / √122.64 = 3.46 / 11.074 = 0.312398<br>
+        t = (1.25 − 0) / 0.312398 = 4.001
+      </div>
+      <div class="result">|4.001| &gt; 2.776 → REJECT H₀: b₁ = 0. CAPEX is a significant explanatory variable of ROA.</div>
+      <p>p-value = 0.016. Since 0.016 &lt; 0.05, reject H₀ at 5% significance. R² = 0.8001. F = 16.01 = 4.001² ✓</p>
+    </div>
+
+    <h3>B. Testing the Intercept (b₀)</h3>
+
+    <div class="formula-box">
+      <div class="label">t-Test for the Intercept</div>
+      <div class="f">
+        t = (b̂₀ − B₀) / s_b̂₀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n − 2<br><br>
+        s_b̂₀ = sₑ × √[ 1/n + X̄² / Σ(Xᵢ−X̄)² ]
+      </div>
+      <div class="note">
+        <strong>B₀</strong> = hypothesized population intercept value. Standard error of intercept involves sₑ, the mean of X (X̄), and the variation of X.<br>
+        Less commonly tested than the slope. The intercept test is most meaningful when X = 0 is a realistic scenario.
+      </div>
+    </div>
+
+    <h3>C. Key Relationships Between Tests in SLR</h3>
+    <div class="card">
+      <ul style="padding-left:20px; line-height:2.2;">
+        <li><strong>t-test for slope b₁ = 0</strong> and <strong>t-test for correlation ρ = 0</strong> produce the same calculated t-statistic in SLR. Both use t = r√(n−2)/√(1−r²) with df = n−2.</li>
+        <li><strong>t² = F</strong>: The square of the t-statistic for testing b₁ = 0 equals the F-statistic for the overall regression test in SLR.</li>
+        <li>Both t-test (slope) and F-test (fit) test the same hypothesis in SLR: H₀: b₁ = 0 — they will always agree on accept/reject.</li>
+        <li><strong>p-value</strong> interpretation: if p-value = 0.016, there is a 1.6% probability of observing a test statistic this extreme if H₀ is true. Reject H₀ if p-value &lt; α.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 9: PREDICTION INTERVALS ══════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Prediction and Prediction Intervals</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Point Forecast of Dependent Variable (Equation 23)</div>
+      <div class="f">
+        Ŷf = b̂₀ + b̂₁ × Xf
+      </div>
+      <div class="note">
+        <strong>Xf</strong> = the forecasted (given) value of the independent variable.<br>
+        <strong>Ŷf</strong> = the predicted value of Y for that Xf value.<br>
+        Example (ROA): if CAPEX = 6%, then Ŷf = 4.875 + 1.25 × 6 = 12.375%.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Standard Error of the Forecast (Equation 24)</div>
+      <div class="f">
+        sf = sₑ × √[ 1 + 1/n + (Xf − X̄)² / Σᵢ(Xᵢ−X̄)² ]
+      </div>
+      <div class="note">
+        The "1 +" inside the square root makes sf &gt; sₑ always — a prediction interval is always wider than a confidence interval for the mean of Y at Xf.<br>
+        <strong>Three factors that affect sf:</strong><br>
+        (1) Better model fit (smaller sₑ) → smaller sf → narrower interval.<br>
+        (2) Larger sample size n → smaller sf → narrower interval.<br>
+        (3) Closer Xf to X̄ → smaller sf → narrower interval. Predictions far from X̄ (extrapolation) are less precise.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Prediction Interval for Ŷf</div>
+      <div class="f">
+        Prediction interval = Ŷf ± t_critical(α/2, n−2) × sf
+      </div>
+      <div class="note">
+        t_critical uses df = n − 2 (same as for testing coefficients in SLR).<br>
+        The prediction interval reflects uncertainty from TWO sources: (1) the regression line itself is an estimate (not perfect), and (2) individual Y values scatter around the line (residual variance).<br>
+        A confidence interval for the <em>mean</em> of Y at Xf would use sf without the "1 +" and would be narrower than the prediction interval.
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Calculate the point forecast:</strong> Ŷf = b̂₀ + b̂₁ × Xf using the estimated regression equation.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Choose a significance level α</strong> for the prediction interval (e.g., α = 5% for 95% PI).</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Find t_critical</strong> with df = n−2 at α/2 (two-tailed) from the t-table.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Compute the standard error of the forecast:</strong> sf = sₑ × √[1 + 1/n + (Xf−X̄)²/Σ(Xᵢ−X̄)²].</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Construct the (1−α)% prediction interval:</strong> [Ŷf − t × sf,  Ŷf + t × sf].</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Prediction Interval vs. Confidence Interval</div>
+      <p>A <strong>prediction interval</strong> gives the range for a single new observation of Y (wider). A <strong>confidence interval</strong> for the conditional mean of Y gives the range for the mean of Y at a given X (narrower — no "1 +" term in the variance formula). The exam may ask which is wider or for which situation each is appropriate. Prediction interval is always wider than the corresponding confidence interval for the mean.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 10: FUNCTIONAL FORMS ══════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Functional Forms for Non-Linear Data</h2>
+    </div>
+
+    <div class="card">
+      <p>Not all economic/financial relationships are linear. When the scatter plot or residuals show a non-linear pattern, we can transform the variables using logarithms to apply linear regression. Three common forms — all use the natural log (ln):</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model Name</th>
+            <th>Equation</th>
+            <th>Y Form</th>
+            <th>X Form</th>
+            <th>Slope Interpretation</th>
+            <th>Finance Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lin-Lin (Standard SLR)</td>
+            <td class="mono">Y = b₀ + b₁X</td>
+            <td>Linear</td>
+            <td>Linear</td>
+            <td>Absolute change in Y per 1-unit absolute change in X.</td>
+            <td>Most general cases where relationship is linear.</td>
+          </tr>
+          <tr>
+            <td>Log-Lin</td>
+            <td class="mono">ln Y = b₀ + b₁X</td>
+            <td>Log</td>
+            <td>Linear</td>
+            <td>Relative (%) change in Y per 1-unit absolute change in X. (b̂₁ ≈ % change in Y)</td>
+            <td>Exponential growth (revenues, populations); Y grows at a constant rate per unit X.</td>
+          </tr>
+          <tr>
+            <td>Lin-Log</td>
+            <td class="mono">Y = b₀ + b₁ ln X</td>
+            <td>Linear</td>
+            <td>Log</td>
+            <td>Absolute change in Y per 1% relative change in X. (b̂₁/100 = unit change per 1% change in X)</td>
+            <td>Diminishing returns — operating profit margin vs. log(unit sales); Y grows slowly as X increases.</td>
+          </tr>
+          <tr>
+            <td>Log-Log (Double-Log)</td>
+            <td class="mono">ln Y = b₀ + b₁ ln X</td>
+            <td>Log</td>
+            <td>Log</td>
+            <td>Elasticity: % change in Y per 1% change in X. (b̂₁ = elasticity of Y with respect to X)</td>
+            <td>Elasticity analysis — revenue vs. advertising; b̂₁ = revenue elasticity w.r.t. ad spend.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How to Choose the Right Functional Form</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Examine the scatter plot</strong> of Y vs. X. If it appears non-linear (curved), a log transformation may be appropriate.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Try different functional forms</strong> and compare goodness-of-fit measures: R², F-statistic, and sₑ. Higher R², higher F, lower sₑ → better fit.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Examine residual plots.</strong> The correct model should show random residuals with no pattern. A pattern means the functional form is still misspecified.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Forecasting with log-lin model:</strong> if ln Ŷf = b̂₀ + b̂₁Xf = −2, then Ŷf = e^(−2) = 0.1353. Must back-transform using the antilog (exponential function).</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Cannot Compare R² Across Different Y Forms</div>
+      <p>You <strong>cannot directly compare R² or F-statistic</strong> between a lin-lin model (Y = b₀ + b₁X) and a log-lin model (ln Y = b₀ + b₁X) because the dependent variable is in different forms. To compare these, look at the standard error of the estimate sₑ and residual plots. You CAN compare sₑ between lin-lin and lin-log models (same Y variable). You CANNOT compare sₑ between lin-lin and log-lin models.</p>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: Which Variable is Logged?</div>
+      <p><strong>Log-Lin:</strong> the LOG is the dependent (Y) variable, the LINear is X. So b̂₁ = relative change in Y / absolute change in X. <strong>Lin-Log:</strong> LINear is Y, LOG is X. So b̂₁ = absolute change in Y / relative change in X. <strong>Log-Log:</strong> both logged → b̂₁ = elasticity (relative/relative). The name tells you the order: (Y form)-(X form). Log-Lin = log Y, linear X.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SECTION 11: EXAM CHECKLIST ══════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>SLR model:</strong> Yᵢ = b₀ + b₁Xᵢ + εᵢ. Y = dependent (explained); X = independent (explanatory); ε = error term (population concept). b₀, b₁ are unknown population parameters estimated by b̂₀, b̂₁.</li>
+        <li>✅ <strong>OLS criterion:</strong> minimizes SSE = Σ(Yᵢ−Ŷᵢ)² = Σeᵢ². Fitted line minimizes sum of SQUARED vertical distances to data points.</li>
+        <li>✅ <strong>Slope formula:</strong> b̂₁ = Cov(Y,X)/Var(X) = Σ(Yᵢ−Ȳ)(Xᵢ−X̄) / Σ(Xᵢ−X̄)². Same sign as correlation r. Calculate slope FIRST, then intercept.</li>
+        <li>✅ <strong>Intercept formula:</strong> b̂₀ = Ȳ − b̂₁X̄. The regression line always passes through (X̄, Ȳ). Σeᵢ = 0.</li>
+        <li>✅ <strong>Intercept interpretation:</strong> predicted Y when X = 0. May be meaningless if X = 0 is unrealistic.</li>
+        <li>✅ <strong>Slope interpretation:</strong> change in Y for one-unit change in X. With dummy variable X: slope = difference in group means (X=1 vs X=0).</li>
+        <li>✅ <strong>Four CLRM assumptions (LHIN):</strong> Linearity, Homoskedasticity, Independence, Normality. All concern the RESIDUALS (except linearity which also concerns X being non-random).</li>
+        <li>✅ <strong>Detecting violations via residual plots:</strong> curved pattern = linearity violated; funnel/fan shape = heteroskedasticity; seasonal pattern = autocorrelation; outliers = normality concern.</li>
+        <li>✅ <strong>Heteroskedasticity:</strong> different variance of residuals across observations. Detected by residuals clustering in groups. Makes standard errors invalid even though coefficients are unbiased.</li>
+        <li>✅ <strong>SST = SSR + SSE.</strong> SST = total variation in Y. SSR = explained (by regression). SSE = unexplained (residual). Goal: maximize SSR, minimize SSE.</li>
+        <li>✅ <strong>R² = SSR/SST.</strong> Range 0–100%. In SLR: R² = r² (square of Pearson correlation). Descriptive, NOT a statistical test. Does not confirm statistical significance alone.</li>
+        <li>✅ <strong>F-statistic = MSR/MSE = SSR/(SSE/(n−2)).</strong> Tests H₀: b₁ = 0. F-distribution with df = (1, n−2). Right-tail test only. In SLR: F = t² (where t tests H₀: b₁ = 0).</li>
+        <li>✅ <strong>Standard error of estimate (sₑ):</strong> sₑ = √MSE = √(SSE/(n−2)). Absolute measure of fit in units of Y. Lower sₑ = better fit. Used in prediction intervals and coefficient tests.</li>
+        <li>✅ <strong>t-test for slope:</strong> t = (b̂₁ − B₁)/s_b̂₁, df = n−2. s_b̂₁ = sₑ/√Σ(Xᵢ−X̄)². More variable X → lower s_b̂₁ → larger t-stat. Test for H₀: b₁ = 0 and test for H₀: ρ = 0 give the same t-statistic.</li>
+        <li>✅ <strong>Point forecast:</strong> Ŷf = b̂₀ + b̂₁Xf. Prediction interval: Ŷf ± t(α/2, n−2) × sf. Prediction interval is wider when: Xf far from X̄, small n, large sₑ.</li>
+        <li>✅ <strong>sf &gt; sₑ always</strong> (due to the "1 +" term). Prediction intervals are wider than confidence intervals for the conditional mean of Y.</li>
+        <li>✅ <strong>Log-Lin:</strong> ln Y = b₀ + b₁X → b̂₁ = relative change in Y per absolute change in X. <strong>Lin-Log:</strong> Y = b₀ + b₁ ln X → b̂₁ = absolute change in Y per relative change in X. <strong>Log-Log:</strong> ln Y = b₀ + b₁ ln X → b̂₁ = elasticity (% change in Y per % change in X).</li>
+        <li>✅ <strong>Cannot compare R² across models with different Y forms</strong> (e.g., lin-lin vs. log-lin). Use sₑ and residual plots instead when Y forms differ.</li>
+        <li>✅ <strong>Key to selecting functional form:</strong> examine R², F-statistic, sₑ, and residual plots. Correct form → random residuals, no pattern.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ THE MODEL ═══<br>
+        Population: Yᵢ = b₀ + b₁Xᵢ + εᵢ<br>
+        Estimated:  Ŷᵢ = b̂₀ + b̂₁Xᵢ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eᵢ = Yᵢ − Ŷᵢ (residual)&nbsp;&nbsp;&nbsp;Σeᵢ = 0<br><br>
+
+        ═══ OLS COEFFICIENTS ═══<br>
+        b̂₁ = Σ(Yᵢ−Ȳ)(Xᵢ−X̄) / Σ(Xᵢ−X̄)²&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(slope — compute FIRST)<br>
+        b̂₀ = Ȳ − b̂₁X̄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(intercept — compute SECOND)<br><br>
+
+        ═══ SUMS OF SQUARES ═══<br>
+        SST = Σ(Yᵢ−Ȳ)²&nbsp;&nbsp;&nbsp;df = n−1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(total variation)<br>
+        SSR = Σ(Ŷᵢ−Ȳ)²&nbsp;&nbsp;&nbsp;df = k = 1&nbsp;&nbsp;&nbsp;(explained by regression)<br>
+        SSE = Σ(Yᵢ−Ŷᵢ)²&nbsp;&nbsp;df = n−2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(unexplained / residual)<br>
+        SST = SSR + SSE<br><br>
+
+        ═══ GOODNESS OF FIT ═══<br>
+        R² = SSR/SST = 1 − SSE/SST&nbsp;&nbsp;&nbsp;&nbsp;(In SLR: R² = r²)<br>
+        MSR = SSR/1 = SSR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MSE = SSE/(n−2)<br>
+        F = MSR/MSE&nbsp;&nbsp;&nbsp;df=(1,n−2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(H₀:b₁=0; right-tail; In SLR: F = t²)<br>
+        sₑ = √MSE = √(SSE/(n−2))&nbsp;&nbsp;&nbsp;&nbsp;(standard error of estimate)<br><br>
+
+        ═══ TESTING SLOPE ═══<br>
+        s_b̂₁ = sₑ / √Σ(Xᵢ−X̄)²<br>
+        t = (b̂₁ − B₁) / s_b̂₁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n−2&nbsp;&nbsp;&nbsp;&nbsp;(B₁ = 0 most common)<br>
+        Note: Same t-stat as testing H₀: ρ = 0. In SLR: t² = F.<br><br>
+
+        ═══ TESTING INTERCEPT ═══<br>
+        s_b̂₀ = sₑ × √[1/n + X̄²/Σ(Xᵢ−X̄)²]<br>
+        t = (b̂₀ − B₀) / s_b̂₀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df = n−2<br><br>
+
+        ═══ PREDICTION ═══<br>
+        Ŷf = b̂₀ + b̂₁Xf<br>
+        sf = sₑ × √[1 + 1/n + (Xf−X̄)²/Σ(Xᵢ−X̄)²]<br>
+        PI = Ŷf ± t(α/2, n−2) × sf<br><br>
+
+        ═══ FUNCTIONAL FORMS ═══<br>
+        Lin-Lin: Y = b₀+b₁X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ b₁ = ΔY per ΔX<br>
+        Log-Lin: lnY = b₀+b₁X&nbsp;&nbsp;&nbsp;→ b₁ = %ΔY per ΔX (relative Y, absolute X)<br>
+        Lin-Log: Y = b₀+b₁lnX&nbsp;&nbsp;&nbsp;→ b₁ = ΔY per %ΔX (absolute Y, relative X)<br>
+        Log-Log: lnY = b₀+b₁lnX → b₁ = elasticity (%ΔY / %ΔX)
+      </div>
+      <div class="note">
+        <strong>LHIN assumptions:</strong> Linearity (no pattern in residuals), Homoskedasticity (constant residual variance), Independence (no autocorrelation), Normality (residuals normal — can relax for large n via CLT).<br>
+        <strong>F = t² in SLR;</strong> testing slope = testing correlation = same t-statistic. R² is descriptive, not a test.<br>
+        <strong>Prediction interval &gt; Confidence interval for mean</strong> (extra "1 +" term in sf). Wider when Xf far from X̄, small n, or large sₑ.<br>
+        <strong>Log-Lin: forecast must be back-transformed</strong>: if ln Ŷf = c, then Ŷf = eᶜ. Cannot compare R² across models with different Y forms.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 10: Simple Linear Regression · Exam Prep Notes
+</footer>
+</body>
+</html>

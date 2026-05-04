@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard I(C): Misrepresentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'I(C)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:10rem;font-weight:900;color:rgba(201,168,76,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--accent);border:1px solid rgba(201,168,76,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent);border-color:var(--accent);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:60px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(201,168,76,0.3);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#ddd0a8;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .warn p+p{margin-top:8px;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#e8c97a;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#e8c97a;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD I · MODULE 3</div>
+  <h1>Standard <span>I(C)</span>: Misrepresentation</h1>
+  <p class="subtitle">Covers false or misleading statements, omissions, guaranteed returns, benchmark misuse, social media, plagiarism, cherry-picking composites, third-party research, and ESG misrepresentation. One of the broadest standards — applies to written, oral, and electronic communications across the full range of professional activities. LES + Handbook synthesised.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">The Standard</a>
+  <a class="toc-item" href="#s2">What "Knowingly" Means</a>
+  <a class="toc-item" href="#s3">Forms of Misrepresentation</a>
+  <a class="toc-item" href="#s4">Guaranteed Returns</a>
+  <a class="toc-item" href="#s5">Performance Reporting</a>
+  <a class="toc-item" href="#s6">Omissions</a>
+  <a class="toc-item" href="#s7">Plagiarism Rules</a>
+  <a class="toc-item" href="#s8">Social Media</a>
+  <a class="toc-item" href="#s9">Worked Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>The Standard — Verbatim Text</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard I(C) — Misrepresentation</div>
+    <p>Members and Candidates must not knowingly make any misrepresentations relating to investment analysis, recommendations, actions, or other professional activities.</p>
+  </div>
+  <div class="card">
+    <p>Deceptively short text, very broad scope. The standard covers:</p>
+    <ul>
+      <li>Any <strong>untrue statement</strong></li>
+      <li>Any <strong>omission of a fact</strong> that renders a statement misleading</li>
+      <li>Any statement that is <strong>otherwise false or misleading</strong></li>
+    </ul>
+    <p>Applies to: investment analysis, recommendations, actions, AND other professional activities — covering the full spectrum from research reports to marketing materials to social media posts. Applies in written, electronic, and oral form.</p>
+    <p>The Handbook adds that communications must be <strong>accurate, timely, complete, and in plain language</strong> — all four conditions must be met. Plain language = clear, concise, uses common words, not dominated by technical jargon.</p>
+  </div>
+</div>
+
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>What "Knowingly" Means — And Its Limits</h2></div>
+  <div class="card">
+    <p>"Knowingly" means the member or candidate either <strong>knows</strong> or <strong>should have known</strong> that the misrepresentation was being made or that the omitted information could alter the investment decision-making process. This is an objective "knew or should have known" standard — not a pure subjective intent test.</p>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">✓ Unintentional Error — NOT a Violation</div>
+      <p>Yao (Example 3): typographical error results in composite assets of ¥350B stated instead of ¥35B. Once discovered, he must cease distribution and correct. Because Yao did NOT knowingly make the misrepresentation, no I(C) violation. He must comply with GIPS error correction procedures if firm claims GIPS compliance.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">⚠️ Known Error Not Corrected = Violation</div>
+      <p>Muhammad (Example 4): promotional material incorrectly claims he has a graduate degree he didn't receive. He used this material numerous times over years — he should have known of the misrepresentation. Once a member becomes aware of an error, they must correct it. Best practice: provide correct information to all who received the erroneous material.</p>
+    </div>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — "Should Have Known" Standard</div>
+    <p>The Muhammad example is the classic test: <strong>if you use materials repeatedly over an extended period, you are presumed to have read them and to be aware of what they say.</strong> The "I didn't write it" defence fails if you continued to use and distribute material you should have reviewed. I(C) does not require intent to deceive — it requires that you not <em>knowingly</em> make misrepresentations, and "knowingly" includes situations where you should have known. This is a critical distinction from simple intent-based standards.</p>
+  </div>
+</div>
+
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Forms of Misrepresentation</h2></div>
+  <h3>Misrepresentation of Qualifications and Services</h3>
+  <div class="card">
+    <p>Members must not misrepresent any aspect of their practice, including:</p>
+    <ul>
+      <li>Own qualifications or credentials (degrees, designations, experience)</li>
+      <li>Qualifications or services provided by the firm</li>
+      <li>Performance record — own or the firm's</li>
+      <li>Characteristics of an investment (e.g., calling a non-guaranteed IO "guaranteed by the US government")</li>
+    </ul>
+    <p>The Handbook adds the requirement to use accurate, timely, complete, and plain language. "Plain language" is now explicitly defined: clear, concise, common words, not dominated by technical jargon.</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Handbook-Only: New Example on Service Description (Rogers / Stafford)</div>
+    <p>The Handbook adds Rogers (Example 1): a partner promises "all the financial and investment services you need" to a prospective client when the firm can't provide tax planning. Using vague language that overpromises scope = misrepresentation. Also adds the Stafford/Angelwood (Example 17) scenario: an adviser who states she will be "personally involved in all client work" but increasingly delegates to junior staff and third-party contractors without disclosing this — violates I(C) because communications were not accurate and complete given the changing staffing circumstances.</p>
+  </div>
+
+  <h3>Third-Party Information and External Managers</h3>
+  <div class="card">
+    <p>When members incorporate third-party information (credit ratings, research, testimonials, marketing materials) into their work, misrepresentations resulting from that material become <strong>the member's responsibility</strong>. Using outside managers to invest client assets is acceptable, but members:</p>
+    <ul>
+      <li>Must disclose their intended use of external managers</li>
+      <li>Must NOT represent external managers' investment practices as their own</li>
+      <li>Can distribute third-party research but must not present themselves as the author</li>
+      <li>May add value by aggregating and repackaging research — clients should be informed this is what they are paying for</li>
+    </ul>
+  </div>
+
+  <h3>ESG Misrepresentation — Handbook Addition</h3>
+  <div class="card">
+    <p>The Handbook adds a new category: ESG ("greenwashing") misrepresentation. Lowery (Example 16 Handbook) manages a fund that states in marketing it will conduct "proactive engagement and proxy voting" to create sustainable growth but never actually does either — never publishes engagement reports or communicates proxy voting decisions. <strong>This is a violation of I(C).</strong> Firms describing funds as considering ESG factors must clearly describe what that means and must not overstate sustainability, social impact, or governance credentials. Actions must match stated policies.</p>
+  </div>
+
+  <h3>AI-Assisted Misrepresentation — Handbook Addition</h3>
+  <div class="card">
+    <p>Al-Wazir (Example 20 Handbook): a sovereign wealth fund asks for a narrative on how the investment manager uses AI. Al-Wazir's firm is just beginning to explore AI but wants to appear competitive. He uses ChatGPT to complete the AI section of the RFP, misrepresenting his firm's AI capabilities. <strong>Two violations:</strong> (1) misrepresenting the firm's capabilities relating to AI, (2) using AI to generate a response that hides his superficial knowledge of the topic. Using AI to mask ignorance and appear more knowledgeable than one is = misrepresentation of professional competence.</p>
+  </div>
+</div>
+
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Guaranteed Returns — An Absolute Prohibition</h2></div>
+  <div class="warn">
+    <div class="warn-label">⚠️ Guaranteeing Returns = Always a Violation</div>
+    <p>Standard I(C) prohibits members and candidates from <strong>guaranteeing clients any specific return on volatile investments</strong>. This includes guaranteeing a rate of return AND guaranteeing preservation of principal. Examples of prohibited statements:</p>
+    <p>"I can guarantee that you will earn 8% on equities this year."</p>
+    <p>"I can guarantee that you will not lose money on this investment."</p>
+    <p>"You will make up the loss with better investment returns from the AKC product." (Lee vignette, Module 5)</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 When "Guarantee" Is Acceptable</div>
+    <p>I(C) does NOT prohibit members from discussing investment products that have <strong>guarantees built into the product structure</strong> — for example, a capital-protected structured product or a FDIC-insured bank deposit (Abdrabbo example: using "guaranteed" for FDIC-insured certificates of deposit within the insured limit is appropriate, but must explain the facts to clients). The distinction: the guarantee must be contractually real and properly described — not an analyst's promise about future market performance.</p>
+  </div>
+</div>
+
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>Performance Reporting Misrepresentations</h2></div>
+  <div class="card">
+    <p>Several distinct categories of performance misrepresentation are covered:</p>
+  </div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Benchmark Selection</div>
+      <p>Selecting benchmarks not comparable to the strategy = misrepresentation. Must select the most appropriate benchmark. If no appropriate benchmark exists (e.g., hedge fund using "cash plus"), must disclose why and discuss with clients what benchmark to use for evaluation.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Valuation Shopping</div>
+      <p>For illiquid/non-traded securities where multiple valuations are available: switching pricing providers solely to get higher valuations misrepresents security worth and leads to overcharging advisory fees. Must provide consistent pricing. Provider changes must not be motivated solely by higher reported values.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Cherry-Picking Composites</div>
+      <p>Selecting only the best-performing accounts for a composite, or excluding accounts that underperformed, misrepresents the firm's track record. Palmer (Example 14/Handbook) excludes underperforming accounts from composites presented to databases. This is a clear violation — must reflect all appropriately defined accounts.</p>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Out-of-Date Performance Information (Finch Example)</div>
+    <p>Finch (Example 15) knows a fund fact sheet is outdated — a long-only fund approved significant leverage that isn't reflected in the fact sheet. He continues to distribute it because "the bank has no control over the marketing material released by mutual fund firms." <strong>This is a violation.</strong> Even if the member didn't create the outdated material, continuing to distribute information they know is inaccurate = I(C) violation. The solution: instruct the sales team to clarify deficiencies with clients and ensure they have the most recent fund documents before accepting orders.</p>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Huggins Example (Handbook-Only): Dated Performance History</div>
+    <p>Huggins publishes five-year performance history on his website but doesn't update it to reflect pandemic-period underperformance. The performance data is technically accurate (it is his five-year history) but <strong>selective in timing</strong> — presenting it creates a false impression. Violation: I(C) requires not just accuracy but also timeliness. Performance information on a website must be kept current. Letting outdated favourable performance sit on a website without updating = misleading by omission.</p>
+  </div>
+</div>
+
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Omissions</h2></div>
+  <div class="card">
+    <p>An omission of a fact can be as misleading as a false statement. Key omission scenarios:</p>
+    <ul>
+      <li><strong>Model inputs:</strong> When inputs to quantitative models are knowingly omitted, the resulting outputs may provide misleading information. Model outputs must not be presented as facts — they are expected results based on inputs and analysis.</li>
+      <li><strong>Composite cherry-picking:</strong> Omitting any accounts appropriate for the defined composite may misrepresent the success of the manager's strategy implementation.</li>
+      <li><strong>Negative scenarios:</strong> An analysis that fails to include potentially negative outcomes or levels of risk outside the norm may not accurately measure the true economic value of an investment.</li>
+      <li><strong>Predecessor performance:</strong> Presenting prior-entity performance history without disclosing it came from a prior entity/different fund structure = misleading omission. (Jergenn vignette, Module 5)</li>
+    </ul>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Hamilton / Insufficient Information (Handbook-Only)</div>
+    <p>Hamilton (Example 19 Handbook) provides general research to potential investors showing the ESG fund's process — but the materials provided to potential investors are less detailed than materials given to committed investors. After committing $50M, a foundation's CIO is unhappy that the fund is overweighted in developing technology, making it riskier than indicated in the general materials. <strong>The violation:</strong> while it may be appropriate to limit information provided to non-clients vs. clients, limiting information cannot rise to the level of misrepresenting the nature or risks of the investment. The general materials did not adequately convey the technology concentration and associated risk.</p>
+  </div>
+</div>
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Plagiarism — Rules and Exceptions</h2></div>
+  <div class="card">
+    <p>Plagiarism is copying or using in substantially the same form materials prepared by others <strong>without acknowledging the source</strong>. Members must not copy (or represent as their own) original ideas or material without permission, and must acknowledge and identify the source of ideas or material that is not their own.</p>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Forms of Plagiarism</div>
+      <ul>
+        <li>Copying a report/study, changing the names, releasing as own original analysis</li>
+        <li>Using excerpts from articles verbatim or with slight changes without acknowledgment</li>
+        <li>Citing quotations as "leading analysts" without naming specific references</li>
+        <li>Using statistical estimates from others without citing AND without their caveats/qualifications</li>
+        <li>Using charts and graphs without stating sources</li>
+        <li>Copying proprietary computerised spreadsheets or algorithms without authorisation</li>
+        <li>Testing a model (with minor modifications) heard at a seminar and presenting the model as a new discovery (Browning example)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">NOT Plagiarism</div>
+      <ul>
+        <li>Distributing third-party research as long as you don't represent yourself as its author and clients are informed</li>
+        <li>Using research conducted by others in the SAME FIRM without attribution — if they have left, the firm owns their work and can continue to use it (but cannot reissue it solely under a new name)</li>
+        <li>Using well-known public domain information with proper attribution</li>
+        <li>Citing the original source (not an intermediary) after independently obtaining and verifying the information</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Citing Sources — Go to the Primary</div>
+    <p>Schneider (Example 10/11) reads about a CFA Institute study in the Financial Times and wants to cite it. <strong>Best practice: obtain the study directly from CFA Institute, review it, cite only that author.</strong> If using the FT's interpretation without obtaining the original, must cite both the FT and CFA Institute. If the FT's version contains errors and Schneider copies them without attributing the original, she risks a misrepresentation violation. Key rule: if you cite, cite the primary source — not the intermediary that told you about it.</p>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Browning (Quantitative Model Plagiarism)</div>
+    <p>Browning attends a seminar where Jorrely presents his new model in detail. Browning tests the model with minor changes, produces positive results, and tells his firm he has "discovered a new model." <strong>Violation:</strong> even though Browning conducted his own testing and made minor modifications, he must acknowledge Jorrely as the original source of the innovative thinking. Browning can take credit for the practical test results and his own modifications — but the conceptual innovation belongs to Jorrely. The test: is the underlying idea yours? If not, attribute it.</p>
+  </div>
+  <div class="warn">
+    <div class="warn-label">⚠️ Plagiarism in Oral Communications</div>
+    <p>I(C) applies to plagiarism in oral communications too — group meetings, client visits, audio/video media, and electronic data transfer. Using undocumented forecasts, earnings projections, or asset values from others in verbal recommendations without attribution = plagiarism even if nothing is written down.</p>
+  </div>
+</div>
+
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Social Media</h2></div>
+  <div class="card">
+    <p>Communications through social media platforms must provide <strong>only the same information</strong> members are allowed to distribute to clients through traditional channels. Key principles:</p>
+    <ul>
+      <li>The online/interactive nature of social media does NOT remove the need to be open and honest</li>
+      <li>Perceived anonymity through social media platforms does NOT permit misrepresenting qualifications, abilities, or investment recommendations</li>
+      <li>Members and candidates must regularly monitor materials posted on websites and social media to ensure they contain current and accurate information</li>
+      <li>Websites must be protected against integrity and security breaches; must not misrepresent any information; must provide full disclosure</li>
+      <li>Actions through social media that knowingly misrepresent investment recommendations or professional activities = I(C) violation</li>
+    </ul>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Brodeur (Social Media Misrepresentation, Module 5 LES)</div>
+    <p>Brodeur (CFA, CEO of LeTour electric cars) posts on pre-disclosed social media: "Considering taking LeTour private at $420/share. Funding is secure." The $420 was a joke, no deal agreed, no advisers retained, only a vague SWF conversation. <strong>Violation of I(C)</strong> — Brodeur knew or should have known the statements were false and misleading. The social media platform was pre-disclosed as a company communication channel — the same honesty standards apply as for any formal investor communication. "Secure funding" when no deal exists is a misrepresentation regardless of the informal medium.</p>
+  </div>
+</div>
+
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Worked Examples — Selected Key Scenarios</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES) / Example 6 (Handbook)</div><div class="ex-title">Marks — "Guaranteed by the US Government" for IOs</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Marks sells interest-only strips (mortgage-backed derivatives) to public pension plans and describes them as "guaranteed by the US government." Only the underlying mortgages are guaranteed — not the investor's investment or the interest stream. When prepayments increase, investors lose money.</div>
+      <div class="ex-verdict"><strong>Violation of I(C).</strong> Misrepresenting the terms and character of the investment. The IOs are not guaranteed — the guarantee on the underlying mortgages does not pass through to the interest stream.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>If a product has a feature that sounds like a guarantee but actually isn't one, stating it "is guaranteed" = misrepresentation. A guarantee must attach to the actual investment, not just something the investment is related to.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6 (LES) / Example 7 (Handbook)</div><div class="ex-title">Abdrabbo — "Guaranteed" for FDIC-Insured Deposits</div><div class="ex-tag"><span class="tag tag-green">ACCEPTABLE (WITH CONDITIONS)</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Abdrabbo advises high-net-worth individuals approaching retirement to move part of their investments into bank-sponsored CDs and money market accounts, telling them the principal will be "guaranteed" up to a certain amount.</div>
+      <div class="ex-verdict"><strong>Acceptable</strong> — within FDIC insured limits, these accounts ARE insured by the US government. Using "guaranteed" in this context is not inappropriate, BUT Abdrabbo must explain the specific facts: the FDIC limit, the risk if the institution goes bankrupt, and that the interest is not guaranteed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Contrast with Marks: the guarantee here is real (FDIC) and applies to the actual principal within the insured limit. "Guaranteed" is accurate — but must be accompanied by a complete explanation of exactly what is and isn't guaranteed.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7 (LES) / Example 8 (Handbook)</div><div class="ex-title">Swanson — "Use the Davis Report, Change a Few Words"</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Swanson is given the Davis report prepared for a competing firm. His partner instructs him: "use the Davis report, change a few words, sign your name, and get it out."</div>
+      <div class="ex-verdict"><strong>Violation of I(C)</strong> if Swanson complies. He could reference portions of the Davis report he agrees with — IF he identifies Davis as the source — and then add his own analysis and conclusions before signing. Simply changing a few words and signing = plagiarism.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The employer's instruction does not justify plagiarism. The compliant alternative: cite the Davis report for the parts you agree with, add your own work on top. This is not plagiarism — it is legitimate use with attribution.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 12 (LES) / Example 13 (Handbook)</div><div class="ex-title">Stafford — Risk Misrepresentation in Offshore Products</div><div class="ex-tag"><span class="tag tag-red">MUST ESCALATE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Stafford manages a pool of assets for Open Air Bank, which distributes the structured securities to offshore clients. Open Air promotes the securities as much less risky than Stafford's actual management policy, and has procured an independent rating that significantly overstates quality. Stafford's supervisor says "Open Air owns it, disclosure is on page 184."</div>
+      <div class="ex-verdict"><strong>Stafford must continue to pursue the issue</strong> through Appleton's compliance and management channels. As a member of the investment team, Stafford is qualified to recognise the inaccuracy. He cannot be part of promoting, recommending, or distributing information about securities he considers misleading.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Two violations in the supervisor's response: (1) "Open Air owns the product" does not absolve Appleton from responsibility for misrepresentations in products it manages. (2) "Risks are disclosed at the bottom of page 184" — a disclosure buried in a 184-page document is not adequate disclosure. Must be prominent and in plain language. Stafford must escalate through internal channels.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 16 (LES) / Adapted</div><div class="ex-title">Anderson — Overemphasis on One Fund's Results</div><div class="ex-tag"><span class="tag tag-yellow">POTENTIAL VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Optima Asset Management offers 8 funds; 7 of 8 had 10-year returns below the sector median. Anderson approves an advertisement stating: "Optima is achieving excellent returns for its investors. The Optima Emerging Markets Equity fund has 10-year returns exceeding the sector median by more than 10%."</div>
+      <div class="ex-verdict">The LES answer is nuanced: it is <strong>difficult to determine</strong> whether a violation has occurred. If the sector outperformance cited is factually correct, that claim alone may not be a violation. However, the statement that Optima "is achieving excellent returns" when 7 of 8 funds are below median is potentially misleading by implication — cherry-picking the one successful fund to create a false impression of firm-wide excellence.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Using a single fund's performance to represent firm-wide performance is problematic unless that fund accurately reflects the firm's overall ability. Marketing must not create false impressions by selective emphasis — even when the individual claims made are technically accurate.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">★</span><h2>Exam Checklist — Standard I(C): Misrepresentation</h2></div>
+
+  <div class="card" style="border-color:rgba(155,127,212,0.3);">
+    <ul class="checklist">
+      <li>✅ <strong>Definition:</strong> Any untrue statement, omission of a fact, or statement that is otherwise false or misleading — in written, electronic, or oral form.</li>
+      <li>✅ <strong>"Knowingly" = knows OR should have known.</strong> Not pure subjective intent. Using materials you should have reviewed = knowingly if errors are discoverable.</li>
+      <li>✅ <strong>Unintentional errors:</strong> Not a violation IF promptly corrected once discovered. Must cease distribution and inform all who received the erroneous information.</li>
+      <li>✅ <strong>Known errors not corrected = violation.</strong> Must correct and (best practice) inform all recipients of the correction.</li>
+      <li>✅ <strong>Guaranteeing returns = always a violation</strong> for volatile investments. Applies to both guaranteed rate of return AND guaranteed preservation of principal.</li>
+      <li>✅ <strong>Exception for structured guarantees:</strong> May describe product guarantees that are contractually real (FDIC insurance, capital-protected structures) — but must explain what is and isn't covered.</li>
+      <li>✅ <strong>Benchmark misrepresentation:</strong> Selecting benchmarks not comparable to the strategy = misrepresentation. Must use most appropriate benchmark; disclose when none is appropriate.</li>
+      <li>✅ <strong>Valuation shopping:</strong> Switching pricing providers solely to get higher valuations = misrepresentation. Must maintain consistency in pricing methodology.</li>
+      <li>✅ <strong>Cherry-picking composites:</strong> Selecting only best-performing accounts to present as representative of strategy = I(C) violation.</li>
+      <li>✅ <strong>Out-of-date information:</strong> Continuing to distribute/display information known to be outdated = I(C) violation. Must keep materials current.</li>
+      <li>✅ <strong>Third-party materials:</strong> If you incorporate third-party material into your work and it contains errors, those errors become your responsibility. Must verify before using.</li>
+      <li>✅ <strong>Distributing third-party research:</strong> Acceptable as long as you do NOT present yourself as the author and clients are informed you are aggregating/repackaging research.</li>
+      <li>✅ <strong>External manager usage:</strong> Must disclose use of external managers; must not present their practices as your own.</li>
+      <li>✅ <strong>Omissions = misrepresentation.</strong> Failing to disclose negative outcomes in model analysis, cherry-picking positive scenarios, failing to include caveats from cited sources — all are violations.</li>
+      <li>✅ <strong>Plagiarism:</strong> Must acknowledge and identify source of ideas and material that is not your own. Applies to written AND oral communications.</li>
+      <li>✅ <strong>Testing someone else's model + minor modifications ≠ own model.</strong> Must attribute conceptual innovation to original source; can take credit for practical test results.</li>
+      <li>✅ <strong>Same-firm research:</strong> May use without attribution if original analyst has left — firm owns the work. Cannot reissue previously released report solely under a new name.</li>
+      <li>✅ <strong>Social media = same standards as traditional communications.</strong> Perceived anonymity does not permit misrepresentation. Must monitor and keep online content current.</li>
+      <li>✅ <strong>ESG misrepresentation (greenwashing):</strong> Stating a fund will conduct engagement/proxy voting when it actually doesn't = I(C) violation. Actions must match stated policies.</li>
+      <li>✅ <strong>AI-assisted misrepresentation:</strong> Using AI to generate responses that overstate knowledge or capabilities = I(C) violation.</li>
+      <li>✅ <strong>Predecessor performance:</strong> Must clearly disclose when performance history comes from a prior entity or different fund structure.</li>
+      <li>✅ <strong>Simulated performance:</strong> Must clearly disclose that results are simulated/back-tested, not actual historical performance.</li>
+      <li>✅ <strong>Buried disclosures don't cure misrepresentation.</strong> Disclosures must be prominent and in plain language — page 184 of a prospectus is not adequate.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ I(C) QUICK REFERENCE</div>
+    <div class="f">
+      DEFINITION:           Untrue statement / material omission / false or misleading statement<br>
+      SCOPE:                Written + electronic + oral; professional activities broadly<br>
+      KNOWINGLY:            Knows OR should have known — objective test<br>
+      UNINTENTIONAL:        Not a violation if corrected promptly; must correct and notify<br>
+      KNOWN ERROR:          Must correct; failing to correct = violation<br><br>
+      GUARANTEED RETURNS:   ALWAYS a violation for volatile investments<br>
+      STRUCTURAL GUARANTEE: OK if contractually real (FDIC, capital protection) with full explanation<br><br>
+      BENCHMARK:            Most appropriate available; disclose when none; no misleading comparison<br>
+      VALUATION SHOPPING:   Cannot switch providers solely for higher valuations<br>
+      CHERRY-PICKING:       Cannot select best-performing accounts for composite presentation<br>
+      OUT-OF-DATE:          Must keep materials current — continuing to use outdated = violation<br><br>
+      PLAGIARISM:           Must acknowledge source of ideas/materials not your own<br>
+      ORAL PLAGIARISM:      Applies to verbal communications too, not just written<br>
+      SAME-FIRM WORK:       Firm owns it; can use without attribution; cannot reissue under new name<br>
+      3RD-PARTY RESEARCH:   Can distribute if not presented as own work; disclose source<br><br>
+      ESG:                  Actions must match stated policies; no greenwashing<br>
+      AI:                   Cannot use AI to overstate capabilities or mask ignorance<br>
+      SOCIAL MEDIA:         Same standards as traditional channels; monitor and keep current
+    </div>
+    <div class="note">
+      <strong>Top I(C) exam traps:</strong><br>
+      (1) "I didn't create the material, I just distributed it" — distributing material you know is inaccurate = your violation<br>
+      (2) "I didn't intentionally misrepresent" — intent is not required; "should have known" standard applies<br>
+      (3) "The guarantee was disclosed in the prospectus" — description of what IS and ISN'T guaranteed must be prominent, not buried<br>
+      (4) "I tested the model and made some changes, so it's my model now" — must still attribute conceptual innovation to original creator<br>
+      (5) "We use the benchmark we've always used" — must use the most appropriate benchmark, not just any benchmark<br>
+      (6) "The performance is accurate" — accuracy alone insufficient; must be fair, accurate, AND complete<br>
+      (7) "The fund says it considers ESG factors" — must actually implement the described ESG process, not just claim to
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard I(C): Misrepresentation · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

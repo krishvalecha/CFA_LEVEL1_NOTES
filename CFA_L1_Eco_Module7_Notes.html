@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 7: Capital Flows & the FX Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;
+    --accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;
+    --purple:#9a7fdc;--teal:#4cb8c9;--orange:#d4824a;
+    --text:#e8eaf0;--muted:#8892a4;
+    --tip-bg:#1a2218;--tip-border:#4cc98a;
+    --warn-bg:#221a18;--warn-border:#c94c4c;
+    --formula-bg:#12151f;--formula-border:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0a1220 40%,#0d1410 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(76,139,201,0.08) 0%,transparent 70%);border-radius:50%;}
+  .badge{display:inline-block;background:rgba(76,139,201,0.12);color:var(--accent2);border:1px solid rgba(76,139,201,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent2);}
+  .page-header p{color:var(--muted);font-size:14px;max-width:640px;}
+
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+  .toc-item:hover{color:var(--accent2);border-color:var(--accent2);}
+
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent2);background:rgba(76,139,201,0.1);border:1px solid rgba(76,139,201,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:24px 0 12px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px;}
+  .card p,.card li{color:var(--text);font-size:15px;}
+  .card ul,.card ol{padding-left:20px;}
+  .card ul li,.card ol li{margin-bottom:6px;}
+
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .formula-box .f{color:#e8c97a;font-size:15px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.65;}
+
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .tip .tip-label{font-weight:700;color:var(--accent3);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .tip p{color:#c8e8d4;}
+
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:14px;}
+  .warn .warn-label{font-weight:700;color:var(--danger);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .warn p{color:#e8c8c8;}
+
+  .mnemonic{background:#1a1628;border:1px solid #3d2f6e;border-radius:6px;padding:16px 20px;margin:14px 0;}
+  .mnemonic .m-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#a98adc;margin-bottom:6px;}
+  .mnemonic p{color:#d8ccf0;font-size:14px;margin:0;}
+
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  thead th{background:rgba(76,139,201,0.1);color:var(--accent2);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--accent2);}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  tbody td{padding:10px 14px;color:var(--text);vertical-align:top;}
+  tbody td:first-child{font-weight:700;color:var(--accent2);}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mini-card .mc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .mini-card ul{padding-left:18px;}
+  .mini-card ul li{font-size:14px;margin-bottom:5px;color:var(--text);}
+
+  /* Participant cards */
+  .participant-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0;}
+  .pc{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px 16px;}
+  .pc .pc-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent);margin-bottom:6px;}
+  .pc p{font-size:13.5px;color:var(--text);margin:0;}
+  @media(max-width:640px){.participant-grid{grid-template-columns:1fr;}}
+
+  /* Regime ladder */
+  .regime-list{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+  .rl-row{display:flex;align-items:stretch;}
+  .rl-label{min-width:48px;background:rgba(76,139,201,0.1);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;color:var(--accent2);border:1px solid var(--border);border-right:none;padding:0 8px;text-align:center;writing-mode:horizontal-tb;flex-shrink:0;}
+  .rl-content{flex:1;background:var(--card);border:1px solid var(--border);border-left:none;padding:10px 16px;}
+  .rl-row:not(:last-child) .rl-content,.rl-row:not(:last-child) .rl-label{border-bottom:none;}
+  .rl-row:first-child .rl-label{border-radius:6px 0 0 0;}
+  .rl-row:first-child .rl-content{border-radius:0 6px 0 0;}
+  .rl-row:last-child .rl-label{border-radius:0 0 0 6px;}
+  .rl-row:last-child .rl-content{border-radius:0 0 6px 0;}
+  .rl-title{font-weight:700;color:#fff;font-size:14px;}
+  .rl-desc{font-size:13px;color:var(--muted);margin-top:3px;}
+  .rl-eg{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--accent3);margin-top:3px;}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  p{margin-bottom:12px;}
+  strong{color:#fff;font-weight:700;}
+  em{color:var(--accent2);font-style:normal;font-weight:600;}
+
+  .worked{background:#121820;border:1px solid #1e2a40;border-radius:6px;padding:18px 22px;margin:14px 0;}
+  .worked .w-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
+  .worked p{font-size:14px;color:var(--text);margin-bottom:8px;}
+  .worked .result{color:var(--accent3);font-weight:700;font-size:15px;}
+  .worked .f{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:14px;}
+
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 48px;font-size:12px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 7: <span>Capital Flows &</span><br>the FX Market</h1>
+  <p>Exam-ready notes covering the FX market, nominal vs. real exchange rates, percentage change calculations, exchange rate regimes (8 types), trade balance identity, and capital restrictions.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · FX Market Basics</a>
+  <a href="#s2" class="toc-item">02 · Nominal vs. Real ER</a>
+  <a href="#s3" class="toc-item">03 · % Change Calculations</a>
+  <a href="#s4" class="toc-item">04 · Market Participants</a>
+  <a href="#s5" class="toc-item">05 · Exchange Rate Regimes</a>
+  <a href="#s6" class="toc-item">06 · Trade Balance Identity</a>
+  <a href="#s7" class="toc-item">07 · Capital Restrictions</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: FX MARKET BASICS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>FX Market Basics & Quoting Conventions</h2>
+    </div>
+
+    <h3>Key Facts About the FX Market</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;">
+        <li style="margin-bottom:6px;"><strong>Largest market in the world</strong> — daily turnover ~USD 6.6 trillion (2019); ~10–15× global fixed-income; ~50× global equities</li>
+        <li style="margin-bottom:6px;">Operates <strong>24 hours a day</strong> every business day — truly global via electronic networks</li>
+        <li style="margin-bottom:6px;">Facilitates international trade AND cross-border capital flows</li>
+        <li style="margin-bottom:6px;">Regulated by the <strong>Bank for International Settlements (BIS)</strong> which conducts a Triennial Survey. In 2017, the Global Foreign Exchange Committee (GFXC) established the voluntary <em>FX Global Code</em> for best practices.</li>
+        <li style="margin-bottom:6px;">FX market composition: Spot transactions + Forward transactions + FX Swaps (largest daily volume) + Exchange-traded derivatives</li>
+      </ul>
+    </div>
+
+    <h3>Exchange Rate Quoting — A/B Convention</h3>
+    <div class="formula-box">
+      <div class="label">Exchange Rate Convention</div>
+      <div class="f">A/B = number of units of currency A per ONE unit of currency B</div>
+      <div class="note">
+        A = Price currency (quote currency) &nbsp;|&nbsp; B = Base currency (always = 1 unit)<br>
+        Example: USD/EUR = 1.1700 → 1 euro buys 1.1700 US dollars<br>
+        EUR is the base currency; USD is the price currency<br>
+        <strong>In a/b notation, the BASE currency is second (denominator), PRICE currency is first (numerator)</strong>
+      </div>
+    </div>
+
+    <h3>Direct vs. Indirect Quotes</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Direct Quote</div>
+        <ul>
+          <li>Domestic currency = <strong>Price currency</strong> (numerator)</li>
+          <li>Foreign currency = Base currency</li>
+          <li>Example for Paris-based trader: EUR/GBP (euros per pound)</li>
+          <li>EUR/GBP = 1.1211 → GBP1 costs EUR1.1211</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Indirect Quote</div>
+        <ul>
+          <li>Domestic currency = <strong>Base currency</strong> (denominator)</li>
+          <li>Foreign currency = Price currency</li>
+          <li>Example for Paris-based trader: GBP/EUR (pounds per euro)</li>
+          <li>GBP/EUR = 0.8920 → EUR1 costs GBP0.8920</li>
+          <li>Direct and indirect are simply <strong>reciprocals</strong> of each other</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Market Hierarchy for Base Currency (Professional FX)</h3>
+    <div class="card">
+      <ol style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;">EUR is base currency in any pair involving it (e.g., GBP/EUR, USD/EUR)</li>
+        <li style="margin-bottom:6px;">GBP is base currency if EUR is not in the pair (e.g., USD/GBP, CAD/GBP)</li>
+        <li style="margin-bottom:6px;">USD is base currency if neither EUR nor GBP is in the pair (e.g., CAD/USD, JPY/USD)</li>
+        <li style="margin-bottom:6px;"><strong>Exception:</strong> AUD and NZD serve as base against USD (USD/AUD, USD/NZD)</li>
+      </ol>
+    </div>
+
+    <h3>Bid/Offer Spread</h3>
+    <div class="card">
+      <p>Banks quote a <strong>two-sided price</strong>: Bid (bank buys base currency at lower price) / Offer or Ask (bank sells base currency at higher price).</p>
+      <p>Example: CHF/EUR = 1.1583 – 1.1585. Client sells EUR1 and receives CHF1.1583; client buys EUR1 and pays CHF1.1585. Bank buys low, sells high — the spread is the bank's profit margin.</p>
+      <p>Electronic dealing systems have compressed bid/offer spreads to very tight levels through global competition.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Base Currency Identification</div>
+      <p>In the notation A/B, B is the BASE currency (set at 1 unit) and A is the PRICE currency. When the quote says "GBPJPY," GBP is the BASE and JPY is the price — so the actual number is JPY per GBP (JPY/GBP). The base currency is listed FIRST in the name/code but is SECOND in the ratio. This reversal trips up many candidates.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: NOMINAL VS REAL EXCHANGE RATE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Nominal vs. Real Exchange Rates</h2>
+    </div>
+
+    <h3>Nominal Exchange Rate</h3>
+    <div class="card">
+      <p>The <strong>nominal exchange rate</strong> is the price of one currency in terms of another — the rate that is actually quoted and traded in the FX market (e.g., USD/EUR = 1.1700).</p>
+    </div>
+
+    <h3>Real Exchange Rate</h3>
+    <div class="card">
+      <p>The <strong>real exchange rate</strong> adjusts the nominal rate for differences in price levels (inflation) between two countries. It measures <em>relative purchasing power</em> — how many real foreign goods you can buy with domestic currency.</p>
+      <p>Real exchange rates are <strong>NOT quoted or traded</strong> in FX markets — they are analytical indexes created by economists and analysts to understand international competitiveness.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Real Exchange Rate Formula</div>
+      <div class="f">Real ER(d/f) = Nominal Spot(d/f) × (Pf / Pd)</div>
+      <div class="note">
+        d = domestic currency (price currency in d/f notation)<br>
+        f = foreign currency (base currency)<br>
+        Pf = foreign price level &nbsp;|&nbsp; Pd = domestic price level (CPI or similar)<br><br>
+        Intuition: If foreign prices rise OR nominal exchange rate rises (domestic currency weakens) → Real ER rises → you can buy FEWER foreign goods → lower real purchasing power
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Approximate % Change in Real Exchange Rate</div>
+      <div class="f">%ΔReal ER ≈ %ΔNominal ER + %ΔPf − %ΔPd</div>
+      <div class="note">
+        (Exact formula multiplies the three factors: (1 + %ΔS) × (1 + %ΔPf)/(1 + %ΔPd) − 1)<br>
+        For small changes, the approximation works well.
+      </div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — Real Exchange Rate Change (UK/Eurozone)</div>
+      <p><strong>Given:</strong> GBP/EUR nominal spot ↑ 10%, Eurozone CPI ↑ 5%, UK CPI ↑ 2%</p>
+      <p class="f">%ΔReal ER ≈ 10% + 5% − 2% = 13%</p>
+      <p class="result">→ Real ER rose 13% → UK purchasing power for Eurozone goods declined ~13% → Eurozone goods are more expensive in real terms</p>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — India/US Real Exchange Rate (2018)</div>
+      <p><strong>Given:</strong> INR/USD nominal spot ↑ 6.7% (USD appreciated), US inflation 2.5%, India inflation 4.7%</p>
+      <p class="f">%ΔReal ER ≈ 6.7% + 2.5% − 4.7% ≈ 4.5%</p>
+      <p class="result">→ Real ER rose only ~4.5% despite nominal ↑ of 6.7% because India's higher inflation partially offset the nominal weakness → India's real purchasing power in USD terms declined.</p>
+    </div>
+
+    <h3>Purchasing Power Parity (PPP)</h3>
+    <div class="card">
+      <p><strong>PPP theory:</strong> Nominal exchange rates adjust in the long run so that identical goods (or standardized baskets) have the same price in different markets (law of one price extended to currencies).</p>
+      <p><strong>In practice:</strong> PPP is a <em>poor predictor</em> of nominal exchange rate movements because: goods are not identical across countries, many services are non-traded, trade barriers and transaction costs exist, capital flows dominate trade flows in determining rates. Nominal rates can deviate from PPP for years.</p>
+      <p>The <em>Big Mac Index</em> (The Economist) is a simple, widely known PPP comparison — shows wide variation in purchasing power across countries for a standardized product.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Intuition — Real Exchange Rate Direction</div>
+      <p>Real ER (domestic/foreign) is the "real price" you pay to buy foreign goods. <strong>Higher real ER → more expensive foreign goods → lower your real purchasing power.</strong> If your domestic currency weakens nominally (S rises) OR foreign prices rise, the real ER rises. If your domestic inflation rises, the real ER falls (your goods become relatively cheaper). Even if the nominal rate doesn't move, inflation differentials change the real ER and affect trade competitiveness.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: PERCENTAGE CHANGE CALCULATIONS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Percentage Change in Exchange Rates</h2>
+    </div>
+
+    <h3>Core Formula</h3>
+    <div class="formula-box">
+      <div class="label">% Change in Exchange Rate</div>
+      <div class="f">% Change = (New Rate − Old Rate) / Old Rate</div>
+      <div class="note">A positive result means the BASE currency appreciated (more price currency needed per unit of base). A negative result means the base currency depreciated. Always identify which is the base currency first.</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — Euro Appreciation</div>
+      <p><strong>Given:</strong> USD/EUR rate moves from 1.1500 to 1.2000</p>
+      <p class="f">% Change = (1.2000 − 1.1500) / 1.1500 = 0.0500 / 1.1500 = +4.35%</p>
+      <p class="result">→ Euro (base) APPRECIATED 4.35% against the USD</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px;">This is euro appreciation (not USD appreciation) because USD/EUR has USD as the price currency. When USD/EUR rises, each euro buys more USD → euro is worth more → euro appreciated.</p>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">USD Depreciation — Inverting the Quote</div>
+      <p><strong>Same move expressed from USD perspective:</strong></p>
+      <p class="f">EUR/USD old = 1/1.1500 = 0.8696 &nbsp;|&nbsp; EUR/USD new = 1/1.2000 = 0.8333</p>
+      <p class="f">% Change = (0.8333 − 0.8696) / 0.8696 = −4.17%</p>
+      <p class="result">→ USD DEPRECATED 4.17% against euro — NOT the same percentage as euro appreciation (4.35%)</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Critical Exam Point — Appreciation ≠ Depreciation % (in magnitude)</div>
+      <p>If currency A appreciates by X% against currency B, then currency B does NOT depreciate by the same X%. The percentages are mathematically different because the bases are different. In the example: euro ↑ 4.35% vs. dollar ↓ 4.17%. This asymmetry is always tested.</p>
+    </div>
+
+    <h3>Appreciation vs. Depreciation — Quote Direction</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>If A/B exchange rate...</th><th>Base currency (B)...</th><th>Price currency (A)...</th></tr></thead>
+        <tbody>
+          <tr><td>Rises (↑)</td><td><span class="tag tag-green">Appreciates</span> (more A needed per B)</td><td><span class="tag tag-red">Depreciates</span></td></tr>
+          <tr><td>Falls (↓)</td><td><span class="tag tag-red">Depreciates</span> (less A needed per B)</td><td><span class="tag tag-green">Appreciates</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — USD/EUR Rises → Euro Stronger</div>
+      <p>If USD/EUR rises from 1.15 to 1.20, each euro now buys MORE dollars → euro is more valuable → euro appreciated. Think: "the price currency (USD) is what you pay — if you have to pay MORE USD per euro, the euro got more expensive (appreciated)." The base currency appreciating = its price tag going up.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: MARKET PARTICIPANTS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>FX Market Participants</h2>
+    </div>
+
+    <h3>Buy Side vs. Sell Side</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Sell Side (FX Dealers)</div>
+        <ul>
+          <li>Large FX trading banks that make markets and provide quotes</li>
+          <li>Tier-1: Deutsche Bank, Citigroup, UBS, HSBC — huge fixed-cost investment in technology; global client base; often cross trades internally</li>
+          <li>Tier 2/3: Regional/local banks — often outsource FX to tier-1 banks</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Buy Side (FX Users)</div>
+        <ul>
+          <li>All entities that transact in FX to meet financial, business, or investment needs</li>
+          <li>6 main categories: Corporate, Real Money, Leveraged, Retail, Government, Central Banks (+ SWFs)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Buy-Side Categories</h3>
+    <div class="participant-grid">
+      <div class="pc">
+        <div class="pc-name">Corporate Accounts</div>
+        <p>FX for cross-border goods/services purchases and sales. Also M&A, foreign asset investment, foreign currency borrowing.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Real Money Accounts</div>
+        <p>Insurance companies, mutual funds, pension funds, endowments, ETFs. Restricted in use of leverage/derivatives — invest for long-term return.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Leveraged Accounts</div>
+        <p>Hedge funds, proprietary trading shops, commodity trading advisers (CTAs), high-frequency algorithmic traders. Actively manage FX risk for profit. Fastest-growing share of daily turnover. Wide range of styles (macro, HFT, technical).</p>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Retail Accounts</div>
+        <p>Individuals (including tourists), smaller hedge funds. Electronic trading has surged retail participation. Estimated ~10% of spot transactions in some pairs. Includes Japanese households moving savings into foreign currencies.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Governments</div>
+        <p>FX for military purchases, consulates, overseas bases. Also debt issuance in foreign currencies. Public pension plans (e.g., Caisse de dépôt et placement du Québec — CAD 420bn AUM). Mix of transactional and public policy motives.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Central Banks</div>
+        <p>Intervene to manage exchange rate levels — to prevent excessive weakness/strength or when market dysfunctional. Also manage FX reserves (~USD 13 trillion total globally; ~60% in USD, ~20% in EUR). Bank of Japan intervened 2004 and 2011; Swiss National Bank intervened 2010–2015.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Sovereign Wealth Funds (SWFs):</strong> Government entities with investment mandates (not public policy focus). Countries with large current account surpluses (Singapore, Kuwait, oil exporters) channel surplus into SWFs. Can be enormous and materially affect exchange rates. Akin to real money accounts but may use derivatives or aggressive strategies.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: EXCHANGE RATE REGIMES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Exchange Rate Regimes</h2>
+    </div>
+
+    <h3>The Impossible Trinity (Trilemma)</h3>
+    <div class="card">
+      <p>The <strong>ideal currency regime</strong> would have three properties: (1) credibly fixed exchange rates, (2) fully convertible currencies, and (3) independent monetary policy. But all three <strong>cannot coexist simultaneously</strong>:</p>
+      <p>If rates are fixed AND currencies fully convertible → any attempt at independent monetary policy (e.g., cut rates) → unlimited capital outflow seeking higher returns elsewhere → CB forced to buy domestic currency to maintain peg → money supply falls → rates rise back to equality → policy negated.</p>
+      <p>The more freely the exchange rate floats and the more capital convertibility is restricted, the more effective is independent monetary policy.</p>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Impossible Trinity — "FCI" — Pick Any Two</div>
+      <p><strong>F</strong>ixed rate + <strong>C</strong>onvertibility + <strong>I</strong>ndependent monetary policy — pick any two. Most countries choose: floating rate + convertibility + independence (developed markets) OR fixed rate + convertibility but sacrifice independence (dollarization, currency board).</p>
+    </div>
+
+    <h3>Historical Timeline</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Period</th><th>System</th><th>Key Feature</th></tr></thead>
+        <tbody>
+          <tr><td>19th C – 1914</td><td>Classical Gold Standard</td><td>Currencies fixed to gold. Price-specie-flow mechanism auto-adjusted trade imbalances via gold flows → money supply changes → price changes → trade rebalances.</td></tr>
+          <tr><td>1930s</td><td>Collapse / Chaos</td><td>Protectionism, deflation, hyperinflation → gold standard abandoned. World trade fell &gt;50%.</td></tr>
+          <tr><td>1944–1973</td><td>Bretton Woods</td><td>Fixed parities with periodic realignments. US dollar linked to gold; others pegged to USD. Collapsed 1973 due to chronic inflation and speculative attacks.</td></tr>
+          <tr><td>1973–present</td><td>Flexible Rates (Smithsonian)</td><td>Most industrial countries float. Much higher exchange rate volatility than expected — investment flows dominate trade flows in setting rates.</td></tr>
+          <tr><td>1979–1992</td><td>European ERM</td><td>"Snake" — limited flexibility bands. UK forced out by speculative attack in Sep 1992 (currency crisis + German high rates).</td></tr>
+          <tr><td>1999–present</td><td>Euro / EMU</td><td>Common currency for most of Western Europe. Eliminates intra-Eurozone FX risk but removes individual country monetary policy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>IMF Classification — 8 Regime Types (Fixed → Float)</h3>
+    <div class="regime-list">
+      <div class="rl-row">
+        <div class="rl-label">MOST FIXED</div>
+        <div class="rl-content">
+          <div class="rl-title">1. No Separate Legal Tender</div>
+          <div class="rl-desc">Country uses another nation's currency (dollarization) OR joins a monetary union (EMU/euro). Zero monetary independence. Inherits credibility but NOT creditworthiness. Seigniorage goes to foreign CB (dollarization) or is shared (monetary union).</div>
+          <div class="rl-eg">Examples: Panama, Ecuador, El Salvador (dollarized); Eurozone (EMU)</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">2. Currency Board System (CBS)</div>
+          <div class="rl-desc">Legislative commitment to exchange domestic currency at a fixed rate for a specified foreign currency. Domestic currency issued ONLY against foreign exchange — fully backed by foreign assets. CB cannot function as lender of last resort. Earns seigniorage (unlike dollarization).</div>
+          <div class="rl-eg">Example: Hong Kong SAR — HKD/USD fixed at 7.80 since 1983</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">3. Fixed (Conventional) Parity</div>
+          <div class="rl-desc">Fixed to single currency or basket. Band of ±1% around parity. No legislative commitment (can abandon). CB can serve as lender of last resort. Credibility depends on FX reserve levels. Vulnerable to speculative attack.</div>
+          <div class="rl-eg">Examples: Many emerging markets pegged to USD</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">4. Target Zone (Wider Band)</div>
+          <div class="rl-desc">Fixed parity with ±2% horizontal intervention bands. More discretionary policy space than simple fixed parity.</div>
+          <div class="rl-eg">Example: Similar to old European ERM mechanism</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">5. Active Crawling Peg</div>
+          <div class="rl-desc">Exchange rate pre-announced for coming weeks/months in small steps. Goal: anchor inflation expectations. Rate changes signal future inflation changes for import-priced goods.</div>
+          <div class="rl-eg">Examples: Argentina, Chile, Uruguay (1980s)</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">6. Passive Crawling Peg</div>
+          <div class="rl-desc">Exchange rate adjusted frequently (weekly/daily) to keep pace with current inflation. Prevents reserve depletion. Reactive rather than forward-looking.</div>
+          <div class="rl-eg">Examples: Brazil and Latin America (1980s high inflation periods)</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">&#8595;</div>
+        <div class="rl-content">
+          <div class="rl-title">7. Managed Float (Dirty Float)</div>
+          <div class="rl-desc">CB intervenes based on internal or external policy targets (trade balance, price stability, employment) without pre-announced targets. Risk of inviting retaliation from trading partners. Exchange rate target implicit, not explicit.</div>
+          <div class="rl-eg">Examples: China (historically), India, many emerging markets</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-label">MOST FLOAT</div>
+        <div class="rl-content">
+          <div class="rl-title">8. Independently Floating</div>
+          <div class="rl-desc">Exchange rate determined by market forces. CB has full monetary independence — can target inflation, employment, etc. Can serve as lender of last resort. Even here, occasional intervention occurs (Plaza Accord 1985; ECB/Fed/BoJ coordinated euro support 2000).</div>
+          <div class="rl-eg">Examples: USD, EUR, GBP, JPY, CHF, CAD, AUD — the major currencies</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CBS vs. Dollarization — The Key Difference</div>
+      <p>Both give up monetary independence. BUT under a <strong>Currency Board System (CBS)</strong>, the country retains its own currency (just fixed to another at a set rate) and earns <strong>seigniorage</strong> (profit from issuing money). Under <strong>dollarization</strong>, the country literally uses another country's currency — seigniorage goes to the foreign CB (e.g., the US Fed). Also, CBS can have a convertibility zone with minor FX fluctuations; dollarization has zero FX risk between the two currencies.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: TRADE BALANCE IDENTITY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Trade Balance, Capital Flows & Exchange Rates</h2>
+    </div>
+
+    <h3>The Fundamental Identity</h3>
+    <div class="formula-box">
+      <div class="label">Trade Balance Identity</div>
+      <div class="f">X − M = (S − I) + (T − G)</div>
+      <div class="note">
+        X = Exports &nbsp;|&nbsp; M = Imports &nbsp;|&nbsp; S = Private Savings &nbsp;|&nbsp; I = Investment (plant & equipment)<br>
+        T = Taxes (net of transfers) &nbsp;|&nbsp; G = Government Expenditure<br><br>
+        Trade surplus (X &gt; M) → Country saves MORE than needed for domestic investment → excess saving flows abroad (buys foreign assets)<br>
+        Trade deficit (X &lt; M) → Country saves LESS than domestic investment needs → must borrow from or sell assets to foreigners
+      </div>
+    </div>
+
+    <h3>Trade Balance and Capital Account — Mirror Image</h3>
+    <div class="card">
+      <p>A trade deficit (surplus) is exactly offset by a capital account surplus (deficit). They are <strong>two sides of the same coin</strong>. Any factor affecting the trade balance has an equal and opposite impact on capital flows — they cannot affect one without affecting the other.</p>
+      <ul style="padding-left:20px;font-size:14.5px;margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Trade surplus:</strong> Country exports more → earns more foreign currency → uses it to buy foreign assets (capital outflow) → capital account deficit</li>
+        <li style="margin-bottom:6px;"><strong>Trade deficit:</strong> Country imports more → pays foreign currency → foreigners invest those funds back (capital inflow) → capital account surplus</li>
+      </ul>
+    </div>
+
+    <h3>How Exchange Rates Affect Trade and Capital Flows</h3>
+    <div class="card">
+      <p><strong>Capital flows dominate in the short to medium term</strong> — financial investment decisions and asset prices adjust much faster than expenditure/saving decisions and goods prices.</p>
+      <p>In a <strong>floating exchange rate regime</strong>: If investors expect a currency to depreciate, they sell it → currency depreciates → reduces further depreciation expectations → caps capital flows → exchange rate stabilizes. The exchange rate itself does the adjustment work.</p>
+      <p>In a <strong>fixed exchange rate regime</strong>: CB intervenes (buys domestic currency with FX reserves) to offset private capital outflows and maintain the peg → adjustment happens via interest rates, not exchange rates.</p>
+      <p>Long-term exchange rate movements are increasingly driven by trade flows and expenditure/saving decisions, while short-term movements are primarily driven by capital flow expectations.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Takeaway — Short vs. Long Run FX Drivers</div>
+      <p><strong>Short/medium term:</strong> Capital flows dominate exchange rate determination. Investor expectations about returns and risk drive most FX movements.<br>
+      <strong>Long term:</strong> Trade flows and relative prices (including PPP relationships) become increasingly important as goods prices and saving/investment decisions adjust.</p>
+    </div>
+
+    <h3>Exchange Rate Impact on Competitiveness</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Currency Movement</th><th>Impact on Exports</th><th>Impact on Imports</th><th>Impact on Trade Balance</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Domestic currency <span class="tag tag-green">depreciates</span></td>
+            <td>↑ Rise (cheaper for foreigners to buy)</td>
+            <td>↓ Fall (more expensive for domestic consumers)</td>
+            <td>Improves (X↑, M↓)</td>
+          </tr>
+          <tr>
+            <td>Domestic currency <span class="tag tag-red">appreciates</span></td>
+            <td>↓ Fall (more expensive for foreigners)</td>
+            <td>↑ Rise (cheaper for domestic consumers)</td>
+            <td>Worsens (X↓, M↑)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: CAPITAL RESTRICTIONS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Capital Restrictions</h2>
+    </div>
+
+    <h3>Definition & Economic Case for Free Capital Flows</h3>
+    <div class="card">
+      <p><strong>Capital restrictions:</strong> Controls on foreigners' ability to own domestic assets OR domestic residents' ability to own foreign assets (limit openness of financial markets — distinct from trade restrictions which limit goods markets).</p>
+      <p>Economists favor free capital flows because: (1) capital flows to highest-return use; (2) inflows fund investment beyond domestic savings; (3) FDI brings technology, skills, management practices; (4) creates local supplier networks; (5) forces domestic firms to be more efficient through competition.</p>
+    </div>
+
+    <h3>Why Governments Restrict Capital Flows</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Inflow Restrictions</div>
+        <ul>
+          <li>Prevent "hot money" inflows that cause currency appreciation → hurts export competitiveness</li>
+          <li>Protect strategic industries from foreign ownership (defense, telecom)</li>
+          <li>Employment and regional development objectives</li>
+          <li>Prevent speculative bubbles in domestic asset markets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Outflow Restrictions</div>
+        <ul>
+          <li>Prevent <strong>capital flight</strong> during macroeconomic crises</li>
+          <li>Restrict repatriation of profits, dividends, royalties</li>
+          <li>Generate revenue for government (keeps capital in domestic economy for taxation)</li>
+          <li>Maintain low interest rates (reduce govt borrowing costs)</li>
+          <li>Complement fixed exchange rate targets</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Forms of Capital Restrictions</h3>
+    <div class="card">
+      <ul style="padding-left:20px;font-size:14.5px;">
+        <li style="margin-bottom:6px;"><strong>Price controls (taxes):</strong> Special taxes on returns to international investment; taxes on certain transaction types</li>
+        <li style="margin-bottom:6px;"><strong>Mandatory reserve requirements:</strong> Foreign depositors must deposit a % of inflow with CB at zero interest for a minimum period</li>
+        <li style="margin-bottom:6px;"><strong>Quantity restrictions:</strong> Ceilings on new foreign borrowing; special authorization requirements</li>
+        <li style="margin-bottom:6px;"><strong>Administrative controls:</strong> Government agency must approve certain cross-border asset transactions</li>
+        <li style="margin-bottom:6px;"><strong>Outright prohibitions:</strong> Complete bans on certain types of international capital transactions</li>
+      </ul>
+    </div>
+
+    <h3>Effectiveness and Costs of Capital Restrictions</h3>
+    <div class="card">
+      <p><strong>IMF findings:</strong> Restrictions on capital inflows require comprehensive coverage and forceful implementation to avoid circumvention. Controls on capital outflows during crisis provide mixed results — temporary relief in some cases; Malaysia's use during 1997–98 Asian crisis was a notable success giving it time to restructure.</p>
+      <p><strong>Costs of capital restrictions:</strong></p>
+      <ul style="padding-left:20px;font-size:14.5px;margin-top:6px;">
+        <li style="margin-bottom:6px;">Non-trivial administration costs; loopholes must be continuously closed</li>
+        <li style="margin-bottom:6px;">Postpones necessary policy adjustments</li>
+        <li style="margin-bottom:6px;">Impedes private-sector adaptation to changing international circumstances</li>
+        <li style="margin-bottom:6px;"><strong>Negative market perceptions</strong> → makes foreign funding more costly and difficult to access</li>
+      </ul>
+    </div>
+
+    <h3>Capital Controls and Fixed Exchange Rates — Complementarity</h3>
+    <div class="card">
+      <p>Capital restrictions and fixed exchange rate targets are <strong>complementary instruments</strong>. Under perfect capital mobility, governments cannot achieve both domestic and external policy objectives simultaneously using standard monetary and fiscal tools (impossible trinity). By limiting capital flows, capital controls allow CB to maintain the exchange rate peg while using other tools for domestic objectives.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Point — Capital Restrictions vs. Trade Restrictions</div>
+      <p><strong>Trade restrictions</strong> limit openness of <em>goods markets</em> (tariffs, quotas, subsidies). <strong>Capital restrictions</strong> limit openness of <em>financial markets</em> (controls on buying/selling assets across borders). Both are government interventions but operate in different markets with different effects.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(76,139,201,0.1);border-color:rgba(76,139,201,0.3);color:var(--accent2);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;font-size:15px;line-height:2.1;">
+        <li>✅ FX market is largest in the world — ~USD 6.6 trillion/day (2019); 24-hour global market.</li>
+        <li>✅ Convention A/B: A = price currency, B = base currency (always 1 unit). Base currency is second in the ratio but first in the name/code.</li>
+        <li>✅ Currency hierarchy: EUR base first, then GBP, then USD. Exception: AUD and NZD are base vs. USD.</li>
+        <li>✅ Direct quote: domestic = price currency. Indirect quote: domestic = base currency. They are reciprocals.</li>
+        <li>✅ Bid = bank buys base; Offer = bank sells base. Bid &lt; Offer always. Bank buys low, sells high.</li>
+        <li>✅ Real ER(d/f) = Nominal Spot(d/f) × (Pf / Pd). Approximate %Δ Real ER ≈ %ΔNominal + %ΔPf − %ΔPd.</li>
+        <li>✅ Higher real ER → more expensive foreign goods → lower real purchasing power. Domestic inflation reduces real ER (goods relatively cheaper).</li>
+        <li>✅ Real exchange rates are NOT quoted/traded — only analytical indexes created by economists.</li>
+        <li>✅ PPP is a poor predictor of short-term nominal exchange rate movements (can deviate for years).</li>
+        <li>✅ % Change in exchange rate = (New − Old) / Old. A positive result = base currency appreciated.</li>
+        <li>✅ Euro appreciation % ≠ USD depreciation % (in magnitude). Mathematically always different.</li>
+        <li>✅ FX market participants: Sell side (dealing banks); Buy side: Corporate, Real Money, Leveraged, Retail, Governments, Central Banks, SWFs.</li>
+        <li>✅ Impossible Trinity: Can't have all three simultaneously — fixed rate + full convertibility + independent monetary policy.</li>
+        <li>✅ 8 IMF Regime types (fixed → float): No separate legal tender → Currency Board → Fixed Parity → Target Zone → Active Crawling Peg → Passive Crawling Peg → Managed Float → Independently Floating.</li>
+        <li>✅ CBS vs. dollarization: Both fix rates; CBS earns seigniorage and retains own currency; dollarization has no own currency, seigniorage goes to foreign CB.</li>
+        <li>✅ Trade balance identity: X − M = (S − I) + (T − G). Trade surplus = country saves more than investment needs.</li>
+        <li>✅ Trade deficit = capital account surplus (mirror images). Cannot affect one without affecting the other.</li>
+        <li>✅ Short/medium term: Capital flows dominate FX. Long term: Trade flows and PPP become more important.</li>
+        <li>✅ Domestic currency depreciation → exports ↑, imports ↓ → trade balance improves.</li>
+        <li>✅ Capital restrictions limit financial markets (vs. trade restrictions = goods markets). Forms: taxes, mandatory reserves, quantity limits, administrative controls, prohibitions.</li>
+        <li>✅ Capital controls + fixed exchange rate are complementary tools (both needed when impossible trinity applies).</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 7: Capital Flows & the FX Market · Exam Prep Notes
+</footer>
+</body>
+</html>

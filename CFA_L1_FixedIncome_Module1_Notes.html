@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 1: Fixed-Income Instrument Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --affirm-bg: #111e18; --affirm-border: #4cc98a;
+    --neg-bg: #1e1111; --neg-border: #c94c4c;
+    --cov-bg: #111620; --cov-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Covenant cards */
+  .affirm-card { background: var(--affirm-bg); border: 1px solid rgba(76,201,138,0.25); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .affirm-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .neg-card { background: var(--neg-bg); border: 1px solid rgba(201,76,76,0.25); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .neg-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #f57c7c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cov-section { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 10px 0 4px; }
+  .cov-content { font-size: 14px; color: var(--text); }
+  .cov-content ul { padding-left: 18px; margin-top: 4px; }
+  .cov-content li { margin-bottom: 4px; font-size: 13.5px; }
+
+  /* Seniority waterfall */
+  .waterfall { background: #111620; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .wf-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .wf-row:last-child { border-bottom: none; }
+  .wf-rank { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--muted); min-width: 32px; }
+  .wf-label { font-size: 14px; font-weight: 600; flex: 1; }
+  .wf-note { font-size: 12.5px; color: var(--muted); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 1</div>
+  <h1>Fixed-Income <span>Instrument Features</span></h1>
+  <p>Exam-ready notes: key bond features (issuer, maturity, principal, coupon, seniority, contingency provisions), yield measures (current yield and YTM), yield curves and credit spreads, bond indentures, sources of repayment, and a full breakdown of affirmative vs. negative covenants with real-world examples.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Core Definitions</a>
+  <a class="toc-item" href="#s2">02 · Key Bond Features</a>
+  <a class="toc-item" href="#s3">03 · Coupon Types</a>
+  <a class="toc-item" href="#s4">04 · Seniority &amp; Priority</a>
+  <a class="toc-item" href="#s5">05 · Yield Measures</a>
+  <a class="toc-item" href="#s6">06 · Yield Curves &amp; Spreads</a>
+  <a class="toc-item" href="#s7">07 · Bond Indenture</a>
+  <a class="toc-item" href="#s8">08 · Sources of Repayment</a>
+  <a class="toc-item" href="#s9">09 · Covenants</a>
+  <a class="toc-item" href="#s10">10 · Master Tables</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: CORE DEFINITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Core Definitions — At a Glance</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Fixed-Income Instrument</div>
+      <div class="def-body">A debt instrument (loan or bond) representing a contractual agreement under which an issuer (borrower) borrows money from investors in exchange for <strong>interest payments and future repayment of principal</strong>. All fixed-income instruments are liabilities, but not all liabilities are fixed-income instruments.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Bond / Fixed-Income Security</div>
+      <div class="def-body">A <strong>standardized, tradeable</strong> fixed-income instrument issued by larger companies, governments, and special purpose entities. More liquid and standardized than loans. Issued to many investors simultaneously.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Par Value / Principal / Face Value</div>
+      <div class="def-body">The amount the issuer promises to repay at maturity. Also the base for coupon calculations: Annual coupon = Par value × Coupon rate. These three terms are interchangeable.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Tenor</div>
+      <div class="def-body">The <strong>remaining time to maturity</strong>. Maturity is the date of the final payment. Tenor ≤ 1 year at issuance → money market security. Tenor &gt; 1 year at issuance → capital market security.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Bond Indenture</div>
+      <div class="def-body">The <strong>legal contract</strong> describing the form of the bond, the obligations of the issuer, and the rights of the bondholders. Contains features, covenants, sources of repayment, and credit enhancements.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Covenant</div>
+      <div class="def-body">A legally enforceable rule agreed upon at the time of bond issuance or loan. <strong>Affirmative covenants</strong>: what the issuer MUST do. <strong>Negative covenants</strong>: what the issuer is PROHIBITED from doing.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Credit Risk</div>
+      <div class="def-body">The risk of loss resulting from the issuer failing to make full and timely payments of interest and/or principal. Higher credit risk → investors demand higher yield. Sovereign bonds typically have the lowest credit risk in each region.</div>
+    </div>
+    <div class="def-block">
+      <div class="def-term">Credit Spread</div>
+      <div class="def-body">The yield difference between a bond and a comparable sovereign (risk-free) bond. Measured in basis points (bps = 0.01%). Reflects compensation demanded by investors for the additional credit risk of a non-sovereign issuer.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: KEY BOND FEATURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Key Bond Features — The Six Building Blocks</h2>
+    </div>
+
+    <div class="card">
+      <p>Every bond is defined by <strong>six key features</strong> that collectively determine its cash flow structure, risk profile, and pricing. These are summarized in the bond prospectus. Mnemonic: <span class="highlight">"I MaP CoS Con"</span> — <strong>I</strong>ssuer, <strong>Ma</strong>turity, <strong>P</strong>rincipal, <strong>Co</strong>upon, <strong>S</strong>eniority, <strong>Con</strong>tingency provisions.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Definition</th><th>Key Details / Exam Points</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>① Issuer</td>
+            <td>The borrower; liable for all interest and principal</td>
+            <td>Government (sovereign, local, supranational, quasi-government), corporate, special purpose entity (ABS). Sovereign = lowest credit risk per region. Corporate has many debt types outstanding (unlike equity — typically only 1-2 types).</td>
+          </tr>
+          <tr>
+            <td>② Maturity</td>
+            <td>Date of the final payment</td>
+            <td>Tenor = remaining time to maturity. ≤1 yr = money market (T-bills, commercial paper). &gt;1 yr = capital market. Perpetual = no stated maturity (still has contractually defined cash flows; still higher seniority than equity; no voting rights).</td>
+          </tr>
+          <tr>
+            <td>③ Principal</td>
+            <td>Amount repaid at maturity (= par value = face value)</td>
+            <td>Usually repaid as a lump sum at maturity. Some instruments repay in increments over time (e.g., mortgages). Also the base for coupon calculations.</td>
+          </tr>
+          <tr>
+            <td>④ Coupon Rate &amp; Frequency</td>
+            <td>The periodic interest paid by the issuer</td>
+            <td>Fixed (most common), floating (FRN = MRR + credit spread), or zero (paid at maturity). Corporate bonds typically pay semiannually. Monthly, quarterly, and annual also common.</td>
+          </tr>
+          <tr>
+            <td>⑤ Seniority</td>
+            <td>Priority of repayment in bankruptcy/liquidation</td>
+            <td>Senior debt paid before junior/subordinated debt. Senior secured paid before senior unsecured. Affects credit risk — higher seniority = lower risk = lower yield.</td>
+          </tr>
+          <tr>
+            <td>⑥ Contingency Provisions</td>
+            <td>Clauses allowing specific actions if certain events occur</td>
+            <td>Most common = embedded options (call, put, convertible). Cannot be traded separately from the bond. Call = issuer can redeem early (issuer-favorable). Put = investor can sell back early (investor-favorable). Convertible = convert to equity.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Bond Cash Flow Calculation (BRWA Example)</div>
+      <div class="f">
+        Annual coupon   = Par value × Coupon rate<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= USD 300,000,000 × 3.2% = USD 9,600,000<br><br>
+        Semiannual coupon = Annual coupon / 2 = USD 4,800,000<br><br>
+        Final payment at maturity = Final coupon + Principal<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 4,800,000 + 300,000,000 = USD 304,800,000
+      </div>
+      <div class="note">
+        Cash flows at t=0: investors PAY principal to issuer.<br>
+        Cash flows at each coupon date: issuer PAYS periodic coupon to investors.<br>
+        Cash flows at maturity: issuer PAYS final coupon + full principal to investors.<br>
+        Bond's price and yield vary INVERSELY with each other.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Loans vs. Bonds — Key Differences</div>
+      <p>
+        <strong>Loans:</strong> private agreement, usually between company and bank, less standardized, less tradeable, governed by a private contract.<br>
+        <strong>Bonds:</strong> standardized, issued to many investors, more easily tradeable, governed by a prospectus/indenture, larger issuers.<br><br>
+        Both are fixed-income instruments. Both are liabilities on the issuer's balance sheet. The key distinction is standardization and tradeability.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Not All Liabilities Are Fixed-Income Instruments</div>
+      <p>Liabilities on a balance sheet include: accounts payable (suppliers), accrued payroll (employees), deferred revenue (customers), taxes payable (governments), lease liabilities (lessors), pension obligations (retirees). <strong>Only loans and bonds</strong> (settled in cash, counterparty is an investor or bank) are fixed-income instruments in this context. Leases and pensions share some characteristics but are outside scope.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: COUPON TYPES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Coupon Types — Fixed, Floating, Zero</h2>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Fixed-Coupon Bond</div>
+        <ul>
+          <li>Uniform periodic payments at set intervals</li>
+          <li>Monthly, quarterly, semiannual, or annual</li>
+          <li>Corporate bonds: typically <strong>semiannual</strong></li>
+          <li>Coupon = Par × Fixed rate</li>
+          <li>Cash flows are fully predictable</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Floating-Rate Note (FRN)</div>
+        <ul>
+          <li>Variable coupon = <strong>MRR + Credit Spread</strong></li>
+          <li>MRR resets periodically with market rates</li>
+          <li>Credit spread set at issuance — typically constant</li>
+          <li>MRR historically = LIBOR; now = observed market rates</li>
+          <li>Spread expressed in basis points (bps)</li>
+          <li>Higher credit quality → lower spread</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Zero-Coupon Bond</div>
+        <ul>
+          <li>No periodic interest payments</li>
+          <li>Also called: <strong>pure discount bonds</strong></li>
+          <li>Interest paid as part of the single payment at maturity</li>
+          <li>Issued at a <strong>discount to par</strong></li>
+          <li>Difference (par − issue price) = cumulative interest at maturity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Floating-Rate Note (FRN) Coupon Formula</div>
+      <div class="f">
+        FRN Coupon Rate = MRR + Credit Spread<br><br>
+        Where:<br>
+        MRR   = Market Reference Rate (resets periodically; e.g., 3-month SOFR)<br>
+        Spread = Issuer-specific premium in basis points (constant over bond's life)<br><br>
+        1 basis point (bps) = 0.01% = 0.0001
+      </div>
+      <div class="note">
+        MRR was historically LIBOR — now transitioning to transaction-based rates (e.g., SOFR in the US).<br>
+        The coupon rate changes each reset period as the MRR changes, but the spread remains fixed.<br>
+        FRNs are less exposed to interest rate risk than fixed-coupon bonds (coupon adjusts with rates).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Perpetual Bonds — Key Exam Points</div>
+      <p>
+        Perpetual bonds have <strong>no stated maturity</strong> and pay periodic coupons forever (or until called). They are:
+        <br>— Still DEBT, not equity (contractually defined cash flows)
+        <br>— Have NO voting rights (unlike equity)
+        <br>— Have greater seniority in capital structure than equity
+        <br>— First issued by public sector; now also banks (to meet regulatory capital)
+        <br>— Despite no maturity, still distinct from equity in all the above ways.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: SENIORITY & PRIORITY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Seniority, Priority of Repayment &amp; Capital Structure</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Seniority</strong> determines who gets paid first in bankruptcy or liquidation. Higher seniority = lower credit risk = lower yield demanded by investors. An issuer can have many debt obligations outstanding simultaneously, each with different seniority, currency, and other features.</p>
+    </div>
+
+    <h3>Repayment Waterfall — Highest to Lowest Priority</h3>
+    <div class="waterfall">
+      <div class="wf-row">
+        <div class="wf-rank" style="color:#4cc98a;">1st</div>
+        <div class="wf-label" style="color:#4cc98a;">Senior Secured Debt</div>
+        <div class="wf-note">Has a legal claim (lien/pledge) on specific assets as collateral; paid first; lowest credit risk among debt</div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-rank" style="color:#c9a84c;">2nd</div>
+        <div class="wf-label" style="color:#c9a84c;">Senior Unsecured Debt</div>
+        <div class="wf-note">No specific collateral; reliance on operating cash flows; "pari passu" among equal-ranking claims (e.g., BRWA)</div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-rank" style="color:#f5a623;">3rd</div>
+        <div class="wf-label" style="color:#f5a623;">Subordinated / Junior Debt</div>
+        <div class="wf-note">Paid only after all senior claims are satisfied; higher risk; higher yield required</div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-rank" style="color:#c94c4c;">Last</div>
+        <div class="wf-label" style="color:#c94c4c;">Equity</div>
+        <div class="wf-note">Residual claim — paid only after ALL debt obligations; highest risk; perpetual bonds still rank above equity</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Pari Passu — "Equal Footing"</div>
+      <p><strong>Pari passu</strong> (Latin: "equal footing") means a debt obligation is treated the same as the borrower's other obligations with similar seniority. If an issuer has multiple senior unsecured bonds, they all rank pari passu — in bankruptcy, they share the available assets proportionally rather than one having priority over another. BRWA's bonds are described as ranking "pari passu with all other unsecured and unsubordinated indebtedness."</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Secured vs. Unsecured — Liquidation Outcome</div>
+      <p>In liquidation: <strong>secured debtholders</strong> receive the value of the designated collateral assets. <strong>Unsecured debtholders</strong> receive only what remains after secured creditors are satisfied. A <strong>junior unsecured bondholder</strong> is last in line among all debt creditors — all secured and senior unsecured claims have higher priority.</p>
+    </div>
+
+    <h3>Asset-Backed Securities (ABS) — Tranching</h3>
+    <div class="card">
+      <p>ABS are issued by <strong>special purpose entities</strong> that own a pool of loans or receivables. The ABS recreates a capital structure of claims on those cash flows, divided into <strong>tranches</strong> with different priorities:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Tranche A</strong>: first priority to receive periodic cash flows</li>
+        <li><strong>Tranche B</strong>: receives cash flows only after Tranche A</li>
+        <li><strong>Tranche C</strong>: receives cash flows only after Tranche A and B</li>
+      </ul>
+      <p style="margin-top:8px;">Source of repayment for ABS = cash flows from the pool of loans/receivables — NOT the operating cash flows of a corporate issuer.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: YIELD MEASURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Yield Measures — Current Yield &amp; YTM</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Current Yield (CY)</div>
+      <div class="f">
+        CY = Annual Coupon / Bond Price<br><br>
+        Example (BRWA bond trading at USD 101 per USD 100 face value):<br>
+        CY = 3.2% / 1.01 = 3.168%
+      </div>
+      <div class="note">
+        Simple measure — analogous to dividend yield for equities.<br>
+        Does NOT account for: capital gain/loss, time value of money, or reinvestment of coupons.<br>
+        If price &gt; par (premium): CY &lt; coupon rate. If price &lt; par (discount): CY &gt; coupon rate. If price = par: CY = coupon rate.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Yield-to-Maturity (YTM)</div>
+      <div class="f">
+        YTM = IRR of the bond (discount rate that equates price to PV of all cash flows)<br><br>
+        Price = C/(1+r)¹ + C/(1+r)² + ... + (C+Par)/(1+r)ⁿ<br><br>
+        BRWA Example (Price = 101, Par = 100, Coupon = 1.6 semiannual, n = 10 periods):<br>
+        101 = 1.6/(1+r)¹ + 1.6/(1+r)² + ... + 101.6/(1+r)¹⁰<br>
+        r = 1.49% per period (semiannual) → YTM = 1.49% × 2 = 2.98% annualized
+      </div>
+      <div class="note">
+        YTM is quoted as an ANNUAL rate. For semiannual bonds: solve for the semiannual rate, then multiply by 2.<br>
+        Price &gt; par → YTM &lt; coupon rate (trading at a premium).<br>
+        Price &lt; par → YTM &gt; coupon rate (trading at a discount).<br>
+        Price = par → YTM = coupon rate (trading at par).
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>YTM = actual investor return only when ALL THREE conditions hold:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>The investor <strong>receives all promised interest and principal as scheduled</strong> (no default)</li>
+        <li>The investor <strong>holds the bond until maturity</strong></li>
+        <li>The investor <strong>reinvests all periodic cash flows at the YTM rate</strong></li>
+      </ol>
+      <p style="margin-top:10px;">If ANY of these conditions fails, the investor's realized return ≠ YTM. This is the same as the IRR assumptions from capital budgeting.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Current Yield — Summary</div>
+        <ul>
+          <li>Simple; easy to compute</li>
+          <li>Analogous to dividend yield</li>
+          <li>Ignores capital gain/loss</li>
+          <li>Ignores time value of money</li>
+          <li>Ignores reinvestment income</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">YTM — Summary</div>
+        <ul>
+          <li>More complete, widely used measure</li>
+          <li>= IRR of bond cash flows</li>
+          <li>Accounts for price, coupons, and principal</li>
+          <li>Quoted as annual rate</li>
+          <li>Assumes reinvestment at YTM (a limitation)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Price-Yield Inverse Relationship</div>
+      <p>Bond price and yield always move in <strong>opposite directions</strong>. When market interest rates rise → bond prices fall → YTM rises. When market interest rates fall → bond prices rise → YTM falls. This is one of the most fundamental relationships in fixed income — tested repeatedly across all fixed income modules.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: YIELD CURVES & SPREADS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Yield Curves &amp; Credit Spreads</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Yield Curve</div>
+      <div class="def-body">A graphical plot of YTM vs. time to maturity for bonds with identical features from the same issuer. Shows how yields vary across maturities for a given issuer. Normally upward-sloping: longer maturities → higher yields (compensation for higher risk).</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Credit Spread</div>
+      <div class="def-body">The yield difference between a corporate (or non-sovereign) bond and a comparable sovereign bond. Measured in basis points (bps). Compensates investors for taking additional credit risk beyond the risk-free rate. Sovereign bonds are used as the benchmark because they have little or no credit risk.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Credit Spread Calculation</div>
+      <div class="f">
+        Credit Spread = YTM (corporate) − YTM (sovereign benchmark)<br><br>
+        BRWA Example:<br>
+        5-year BRWA bond YTM   = 3.2%<br>
+        5-year US Treasury YTM = 2.3%<br>
+        Credit Spread          = 3.2% − 2.3% = 0.90% = 90 bps
+      </div>
+      <div class="note">
+        The 90 bps spread reflects compensation investors demand for the additional credit risk of BRWA vs. the US government.<br>
+        Higher issuer credit risk → wider spread. Investment-grade issuers → narrow spreads. High-yield/junk issuers → wide spreads.<br>
+        Sovereign bonds in developed markets are used as the benchmark because they are considered to have no default risk.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Using Yield Curves in Analysis</div>
+      <p>An issuer's yield curve shows how their borrowing cost varies by maturity. Comparing the issuer's yield curve to the sovereign curve shows the credit risk premium at each maturity. Key exam point: same issuer, same features, only maturity differs → higher maturity → higher YTM (in a normal upward-sloping curve). The market reference rate (MRR) used in FRN pricing also relates to sovereign or benchmark rates.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: BOND INDENTURE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Bond Indenture — Contents &amp; Purpose</h2>
+    </div>
+
+    <div class="card">
+      <p>The <strong>bond indenture</strong> is the legal contract governing the bond. It goes beyond just the key features (from the prospectus) to fully describe the issuer's obligations and the bondholder's rights. Key contents of an indenture:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Bond features (maturity, principal, coupon, seniority, contingency provisions)</li>
+        <li><strong>Sources of repayment</strong> — where the money to repay bondholders comes from</li>
+        <li><strong>Credit enhancements / collateral</strong> — secondary sources of repayment and pledged assets</li>
+        <li><strong>Covenants</strong> — legally binding rules on the issuer (affirmative and negative)</li>
+        <li>Provisions for default and remedies</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Bondholders vs. Equity Investors — Influence</div>
+      <p>Equity investors have <strong>voting rights</strong> — they can vote on major corporate decisions. Bondholders have <strong>no voting rights</strong> but are protected by <strong>legally enforceable covenants</strong> in the indenture. If covenants are violated, bondholders have recourse: change in financial terms (e.g., higher interest rate), accelerated debt payments, or termination of the debt agreement.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: SOURCES OF REPAYMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Sources of Repayment — By Issuer Type</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issuer Type</th><th>Primary Source of Repayment</th><th>Secondary / Collateral</th><th>Credit Quality</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>National (Sovereign) Government</td>
+            <td>Tax revenues (sovereign right to tax); can also print currency</td>
+            <td>—</td>
+            <td>Highest in each region; benchmark for bond market risk; often considered risk-free in developed markets</td>
+          </tr>
+          <tr>
+            <td>Local / Regional Government</td>
+            <td>Taxing authority OR fees from infrastructure projects (bridges, toll roads, transit)</td>
+            <td>Project assets / revenues</td>
+            <td>Generally lower than sovereign; tied to local tax base</td>
+          </tr>
+          <tr>
+            <td>Corporate — High Quality (Unsecured)</td>
+            <td>Operating cash flows of the firm</td>
+            <td>None — cash flows are the SOLE source</td>
+            <td>Depends on profitability and leverage; no asset pledge needed</td>
+          </tr>
+          <tr>
+            <td>Corporate — Lower Quality (Secured)</td>
+            <td>Operating cash flows of the firm</td>
+            <td>Legal claim/lien/pledge on specific assets (collateral)</td>
+            <td>Lower; less stable cash flows; collateral provides secondary repayment in liquidation</td>
+          </tr>
+          <tr>
+            <td>ABS (Special Purpose Entity)</td>
+            <td>Cash flows from the pool of loans or receivables owned by the SPE</td>
+            <td>Tranching provides priority structure (Tranche A → B → C)</td>
+            <td>Varies by tranche; senior tranches can achieve high credit quality even with lower-quality underlying assets</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Collateral</div>
+      <div class="def-body">Secondary claims used to assess credit quality. Includes: (1) physical assets (property, equipment); (2) cash flows (licensing fees); (3) financial guarantees from a third party. Secured bonds pledge specific assets as collateral — gives lender a lien. Issuer trade-off: collateral lowers borrowing cost but reduces operating flexibility.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Credit Enhancement</div>
+      <div class="def-body">Any provision that strengthens the issuer's ability to repay, thus reducing credit risk. Examples: collateral pledges, financial guarantees, tranching in ABS, reserve funds. Benefit: lower borrowing cost. Cost: reduced operating flexibility for the issuer.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: COVENANTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Bond Covenants — Affirmative vs. Negative</h2>
+    </div>
+
+    <div class="card">
+      <p>Covenants are <strong>legally enforceable rules</strong> that borrowers and lenders agree on at issuance. They give bondholders rights and protections since they have no voting rights. Two types: <span class="highlight3">Affirmative</span> (what the issuer MUST do) and <span class="danger-text">Negative</span> (what the issuer is PROHIBITED from doing).</p>
+    </div>
+
+    <!-- AFFIRMATIVE COVENANTS -->
+    <div class="affirm-card">
+      <div class="affirm-title">✅ Affirmative Covenants — "Issuer MUST Do"</div>
+      <div class="cov-section">Nature</div>
+      <div class="cov-content">Typically <strong>administrative in nature</strong>. Generally do NOT impose significant additional costs on the issuer or constrain operating discretion materially.</div>
+      <div class="cov-section">Common Examples</div>
+      <div class="cov-content">
+        <ul>
+          <li><strong>Use of proceeds:</strong> specifying how the bond proceeds will be used (e.g., general corporate purposes, capital expenditures)</li>
+          <li><strong>Financial reporting:</strong> provision of timely financial statements to bondholders</li>
+          <li><strong>Change of control put:</strong> bondholders may redeem bonds at a premium to par if the issuer is acquired (protects against credit deterioration post-acquisition)</li>
+          <li><strong>Pari passu clause:</strong> ensures the bond is treated equally with other debt of similar seniority ("equal footing" — no secret preferences)</li>
+          <li><strong>Cross-default clause:</strong> if the issuer defaults on ANY other debt obligation, it is considered to be in default on this bond as well (prevents selective default)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NEGATIVE COVENANTS -->
+    <div class="neg-card">
+      <div class="neg-title">🚫 Negative Covenants — "Issuer CANNOT Do"</div>
+      <div class="cov-section">Nature</div>
+      <div class="cov-content">Restrict specific actions that could harm bondholders' interests. More common and more restrictive for <strong>lower-credit-quality issuers</strong>. Protect against dilution of bondholder claims.</div>
+      <div class="cov-section">Common Examples (from BRWA — Senior Unsecured, High Quality)</div>
+      <div class="cov-content">
+        <ul>
+          <li><strong>Limitation on liens:</strong> restricts pledging assets as security for NEW debt (prevents existing unsecured creditors from being effectively subordinated by new secured debt)</li>
+          <li><strong>Limitation on sale and leaseback:</strong> prohibits selling a plant and then leasing it back for more than X years (prevents asset stripping while maintaining use)</li>
+          <li><strong>Merger and consolidation restriction:</strong> prohibits merging or selling substantially all assets if the surviving company would violate the limitation on liens or sale and leaseback provisions</li>
+        </ul>
+      </div>
+      <div class="cov-section">Additional Examples for Lower Credit Quality (from VIVU — 6.5% Secured)</div>
+      <div class="cov-content">
+        <ul>
+          <li><strong>Restriction on additional debt:</strong> issuer cannot issue new debt unless the Incurrence Test is met (unless it is subordinated or a working capital facility ≤ 20% of outstanding principal)</li>
+          <li><strong>Restriction on dividends and distributions:</strong> issuer cannot pay dividends, repurchase shares, or reduce share capital unless the Incurrence Test is met (prevents cash leaving the company at bondholders' expense)</li>
+          <li><strong>Financial ratio maintenance (Debt Restriction Test):</strong> issuer must maintain Net Interest Bearing Debt/EBITDA ≤ 5.0× AND Interest Coverage Ratio &gt; 2.5× at each reporting period</li>
+          <li><strong>Negative pledge clause:</strong> restricts pledging assets as collateral for new debt to ensure existing creditors are not subordinated</li>
+          <li><strong>Limitations on investments, asset disposals, or senior debt issuance</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ VIVU Incurrence Test &amp; Debt Restriction Test</div>
+      <div class="f">
+        Debt Restriction Test (maintenance — must pass each period):<br>
+        Net Interest Bearing Debt / EBITDA  ≤ 5.0×<br>
+        Interest Coverage Ratio             &gt; 2.5×<br><br>
+        Incurrence Test (must pass to take restricted actions):<br>
+        Net Interest Bearing Debt / EBITDA  ≤ 4.5× (tighter than maintenance test)<br>
+        Interest Coverage Ratio             &gt; 3.0× (tighter than maintenance test)<br><br>
+        Restricted actions requiring Incurrence Test to be met:<br>
+        → Issue additional non-subordinated, non-working-capital debt<br>
+        → Pay dividends, repurchase shares, or reduce share capital
+      </div>
+      <div class="note">
+        The Incurrence Test is MORE STRINGENT than the Debt Restriction Test — it must be passed before taking additional risk actions.<br>
+        Net Interest Bearing Debt / EBITDA: measures leverage (lower is better).<br>
+        Interest Coverage Ratio: measures ability to service debt from earnings (higher is better).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Call Price Schedule (VIVU Callable Bond)</div>
+      <p>VIVU's 6.5% callable bond has a declining call price schedule — the issuer pays a <strong>premium above par</strong> to call the bond early, and this premium decreases over time:</p>
+      <p style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:13px; color:#e8c97a;">
+        Years 3–4: 103.25% of par | Years 4–5: 102.50% of par<br>
+        Years 5–6: 101.75% of par | Years 6–7: 101.00% of par
+      </p>
+      <p style="margin-top:8px;">The call is exercisable starting 3 years after settlement (call protection period = first 3 years). The declining schedule incentivizes early exercise and protects investors from being called in highly unfavorable interest rate environments.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Overly Restrictive Covenants Can Backfire</div>
+      <p>Highly restrictive covenants are not always in bondholders' best interest. If covenants prevent an issuer from raising new funds necessary to meet contractual obligations (e.g., strict debt restrictions), they can <strong>force a default that might otherwise have been avoided</strong>. Covenant violation consequences include: change in financial terms (rate increase), accelerated repayment, or termination of the debt agreement.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>Issuer Types — Credit Risk Hierarchy</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issuer Type</th><th>Examples</th><th>Source of Repayment</th><th>Relative Credit Risk</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sovereign / National Government</td>
+            <td>US Treasury, UK Gilts, German Bunds</td>
+            <td>Tax revenues; can print currency</td>
+            <td><span class="tag tag-green">Lowest</span> — benchmark for region</td>
+          </tr>
+          <tr>
+            <td>Supranational</td>
+            <td>World Bank, IMF, European Investment Bank</td>
+            <td>Member contributions, capital markets</td>
+            <td><span class="tag tag-green">Very Low</span></td>
+          </tr>
+          <tr>
+            <td>Quasi-Government / Agency</td>
+            <td>Postal services, national railways</td>
+            <td>Government backing + operating revenues</td>
+            <td><span class="tag tag-yellow">Low</span></td>
+          </tr>
+          <tr>
+            <td>Local / Municipal Government</td>
+            <td>City bonds, toll road bonds</td>
+            <td>Taxing authority or project revenues</td>
+            <td><span class="tag tag-yellow">Low–Medium</span></td>
+          </tr>
+          <tr>
+            <td>Corporate (Investment Grade)</td>
+            <td>BRWA Corporation (senior unsecured)</td>
+            <td>Operating cash flows (sole source)</td>
+            <td><span class="tag tag-yellow">Medium</span></td>
+          </tr>
+          <tr>
+            <td>Corporate (High Yield / Secured)</td>
+            <td>VIVU (senior secured callable)</td>
+            <td>Operating cash flows + collateral assets</td>
+            <td><span class="tag tag-red">Medium–High</span></td>
+          </tr>
+          <tr>
+            <td>Special Purpose Entity (ABS)</td>
+            <td>Mortgage-backed securities, CLOs</td>
+            <td>Cash flows from pool of loans/receivables</td>
+            <td>Varies by tranche</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Covenants — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Direction</th><th>Nature</th><th>Key Examples</th><th>Typical Issuer</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-green">Affirmative</span></td>
+            <td>Issuer MUST do</td>
+            <td>Administrative; rarely constraining</td>
+            <td>Use of proceeds, financial reports, change of control put, pari passu clause, cross-default clause</td>
+            <td>All issuers</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-red">Negative</span></td>
+            <td>Issuer CANNOT do</td>
+            <td>Protective; can restrict operations</td>
+            <td>Limitation on liens, sale &amp; leaseback, merger restriction, dividend restrictions, incurrence test, negative pledge clause</td>
+            <td>More common / stricter for lower-quality issuers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Coupon Types — Quick Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Rate Type</th><th>Payment Structure</th><th>Key Formula/Note</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fixed-Coupon Bond</td>
+            <td>Constant rate</td>
+            <td>Regular periodic payments (usually semiannual)</td>
+            <td>Coupon = Par × Fixed rate; fully predictable cash flows</td>
+          </tr>
+          <tr>
+            <td>Floating-Rate Note (FRN)</td>
+            <td>Variable; resets periodically</td>
+            <td>Regular periodic payments (rate changes each reset)</td>
+            <td>Coupon = MRR + Credit Spread; spread is fixed, MRR floats</td>
+          </tr>
+          <tr>
+            <td>Zero-Coupon Bond</td>
+            <td>No periodic coupon</td>
+            <td>Single payment at maturity (interest + principal)</td>
+            <td>Issued at discount; interest = Par − Issue price; also called pure discount bond</td>
+          </tr>
+          <tr>
+            <td>Perpetual Bond</td>
+            <td>Fixed or variable</td>
+            <td>Indefinite periodic payments; no maturity</td>
+            <td>Not equity — has contractual cash flows, no voting rights, higher seniority than equity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>All fixed-income instruments are liabilities, but NOT all liabilities are fixed-income instruments.</strong> Only loans and bonds (settled in cash, counterparty = investor or bank) qualify.</li>
+        <li>✅ <strong>6 key bond features (I MaP CoS Con):</strong> Issuer, Maturity, Principal, Coupon (rate + frequency), Seniority, Contingency provisions.</li>
+        <li>✅ <strong>Par value = principal = face value.</strong> All three terms are interchangeable. Annual coupon = Par × Coupon rate.</li>
+        <li>✅ <strong>Tenor = remaining time to maturity.</strong> ≤1 yr = money market (T-bills, commercial paper). &gt;1 yr = capital market. No maturity = perpetual.</li>
+        <li>✅ <strong>Perpetual bonds are debt, not equity:</strong> contractually defined cash flows, no voting rights, higher seniority than equity. First issued by public sector; also used by banks for regulatory capital.</li>
+        <li>✅ <strong>FRN coupon = MRR + Credit Spread.</strong> MRR resets periodically. Credit spread set at issuance, typically constant. 1 bps = 0.01%.</li>
+        <li>✅ <strong>Zero-coupon bonds = pure discount bonds.</strong> No periodic interest. Issued at discount to par. Interest = par − issue price, paid at maturity.</li>
+        <li>✅ <strong>Corporate bonds typically pay coupons semiannually.</strong></li>
+        <li>✅ <strong>Seniority waterfall (highest to lowest):</strong> Secured senior → Unsecured senior → Subordinated/junior → Equity. Higher seniority = lower credit risk = lower yield.</li>
+        <li>✅ <strong>Pari passu = "equal footing."</strong> Same-seniority bonds share available assets proportionally in bankruptcy. Not one having priority over another.</li>
+        <li>✅ <strong>Price and yield are inversely related.</strong> Price↑ → Yield↓. Price↓ → Yield↑. Fundamental fixed income relationship.</li>
+        <li>✅ <strong>Current Yield = Annual Coupon / Price.</strong> Simple; analogous to dividend yield. Ignores capital gain/loss, TVM, and reinvestment.</li>
+        <li>✅ <strong>YTM = IRR of bond cash flows.</strong> Equates bond price to PV of all future cash flows. Quoted as annual rate. YTM = actual return only if: (1) no default, (2) held to maturity, (3) coupons reinvested at YTM.</li>
+        <li>✅ <strong>Price &gt; par → YTM &lt; coupon rate</strong> (premium). Price &lt; par → YTM &gt; coupon rate (discount). Price = par → YTM = coupon rate.</li>
+        <li>✅ <strong>Credit spread = Issuer YTM − Sovereign benchmark YTM.</strong> Measured in bps. Compensation for additional credit risk. Higher credit risk = wider spread.</li>
+        <li>✅ <strong>Bond indenture</strong> = the legal contract. Contains: bond features, sources of repayment, collateral/credit enhancements, and covenants.</li>
+        <li>✅ <strong>Sovereign repayment source = tax revenues (and sometimes printing currency).</strong> Highest credit quality. Used as risk-free benchmark.</li>
+        <li>✅ <strong>Corporate unsecured = operating cash flows (sole source).</strong> Corporate secured = operating cash flows + collateral pledge (lien on specific assets).</li>
+        <li>✅ <strong>ABS repayment source = cash flows from pool of loans/receivables</strong> owned by the special purpose entity. Structured into tranches by priority.</li>
+        <li>✅ <strong>Affirmative covenants = MUST DO (what issuer is required to do).</strong> Administrative in nature. Examples: use of proceeds, financial reports, pari passu clause, cross-default clause, change-of-control put.</li>
+        <li>✅ <strong>Negative covenants = CANNOT DO (what issuer is prohibited from doing).</strong> Protective. Examples: limitation on liens, sale-and-leaseback restriction, merger restriction, dividend restriction, incurrence test, negative pledge clause.</li>
+        <li>✅ <strong>Pari passu clause</strong> = equal treatment with other same-seniority debt. <strong>Cross-default clause</strong> = default on ANY debt = default on this bond.</li>
+        <li>✅ <strong>Negative pledge clause</strong> = restricts pledging assets as collateral for new debt, preventing subordination of existing unsecured creditors.</li>
+        <li>✅ <strong>Incurrence test is more stringent than the maintenance test.</strong> Required for taking additional restricted actions (e.g., paying dividends, issuing new debt).</li>
+        <li>✅ <strong>Overly strict covenants can force avoidable defaults</strong> by preventing issuers from raising necessary funds. Covenant violations give bondholders recourse: rate increase, accelerated payment, or termination.</li>
+        <li>✅ <strong>Embedded options cannot be traded separately from the bond.</strong> Call = issuer right (issuer-favorable, lower price). Put = investor right (investor-favorable, higher price). Convertible = convert bond to equity.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA &amp; KEY REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ BOND CASH FLOWS ═══<br>
+        Annual coupon      = Par × Coupon rate<br>
+        Semiannual coupon  = Annual coupon / 2<br>
+        Final payment      = Last coupon + Par value<br><br>
+
+        ═══ COUPON TYPES ═══<br>
+        Fixed: Coupon = Par × Fixed rate (constant payments)<br>
+        FRN:   Coupon = MRR + Credit Spread (MRR resets; spread fixed)<br>
+        Zero:  No coupon; issued at discount; interest = Par − Issue price<br><br>
+
+        ═══ YIELD MEASURES ═══<br>
+        Current Yield = Annual Coupon / Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[simple; ignores TVM]<br>
+        YTM = IRR of cash flows&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3 assumptions: no default, held to maturity, reinvest at YTM]<br>
+        Price &gt; par → YTM &lt; coupon | Price = par → YTM = coupon | Price &lt; par → YTM &gt; coupon<br>
+        PRICE ↑ → YIELD ↓ (always inverse)<br><br>
+
+        ═══ CREDIT SPREAD ═══<br>
+        Credit Spread = Corporate YTM − Sovereign YTM&nbsp;&nbsp;&nbsp;&nbsp;[in bps; 1 bps = 0.01%]<br><br>
+
+        ═══ SENIORITY WATERFALL ═══<br>
+        Senior Secured → Senior Unsecured → Subordinated → Equity<br>
+        Higher seniority = lower credit risk = lower yield<br><br>
+
+        ═══ COVENANTS ═══<br>
+        Affirmative = MUST DO (administrative; pari passu, cross-default, reports, use of proceeds)<br>
+        Negative    = CANNOT DO (protection; liens, dividends, debt limits, mergers, negative pledge)<br><br>
+
+        ═══ KEY DEFINITIONS ═══<br>
+        Tenor       = remaining time to maturity<br>
+        Indenture   = legal contract governing the bond<br>
+        Pari passu  = equal footing with same-seniority debt<br>
+        Cross-default = default on any debt = default on this bond<br>
+        Collateral  = secondary source of repayment (secured bonds)<br>
+        Credit spread = yield premium over risk-free benchmark
+      </div>
+      <div class="note">
+        <strong>FRN vs. Fixed:</strong> FRN coupon adjusts with MRR (resets); fixed coupon never changes. Both have constant credit spread once set.<br>
+        <strong>Zero-coupon bonds:</strong> no periodic payments; issued at discount; entire return realized at maturity as price appreciation.<br>
+        <strong>Perpetual bonds:</strong> no maturity but still debt — contractual cash flows, no voting rights, senior to equity.<br>
+        <strong>YTM = realized return only when all 3 conditions hold:</strong> no default + held to maturity + reinvest at YTM.<br>
+        <strong>Negative covenants protect bondholders</strong> from actions that dilute their claims, but overly strict ones can force unnecessary defaults.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 1: Fixed-Income Instrument Features · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 3: Analyzing Balance Sheets</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --int-bg: #111a16; --int-border: #4cc98a;
+    --gw-bg: #14111a; --gw-border: #9b7fd4;
+    --fi-bg: #12141f; --fi-border: #4c8bc9;
+    --liab-bg: #1a1218; --liab-border: #c94c4c;
+    --ratio-bg: #121618; --ratio-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'BS'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 900; color: rgba(76,139,201,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .num { font-family: 'JetBrains Mono', monospace; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  /* Section-specific colored cards */
+  .int-card { background: var(--int-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .int-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .gw-card { background: var(--gw-bg); border: 1px solid rgba(155,127,212,0.2); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .gw-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #9b7fd4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .fi-card { background: var(--fi-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fi-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .liab-card { background: var(--liab-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .liab-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ratio-card { background: var(--ratio-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .ratio-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(201,168,76,0.08); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 16px 14px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content .st-title { font-weight: 700; color: #fff; font-size: 14.5px; margin-bottom: 6px; }
+  .step-content strong { color: var(--accent); }
+
+  .worked { background: #0e1218; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .worked table { font-size: 13px; }
+  .worked thead th { background: #141926; font-size: 10px; }
+  .worked .total-row td { border-top: 2px solid var(--accent); font-weight: 700; color: var(--accent); }
+  .worked .result-row td { background: rgba(201,168,76,0.08); font-weight: 700; font-size: 14px; color: #e8c97a; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 3</div>
+  <h1>Analyzing <span>Balance Sheets</span></h1>
+  <p class="subtitle">Complete module replacement: intangible assets (finite vs. indefinite useful life, IFRS vs. US GAAP treatment, internally generated vs. purchased), goodwill (recognition, impairment, analyst adjustments), financial instruments (fair value vs. amortized cost, three measurement categories, IFRS/US GAAP differences), non-current liabilities (long-term debt, deferred tax liabilities), and common-size balance sheet analysis with liquidity and solvency ratios.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Balance Sheet Overview</a>
+  <a class="toc-item" href="#s2">02 · Intangible Assets</a>
+  <a class="toc-item" href="#s3">03 · Goodwill</a>
+  <a class="toc-item" href="#s4">04 · Financial Instruments</a>
+  <a class="toc-item" href="#s5">05 · Non-Current Liabilities</a>
+  <a class="toc-item" href="#s6">06 · Common-Size Analysis</a>
+  <a class="toc-item" href="#s7">07 · Liquidity &amp; Solvency Ratios</a>
+  <a class="toc-item" href="#s8">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 1: BALANCE SHEET OVERVIEW      -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Balance Sheet — Overview &amp; Measurement Bases</h2>
+    </div>
+
+    <div class="card">
+      <p>The balance sheet (statement of financial position) shows what an entity <strong>owns</strong> (assets), what it <strong>owes</strong> (liabilities), and the owners' interest in the net assets (equity) — all at a <em>specific point in time</em>. Unlike the income statement (a flow statement), the balance sheet is a snapshot.</p>
+      <p>The fundamental accounting equation: <strong>Assets = Liabilities + Equity</strong>. Analysts use the balance sheet to assess liquidity (short-term ability to pay), solvency (long-term financial stability), and the overall financial position of the entity.</p>
+    </div>
+
+    <h3>Measurement Bases — Not Everything Is at Cost</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Historical / Amortized Cost</div>
+        <ul>
+          <li>Most common measurement basis</li>
+          <li>PP&amp;E, inventory (under certain methods), most debt instruments held to maturity</li>
+          <li>Long-term debt (bonds payable) — carried at amortized cost</li>
+          <li>Provides reliability, but may diverge from economic reality over time</li>
+          <li>Amortized cost = Initial cost − Principal repaid ± Amortization of discount/premium − Impairment</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Fair Value</div>
+        <ul>
+          <li>The price to sell an asset (or transfer a liability) in an orderly market transaction</li>
+          <li>Used for certain financial assets, trading securities, derivatives</li>
+          <li>Changes flow to income statement (trading) or OCI (available-for-sale/FVOCI)</li>
+          <li>More relevant economically but introduces volatility</li>
+          <li>IFRS permits fair value model for intangibles if an active market exists</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Analyst Takeaway — Measurement Heterogeneity</div>
+      <p>Balance sheets mix measurement bases — some items at cost, some at fair value. This limits comparability across companies and requires analysts to read footnotes carefully. Two companies with identical economic positions can show dramatically different balance sheet values depending on their accounting policies and available elections. Always check the notes for the measurement basis of each major category.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 2: INTANGIBLE ASSETS           -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Intangible Assets</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Intangible assets</strong> are identifiable non-monetary assets without physical substance. "Identifiable" means the asset can either be separated and sold on its own OR arises from contractual/legal rights. Common examples: patents, licenses, trademarks, copyrights, franchises, customer lists.</p>
+      <p>The most important intangible that is <em>not</em> separately identifiable is <strong>goodwill</strong>, which arises in business combinations and is covered separately in the next section.</p>
+    </div>
+
+    <h3>Measurement Models — IFRS vs. US GAAP</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">IFRS</div>
+        <ul>
+          <li><strong>Cost model:</strong> Carry at cost less accumulated amortization and impairment — the default</li>
+          <li><strong>Revaluation model:</strong> Allowed ONLY if an <em>active market</em> exists for that intangible (rare in practice)</li>
+          <li>Research costs: always <strong>expensed</strong></li>
+          <li>Development costs: <strong>capitalized</strong> if specific criteria are met (technological feasibility, intent &amp; ability to complete, future economic benefits probable)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">US GAAP</div>
+        <ul>
+          <li><strong>Cost model only</strong> — revaluation model not permitted</li>
+          <li>Both research and development costs generally <strong>expensed</strong> as incurred</li>
+          <li>Exception: software development costs capitalized after <em>technological feasibility</em> is established (but companies like Microsoft set feasibility very late → effectively expense everything)</li>
+          <li>No internal development capitalization for brands, customer lists, etc.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Useful Life Assessment — Finite vs. Indefinite</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Amortization</th><th>Impairment Testing</th><th>Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Finite Useful Life</td><td>Amortized systematically over best estimate of useful life. Method and life reviewed at least annually.</td><td>Subject to impairment testing (same as PP&amp;E)</td><td>Patents (20-yr legal life), licenses with fixed terms, customer lists, trademarks with renewal limits</td></tr>
+          <tr><td>Indefinite Useful Life</td><td><strong>NOT amortized</strong></td><td>Tested for impairment at least <strong>annually</strong>. Reasonableness of indefinite classification also reviewed annually.</td><td>Broadcast licenses (renewable indefinitely), some trademarks, franchise rights with perpetual renewal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Analyst Trap — "Indefinite" ≠ "Infinite"</div>
+      <p>An indefinite life means the entity cannot foresee a limit to the period over which the asset will generate net cash inflows. It does NOT mean the asset has infinite value. The annual review of whether indefinite classification remains appropriate is critical — a change to finite life triggers amortization from that point forward, hitting future earnings. Watch for changes in useful life estimates.</p>
+    </div>
+
+    <h3>Internally Generated vs. Purchased Intangibles</h3>
+
+    <div class="int-card">
+      <div class="int-title">IFRS: Research Phase vs. Development Phase — The Critical Split</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Research phase:</strong> Activities seeking new knowledge (basic research, searching for alternatives). All costs → <strong>immediately expensed</strong>. No exceptions.</li>
+        <li><strong>Development phase:</strong> Occurs after research phase. Design, testing of prototypes and models. Costs <strong>can be capitalized</strong> as intangible assets IF all of the following criteria are met simultaneously:
+          <ul style="margin-top:6px;">
+            <li>Technical feasibility of completing the asset</li>
+            <li>Intention to complete and use or sell the asset</li>
+            <li>Ability to use or sell the asset</li>
+            <li>Probable future economic benefits will flow to the entity</li>
+            <li>Adequate technical, financial, and other resources to complete development</li>
+            <li>Ability to reliably measure the expenditure attributable to the asset</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — Research vs. Development</div>
+      <p>"<strong>R</strong>esearch = <strong>R</strong>isk" — always expensed because outcomes are too uncertain. "<strong>D</strong>evelopment = <strong>D</strong>ependable enough to capitalize" — once feasibility is established, future benefits are probable enough to put on the balance sheet. Think of it as: Research asks "can we do it?"; Development answers "yes, and here's how we're doing it."</p>
+    </div>
+
+    <h3>Always-Expensed Items (Both IFRS and US GAAP)</h3>
+
+    <div class="card">
+      <p>The following types of internal costs are <strong>always expensed</strong> and can never be recognized as intangible assets, regardless of how valuable they may be economically:</p>
+      <div class="two-col" style="margin-top:12px;">
+        <ul style="padding-left:18px; font-size:14px;">
+          <li>Internally generated brands, mastheads, publishing titles, customer lists</li>
+          <li>Start-up costs (pre-operating costs)</li>
+          <li>Training costs</li>
+          <li>Administrative and general overhead</li>
+        </ul>
+        <ul style="padding-left:18px; font-size:14px;">
+          <li>Advertising and promotion costs</li>
+          <li>Relocation and reorganization expenses</li>
+          <li>Redundancy and other termination costs</li>
+          <li>Research costs (always, under both standards)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Intangible Assets</div>
+      <p>The exam will test whether you can distinguish: (1) IFRS vs. US GAAP treatment of development costs; (2) finite vs. indefinite useful life and the resulting accounting difference (amortize vs. impairment-test only); (3) which items are always expensed. A common trap: internally generated brands and customer lists are <strong>never capitalized</strong> under either standard — but if a company is acquired and the acquirer can separately identify those same brand/customer list values, they CAN be recognized (as part of the purchase price allocation). This asymmetry is important: the same economic asset is on the balance sheet of an acquirer but not of the original developer.</p>
+    </div>
+
+    <h3>Analyst Considerations for Intangibles</h3>
+
+    <div class="card">
+      <p>Analysts traditionally view reported intangible values — especially goodwill — with caution. Common adjustments include:</p>
+      <ul>
+        <li>Excluding intangibles to compute <strong>"tangible book value"</strong> (remove intangibles from assets and reduce equity by the same amount)</li>
+        <li>Adding back amortization expense and impairment losses to compute adjusted pretax income</li>
+        <li>However: arbitrarily assigning zero value to all intangibles is <strong>not advisable</strong> — each intangible should be assessed individually. A patent with remaining exclusivity period and proven cash flows has real value.</li>
+      </ul>
+      <p>Companies may also have valuable assets that are <strong>never recorded</strong> on a balance sheet because they are non-identifiable and the company lacks sufficient control over their future economic benefits — e.g., management skills, market share, reputation, brand recognition. These are reflected in the company's market price (market cap exceeds book value), and may be recognized as goodwill by an acquirer.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 3: GOODWILL                    -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Goodwill</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Goodwill</strong> arises when one company acquires another and pays more than the fair value of the acquiree's identifiable net assets (assets − liabilities). It is the most common intangible that is NOT separately identifiable — it cannot be sold on its own; it only exists in the context of the business as a whole.</p>
+    </div>
+
+    <h3>Why Would an Acquirer Overpay?</h3>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#9b7fd4;">Unrecognized Assets</div>
+        <p>Acquiree has valuable assets not on its own balance sheet (e.g., reputation, distribution network, trained workforce, customer relationships). The acquirer is paying for these.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">R&amp;D Value</div>
+        <p>The acquiree's R&amp;D expenditures may not have met criteria for capitalization, but the research may have created real (though unrecognized) value — e.g., a pipeline drug near approval.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Synergies</div>
+        <p>The acquirer expects value from improved strategic positioning vs. competitors or operational synergies (e.g., cost savings, cross-selling) that don't exist in the target's standalone balance sheet.</p>
+      </div>
+    </div>
+
+    <h3>Goodwill Recognition — The 3-Step Process</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">STEP 1</div>
+        <div class="step-content">
+          <div class="st-title">Determine the Purchase Price</div>
+          The total consideration paid by the acquirer to purchase the target company. This includes cash paid, shares issued (at fair value), deferred payments, contingent consideration, etc.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 2</div>
+        <div class="step-content">
+          <div class="st-title">Measure Net Identifiable Assets at Fair Value</div>
+          All of the acquiree's identifiable assets (tangible AND intangible) are measured at <strong>fair value</strong> as of the acquisition date. The acquiree's liabilities and contingent liabilities are also measured at fair value. Net identifiable assets = Fair value of identifiable assets − Fair value of liabilities.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">STEP 3</div>
+        <div class="step-content">
+          <div class="st-title">Goodwill = Purchase Price − Net Identifiable Assets</div>
+          The excess of the purchase price over the fair value of net identifiable assets is recognized as <strong>goodwill</strong> on the balance sheet. If the purchase price is LESS than the fair value of net identifiable assets, that is a "<strong>bargain purchase</strong>" — the gain is recognized immediately in profit or loss.
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Goodwill Formula</div>
+      <div class="f">
+        Goodwill = Purchase Price − Fair Value of Net Identifiable Assets Acquired<br>
+        Net Identifiable Assets = FV of Identifiable Assets − FV of Liabilities &amp; Contingent Liabilities<br><br>
+        Bargain Purchase: Purchase Price &lt; FV Net Identifiable Assets → Gain on IS (not goodwill)
+      </div>
+      <div class="note">Note: Goodwill is measured using fair values at the <em>acquisition date</em>, not the book values from the acquiree's financial statements. This step-up to fair value is critical — it means all assets and liabilities are remeasured, and previously unrecognized identifiable intangibles (like customer lists and trademarks) are now recognized for the first time on the acquirer's consolidated balance sheet.</div>
+    </div>
+
+    <h3>Subsequent Accounting — No Amortization, Annual Impairment Test</h3>
+
+    <div class="gw-card">
+      <div class="gw-title">Goodwill Post-Acquisition Treatment (Both IFRS &amp; US GAAP)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#d4c8f0;">
+        <li><strong>NOT amortized</strong> — unlike PP&amp;E or finite-life intangibles</li>
+        <li>Tested for impairment <strong>at least annually</strong> (and whenever indicators of impairment exist)</li>
+        <li>If goodwill is impaired: impairment loss is charged against income → reduces earnings</li>
+        <li>Impairment loss is <strong>non-cash</strong> — doesn't affect cash flows, but does reduce total assets and equity</li>
+        <li>After an impairment loss: total assets are lower → return on assets (ROA = Net Income ÷ Average Total Assets) may actually <em>increase</em> in subsequent periods (lower denominator)</li>
+        <li>Impairment losses <strong>cannot be reversed</strong> under US GAAP (IFRS also does not allow reversal for goodwill)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Goodwill Impairment — The Earnings Quality Signal</div>
+      <p>A large goodwill impairment charge signals that management overpaid for an acquisition — the expected synergies or cash flows never materialized. It is a non-cash charge that reduces net income but has no cash flow impact. Analysts typically <strong>exclude goodwill impairment from operating trend analysis</strong> but use it to <strong>assess management's acquisition performance</strong>. A company that repeatedly impairs goodwill has a track record of poor capital allocation.</p>
+    </div>
+
+    <h3>Accounting Goodwill vs. Economic Goodwill</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#9b7fd4;">Accounting Goodwill</div>
+        <p>Based on accounting standards. Only recognized in acquisitions (purchase price &gt; FV of net identifiable assets). Historical artifact — reflects what was paid, not current value. Carries forward at cost less impairment.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Economic Goodwill</div>
+        <p>Based on the ongoing economic performance of the entity — the present value of excess returns expected. Reflected in the company's stock price (market cap &gt; book equity = "market-to-book premium"). Not necessarily visible on the balance sheet at all.</p>
+      </div>
+    </div>
+
+    <h3>Analyst Adjustments for Goodwill</h3>
+
+    <div class="card">
+      <p>Because goodwill recognition and impairment can significantly distort comparability between companies (one grew organically, another by acquisition), analysts often make these adjustments:</p>
+      <ul>
+        <li><strong>Exclude goodwill from balance sheet ratios</strong> — use tangible assets (total assets − goodwill) in ratios like total assets turnover and leverage ratios. This makes comparisons between acquirers and organic growers more meaningful.</li>
+        <li><strong>Exclude goodwill impairment from income statement analysis</strong> — strip out impairment charges to assess underlying operating trends. However, don't ignore impairment entirely: it reveals acquisition quality.</li>
+        <li><strong>Assess acquisition price relative to earnings</strong> — compare P/E of acquisition price to the target's earnings power. High goodwill from a high-price acquisition is a financial risk if earnings disappoint.</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Goodwill</div>
+      <p>The exam will test: (1) the three-step goodwill calculation; (2) goodwill = <strong>not amortized</strong>, tested for impairment annually; (3) impairment is <strong>non-cash</strong> and <strong>irreversible</strong>; (4) a bargain purchase creates a <strong>gain on the income statement</strong>, not negative goodwill on the balance sheet; (5) the accounting vs. economic goodwill distinction; (6) why goodwill impairment may <em>increase</em> future ROA (smaller asset base). Also: management judgment in valuing identifiable intangible assets affects how much gets allocated to goodwill vs. separately identifiable intangibles — and separately identified intangibles with finite lives <em>are</em> amortized, so this allocation matters for future earnings.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 4: FINANCIAL INSTRUMENTS       -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Financial Instruments</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>financial instrument</strong> is a contract that gives rise to a <em>financial asset of one entity</em> and a <em>financial liability or equity instrument of another entity</em>. Examples: bonds (asset to holder, liability to issuer), loans, equity investments, derivatives. Derivatives are financial instruments whose value is derived from an underlying factor (interest rates, exchange rates, commodity prices, security prices, credit ratings) — and require little or no initial investment.</p>
+      <p>The key question: <strong>how are financial instruments measured after initial recognition?</strong> The answer depends on their classification, which drives significantly different income statement and balance sheet impacts.</p>
+    </div>
+
+    <h3>Three Measurement Categories — The Master Framework</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Measurement Basis</th><th>Where Unrealized Gains/Losses Go</th><th>IFRS Name</th><th>US GAAP Equivalent</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Category 1</td>
+            <td>Amortized Cost</td>
+            <td>No unrealized G/L recognized — only interest income on IS</td>
+            <td>Amortized Cost</td>
+            <td>Held-to-Maturity (HTM) — debt only</td>
+          </tr>
+          <tr>
+            <td>Category 2</td>
+            <td>Fair Value</td>
+            <td><strong>Other Comprehensive Income (OCI)</strong> — bypasses income statement</td>
+            <td>FVOCI (Fair Value through OCI)</td>
+            <td>Available-for-Sale (AFS) — debt only under US GAAP; equity permitted under IFRS</td>
+          </tr>
+          <tr>
+            <td>Category 3</td>
+            <td>Fair Value</td>
+            <td><strong>Profit or Loss (income statement)</strong> — hits earnings directly</td>
+            <td>FVTPL (Fair Value through Profit or Loss)</td>
+            <td>Trading Securities (debt &amp; equity)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>When Is Each Category Used?</h3>
+
+    <div class="fi-card">
+      <div class="fi-title">Category 1: Amortized Cost (HTM under US GAAP)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li>IFRS: Used when (a) cash flows occur on specified dates AND consist solely of principal and interest (the "SPPI" test), AND (b) the business model is to <strong>hold the asset to collect contractual cash flows</strong> (hold-to-maturity intent).</li>
+        <li>US GAAP: "Held-to-maturity" — same intent, applies only to debt securities. The entity must have both the positive intent AND the ability to hold to maturity.</li>
+        <li>Examples: long-term bonds bought with intent to hold to maturity, loans made to other companies</li>
+        <li>Fair value changes? <strong>Ignored</strong> on the balance sheet — asset stays at amortized cost. Only interest income hits the P&amp;L.</li>
+      </ul>
+    </div>
+
+    <div class="fi-card">
+      <div class="fi-title">Category 2: FVOCI / Available-for-Sale</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li>IFRS Debt: Used when business model involves <strong>both collecting cash flows AND selling</strong> the financial assets. Meets SPPI test.</li>
+        <li>IFRS Equity: Company may make an <strong>irrevocable election at acquisition</strong> to measure equity investments at FVOCI. This election is permanent — cannot be changed later.</li>
+        <li>US GAAP: "Available-for-Sale" — applies <strong>only to debt securities</strong>. US GAAP does NOT allow equity investments in FVOCI/AFS category.</li>
+        <li>Balance sheet: asset at <strong>fair value</strong>. Unrealized gains/losses → <strong>OCI</strong> (equity section, accumulated other comprehensive income — AOCI). When the asset is sold, the cumulative OCI gain/loss is "recycled" to the income statement.</li>
+      </ul>
+    </div>
+
+    <div class="fi-card">
+      <div class="fi-title">Category 3: FVTPL / Trading Securities</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li>IFRS: Default category for financial assets not assigned to Category 1 or 2. Also used if the company makes an irrevocable FVTPL election at acquisition.</li>
+        <li>US GAAP: All equity investments (except those giving significant influence) are measured at FVTPL. "Trading" debt securities — acquired with intent to sell before maturity.</li>
+        <li>Balance sheet: asset at <strong>fair value</strong>. Unrealized gains/losses → <strong>directly to income statement</strong> (profit or loss). This creates earnings volatility.</li>
+        <li>Highest earnings volatility — every market fluctuation hits net income.</li>
+      </ul>
+    </div>
+
+    <h3>Critical IFRS vs. US GAAP Differences on Financial Instruments</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Equity Investments — IFRS</div>
+        <ul>
+          <li>Default: FVTPL (unrealized G/L → income statement)</li>
+          <li>Option: irrevocable FVOCI election at acquisition (unrealized G/L → OCI, never recycled to P&amp;L even on sale)</li>
+          <li>No HTM/AFS categories for equity</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Equity Investments — US GAAP</div>
+        <ul>
+          <li><strong>ALL equity investments</strong> (except those conferring significant influence) → FVTPL mandatory</li>
+          <li>No AFS option for equity — this was eliminated under ASU 2016-01</li>
+          <li>Unrealized G/L always hits income statement — no OCI option</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Worked Example — Impact of Classification on Financials</h3>
+
+    <div class="worked">
+      <div class="worked-title">Example: €100m Bond Investment, 5% coupon (semi-annual), value increases €2m after 6 months</div>
+      <div class="table-wrap" style="margin-top:0; border:none;">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Amortized Cost (HTM)</th>
+              <th>FVOCI (AFS)</th>
+              <th>FVTPL (Trading)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Interest income on IS</td>
+              <td class="num">€2,500,000</td>
+              <td class="num">€2,500,000</td>
+              <td class="num">€2,500,000</td>
+            </tr>
+            <tr>
+              <td>Unrealized gain on IS</td>
+              <td class="num">—</td>
+              <td class="num">—</td>
+              <td class="num">€2,000,000</td>
+            </tr>
+            <tr class="total-row">
+              <td>Total impact on Profit &amp; Loss</td>
+              <td class="num">€2,500,000</td>
+              <td class="num">€2,500,000</td>
+              <td class="num">€4,500,000</td>
+            </tr>
+            <tr>
+              <td>Asset on Balance Sheet</td>
+              <td class="num">€100,000,000 (cost)</td>
+              <td class="num">€102,000,000 (FV)</td>
+              <td class="num">€102,000,000 (FV)</td>
+            </tr>
+            <tr>
+              <td>Unrealized gain in AOCI (equity)</td>
+              <td class="num">—</td>
+              <td class="num">€2,000,000</td>
+              <td class="num">—</td>
+            </tr>
+            <tr class="result-row">
+              <td>Retained Earnings</td>
+              <td class="num">+€2,500,000</td>
+              <td class="num">+€2,500,000</td>
+              <td class="num">+€4,500,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin-top:12px;">Key insight: All three categories show the same cash received (€2.5m coupon). The difference is only in how/where the unrealized €2m gain is recognized. HTM: balance sheet stays at cost (€100m), no gain recognized. FVOCI: balance sheet shows FV (€102m) but gain bypasses income statement → sits in AOCI. FVTPL: balance sheet shows FV (€102m) AND gain hits income → highest reported earnings volatility.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Financial Instruments</div>
+      <p>The exam loves to test: (1) which category → where do unrealized gains/losses go (IS vs. OCI); (2) the US GAAP difference — ALL equity (except significant-influence investments) is mandatorily FVTPL; AFS applies only to debt; (3) IFRS allows FVOCI for equity via irrevocable election; (4) realized gains/losses (from selling) always go through the income statement regardless of classification; (5) amortized cost = initial recognition − principal repaid ± amortization of discount/premium − impairment. Know the Exhibit 5 table cold — the examiner often presents scenarios and asks where the gain/loss appears.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 5: NON-CURRENT LIABILITIES     -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Non-Current Liabilities</h2>
+    </div>
+
+    <div class="card">
+      <p>All liabilities that are <strong>not classified as current</strong> are non-current (long-term) liabilities. Typical non-current liabilities include: long-term financial liabilities (bonds payable, bank loans), lease liabilities, deferred tax liabilities, post-employment benefit obligations (pension liabilities), and deferred revenue (non-current portion).</p>
+      <p>Most liabilities are reported at <strong>amortized cost</strong> on the balance sheet, though certain cases (financial liabilities held for trading, derivatives, some hedged instruments) are carried at fair value.</p>
+    </div>
+
+    <h3>Long-Term Financial Liabilities — Bonds and Loans</h3>
+
+    <div class="liab-card">
+      <div class="liab-title">Bonds Payable — Amortized Cost Treatment</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li><strong>Issued at par:</strong> Carrying amount = face value throughout life. No amortization of discount/premium needed. Simple case: $10m bonds at par → $10m liability always.</li>
+        <li><strong>Issued at discount</strong> (below par): e.g., $10m face value bonds issued at 97.5% → proceeds = $9.75m. The $250,000 discount is amortized over the bond's life, increasing the carrying amount to $10m at maturity. Each period: interest expense &gt; coupon paid (the amortized discount is added).</li>
+        <li><strong>Issued at premium</strong> (above par): e.g., issued at 102% → proceeds = $10.2m. The $200,000 premium is amortized over the bond's life, decreasing the carrying amount to $10m at maturity. Each period: interest expense &lt; coupon paid (the amortized premium is deducted).</li>
+        <li>At maturity: carrying amount (amortized cost) = face value for all bonds, regardless of original issue price.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Amortized Cost of Bond — Key Relationship</div>
+      <div class="f">
+        Carrying Amount = Face Value − Unamortized Discount  (discount bond)<br>
+        Carrying Amount = Face Value + Unamortized Premium  (premium bond)<br><br>
+        Interest Expense (IS) = Carrying Amount × Effective Interest Rate<br>
+        Coupon Payment (Cash) = Face Value × Coupon Rate<br><br>
+        Discount amortization: Interest Expense &gt; Coupon → carrying amount increases toward face value<br>
+        Premium amortization: Interest Expense &lt; Coupon → carrying amount decreases toward face value
+      </div>
+      <div class="note">This is the effective interest method — the standard method under both IFRS and US GAAP. The straight-line method (equal amortization each period) is a simplification sometimes allowed under US GAAP if results are not materially different.</div>
+    </div>
+
+    <h3>Deferred Tax Liabilities</h3>
+
+    <div class="card">
+      <p><strong>Deferred tax liabilities (DTLs)</strong> arise from <em>temporary timing differences</em> between: taxable income (what you report to the tax authority) and financial statement income (what you report to investors). A DTL means you're paying less tax NOW than your income statement expense suggests — the extra tax is deferred to future periods.</p>
+      <p>The most common cause: using <strong>accelerated depreciation</strong> for tax purposes but <strong>straight-line depreciation</strong> for financial reporting. Tax depreciation is front-loaded → lower taxable income in early years → lower taxes payable now → DTL. In later years, tax depreciation is lower → higher taxable income → pay off the DTL.</p>
+      <p>DTLs also arise when: subsidiary profits not yet distributed (not yet subject to tax), or income recognized later for tax than for financial reporting.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Deferred Tax Liability (DTL)</div>
+        <p>Tax payable in future periods. Taxable income &lt; Book income currently → paying less tax now. The difference accumulates as a DTL (future tax obligation).</p>
+        <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Common cause: Accelerated depreciation for tax. Book income &gt; taxable income early in asset life → DTL builds up early, reverses later.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Deferred Tax Asset (DTA)</div>
+        <p>Prepaid tax — you pay tax NOW but will get the benefit later. Common cause: Unearned revenue taxed immediately when received (e.g., in the US, cash received is often taxable immediately), but recognized as revenue over time for financial reporting.</p>
+        <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Also arises from: tax loss carryforwards, warranty provisions (deductible only when paid, not when expensed).</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 DTL Memory Trick</div>
+      <p><strong>"DTL = Deferred Tax = Delaying the Tax Bill."</strong> You owe the tax eventually, but you're paying it later than your income statement suggests. The government is essentially giving you a temporary interest-free loan. Think of Apple's $31.5 billion DTL — mostly accumulated offshore profits not yet repatriated and taxed — a massive deferred obligation lurking in "other non-current liabilities."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 6: COMMON-SIZE ANALYSIS        -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Common-Size Balance Sheet Analysis</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Vertical common-size analysis</strong> of the balance sheet: express every line item as a <strong>percentage of total assets</strong>. This removes the effect of size differences, enabling meaningful comparison across companies of different sizes and across time periods.</p>
+      <p>Unlike the income statement common-size (where everything is % of revenue), the balance sheet uses total assets as the base for all items — both asset items AND liability/equity items.</p>
+    </div>
+
+    <h3>What Common-Size Analysis Reveals</h3>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Liquidity Profile</div>
+        <ul>
+          <li>High % cash + marketable securities → strong liquidity</li>
+          <li>High % inventory + receivables with low cash → liquidity risk</li>
+          <li>Compare current assets % vs. current liabilities %</li>
+          <li>Current ratio can be inferred from common-size data</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#9b7fd4;">Capital Structure &amp; Strategy</div>
+        <ul>
+          <li>High % goodwill → growth via acquisitions</li>
+          <li>Zero goodwill → organic growth strategy</li>
+          <li>High % PP&amp;E → capital-intensive, manufactures in-house</li>
+          <li>High % intangibles → tech, pharma, media companies</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Solvency &amp; Leverage</div>
+        <ul>
+          <li>High % total liabilities relative to total assets → higher leverage = higher financial risk</li>
+          <li>High % long-term debt → depends on cash flow stability</li>
+          <li>Compare equity % over time — declining equity share = increasing leverage</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Sector Patterns — Key Benchmarks to Know</h3>
+
+    <div class="ratio-card">
+      <div class="ratio-title">S&amp;P 500 Sector Balance Sheet Norms (Median, 2017 Data)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c890; line-height:2;">
+        <li><strong>Energy &amp; Utilities:</strong> Highest PP&amp;E (73% and 72% of assets). Capital-intensive physical infrastructure.</li>
+        <li><strong>Financials:</strong> Highest total liabilities (87% of assets). Highly leveraged by nature — deposits and debt fund assets. Financial leverage ratio is very high.</li>
+        <li><strong>Information Technology:</strong> Lowest leverage — highest cash &amp; investments (22.7% of assets median). Lowest long-term debt (22.9%) and highest equity (39.3%).</li>
+        <li><strong>Consumer Staples &amp; Health Care:</strong> Highest intangibles/goodwill — reflects brand value and pharmaceutical acquisitions.</li>
+        <li><strong>Telecom Services:</strong> Highest long-term debt (46.8%) — capital-intensive infrastructure with relatively stable cash flows supporting high leverage.</li>
+        <li><strong>Utilities &amp; Real Estate:</strong> Very low receivables and inventories. Lowest cash relative to assets.</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Common-Size Balance Sheet Interpretation</div>
+      <p>Exam questions often give you a common-size balance sheet for two companies and ask you to draw conclusions about liquidity, solvency, and strategy. Key patterns: <strong>Company with high goodwill → made acquisitions</strong>; <strong>Company with zero goodwill → organic grower</strong>; <strong>Company with very high A/P but low cash → potential liquidity risk</strong> (like a retailer living on trade credit). A company with 95%+ liabilities (like Company C in the LES example) may be technically liquid today but is highly vulnerable to cash flow shocks. Remember: common-size analysis gives RATIOS not absolute amounts — you still need the raw numbers to assess the actual size of obligations.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 7: LIQUIDITY & SOLVENCY RATIOS -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Liquidity &amp; Solvency Ratios</h2>
+    </div>
+
+    <div class="card">
+      <p>Balance sheet ratios split into two categories: <strong>liquidity ratios</strong> (short-term ability to meet obligations) and <strong>solvency ratios</strong> (long-term financial stability). All ratios involve only balance sheet items — no income statement needed (unlike interest coverage ratios, which are discussed in later modules).</p>
+    </div>
+
+    <h3>Liquidity Ratios</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>What It Measures</th><th>Key Point</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Current Ratio</td>
+            <td class="num">Current Assets ÷ Current Liabilities</td>
+            <td>Broadest measure of short-term liquidity. Can the company cover all current liabilities with all current assets?</td>
+            <td>&gt;1 = current assets exceed current liabilities. Higher is generally better, but very high may indicate inefficient use of cash.</td>
+          </tr>
+          <tr>
+            <td>Quick Ratio (Acid Test)</td>
+            <td class="num">(Cash + Mktable Securities + Receivables) ÷ Current Liabilities</td>
+            <td>More conservative — excludes inventory (least liquid current asset) and other prepayments.</td>
+            <td>Better for companies where inventory is slow to convert to cash (e.g., real estate, manufacturing).</td>
+          </tr>
+          <tr>
+            <td>Cash Ratio</td>
+            <td class="num">(Cash + Marketable Securities) ÷ Current Liabilities</td>
+            <td>Most conservative. Only uses the most liquid assets. Can the company pay ALL current liabilities immediately?</td>
+            <td>Very low for most companies — holding that much cash would be inefficient. Useful for distressed analysis.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Liquidity Ratio Hierarchy</div>
+      <p>Think of the three ratios as a funnel: <strong>Current ratio</strong> includes everything (inventory, prepayments, receivables, cash). <strong>Quick ratio</strong> removes inventory and prepayments. <strong>Cash ratio</strong> only keeps cash and near-cash. Each ratio is more conservative than the last. A company that looks liquid on the current ratio but much worse on the quick ratio likely has a lot of slow-moving inventory — a red flag for liquidity risk in a downturn.</p>
+    </div>
+
+    <h3>Solvency Ratios</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ratio</th><th>Formula</th><th>What It Measures</th><th>Higher Ratio Means</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Long-Term Debt-to-Equity</td>
+            <td class="num">Total Long-Term Debt ÷ Total Equity</td>
+            <td>Long-term financial leverage. How much LT debt per unit of equity?</td>
+            <td>Higher financial risk and leverage</td>
+          </tr>
+          <tr>
+            <td>Debt-to-Equity (D/E)</td>
+            <td class="num">Total Debt ÷ Total Equity</td>
+            <td>Total financial leverage (both current and long-term debt).</td>
+            <td>Higher financial risk and leverage</td>
+          </tr>
+          <tr>
+            <td>Total Debt Ratio</td>
+            <td class="num">Total Debt ÷ Total Assets</td>
+            <td>Proportion of assets financed by debt. Also = 1 − Equity ratio.</td>
+            <td>Higher leverage; creditors finance more of assets</td>
+          </tr>
+          <tr>
+            <td>Financial Leverage (Equity Multiplier)</td>
+            <td class="num">Total Assets ÷ Total Equity</td>
+            <td>Multiplier effect of debt. Used in DuPont analysis (ROE = ROA × Financial Leverage).</td>
+            <td>Higher leverage; amplifies ROE but also risk</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Solvency Formulas</div>
+      <div class="f">
+        Current Ratio          = Current Assets ÷ Current Liabilities<br>
+        Quick Ratio            = (Cash + Mktable Sec + Receivables) ÷ Current Liabilities<br>
+        Cash Ratio             = (Cash + Mktable Sec) ÷ Current Liabilities<br><br>
+        LT Debt-to-Equity      = Total Long-Term Debt ÷ Total Equity<br>
+        Debt-to-Equity         = Total Debt ÷ Total Equity<br>
+        Total Debt Ratio       = Total Debt ÷ Total Assets<br>
+        Financial Leverage     = Total Assets ÷ Total Equity<br><br>
+        Tangible Book Value    = Total Equity − Goodwill − Intangible Assets<br>
+        Tangible Equity Ratio  = Tangible Book Value ÷ Total Assets
+      </div>
+      <div class="note">Note: "Total debt" can mean different things depending on context. Sometimes it refers to interest-bearing debt only (notes payable + bonds payable + bank loans + capital leases) and excludes trade payables and other non-financial liabilities. Other times it means all liabilities. Always clarify which definition is being used in a given question or analysis.</div>
+    </div>
+
+    <h3>Limitations of Balance Sheet Ratio Analysis</h3>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Ratio Analysis Limitations — Don't Rely Blindly</div>
+      <p><strong>Point-in-time snapshot:</strong> Balance sheet ratios reflect the financial position on one specific date. Companies can "window dress" — e.g., paying down short-term debt just before the reporting date to boost the current ratio, then re-borrowing after. The ratio looks better but nothing fundamental changed.</p>
+      <p><strong>Components matter more than the ratio:</strong> The current ratio treats all current assets equally, but inventory is far less liquid than cash. A current ratio of 2.0 backed mostly by slow-moving inventory is worse than a current ratio of 1.5 backed by cash and receivables.</p>
+      <p><strong>Industry context is essential:</strong> A D/E ratio of 5:1 is alarmingly high for a manufacturer but completely normal for a bank. Financial companies have structurally high leverage by design. Never interpret a ratio without a sector benchmark.</p>
+      <p><strong>Accounting differences distort comparisons:</strong> Different depreciation methods, inventory costing, and intangible asset treatments create ratios that are not apples-to-apples across companies. Analytical adjustments are required.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 8: EXAM CHECKLIST              -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Module 3: Analyzing Balance Sheets</h2>
+    </div>
+
+    <div class="card" style="border-color:rgba(155,127,212,0.3);">
+      <ul class="checklist">
+        <li>✅ <strong>Intangible assets = identifiable, non-monetary, no physical substance.</strong> Identifiable = separable OR arises from contractual/legal rights. Goodwill = NOT separately identifiable.</li>
+        <li>✅ <strong>IFRS measurement models for intangibles:</strong> Cost model (default) OR revaluation model (only if active market exists). US GAAP: cost model ONLY.</li>
+        <li>✅ <strong>Finite useful life:</strong> Amortized systematically over useful life. Method and life reviewed annually. Subject to impairment. <strong>Indefinite useful life:</strong> NOT amortized. Tested for impairment annually. Classification reviewed annually.</li>
+        <li>✅ <strong>Internally generated intangibles — IFRS:</strong> Research phase = always expensed. Development phase = capitalize if 6 criteria met (feasibility + intent + ability + future benefits + resources + reliable measurement).</li>
+        <li>✅ <strong>US GAAP:</strong> Both R&amp;D costs generally expensed (except post-feasibility software development). No development capitalization for most internally generated intangibles.</li>
+        <li>✅ <strong>Always expensed (both standards):</strong> Internally generated brands, customer lists, start-up costs, training, admin overhead, advertising, restructuring costs.</li>
+        <li>✅ <strong>Purchased intangibles ARE capitalized</strong> if they arise from contractual rights, other legal rights, or can be separated and sold. Same economic asset — different treatment depending on whether internally developed or acquired.</li>
+        <li>✅ <strong>Goodwill = Purchase price − FV of net identifiable assets acquired.</strong> Recognized only in acquisitions. NOT amortized. Tested for impairment at least annually.</li>
+        <li>✅ <strong>Bargain purchase:</strong> Purchase price &lt; FV net identifiable assets → GAIN on income statement (not negative goodwill on balance sheet).</li>
+        <li>✅ <strong>Goodwill impairment:</strong> Non-cash charge. Reduces earnings and total assets. Irreversible. May increase future ROA (lower denominator). Signals management overpaid for acquisition.</li>
+        <li>✅ <strong>Accounting goodwill vs. economic goodwill:</strong> Accounting = acquisition-based, on balance sheet. Economic = ongoing performance, reflected in stock price. Economic goodwill can exist with zero accounting goodwill (organic growth).</li>
+        <li>✅ <strong>Three financial instrument measurement categories:</strong> (1) Amortized Cost = hold-to-collect, SPPI test; (2) FVOCI = hold-to-collect AND sell (debt), or irrevocable equity election (IFRS); (3) FVTPL = default / trading intent.</li>
+        <li>✅ <strong>Where unrealized G/L goes:</strong> Amortized Cost → nowhere (no recognition). FVOCI → OCI (bypasses IS). FVTPL → Income Statement (hits earnings directly).</li>
+        <li>✅ <strong>US GAAP equity investments:</strong> ALL equity (except significant influence) → FVTPL mandatory. No AFS/FVOCI option for equity. Unrealized G/L always hits income statement.</li>
+        <li>✅ <strong>IFRS equity investments:</strong> Default = FVTPL. Irrevocable FVOCI election available at acquisition. If FVOCI elected for equity, gains/losses never recycled to P&amp;L even on sale.</li>
+        <li>✅ <strong>Bonds payable — amortized cost:</strong> Discount bond: carrying value increases to face value over life (interest expense &gt; coupon). Premium bond: carrying value decreases to face value (interest expense &lt; coupon). At maturity: all bonds carry at face value.</li>
+        <li>✅ <strong>Deferred tax liability:</strong> Taxable income &lt; Book income → pay less tax now → DTL (future obligation). Most common cause: accelerated depreciation for tax, straight-line for books.</li>
+        <li>✅ <strong>Common-size balance sheet:</strong> Each item as % of total assets (NOT revenue). Enables comparison across companies and over time regardless of size. Reveals capital structure, liquidity profile, and strategic priorities.</li>
+        <li>✅ <strong>Liquidity ratios (ascending conservatism):</strong> Current ratio (all current assets ÷ CL) → Quick ratio (exclude inventory and prepayments) → Cash ratio (cash + mktable sec only). All higher = more liquid.</li>
+        <li>✅ <strong>Solvency ratios:</strong> LT D/E, D/E, Total Debt Ratio, Financial Leverage (= Total Assets ÷ Equity). Higher = more leveraged = more financial risk. Interpret always relative to sector norms.</li>
+        <li>✅ <strong>Ratio limitations:</strong> Point-in-time only. Inventory ≠ cash in liquidity analysis. Industry context essential. Accounting policy differences distort cross-company comparisons. Current ratio is sensitive to year-end window dressing.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 3 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ INTANGIBLE ASSETS ═══<br>
+        Finite life → Amortize over useful life + Impairment testing<br>
+        Indefinite life → NO amortization + Annual impairment test<br>
+        IFRS: Research → Expense | Development → Capitalize (if 6 criteria met)<br>
+        US GAAP: R&amp;D → Expense (exception: post-feasibility software costs)<br>
+        Internally generated brands/customer lists/start-up: ALWAYS expensed (both standards)<br><br>
+
+        ═══ GOODWILL ═══<br>
+        Goodwill = Purchase Price − FV of Net Identifiable Assets<br>
+        Net Identifiable Assets = FV Assets − FV Liabilities<br>
+        Bargain purchase: Gain on IS (not negative goodwill)<br>
+        Post-acquisition: NOT amortized. Annual impairment test. Non-cash if impaired.<br>
+        Impairment → lowers assets → may increase future ROA<br><br>
+
+        ═══ FINANCIAL INSTRUMENTS — 3 CATEGORIES ═══<br>
+        Amortized Cost (HTM) → Interest income on IS only. No FV changes recognized.<br>
+        FVOCI (AFS)          → FV changes → OCI (equity). Interest income → IS.<br>
+        FVTPL (Trading)      → FV changes → IS (income statement). Highest volatility.<br>
+        Realized gains (sale) → ALWAYS to income statement, all categories.<br>
+        US GAAP equity: ALL equity → FVTPL mandatory (no AFS for equity)<br>
+        IFRS equity: Default FVTPL. Irrevocable FVOCI election available.<br><br>
+
+        ═══ BONDS PAYABLE — AMORTIZED COST ═══<br>
+        Discount bond: Interest exp &gt; Coupon paid → Carrying value ↑ toward face<br>
+        Premium bond:  Interest exp &lt; Coupon paid → Carrying value ↓ toward face<br>
+        At maturity: Carrying amount = Face value always<br><br>
+
+        ═══ DEFERRED TAX LIABILITY ═══<br>
+        DTL: Tax paid &lt; Book tax expense now → defer to future<br>
+        Common cause: Accelerated depreciation (tax) vs. Straight-line (books)<br>
+        DTA: Tax paid &gt; Book tax expense now → prepaid tax (e.g., unearned revenue taxed on receipt)<br><br>
+
+        ═══ LIQUIDITY RATIOS ═══<br>
+        Current Ratio = Current Assets ÷ Current Liabilities<br>
+        Quick Ratio   = (Cash + Mktable Sec + Receivables) ÷ Current Liabilities<br>
+        Cash Ratio    = (Cash + Mktable Sec) ÷ Current Liabilities<br><br>
+
+        ═══ SOLVENCY RATIOS ═══<br>
+        LT Debt-to-Equity  = LT Debt ÷ Equity<br>
+        Debt-to-Equity     = Total Debt ÷ Equity<br>
+        Total Debt Ratio   = Total Debt ÷ Total Assets<br>
+        Financial Leverage = Total Assets ÷ Equity  (= 1 ÷ Equity Ratio)<br>
+        Tangible Book Val  = Equity − Goodwill − Intangibles
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 3:</strong><br>
+        (1) Goodwill is NOT amortized under either IFRS or US GAAP — only impairment tested annually.<br>
+        (2) Bargain purchase = GAIN on income statement, NOT negative goodwill on balance sheet.<br>
+        (3) Goodwill impairment is non-cash — reduces earnings and assets but NOT cash flow from operations.<br>
+        (4) IFRS allows development cost capitalization; US GAAP generally does NOT.<br>
+        (5) Internally generated brands, customer lists = NEVER capitalized (but acquired ones ARE).<br>
+        (6) US GAAP equity investments → FVTPL mandatory. No AFS/FVOCI for equity.<br>
+        (7) IFRS FVOCI election for equity is irrevocable AND gains never recycled to P&amp;L on sale.<br>
+        (8) Unrealized gains on FVOCI → OCI (bypasses IS). Unrealized gains on FVTPL → directly hits IS.<br>
+        (9) Discount bond: interest expense &gt; coupon (amortization increases carrying value). Premium: opposite.<br>
+        (10) DTL: accelerated tax depreciation → lower taxable income now → less tax paid now → DTL (future obligation).<br>
+        (11) Common-size balance sheet base = TOTAL ASSETS (not revenue). Everything expressed as % of total assets.<br>
+        (12) Current ratio is the broadest liquidity measure; Quick ratio excludes inventory; Cash ratio is the most conservative.<br>
+        (13) Post-goodwill-impairment: total assets fall → future ROA may INCREASE (smaller denominator). A counter-intuitive exam favorite.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 3: Analyzing Balance Sheets · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 3: Statistical Measures of Asset Returns</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--purple:#a04cc9;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--tip-border:#4cc98a;--warn-bg:#221a18;--warn-border:#c94c4c;--formula-bg:#12151f;--formula-border:#c9a84c; }
+  *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0d0d18 40%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden}
+  .page-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(160,76,201,0.08) 0%,transparent 70%);border-radius:50%}
+  .badge{display:inline-block;background:rgba(160,76,201,0.12);color:var(--purple);border:1px solid rgba(160,76,201,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1.1;color:#fff;margin-bottom:12px}
+  .page-header h1 span{color:var(--purple)}.page-header p{color:var(--muted);font-size:14px;max-width:780px}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none}
+  .toc-strip::-webkit-scrollbar{display:none}
+  .toc-item{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 18px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;transition:color .2s,border-color .2s}
+  .toc-item:hover{color:var(--purple);border-color:var(--purple)}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px}.section{margin-bottom:56px}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--purple);background:rgba(160,76,201,0.1);border:1px solid rgba(160,76,201,0.25);padding:4px 10px;border-radius:2px;letter-spacing:.08em;white-space:nowrap}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff}
+  h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1rem;color:var(--purple);text-transform:uppercase;letter-spacing:.07em;margin:24px 0 12px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:16px}
+  .card p,.card li{color:var(--text);font-size:15px}.card p+p{margin-top:10px}.card ul,.card ol{padding-left:20px}.card ul li,.card ol li{margin-bottom:6px}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--formula-border);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0}
+  .formula-box .label{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+  .formula-box .f{font-family:'JetBrains Mono',monospace;color:#e8c97a;font-size:14.5px;font-weight:600;line-height:2.1}
+  .formula-box .note{color:var(--muted);font-size:12px;margin-top:8px;font-family:'Source Sans 3',sans-serif;line-height:1.6}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--tip-border);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent3);margin-bottom:6px}
+  .tip p{font-size:14px;color:#c8dfd0}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--warn-border);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--danger);margin-bottom:6px}
+  .warn p{font-size:14px;color:#dfc8c8}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}@media(max-width:860px){.three-col{grid-template-columns:1fr}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px}
+  .mini-card ul{padding-left:16px}.mini-card li{font-size:13.5px;margin-bottom:5px;color:var(--text)}.mini-card p{font-size:13.5px;color:var(--text)}
+  .table-wrap{overflow-x:auto;margin:16px 0;border-radius:6px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}thead tr{background:#1e2330}
+  thead th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);border-bottom:1px solid var(--border);white-space:nowrap}
+  tbody tr{border-bottom:1px solid var(--border);transition:background .15s}tbody tr:last-child{border-bottom:none}tbody tr:hover{background:rgba(255,255,255,.02)}
+  tbody td{padding:11px 16px;color:var(--text);vertical-align:top}tbody td:first-child{color:var(--accent);font-weight:600;font-size:13px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace}
+  .tag-green{background:rgba(76,201,138,.15);color:var(--accent3);border:1px solid rgba(76,201,138,.3)}
+  .tag-red{background:rgba(201,76,76,.15);color:var(--danger);border:1px solid rgba(201,76,76,.3)}
+  .tag-yellow{background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3)}
+  .tag-blue{background:rgba(76,139,201,.15);color:var(--accent2);border:1px solid rgba(76,139,201,.3)}
+  .tag-purple{background:rgba(160,76,201,.15);color:var(--purple);border:1px solid rgba(160,76,201,.3)}
+  .highlight{color:var(--accent);font-weight:600}.highlight2{color:var(--accent2);font-weight:600}.highlight3{color:var(--accent3);font-weight:600}.danger-text{color:var(--danger);font-weight:600}
+  .def-block{background:#171b26;border:1px solid var(--border);border-top:2px solid var(--purple);border-radius:0 0 6px 6px;padding:14px 20px;margin:12px 0}
+  .def-block .def-term{font-weight:700;color:var(--purple);font-size:14px;margin-bottom:4px;font-family:'JetBrains Mono',monospace}
+  .def-block .def-body{font-size:14px;color:var(--text)}
+  .shape-card{border-radius:6px;padding:16px 20px;margin-bottom:10px}
+  .shape-pos{background:rgba(76,201,138,.06);border:1px solid rgba(76,201,138,.3)}
+  .shape-neg{background:rgba(201,76,76,.06);border:1px solid rgba(201,76,76,.3)}
+  .shape-zero{background:rgba(76,139,201,.06);border:1px solid rgba(76,139,201,.3)}
+  .shape-lepto{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.3)}
+  .shape-platy{background:rgba(160,76,201,.06);border:1px solid rgba(160,76,201,.3)}
+  .shape-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .shape-pos .shape-label{color:var(--accent3)}.shape-neg .shape-label{color:var(--danger)}.shape-zero .shape-label{color:var(--accent2)}.shape-lepto .shape-label{color:var(--accent)}.shape-platy .shape-label{color:var(--purple)}
+  .shape-card p,.shape-card li{font-size:14px;color:var(--text)}.shape-card ul{padding-left:16px;margin-top:6px}.shape-card li{margin-bottom:4px}
+  .disp-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:10px}
+  .disp-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:6px}
+  .disp-card p,.disp-card li{font-size:14px;color:var(--text)}.disp-card ul{padding-left:16px;margin-top:4px}.disp-card li{margin-bottom:3px}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 3</div>
+  <h1>Statistical Measures of <span>Asset Returns</span></h1>
+  <p>Exam-ready notes: measures of central tendency (mean, median, mode), outlier handling, quantiles and box plots, measures of dispersion (range, MAD, variance, std dev, target semideviation, CV), skewness and kurtosis, and covariance/correlation with limitations.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Mean, Median, Mode</a>
+  <a class="toc-item" href="#s2">02 · Outlier Handling</a>
+  <a class="toc-item" href="#s3">03 · Quantiles &amp; Box Plots</a>
+  <a class="toc-item" href="#s4">04 · Dispersion — Concepts</a>
+  <a class="toc-item" href="#s5">05 · All Dispersion Formulas</a>
+  <a class="toc-item" href="#s6">06 · Skewness</a>
+  <a class="toc-item" href="#s7">07 · Kurtosis</a>
+  <a class="toc-item" href="#s8">08 · Normal Distribution</a>
+  <a class="toc-item" href="#s9">09 · Covariance &amp; Correlation</a>
+  <a class="toc-item" href="#s10">10 · Limitations of Correlation</a>
+  <a class="toc-item" href="#s11">&#9733; Exam Checklist</a>
+</div>
+<div class="container">
+
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>Measures of Central Tendency — Mean, Median, Mode</h2></div>
+  <div class="def-block"><div class="def-term">Measure of Central Tendency</div><div class="def-body">Specifies where data are centered — the "expected" return based on the observed sample. Addresses the <strong>reward</strong> dimension. Three main measures: arithmetic mean, median, and mode.</div></div>
+  <div class="three-col">
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent3);">Arithmetic Mean (X&#772;)</div><p>Sum of all observations &#247; n. Most frequently used. Equal weight to every observation.</p><div style="margin:8px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#e8c97a;">X&#772; = &#931;X&#7522; / n</div><ul><li><span class="danger-text">Sensitive to outliers</span> — pulled by extremes</li><li>Most mathematically tractable</li><li>Uses ALL observations equally</li></ul></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent2);">Median</div><p>Middle value of sorted data. Odd n: position (n+1)/2. Even n: average of n/2 and (n+2)/2 positions.</p><ul><li><span class="highlight3">NOT affected by outliers</span></li><li>Only ONE median per distribution</li><li>Preferred for skewed distributions</li><li>Less mathematically tractable than mean</li></ul></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent);">Mode</div><p>Most frequently occurring value. Only measure usable with nominal/categorical data.</p><ul><li>Can have 0, 1, or multiple modes</li><li>Unimodal = 1; bimodal = 2; trimodal = 3</li><li>If all values different &#8594; no mode</li><li>In histograms = tallest bar (modal interval)</li><li>Continuous distributions may have no mode</li></ul></div>
+  </div>
+  <div class="tip"><div class="tip-label">&#128161; Mean vs. Median</div><p>Use <strong>mean</strong> for symmetric distributions without extreme outliers — it uses all information. Use <strong>median</strong> when outliers are present or distribution is skewed — it is robust to extremes. A large mean&#8722;median gap signals skewness or outliers.</p></div>
+</div>
+
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>Dealing with Outliers — Three Options</h2></div>
+  <div class="three-col">
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent3);">Option 1 — Do Nothing</div><p>Use full data without adjustment. <strong>Use when:</strong> values are legitimate and the full distribution must be reflected. Outliers may contain meaningful information; excluding them may lose valuable data. Eliminates subjective judgment about what is "extreme."</p></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent2);">Option 2 — Trimmed Mean</div><p><strong>Delete</strong> the extreme observations at both ends. Arithmetic mean after removing a stated % of lowest and highest values.<br><br>Example: <strong>5% trimmed mean</strong> = remove bottom 2.5% and top 2.5%, average remaining 95%. Used in sports scoring (discard extreme judges' scores).</p></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent);">Option 3 — Winsorized Mean</div><p><strong>Replace</strong> extreme values with boundary values (nearest non-extreme). Same n, but extremes are capped.<br><br>Example: <strong>95% winsorized mean</strong> = set bottom 2.5% = 2.5th percentile; top 2.5% = 97.5th percentile; then average all.</p></div>
+  </div>
+  <div class="tip"><div class="tip-label">&#128161; Trimmed vs. Winsorized</div><p><strong>Trimmed:</strong> removes extreme values &#8594; smaller effective n in the average. <strong>Winsorized:</strong> replaces extreme values &#8594; same total n but extremes are capped. Both reduce outlier influence. Comparing measures with/without outliers reveals important distributional insights.</p></div>
+</div>
+
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>Quantiles, IQR &amp; Box and Whisker Plots</h2></div>
+  <div class="def-block"><div class="def-term">Quantile</div><div class="def-body">A value at or below which a stated fraction of the data lies. General term covering quartiles, quintiles, deciles, and percentiles.</div></div>
+  <div class="table-wrap"><table><thead><tr><th>Quantile</th><th>Divides Into</th><th>Key Points</th><th>Notes</th></tr></thead><tbody>
+    <tr><td>Quartiles</td><td>4 equal parts</td><td>Q1 (25th pct), Q2 = median (50th), Q3 (75th)</td><td>Most commonly used in box plots</td></tr>
+    <tr><td>Quintiles</td><td>5 equal parts</td><td>20th, 40th, 60th, 80th percentiles</td><td>Used in factor research</td></tr>
+    <tr><td>Deciles</td><td>10 equal parts</td><td>10th through 90th percentiles</td><td>Ranking companies by market cap</td></tr>
+    <tr><td>Percentiles</td><td>100 equal parts</td><td>1st through 99th percentiles</td><td>P&#7523; = value at/below which k% of data lies</td></tr>
+  </tbody></table></div>
+  <div class="formula-box"><div class="label">IQR and Box Plot Fences</div><div class="f">IQR = Q3 &#8722; Q1<br><br>Outlier detection (IQR-based fences):<br>Upper fence = Q3 + 1.5 &#215; IQR<br>Lower fence = Q1 &#8722; 1.5 &#215; IQR<br>Observations beyond fences = outliers (plotted separately)</div><div class="note">Box = Q1 to Q3 (IQR). Median or mean marked inside box. Whiskers extend to fences.<br>Simple variant: whiskers extend to max/min values. IQR variant: whiskers to 1.5&#215;IQR, outliers as dots.</div></div>
+  <div class="card"><p><strong>Investment applications of quantiles:</strong></p><ul><li><strong>Performance ranking:</strong> Fund managers ranked by percentile within peer group (e.g., Morningstar star ratings based on performance percentiles)</li><li><strong>Factor research:</strong> Companies sorted into deciles by market cap &#8594; compare small-cap (D1) vs. large-cap (D10) returns</li><li><strong>Investment strategy:</strong> Sort companies by P/E, sales growth, or profitability into quantiles &#8594; study return differences across groups</li></ul></div>
+</div>
+
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>Measures of Dispersion — Concepts</h2></div>
+  <div class="def-block"><div class="def-term">Dispersion</div><div class="def-body">Variability of outcomes around the central tendency. If mean return addresses <strong>reward</strong>, dispersion addresses <strong>risk and uncertainty</strong>. Absolute dispersion = variability without reference to a benchmark. Relative dispersion = variability relative to a reference value.</div></div>
+  <div class="disp-card"><div class="disp-title">Range</div><p>Max &#8722; Min. Simplest measure. Uses only 2 data points. Sensitive to outliers. Cannot describe distribution shape.</p></div>
+  <div class="disp-card"><div class="disp-title">Mean Absolute Deviation (MAD)</div><p>Average of absolute deviations from the mean. Uses ALL observations. Solves cancellation problem via absolute values. Superior to range but less mathematically tractable than variance.</p></div>
+  <div class="disp-card"><div class="disp-title">Sample Variance (s&#178;) and Sample Standard Deviation (s)</div><p>Squaring deviations solves the cancellation problem. Variance = average squared deviation. Std dev = &#8730;variance (restores original units). Divisor = <strong>n&#8722;1</strong> (degrees of freedom &#8594; unbiased estimate of population variance). Std dev: same units as data. Variance: squared units. Most widely used dispersion measures with known statistical properties.</p></div>
+  <div class="disp-card"><div class="disp-title">Target Downside Deviation (Target Semideviation)</div><p>Only considers observations <strong>below a specified target B</strong> (e.g., minimum acceptable return of 6%). Focuses on downside risk &#8212; what loss-averse investors care about. Include only X&#7522; &#8804; B in the numerator sum. Divisor = total n&#8722;1 (not count of sub-target obs).</p></div>
+  <div class="disp-card"><div class="disp-title">Coefficient of Variation (CV)</div><p>CV = s / X&#772;. Scale-free (no units). Risk per unit of return. Allows comparison across datasets with different means or units. Lower CV = more efficient (less risk per unit of return). <strong>Meaningless if mean is negative.</strong></p></div>
+</div>
+
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>All Dispersion Formulas — Master Reference</h2></div>
+  <div class="formula-box"><div class="label">Complete Dispersion Formula Set</div><div class="f">Range = Max &#8722; Min<br><br>MAD = &#931;|X&#7522; &#8722; X&#772;| / n<br><br>Sample Variance: s&#178; = &#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1)<br><br>Sample Std Dev: s = &#8730;[&#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1)]<br><br>Target Semideviation: s_Target = &#8730;[&#931;(X&#7522; &#8722; B)&#178; / (n&#8722;1)]  [only for X&#7522; &#8804; B]<br><br>Coefficient of Variation: CV = s / X&#772;</div><div class="note">Divisors: MAD uses n. Variance, std dev, target semideviation all use n&#8722;1.<br>Target semideviation: sum only sub-target observations, but divide by TOTAL n&#8722;1.<br>CV is scale-free (no units). Meaningless if mean is negative.</div></div>
+  <div class="table-wrap"><table><thead><tr><th>Measure</th><th>Uses All Data?</th><th>Units</th><th>Key Note</th></tr></thead><tbody>
+    <tr><td>Range</td><td><span class="tag tag-red">NO &#8212; only 2</span></td><td>Same as data</td><td>Easiest; very outlier-sensitive</td></tr>
+    <tr><td>MAD</td><td><span class="tag tag-green">YES</span></td><td>Same as data</td><td>Better than range; divisor = n; less tractable than variance</td></tr>
+    <tr><td>Variance (s&#178;)</td><td><span class="tag tag-green">YES</span></td><td>Squared units</td><td>Divisor = n&#8722;1; hard to interpret directly</td></tr>
+    <tr><td>Std Dev (s)</td><td><span class="tag tag-green">YES</span></td><td>Same as data</td><td>Divisor = n&#8722;1; most interpretable and widely used</td></tr>
+    <tr><td>Target Semidev</td><td><span class="tag tag-yellow">PARTIAL (&#8804; target)</span></td><td>Same as data</td><td>Divisor = total n&#8722;1; downside risk focus</td></tr>
+    <tr><td>CV</td><td><span class="tag tag-green">YES (via s)</span></td><td><span class="tag tag-blue">NONE &#8212; scale-free</span></td><td>s / X&#772;; meaningless if mean &#8804; 0</td></tr>
+  </tbody></table></div>
+  <div class="warn"><div class="warn-label">&#9888;&#65039; Exam Trap &#8212; Divisor n vs. n&#8722;1</div><p>Sample variance, std dev, target semideviation, and covariance all use <strong>n&#8722;1</strong>. MAD uses <strong>n</strong>. Target semideviation: sum only sub-target observations in numerator, but divide by <strong>total n&#8722;1</strong> &#8212; not just the count of sub-target observations.</p></div>
+</div>
+
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Skewness &#8212; Asymmetry of the Distribution</h2></div>
+  <div class="def-block"><div class="def-term">Skewness</div><div class="def-body">Degree to which a distribution is asymmetric about its mean. Computed as average <strong>cubed</strong> deviation from the mean divided by s&#179;. Scale-free. Cubing (unlike squaring) preserves the sign of deviations. Skewness &#8776; (1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#179; / s&#179; for large n (&#8805; 100).</div></div>
+  <div class="shape-card shape-pos"><div class="shape-label">Positive Skewness (Right-Skewed) &#8212; Long Right Tail</div><p><strong>Mode &lt; Median &lt; Mean</strong> (mean pulled right by extreme gains)</p><ul><li>Frequent <strong>small losses</strong>, few <strong>extreme gains</strong></li><li>Long tail on the <strong>right side</strong></li><li><strong>Investors PREFER</strong> positive skew: limited downside + occasional large upside</li><li>Examples: venture capital, options, some commodity strategies</li></ul></div>
+  <div class="shape-card shape-neg"><div class="shape-label">Negative Skewness (Left-Skewed) &#8212; Long Left Tail</div><p><strong>Mean &lt; Median &lt; Mode</strong> (mean pulled left by extreme losses)</p><ul><li>Frequent <strong>small gains</strong>, few <strong>extreme losses</strong></li><li>Long tail on the <strong>left side</strong></li><li><strong>Investors DISLIKE</strong> negative skew: occasional catastrophic losses</li><li>Examples: selling options, credit portfolios, some hedge fund strategies</li></ul></div>
+  <div class="shape-card shape-zero"><div class="shape-label">Zero Skewness &#8212; Symmetric</div><p><strong>Mean = Median = Mode.</strong> Each side is a mirror image. Normal distribution has zero skewness.</p></div>
+  <div class="tip"><div class="tip-label">&#128161; Mnemonic &#8212; Mean Chases the Tail</div><p><strong>Positive skew:</strong> tail points RIGHT &#8594; mean pulled RIGHT &#8594; mean is LARGEST: Mode &lt; Median &lt; Mean.<br><strong>Negative skew:</strong> tail points LEFT &#8594; mean pulled LEFT &#8594; mean is SMALLEST: Mean &lt; Median &lt; Mode.<br>Memory trick: <strong>"The mean chases the tail."</strong></p></div>
+</div>
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Kurtosis &#8212; Tail Weight of the Distribution</h2></div>
+  <div class="def-block"><div class="def-term">Kurtosis</div><div class="def-body">Measures the combined weight of the <strong>tails</strong> relative to the rest of the distribution. Computed using 4th power of deviations divided by s&#8308;. Normal distribution kurtosis = <strong>3.0</strong>. Excess kurtosis = kurtosis &#8722; 3 (normal = 0).</div></div>
+  <div class="formula-box"><div class="label">Kurtosis and Excess Kurtosis (large n &#8805; 100)</div><div class="f">Kurtosis &#8776; (1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#8308; / s&#8308;<br><br>Excess Kurtosis (K_E) = Kurtosis &#8722; 3<br>K_E &#8776; [(1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#8308; / s&#8308;] &#8722; 3</div><div class="note">Normal distribution: kurtosis = 3.0, excess kurtosis = 0.<br>Most statistical software reports EXCESS kurtosis but labels it simply "kurtosis." If software says kurtosis = 1.5 &#8594; actual kurtosis = 4.5 &#8594; fat-tailed.</div></div>
+  <div class="shape-card shape-lepto"><div class="shape-label">Leptokurtic &#8212; Fat Tails (Kurtosis &gt; 3, Excess K &gt; 0)</div><ul><li>More weight in tails than normal &#8594; more extreme outcomes</li><li>Also more peaked near the mean</li><li>Fewer observations in intermediate regions (&#177;1 to &#177;2.5 std devs)</li><li><strong>Most equity return series are leptokurtic</strong> &#8212; fat tails are a stylized fact of financial returns</li><li>Ignoring fat tails &#8594; <span class="danger-text">underestimate probability of extreme outcomes</span></li></ul></div>
+  <div class="shape-card shape-platy"><div class="shape-label">Platykurtic &#8212; Thin Tails (Kurtosis &lt; 3, Excess K &lt; 0)</div><ul><li>Less weight in tails than normal &#8594; fewer extreme outcomes. Flatter, more spread-out shape.</li></ul></div>
+  <div class="table-wrap"><table><thead><tr><th>Kurtosis</th><th>Excess Kurtosis</th><th>Description</th><th>Term</th></tr></thead><tbody>
+    <tr><td>&gt; 3.0</td><td>&gt; 0</td><td>Fatter tails; more extreme outcomes than normal</td><td><span class="tag tag-yellow">Leptokurtic (fat-tailed)</span></td></tr>
+    <tr><td>= 3.0</td><td>= 0</td><td>Same tail weight as normal distribution</td><td><span class="tag tag-blue">Mesokurtic (normal)</span></td></tr>
+    <tr><td>&lt; 3.0</td><td>&lt; 0</td><td>Thinner tails; fewer extreme outcomes than normal</td><td><span class="tag tag-purple">Platykurtic (thin-tailed)</span></td></tr>
+  </tbody></table></div>
+  <div class="warn"><div class="warn-label">&#9888;&#65039; Exam Trap &#8212; Software Reports Excess Kurtosis as "Kurtosis"</div><p>Many statistical packages report <strong>excess kurtosis</strong> but label it "kurtosis." If software output says kurtosis = 1.5, this means <strong>excess kurtosis = 1.5</strong> (actual kurtosis = 4.5) &#8594; fat-tailed distribution. Always check which version is being reported.</p></div>
+</div>
+
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Normal Distribution &#8212; Key Properties</h2></div>
+  <div class="card"><p>The benchmark against which skewness and kurtosis are measured:</p><ul style="margin-top:8px;"><li><strong>Symmetric and bell-shaped.</strong> Mean = Median = Mode</li><li><strong>Completely described by two parameters only:</strong> mean (&#956;) and variance (&#963;&#178;)</li><li>Skewness = 0. Kurtosis = 3.0. Excess kurtosis = 0</li><li>Central role in mean&#8211;variance portfolio selection model and financial risk management</li></ul></div>
+  <div class="two-col">
+    <div class="mini-card"><div class="mc-title" style="color:var(--danger);">Skewness Quick Reference</div><ul><li>Positive skew: Mode &lt; Median &lt; Mean (right tail)</li><li>Zero skew (normal): Mode = Median = Mean</li><li>Negative skew: Mean &lt; Median &lt; Mode (left tail)</li><li>Investors prefer positive skew (upside surprises)</li><li>Investors dislike negative skew (downside surprises)</li></ul></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent);">Kurtosis Quick Reference</div><ul><li>Leptokurtic: K &gt; 3, K_E &gt; 0 (fat tails)</li><li>Mesokurtic: K = 3, K_E = 0 (normal)</li><li>Platykurtic: K &lt; 3, K_E &lt; 0 (thin tails)</li><li>Most equity returns: leptokurtic</li><li>Ignoring fat tails &#8594; underestimate extreme risk</li></ul></div>
+  </div>
+</div>
+
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Covariance &amp; Correlation</h2></div>
+  <div class="def-block"><div class="def-term">Covariance (s_XY)</div><div class="def-body">Measures how two random variables move <strong>together</strong>. Positive = move in same direction. Negative = move in opposite directions. Difficult to interpret alone because units are squared.</div></div>
+  <div class="formula-box"><div class="label">Covariance and Correlation Coefficient Formulas</div><div class="f">Sample Covariance:<br>s_XY = &#931;[(X&#7522; &#8722; X&#772;)(Y&#7522; &#8722; Y&#772;)] / (n&#8722;1)<br><br>Sample Correlation Coefficient:<br>r_XY = s_XY / (s_X &#215; s_Y)<br><br>Range: &#8722;1 &#8804; r_XY &#8804; +1</div><div class="note">Correlation = normalized covariance &#8212; divides out the scale/units. Correlation is unitless (&#8722;1 to +1).<br>Covariance uses squared units (e.g., %&#178; if both vars are returns). Divisor = n&#8722;1 in both formulas.</div></div>
+  <h3>Properties of Correlation</h3>
+  <div class="card"><ol style="padding-left:20px;"><li><strong>Range: &#8722;1 &#8804; r_XY &#8804; +1</strong> always</li><li>r = 0: <strong>uncorrelated</strong> &#8212; no linear relationship</li><li>r close to +1: <strong>strong positive linear</strong>. r = +1: perfect positive (all points on upward line)</li><li>r close to &#8722;1: <strong>strong negative (inverse) linear</strong>. r = &#8722;1: perfect inverse (all points on downward line)</li><li>Measures <strong>linear</strong> relationships ONLY. Strong non-linear relationship can still show near-zero correlation</li></ol></div>
+  <h3>Scatter Plot Interpretation</h3>
+  <div class="card"><ul><li><strong>Tight clustering on upward line</strong> &#8594; strong positive correlation</li><li><strong>Tight clustering on downward line</strong> &#8594; strong negative correlation</li><li><strong>No pattern</strong> &#8594; near-zero correlation</li><li><strong>Non-linear pattern</strong> (U-shape, parabola) &#8594; do NOT use correlation coefficient &#8212; it will mislead</li><li>Outliers are easily spotted &#8212; extreme points near axis ends</li></ul></div>
+</div>
+
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><h2>Limitations of Correlation Analysis</h2></div>
+  <div class="warn"><div class="warn-label">&#9888;&#65039; Correlation &#8800; Causation</div><p>Even highly correlated variables do not necessarily cause each other. Correlation measures only <strong>association (co-movement)</strong>. Confusing correlation with causation is a fundamental error in statistical reasoning and investment analysis.</p></div>
+  <h3>Three Types of Spurious Correlation</h3>
+  <div class="three-col">
+    <div class="mini-card"><div class="mc-title" style="color:var(--danger);">Type 1 &#8212; Chance Relationship</div><p>High correlation in a dataset due to random chance &#8212; no true underlying relationship. Example: US retail beer/wine/liquor sales vs. atmospheric CO&#8322; levels (r = 0.824, 2000&#8211;2018) &#8212; clearly no causal link.</p></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent);">Type 2 &#8212; Induced by Third Variable</div><p>Two uncorrelated variables may appear correlated when both are divided by a common third variable. Example: dividends and total assets may show low correlation, but both divided by market cap may show artificially high correlation.</p></div>
+    <div class="mini-card"><div class="mc-title" style="color:var(--accent2);">Type 3 &#8212; Common Driver</div><p>Two variables correlated not directly but because both relate to a third variable. Example: height and vocabulary are positively correlated &#8212; but <strong>age</strong> drives both independently.</p></div>
+  </div>
+  <div class="card"><p><strong>Additional limitations:</strong></p><ul><li><strong>Outliers:</strong> Correlation is sensitive to extreme values &#8212; a few outliers can dramatically change r_XY. May need to trim or winsorize before computing.</li><li><strong>Non-linear relationships:</strong> Correlation only captures linear association. Variables may be perfectly associated non-linearly yet show r &#8776; 0 (Anscombe's Quartet).</li><li><strong>Anscombe's Quartet:</strong> Four very different data patterns can have identical means, standard deviations, and correlation coefficients. Summary statistics alone are insufficient &#8212; always visualize with scatter plots.</li><li>Investment strategies based on spurious correlations will appear profitable in backtests but fail in practice.</li></ul></div>
+  <div class="tip"><div class="tip-label">&#128161; Always Pair Statistics with Scatter Plots</div><p>A single correlation coefficient cannot tell the whole story. Always inspect the scatter plot alongside the number to identify: (1) whether the relationship is truly linear, (2) whether outliers are distorting the measure, and (3) whether there are sub-groups in the data.</p></div>
+</div>
+
+<div class="section" id="s11">
+  <div class="section-header"><span class="section-num" style="background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);color:var(--accent);">&#9733;</span><h2>Last-Minute Exam Checklist</h2></div>
+  <div class="card"><ul style="padding-left:20px;font-size:15px;line-height:2.2;">
+    <li>&#9989; <strong>Arithmetic mean:</strong> X&#772; = &#931;X&#7522; / n. Most common. Equal weight to all obs. Sensitive to outliers. Mathematically tractable.</li>
+    <li>&#9989; <strong>Median:</strong> Middle value of sorted data. Odd n: position (n+1)/2. Even n: average of n/2 and (n+2)/2 positions. NOT affected by outliers. Only 1 per distribution. Preferred for skewed data.</li>
+    <li>&#9989; <strong>Mode:</strong> Most frequent value. Only measure for nominal/categorical data. 0, 1, or many modes possible. In histograms = tallest bar.</li>
+    <li>&#9989; <strong>Outlier options:</strong> (1) Do nothing &#8212; full data. (2) Trimmed mean &#8212; remove top and bottom X%; smaller n. (3) Winsorized mean &#8212; replace extremes with boundary values; same n. Trimmed = removes. Winsorized = replaces.</li>
+    <li>&#9989; <strong>Quantiles:</strong> Quartiles (Q1/Q2/Q3 = 25th/50th/75th pct), quintiles, deciles, percentiles. IQR = Q3 &#8722; Q1. Box plot fences: Q3 + 1.5&#215;IQR and Q1 &#8722; 1.5&#215;IQR. Beyond fences = outliers.</li>
+    <li>&#9989; <strong>Range = Max &#8722; Min.</strong> Uses only 2 observations. Simplest but limited and outlier-sensitive.</li>
+    <li>&#9989; <strong>MAD = &#931;|X&#7522; &#8722; X&#772;| / n.</strong> Uses all data. Divisor = n. Less tractable than variance.</li>
+    <li>&#9989; <strong>Sample variance: s&#178; = &#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1).</strong> Divisor = n&#8722;1. Squared units. Unbiased estimate of population variance.</li>
+    <li>&#9989; <strong>Sample std dev: s = &#8730;[&#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1)].</strong> Same units as data. Most interpretable and widely used.</li>
+    <li>&#9989; <strong>Target semideviation: s_Target = &#8730;[&#931;(X&#7522; &#8722; B)&#178; / (n&#8722;1)] for X&#7522; &#8804; B.</strong> Only sub-target obs in numerator. Divisor = TOTAL n&#8722;1. Downside risk measure.</li>
+    <li>&#9989; <strong>CV = s / X&#772;.</strong> Scale-free. Risk per unit of return. Lower CV = more efficient. Meaningless if mean &#8804; 0. Allows cross-dataset comparison.</li>
+    <li>&#9989; <strong>Normal distribution:</strong> Symmetric. Mean = Median = Mode. Described by &#956; and &#963;&#178; only. Skewness = 0. Kurtosis = 3.0. Excess kurtosis = 0.</li>
+    <li>&#9989; <strong>Positive skewness:</strong> Right tail. Mode &lt; Median &lt; Mean. Frequent small losses + few extreme gains. Investors PREFER. Mean chases the (right) tail.</li>
+    <li>&#9989; <strong>Negative skewness:</strong> Left tail. Mean &lt; Median &lt; Mode. Frequent small gains + few extreme losses. Investors DISLIKE. Mean chases the (left) tail.</li>
+    <li>&#9989; <strong>Skewness formula:</strong> &#8776; (1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#179; / s&#179; for n &#8805; 100. Cubed &#8594; preserves sign. Scale-free.</li>
+    <li>&#9989; <strong>Kurtosis = 3 for normal.</strong> Leptokurtic (fat-tailed): K &gt; 3, excess K &gt; 0. Platykurtic (thin-tailed): K &lt; 3, excess K &lt; 0. Mesokurtic = normal. Most equity returns are leptokurtic.</li>
+    <li>&#9989; <strong>Excess kurtosis = kurtosis &#8722; 3.</strong> Software often reports excess kurtosis labeled as "kurtosis." Fat tails &#8594; excess K &gt; 0 &#8594; more extreme outcomes than normal model predicts.</li>
+    <li>&#9989; <strong>Covariance: s_XY = &#931;[(X&#7522; &#8722; X&#772;)(Y&#7522; &#8722; Y&#772;)] / (n&#8722;1).</strong> Positive = same direction. Negative = opposite. Units = squared. Divisor = n&#8722;1.</li>
+    <li>&#9989; <strong>Correlation: r_XY = s_XY / (s_X &#215; s_Y).</strong> Range: &#8722;1 to +1. Unitless. Linear association only. r = 0 = uncorrelated. r = &#177;1 = perfect linear. Does NOT imply causation.</li>
+    <li>&#9989; <strong>3 types of spurious correlation:</strong> (1) Chance pattern. (2) Induced by common denominator. (3) Common underlying driver. Investment strategies built on spurious correlation fail in practice.</li>
+    <li>&#9989; <strong>Correlation limitations:</strong> Sensitive to outliers. Cannot capture non-linear relationships. Summary statistics alone mislead (Anscombe's Quartet). Always pair with scatter plots.</li>
+  </ul></div>
+  <div class="formula-box"><div class="label">All Key Formulas &#8212; Quick Reference</div><div class="f">CENTRAL TENDENCY:<br>Mean: X&#772; = &#931;X&#7522; / n<br>Median position: (n+1)/2 (odd n); avg of n/2 and (n+2)/2 (even n)<br>IQR = Q3 &#8722; Q1;  Upper fence = Q3 + 1.5&#215;IQR;  Lower fence = Q1 &#8722; 1.5&#215;IQR<br><br>DISPERSION:<br>Range = Max &#8722; Min<br>MAD = &#931;|X&#7522; &#8722; X&#772;| / n<br>s&#178; = &#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1)<br>s = &#8730;[&#931;(X&#7522; &#8722; X&#772;)&#178; / (n&#8722;1)]<br>s_Target = &#8730;[&#931;(X&#7522; &#8722; B)&#178; / (n&#8722;1)]  [only X&#7522; &#8804; B in sum; divisor = total n&#8722;1]<br>CV = s / X&#772;<br><br>SHAPE:<br>Skewness &#8776; (1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#179; / s&#179;  [n &#8805; 100]<br>Kurtosis &#8776; (1/n) &#215; &#931;(X&#7522; &#8722; X&#772;)&#8308; / s&#8308;  [normal = 3.0]<br>Excess Kurtosis K_E = Kurtosis &#8722; 3  [normal = 0]<br><br>CORRELATION:<br>s_XY = &#931;[(X&#7522; &#8722; X&#772;)(Y&#7522; &#8722; Y&#772;)] / (n&#8722;1)<br>r_XY = s_XY / (s_X &#215; s_Y);  &#8722;1 &#8804; r &#8804; +1</div><div class="note">Divisors: MAD = n. Variance / std dev / target semidev / covariance = n&#8722;1.<br>Skewness: positive &#8594; Mode &lt; Median &lt; Mean. Negative &#8594; Mean &lt; Median &lt; Mode. Normal = all equal.<br>Kurtosis: Leptokurtic &gt; 3, Mesokurtic = 3, Platykurtic &lt; 3. Excess kurtosis: add &#8722;3 to each.<br>CV: scale-free, no units, meaningless if mean is negative. Correlation: linear only, &#8800; causation.</div></div>
+</div>
+
+</div>
+<footer>CFA Level 1 &#183; Quantitative Methods &#183; Module 3: Statistical Measures of Asset Returns &#183; Exam Prep Notes</footer>
+</body>
+</html>

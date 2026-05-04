@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 5: Fixed-Income Markets for Government Issuers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --dm-bg: #111a16; --dm-border: #4cc98a;
+    --em-bg: #1a1510; --em-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* DM vs EM cards */
+  .dm-card { background: var(--dm-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .dm-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .em-card { background: var(--em-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .em-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Auction steps */
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 5</div>
+  <h1>Fixed-Income Markets for <span>Government Issuers</span></h1>
+  <p>Exam-ready notes: sovereign debt (DM vs. EM issuers, debt instruments, issuance policies), sovereign debt auctions (competitive vs. non-competitive bids, single-price vs. multi-price, primary dealers), secondary market trading differences, and non-sovereign issuers (government agencies, local/regional governments, general obligation vs. revenue bonds, supranational organizations).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Sovereign Issuer Overview</a>
+  <a class="toc-item" href="#s2">02 · DM vs. EM Sovereign Issuers</a>
+  <a class="toc-item" href="#s3">03 · Sovereign Debt Instruments</a>
+  <a class="toc-item" href="#s4">04 · Debt Management Policy</a>
+  <a class="toc-item" href="#s5">05 · Sovereign Debt Auction</a>
+  <a class="toc-item" href="#s6">06 · Primary Dealers &amp; Trading</a>
+  <a class="toc-item" href="#s7">07 · Gov't vs. Corporate — Key Differences</a>
+  <a class="toc-item" href="#s8">08 · Non-Sovereign Government Issuers</a>
+  <a class="toc-item" href="#s9">09 · Local/Regional &amp; Supranational</a>
+  <a class="toc-item" href="#s10">10 · Master Tables</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: SOVEREIGN ISSUER OVERVIEW -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Sovereign Government Issuers — Overview</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Sovereign governments</strong> are distinguished by their <strong>legal authority to tax economic activity</strong> within their jurisdiction. This unique ability to generate revenue makes them the lowest default-risk issuers domestically and the benchmark for all other bond market pricing.</p>
+      <p style="margin-top:10px;"><strong>Primary sources of repayment:</strong> tax revenues (income, business, sales, VAT). Additional: tariffs, usage fees, cash flows from government-owned enterprises.</p>
+      <p style="margin-top:10px;"><strong>Key contrast with private issuers:</strong> Public sector accounting differs significantly from private sector GAAP. Governments use cash-based (not accrual-based) accounting standards, typically excluding depreciation of fixed public assets (highways, infrastructure) and unfunded liabilities (pension obligations). The <strong>economic balance sheet</strong> — which includes expected future tax revenues and obligations — is more relevant for evaluating sovereign creditworthiness.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Sovereign government's economic balance sheet includes:</strong></p>
+      <div class="two-col" style="margin-top:8px;">
+        <div>
+          <p style="font-weight:700; color:var(--accent3); margin-bottom:6px;">Assets (Claims)</p>
+          <ul style="padding-left:18px;">
+            <li>Short-term claims and assets</li>
+            <li>Fixed assets (infrastructure, land, government-owned firms)</li>
+            <li>FX reserves</li>
+            <li>Commodity and other reserves</li>
+            <li><strong>Expected future tax revenues</strong> (economic balance sheet claim)</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-weight:700; color:var(--danger); margin-bottom:6px;">Obligations (Liabilities)</p>
+          <ul style="padding-left:18px;">
+            <li>Domestic currency outstanding (money supply)</li>
+            <li>Short-term debt</li>
+            <li>Long-term debt (domestic and foreign currency)</li>
+            <li>Pension and other domestic obligations</li>
+            <li>Supranational and external obligations</li>
+            <li><strong>Promised future expenditures</strong> (economic balance sheet)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: DM VS. EM SOVEREIGN ISSUERS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>DM vs. EM Sovereign Issuers</h2>
+    </div>
+
+    <div class="dm-card">
+      <div class="dm-title">✅ Developed Market (DM) Sovereign Issuers</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Economy:</strong> Strong, stable, well-diversified domestic economy</li>
+        <li><strong>Budget:</strong> Primarily consistent, recurrent outlays financed with broad-based individual and business tax revenues → stable and transparent fiscal policy</li>
+        <li><strong>Currency:</strong> Debt denominated in a <strong>major reserve currency</strong> commonly held by foreign governments (USD, EUR, GBP, JPY, CHF, AUD, CNY)</li>
+        <li><strong>Credit:</strong> Considered <strong>default-risk-free</strong> — "risk-free" benchmark for all other bonds in the region</li>
+        <li><strong>Market access:</strong> Unconstrained access across the full maturity spectrum</li>
+        <li><strong>Domestic currency:</strong> Freely convertible; liquid; widely held as foreign exchange reserves</li>
+      </ul>
+    </div>
+
+    <div class="em-card">
+      <div class="em-title">⚠️ Emerging Market (EM) Sovereign Issuers</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8d8c0;">
+        <li><strong>Economy:</strong> Higher growth but less stable and less well-diversified; subject to greater economic cycle fluctuations</li>
+        <li><strong>Dependence:</strong> Often rely on a dominant domestic industry (commodities); more state-owned or state-controlled enterprises</li>
+        <li><strong>Budget:</strong> Investment needs to expand economic and social infrastructure may exceed current domestic tax cash flows → need for external or supranational funding</li>
+        <li><strong>Currency:</strong> Debt often in a <strong>restricted domestic currency</strong> with limited convertibility or liquidity → constrains foreign investment and longer-term issuance</li>
+        <li><strong>Domestic debt:</strong> Issued in domestic currency; held mostly by domestic financial institutions and domestic investors</li>
+        <li><strong>External debt:</strong> Debt owed to foreign creditors — includes supranational organizations and foreign-currency-denominated bonds (Eurobonds) held by foreign private investors</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 EM External Debt — Indirect Currency Risk</div>
+      <p>Foreign investors in EM external debt (e.g., Romania EUR bond, Indonesia USD bond) do NOT face direct currency risk — they receive USD or EUR payments. But they face <strong>indirect currency exposure</strong>: their returns depend on the EM government's ability to generate sufficient <strong>foreign currency revenue</strong> through international trade, capital flows, and services to make foreign-currency interest and principal payments. If the EM issuer's foreign currency receipts decline (e.g., commodity price crash), they may struggle to service external debt even if their domestic economy is sound.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Fiscal policy and sovereign debt levels:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Budget deficits</strong> → increase borrowing needs (more bond issuance)</li>
+        <li><strong>Budget surpluses</strong> → reduce borrowing needs (less issuance, potential buybacks)</li>
+        <li>Forecasting debt levels requires analyzing: changes in fiscal policy AND sensitivity of revenues/expenditures to GDP growth and inflation</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: SOVEREIGN DEBT INSTRUMENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Sovereign Debt Instruments</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Instrument</th><th>Maturity</th><th>Coupon Type</th><th>Common Names</th><th>Key Features</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Short-Term Bills</td>
+            <td>1–12 months</td>
+            <td>Zero-coupon (discount)</td>
+            <td>Treasury Bills (T-bills)</td>
+            <td>Issued at discount to par; no periodic interest; most liquid; substitute for bank deposits; government manages auction size flexibly to handle near-term cash flow uncertainty</td>
+          </tr>
+          <tr>
+            <td>Medium-Term Notes</td>
+            <td>2–10 years</td>
+            <td>Fixed-rate coupon most common; also floating-rate, inflation-linked</td>
+            <td>Treasury Notes (US), Gilts (UK), Bunds (Germany)</td>
+            <td>Issued regularly; key benchmark for mid-range maturities; some markets also issue foreign currency notes</td>
+          </tr>
+          <tr>
+            <td>Long-Term Bonds</td>
+            <td>&gt;10 years</td>
+            <td>Fixed-rate most common; inflation-linked also issued</td>
+            <td>Treasury Bonds (US), Long Gilts (UK)</td>
+            <td>Key benchmark for long end; matched by pension/insurance investors; higher borrowing cost but greater fiscal stability</td>
+          </tr>
+          <tr>
+            <td>Inflation-Linked Bonds</td>
+            <td>Medium to long</td>
+            <td>Fixed rate on inflation-adjusted principal (capital-indexed)</td>
+            <td>TIPS (US), Index-Linked Gilts (UK)</td>
+            <td>Protect investors from inflation erosion; sovereign governments are primary issuers</td>
+          </tr>
+          <tr>
+            <td>Guaranteed Instruments</td>
+            <td>Varies</td>
+            <td>Pass-through of underlying mortgages</td>
+            <td>Agency MBS guaranteed by Ginnie Mae</td>
+            <td>Sovereign does NOT issue directly but guarantees; most prominent example = US mortgage-backed securities (Ginnie Mae)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Ricardian Equivalence — What It Says and Why It Matters</div>
+      <p><strong>Ricardian equivalence theorem:</strong> A sovereign government's choice of debt maturity is irrelevant to the present value of future tax cash flows. Under strict assumptions (consumption smoothing, rational expectations, perfect capital markets, intergenerational altruism), taxpayers save today in anticipation of future taxes needed to repay government debt — making the timing of government borrowing irrelevant.</p>
+      <p style="margin-top:8px;"><strong>Why it breaks down in practice:</strong> Capital markets are imperfect. Not all taxpayers can freely borrow or form rational expectations about future taxes. This breakdown justifies real-world debt management policies that distribute issuance across maturities, provide liquidity benefits to investors, and reduce rollover risk — even if it slightly increases average borrowing costs.</p>
+      <p style="margin-top:8px;"><strong>Analogy to corporate finance:</strong> Like Modigliani-Miller (capital structure irrelevance for firms), Ricardian equivalence is an idealized benchmark that helps explain why real-world departures from it lead to actual debt management policy.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: DEBT MANAGEMENT POLICY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Sovereign Debt Management Policy</h2>
+    </div>
+
+    <div class="card">
+      <p>In practice, governments do NOT follow Ricardian equivalence — they spread debt across maturities for several important reasons. Key trade-off: <strong>shorter maturities = lower cost but more rollover risk</strong>. Longer maturities = higher cost but greater fiscal stability.</p>
+    </div>
+
+    <h3>Four Key Benefits of Issuing Sufficient Long-Term Sovereign Debt</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Benefit</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>①</td>
+            <td>Establishes risk-free benchmark across maturities</td>
+            <td>Sovereign bond yields at each maturity serve as the baseline from which all other bonds' credit spreads are measured. Regular issuance across maturities increases capital market efficiency and transparency for private issuers. This is the foundation of fixed-income valuation.</td>
+          </tr>
+          <tr>
+            <td>②</td>
+            <td>Used to manage and hedge interest rate risk</td>
+            <td>Financial intermediaries, asset managers, and pension funds use medium- and long-term government securities and related derivatives to manage interest rate risk separately from credit risk. Government bonds are the primary tool for duration management.</td>
+          </tr>
+          <tr>
+            <td>③</td>
+            <td>Preferred collateral in repo and derivative transactions</td>
+            <td>Long-term government securities are the most common collateral in repo transactions and derivative contracts, due to their high liquidity and safety. This supports the entire secured lending market.</td>
+          </tr>
+          <tr>
+            <td>④</td>
+            <td>Used in monetary policy and held as FX reserves</td>
+            <td>Central banks use government securities in open market operations (buy/sell) and repo contracts to implement monetary policy. Foreign governments and central banks hold government bonds of major currencies as their FX reserves (especially US Treasuries).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Short-Term Sovereign Debt Has a Liquidity Premium</div>
+      <p>Short-term government bills have <strong>yields lower than they would otherwise be</strong> because investors value their high degree of liquidity and safety. This yield reduction = the <strong>liquidity premium</strong> — investors accept lower returns for the privilege of holding near-cash instruments. This is analogous to how checking accounts pay no/low interest but are highly valued for liquidity. Government issuers benefit from this premium: it reduces their short-term borrowing costs.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Sovereign Rollover Risk — Not Just a Corporate Problem</div>
+      <p>Governments that rely too heavily on short-term debt face the same rollover risk as corporations — uncertain refinancing costs when short-term bills mature. Excessive short-term funding increases variability of budget costs → higher tax rate uncertainty → threats to economic stability. This is why governments distribute debt across maturities and issue at regular, predictable intervals despite the higher cost of longer-term debt.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: SOVEREIGN DEBT AUCTION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Sovereign Debt Auction — Process &amp; Types</h2>
+    </div>
+
+    <div class="card">
+      <p>Unlike corporate bond issuance (managed by investment bank underwriters), sovereign debt issuance uses a <strong>scheduled public auction</strong> led by the national treasury or finance ministry. Two types of bidders:</p>
+      <div class="two-col" style="margin-top:8px;">
+        <div>
+          <p style="font-weight:700; color:var(--accent2); margin-bottom:6px;">Competitive Bidder</p>
+          <ul style="padding-left:18px; font-size:13.5px;">
+            <li>Specifies an acceptable <strong>price AND quantity</strong></li>
+            <li>If the auction price is ABOVE the bid → receives NO securities</li>
+            <li>Receives securities only at their bid price (or better)</li>
+            <li>Typically large institutions and primary dealers</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-weight:700; color:var(--accent3); margin-bottom:6px;">Non-Competitive Bidder</p>
+          <ul style="padding-left:18px; font-size:13.5px;">
+            <li>Agrees to accept <strong>whatever price is determined at auction</strong></li>
+            <li><strong>Always receives securities</strong> (bids are always accepted)</li>
+            <li>Specifies quantity only; no price preference</li>
+            <li>Typically smaller investors and retail participants</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Single-Price vs. Multiple-Price Auction</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Single-Price Auction (Dutch Auction)</div>
+        <ul>
+          <li>All winning bidders pay the <strong>SAME PRICE</strong> regardless of their bid</li>
+          <li>Issuer ranks competitive bids from highest price (lowest yield) to lowest price (highest yield)</li>
+          <li>Fill from highest price until desired amount reached</li>
+          <li><strong>Cut-off yield = "stop yield"</strong> = highest yield at which the full offering is filled</li>
+          <li>All securities sold at the stop yield price</li>
+          <li>May result in <strong>lower cost and broader distribution</strong> (more investors willing to bid honestly)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Multiple-Price Auction (Discriminatory Auction)</div>
+        <ul>
+          <li>Each winning bidder pays their <strong>OWN BID PRICE</strong></li>
+          <li>Different prices for the same bond issue among bidders</li>
+          <li>Investors must accept their bid price if competitive bid wins</li>
+          <li>May result in <strong>narrower distribution</strong> — investors shade bids to avoid "winner's curse" (paying more than the clearing price)</li>
+          <li>Less common than single-price auctions</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Single-Price Auction — Four-Phase Process</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Auction announced</strong> by the government debt management office. Includes: amount and type of securities, auction date, issue date, maturity date, and bidding times.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Bids submitted</strong> by dealers, institutional investors, and individuals. Both competitive bids (price + quantity) and non-competitive bids (quantity only) are accepted during the bidding window.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Bids ranked and cut-off determined.</strong> All non-competitive bids are accepted first. Competitive bids are ranked from <strong>lowest yield (highest price) to highest yield (lowest price)</strong>. The highest yield that fills the total offering amount is the <strong>"stop yield" or "cut-off yield."</strong> Competitive bidders who bid at a yield ABOVE the stop yield receive NO securities. All securities are sold at the single stop-yield price. Results are announced publicly.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Securities delivered</strong> to all non-competitive bidders and winning competitive bidders in exchange for proceeds at the single auction price.</div>
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">★ Auction Key Concept — Stop Yield</div>
+      <div class="f">
+        Competitive bids ranked: lowest yield (highest price) → highest yield (lowest price)<br><br>
+        Fill from lowest yield upward until the full offering amount is reached<br><br>
+        Stop Yield = the HIGHEST yield (lowest price) at which the offering is fully filled<br><br>
+        All securities sold at the price corresponding to the stop yield (single-price auction)<br><br>
+        Competitive bidders who bid ABOVE the stop yield → receive ZERO securities<br>
+        Non-competitive bidders → ALWAYS receive securities at the stop yield price<br><br>
+        Winners: bid yield ≤ stop yield (bid price ≥ stop price)<br>
+        Losers: bid yield &gt; stop yield (bid price &lt; stop price)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Yield vs. Price Direction in Auctions</div>
+      <p>Remember: yield and price move inversely. Bidding a <strong>lower yield = offering a higher price</strong> — this is a more competitive bid. The government prefers the highest-priced bids (lowest yield bids) because they reduce borrowing costs. Bids are ranked from most favorable (lowest yield) to least favorable (highest yield), and the cut-off is at the highest acceptable yield.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: PRIMARY DEALERS & TRADING -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Primary Dealers &amp; Secondary Market Trading</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Primary Dealers</div>
+      <div class="def-body">Financial intermediaries designated by sovereign governments to play a special role in the government debt market. Primary dealers are <strong>required to participate in ALL auctions with competitive prices</strong> — they cannot choose to skip auctions. They also: (1) serve as the central bank's counterparty for open market operations; (2) facilitate the purchase and sale of government debt by foreign central banks and other indirect bidders; (3) make secondary markets in government securities.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Other bidder types in sovereign auctions:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Direct bidders:</strong> Investors who participate directly in auctions — e.g., through TreasuryDirect (US) or the UK Debt Management Office</li>
+        <li><strong>Indirect bidders:</strong> Foreign central banks and other investors whose bids are submitted through primary dealers on their behalf</li>
+      </ul>
+    </div>
+
+    <h3>Secondary Market Trading — Government vs. Corporate</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Government Bonds</th><th>Corporate Bonds</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Market type</td><td>Mostly OTC; some exchange-traded (e.g., Australia)</td><td>Mostly OTC</td></tr>
+          <tr><td>Liquidity</td><td>Highest — most liquid fixed-income securities in each market</td><td>Varies widely; recent IG = more liquid; HY/seasoned = less liquid</td></tr>
+          <tr><td>On-the-run</td><td>Most recently issued bonds = benchmark; most liquid; used for benchmark yield analyses. Electronic trading platforms used for on-the-run bonds.</td><td>Recently issued also most liquid but not used as yield benchmark</td></tr>
+          <tr><td>Off-the-run</td><td>Older issues; less liquid; trade infrequently</td><td>Seasoned bonds = illiquid; may need matrix pricing</td></tr>
+          <tr><td>Bid-offer spread</td><td>Fraction of a basis point for on-the-run sovereigns (most liquid)</td><td>Several bps for recent IG; 10-20+ bps for seasoned/HY</td></tr>
+          <tr><td>Non-economic buyers</td><td>Yes — significant: central banks (monetary policy), foreign governments (FX reserves), domestic regulators forcing bank/insurer holdings</td><td>No — purely economic buyers (return-seeking)</td></tr>
+          <tr><td>Reserve currency benefit</td><td>Reserve currency sovereigns (especially US) benefit from artificially reduced borrowing costs due to sustained foreign demand</td><td>No equivalent</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Non-Economic Buyers and Reserve Currencies</div>
+      <p><strong>Non-economic buyers</strong> of sovereign debt (especially US Treasuries) include: Federal Reserve (monetary policy), foreign governments/central banks (FX reserves), domestic state/local governments (legal restrictions), banks and insurance companies (regulatory requirements). These buyers are NOT purely return-seeking — they buy for policy or regulatory reasons. This sustained demand <strong>artificially reduces sovereign borrowing costs</strong> versus what the private sector would face.<br><br>
+      <strong>Reserve currency status:</strong> The USD accounts for ~60% of global FX reserves, ~50% of international trade, and is involved in ~90% of all FX transactions. This gives the US unparalleled demand for its debt — the "exorbitant privilege." Other reserve currencies: EUR, JPY, GBP, CHF, AUD, CNY.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: GOV'T VS. CORPORATE DIFFERENCES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Government vs. Corporate Issuance — Key Contrasts</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Sovereign Government</th><th>Corporate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Issuance method</td><td><strong>Scheduled public auction</strong> run by treasury/finance ministry; regular and predictable intervals</td><td>Opportunistic underwritten offering (IG) or best-efforts (HY); managed by investment bank underwriters</td></tr>
+          <tr><td>Intermediary role</td><td>Primary dealers required to bid competitively at all auctions; serve as CB counterparty</td><td>Underwriters guarantee sale (IG) or act as broker (HY)</td></tr>
+          <tr><td>Timing</td><td>Regular, scheduled intervals — NOT opportunistic</td><td>Opportunistic (when conditions are favorable); IG can issue in hours</td></tr>
+          <tr><td>Auction process</td><td>Single-price or multiple-price competitive auction</td><td>Book-building process; order book; price guidance; no formal auction</td></tr>
+          <tr><td>Price determination</td><td>Set by market through competitive bidding; stop yield determines price</td><td>Negotiated between issuer and underwriter; influenced by order book</td></tr>
+          <tr><td>Maturity spectrum</td><td>Full spectrum (1 month to 30+ years); government commits to maintaining all maturities</td><td>Limited by credit quality; HY usually ≤10 years; IG up to 30 years</td></tr>
+          <tr><td>Accounting standards</td><td>Cash-based accounting; economic balance sheet more relevant</td><td>GAAP/IFRS accrual-based; standardized financial statements</td></tr>
+          <tr><td>Source of repayment</td><td>Tax revenues, fees, government enterprises; sovereign right to levy taxes</td><td>Operating cash flows; collateral (secured bonds)</td></tr>
+          <tr><td>Credit risk</td><td>DM sovereigns = default risk-free; EM sovereigns have some credit risk</td><td>Always some credit risk; rated BBB− to AAA (IG) or below BBB− (HY)</td></tr>
+          <tr><td>Benchmark role</td><td>Sets the risk-free yield benchmark at each maturity; all other yields quoted as spread to sovereign</td><td>Quoted as spread to sovereign benchmark; never themselves the benchmark</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: NON-SOVEREIGN GOVERNMENT ISSUERS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Non-Sovereign Government Issuers — Agencies</h2>
+    </div>
+
+    <div class="card">
+      <p>Non-sovereign government funding varies widely by country — depending on how public goods and services are allocated between national, regional, and local governments. Non-sovereign issuers can rely on: local taxes, national government budget allocations, or user fees — with or without explicit sovereign backing as a secondary repayment source.</p>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Government Agencies (Quasi-Government Entities)</div>
+      <div class="def-body">Entities that issue debt to fund government-sponsored public goods or services, as mandated by sovereign or local law. Primary repayment = their operational cash flows. Secondary repayment = sovereign government backing. Typically able to borrow at yields <strong>close to (but not equal to)</strong> their sovereign guarantor's yield — they do not receive the full liquidity premium of the sovereign.</div>
+    </div>
+
+    <h3>Agency Examples</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Airport Authority Hong Kong (AAHK)</div>
+        <ul>
+          <li>Statutory agency for operating/developing Hong Kong International Airport</li>
+          <li>Issues short- AND long-term debt (matching working capital and capital investment needs)</li>
+          <li>Primary repayment: <strong>airport operational cash flows</strong></li>
+          <li>Secondary repayment: <strong>sovereign Hong Kong government backing</strong></li>
+          <li>Example: USD 1.5 billion perpetual bond (2020) — covered in Module 1</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Ginnie Mae (Government National Mortgage Association)</div>
+        <ul>
+          <li>US agency that securitizes and guarantees certain mortgage loans</li>
+          <li>Subsidizes and promotes US homeownership</li>
+          <li>Issues <strong>callable agency debt</strong> with maturities matching expected mortgage cash flows</li>
+          <li>Primary repayment: <strong>mortgage-based guaranty fees and related cash flows</strong></li>
+          <li>Secondary repayment: <strong>US sovereign government backing</strong></li>
+          <li>Important: Ginnie Mae ≠ Fannie Mae or Freddie Mac</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Agency Yield vs. Sovereign Yield</div>
+      <p>Government agencies typically borrow at yields <strong>slightly above</strong> their sovereign guarantor's yield — NOT at the exact same yield. They do not benefit from the full liquidity premium of sovereign debt because: (1) their securities are less liquid; (2) the sovereign guarantee may be implicit rather than unconditional; (3) they have their own operational risk profile. The yield difference between agency and sovereign = the agency spread.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: LOCAL/REGIONAL & SUPRANATIONAL -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Local/Regional Government Bonds &amp; Supranational Organizations</h2>
+    </div>
+
+    <h3>Local and Regional Government Bonds</h3>
+
+    <div class="def-block">
+      <div class="def-term">General Obligation Bonds (GO Bonds)</div>
+      <div class="def-body">Bonds issued for general purposes (public goods and services in the non-sovereign's jurisdiction), repaid from <strong>local tax revenues</strong>. <strong>Unsecured</strong> — no specific revenue stream or asset backing. Credit quality depends on taxing authority and fiscal health of the local government. Example: Province of Ontario green bond — proceeds limited to eligible green projects; repaid from provincial tax revenues.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Revenue Bonds</div>
+      <div class="def-body">Bonds issued for <strong>specific project financing</strong> (roads, bridges, tunnels, stadiums, airports), repaid from the project's own <strong>revenue stream</strong> (tolls, fees, ticket sales). Usually longer-dated, with maturity often matching the expected life of the project's cash flows. Higher risk than GO bonds — if the project generates insufficient revenue, bondholders may not be fully repaid. NOT backed by general taxing authority.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">GO Bonds</div>
+        <ul>
+          <li>General purpose</li>
+          <li>Repaid from <strong>local tax revenues</strong></li>
+          <li>Unsecured; backed by full taxing authority</li>
+          <li>Generally safer (taxes are more predictable than project revenues)</li>
+          <li>Example: US Municipal bonds (munis)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Revenue Bonds</div>
+        <ul>
+          <li>Specific project financing</li>
+          <li>Repaid from <strong>project revenues</strong> (tolls, fees)</li>
+          <li>Secured against project cash flows</li>
+          <li>Higher risk — no taxing authority backup</li>
+          <li>Usually longer maturity (matches project life)</li>
+          <li>Examples: toll road bonds, airport bonds, stadium bonds</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Supranational Organizations</h3>
+    <div class="card">
+      <p><strong>Supranational organizations</strong> are created and supported by multiple sovereign governments (member states) in pursuit of a common objective — e.g., economic cooperation, development financing, trade promotion, sustainable growth.</p>
+      <p style="margin-top:10px;"><strong>Key features:</strong></p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Member states share decision-making authority</li>
+        <li>Receive implicit AND explicit financial support from member governments</li>
+        <li>Result: <strong>highest credit quality</strong> among non-sovereign issuers; strong capital market access across maturities</li>
+        <li>Issue global bonds in major currencies; target broad international investor base</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Organization</th><th>Purpose</th><th>Examples of Debt Activity</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>World Bank</td><td>Reduce global poverty; promote economic development</td><td>Regular issuer of global bonds; wide range of maturities and currencies</td></tr>
+          <tr><td>International Monetary Fund (IMF)</td><td>International monetary cooperation; financial stability; balance of payments support</td><td>Issues debt to fund loans to member countries in balance of payments distress</td></tr>
+          <tr><td>Asian Development Bank (ADB)</td><td>Promote sustainable development and economic cooperation in Asia</td><td>Issues bonds in major currencies; example: IDR-denominated bond with USD payments</td></tr>
+          <tr><td>Islamic Development Bank</td><td>Promote economic development in Muslim countries</td><td>Issues sukuk (shari'a-compliant bonds)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Supranational + Sovereign Partnership — PT Indonesia Infrastructure Finance (IIF)</div>
+      <p>IIF is a quasi-government entity that combines <strong>indirect Indonesian government ownership</strong> with strong financial support from international supranationals (Asian Development Bank, World Bank IFC, German KfW). This combination allows IIF to issue USD Eurobonds at lower cost than Indonesia could achieve alone — the supranational backing subsidizes the borrowing cost. Key feature: IIF's IDR-denominated ADB bonds pay interest in USD at the spot IDR/USD rate 2 days before each payment — investors face currency risk despite USD payments (rates change each period).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>All Government Issuer Types — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issuer Type</th><th>Examples</th><th>Primary Repayment</th><th>Secondary / Backup</th><th>Credit Quality</th><th>Yield vs. Sovereign</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DM Sovereign</td>
+            <td>US, Germany, UK, Japan</td>
+            <td>Broad-based tax revenues</td>
+            <td>Sovereign right to print currency</td>
+            <td><span class="tag tag-green">Default Risk-Free</span></td>
+            <td>Benchmark (lowest)</td>
+          </tr>
+          <tr>
+            <td>EM Sovereign (External Debt)</td>
+            <td>Romania, Brazil, Indonesia</td>
+            <td>Tax revenues + foreign currency receipts</td>
+            <td>FX reserves; IMF/supranational support</td>
+            <td><span class="tag tag-yellow">Variable; higher than DM</span></td>
+            <td>Above DM benchmark + credit spread</td>
+          </tr>
+          <tr>
+            <td>Government Agency</td>
+            <td>Ginnie Mae (US), AAHK (HK)</td>
+            <td>Operational cash flows (guaranty fees, airport revenues)</td>
+            <td>Sovereign government backing</td>
+            <td><span class="tag tag-green">Very High (near-sovereign)</span></td>
+            <td>Slightly above sovereign (agency spread)</td>
+          </tr>
+          <tr>
+            <td>Local/Regional (GO Bonds)</td>
+            <td>Province of Ontario, US Municipalities</td>
+            <td>Local tax revenues</td>
+            <td>Taxing authority; possible sovereign guarantee</td>
+            <td><span class="tag tag-yellow">Variable; depends on local fiscal health</span></td>
+            <td>Above sovereign; varies widely</td>
+          </tr>
+          <tr>
+            <td>Local/Regional (Revenue Bonds)</td>
+            <td>Toll road authorities, airport authorities</td>
+            <td>Project revenues (tolls, fees)</td>
+            <td>Project assets</td>
+            <td><span class="tag tag-yellow">Variable; project-dependent</span></td>
+            <td>Above GO bonds; project risk premium</td>
+          </tr>
+          <tr>
+            <td>Supranational</td>
+            <td>World Bank, ADB, IMF</td>
+            <td>Member contributions + bond proceeds lent to members</td>
+            <td>Implicit and explicit member government support</td>
+            <td><span class="tag tag-green">Highest among non-sovereign; often AAA</span></td>
+            <td>Near-sovereign or slight premium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Sovereign Auction — Competitive vs. Non-Competitive Bids</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Competitive Bid</th><th>Non-Competitive Bid</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Specifies</td><td>Price (yield) AND quantity</td><td>Quantity only; no price preference</td></tr>
+          <tr><td>Guarantee of receiving securities</td><td>No — only if yield ≤ stop yield</td><td>Yes — always accepted</td></tr>
+          <tr><td>Price paid</td><td>Stop yield price (single-price) or own bid price (multiple-price)</td><td>Stop yield price (same as competitive winners)</td></tr>
+          <tr><td>Typical bidders</td><td>Primary dealers, large institutions</td><td>Retail investors, smaller institutions</td></tr>
+          <tr><td>Risk</td><td>Risk of missing allocation if bid is too low a price (too high a yield)</td><td>No allocation risk; price is uncertain</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Sovereign governments distinguished by:</strong> legal authority to tax economic activity AND establish/maintain public goods and services. These are the lowest default-risk domestic issuers and the pricing benchmark for all other bonds.</li>
+        <li>✅ <strong>DM sovereign:</strong> strong, stable, diversified economy; broad-based tax revenues; major reserve currency; default-risk-free; unconstrained market access across full maturity spectrum.</li>
+        <li>✅ <strong>EM sovereign:</strong> higher growth but less stable; commodity-dependent; may have restricted/illiquid domestic currency; distinguishing domestic debt (held by domestic investors) from external debt (foreign currency, held by foreign investors/supranationals).</li>
+        <li>✅ <strong>EM external debt investors face INDIRECT currency risk</strong> — even if paid in USD/EUR, returns depend on issuer's ability to generate foreign currency revenue to service foreign-currency debt.</li>
+        <li>✅ <strong>Budget deficit → increased sovereign borrowing. Surplus → reduced borrowing.</strong></li>
+        <li>✅ <strong>Sovereign debt instruments:</strong> T-bills (1–12 months; zero-coupon; discount); Treasury notes/bonds (medium/long; usually fixed-rate coupon); inflation-linked bonds (TIPS — capital-indexed); guaranteed instruments (Ginnie Mae MBS — sovereign doesn't directly issue but guarantees).</li>
+        <li>✅ <strong>Ricardian equivalence:</strong> government's debt maturity choice is irrelevant (analogous to MM for firms). In practice, it breaks down → governments distribute debt across maturities for fiscal stability, rollover risk reduction, and liquidity benefits.</li>
+        <li>✅ <strong>Four benefits of long-term sovereign debt:</strong> (1) establishes risk-free benchmark at each maturity; (2) used for interest rate risk management/hedging; (3) preferred collateral in repo and derivative transactions; (4) used in monetary policy and held as FX reserves.</li>
+        <li>✅ <strong>Short-term sovereign debt has a liquidity premium</strong> → yields lower than they would otherwise be (investors accept less return for near-cash safety/liquidity).</li>
+        <li>✅ <strong>Sovereign debt issuance = scheduled public auction</strong> (NOT opportunistic underwritten offering like corporate bonds). Led by national treasury/finance ministry at regular, predictable intervals.</li>
+        <li>✅ <strong>Competitive bidders:</strong> specify price + quantity; receive securities only if bid yield ≤ stop yield. Non-competitive bidders: quantity only; ALWAYS receive securities at the stop yield price.</li>
+        <li>✅ <strong>Single-price auction:</strong> all winning bidders pay the SAME price (stop yield). Lower cost and broader distribution. Multiple-price auction: each bidder pays their own bid price — narrower distribution.</li>
+        <li>✅ <strong>Stop yield = cut-off yield = highest yield at which the full offering is filled.</strong> Competitive bids ranked lowest yield to highest; fill from bottom up; stop at the yield that fills the offering. All securities sold at this single price.</li>
+        <li>✅ <strong>Primary dealers:</strong> required to submit competitive bids at ALL auctions. Serve as central bank's counterparty for open market operations. Facilitate foreign central bank purchases. Make secondary markets.</li>
+        <li>✅ <strong>On-the-run sovereign bonds:</strong> most recently issued; most liquid; used for benchmark yield analyses; some electronic trading. Off-the-run: older, less liquid, trade infrequently.</li>
+        <li>✅ <strong>Non-economic buyers of sovereign debt:</strong> central banks (monetary policy), foreign governments (FX reserves), domestic regulators (forcing bank/insurer holdings). Reduces sovereign borrowing costs vs. private sector.</li>
+        <li>✅ <strong>Reserve currency status reduces borrowing costs</strong> — US dollar = 60% of global FX reserves; ~90% of FX transactions. Other reserve currencies: EUR, JPY, GBP, CHF, AUD, CNY.</li>
+        <li>✅ <strong>Government agencies (quasi-government):</strong> issue debt for government-sponsored public goods; primary repayment = operational cash flows; secondary = sovereign backing. Borrow at yields SLIGHTLY ABOVE (not equal to) sovereign yield — do not receive full sovereign liquidity premium.</li>
+        <li>✅ <strong>Ginnie Mae ≠ Fannie Mae ≠ Freddie Mac.</strong> Ginnie Mae = Government National Mortgage Association = securitizes and guarantees US mortgages; issues callable agency debt; primary repayment = guaranty fees.</li>
+        <li>✅ <strong>General obligation (GO) bonds:</strong> repaid from LOCAL TAX REVENUES; unsecured; general purpose; backed by taxing authority. Revenue bonds: repaid from PROJECT REVENUES (tolls, fees); project-specific; usually longer-dated; no taxing authority backup.</li>
+        <li>✅ <strong>Supranational organizations</strong> (World Bank, IMF, ADB): created by sovereign governments; member state support → highest credit quality among non-sovereign issuers; issue global bonds in major currencies; often AAA-rated.</li>
+        <li>✅ <strong>Public sector accounting = cash-based</strong> (not accrual/GAAP). Excludes depreciation of public assets, unfunded pension liabilities. Economic balance sheet (including future tax revenues and future expenditures) is more relevant for sovereign creditworthiness.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ DM vs. EM SOVEREIGN ═══<br>
+        DM: stable + diversified + reserve currency + default-risk-free + unconstrained access<br>
+        EM: higher growth + less stable + often restricted currency + domestic vs. external debt<br>
+        EM external debt: indirect FX risk (depends on foreign currency revenue generation)<br><br>
+
+        ═══ SOVEREIGN DEBT INSTRUMENTS ═══<br>
+        T-bills: 1–12 months; zero-coupon; discount; most liquid; flexible auction sizes<br>
+        T-notes/bonds: medium/long; fixed-rate (most common); also FRN and inflation-linked<br>
+        TIPS (US): capital-indexed; principal adjusts with CPI; coupon = fixed % of adjusted principal<br>
+        Guaranteed: sovereign guarantees but does NOT directly issue (e.g., Ginnie Mae MBS)<br><br>
+
+        ═══ RICARDIAN EQUIVALENCE ═══<br>
+        Theory: maturity of sovereign debt is irrelevant (like MM for firms)<br>
+        Practice: breaks down → governments distribute debt across maturities<br>
+        Reason: liquidity benefits, rollover risk reduction, fiscal stability<br><br>
+
+        ═══ BENEFITS OF LONG-TERM SOVEREIGN DEBT ═══<br>
+        ① Risk-free benchmark at each maturity (for all other bond pricing)<br>
+        ② Used to manage/hedge interest rate risk (duration tool)<br>
+        ③ Preferred repo and derivative collateral (highest quality/liquidity)<br>
+        ④ Central bank monetary policy + foreign exchange reserves<br><br>
+
+        ═══ SOVEREIGN AUCTION PROCESS ═══<br>
+        Competitive bid: specify price + quantity; wins if bid yield ≤ stop yield<br>
+        Non-competitive bid: quantity only; ALWAYS wins; pays stop yield price<br>
+        Single-price: all pay stop yield | Multi-price: each pays own bid price<br>
+        Stop yield = highest yield filling the full offering (ranked lowest → highest yield)<br>
+        Primary dealers: required at ALL auctions; CB counterparty; make secondary markets<br><br>
+
+        ═══ NON-SOVEREIGN ISSUERS ═══<br>
+        Agency: operational cash flows + sovereign backing; yield slightly ABOVE sovereign<br>
+        GO bonds: local tax revenues; unsecured; backed by taxing authority<br>
+        Revenue bonds: project revenues (tolls/fees); project-specific; longer maturity<br>
+        Supranational (World Bank, ADB, IMF): member state support; highest non-sovereign credit quality
+      </div>
+      <div class="note">
+        <strong>Sovereign issuance vs. corporate issuance:</strong> Sovereign = scheduled public auction (regular/predictable). Corporate = opportunistic underwriting (IG) or best-efforts (HY).<br>
+        <strong>Non-economic sovereign buyers</strong> (central banks, foreign govts, regulators) reduce sovereign borrowing costs vs. corporate sector — most pronounced for reserve currency issuers (especially USD).<br>
+        <strong>Agency yield &gt; sovereign yield</strong> (slightly) — not the same as the risk-free rate; no full liquidity premium.<br>
+        <strong>GO bonds backed by taxing authority. Revenue bonds backed by project cash flows only</strong> — no taxing authority backup → higher risk than GO bonds.<br>
+        <strong>Public accounting:</strong> cash-based, not GAAP/IFRS → economic balance sheet (including future tax revenues and expenditures) is the right analytical framework for sovereigns.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 5: Fixed-Income Markets for Government Issuers · Exam Prep Notes
+</footer>
+
+</body>
+</html>

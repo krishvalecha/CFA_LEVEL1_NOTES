@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard VII: Responsibilities as a CFA Institute Member or CFA Candidate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--gold:#c9a84c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#100f08 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'VII';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:11rem;font-weight:900;color:rgba(201,168,76,0.06);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--gold);border:1px solid rgba(201,168,76,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--gold);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--gold);border-color:var(--gold);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1108;border:1px solid rgba(201,168,76,0.3);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#ddd0a8;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#e8c97a;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .example{background:#0e1208;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#11130a;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-source{font-size:10px;color:var(--gold);font-family:'JetBrains Mono',monospace;background:rgba(201,168,76,0.1);padding:2px 7px;border-radius:3px;border:1px solid rgba(201,168,76,0.2);}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#e8c97a;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .proper-improper{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:16px 0;}
+  .pi-header{padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;}
+  .pi-proper-h{background:rgba(76,201,138,0.15);color:var(--accent3);border-bottom:1px solid var(--border);}
+  .pi-improper-h{background:rgba(201,76,76,0.15);color:var(--danger);border-bottom:1px solid var(--border);border-left:1px solid var(--border);}
+  .pi-cell{padding:10px 16px;font-size:13px;border-bottom:1px solid var(--border);line-height:1.65;}
+  .pi-proper{background:rgba(76,201,138,0.03);color:#c8dfd0;}
+  .pi-improper{background:rgba(201,76,76,0.03);color:#dfc8c8;border-left:1px solid var(--border);}
+  .pi-cell:last-of-type,.pi-cell:nth-last-of-type(2){border-bottom:none;}
+  .divider{border:none;border-top:2px solid var(--border);margin:56px 0;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD VII · MODULE 3 · FINAL STANDARD</div>
+  <h1>Standard <span>VII</span>: Responsibilities as a CFA Institute Member or CFA Candidate</h1>
+  <p class="subtitle">VII(A) prohibits any conduct that compromises the reputation or integrity of CFA Institute or the CFA designation, or the integrity, validity, or security of CFA Institute programs — covering exam cheating, confidential information disclosure, testing rule violations, and misuse of CFA volunteer positions. VII(B) prohibits misrepresenting or exaggerating the meaning or implications of CFA membership, the CFA designation, or CFA candidacy. Both sources fully synthesised — the Handbook carries 5 new examples on computer-based testing not found in the LES.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#a1">VII(A) Standard</a>
+  <a class="toc-item" href="#a2">Confidential Info</a>
+  <a class="toc-item" href="#a3">Volunteer Conduct</a>
+  <a class="toc-item" href="#a4">Opinions Permitted</a>
+  <a class="toc-item" href="#a5">VII(A) Examples</a>
+  <a class="toc-item" href="#b1">VII(B) Standard</a>
+  <a class="toc-item" href="#b2">Membership Status</a>
+  <a class="toc-item" href="#b3">Proper/Improper</a>
+  <a class="toc-item" href="#b4">VII(B) Examples</a>
+  <a class="toc-item" href="#checklist">★ Checklists</a>
+</div>
+<div class="container">
+
+<!-- ═══════════ VII(A) ═══════════ -->
+<div class="section" id="a1">
+  <div class="section-header"><span class="section-num">VII(A)</span><h2>Standard VII(A): Conduct as Participants in CFA Institute Programs</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard VII(A) — Conduct as Participants in CFA Institute Programs</div>
+    <p>Members and Candidates must not engage in any conduct that compromises the reputation or integrity of CFA Institute or the CFA designation or the integrity, validity, or security of CFA Institute programs.</p>
+  </div>
+  <div class="card">
+    <p>VII(A) applies across all CFA Institute programs — not just the CFA Program — including the CIPM Program, the Investment Foundations Program, and any other CFA Institute credentialing or educational program. The standard's purpose: protect the public's confidence that the CFA charter represents achievement based on merit and ethical conduct. The Handbook adds an important clarification: this standard does NOT require non-members or non-candidates who are participants in CFA Institute programs to comply with the Code and Standards, unless they are otherwise subject to it.</p>
+    <p>Prohibited conduct includes but is not limited to:</p>
+    <ul>
+      <li>Giving or receiving assistance (cheating) on any CFA Institute examination</li>
+      <li>Violating rules, regulations, and testing policies of CFA Institute programs (calculator policy, personal belongings policy, etc.)</li>
+      <li>Providing confidential program or exam information to candidates or the public</li>
+      <li>Disregarding or attempting to circumvent security measures for any CFA Institute examination</li>
+      <li>Improperly using an association with CFA Institute to achieve personal or professional goals</li>
+      <li>Misrepresenting information to CFA Institute regarding any CFA Institute program (LES includes "misrepresenting on the Professional Conduct Statement or in the Continuing Education Program"; the Handbook adds fraudulent deferral requests and document falsification)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="a2">
+  <div class="section-header"><span class="section-num">A2</span><h2>Confidential Program Information</h2></div>
+  <div class="card">
+    <p>CFA Institute actively polices online platforms (blogs, forums, social networks) for confidential information. Candidates and members who are aware of potential violations should report them to CFA Institute.</p>
+    <p>Examples of information that CANNOT be disclosed include:</p>
+    <ul>
+      <li>Specific details of questions appearing on the exam</li>
+      <li>Broad topical areas tested or not tested on the exam</li>
+      <li>Formulas tested or not tested on the exam</li>
+    </ul>
+    <p>All aspects of an exam — questions, broad topical areas, and formulas, tested or NOT tested — are considered confidential until CFA Institute elects to release them publicly. This requirement maintains exam integrity and rigor for future candidates.</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 What IS Permitted</div>
+    <p>VII(A) does NOT prohibit: discussing nonconfidential curriculum material with others or in study groups; expressing opinions about how difficult the exam was or how well you think you did; publicly disagreeing with CFA Institute's policies, procedures, or advocacy positions; factually stating your involvement as a volunteer. What is prohibited is disclosing content-specific information — the subjects covered, questions asked, formulas tested or not tested.</p>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — The Rossi Blog Post Example</div>
+    <p>Rossi writes: "Level II is complete! I think I did fairly well... It was really difficult, but fair... I think I did especially well on the derivatives questions. And there were tons of them! I think I counted 18! The ethics questions were really hard... I was surprised to see there were no questions at all about IPO allocations."</p>
+    <p>The critical distinction: <strong>Permitted</strong> — expressing how difficult the exam was, how well she thinks she did. <strong>Violation</strong> — revealing that derivatives questions were numerous ("tons of them", "counted 18"), that ethics was heavily covered, and specifically that there were NO questions on IPO allocations. Both the presence and the absence of topics on the exam are confidential. Rossi's disclosure could assist future candidates sitting the same exam administration (if posted before all administrations are complete) or give future exam administrations' candidates insights into what was or wasn't tested. The fact that the comments might seem casual and personal doesn't change their nature as confidential content disclosure.</p>
+  </div>
+</div>
+
+<div class="section" id="a3">
+  <div class="section-header"><span class="section-num">A3</span><h2>Volunteer Conduct — Special Obligations</h2></div>
+  <div class="card">
+    <p>Members who participate as volunteers — proctors, exam developers, graders, committee members — are exposed to confidential material and must maintain the same high level of integrity and confidentiality required of candidates. Volunteers must not disclose or solicit confidential material gained during the volunteer process to anyone outside the exam development process.</p>
+    <p>Information that CANNOT be shared by members involved in developing, administering, or grading exams:</p>
+    <ul>
+      <li>Questions appearing on the exam or under consideration</li>
+      <li>Deliberation related to the exam process</li>
+      <li>Information related to the scoring of questions</li>
+    </ul>
+    <p>Additionally, volunteer positions at CFA Institute must not be used to benefit the volunteer personally or commercially. Using a CFA Institute position (e.g., society program chair, committee membership) to steer business opportunities to oneself or one's clients, or to imply special informational advantages to clients, violates VII(A).</p>
+  </div>
+</div>
+
+<div class="section" id="a4">
+  <div class="section-header"><span class="section-num">A4</span><h2>Expressing Opinions — What Is Allowed</h2></div>
+  <div class="card">
+    <p>VII(A) explicitly does NOT cover expressing opinions regarding CFA Institute or its programs. Members and candidates are free to:</p>
+    <ul>
+      <li>Disagree with CFA Institute on its policies, procedures, or advocacy positions</li>
+      <li>Express personal opinions about the exam's difficulty or their own performance</li>
+      <li>Discuss CFA Institute's approach to various issues</li>
+      <li>Factually state their involvement with CFA Institute volunteer roles</li>
+    </ul>
+    <p>When expressing a personal opinion, a candidate is prohibited from disclosing content-specific information — any actual exam questions and information about subjects covered or not covered in the exam. The opinion protection applies to views about the programme; it doesn't extend to disclosure of what was on the exam.</p>
+  </div>
+</div>
+
+<div class="section" id="a5">
+  <div class="section-header"><span class="section-num">A5</span><h2>VII(A) Worked Examples — All Examples From Both Sources</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both (different scenarios)</div><div class="ex-title">Nero — Proctor/Candidate Sharing and Using Actual Exam Questions</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>LES version:</strong> Nero is a proctor who reviews the Level II exam the night before administration and provides questions to two candidates. <strong>Handbook version:</strong> Nero is a candidate who finds what appears to be a copy of the Level II exam and posts questions in an online chatroom for other candidates; all three use the questions to prepare.</div>
+      <div class="ex-verdict"><strong>All parties violated VII(A).</strong> Both the givers and the receivers of exam content violate the standard. Providing an unfair advantage to other candidates undermines the integrity and validity of the Level II exam as an accurate measure of the knowledge and skills needed to earn the CFA designation. Receiving stolen exam content also undermines the ethical framework that is a key part of the designation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>VII(A) creates a two-sided obligation: both giving AND receiving confidential exam information constitutes a violation. This applies to proctors, volunteers, and candidates equally. The purpose of the exam — to serve as an objective measure of merit — is undermined by any participant who gives or uses exam information improperly, regardless of their role.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2 (Handbook-Only)</div><div class="ex-source">Handbook Only</div><div class="ex-title">Chiu — Filing Fraudulent Emergency Deferral Request with Falsified Death Certificate</div><div class="ex-tag"><span class="tag tag-red">VIOLATION — ALSO I(C)</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Chiu is not prepared for her Level I exam. She files a fraudulent Emergency Deferral request claiming her uncle died (not a valid basis), then a second request claiming her mother died — submitting an altered death certificate with a changed name. She later admits there were no deaths and the documentation was falsified.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A)</strong> (compromising the integrity of the CFA exam process by filing a fraudulent request and falsifying documentation) <strong>and I(C) Misrepresentation</strong> (submitting falsified documents). Violating CFA Program rules — not just exam content rules — is within the scope of VII(A).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (Handbook-Only)</div>VII(A) covers violations of testing policies and program rules broadly — not just information disclosure. Submitting false or falsified documents to CFA Institute in connection with a program = VII(A) violation. The cross-standard interaction: falsification of documentation also implicates I(C) Misrepresentation, which applies to misrepresentations in professional conduct contexts, not just to clients.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3 (Handbook-Only)</div><div class="ex-source">Handbook Only</div><div class="ex-title">Hermosa — Disruptive and Threatening Conduct at Test Centre</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Hermosa refuses to cooperate with check-in procedures (showing empty pockets), becomes agitated, shouts profanity, throws his passport at the proctor, and threatens her with bodily harm. Other candidates in the test centre complain that the incident interrupted their testing experience and that they were concerned for their safety.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A).</strong> Hermosa violated testing rules (refusing to comply with check-in) and compromised the integrity and security of the exam environment for other candidates. Physical threats and disruptive behaviour go well beyond ordinary testing rule violations — they interfere with the valid testing conditions required for all candidates.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (Handbook-Only)</div>Testing rule compliance covers not just exam-content rules but behavioural standards in the testing environment. VII(A) encompasses any conduct that compromises the integrity, validity, or security of the exam — including threatening behaviour that compromises the safe and fair testing environment for other candidates.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2 (LES) / Example 4 (Handbook)</div><div class="ex-source">Both (different framing)</div><div class="ex-title">Sullivan/Yu — Bringing Written Formulas into the Exam Room</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>LES:</strong> Sullivan writes a formula on his palm before the exam; proctor notices him looking at his hand. <strong>Handbook:</strong> Yu writes several formulas on paper and hides it in her shirt sleeve before entering the CBT centre; a proctor notices her removing it during the exam. Both concealed their written notes differently, but the violation is identical.</div>
+      <div class="ex-verdict"><strong>Both violated VII(A).</strong> Taking written information from the Candidate Body of Knowledge (CBOK) into the exam room compromises the validity of exam performance and violates CFA Program testing rules. The Candidate Pledge explicitly prohibits bringing materials into the testing room.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>All forms of unauthorised material in the testing environment = VII(A) violation. The method of concealment (palm vs. paper in sleeve) is irrelevant. The violation is compromising exam validity by using materials not available to all candidates. This also directly contradicts the Candidate Pledge.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (Handbook-Only)</div><div class="ex-source">Handbook Only</div><div class="ex-title">Sharma — Looking at Other Candidates' CBT Screens During the Exam</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Sharma's mind wanders during the Level II CBT exam. He wonders if his test matches the one next to him, and looks at the neighbouring candidate's screen multiple times. The testing rules explicitly prohibit looking at other candidates' screens. His conduct is observed by a proctor and captured on video surveillance.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A).</strong> Sharma violated testing rules by looking at other candidates' screens, compromising the validity, integrity, and security of the exam. The intent (idle curiosity) rather than deliberate cheating does not change the violation — the rules are absolute and Sharma was aware of them.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (Handbook-Only)</div>Intent to gain an advantage is not required for a VII(A) violation — violating a clearly stated testing rule is sufficient. This is especially relevant in the CBT environment where visual separation between screens is a core security measure. Any breach of this rule, regardless of motivation, undermines exam security.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3 (LES) / Example 6 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Davis — Continuing to Fill in Answers After Time Is Called</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">The proctors announce "Stop writing now." Davis continues to randomly fill in ovals on his answer sheet. A proctor approaches and reminds him to stop — Davis continues. Even after two additional requests to stop, Davis only finally puts down his pencil after the proctor's third intervention.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A).</strong> By continuing to write after time was called, Davis took an unfair advantage over other candidates who complied with the rules and compromised the validity of his exam performance. Repeated defiance of the proctor's instructions further constitutes a violation of CFA Program rules and regulations.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Time limit compliance is a core component of exam validity. Writing after time is called — even randomly filling in answers — provides an advantage over candidates who stopped when required. The validity of the exam as a comparative measure of candidate knowledge depends on uniform adherence to time constraints.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4 (LES) / Example 6 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Rossi — Blog Post Revealing Exam Content (Topics Tested and Not Tested)</div><div class="ex-tag"><span class="tag tag-red">PARTIAL VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">After completing Level II, Rossi posts a blog entry: she expresses how difficult the exam was, mentions doing well on derivatives (implying many derivatives questions — counting 18), notes ethics was hard, and specifically states there were NO questions on IPO allocations.</div>
+      <div class="ex-verdict"><strong>Partial violation.</strong> NOT a violation: expressing that the exam was difficult, stating she thinks she did well. VIOLATION: revealing that derivatives was heavily tested (topics and number of questions), that ethics was significant, and that IPO allocations was NOT tested — all constitute disclosure of confidential exam content. Both the presence and absence of specific topics are confidential.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The personal/casual tone of a post doesn't change the confidentiality classification of the information disclosed. "Topics not covered" is just as confidential as "topics that were covered" — both provide meaningful guidance to future candidates. Even a seemingly innocent observation ("I was surprised to see no questions on X") is a disclosure of confidential information about exam content.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES) / Example 7 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Gagne — Online Forum Discussion Attempting to Reconstruct Exam Questions</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Gagne participates in an internet forum discussion the week after completing Level I. He and others discuss the most challenging questions and attempt to determine the correct answers — sharing question-specific details in the process.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A).</strong> Providing and soliciting confidential exam information, including question-specific details in attempts to reconstruct exam content and determine correct answers, compromises the integrity of the exam process and violates the Candidate Pledge. Both providing and soliciting the information are violations.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Post-exam discussion threads that reconstruct specific questions = violation even when the intent is academic ("determining correct answers"). The reconstruction of exam content is itself a form of disclosure. Both those who share and those who solicit the information violate VII(A). The forum setting (online, seemingly private) doesn't change the classification.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6 (LES) / Example 8 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Pena / CFA4Sure — Third-Party Solicitation of Exam Content</div><div class="ex-tag"><span class="tag tag-red">VIOLATION — MULTIPLE PARTIES</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">CFA4Sure emails all customers the day after the exam, asking them to share the hardest questions so CFA4Sure can better prepare future customers. Pena responds by emailing a summary of the questions she found most difficult.</div>
+      <div class="ex-verdict"><strong>Pena violated VII(A)</strong> by disclosing exam questions. <strong>CFA4Sure employees who are members or candidates also violated VII(A)</strong> by soliciting confidential information. The fact that CFA4Sure is a commercial test-prep company (not a testing organisation) doesn't insulate its member/candidate employees from liability for soliciting confidential content.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Third-party solicitation of confidential exam content is still a violation by those who comply with the request. Commercial benefit to the requesting party doesn't change the confidentiality status of the information. Members/candidates working for test-prep companies have the same obligations as any other member/candidate — their employer's commercial interests don't override their duties under VII(A).</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7 (LES) / Example 9 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Whitcomb — Grader Discloses Question Details and Guideline Answers to Candidate Colleagues</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Whitcomb signs a CFA Institute Grader Agreement committing to not reveal exam materials. Several weeks after grading, he tells colleague candidates which question he graded, discusses the guideline answer, and mentions that few candidates scored well on it.</div>
+      <div class="ex-verdict"><strong>Violation of VII(A).</strong> Whitcomb broke his Grader Agreement and disclosed information related to a specific exam question, its guideline answer, and relative performance data — all confidential materials from the grading process. The agreement is contractually binding AND reinforces the ethical obligation under VII(A).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Volunteer obligations under VII(A) persist after the volunteer engagement ends. Whitcomb's obligations didn't terminate when grading concluded — the confidentiality requirement continues. Volunteer positions with CFA Institute carry ongoing confidentiality duties, not just in-the-moment restrictions.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 8+9 (LES) / 10+11 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Ramirez + Warrenski — Misusing CFA Institute Volunteer Positions for Personal Benefit</div><div class="ex-tag"><span class="tag tag-red">BOTH VIOLATIONS</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Ramirez:</strong> investor-relations consultant and CFA society program chair — schedules only his own clients to make presentations to the society, excluding other companies. <strong>Warrenski:</strong> member of the GIPS Executive Committee/Technical Committee — tells clients that her committee membership allows her to better assist them in keeping up with and complying with forthcoming GIPS changes.</div>
+      <div class="ex-verdict"><strong>Ramirez:</strong> using his program chair position to steer business to his clients = compromising CFA Institute's reputation and integrity. <strong>Warrenski:</strong> using committee membership to imply special informational advantages to clients = compromising CFA Institute's reputation and integrity. She may factually state her involvement with the committee but cannot infer any special advantage to her clients from such participation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rules</div><strong>Ramirez:</strong> CFA Institute volunteer positions must be used to serve the organisation and its members — not to advance the volunteer's commercial interests. Steering access selectively to favour personal clients = direct commercial exploitation of the position. <strong>Warrenski:</strong> Two prohibited elements: (1) implying her committee position gives her advance knowledge advantages, and (2) implying she would use confidential committee information to serve her clients. Both corrupt the relationship between CFA Institute's volunteer roles and members' professional responsibilities.</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ VII(B) ═══════════ -->
+<div class="section" id="b1">
+  <div class="section-header"><span class="section-num">VII(B)</span><h2>Standard VII(B): Reference to CFA Institute, the CFA Designation, and the CFA Program</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard VII(B) — Reference to CFA Institute, the CFA Designation, and the CFA Program</div>
+    <p>When referring to CFA Institute, CFA Institute membership, the CFA designation, or candidacy in the CFA Program, Members and Candidates must not misrepresent or exaggerate the meaning or implications of membership in CFA Institute, holding the CFA designation, or candidacy in the CFA Program.</p>
+  </div>
+  <div class="card">
+    <p>VII(B) is intended to ensure factual representations relating to CFA Institute and to prohibit unsupported statements promising competence or performance. Specifically prohibited: overstating the competency of an individual, or asserting or implying that superior investment performance can be expected from someone with the CFA designation.</p>
+    <p><strong>Permitted statements</strong> include:</p>
+    <ul>
+      <li>Highlighting the commitment of CFA members, charterholders, and candidates to ethical and professional conduct</li>
+      <li>Mentioning the thoroughness and rigor of the CFA exams</li>
+      <li>Making claims about the relative merits of CFA Institute, the CFA Program, or the Code and Standards — as long as they are explicitly or implicitly stated as the speaker's opinion</li>
+      <li>Factual statements supported by evidence</li>
+    </ul>
+    <p>VII(B) applies to all forms of communication: firm letterhead, business cards, professional biographies, directory listings, printed advertising, LinkedIn pages, email signatures, websites, personal resumes, and oral statements to the public, clients, or prospects.</p>
+    <p><strong>Handbook adds:</strong> LinkedIn pages and email signatures specifically listed as covered channels — reflecting the social media expansion of the Handbook's scope.</p>
+  </div>
+</div>
+
+<div class="section" id="b2">
+  <div class="section-header"><span class="section-num">B2</span><h2>Membership Status, Designation Rights, and Candidacy</h2></div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Active CFA Institute Membership</div>
+      <p>Annual requirements to maintain active status:</p>
+      <ul>
+        <li>Complete CFA Institute Membership Agreement (Handbook adds this vs. LES)</li>
+        <li>Submit completed Professional Conduct Statement</li>
+        <li>Pay applicable membership dues</li>
+      </ul>
+      <p>If any requirement is missed: membership lapses. Must not present as an active member. Handbook adds: must remove all references from social media, business communications, reports. May state they were a member in the past.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">CFA Charterholder Rights</div>
+      <p>Charterholders = individuals who earned the right to use the CFA designation from CFA Institute after completing the CFA Program and required years of acceptable work experience.</p>
+      <ul>
+        <li>Must also satisfy annual membership requirements to maintain the right to use the designation</li>
+        <li>If membership lapses: forfeits the right to use the CFA designation</li>
+        <li>Handbook adds: must remove all references to the designation from social media, business communications, reports</li>
+        <li>May state they were a charterholder in the past</li>
+        <li>Retired status available at reduced dues through a formal CFA Institute process</li>
+        <li>Pseudonyms/anonymity: cannot tag the CFA designation to a fictitious identity or pseudonym</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Candidacy Status</div>
+      <p>A person IS a candidate if:</p>
+      <ul>
+        <li>CFA Institute has accepted their application (issued a notice of acceptance), AND</li>
+        <li>The person is enrolled to sit for a specified exam, OR</li>
+        <li>The person has sat for a specified exam but results have not yet been received</li>
+      </ul>
+      <p>A person is NOT a candidate if they declined to sit or otherwise don't meet the CFA Institute Bylaws definition. Candidacy resumes when enrolled again.</p>
+      <p>Must never: imply a partial designation from passing one or more levels; cite an expected completion date for earning the charter.</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ The Retired Status Trap — Both Sources</div>
+    <p>Both the Vasseur (travels for 2 years) and Simpson (retires after 25 years) examples illustrate the same point: stopping the Professional Conduct Statement and dues payments = membership lapses = loss of right to use the CFA designation. Simply being retired or not actively practicing does NOT automatically create "retired" status. CFA Institute has a specific formal process for obtaining "retired" member classification with reduced dues — this requires affirmative action by the charterholder. Without going through that process, a retired professional who stops paying dues loses their right to use the designation even if they never plan to practice again.</p>
+  </div>
+</div>
+
+<div class="section" id="b3">
+  <div class="section-header"><span class="section-num">B3</span><h2>Proper and Improper References — Side-by-Side</h2></div>
+  <div class="proper-improper">
+    <div class="pi-header pi-proper-h">✅ Proper References</div>
+    <div class="pi-header pi-improper-h">❌ Improper References</div>
+    <div class="pi-cell pi-proper">"Becoming a charterholder has enhanced my portfolio management skills."</div>
+    <div class="pi-cell pi-improper">"CFA charterholders achieve better performance results."</div>
+    <div class="pi-cell pi-proper">"John Smith passed all three CFA exams in three consecutive sittings."</div>
+    <div class="pi-cell pi-improper">"John Smith is among the elite, having passed all three CFA exams in three consecutive attempts."</div>
+    <div class="pi-cell pi-proper">"The CFA designation is globally recognised and attests to a charterholder's success in a rigorous and comprehensive study program."</div>
+    <div class="pi-cell pi-improper">"As a CFA charterholder, I am the most qualified to manage client investments."</div>
+    <div class="pi-cell pi-proper">"The credibility that the CFA designation affords and the skills the CFA Program cultivates are key assets for my future career development."</div>
+    <div class="pi-cell pi-improper">"As a CFA charterholder, Jane White provides the best value in trade execution."</div>
+    <div class="pi-cell pi-proper">"I enrolled as a candidate for the CFA designation to obtain the highest set of credentials in the global investment management industry."</div>
+    <div class="pi-cell pi-improper">"Enrolling as a candidate for the CFA designation ensures one of becoming better at valuing debt securities."</div>
+    <div class="pi-cell pi-proper">"I passed the Level II CFA exam."</div>
+    <div class="pi-cell pi-improper">"CFA, Level II"</div>
+    <div class="pi-cell pi-proper">"I am a 20XX Level III candidate for the CFA designation."</div>
+    <div class="pi-cell pi-improper">"CFA, Expected 20XX"</div>
+    <div class="pi-cell pi-proper">"I passed all three levels of the CFA exam and will be eligible for the CFA charter upon completion of the required work experience."</div>
+    <div class="pi-cell pi-improper">"John Smith, Charter Pending"</div>
+  </div>
+  <div class="card">
+    <p><strong>Key patterns in the proper/improper distinctions:</strong></p>
+    <ul>
+      <li><strong>Passing all three exams consecutively</strong> = factual and acceptable to state. Claiming this demonstrates "elite" status or superior ability = not acceptable.</li>
+      <li><strong>Enhanced personal skills</strong> = acceptable personal outcome statement. "Achieve better performance" = overstated claim about outcomes.</li>
+      <li><strong>"I passed Level II of the CFA exam"</strong> = acceptable factual statement. "CFA, Level II" = implies a partial designation, which doesn't exist.</li>
+      <li><strong>"I am a Level III candidate"</strong> = acceptable factual statement. "CFA, Expected 20XX" = implies an expected charter before it's earned; "Charter Pending" = same problem.</li>
+      <li><strong>The "ensures" problem</strong>: "Enrolling ensures one of becoming better at valuing debt securities" = guarantee of outcome = not acceptable. Factual benefits only.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="b4">
+  <div class="section-header"><span class="section-num">B4</span><h2>VII(B) Worked Examples</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">AZ Investment Advisers — Linking First-Attempt Passes to Superior Fund Performance</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">An advertisement for AZ Investment Advisers states that all principals are CFA charterholders who passed all three exams on their first attempt, and prominently links this fact to the notion that AZ's mutual funds have achieved superior performance.</div>
+      <div class="ex-verdict"><strong>Violation of VII(B).</strong> Stating that all principals passed on the first try is permissible IF true — it's a factual statement. However, linking that fact to claims of superior performance ability or investment results is prohibited. The advertisement implies: (1) CFA charterholders achieve better investment results and (2) first-attempt passers are more successful than those who required additional attempts — both are prohibited implications.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Factual statements about exam achievements are fine. The violation comes from the linkage to performance claims. CFA Institute makes no representation that charterholders outperform non-charterholders, and the standard prohibits members from making such implications. First-attempt passing is a factual achievement — implying it predicts superior investment performance converts a fact into an unsupported performance claim.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Vasseur — Using CFA Designation After Membership Lapsed</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Vasseur (CFA charterholder for 5 years) travels abroad for 2 years, doesn't file a Professional Conduct Statement or pay dues. Upon returning to work as a self-employed analyst, he prints business cards displaying "CFA" after his name without reinstating his membership.</div>
+      <div class="ex-verdict"><strong>Violation of VII(B).</strong> Vasseur's right to use the CFA designation was suspended when he failed to meet the annual membership requirements. Displaying "CFA" after his name implies active charterholder status he does not currently hold. He must reinstate membership through the appropriate CFA Institute process before using the designation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The right to use the CFA designation is tied to active membership — not to having once earned the charter. Annual Professional Conduct Statement + dues = the ongoing price of using the designation. Lapsing membership = forfeiting the right to use the designation, even temporarily. There is no grace period during which the designation can be used while membership has lapsed.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Simpson — Retired Charterholder Using CFA Designation Without Retired Status</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Simpson retires after a 25-year career. He stops filing Professional Conduct Statements and paying dues, then designs a personal business card (no corporate logo) for friends with his new contact details — continuing to display "CFA" after his name.</div>
+      <div class="ex-verdict"><strong>Violation of VII(B).</strong> Same analysis as Vasseur — membership lapsed, forfeiting the right to use the designation. The personal/informal nature of the business card (no corporate logo, just for friends) doesn't change the classification. CFA Institute has a formal "retired" status process with reduced dues — Simpson must complete that process to regain the right to use the designation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>"Retired" status is NOT automatic. It is a specific formal classification with its own ongoing requirements (reduced dues + continued Professional Conduct Statement). Without actively obtaining retired status from CFA Institute, a retired charterholder who stops paying dues has lapsed membership — and cannot use the designation. The fact that the business card is "just for friends" doesn't matter — the designation reference misrepresents the member's current status.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-source">Both</div><div class="ex-title">Reese — Factual Statements About the CFA Program to a Friend</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Reese (CFA charterholder since 2000) tells a friend considering the CFA Program: she learned a great deal from the programme, many firms require the CFA designation for their investment professionals, and she would recommend it to anyone pursuing investment management.</div>
+      <div class="ex-verdict"><strong>Compliant with VII(B).</strong> Reese's statements are factual: the CFA Program enhanced her knowledge; many firms do require it. These are supportable factual claims about the CFA Program's benefits — not unsupported guarantees of performance or superiority.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The key distinction: statements about the factual benefits of the CFA Program (knowledge enhancement, industry recognition) are permitted. Statements guaranteeing superior performance or competence claims that can't be factually supported are not. Reese's recommendations are based on her personal experience and factual industry patterns — both legitimate bases for positive statements about the programme.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES) / Example 5 (Handbook)</div><div class="ex-source">Both (different scenario/same name)</div><div class="ex-title">Glass/"Expert CFA" — Using CFA Designation with a Fictitious Name Online</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>LES:</strong> An anonymous blogger runs a blog as "Expert CFA" — Cannon reads this blog and incorporates the factors into his proprietary model. The "Expert CFA" blogger is using the designation without being identified by full name. <strong>Handbook:</strong> Glass (a CFA charterholder) wants to comment on an investor blog anonymously; he publishes comments signed "Expert, CFA" using a pseudonym.</div>
+      <div class="ex-verdict"><strong>Both scenarios = violation of VII(B).</strong> Using a pseudonym or fictitious name while claiming the CFA designation is a misrepresentation. The designation must be used with the charterholder's full name — not with anonymous identifiers or pseudonyms that hide the member's identity. The designation implies a real, identifiable, accountable professional.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Anonymity + CFA designation = violation. The CFA designation is tied to an identified individual — it cannot be claimed by a pseudonym. This rule prevents anonymous actors from trading on the CFA brand without accountability. In the Handbook version, Glass's desire for anonymity is understandable but doesn't override the requirement. Cross-reference: the LES version of "Expert CFA" also implicates V(A) for Cannon who incorporated the unvalidated blog factors into his model.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES-Only)</div><div class="ex-source">LES Only</div><div class="ex-title">Prittima — Order of CFA Designation and PhD on Business Card</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Prittima has earned both the CFA designation and a PhD in finance. She wants to cite both on her business card but is unsure of the proper ordering.</div>
+      <div class="ex-verdict"><strong>Compliant — no violation.}</strong> The order of designations cited on resumes and business cards is a matter of personal preference. Prittima is free to cite the CFA designation either before or after citing her PhD. Multiple designations must be separated by a comma.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>There is no prescribed ordering requirement for the CFA designation relative to academic credentials. Personal preference governs. The only requirements: (1) both designations must be cited accurately, (2) separated by a comma, and (3) no implication that the order represents a ranking of importance or superior qualification.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMBINED CHECKLISTS ═══════════ -->
+<div class="section" id="checklist">
+  <div class="section-header"><span class="section-num">★</span><h2>Combined Exam Checklists — VII(A) and VII(B)</h2></div>
+  <div class="card" style="border-color:rgba(201,168,76,0.3);">
+    <h3 style="margin-top:0;">Standard VII(A): Conduct as Participants in CFA Institute Programs</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Applies across all CFA Institute programs</strong> — CFA Program, CIPM, Investment Foundations, and any other CFA Institute credentialing/educational program.</li>
+      <li>✅ <strong>Prohibited conduct:</strong> cheating (giving or receiving exam assistance) + testing rule violations + providing confidential information + circumventing security + improperly using CFA Institute association for personal goals + misrepresenting information to CFA Institute.</li>
+      <li>✅ <strong>Confidential information includes:</strong> specific exam questions + broad topical areas tested + broad topical areas NOT tested + formulas tested + formulas NOT tested. All aspects are confidential until publicly released by CFA Institute.</li>
+      <li>✅ <strong>Both providing AND receiving confidential exam information = violation.</strong> The obligation is bilateral. (Nero/candidates)</li>
+      <li>✅ <strong>Topics NOT covered on the exam are as confidential as topics that ARE covered.</strong> (Rossi — IPO allocations disclosure)</li>
+      <li>✅ <strong>Post-exam discussion threads reconstructing specific questions = violation</strong> — even when the intent is academic ("what was the right answer?"). (Gagne)</li>
+      <li>✅ <strong>Third-party solicitation of exam content:</strong> members/candidates who comply with requests to share content violate VII(A). (Pena/CFA4Sure)</li>
+      <li>✅ <strong>Volunteer obligations continue after the engagement ends.</strong> Whitcomb's disclosure weeks after grading = still a violation.</li>
+      <li>✅ <strong>CFA Institute volunteer positions must not be used for personal/commercial benefit.</strong> (Ramirez — scheduling only personal clients; Warrenski — implying confidential committee advantage)</li>
+      <li>✅ <strong>Warrenski rule:</strong> may state involvement with a CFA Institute committee factually; cannot infer or imply special advantages to clients from committee membership.</li>
+      <li>✅ <strong>Testing rule violations (any rule):</strong> calculator policy, possession of unauthorised materials, continuing to write after time is called, looking at other screens, fraudulent deferral requests — all are VII(A) violations.</li>
+      <li>✅ <strong>Permitted:</strong> discussing nonconfidential curriculum material + expressing personal opinions about exam difficulty/performance + disagreeing with CFA Institute policies + factually stating volunteer involvement.</li>
+      <li>✅ <strong>Fraudulent documentation</strong> submitted to CFA Institute (altered death certificates for deferral) = VII(A) + I(C) Misrepresentation. (Chiu — Handbook only)</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard VII(B): Reference to CFA Institute, the CFA Designation, and the CFA Program</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Cannot misrepresent or exaggerate</strong> the meaning or implications of CFA membership, the CFA designation, or CFA candidacy.</li>
+      <li>✅ <strong>Cannot imply superior performance</strong> will result from the CFA designation — investment results cannot be linked to charterholder status. (AZ Investment Advisers)</li>
+      <li>✅ <strong>Facts about the programme are permitted</strong> — programme enhanced my skills, firms require it, rigorous and thorough — as long as they are factual or stated as personal opinion.</li>
+      <li>✅ <strong>Annual membership requirements:</strong> Membership Agreement (Handbook) + Professional Conduct Statement + dues. Failing any = membership lapses = no right to use the designation.</li>
+      <li>✅ <strong>Lapsed membership:</strong> must not present as active member; must remove ALL references to designation from social media, business communications, reports (Handbook). May state past membership/charterholder status.</li>
+      <li>✅ <strong>"Retired" status is NOT automatic</strong> — must go through CFA Institute's formal retired status process with reduced dues. Simply retiring doesn't preserve the right to use the designation. (Simpson, Vasseur)</li>
+      <li>✅ <strong>Pseudonyms and anonymous online profiles</strong> cannot be tagged with the CFA designation. Full name required with any use of the designation. (Glass/"Expert CFA")</li>
+      <li>✅ <strong>Candidacy references:</strong> Must clearly state "candidate for the CFA designation" — cannot imply partial designation. Cannot cite an expected completion date.</li>
+      <li>✅ <strong>"CFA, Level II"</strong> is improper — implies a partial designation that doesn't exist. "I passed the Level II CFA exam" is proper.</li>
+      <li>✅ <strong>"CFA, Expected 20XX"</strong> and "Charter Pending" are both improper — imply a forthcoming designation before it is awarded. The charter is only awarded upon meeting all requirements and Board of Governors approval.</li>
+      <li>✅ <strong>Passing all three exams consecutively is a fact</strong> that may be stated. Implying this demonstrates "elite" status or superior ability is a violation. (AZ Investment Advisers)</li>
+      <li>✅ <strong>Order of CFA and academic credentials on business cards</strong> = personal preference; separate with a comma. No prescribed ordering. (Prittima — LES-only)</li>
+      <li>✅ <strong>Applies to all communication forms:</strong> letterhead, business cards, biographies, directory listings, advertising, LinkedIn pages, email signatures, websites, resumes, oral statements.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ STANDARD VII QUICK REFERENCE</div>
+    <div class="f">
+      ══ VII(A): CONDUCT AS CFA PROGRAM PARTICIPANTS ══<br>
+      PROHIBITED:           Cheating (give/receive) + rule violations + confidential disclosure + security circumvention<br>
+                            + improper use of CFA Institute association + misrepresenting to CFA Institute<br>
+      CONFIDENTIAL =        All exam aspects: questions + topics tested + topics NOT tested + formulas + scoring<br>
+      BILATERAL:            Both giving AND receiving confidential info = violation<br>
+      TOPICS NOT TESTED:    Just as confidential as topics that ARE tested<br>
+      POST-EXAM FORUMS:     Question reconstruction discussions = violation regardless of intent<br>
+      3RD PARTY REQUESTS:   Complying with requests to share content = violation<br>
+      VOLUNTEER DUTIES:     Continue after engagement ends; cannot use position for personal/commercial benefit<br>
+      WARRENSKI RULE:       State involvement factually; cannot imply special advantages from committee access<br>
+      TESTING RULES:        Any rule violation = VII(A) violation; no rule is too minor<br>
+      PERMITTED:            Discussing curriculum + expressing personal opinions + disagreeing with CFA Institute policies<br><br>
+      ══ VII(B): REFERENCE TO CFA DESIGNATION ══<br>
+      PROHIBITED:           Misrepresent or exaggerate meaning; imply superior performance; promise competency<br>
+      ANNUAL REQUIREMENTS:  Membership Agreement + Professional Conduct Statement + dues → all required<br>
+      LAPSED MEMBERSHIP:    No right to designation; remove ALL references from all channels; may note past status<br>
+      RETIRED STATUS:       NOT automatic; formal CFA Institute process required with reduced dues<br>
+      PSEUDONYMS:           Cannot tag CFA designation to a fictitious name/pseudonym; full name required<br>
+      CANDIDACY REFS:       "Candidate for the CFA designation" only; no partial designation; no expected date<br>
+      "CFA, LEVEL II":      IMPROPER — implies partial designation. "I passed the Level II CFA exam" = PROPER<br>
+      "CHARTER PENDING":    IMPROPER — implies forthcoming award. "Will be eligible upon completing work exp." = PROPER<br>
+      CONSECUTIVE PASSES:   Factual = OK. Implying "elite" or superior ability = violation<br>
+      FACTS PERMITTED:      Programme enhanced skills + firms require it + rigorous programme + opinion-labelled claims
+    </div>
+    <div class="note">
+      <strong>Top VII(A) exam traps:</strong><br>
+      (1) "She only mentioned that derivatives was her strongest topic — not the actual questions" — revealing that derivatives was heavily tested (numbers of questions, being "tons") = confidential content disclosure<br>
+      (2) "He posted that there were NO questions on IPO allocations — that's not actually a question, so it's fine" — what's NOT on the exam is equally confidential as what IS<br>
+      (3) "She can say she's on the GIPS committee if a client asks" — stating involvement factually is fine; implying the position gives her or her clients special advantages is not<br>
+      (4) "He used a pseudonym so it wasn't really CFA Institute's brand being misused" — pseudonyms tagged with the CFA designation violate both VII(A) (misuse of CFA Institute association) and VII(B) (misuse of the designation)<br><br>
+      <strong>Top VII(B) exam traps:</strong><br>
+      (1) "He's retired and not working anymore — of course he can still put CFA on his card" — retired status is not automatic; must go through CFA Institute's formal process<br>
+      (2) "She passed all three levels, so 'CFA, Level III' is just stating she's done" — "CFA, Level III" implies a partial designation; "I passed all three levels of the CFA exam" is the correct statement<br>
+      (3) "Linking the fact that all principals passed on the first try to their fund's good performance — it's just marketing" — linking first-attempt exam passes to investment performance claims violates VII(B)<br>
+      (4) "He can put 'Expert, CFA' online — it just means he's an expert who happens to be a CFA charterholder" — pseudonym + CFA designation = violation regardless of the pseudonym's meaning
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard VII: Responsibilities as a CFA Institute Member or CFA Candidate — VII(A) Conduct as Participants in CFA Institute Programs, VII(B) Reference to CFA Institute, the CFA Designation, and the CFA Program · Module 3 Guidance Notes · LES + Handbook Synthesis · Final Standard</footer>
+</body>
+</html>

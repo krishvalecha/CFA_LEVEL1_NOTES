@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 6: Industry and Competitive Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f0d14 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.0; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .force-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .force-1 { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); }
+  .force-2 { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); }
+  .force-3 { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); }
+  .force-4 { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); }
+  .force-5 { background: rgba(180,76,201,0.07); border: 1px solid rgba(180,76,201,0.3); }
+  .force-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .force-1 .force-label { color: var(--danger); }
+  .force-2 .force-label { color: var(--accent); }
+  .force-3 .force-label { color: var(--accent2); }
+  .force-4 .force-label { color: var(--accent3); }
+  .force-5 .force-label { color: #b44cc9; }
+  .force-card p, .force-card li { font-size: 14px; color: var(--text); }
+  .force-card ul { padding-left: 16px; margin-top: 6px; }
+  .force-card li { margin-bottom: 4px; }
+
+  .pestle-card { border-radius: 6px; padding: 14px 18px; margin-bottom: 10px; border: 1px solid var(--border); background: var(--card); }
+  .pestle-letter { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; float: left; margin-right: 14px; line-height: 1; margin-top: 2px; }
+  .pestle-title { font-weight: 700; font-size: 14px; color: #fff; }
+  .pestle-body { font-size: 13.5px; color: var(--text); margin-top: 4px; }
+  .pestle-clear { clear: both; }
+
+  .strat-box { border-radius: 6px; padding: 18px 20px; margin-bottom: 12px; }
+  .strat-cost { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .strat-diff { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .strat-focus { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .strat-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .strat-cost .strat-title { color: var(--accent3); }
+  .strat-diff .strat-title { color: var(--accent2); }
+  .strat-focus .strat-title { color: var(--accent); }
+  .strat-box ul { padding-left: 16px; }
+  .strat-box li { font-size: 13.5px; margin-bottom: 4px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 6</div>
+  <h1>Industry and <span>Competitive Analysis</span></h1>
+  <p>Exam-ready notes: industry classification (GICS/ICB/TRBC), industry survey (HHI, growth style box), Porter's Five Forces, PESTLE analysis, and the three generic competitive strategies (cost leadership, differentiation, focus).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why Industry Analysis?</a>
+  <a class="toc-item" href="#s2">02 · Industry Classification</a>
+  <a class="toc-item" href="#s3">03 · Limitations &amp; Alternative Groupings</a>
+  <a class="toc-item" href="#s4">04 · Industry Survey</a>
+  <a class="toc-item" href="#s5">05 · HHI — Concentration Formula</a>
+  <a class="toc-item" href="#s6">06 · Porter's Five Forces</a>
+  <a class="toc-item" href="#s7">07 · PESTLE Analysis</a>
+  <a class="toc-item" href="#s8">08 · Competitive Strategies</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WHY INDUSTRY ANALYSIS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why Industry Analysis? — Purpose &amp; Steps</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Industry and Competitive Analysis</div>
+      <div class="def-body">The study of the drivers of an industry's size, profitability, and market shares, and the evaluation of a company's competitive positioning within that industry. Used to understand structural factors, relative competitive strengths/weaknesses, and their contribution to a company's economic profits (ROIC in excess of WACC).</div>
+    </div>
+
+    <h3>Three Core Purposes</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Estimate Base Rate</div>
+        <p>Competition "pulls" company profitability toward an industry base rate over time. Industry analysis estimates that base rate and its determinants, and forms forward-looking views on potential structural changes.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Improve Forecasts</div>
+        <p>Understanding competitive forces sharpens forecasts of prices, costs, market share, and profitability. Analysts covering both a company and its suppliers make more accurate earnings forecasts (Guan, Wong &amp; Zhang 2014).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Identify Opportunities</div>
+        <p>May uncover attractive investment candidates. Some investors prefer industry-level exposure (basket approach) to diversify away company-specific risk, scaling positions by size, liquidity, or relative attractiveness.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Insight — McGahan &amp; Porter (1997)</div>
+      <p>Industry was the most important factor in the <strong>sustainability</strong> of economic profits. Company-specific effects were larger for <strong>low performers</strong> than high performers — industry forces act as a <strong>ceiling</strong> on returns but <strong>not a floor</strong>. A company can persistently underperform its industry but not easily persistently outperform it.</p>
+    </div>
+
+    <h3>The 5-Step Analysis Process</h3>
+    <div class="card">
+      <ol style="padding-left:20px; line-height:2.2;">
+        <li><strong>Define Industry</strong> — use third-party classification + own judgment on substitutes, geography, multi-product firms</li>
+        <li><strong>Industry Survey</strong> — estimate size, growth rate, profitability, market share trends</li>
+        <li><strong>Industry Structure</strong> — Porter's Five Forces analysis; determine key factors to monitor</li>
+        <li><strong>External Influences</strong> — PESTLE: political, economic, social, technological, legal, environmental</li>
+        <li><strong>Competitive Analysis</strong> — evaluate company's competitive strategy vs. industry context; determine competitive advantage</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: INDUSTRY CLASSIFICATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Industry Classification Methods</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Industry (definition)</div>
+      <div class="def-body">Companies that sell similar products or services, from the perspective of a customer. The commercial classification schemes use a "demand" approach (product/customer similarity), replacing the older government "supply" approach (production characteristics).</div>
+    </div>
+
+    <h3>Legacy vs. Commercial Classification Schemes</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--muted);">Legacy Schemes (Old)</div>
+        <ul>
+          <li>Examples: <strong>SIC</strong> (US), <strong>NACE</strong> (EU), <strong>ISIC</strong> (UN)</li>
+          <li>Devised by <strong>government agencies</strong></li>
+          <li>Country-specific; not updated frequently</li>
+          <li><strong>Supply approach</strong>: grouped by production characteristics (agriculture, manufacturing, retail, services)</li>
+          <li>Became outdated as new business models emerged</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Commercial Schemes (Current)</div>
+        <ul>
+          <li><strong>GICS</strong> — by MSCI &amp; S&amp;P Dow Jones Indices</li>
+          <li><strong>ICB</strong> — by FTSE Russell</li>
+          <li><strong>TRBC</strong> — by Refinitiv</li>
+          <li><strong>Demand approach</strong>: grouped by product/service similarity</li>
+          <li>Global, reviewed &amp; updated at least annually</li>
+          <li>GICS &amp; ICB: public companies only. TRBC: also covers private companies, non-profits, government entities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — Remember the 3 Commercial Schemes</div>
+      <p><strong>"GIT"</strong> — <strong>G</strong>ICS (MSCI/S&amp;P), <strong>I</strong>CB (FTSE Russell), <strong>T</strong>RBC (Refinitiv). All are strictly hierarchical taxonomies — like species → genus → family in biology. A company is assigned to ONE group at the lowest tier, automatically assigning it to all higher tiers.</p>
+    </div>
+
+    <h3>Structure of Classification Schemes</h3>
+    <div class="card">
+      <p>GICS, ICB, and TRBC are <strong>strictly hierarchical taxonomies</strong>. Each company is classified to a single group in the <strong>lowest tier</strong>; the groups themselves make up the higher tiers. Think of it like biological taxonomy: one species → one genus → one family → etc.</p>
+      <p style="margin-top:10px;">For companies operating in <strong>multiple industries</strong>: the goal is to assign the company to a single grouping that describes the <strong>majority</strong> of its business. All three schemes use some discretion in this process.</p>
+      <p style="margin-top:10px;">Data aggregators (Bloomberg, FactSet, CapIQ) and stock exchange operators (London Stock Exchange) either use these schemes or have their own substantially similar ones.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Multi-Product Company Classification</div>
+      <p>Because GICS/ICB/TRBC are strict taxonomies, multi-product companies are assigned to just ONE grouping — even if a competitor is a division of a company classified in a completely different sector. Classic example: Amazon is classified as consumer discretionary (retail), but most of its operating profits come from AWS (cloud computing). Alphabet (Google Cloud) and Microsoft are classified in different sectors from AWS.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: LIMITATIONS & ALTERNATIVE GROUPINGS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Limitations of Classification Schemes &amp; Alternative Groupings</h2>
+    </div>
+
+    <h3>Four Key Limitations</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Limitation</th>
+            <th>Explanation / Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Business model variations / substitutes</td>
+            <td>Groupings may be too narrow or too broad. E.g., "application software" groups Shopify (e-commerce payments) with Check Point (cybersecurity) — they don't compete. Conversely, retailers across sub-industries compete for the same consumer dollar.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Multi-product company classification</td>
+            <td>Company assigned to a single grouping — may miss competitors that are divisions of differently classified companies (e.g., AWS vs. Amazon retail; Google Cloud classified differently from Azure).</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Geographical considerations</td>
+            <td>Schemes are global, but some industries (healthcare services, insurance) are national/regional due to customer behavior or regulations. E.g., UAE hospitals vs. French hospitals have little economic relevance to each other.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Changes in groupings over time</td>
+            <td>Reclassifications affect prior-period comparability and can introduce survivorship bias. Example: Real Estate sector was carved out of Financials sector (GICS). Analysts must restate historical statistics and construct survivorship bias–free datasets.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Alternative Methods of Grouping Companies</h3>
+    <div class="card">
+      <p>Beyond industry/product grouping, companies can also be grouped by:</p>
+      <ul style="margin-top:10px;">
+        <li><strong>Geography:</strong> By country (country of incorporation, primary listing, HQ, or market perception). Developed / emerging / frontier markets classification uses discretion — considers market size/liquidity, income per capita, legal restrictions on foreign investment. <em>Note: geographic revenue composition is generally NOT used for classification (e.g., Toyota = Japanese company despite largest revenues from North America).</em></li>
+        <li><strong>Business cycle sensitivity:</strong> Defensive vs. cyclical groupings. <span class="tag tag-green">Defensive</span> = consumer staples, healthcare, utilities. <span class="tag tag-red">Cyclical</span> = financials, basic materials, consumer discretionary, industrials. Can be combined with geographic or credit approaches.</li>
+        <li><strong>Statistical similarities:</strong> Clustering analysis based on financial ratios, market data, or co-movements in returns. Sub-groupings by size (market cap), valuation ratios, growth rates of sales/earnings, profitability ratios, price performance statistics (volatility, momentum). These groupings have <strong>more turnover</strong> in constituents than industry/country groupings because these statistics are less stable.</li>
+        <li><strong>ESG characteristics:</strong> Carbon emissions/revenue ratios, board diversity, executive diversity, exposure to tobacco/gambling. Can be aggregated into composite ESG ratings for cross-issuer comparability.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Exam Tip — Defensive vs. Cyclical</div>
+      <p>Defensive = demand is relatively insensitive to economic conditions — people still buy food, medicine, utilities in a recession. Cyclical = demand is discretionary or tied to credit and business investment. <strong>Note:</strong> in a severe enough downturn, ALL companies are affected — the distinction is a matter of degree, not categorical immunity.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: INDUSTRY SURVEY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Industry Survey — Size, Growth, Profitability, Market Share</h2>
+    </div>
+
+    <h3>Industry Size &amp; Historical Growth Rate</h3>
+    <div class="card">
+      <p><strong>Industry size</strong> = total annual sales from the <span class="highlight2">product or customer perspective</span> — not necessarily all sales of each company in the industry. Example: Amazon's retail segment sales count for the retail industry, but AWS sales do not.</p>
+      <p>Growth rate = year-over-year rates each year OR compounded annual growth rate (CAGR) over a multi-year period. Best practice: break growth into <strong>volume</strong> and <strong>price/mix</strong> components.</p>
+      <p>For industries with many private companies, analysts estimate size using: (1) government economic indicators, (2) third-party consultancy surveys, or (3) issuer investor presentations — all must be corroborated for reasonableness.</p>
+    </div>
+
+    <h3>Growth Style Box</h3>
+    <div class="card">
+      <p>An industry's growth character is assessed by comparing its historical growth rate to broader economic growth during recessions and expansions. The 2×2 style box combines:</p>
+      <div class="two-col" style="margin-top:14px;">
+        <div class="mini-card">
+          <div class="mc-title" style="color:var(--accent3);">Defensive Industries (examples)</div>
+          <ul>
+            <li><strong>Mature + Defensive:</strong> Utilities, Beverages, Pharmaceuticals</li>
+            <li><strong>Growth + Defensive:</strong> Biotechnology, Software, Gaming</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <div class="mc-title" style="color:var(--danger);">Cyclical Industries (examples)</div>
+          <ul>
+            <li><strong>Mature + Cyclical:</strong> Crude oil, Natural gas, Freight transportation</li>
+            <li><strong>Growth + Cyclical:</strong> Semiconductors, Fintech, Digital advertising</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:12px;"><strong>Growth industries:</strong> Haven't reached full saturation/penetration of total addressable market (TAM). Often technology-based. Key questions: Will high growth persist? What is the peak penetration rate? (Harder to answer the newer the industry.)</p>
+      <p><strong>Mature industries:</strong> Fully penetrated addressable market. Growth ≈ 0 or declining as demand migrates to substitutes. Key issue: monitoring disruptive threats, competitive intensity changes, speed of decline.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Cyclicality Drivers</div>
+      <p>Business cycle sensitivity is driven by: (1) degree to which sales are <strong>discretionary vs. necessary</strong>; (2) <strong>price sensitivity</strong>; (3) <strong>interest rate exposure</strong> of the business model; (4) whether the product is a <strong>durable/capital good</strong> vs. a recurring consumable or subscription. Durables can be deferred → highly cyclical.</p>
+    </div>
+
+    <h3>Industry Profitability Measures</h3>
+    <div class="card">
+      <p><strong>Best measure:</strong> Time series of the distribution of <span class="highlight">returns on invested capital (ROIC)</span> — e.g., 25th, 50th, 75th percentiles. Captures after-tax operating profits per dollar of invested capital; is agnostic about capital structure. But this is often only feasible when the industry is dominated by publicly traded companies.</p>
+      <p><strong>Practical alternatives:</strong></p>
+      <ul>
+        <li>Measure profitability of publicly traded players and assume private competitors are similar</li>
+        <li>Use government agency or third-party consultancy data (e.g., government surveys of gross margins and operating expenses)</li>
+      </ul>
+      <p><strong>Most important:</strong> The <span class="highlight2">trend</span> — is industry profitability rising or falling? More informative than any single point estimate.</p>
+    </div>
+
+    <h3>Market Share Trends &amp; Major Players</h3>
+    <div class="card">
+      <p>Market share = industry participant's annual revenues ÷ industry size × 100%. Interpret as a range (not a precise point) due to measurement limitations.</p>
+      <p><strong>Most important:</strong> The <span class="highlight2">trend over time</span> — reveals whether customers prefer one company's products over competitors'.</p>
+      <p><strong>Key nuance on acquisitions:</strong> A company buying a competitor gains market share — but more important is whether it is gaining share <span class="highlight3">organically (non-acquired basis)</span>. Organic share gains reflect true competitive strength.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Survivorship Bias</div>
+      <p>When classification schemes change groupings, or when companies are delisted (acquired, bankrupt), historical statistics can become distorted due to survivorship bias. Analysts must restate historical data and use survivorship bias–free datasets when possible.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: HHI FORMULA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Herfindahl-Hirschman Index (HHI) — Concentration Formula</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Herfindahl-Hirschman Index (HHI)</div>
+      <div class="f">
+        HHI = Σ sᵢ²  (sum of squared market shares of all competitors)<br><br>
+        where sᵢ = market share of firm i stated as a WHOLE NUMBER (e.g., 50% = 50, not 0.50)
+      </div>
+      <div class="note">
+        Example: 4 firms with shares 30, 30, 20, 20 → HHI = 30² + 30² + 20² + 20² = 900 + 900 + 400 + 400 = 2,600<br>
+        Monopoly (maximum HHI) = 100² = 10,000<br><br>
+        Regulatory thresholds (antitrust):<br>
+        • HHI &lt; 1,500 → unconcentrated<br>
+        • HHI 1,500–2,500 → moderately concentrated<br>
+        • HHI &gt; 2,500 → highly concentrated<br>
+        • Acquisitions in highly concentrated markets that increase HHI by &gt;200 points → often subject to regulatory challenge
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Lower Concentration → Higher Rivalry</div>
+        <ul>
+          <li>Many small competitors</li>
+          <li>Usually high competitive intensity</li>
+          <li>Exception: very service-oriented, local, or highly differentiated industries</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Rising Concentration → Lower Rivalry</div>
+        <ul>
+          <li>Consolidation (M&amp;A) → fewer competitors</li>
+          <li>Associated with falling competitive intensity</li>
+          <li>Generally leads to higher profitability</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 HHI Exam Trick</div>
+      <p>Always use the market share as a <strong>whole number</strong> (50, not 0.50) before squaring. The maximum possible HHI = 10,000 (pure monopoly). A perfectly equal duopoly of two firms at 50% each = 50² + 50² = 5,000. The HHI is always between 0 (infinite competitors, infinitesimal shares) and 10,000 (monopoly).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: PORTER'S FIVE FORCES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Porter's Five Forces — Industry Structure</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Porter's Five Forces</div>
+      <div class="def-body">A framework for assessing an industry's structure — determines the industry's long-run profitability as measured by returns on invested capital. If some or all forces are intense → almost no company earns attractive returns. If forces are benign → highly profitable industry. Aimed at characterizing drivers of profitability, not just measuring them.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "TNCSR" or "NSTCR"</div>
+      <p>The 5 forces: <strong>N</strong>ew entrants threat · <strong>S</strong>ubstitutes threat · <strong>C</strong>ustomer bargaining power · <strong>S</strong>upplier bargaining power · <strong>R</strong>ivalry among existing competitors. Memory trick: <strong>"Never Stop Customers Squeezing Revenue"</strong> — each force squeezes profitability.</p>
+    </div>
+
+    <div class="force-card force-1">
+      <div class="force-label">Force 1 — Threat of New Entrants</div>
+      <p><strong>High threat</strong> (low barrier) = many new entrants, lower profitability for incumbents. <strong>Low threat</strong> (high barrier) = protected industry profits.</p>
+      <ul>
+        <li><strong>Network effects:</strong> Value increases with number of users (e.g., Visa/Mastercard payment networks) → new entrant starts with low-value product, must achieve scale</li>
+        <li><strong>Economies of scale:</strong> Large fixed costs give incumbents a cost advantage (e.g., cloud computing infrastructure)</li>
+        <li><strong>Economies of scope:</strong> Incumbents leverage multiple business lines (e.g., Warehouse Club pharmacies + gas stations; commercial banks across multiple businesses)</li>
+        <li><strong>Customer loyalty / brand:</strong> Low private label share = strong brand loyalty (e.g., energy drinks, tobacco). High private label = low brand loyalty (dairy milk, packaged baked goods)</li>
+        <li><strong>Switching costs:</strong> High = protects incumbents (e.g., SAP ERP software — lengthy, costly implementation). Low = easy entry (e.g., food delivery apps)</li>
+        <li><strong>Exclusive access to inputs/channels:</strong> E.g., beverage companies with shelf space arrangements, owned distribution assets</li>
+        <li><strong>Government policies:</strong> Regulations, subsidies, patents, licenses that restrict entry. E.g., fewer than 3 new bank charters/year in the US (2010–2021) vs. 50,000+ new restaurants/year</li>
+      </ul>
+    </div>
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Experience/Expertise Is NOT a Barrier</div>
+      <p>Experience and expertise among incumbents are NOT sustainable barriers to entry. Entrants can imitate, poach employees, purchase from incumbents' suppliers, and engage industry consultants.</p>
+    </div>
+
+    <div class="force-card force-2">
+      <div class="force-label">Force 2 — Threat of Substitutes</div>
+      <p><strong>High threat</strong> = alternative product fulfills same customer need at lower price → limits pricing power. Classic exam example: streaming video substituting for cable TV; digital advertising substituting for television advertising.</p>
+      <ul>
+        <li>Is there a lower-priced substitute fulfilling the same need? (Video conferencing vs. business travel/office space)</li>
+        <li>Can customers go without the product? (Elective medical procedures can be deferred)</li>
+        <li>Is the substitute improving in performance? (Digital ads went from pop-ups → targeted video → content/influencer ads → took share from TV)</li>
+        <li>Is it difficult to switch to the substitute? (Generic pharmaceutical automatically substituted at pharmacy when approved)</li>
+      </ul>
+    </div>
+
+    <div class="force-card force-3">
+      <div class="force-label">Force 3 — Bargaining Power of Customers</div>
+      <p><strong>High power</strong> = customers can demand lower prices, better terms → squeezes industry margins.</p>
+      <ul>
+        <li>Few, concentrated customers (e.g., Apple/Samsung/Xiaomi account for large % of electronic component companies' revenues)</li>
+        <li>Standardized/undifferentiated products (e.g., crude oil is graded — refiners pay by grade, not by producer)</li>
+        <li>Products NOT critical for customers → low switching cost</li>
+        <li>Products represent large part of customer budget → more price-sensitive (e.g., feed = 60%+ of livestock farmer costs → seek alternatives)</li>
+        <li>Backward integration possibility — "build" vs. "buy" (e.g., streaming services initially licensed content, then started producing their own)</li>
+      </ul>
+    </div>
+
+    <div class="force-card force-4">
+      <div class="force-label">Force 4 — Bargaining Power of Suppliers</div>
+      <p><strong>High power</strong> = suppliers can raise prices or reduce quality → increases industry costs.</p>
+      <ul>
+        <li>Few, concentrated suppliers (e.g., Apple's A/M-series chips manufactured exclusively by TSMC)</li>
+        <li>High switching costs (e.g., index licensing fees = 35% of ETF managers' fee revenue; switching requires changing investment processes, client reporting)</li>
+        <li>Differentiated/specialized inputs (e.g., skilled/credentialed labor in healthcare, airlines, investment banking, tech — limited supply)</li>
+        <li>No substitutes for supplier's product</li>
+        <li><em>Counterexample:</em> Retailers can substitute branded merchandise with private label from contract manufacturers</li>
+      </ul>
+    </div>
+
+    <div class="force-card force-5">
+      <div class="force-label">Force 5 — Rivalry among Existing Competitors</div>
+      <p><strong>High rivalry</strong> = intense price competition, promotions, feature wars → lower industry profitability.</p>
+      <ul>
+        <li>History of price competition (e.g., automakers and aircraft manufacturers compete fiercely on price, financing, and warranty)</li>
+        <li>Numerous, roughly equal-sized competitors (e.g., ~dozen automakers each with &lt;15% global share)</li>
+        <li>Undifferentiated products (e.g., generic pharmaceuticals — legally required to be chemically equivalent → compete solely on price; more generics per drug → more price competition)</li>
+        <li>High exit barriers → low-profitability firms stay in industry longer (e.g., natural resource producers — costly to shut down)</li>
+        <li>Slow industry growth → companies fight for each other's customers (e.g., mobile wireless plans post-2015 when penetration plateaued)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 How to Apply the Five Forces</div>
+      <p>After evaluating all five forces, identify which <strong>one or two forces are strongest</strong> — there is no quantitative threshold, it's a qualitative judgment. Useful test: "What would happen if company X raised prices 10% tomorrow?" → If many customers would switch to a competitor or substitute, then customer bargaining power and threat of substitutes are the key forces to focus on.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: PESTLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>PESTLE Analysis — External Influences</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">PESTLE Analysis</div>
+      <div class="def-body">A framework for analyzing the Political, Economic, Social, Technological, Legal, and Environmental external influences on an industry. While Porter's Five Forces is concerned with the determinants of industry profitability, PESTLE is more concerned with an industry's <strong>growth rate and market share dynamics</strong>. Used to identify investable "themes" or "narratives."</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Porter vs. PESTLE — Know the Distinction</div>
+      <p><strong>Porter's Five Forces</strong> = internal to the industry; determines long-run <strong>profitability</strong> (ROIC). <strong>PESTLE</strong> = external to the industry; determines <strong>growth rate</strong> and market share dynamics. They are complementary, not interchangeable.</p>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:var(--danger);">P</div>
+      <div class="pestle-title">Political</div>
+      <div class="pestle-body">Fiscal/monetary policy, government buying/selling, regulatory changes, geopolitical conditions. Key sectors: <strong>Energy</strong> (low price appeal vs. emissions targets; OPEC produced 35% of global crude in 2021), <strong>Healthcare</strong> (largest buyer of services; price controls, coverage expansions, pharmaceutical scandals 2000–2007 led to heightened scrutiny), <strong>Defense</strong> (geopolitical objectives drive spending; country restrictions on export customers).</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:var(--accent);">E</div>
+      <div class="pestle-title">Economic</div>
+      <div class="pestle-body">GDP/income, inflation, interest rates, exchange rates — both cyclical and structural influences. Most important for: <strong>cyclical sectors</strong> (financials, basic materials, consumer discretionary). Exchange rate changes critical for companies with currency mismatches in revenues vs. costs. Key example: <strong>Autos</strong> — high-priced durable good, purchase can be delayed or substituted with used car based on consumer confidence. <strong>Nestlé:</strong> 40%+ of 2022 sales in emerging markets (faster volume growth than developed markets).</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:var(--accent2);">S</div>
+      <div class="pestle-title">Social</div>
+      <div class="pestle-body">Cultural/consumer trends, demographic changes, lifestyle shifts. More significant for <strong>consumer-facing</strong> industries than B2B. Example: <strong>Athletic apparel</strong> (lululemon) benefiting from increasing consumer interest in fitness/wellness. <strong>Beauty industry</strong> growth driven by smartphone cameras + social media increasing salience of appearance + efficient influencer marketing channels. Growing reputational risk re: sustainable sourcing and human rights in supply chains.</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:var(--accent3);">T</div>
+      <div class="pestle-title">Technological</div>
+      <div class="pestle-body">Two types of innovation (Clayton Christensen):
+      <br><strong>Sustaining innovation:</strong> Improves existing product performance, adds marginal features, no fundamental change in functionality. Often led by incumbents. Example: successive improvements to cable TV (digital transmission, DVR, HD, premium channels).
+      <br><strong>Disruptive innovation:</strong> Creates a new market or enters existing market with very different value proposition that may initially not appeal to existing customers. Often from new entrants. Example: streaming video → disrupted cable TV.
+      <br><strong>Innovator's dilemma:</strong> Incumbents must choose: invest in the disruption (speeds decline of own business) or ignore it (lose market share while protecting near-term profits). Disruptive innovation most likely from new entrants — no existing profitable business to protect.</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:#b44cc9;">L</div>
+      <div class="pestle-title">Legal</div>
+      <div class="pestle-body">Changes in laws/regulations from courts and policymakers that alter business practices or economic outcomes. More subtle "rules of the road" changes, beyond fiscal/monetary policy. Example: <strong>Tobacco</strong> — advertising bans, graphic packaging, minimum age, smoking bans, nicotine limits, flavorings restrictions + high taxes → industry pivoting to "reduced risk products." <strong>Cannabis</strong> — highly fragmented legal environment: fully legal (Canada), state-level variation (USA), mostly prohibited (most of Asia).</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="pestle-card">
+      <div class="pestle-letter" style="color:var(--accent3);">E</div>
+      <div class="pestle-title">Environmental</div>
+      <div class="pestle-body">Transition risks/opportunities from lower-carbon economy, waste/land use laws, environmental protections. Most important for: <strong>energy, airlines, utilities, autos</strong> (production or consumption of fossil fuels → carbon emissions). Due to regulatory changes, carbon taxes, consumer preferences, or voluntary actions — companies must evolve or face share losses to lower-carbon alternatives. Closely associated with Legal influences.</div>
+      <div class="pestle-clear"></div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 PESTLE Practical Note</div>
+      <p>External influences often <strong>don't change quickly</strong> → doesn't need to be redone every quarter. In practice, <strong>some factors are far more important than others</strong> for a given industry — analysts should identify and focus on the most impactful ones. Analysts develop expertise over time and can access industry specialists as a paid service.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: COMPETITIVE STRATEGIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Competitive Positioning — Generic Strategies</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Competitive Strategy Evaluation Framework</div>
+      <div class="def-body">To evaluate a company's competitive strategy on a forward-looking basis, an analyst assesses three dimensions: (1) Does the strategy create a defense against the five industry forces? (2) Does the strategy benefit from (or is not at odds with) the expected external forces identified in PESTLE? (3) Does the company have the resources and capabilities to execute the strategy?</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Intentional vs. Unintentional Strategy</div>
+      <p>An <strong>intentional strategy</strong> = company-wide planning, performance measurement, and feedback loops. An <strong>unintentional strategy</strong> = teams pursuing own incentives, doing what was done before, or following industry norms. Unintentional strategy is rarely best and exacerbates coordination problems. Exception: discovery-oriented R&amp;D — Munos (2009) found <em>diseconomies of scale</em> in pharmaceutical R&amp;D, with most new drugs discovered by small, relatively unmanaged companies.</p>
+    </div>
+
+    <h3>Three Generic Competitive Strategies (Michael Porter)</h3>
+
+    <div class="strat-box strat-cost">
+      <div class="strat-title">Strategy 1 — Cost Leadership</div>
+      <div class="two-col">
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent3); margin-bottom:6px;">How it works:</p>
+          <ul>
+            <li>Economies of scale from fixed costs</li>
+            <li>Favorable access to raw materials</li>
+            <li>Culture of strict cost control</li>
+            <li>Aggressive pricing to gain high volume</li>
+            <li>Low-cost distribution</li>
+            <li>Economies of scope</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent3); margin-bottom:6px;">Defends against:</p>
+          <ul>
+            <li>New entrants: capital requirements &amp; scale advantages deter entry</li>
+            <li>Customer power: customers can only bring prices down to marginal cost of cost leader</li>
+            <li>Rivalry: rivals can't compete on price with cost leaders</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:13.5px; margin-top:10px;"><strong>Industry fit:</strong> Capital-intensive, price-conscious customers, low product differentiation, minimal innovation.</p>
+      <p style="font-size:13.5px; margin-top:6px;"><strong>Risks:</strong> Cost inflation, technological change that erodes cost advantage, desire for "premiumization" among customers.</p>
+    </div>
+
+    <div class="strat-box strat-diff">
+      <div class="strat-title">Strategy 2 — Differentiation</div>
+      <div class="two-col">
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent2); margin-bottom:6px;">How it works:</p>
+          <ul>
+            <li>Investments in advertising, brand, customer service, proprietary distribution</li>
+            <li>Protection via trademarks, patents, copyright</li>
+            <li>Superior quality, unique features</li>
+            <li>Culture of strong customer experience</li>
+            <li>Premium pricing</li>
+            <li>Integration of services, software, and hardware</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent2); margin-bottom:6px;">Defends against:</p>
+          <ul>
+            <li>New entrants &amp; substitutes: brand loyalty deters switching, protects market share</li>
+            <li>Customer power: customers may be unable or unwilling to comparison-shop or switch</li>
+            <li>Supplier power: can pass along price increases to customers and/or absorb them via margin</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:13.5px; margin-top:10px;"><strong>Industry fit:</strong> Price is not foremost concern; customers value distinctiveness; innovation with features varying across products.</p>
+      <p style="font-size:13.5px; margin-top:6px;"><strong>Risks:</strong> Imitation by competitors; buyers become sophisticated and no longer need level of service; pricing premium becomes too high; high market share may undermine exclusivity appeal.</p>
+    </div>
+
+    <div class="strat-box strat-focus">
+      <div class="strat-title">Strategy 3 — Focus</div>
+      <div class="two-col">
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent); margin-bottom:6px;">How it works:</p>
+          <ul>
+            <li>Proximity to and deep understanding of a specific customer group/geography/product</li>
+            <li>May incorporate elements of both cost leadership and differentiation — but narrowly targeted</li>
+            <li>Difficult or uneconomical for larger players to serve the narrow segment efficiently</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:13.5px; font-weight:700; color:var(--accent); margin-bottom:6px;">Defends against:</p>
+          <ul>
+            <li>New entrants &amp; substitutes: customer loyalty to unique product deters switching</li>
+            <li>Customer power: customers unable or unwilling to switch</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:13.5px; margin-top:10px;"><strong>Industry fit:</strong> Narrow customer segment has distinct needs; other players find it uneconomical to serve the niche.</p>
+      <p style="font-size:13.5px; margin-top:6px;"><strong>Risks:</strong> Larger competitors outcompete on price; differences in demand between niche and industry narrow; buyers become sophisticated, no longer need level of service.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ "Stuck in the Middle" — The Worst Position</div>
+      <p>A company that is not a cost leader, not differentiated, and not focused is "stuck in the middle." This is the worst strategic position — it has no sustainable competitive advantage and is vulnerable to attack from all three directions simultaneously.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Strategy Effectiveness is Backward-Looking</div>
+      <p>An effective competitive strategy is evidenced by a company's <strong>track record of value added</strong> (economic profits). Its effectiveness can only be judged in <strong>hindsight</strong>. Forward-looking evaluation uses the three questions: (1) defense against five forces? (2) aligned with PESTLE? (3) resources and capabilities to execute?</p>
+    </div>
+
+    <h3>Sustaining vs. Disruptive Innovation — Quick Reference</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Sustaining Innovation</div>
+        <ul>
+          <li>Improves existing product performance</li>
+          <li>Adds marginal features</li>
+          <li>No fundamental change in functionality</li>
+          <li>Often led by <strong>incumbents</strong></li>
+          <li>Serves existing customers better</li>
+          <li>Example: successive cable TV improvements (DVR, HD, premium content)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Disruptive Innovation</div>
+        <ul>
+          <li>Creates new market OR different value proposition in existing market</li>
+          <li>May not appeal initially to existing customers</li>
+          <li>Most likely from <strong>new entrants</strong></li>
+          <li>Incumbents face the "innovator's dilemma"</li>
+          <li>Example: streaming video disrupting cable TV</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Purpose of industry analysis:</strong> (1) Estimate the industry profitability base rate and its determinants, (2) Improve forecasts by understanding competitive forces, (3) Identify investment opportunities. McGahan &amp; Porter: industry = most important factor in <em>sustainability</em> of economic profits; acts as a ceiling on returns, not a floor.</li>
+        <li>✅ <strong>5 steps:</strong> Define Industry → Industry Survey → Industry Structure (Porter) → External Influences (PESTLE) → Competitive Analysis.</li>
+        <li>✅ <strong>Industry definition:</strong> Companies selling similar products/services from the customer's perspective. Challenges: substitutes, multi-product companies, geography, evolving business models.</li>
+        <li>✅ <strong>Legacy schemes (SIC, NACE, ISIC):</strong> Government-devised, country-specific, supply approach (production characteristics), infrequently updated. <strong>Commercial schemes (GICS, ICB, TRBC):</strong> Demand approach (product similarity), global, updated at least annually. TRBC also covers private companies and non-profits; GICS and ICB cover only public companies.</li>
+        <li>✅ <strong>Classification structure:</strong> Strictly hierarchical taxonomy — company assigned to ONE lowest-tier group; automatically assigned to all higher tiers. Multi-product companies classified by majority of business. No scheme perfectly handles companies with diverse segments (e.g., Amazon = consumer discretionary despite AWS profits).</li>
+        <li>✅ <strong>4 limitations of third-party schemes:</strong> (1) Business model variations/substitutes, (2) Multi-product company problem, (3) Geography (global schemes less useful for local/national service industries), (4) Changes in groupings over time (survivorship bias, comparability).</li>
+        <li>✅ <strong>Alternative groupings:</strong> Geography (country classification NOT by revenue geography — Toyota = Japanese even if biggest market is North America); business cycle sensitivity (defensive vs. cyclical); statistical similarities (clustering by ratios, returns, market data — more constituent turnover); ESG characteristics.</li>
+        <li>✅ <strong>Defensive sectors:</strong> Consumer staples, healthcare, utilities. <strong>Cyclical sectors:</strong> Financials, basic materials, consumer discretionary, industrials.</li>
+        <li>✅ <strong>Industry size:</strong> Total annual sales from product/customer perspective — not all sales of each industry constituent (e.g., exclude AWS from retail industry sizing). Estimated via government data, third-party surveys, or issuer investor presentations (all must be corroborated).</li>
+        <li>✅ <strong>Growth style box:</strong> 2×2 matrix of (Mature/Growth) × (Defensive/Cyclical). Growth industries = haven't saturated TAM, often tech-based. Mature industries = fully penetrated, growth ≈ 0 or declining.</li>
+        <li>✅ <strong>Cyclicality drivers:</strong> Discretionary vs. necessary purchases; price sensitivity; interest rate exposure; durable/capital good vs. recurring consumable or subscription.</li>
+        <li>✅ <strong>Best profitability measure:</strong> ROIC distribution over time (25th/50th/75th percentiles). Trend more important than point estimate. Practical alternatives: use public company data and extrapolate, or use government/consultancy surveys.</li>
+        <li>✅ <strong>Market share:</strong> Interpret as a range. Most important = trend over time. Organic share gains more meaningful than acquisition-driven gains. Survivorship bias can affect historical statistics.</li>
+        <li>✅ <strong>HHI formula:</strong> HHI = Σsᵢ² where sᵢ is market share as a WHOLE NUMBER (50, not 0.50). Max = 10,000 (monopoly). &lt;1,500 = unconcentrated; 1,500–2,500 = moderate; &gt;2,500 = highly concentrated. Acquisitions in highly concentrated markets increasing HHI by &gt;200 → regulatory challenge likely.</li>
+        <li>✅ <strong>Lower concentration → higher rivalry</strong> (more competitors fighting for share). <strong>Rising concentration → lower rivalry</strong> (fewer competitors, higher margins).</li>
+        <li>✅ <strong>Porter's Five Forces:</strong> (1) Threat of new entrants, (2) Threat of substitutes, (3) Bargaining power of customers, (4) Bargaining power of suppliers, (5) Rivalry among existing competitors. Intense forces → low ROIC; benign forces → high ROIC. No quantitative threshold — qualitative judgment. Identify 1–2 strongest forces.</li>
+        <li>✅ <strong>Barriers to entry include:</strong> Network effects, economies of scale, economies of scope, brand/customer loyalty, switching costs, exclusive access to inputs/channels, government policies. <em>NOT a barrier:</em> Experience and expertise (can be imitated, poached, or bought).</li>
+        <li>✅ <strong>Threat of substitutes:</strong> Lower-priced alternative; ability to go without; improving substitute performance; ease of switching.</li>
+        <li>✅ <strong>Customer power drivers:</strong> Few, concentrated buyers; undifferentiated products; non-critical products; large share of customer budget; backward integration ability.</li>
+        <li>✅ <strong>Supplier power drivers:</strong> Few, concentrated suppliers; high switching costs; differentiated/specialized inputs; no substitutes for supplier's product.</li>
+        <li>✅ <strong>Rivalry drivers:</strong> Price competition history; numerous equal-sized competitors; undifferentiated products; high exit barriers; slow growth.</li>
+        <li>✅ <strong>Porter vs. PESTLE:</strong> Porter = internal to industry; determines long-run profitability. PESTLE = external to industry; determines growth rate and market share dynamics. Complementary, not interchangeable.</li>
+        <li>✅ <strong>PESTLE = P-E-S-T-L-E:</strong> Political (fiscal/monetary policy, regulation, geopolitical — energy, healthcare, defense most affected); Economic (GDP, inflation, rates, FX — most important for cyclicals); Social (cultural trends, demographics, lifestyle — more important for consumer industries); Technological (sustaining vs. disruptive innovation, innovator's dilemma); Legal (laws/regulations changing business practices — tobacco, cannabis); Environmental (carbon transition risks, waste/land use — energy, airlines, utilities, autos most affected).</li>
+        <li>✅ <strong>Sustaining innovation:</strong> Performance improvement, no fundamental change, led by incumbents. <strong>Disruptive innovation:</strong> New value proposition, often from new entrants, incumbents face innovator's dilemma — invest (hurts existing business) or ignore (lose market share).</li>
+        <li>✅ <strong>Three generic strategies (Porter):</strong> (1) Cost Leadership — economies of scale, low cost, aggressive volume pricing. (2) Differentiation — brand, quality, premium pricing, customer experience. (3) Focus — narrow customer group/geography/product. "Stuck in the middle" = no sustainable advantage = worst position.</li>
+        <li>✅ <strong>Evaluate competitive strategy on three dimensions:</strong> (1) Defends against the five forces? (2) Aligned with PESTLE external influences? (3) Company has resources/capabilities to execute?</li>
+        <li>✅ <strong>Strategy effectiveness:</strong> Can only be fully judged in hindsight (track record of economic profits). Forward-looking evaluation uses the three dimensions above. Intentional strategy (planned, measured, with feedback) &gt; unintentional strategy.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas &amp; Classifications — Quick Reference</div>
+      <div class="f">
+        HHI = Σsᵢ²   (sᵢ = market share as whole number, e.g. 50 not 0.50)<br>
+        Monopoly HHI = 100² = 10,000   |   Equal duopoly HHI = 50² + 50² = 5,000<br><br>
+        Market Share of firm i = (Firm i revenues / Total industry revenues) × 100%<br><br>
+        Growth Rate = CAGR = [(Ending Value / Beginning Value)^(1/n)] − 1<br>
+      </div>
+      <div class="note">
+        HHI thresholds: &lt;1,500 = unconcentrated | 1,500–2,500 = moderate | &gt;2,500 = highly concentrated<br>
+        Acquisition threshold trigger: increase in HHI &gt;200 in highly concentrated market → regulatory challenge<br><br>
+        Five Forces: New Entrants · Substitutes · Customer Power · Supplier Power · Rivalry<br>
+        PESTLE: Political · Economic · Social · Technological · Legal · Environmental<br>
+        Generic Strategies: Cost Leadership · Differentiation · Focus ("stuck in the middle" = worst)<br><br>
+        Classification schemes: GICS (MSCI/S&amp;P) · ICB (FTSE Russell) · TRBC (Refinitiv — also covers private cos.)<br>
+        Defensive sectors: Consumer Staples, Healthcare, Utilities<br>
+        Cyclical sectors: Financials, Basic Materials, Consumer Discretionary, Industrials
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 6: Industry and Competitive Analysis · Exam Prep Notes
+</footer>
+
+</body>
+</html>

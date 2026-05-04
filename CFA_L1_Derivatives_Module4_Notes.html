@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 4: Arbitrage, Replication, and the Cost of Carry</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --arb-bg: #111a16; --arb-border: #4cc98a;
+    --rep-bg: #1a1020; --rep-border: #4c8bc9;
+    --cost-bg: #1a1510; --cost-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .arb-card { background: var(--arb-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .arb-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rep-card { background: var(--rep-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .rep-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .cost-card { background: var(--cost-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cost-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 4</div>
+  <h1>Arbitrage, Replication, and the <span>Cost of Carry in Pricing Derivatives</span></h1>
+  <p>Exam-ready notes: two arbitrage conditions (law of one price), discrete vs. continuous compounding, forward price formula derivation via replication, cost of carry framework (opportunity cost + storage costs − benefits of ownership), forward pricing for equities (with/without dividends), equity indexes, FX forwards (interest rate parity), and commodities (storage costs, convenience yield).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Arbitrage — Two Key Conditions</a>
+  <a class="toc-item" href="#s2">02 · Compounding Methods</a>
+  <a class="toc-item" href="#s3">03 · Replication — The Core Logic</a>
+  <a class="toc-item" href="#s4">04 · No-Arbitrage Forward Price (Eq. 3 &amp; 4)</a>
+  <a class="toc-item" href="#s5">05 · Cost of Carry — Framework</a>
+  <a class="toc-item" href="#s6">06 · Equity Forwards (With/Without Dividends)</a>
+  <a class="toc-item" href="#s7">07 · FX Forwards — Interest Rate Parity</a>
+  <a class="toc-item" href="#s8">08 · Commodity Forwards — Storage &amp; Convenience Yield</a>
+  <a class="toc-item" href="#s9">09 · All Asset Classes — Master Table</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 1: ARBITRAGE — TWO KEY CONDITIONS    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Arbitrage — Two Key Conditions</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Arbitrage</div>
+      <div class="def-body">A <strong>riskless profit opportunity</strong> arising when the same asset — or assets with identical future cash flows — can be simultaneously bought and sold at different prices. Arbitrage exploits violations of the <strong>"Law of One Price"</strong>: identical assets must trade at the same price at the same time. In efficient markets without transaction costs, arbitrage opportunities are quickly exploited and eliminated.</div>
+    </div>
+
+    <div class="card">
+      <p>For derivatives, arbitrage arises under two distinct scenarios:</p>
+    </div>
+
+    <div class="arb-card">
+      <div class="arb-title">Arbitrage Condition 1 — Law of One Price</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><strong>Identical assets (or assets with identical cash flows) traded at the same time must have the same price: S₀ᴬ = S₀ᴮ</strong></p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Bond arbitrage example:</strong> Bond A = €99.00; Bond B = €99.15. Both: same issuer, same maturity, same cash flows (€100 at T).</p>
+      <ul style="padding-left:18px; font-size:13.5px; color:#c8dfd0;">
+        <li><strong>At t=0:</strong> Sell Bond B short (receive €99.15) → Buy Bond A (pay €99.00) → Pocket €0.15 risk-free today</li>
+        <li><strong>At t=T:</strong> Receive €100 from Bond A → Use €100 to buy Bond B to cover the short</li>
+        <li><strong>Result:</strong> Zero cash flow at T, +€0.15 at t=0 → riskless profit = pure arbitrage</li>
+        <li>Market forces: Others see this → buy A (price rises) + sell B (price falls) → prices converge until S₀ᴬ = S₀ᴮ</li>
+      </ul>
+    </div>
+
+    <div class="arb-card">
+      <div class="arb-title">Arbitrage Condition 2 — Present Value Condition</div>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:10px;"><strong>An asset with a known future price must have a spot price equal to the future price discounted at the risk-free rate: S₀ = S_T(1+r)⁻ᵀ</strong></p>
+      <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>Gold example (Procam):</strong> Gold forward price = $1,792.13/oz in 3 months. Risk-free rate = 2%. No-arbitrage spot price = $1,792.13 × (1.02)⁻⁰·²⁵ = $1,783.28.</p>
+      <ul style="padding-left:18px; font-size:13.5px; color:#c8dfd0;">
+        <li>If spot = $1,770 (below $1,783.28): Borrow at 2% → Buy spot at $1,770 → Simultaneously sell forward at $1,792.13</li>
+        <li>At T: Deliver gold at $1,792.13, repay loan principal + interest ($1,770 × (1.02)⁰·²⁵ = $1,778.78)</li>
+        <li>Riskless profit = $1,792.13 − $1,778.78 = $13.35 per ounce</li>
+        <li>Market forces: Spot price rises (buying pressure), forward price falls (selling pressure) → until S₀ = S_T(1+r)⁻ᵀ</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Two Arbitrage Conditions — Must Memorize</div>
+      <div class="f">
+        Condition 1: S₀ᴬ = S₀ᴮ<br>
+        Identical assets (or assets with identical cash flows) → must have same price<br><br>
+        Condition 2: S₀ = S_T × (1 + r)⁻ᵀ<br>
+        Asset with known future price → spot price = present value of future price<br>
+        Equivalently: S_T = S₀ × (1 + r)ᵀ<br><br>
+        These two conditions establish the no-arbitrage relationship between:<br>
+        Spot prices, Forward commitment prices, and the Risk-Free Rate
+      </div>
+      <div class="note">
+        <strong>Relevant risk-free rate:</strong> For most market participants, the relevant risk-free rate is the <strong>repo rate</strong> (repurchase agreement rate) — the rate at which highly liquid securities (like Treasuries) are used as collateral for short-term borrowing. This is the practical "risk-free rate" in derivative pricing.<br><br>
+        <strong>Forward price vs. expected future spot price:</strong> The forward price is NOT an unbiased forecast of the future spot price — it incorporates the cost of carry (risk-free rate, storage costs, income) but not risk premiums in the traditional sense.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Arbitrage Mechanism — Market Self-Correction</div>
+      <p>Arbitrage opportunities are self-eliminating: as traders exploit them, their buying/selling activity moves prices toward equilibrium. In Bond A/B example: buying A raises its price; selling B lowers its price → gap closes. In gold example: buying gold (spot) raises S₀; selling forward lowers F₀(T) → both converge to the no-arbitrage relationship. This is why derivatives are priced using no-arbitrage conditions — any deviation from these prices creates risk-free profits that traders instantly exploit, restoring equilibrium.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 2: COMPOUNDING METHODS               -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Discrete vs. Continuous Compounding</h2>
+    </div>
+
+    <div class="card">
+      <p>Derivatives can be priced using either discrete or continuous compounding. The CFA curriculum specifies which method to use for each asset class — it is important to use the correct one.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Discrete Compounding (Future Value)</div>
+      <div class="f">FV_N = PV × (1 + r)ᴺ</div>
+      <div class="note">
+        r = stated interest rate per period | N = number of compounding periods<br>
+        Used for: individual underlying assets (individual stocks, individual bonds, individual commodities)<br>
+        Example: $1,000 invested for 0.25 years (3 months) at 2% annual rate:<br>
+        FV = $1,000 × (1.02)⁰·²⁵ = $1,004.98
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Continuous Compounding (Future Value)</div>
+      <div class="f">FV_T = PV × e^(rT)</div>
+      <div class="note">
+        e = Euler's number ≈ 2.71828 | r = continuously compounded rate | T = time in years<br>
+        Used for: portfolio underlyings (equity indexes, fixed-income indexes, commodity indexes), FX forwards<br>
+        Example: $1,000 invested for 0.5 years at 2% continuously compounded:<br>
+        FV = $1,000 × e^(0.02 × 0.5) = $1,000 × e^0.01 = $1,010.05
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Discrete Compounding — Use For:</div>
+        <ul>
+          <li>Individual equity forwards (single stocks)</li>
+          <li>Individual bond forwards</li>
+          <li>Individual commodity forwards (gold, oil)</li>
+          <li>Formula: F₀(T) = S₀(1+r)ᵀ</li>
+          <li>Benefits/costs as PV amounts: F₀(T) = [S₀ − PV₀(I) + PV₀(C)](1+r)ᵀ</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Continuous Compounding — Use For:</div>
+        <ul>
+          <li>Equity index forwards (e.g., NIFTY 50, S&P 500)</li>
+          <li>Fixed-income index forwards</li>
+          <li>Commodity index forwards</li>
+          <li>ALL FX forwards</li>
+          <li>Formula: F₀(T) = S₀ × e^(rT)</li>
+          <li>With carry: F₀(T) = S₀ × e^((r+c−i)T)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Using Wrong Compounding Method</div>
+      <p>The exam will test whether you can identify which compounding method to use. The rule: <strong>Individual assets → discrete compounding (1+r)ᵀ. Portfolios/indexes and FX → continuous compounding e^(rT).</strong> Mixing these up produces different numerical answers. Read the question carefully to identify the type of underlying before applying a formula.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 3: REPLICATION — THE CORE LOGIC      -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Replication — The Core Pricing Logic</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Replication</div>
+      <div class="def-body">A strategy in which a derivative's cash flow stream is <strong>recreated using a combination of long or short positions in the underlying asset and borrowing or lending at the risk-free rate</strong>. If the replicated position produces identical cash flows to the derivative, then by the law of one price (no-arbitrage), they must have the same price. Replication is used to derive the no-arbitrage forward price.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key insight:</strong> A long forward commitment (agree to buy the underlying at F₀(T) in T periods) can be exactly replicated by: <strong>borrowing S₀ at the risk-free rate today, buying the underlying at S₀ today, and holding until T.</strong></p>
+      <p style="margin-top:10px;">If both positions produce identical cash flows at time T, they must cost the same today (law of one price). Since the forward costs nothing today (no upfront payment), the cost of the replicating portfolio must also be zero — which means the forward price is exactly the future value of the spot price at the risk-free rate.</p>
+    </div>
+
+    <h3>Long Forward = Borrow + Buy Underlying</h3>
+
+    <div class="rep-card">
+      <div class="rep-title">Replication 1: Long Forward ↔ Borrow + Buy (Procam Gold Example)</div>
+      <p style="font-size:14px; color:#c8d0df; margin-bottom:10px;">Setup: S₀ = $1,783.28, r = 2%, T = 0.25 (3 months), F₀(T) = $1,792.13 per oz, 100 oz contract</p>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#9ecef5; line-height:2;">
+        STRATEGY 1 — Long Forward:<br>
+        t=0: No cash flow (CF₀ = 0)<br>
+        t=T: Settle at (S_T − F₀(T)) per ounce<br>
+        → S_T=$1,900: Profit = 100×($1,900−$1,792.13) = +$10,787<br>
+        → S_T=$1,700: Profit = 100×($1,700−$1,792.13) = −$9,213<br><br>
+        STRATEGY 2 — Borrow + Buy:<br>
+        t=0: Borrow $178,328 at 2% → Buy 100 oz at $1,783.28 (CF₀ = 0 net)<br>
+        t=T: Sell 100 oz at S_T → Repay loan: $178,328×(1.02)⁰·²⁵ = $179,213<br>
+        → S_T=$1,900: Profit = 100×$1,900 − $179,213 = +$10,787 ✓<br>
+        → S_T=$1,700: Profit = 100×$1,700 − $179,213 = −$9,213 ✓
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Conclusion:</strong> The payoffs under both strategies are <strong>identical for every possible value of S_T</strong>. By the law of one price, the forward price must be exactly F₀(T) = S₀ × (1+r)ᵀ — otherwise, arbitrage opportunities exist.</p>
+    </div>
+
+    <h3>Long Asset + Short Forward = Risk-Free Return</h3>
+
+    <div class="rep-card">
+      <div class="rep-title">Replication 2: Long Asset + Short Forward → Earns Risk-Free Rate</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#9ecef5; line-height:2;">
+        Procam buys 100 oz gold at S₀ = $1,783.28 AND simultaneously sells forward at F₀(T) = $1,792.13<br><br>
+        t=0: Cash outflow = −$178,328<br>
+        t=T: Cash inflow = F₀(T) = $179,213 (locked in regardless of S_T)<br><br>
+        Rate of return: $179,213 = $178,328 × (1+r)⁰·²⁵<br>
+        → r = 2.00% = the risk-free rate ✓<br><br>
+        The long asset + short forward position locks in the RISK-FREE RATE as the return,<br>
+        regardless of what S_T turns out to be at maturity.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Replication Triangle — Three Equivalent Positions</div>
+      <p>The no-arbitrage condition creates a triangle of equivalent strategies (when there are no costs or benefits of ownership):<br>
+      <strong>①</strong> Long forward at F₀(T) = Long asset + Borrow S₀ at risk-free rate<br>
+      <strong>②</strong> Long asset + Short forward = Risk-free bond (earns risk-free rate)<br>
+      <strong>③</strong> Long forward + Risk-free bond (lend PV of F₀(T)) = Long asset<br><br>
+      Any two of these positions can be combined to replicate the third. This is the fundamental principle that makes derivative pricing possible — derivatives are priced relative to combinations of the underlying and the risk-free rate.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 4: NO-ARBITRAGE FORWARD PRICE FORMULAS   -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>No-Arbitrage Forward Price — Base Formulas (No Carry Costs)</h2>
+    </div>
+
+    <div class="card">
+      <p>For an underlying asset with <strong>no additional costs or benefits of ownership</strong> (no dividends, no storage costs, no income), the forward price is simply the future value of the spot price at the risk-free rate. This is the baseline formula from which all cost-of-carry adjustments are made.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Forward Price, No Carry Costs (Discrete Compounding)</div>
+      <div class="f">F₀(T) = S₀ × (1 + r)ᵀ</div>
+      <div class="note">
+        S₀ = current spot price of underlying | r = risk-free rate per period | T = time to maturity (in years or fraction of year)<br>
+        This is the no-arbitrage forward price for an asset with no income or costs beyond the opportunity cost.<br>
+        Examples: non-dividend-paying stocks, zero-coupon bonds, gold (when ignoring storage costs)<br><br>
+        <strong>Key relationship:</strong> F₀(T) &gt; S₀ when r &gt; 0 (positive risk-free rate)<br>
+        The forward price exceeds spot because of the opportunity cost of capital — the buyer doesn't have to pay now, so they're effectively lending money to the seller until T.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Forward Price, No Carry Costs (Continuous Compounding)</div>
+      <div class="f">F₀(T) = S₀ × e^(rT)</div>
+      <div class="note">
+        Used when the underlying is a portfolio or index (equity index, fixed-income index, commodity index) or for FX forwards.<br>
+        Equivalent to Equation 3 but using continuous compounding.<br>
+        For small values of rT, e^(rT) ≈ (1 + r)ᵀ — the two formulas give nearly identical results for short maturities and low rates.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why F₀(T) &gt; S₀ When r &gt; 0</div>
+      <p>Think of it this way: if you buy forward (pay F₀(T) at time T), you don't have to put up the money today — you're essentially getting a "free loan" from your counterparty from t=0 to t=T. The counterparty charges you for this by setting F₀(T) = S₀ × (1+r)ᵀ — the future value of the spot price at the risk-free rate. This is the opportunity cost of capital: the seller could have invested S₀ at the risk-free rate during the period, so they demand compensation for not doing so.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward Price vs. Forward Value — Don't Confuse Them</div>
+      <p><strong>Forward price F₀(T):</strong> the delivery price agreed at t=0, set so the contract has zero value at inception. Stays fixed for the life of the contract.<br>
+      <strong>Forward value:</strong> the current market value of the forward contract AFTER inception, as the spot price and risk-free rate change. At t=0: value = 0. At t&gt;0: value = PV(S_t − F₀(T)) = positive for buyer if S_t &gt; F₀(T), negative if S_t &lt; F₀(T). This distinction is tested in later derivatives modules.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 5: COST OF CARRY — FRAMEWORK             -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Cost of Carry — The Complete Framework</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Cost of Carry</div>
+      <div class="def-body">The <strong>net of all costs and benefits related to owning an underlying asset for a specific period</strong>. It determines the relationship between the spot price and the forward price. When costs of carry are positive (costs exceed benefits), the forward price exceeds the spot price. When negative (benefits exceed costs), the forward price is below the spot price.</div>
+    </div>
+
+    <div class="three-col">
+      <div class="cost-card" style="margin-bottom:0;">
+        <div class="cost-title">Opportunity Cost (Always Present)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#dfd0c8;">
+          <li>The risk-free rate of return (r) foregone by tying up capital in the asset</li>
+          <li>Applies to ALL asset classes</li>
+          <li>Always adds to the forward price (since r &gt; 0 typically)</li>
+          <li>Whether or not the investor borrows to buy</li>
+        </ul>
+      </div>
+      <div class="arb-card" style="margin-bottom:0;">
+        <div class="arb-title">Benefits (Reduce Forward Price)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#c8dfd0;">
+          <li>Cash flows received by the owner of the underlying</li>
+          <li><strong>Dividends</strong> on individual stocks (I) or dividend yield (i) on indexes</li>
+          <li><strong>Coupon income</strong> on bonds</li>
+          <li><strong>Convenience yield</strong> for physical commodities</li>
+          <li>Reduce forward price because derivative buyer forgoes these benefits</li>
+        </ul>
+      </div>
+      <div class="rep-card" style="margin-bottom:0;">
+        <div class="rep-title">Other Costs (Increase Forward Price)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#c8d0df;">
+          <li>Physical storage costs for commodities (C or c)</li>
+          <li>Insurance costs on physical holdings</li>
+          <li>Transportation costs</li>
+          <li>Spoilage costs for soft commodities (agricultural products)</li>
+          <li>Only apply to physical commodity underlyings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 5 — Forward Price with Known Dollar Costs &amp; Benefits (Discrete)</div>
+      <div class="f">F₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1 + r)ᵀ</div>
+      <div class="note">
+        <strong>PV₀(I)</strong> = present value at t=0 of all income/benefits (dividends, coupons) received during [0, T]<br>
+        <strong>PV₀(C)</strong> = present value at t=0 of all ownership costs (storage, insurance) paid during [0, T]<br>
+        <strong>Logic:</strong> Subtract PV of income (buyer forgoes it), add PV of costs (buyer avoids paying them → seller demands compensation)<br><br>
+        <strong>If no costs or income:</strong> Equation 5 reduces to Equation 3 → F₀(T) = S₀(1+r)ᵀ<br>
+        <strong>If income only (I), no costs (C=0):</strong> F₀(T) = [S₀ − PV₀(I)](1+r)ᵀ → lower than no-income forward price<br>
+        <strong>If costs only (C), no income (I=0):</strong> F₀(T) = [S₀ + PV₀(C)](1+r)ᵀ → higher than no-cost forward price
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 6 — Forward Price with Rate-Based Costs &amp; Benefits (Continuous)</div>
+      <div class="f">F₀(T) = S₀ × e^((r + c − i) × T)</div>
+      <div class="note">
+        <strong>r</strong> = risk-free rate (opportunity cost) — always positive, always adds to forward price<br>
+        <strong>c</strong> = cost rate (storage, insurance as annual % of asset value) — positive, adds to forward price<br>
+        <strong>i</strong> = income/benefit rate (dividend yield, convenience yield as annual %) — positive, reduces forward price<br><br>
+        Used when costs/benefits are expressed as rates rather than specific dollar amounts.<br>
+        For equity indexes: c=0, i = dividend yield (i) → F₀(T) = S₀ × e^((r − i)T)<br>
+        For FX: c=0, i = foreign rate (rf), r = domestic rate (rd) → see Equation 7
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Cost vs. Benefit Relationship</th><th>Effect on Forward Price</th><th>Intuition</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Opportunity Cost + Other Costs &gt; Benefits</td>
+            <td><span class="tag tag-green">F₀(T) &gt; S₀</span> (forward at premium)</td>
+            <td>Holding the asset costs more than owning it benefits → buyer demands a lower entry price (equivalently, seller wants a higher forward price to compensate)</td>
+          </tr>
+          <tr>
+            <td>Opportunity Cost + Other Costs = Benefits</td>
+            <td><span class="tag tag-yellow">F₀(T) = S₀</span></td>
+            <td>Costs and benefits exactly offset → forward equals spot</td>
+          </tr>
+          <tr>
+            <td>Opportunity Cost + Other Costs &lt; Benefits</td>
+            <td><span class="tag tag-red">F₀(T) &lt; S₀</span> (forward at discount)</td>
+            <td>Owning the asset provides net benefits (e.g., high convenience yield or dividend yield exceeds financing cost) → buyer must pay a premium over forward price to have those benefits NOW in the spot market</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 6: EQUITY FORWARDS                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Equity Forwards — Individual Stocks &amp; Indexes</h2>
+    </div>
+
+    <h3>Individual Stocks — With and Without Dividends</h3>
+
+    <div class="auction-box">
+      <div class="label">Example: Hightest Capital — UL Share Forward (6 months, r=5%)</div>
+      <div class="f">
+        CASE 1: No Dividend (I = 0)<br>
+        F₀(T) = S₀ × (1 + r)ᵀ = €50 × (1.05)⁰·⁵ = €51.23<br>
+        Opportunity cost = F₀(T) − S₀ = €51.23 − €50 = €1.23<br><br>
+        CASE 2: Quarterly dividend of €0.30 (at T=0.25 and T=0.50)<br>
+        Step 1: Calculate PV of dividends:<br>
+        PV₀(I) = €0.30 × (1.05)⁻⁰·²⁵ + €0.30 × (1.05)⁻⁰·⁵<br>
+                = €0.2964 + €0.2928 = €0.5892<br><br>
+        Step 2: Apply Equation 5:<br>
+        F₀(T) = (€50 − €0.5892) × (1.05)⁰·⁵<br>
+                = €49.4108 × 1.02470 = €50.6310<br><br>
+        With dividends: Forward price drops by ~€0.62 relative to no-dividend case.<br>
+        For 1,000 shares: F₀(T) = €50,631.00
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Dividends LOWER the Forward Price</div>
+      <p>The buyer of the forward agrees to purchase shares in the future. During the waiting period, the OWNER of the shares (the seller) collects the dividends — not the buyer. The forward buyer forgoes these dividends. To compensate, the forward price is reduced by the present value of the dividends that the buyer will miss. Intuitively: the forward price is fair only if the buyer is compensated (via a lower entry price) for not receiving the dividends they would have gotten by buying the shares today.</p>
+    </div>
+
+    <h3>Equity Indexes — Continuous Compounding with Dividend Yield</h3>
+
+    <div class="auction-box">
+      <div class="label">Example: VFO — NIFTY 50 Index Forward (3 months, r=4%, dividend yield i=2.2%)</div>
+      <div class="f">
+        Using Equation 6 with c = 0:<br>
+        F₀(T) = S₀ × e^((r − i) × T)<br>
+               = 15,200 × e^((0.04 − 0.022) × 0.25)<br>
+               = 15,200 × e^(0.018 × 0.25)<br>
+               = 15,200 × e^(0.0045)<br>
+               = 15,200 × 1.004510<br>
+               = INR 15,268.55
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Individual Stock Forward</th><th>Equity Index Forward</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Compounding</td><td>Discrete: (1+r)ᵀ</td><td>Continuous: e^(rT)</td></tr>
+          <tr><td>Dividend treatment</td><td>Specific dividend amounts → PV₀(I) subtracted before compounding</td><td>Continuous dividend yield i → subtracts from r in exponent: e^((r−i)T)</td></tr>
+          <tr><td>Formula</td><td>F₀(T) = [S₀ − PV₀(I)](1+r)ᵀ</td><td>F₀(T) = S₀ × e^((r−i)T)</td></tr>
+          <tr><td>Costs (C)</td><td>Add PV₀(C) if applicable</td><td>c=0 typically (index doesn't hold physical assets)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 7: FX FORWARDS — INTEREST RATE PARITY    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>FX Forwards — Covered Interest Rate Parity</h2>
+    </div>
+
+    <div class="card">
+      <p>Foreign exchange is a special case where <strong>both currencies have an opportunity cost</strong> — the foreign risk-free rate (r_f) for the foreign currency and the domestic risk-free rate (r_d) for the domestic currency. The FX forward is priced using the <strong>interest rate differential</strong> between the two currencies — not the absolute rate level.</p>
+      <p style="margin-top:10px;"><strong>FX rate notation:</strong> S₀,f/d = spot rate expressed as units of foreign currency (price currency, f) per unit of domestic currency (base currency, d). Example: AUD/USD = 1.3335 means 1.3335 AUD buys 1 USD (USD is the base/domestic currency).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 7 — FX Forward Price (Continuous Compounding)</div>
+      <div class="f">F₀,f/d(T) = S₀,f/d × e^((rf − rd) × T)</div>
+      <div class="note">
+        <strong>rf</strong> = foreign currency (price currency) risk-free rate<br>
+        <strong>rd</strong> = domestic currency (base currency) risk-free rate<br>
+        <strong>f/d</strong> = exchange rate quoted as units of foreign per unit of domestic<br><br>
+        The cost of carry for FX is: rf (foreign rate, acts like a "benefit" — like a dividend on the foreign currency) vs. rd (domestic rate, acts like the opportunity cost)<br>
+        Cost of carry net = (rf − rd)<br><br>
+        <strong>This is Covered Interest Rate Parity (CIRP)</strong> — the no-arbitrage condition linking spot FX rates, forward FX rates, and the interest rate differential.
+      </div>
+    </div>
+
+    <h3>AUD/USD Forward — Worked Example (Covered IRP)</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">t=0</div>
+        <div class="step-content">
+          <strong>Given:</strong> AUD/USD spot = 1.3335 (1.3335 AUD = 1 USD)<br>
+          USD domestic rate r_d = 0.20% p.a. (continuously compounded) | AUD foreign rate r_f = 0.05% p.a.<br><br>
+          <strong>Borrow USD 1,000 at r_d = 0.20%</strong><br>
+          Convert to AUD at spot rate: AUD 1,333.50 (= USD 1,000 × 1.3335)<br>
+          <strong>Lend AUD 1,333.50 at r_f = 0.05%</strong>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">t=T</div>
+        <div class="step-content">
+          <strong>Receive</strong> AUD loan proceeds: AUD 1,333.50 × e^(0.0005 × 0.5) = <strong>AUD 1,333.83</strong><br>
+          <strong>Repay</strong> USD loan: USD 1,000 × e^(0.002 × 0.5) = <strong>USD 1,001</strong><br><br>
+          <strong>No-arbitrage forward rate:</strong> F₀,AUD/USD(T) = AUD 1,333.83 / USD 1,001 = <strong>1.3325</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Verify Using Equation 7</div>
+      <div class="f">
+        F₀,AUD/USD(T) = S₀,AUD/USD × e^((rf − rd) × T)<br>
+                       = 1.3335 × e^((0.0005 − 0.002) × 0.5)<br>
+                       = 1.3335 × e^(−0.00075)<br>
+                       = 1.3335 × 0.999250<br>
+                       = 1.3325 ✓
+      </div>
+    </div>
+
+    <h3>FX Forward Premium and Discount — The Key Rules</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Interest Rate Differential</th><th>Forward vs. Spot</th><th>Foreign Currency in Forward Market</th><th>FX Forward Premium/Discount</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>(rf − rd) &gt; 0<br>(foreign rate higher)</td>
+            <td>F₀,f/d(T) &gt; S₀,f/d<br>(more foreign currency needed per unit domestic)</td>
+            <td><span class="tag tag-red">Discount</span><br>(weakens in forward market)</td>
+            <td><span class="tag tag-green">Premium</span><br>(domestic currency at premium)</td>
+          </tr>
+          <tr>
+            <td>(rf − rd) = 0</td>
+            <td>F₀,f/d(T) = S₀,f/d</td>
+            <td>Neither premium nor discount</td>
+            <td>Neither premium nor discount</td>
+          </tr>
+          <tr>
+            <td>(rf − rd) &lt; 0<br>(foreign rate lower)</td>
+            <td>F₀,f/d(T) &lt; S₀,f/d<br>(fewer foreign currency units needed per unit domestic)</td>
+            <td><span class="tag tag-green">Premium</span><br>(strengthens in forward market)</td>
+            <td><span class="tag tag-red">Discount</span><br>(domestic currency at discount)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Interest Rate Parity — The Core Intuition</div>
+      <p>Countries with <strong>higher interest rates</strong> see their currency trade at a <strong>forward discount</strong>. Why? If currency A has a 5% rate and currency B has a 1% rate, you'd borrow in B (cheap) and invest in A (high yield) — earning a 4% differential. But this arbitrage is eliminated by the forward market: A's currency depreciates in the forward market exactly enough to offset the interest rate advantage. Net result: no risk-free profit from currency carry trades in a world of covered interest rate parity.</p>
+    </div>
+
+    <h3>Montau AG FX Forward — KRW/EUR Example</h3>
+
+    <div class="auction-box">
+      <div class="label">KRW/EUR Forward Rate (S₀=1300, r_KRW=0.75%, r_EUR=−0.25%, T=75/365)</div>
+      <div class="f">
+        F₀,KRW/EUR(T) = 1,300 × e^((0.0075 − (−0.0025)) × (75/365))<br>
+                       = 1,300 × e^(0.01 × 0.2055)<br>
+                       = 1,300 × e^(0.002055)<br>
+                       = 1,300 × 1.002057<br>
+                       = 1,302.67<br><br>
+        rf − rd = 0.75% − (−0.25%) = 1.00% &gt; 0<br>
+        → F₀,f/d &gt; S₀,f/d → MORE KRW per EUR in forward market<br>
+        → KRW trades at forward DISCOUNT vs. EUR (higher KRW rate)
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 8: COMMODITY FORWARDS                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Commodity Forwards — Storage Costs &amp; Convenience Yield</h2>
+    </div>
+
+    <div class="card">
+      <p>Physical commodities (gold, oil, grain, metals) are unique because they involve <strong>known costs of ownership</strong> — storage, insurance, transportation, and potential spoilage (soft commodities). These costs increase the forward price. Physical commodities may also have a <strong>convenience yield</strong> — a non-cash benefit of holding the physical commodity — which reduces the forward price.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Commodity Forward Price with Storage Costs (Discrete)</div>
+      <div class="f">F₀(T) = [S₀ + PV₀(C)] × (1 + r)ᵀ</div>
+      <div class="note">
+        PV₀(C) = present value of storage + insurance costs per unit during [0, T]<br>
+        Storage costs INCREASE the forward price — the seller of the forward contract would incur these costs if they owned the physical commodity; they demand compensation via a higher forward price.
+      </div>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Gold Storage Example (Procam) — Storage cost $2/oz at end, r=2%, S₀=$1,783.28, T=0.25</div>
+      <div class="f">
+        Without storage: F₀(T) = $1,783.28 × (1.02)⁰·²⁵ = $1,792.13<br><br>
+        With $2/oz storage cost (payable at end):<br>
+        Step 1: PV₀(C) = $2 × (1.02)⁻⁰·²⁵ = $1.99 per ounce<br><br>
+        Step 2: F₀(T) = ($1,783.28 + $1.99) × (1.02)⁰·²⁵<br>
+                      = $1,785.27 × 1.00499<br>
+                      = $1,794.13 per ounce<br><br>
+        Storage cost increases forward price by ~$2 (from $1,792.13 to $1,794.13)
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Convenience Yield</div>
+      <div class="def-body">A <strong>non-cash benefit of holding a physical commodity</strong> versus a derivative. Arises when physical market conditions make owning the commodity itself valuable beyond its price return. Example: if crude oil inventories are very low, refineries will bid up spot oil prices to ensure supply availability — the spot price rises above what storage costs and interest rates alone would predict. The convenience yield acts like a "dividend" for the physical commodity, reducing the forward price relative to the no-arbitrage price calculated without it.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Commodity Forward Price with Storage Costs and Convenience Yield (Continuous)</div>
+      <div class="f">F₀(T) = S₀ × e^((r + c − y) × T)</div>
+      <div class="note">
+        <strong>r</strong> = risk-free rate | <strong>c</strong> = storage cost rate | <strong>y</strong> = convenience yield rate<br>
+        When convenience yield is HIGH relative to storage costs and the risk-free rate: F₀(T) &lt; S₀ (forward price below spot)<br>
+        This is called <strong>backwardation</strong> — the futures curve slopes downward.<br>
+        When convenience yield is LOW: F₀(T) &gt; S₀ — this is <strong>contango</strong> — futures curve slopes upward.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Contango — F₀(T) &gt; S₀</div>
+        <p>The normal state for most commodities with storage costs and low convenience yields. Futures price is above spot. Occurs when: carrying costs (r + storage) exceed convenience yield. Futures curve slopes upward by maturity.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">Backwardation — F₀(T) &lt; S₀</div>
+        <p>Futures price is below spot. Occurs when: high convenience yield exceeds carrying costs (r + storage). Signals that physical supply is tight — holders of the physical commodity benefit disproportionately from possession NOW. Common during supply shortages.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 F₀ Significantly Below No-Arbitrage Price → Implies Convenience Yield</div>
+      <p>If you observe a commodity forward price that is significantly below the theoretical no-arbitrage price (calculated using just the risk-free rate and storage costs), this implies the presence of a convenience yield. Market participants are willing to pay a premium for the SPOT commodity (driving up S₀) relative to the forward — reflecting the value of immediate physical availability. The convenience yield bridges the gap between the observed forward price and the theoretical price.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 9: ALL ASSET CLASSES — MASTER TABLE      -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>All Asset Classes — Cost of Carry Master Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Asset Class</th><th>Benefits (Reduce Forward Price)</th><th>Costs (Increase Forward Price)</th><th>Forward Price Formula</th><th>F₀ vs. S₀</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Non-Dividend Stock</td>
+            <td>None</td>
+            <td>Risk-free rate (r)</td>
+            <td>F₀(T) = S₀(1+r)ᵀ</td>
+            <td>F₀ &gt; S₀</td>
+          </tr>
+          <tr>
+            <td>Dividend-Paying Stock</td>
+            <td>Dividends: PV₀(I)</td>
+            <td>Risk-free rate (r)</td>
+            <td>F₀(T) = [S₀ − PV₀(I)](1+r)ᵀ</td>
+            <td>F₀ &gt; or &lt; S₀ (depends on dividend level vs. r)</td>
+          </tr>
+          <tr>
+            <td>Equity Index</td>
+            <td>Dividend yield: i (continuous)</td>
+            <td>Risk-free rate: r (continuous)</td>
+            <td>F₀(T) = S₀ × e^((r−i)T)</td>
+            <td>F₀ &gt; S₀ if r &gt; i; F₀ &lt; S₀ if i &gt; r</td>
+          </tr>
+          <tr>
+            <td>Foreign Exchange</td>
+            <td>Foreign interest rate: rf (acts as benefit — "yield on foreign currency")</td>
+            <td>Domestic interest rate: rd (opportunity cost)</td>
+            <td>F₀,f/d(T) = S₀,f/d × e^((rf−rd)T)</td>
+            <td>F₀ &gt; S₀ if rf &gt; rd; F₀ &lt; S₀ if rf &lt; rd</td>
+          </tr>
+          <tr>
+            <td>Commodity (No Convenience)</td>
+            <td>None</td>
+            <td>Risk-free rate (r) + Storage/insurance costs (C or c)</td>
+            <td>F₀(T) = [S₀ + PV₀(C)](1+r)ᵀ or S₀ × e^((r+c)T)</td>
+            <td>F₀ &gt; S₀ (contango)</td>
+          </tr>
+          <tr>
+            <td>Commodity (With Convenience)</td>
+            <td>Convenience yield: y</td>
+            <td>Risk-free rate (r) + Storage costs (c)</td>
+            <td>F₀(T) = S₀ × e^((r + c − y)T)</td>
+            <td>F₀ &gt; S₀ (contango) if r+c &gt; y; F₀ &lt; S₀ (backwardation) if y &gt; r+c</td>
+          </tr>
+          <tr>
+            <td>Bond (Domestic)</td>
+            <td>Coupon income</td>
+            <td>Risk-free rate (r)</td>
+            <td>F₀(T) = [S₀ − PV₀(coupons)](1+r)ᵀ</td>
+            <td>F₀ &gt; or &lt; S₀ (depends on coupon vs. r)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ All Forward Price Formulas — Complete Reference</div>
+      <div class="f">
+        BASE FORMULA (Discrete, no carry):  F₀(T) = S₀ × (1 + r)ᵀ<br>
+        BASE FORMULA (Continuous, no carry): F₀(T) = S₀ × e^(rT)<br><br>
+        WITH KNOWN $ AMOUNTS (Discrete):     F₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1 + r)ᵀ<br>
+        WITH RATES (Continuous):             F₀(T) = S₀ × e^((r + c − i) × T)<br><br>
+        FX FORWARD:                          F₀,f/d(T) = S₀,f/d × e^((rf − rd) × T)<br><br>
+        KEY RULES:<br>
+        Benefits (dividends, coupons, convenience yield, foreign rate) → SUBTRACT from forward price<br>
+        Costs (storage, insurance, domestic rate) → ADD to forward price<br>
+        Risk-free rate (r or rd) always adds to forward price (opportunity cost, always present)
+      </div>
+      <div class="note">
+        <strong>Discrete compounding:</strong> individual stocks, individual bonds, individual commodities<br>
+        <strong>Continuous compounding:</strong> equity indexes, FI indexes, commodity indexes, ALL FX<br>
+        <strong>Contango vs. Backwardation:</strong> Contango = F₀ &gt; S₀ (normal for commodities with carry). Backwardation = F₀ &lt; S₀ (indicates high convenience yield / supply shortage).<br>
+        <strong>Repo rate is the relevant risk-free rate</strong> for most derivative market participants.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE     -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Two arbitrage conditions:</strong> (1) Identical assets must have the same price: S₀ᴬ = S₀ᴮ (Law of One Price). (2) Asset with known future price must have spot = PV of future price: S₀ = S_T × (1+r)⁻ᵀ.</li>
+        <li>✅ <strong>Arbitrage is self-eliminating:</strong> buyers of the cheap asset and sellers of the expensive asset converge prices until the no-arbitrage condition holds. The relevant risk-free rate is the repo rate for most market participants.</li>
+        <li>✅ <strong>Discrete compounding (Eq. 1): FV_N = PV × (1+r)ᴺ</strong> → used for individual assets. <strong>Continuous compounding (Eq. 2): FV_T = PV × e^(rT)</strong> → used for indexes (equity, FI, commodity) and all FX forwards.</li>
+        <li>✅ <strong>Replication:</strong> A derivative's cash flow stream can be recreated using a long or short position in the underlying + borrowing/lending at the risk-free rate. Long forward ↔ Borrow S₀ + Buy underlying. Law of one price → identical payoffs → same price → forward price is determined.</li>
+        <li>✅ <strong>Long asset + Short forward = Risk-free bond</strong> (earns the risk-free rate, regardless of S_T). This is the fundamental no-arbitrage replication relationship.</li>
+        <li>✅ <strong>Base forward price formula (no carry): F₀(T) = S₀ × (1+r)ᵀ</strong> (discrete) or <strong>F₀(T) = S₀ × e^(rT)</strong> (continuous). Always: F₀(T) &gt; S₀ when r &gt; 0.</li>
+        <li>✅ <strong>Cost of carry = net of all costs and benefits of owning the underlying for T periods.</strong> Costs (storage, insurance) increase F₀(T). Benefits (dividends, coupons, convenience yield) decrease F₀(T).</li>
+        <li>✅ <strong>Formula with known dollar amounts (Eq. 5 — Discrete):</strong> F₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1+r)ᵀ. PV₀(I) = PV of income/benefits; PV₀(C) = PV of costs. Subtract PV(I), add PV(C), then compound.</li>
+        <li>✅ <strong>Formula with rates (Eq. 6 — Continuous):</strong> F₀(T) = S₀ × e^((r+c−i)T). r=risk-free rate; c=cost rate; i=income rate. All rates annualized.</li>
+        <li>✅ <strong>Non-dividend stock:</strong> F₀(T) = S₀(1+r)ᵀ. No benefits to subtract.</li>
+        <li>✅ <strong>Dividend-paying stock (discrete):</strong> F₀(T) = [S₀ − PV₀(I)](1+r)ᵀ. Calculate PV of each dividend individually: PV_i = D × (1+r)^(−t_i). Forward price is LOWER than for the non-dividend case.</li>
+        <li>✅ <strong>Equity index (continuous):</strong> F₀(T) = S₀ × e^((r−i)T) where i = continuous dividend yield. F₀ &gt; S₀ if r &gt; i; F₀ &lt; S₀ if i &gt; r.</li>
+        <li>✅ <strong>FX forward (Eq. 7 — Covered Interest Rate Parity):</strong> F₀,f/d(T) = S₀,f/d × e^((rf−rd)T). rf = foreign (price) currency rate; rd = domestic (base) currency rate. The DIFFERENTIAL determines forward premium/discount — not the absolute rates.</li>
+        <li>✅ <strong>FX forward rules:</strong> rf &gt; rd → F₀ &gt; S₀ → foreign currency at DISCOUNT in forward market. rf &lt; rd → F₀ &lt; S₀ → foreign currency at PREMIUM in forward market. Equal rates → forward = spot.</li>
+        <li>✅ <strong>Commodity forward (with storage): F₀(T) = [S₀ + PV₀(C)](1+r)ᵀ</strong> or S₀ × e^((r+c)T). Storage costs add to forward price. Always F₀ &gt; S₀ when storage costs are present (contango).</li>
+        <li>✅ <strong>Convenience yield:</strong> Non-cash benefit of holding the physical commodity (not a derivative). Reduces the forward price. A forward price significantly below the theoretical no-arbitrage price signals the presence of a convenience yield.</li>
+        <li>✅ <strong>Contango:</strong> F₀ &gt; S₀ (normal carry). Costs (r + storage) exceed convenience yield. Futures curve slopes upward. <strong>Backwardation:</strong> F₀ &lt; S₀. Convenience yield exceeds carrying costs (r + storage). Signals physical supply shortage.</li>
+        <li>✅ <strong>F₀(T) vs. S₀ summary rule:</strong> Opportunity cost + other costs &gt; benefits → F₀ &gt; S₀. Equal → F₀ = S₀. Benefits &gt; costs → F₀ &lt; S₀.</li>
+        <li>✅ <strong>All asset classes cost of carry:</strong> Non-dividend stock: only r. Dividend stock: r offset by dividends. Equity index: r offset by i (dividend yield). FX: (rf−rd) differential. Commodity: r + storage, offset by convenience yield if present. Bond: r offset by coupon income.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ TWO ARBITRAGE CONDITIONS ═══<br>
+        ① Law of one price: identical assets must have same price (S₀ᴬ = S₀ᴮ)<br>
+        ② PV condition: S₀ = future price × (1+r)⁻ᵀ (or × e^(−rT))<br><br>
+
+        ═══ BASE FORWARD PRICE FORMULAS ═══<br>
+        Discrete:   F₀(T) = S₀(1+r)ᵀ          ← individual assets<br>
+        Continuous: F₀(T) = S₀ × e^(rT)        ← indexes and FX<br><br>
+
+        ═══ COST OF CARRY ADJUSTMENTS ═══<br>
+        Discrete:   F₀(T) = [S₀ − PV₀(I) + PV₀(C)] × (1+r)ᵀ<br>
+        Continuous: F₀(T) = S₀ × e^((r + c − i) × T)<br>
+        FX (Eq. 7): F₀,f/d(T) = S₀,f/d × e^((rf − rd) × T)<br><br>
+
+        ═══ ASSET-SPECIFIC FORWARD PRICES ═══<br>
+        No-dividend stock: F₀ = S₀(1+r)ᵀ<br>
+        Dividend stock:    F₀ = [S₀ − PV₀(dividends)](1+r)ᵀ<br>
+        Equity index:      F₀ = S₀ × e^((r−i)T)  [i = div yield]<br>
+        FX:                F₀,f/d = S₀,f/d × e^((rf−rd)T)<br>
+        Commodity (carry): F₀ = [S₀ + PV₀(C)](1+r)ᵀ or S₀ × e^((r+c−y)T)<br><br>
+
+        ═══ KEY RELATIONSHIPS ═══<br>
+        Benefits reduce F₀ | Costs increase F₀ | r always increases F₀<br>
+        Contango: F₀ &gt; S₀ | Backwardation: F₀ &lt; S₀ (high convenience yield)<br>
+        High foreign rate → foreign currency at forward DISCOUNT (F₀,f/d &gt; S₀,f/d)<br>
+        Replication: Long forward = Borrow + Buy spot<br>
+        Long spot + Short forward = Risk-free bond (earns r)
+      </div>
+      <div class="note">
+        <strong>Discrete vs. continuous compounding:</strong> Individual assets = (1+r)ᵀ. Portfolios/indexes/FX = e^(rT).<br>
+        <strong>PV₀(I) to calculate dividends:</strong> Discount each dividend: PV_i = D_i × (1+r)^(−t_i), then sum all.<br>
+        <strong>Convenience yield signal:</strong> F₀ significantly BELOW the cost-of-carry no-arbitrage price → convenience yield implied.<br>
+        <strong>FX rule memory hook:</strong> Higher rate currency trades at forward DISCOUNT (it depreciates in forward market to offset its yield advantage — covered interest rate parity).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 4: Arbitrage, Replication, and the Cost of Carry in Pricing Derivatives · Exam Prep Notes
+</footer>
+
+</body>
+</html>

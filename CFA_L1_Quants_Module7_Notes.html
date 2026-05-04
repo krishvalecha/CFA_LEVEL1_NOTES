@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Quantitative Methods | Module 7: Estimation and Inference</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --ev-bg: #111620; --ev-border: #4c8bc9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .clt-box { background: #121a20; border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .clt-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .clt-box .f { color: #a8d4f0; font-size: 15px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .clt-box .note { color: #7eaacf; font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mc-title.blue { color: var(--accent2); }
+  .mc-title.green { color: var(--accent3); }
+  .mc-title.red { color: var(--danger); }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .tag-prob { display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 2px; border: 1px solid rgba(76,201,138,0.25); font-family: 'JetBrains Mono', monospace; }
+  .tag-nonprob { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 2px; border: 1px solid rgba(201,76,76,0.25); font-family: 'JetBrains Mono', monospace; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; padding: 0; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; gap: 0; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.1); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .worked-box { background: #111a14; border: 1px solid rgba(76,201,138,0.2); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .worked-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 12px; }
+  .worked-box p { font-size: 14px; color: #c8dfd0; margin-bottom: 8px; }
+  .worked-box .calc { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #e8c97a; line-height: 2.0; margin: 8px 0; }
+  .worked-box .result { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #4cc98a; font-weight: 700; margin-top: 8px; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--accent3); font-weight: 600; }
+  .hl-red { color: var(--danger); font-weight: 600; }
+
+  .vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; }
+  .vs-side { padding: 18px 20px; }
+  .vs-side:first-child { background: rgba(76,201,138,0.06); border-right: 1px solid var(--border); }
+  .vs-side:last-child { background: rgba(201,76,76,0.06); }
+  .vs-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .vs-title.green { color: var(--accent3); }
+  .vs-title.red { color: var(--danger); }
+  .vs-side ul { padding-left: 16px; }
+  .vs-side li { font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+
+  .mnemonic-box { background: #1a1528; border: 1px solid rgba(201,168,76,0.25); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .mnemonic-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .mnemonic-box p { font-size: 14px; color: #dfd0a8; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 24px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ -->
+<!-- PAGE HEADER -->
+<!-- ══════════════════════════════════════ -->
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · QUANTITATIVE METHODS · MODULE 7</div>
+  <h1>Estimation and <span>Inference</span></h1>
+  <p>Sampling methods &amp; their biases · Central Limit Theorem · Standard Error · Bootstrap &amp; Jackknife resampling. Complete exam-ready reference — concepts, formulas, memory tricks, and traps.</p>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TOC STRIP -->
+<!-- ══════════════════════════════════════ -->
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Key Terms</a>
+  <a class="toc-item" href="#s2">02 · Sampling Methods</a>
+  <a class="toc-item" href="#s3">03 · Sampling Error &amp; Bias</a>
+  <a class="toc-item" href="#s4">04 · Central Limit Theorem</a>
+  <a class="toc-item" href="#s5">05 · Standard Error</a>
+  <a class="toc-item" href="#s6">06 · Bootstrap</a>
+  <a class="toc-item" href="#s7">07 · Jackknife</a>
+  <a class="toc-item" href="#s8">08 · Master Comparison Table</a>
+  <a class="toc-item" href="#s9">★ · Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: KEY TERMS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Essential Definitions</h2>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="def-block">
+          <div class="def-term">Population</div>
+          <div class="def-body">All members of a specified group. The complete set we are trying to learn about.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Parameter</div>
+          <div class="def-body">A quantity computed from or used to describe a <strong>population</strong>. E.g., population mean µ, population variance σ². Fixed (unknown) values.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Sample</div>
+          <div class="def-body">A subset of the population used to estimate population parameters. Must be representative for valid inference.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Statistic</div>
+          <div class="def-body">A quantity computed from or used to describe a <strong>sample</strong>. E.g., sample mean X̄, sample variance s². A random variable — it varies from sample to sample.</div>
+        </div>
+      </div>
+      <div>
+        <div class="def-block">
+          <div class="def-term">Sampling Error</div>
+          <div class="def-body">The difference between an observed sample statistic and the population parameter it estimates. Arises because we observe only a subset. <em>Sampling error ≠ mistake</em> — it is an inherent property of sampling.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Sampling Distribution</div>
+          <div class="def-body">The distribution of all distinct possible values a statistic can assume when computed from samples of the same size drawn from the same population. A statistic is itself a random variable.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Sampling Plan</div>
+          <div class="def-body">The set of rules used to select a sample from the population. Defines the method and size of sampling.</div>
+        </div>
+        <div class="def-block">
+          <div class="def-term">Resampling</div>
+          <div class="def-body">Technique that repeatedly draws samples from the original observed data to perform statistical inference without closed-form formulas.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Parameter vs. Statistic — The Core Distinction</div>
+      <p><strong>Parameter describes the POPULATION</strong> (Greek letters: µ, σ², σ) — it is fixed but unknown. <strong>Statistic describes the SAMPLE</strong> (Latin letters: X̄, s², s) — it is known but varies. The whole game of inference is using statistics to estimate parameters.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: SAMPLING METHODS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Sampling Methods</h2>
+    </div>
+
+    <div class="card">
+      <p>Two top-level categories: <span class="hl-green">Probability Sampling</span> — every member has an equal chance of selection, produces representative samples, more accurate and reliable. <span class="hl-red">Non-Probability Sampling</span> — selection depends on researcher judgment or convenience, significant risk of non-representative samples.</p>
+    </div>
+
+    <h3>Probability Sampling Methods</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>How It Works</th>
+            <th>Best For</th>
+            <th>Key Advantage</th>
+            <th>Key Limitation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Simple Random Sampling <span class="tag-prob">PROB</span></td>
+            <td>Each element has equal probability of selection. Every possible sample of size n is equally likely.</td>
+            <td>Homogeneous populations where all elements are broadly similar.</td>
+            <td>Unbiased; straightforward; sample statistics are valid estimates of population parameters.</td>
+            <td>May not represent important subgroups; requires ability to identify all population members.</td>
+          </tr>
+          <tr>
+            <td>Systematic Sampling <span class="tag-prob">PROB</span></td>
+            <td>Select every k<sup>th</sup> member from the population until desired sample size is reached.</td>
+            <td>When population cannot be fully coded or listed.</td>
+            <td>Practical when population list is unavailable. Result is approximately random.</td>
+            <td>Risk of periodicity bias if the population has a repeating pattern at interval k.</td>
+          </tr>
+          <tr>
+            <td>Stratified Random Sampling <span class="tag-prob">PROB</span></td>
+            <td>Divide population into strata (subgroups); draw simple random samples from each stratum proportional to its size; pool samples.</td>
+            <td>Heterogeneous populations with identifiable subgroups (e.g., bond indexing by duration, sector, credit quality).</td>
+            <td>Guarantees representation of all subgroups; produces estimates with <em>smaller variance</em> than simple random sampling.</td>
+            <td>Requires knowledge of population strata and their relative sizes.</td>
+          </tr>
+          <tr>
+            <td>Cluster Sampling <span class="tag-prob">PROB</span></td>
+            <td>Divide population into clusters (mini-representations of whole). Randomly select clusters. <br><em>One-stage:</em> take all members of selected clusters. <em>Two-stage:</em> randomly sample within selected clusters.</td>
+            <td>Very large, geographically dispersed populations (e.g., national investor surveys).</td>
+            <td>Most time-efficient and cost-efficient probability method for large populations.</td>
+            <td>Lower accuracy than other probability methods at equal sample size; cluster sample may be less representative of entire population.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Non-Probability Sampling Methods</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title red">Convenience Sampling <span class="tag-nonprob">NON-PROB</span></div>
+        <ul>
+          <li>Elements selected based on ease of access or availability to the researcher.</li>
+          <li>Samples are NOT necessarily representative of the population.</li>
+          <li><strong>Advantage:</strong> Very quick and low cost.</li>
+          <li><strong>Use case:</strong> Preliminary/pilot stage of research; cost-constrained situations; small-scale studies before large-scale sampling.</li>
+          <li><strong>Risk:</strong> High potential for non-representative results.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title red">Judgmental Sampling <span class="tag-nonprob">NON-PROB</span></div>
+        <ul>
+          <li>Elements handpicked based on researcher's knowledge and professional judgment.</li>
+          <li>Selection can be affected by researcher bias → skewed results.</li>
+          <li><strong>Advantage:</strong> Researcher expertise can create a more targeted, relevant sample quickly. Expert judgment can be more efficient than mechanical selection.</li>
+          <li><strong>Use case:</strong> Auditing — experienced auditors select accounts/transactions using sound judgment to ensure sufficient audit coverage.</li>
+          <li><strong>Risk:</strong> Researcher bias; does not represent whole population.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Stratified vs. Cluster Sampling</div>
+      <p>These look similar but work oppositely. In <strong>stratified sampling</strong>: ALL strata are included, and you randomly select elements WITHIN each stratum. In <strong>cluster sampling</strong>: you randomly select WHICH clusters to include, then include ALL (or a random subset of) members of chosen clusters. Cluster = select whole groups; Stratified = select from all groups.</p>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Mnemonic: Sampling Method Accuracy Ranking</div>
+      <p><strong>"Stratified &gt; Simple Random &gt; Cluster"</strong> for accuracy at equal sample size. Remember: <strong>S</strong>tratified = <strong>S</strong>maller variance (best). <strong>C</strong>luster = <strong>C</strong>heapest but least accurate. Non-probability methods (Convenience, Judgmental) are not on the accuracy scale — they may not be representative at all.</p>
+    </div>
+
+    <h3>Sampling from Multiple Distributions</h3>
+    <div class="card">
+      <p>A critical practical issue: if a sample is drawn from a population that is actually a mixture of different distributions (e.g., returns in normal markets vs. crisis periods), the analyst must be careful. Pooling data from different distributions without recognizing their difference can produce misleading statistics — the sample may appear to come from a single distribution when it does not. <span class="hl-red">Always assess whether the population is homogeneous before choosing a sampling method.</span></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: SAMPLING ERROR & BIAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Sampling Error &amp; Data Biases</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Sampling Error (Formal Definition)</div>
+      <div class="def-body">The difference between the observed value of a statistic and the quantity it is intended to estimate, as a result of using subsets of the population. It arises from sampling variation — we observe only a subset of the full population.</div>
+    </div>
+
+    <div class="card">
+      <p>A <strong>random sample reflects the properties of the population in an unbiased way</strong>. Sample statistics computed from random samples are valid (unbiased) estimates of population parameters. However, any individual sample will differ from the population — this is expected sampling variation, not an error in the pejorative sense.</p>
+      <p style="margin-top:10px;">The trade-off of sampling is: <span class="hl-green">time and money saved</span> in exchange for <span class="hl-red">introducing sampling error</span>. Larger samples reduce (but never eliminate) sampling error.</p>
+    </div>
+
+    <h3>Common Data &amp; Sampling Biases to Know</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bias Type</th><th>Description</th><th>Investment Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data-Mining Bias</td>
+            <td>Repeatedly searching for patterns in the same dataset until a significant result is found by chance. The "discovered" pattern is a statistical artifact, not a real relationship.</td>
+            <td>Backtesting hundreds of trading strategies on the same historical data and reporting only the one that worked best.</td>
+          </tr>
+          <tr>
+            <td>Sample Selection Bias</td>
+            <td>Systematically excluding certain data from the sample. Creates a non-representative sample even if the sampling process within the included data is random.</td>
+            <td>Survivorship bias: studying only currently existing funds excludes funds that failed/closed, overstating average performance.</td>
+          </tr>
+          <tr>
+            <td>Look-Ahead Bias</td>
+            <td>Using information in analysis that was not actually available at the time of the decision being modeled.</td>
+            <td>Using annual earnings data (published in March) to make investment decisions modeled as of January 1 of the same year.</td>
+          </tr>
+          <tr>
+            <td>Time-Period Bias</td>
+            <td>Using a time period for a study that is either too short (capturing a specific regime) or too long (spanning multiple structural regimes). Results may not generalize.</td>
+            <td>Basing equity risk premium estimates only on the 1990s bull market, or using data spanning pre/post gold standard periods.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Survivorship Bias — Most Common Exam Application</div>
+      <p>When a database only includes funds/companies that are still alive today, historical average performance is <strong>upward biased</strong> because all the failures are excluded from the sample. This is the most tested form of sample selection bias.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: CENTRAL LIMIT THEOREM -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>The Central Limit Theorem (CLT)</h2>
+    </div>
+
+    <div class="clt-box">
+      <div class="label">★ Central Limit Theorem — Formal Statement</div>
+      <div class="f">
+        Given a population with mean µ and finite variance σ²,<br>
+        the sampling distribution of the sample mean X̄<br>
+        from random samples of size n will be:<br><br>
+        X̄ ~ approximately Normal( µ,  σ²/n )<br><br>
+        …when sample size n is LARGE (n ≥ 30 as a rule of thumb).
+      </div>
+      <div class="note">
+        This holds regardless of the shape of the underlying population distribution — as long as the population has finite variance.<br>
+        The mean of the sampling distribution of X̄ = µ (population mean).<br>
+        The variance of the sampling distribution of X̄ = σ²/n (population variance divided by n).
+      </div>
+    </div>
+
+    <h3>Three Key Properties of the Sampling Distribution of X̄ (Large n)</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Approximately Normal</strong> — regardless of the shape of the original population distribution. Even if returns are skewed or fat-tailed, X̄ will be approximately normally distributed for large n.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Mean of X̄ = µ</strong> — the mean of the sampling distribution of the sample mean equals the true population mean. X̄ is an unbiased estimator of µ.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Variance of X̄ = σ²/n</strong> — as sample size n increases, the variance of the sample mean DECREASES. Larger samples → sample mean is clustered more tightly around µ → less sampling error.</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title blue">Why CLT Is So Powerful</div>
+        <ul>
+          <li>We rarely know the population distribution in practice — it could be skewed, fat-tailed, bimodal, etc.</li>
+          <li>CLT lets us use the normal distribution for inference about population means <em>regardless</em> of the underlying distribution (provided n is large and variance is finite).</li>
+          <li>It is the foundation for constructing confidence intervals and hypothesis testing for means.</li>
+          <li>Works for ANY distribution with finite variance — uniform, exponential, binomial, etc.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title blue">The n ≥ 30 Rule of Thumb</div>
+        <ul>
+          <li>When n ≥ 30, X̄ is approximately normally distributed for most practical purposes.</li>
+          <li>If the underlying population is itself close to normal, even smaller samples (n &lt; 30) may be sufficient.</li>
+          <li>If the underlying population is <em>very</em> non-normal (highly skewed, heavy-tailed), n may need to be <strong>well in excess of 30</strong> for the CLT to apply well.</li>
+          <li>There is no universal bright line — n ≥ 30 is a guideline, not a guarantee.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ CLT Does NOT Say the Population Becomes Normal</div>
+      <p>A very common misconception: the CLT says the <strong>sampling distribution of the sample mean</strong> is approximately normal — NOT that the population becomes normally distributed. The original population keeps whatever shape it has. Only the distribution of X̄ (across many repeated samples) approaches normality.</p>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: What the CLT Gives Us</div>
+      <p>Remember <strong>"3 Ns"</strong>: the CLT tells us that X̄ is <strong>N</strong>ormal, with mean = µ (<strong>N</strong>o bias), and variance = σ²/<strong>n</strong> (shrinks with n). That's Normal, No-bias, Narrowing — the three gifts of the CLT.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: STANDARD ERROR -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Standard Error of the Sample Mean</h2>
+    </div>
+
+    <div class="card">
+      <p>The standard deviation of a sample statistic is called its <span class="hl-blue">standard error</span>. The standard error of the sample mean measures how much the sample mean is expected to deviate from the true population mean — i.e., the precision of the estimate. It is the most important application of the CLT in practice.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Standard Error of the Sample Mean — Two Cases</div>
+      <div class="f">
+        CASE 1: Population σ is KNOWN<br>
+        σ_X̄ = σ / √n<br><br>
+        CASE 2: Population σ is UNKNOWN (use sample std dev s)<br>
+        s_X̄ = s / √n<br><br>
+        where s = √[ Σ(Xᵢ − X̄)² / (n − 1) ]<br><br>
+        ← In practice, σ is almost ALWAYS unknown → use Case 2.
+      </div>
+      <div class="note">
+        <strong>σ_X̄ or s_X̄</strong> = standard error of the sample mean.<br>
+        <strong>n</strong> = sample size. Note the √n in the denominator — standard error shrinks as sample size grows (∝ 1/√n, not 1/n).<br>
+        <strong>s²</strong> = sample variance — uses (n−1) in denominator (degrees of freedom correction) to make it an unbiased estimator of σ².
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Sample Variance Formula (Equation 3)</div>
+      <div class="f">
+        s² = Σᵢ₌₁ⁿ (Xᵢ − X̄)² / (n − 1)
+      </div>
+      <div class="note">
+        Divide by (n−1), not n. This is the "degrees of freedom" correction — using X̄ (estimated from the data) in place of µ costs one degree of freedom, so we divide by (n−1) to get an unbiased estimator of σ².<br>
+        s (sample standard deviation) = √s² = the estimate of σ used in Case 2 above.
+      </div>
+    </div>
+
+    <h3>Standard Deviation vs. Standard Error — Critical Distinction</h3>
+    <div class="vs-box">
+      <div class="vs-side">
+        <div class="vs-title green">Standard Deviation (σ or s)</div>
+        <ul>
+          <li>Measures <strong>dispersion of individual data points</strong> around the mean.</li>
+          <li>Describes how spread out the data is.</li>
+          <li>A property of the <em>data / distribution</em>.</li>
+          <li>Use when: "How variable are individual observations?"</li>
+          <li>Does NOT shrink to zero as n → ∞ (data always has dispersion).</li>
+        </ul>
+      </div>
+      <div class="vs-side">
+        <div class="vs-title red">Standard Error (σ_X̄ or s_X̄)</div>
+        <ul>
+          <li>Measures <strong>precision of a sample statistic</strong> (e.g., sample mean) as an estimate of the population parameter.</li>
+          <li>Describes how much the sample mean varies across samples.</li>
+          <li>A property of the <em>estimator / sampling process</em>.</li>
+          <li>Use when: "How accurate is my estimate of µ?"</li>
+          <li><strong>Shrinks as n increases</strong> — larger sample → more precise estimate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Standard Deviation ≠ Standard Error</div>
+      <p>The terms are NOT interchangeable. Standard deviation is about <em>data spread</em>; standard error is about <em>estimation precision</em>. Confusing them in a question is a classic trap. If a question asks about the accuracy of the sample mean as an estimator of the population mean → it's asking about <strong>standard error</strong>.</p>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Illustration: Effect of Sample Size on Standard Error</div>
+      <p>Suppose population σ = 20%. Compare standard errors for different sample sizes:</p>
+      <div class="calc">
+        n = 25:   s_X̄ = 20% / √25 = 20% / 5 = 4.00%<br>
+        n = 100:  s_X̄ = 20% / √100 = 20% / 10 = 2.00%<br>
+        n = 400:  s_X̄ = 20% / √400 = 20% / 20 = 1.00%
+      </div>
+      <div class="result">Quadrupling sample size HALVES the standard error (∝ 1/√n relationship).</div>
+      <p>To cut standard error in half, you must quadruple the sample size — diminishing returns to larger samples.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 1/√n Relationship — Key Insight</div>
+      <p>Standard error = σ/√n. This means to <strong>halve</strong> the standard error, you need to <strong>quadruple</strong> (4×) the sample size. To reduce it to 1/3, you need 9× the sample size. The precision gains from larger samples follow diminishing returns — going from n=25 to n=100 halves the SE, but going from n=100 to n=400 only halves it again despite tripling the additional observations.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: BOOTSTRAP -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Bootstrap Resampling</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Bootstrap</div>
+      <div class="def-body">A resampling method that uses the original observed sample as a proxy for the population, then repeatedly draws samples of the same size as the original — <strong>with replacement</strong> — to build an empirical sampling distribution of a statistic.</div>
+    </div>
+
+    <h3>How Bootstrap Works — Step by Step</h3>
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Start with original sample</strong> of size n (e.g., 12 monthly returns). This sample serves as the "estimated population."</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Draw a resample of size n WITH replacement</strong> from the original sample. Each observation has equal probability of being drawn in each draw. Some observations may appear more than once; others may not appear at all.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Compute the statistic of interest</strong> (e.g., mean, median, standard deviation) for each resample. Record it.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Repeat steps 2–3 many times</strong> (e.g., B = 1,000 times). Each repetition gives one value of the statistic.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Build the bootstrap sampling distribution</strong> from all B resample statistics. This approximates the true sampling distribution of the statistic.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Estimate standard error</strong> using Equation 4, or construct confidence intervals directly from the bootstrap distribution's percentiles.</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Bootstrap Standard Error of the Sample Mean (Equation 4)</div>
+      <div class="f">
+        s_X̄ = √[ 1/(B−1) × Σᵦ₌₁ᴮ (θ̂ᵦ − θ̄)² ]
+      </div>
+      <div class="note">
+        <strong>s_X̄</strong> = estimated standard error of the sample mean from bootstrap.<br>
+        <strong>B</strong> = number of resamples drawn from the original sample.<br>
+        <strong>θ̂ᵦ</strong> = the mean of resample b (one of the B resamples).<br>
+        <strong>θ̄</strong> = the mean across ALL B resample means (the grand mean of resamples).<br><br>
+        Note: this formula looks just like sample variance — it is the sample standard deviation of the B resample means.
+      </div>
+    </div>
+
+    <div class="worked-box">
+      <div class="worked-label">📐 Worked Example (from Module): Bootstrap SE Calculation</div>
+      <p>Original sample: n = 12 monthly returns. Bootstrap: B = 1,000 resamples drawn with replacement.</p>
+      <p>Results: Mean across all 1,000 resample means (θ̄) = −0.01367. Sum of squared deviations of resample means from θ̄ = 1.94143.</p>
+      <div class="calc">
+        s_X̄ = √[ 1/(1000−1) × 1.94143 ]<br>
+        s_X̄ = √[ 1/999 × 1.94143 ]<br>
+        s_X̄ = √[ 0.001944 ]
+      </div>
+      <div class="result">s_X̄ = 0.04408 (i.e., ~4.41%)</div>
+      <p>This is the bootstrap estimate of how precisely the sample mean estimates the population mean.</p>
+    </div>
+
+    <h3>Key Characteristics of Bootstrap</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title green">Advantages</div>
+        <ul>
+          <li>Does not require a closed-form analytical formula or distributional assumptions — "model-free" / "non-parametric."</li>
+          <li>Works for ANY estimator — mean, median, standard deviation, correlations, complex risk metrics — even when no analytical formula exists.</li>
+          <li>Potential advantages in <strong>accuracy</strong> over conventional parametric methods.</li>
+          <li>Can construct confidence intervals for complex statistics without formulas.</li>
+          <li>Widely applicable in finance: historical simulations in asset allocation, backtesting investment strategies, gauging strategy performance vs. a benchmark.</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title red">Limitations / Characteristics to Know</div>
+        <ul>
+          <li>Computationally intensive — requires many repetitions (often 1,000+).</li>
+          <li>Bootstrap usually gives <strong>different results each run</strong> because resamples are randomly drawn.</li>
+          <li>Number of repetitions B is left to the analyst to determine — no fixed rule.</li>
+          <li>Quality depends on the original sample being representative of the population — if the original sample is biased, bootstrap amplifies that bias.</li>
+          <li>Also called <strong>model-free resampling</strong> or <strong>non-parametric resampling</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 "With Replacement" — Why It Matters</div>
+      <p>Bootstrap draws WITH replacement — after each draw, the observation is put back before the next draw. This means: (a) the same observation can appear multiple times in one resample, (b) some observations may not appear at all, and (c) each resample has the same size n as the original. This is what allows the bootstrap to simulate the variability of the statistic across hypothetical repeated samples from the population.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: JACKKNIFE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Jackknife Resampling</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Jackknife</div>
+      <div class="def-body">A resampling technique where subsamples are created by taking the original sample and <strong>leaving out one observation at a time</strong> — without replacement. For a sample of size n, jackknife produces exactly n subsamples, each of size (n−1).</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Primary use case:</strong> Reducing the bias of an estimator. Secondary uses: estimating the standard error and constructing confidence intervals of an estimator.</p>
+      <p style="margin-top:10px;"><strong>How it works:</strong> From a sample of n observations, create n subsamples by dropping observation 1 (subsample 1), then dropping observation 2 (subsample 2), etc. Each subsample has n−1 observations. Compute the statistic of interest on each subsample. Use the variability across these n estimates to assess sampling error.</p>
+    </div>
+
+    <h3>Bootstrap vs. Jackknife — Head-to-Head</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Bootstrap</th>
+            <th>Jackknife</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sampling method</td>
+            <td>Draw samples WITH replacement from original</td>
+            <td>Leave out one observation at a time (no replacement)</td>
+          </tr>
+          <tr>
+            <td>Resample size</td>
+            <td>Same size as original sample (n)</td>
+            <td>One less than original sample (n − 1)</td>
+          </tr>
+          <tr>
+            <td>Number of repetitions</td>
+            <td>Analyst-determined (typically 1,000+); no fixed rule</td>
+            <td>Always exactly n repetitions (one per observation)</td>
+          </tr>
+          <tr>
+            <td>Reproducibility</td>
+            <td>Different results each run (random draws)</td>
+            <td>Same results every run (deterministic process)</td>
+          </tr>
+          <tr>
+            <td>Primary application</td>
+            <td>Estimating standard error and CIs for any statistic; most powerful and widely used</td>
+            <td>Reducing estimator bias; also finds SE and CIs</td>
+          </tr>
+          <tr>
+            <td>Computation</td>
+            <td>Computer simulation required; more intensive for large B</td>
+            <td>Systematic and structured; always n computations</td>
+          </tr>
+          <tr>
+            <td>Finance applications</td>
+            <td>Asset allocation simulations, strategy backtesting vs. benchmark</td>
+            <td>Bias correction in complex estimators</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic-box">
+      <div class="mnemonic-label">🧠 Memory Trick: Bootstrap vs. Jackknife</div>
+      <p><strong>Boot</strong>strap = Boot up the computer and run randomly (WITH replacement, random, variable results, YOU decide how many). <strong>Jack</strong>knife = Jack out one at a time, very systematically (WITHOUT replacement, systematic, same results every time, ALWAYS n repetitions). Boot = random + computer; Jack = systematic + deterministic.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap: Jackknife Does NOT Use Replacement</div>
+      <p>Bootstrap uses WITH replacement; Jackknife does NOT. The jackknife simply omits one observation at a time — it never replaces observations or draws randomly. This is why jackknife always produces the same result (deterministic), while bootstrap produces different results each run.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: MASTER COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Master Comparison: All Sampling Methods</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Type</th>
+            <th>Selection Mechanism</th>
+            <th>Accuracy</th>
+            <th>Cost/Time</th>
+            <th>Best When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Simple Random</td>
+            <td><span class="tag-prob">PROB</span></td>
+            <td>Each element equally likely; lottery / random number table</td>
+            <td>Good</td>
+            <td>Moderate</td>
+            <td>Homogeneous population; can identify all members</td>
+          </tr>
+          <tr>
+            <td>Systematic</td>
+            <td><span class="tag-prob">PROB</span></td>
+            <td>Every k<sup>th</sup> element</td>
+            <td>Approximately as good as SRS</td>
+            <td>Moderate</td>
+            <td>Cannot list all members; large ordered populations</td>
+          </tr>
+          <tr>
+            <td>Stratified Random</td>
+            <td><span class="tag-prob">PROB</span></td>
+            <td>Random within each stratum; all strata represented</td>
+            <td><strong>Best</strong> (smallest variance)</td>
+            <td>Higher (must identify strata)</td>
+            <td>Heterogeneous population with known subgroups (e.g., bond indexing)</td>
+          </tr>
+          <tr>
+            <td>Cluster</td>
+            <td><span class="tag-prob">PROB</span></td>
+            <td>Randomly select whole clusters; use all or subsample within clusters</td>
+            <td>Lowest of prob. methods</td>
+            <td><strong>Lowest</strong></td>
+            <td>Very large, dispersed populations; geographic surveys</td>
+          </tr>
+          <tr>
+            <td>Convenience</td>
+            <td><span class="tag-nonprob">NON-PROB</span></td>
+            <td>Easiest/most accessible elements</td>
+            <td>Potentially very low</td>
+            <td>Very low</td>
+            <td>Pilot studies; cost/time-constrained preliminary research</td>
+          </tr>
+          <tr>
+            <td>Judgmental</td>
+            <td><span class="tag-nonprob">NON-PROB</span></td>
+            <td>Expert handpicks relevant elements</td>
+            <td>Depends on expert quality; risk of bias</td>
+            <td>Low–Moderate</td>
+            <td>Auditing; specialized populations requiring expert selection</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>CLT &amp; Standard Error — Quick Reference</h3>
+    <div class="clt-box">
+      <div class="label">Central Limit Theorem Summary</div>
+      <div class="f">
+        Population: any distribution, mean = µ, variance = σ² (finite)<br>
+        Sample size: n (large, typically n ≥ 30)<br><br>
+        Sampling distribution of X̄:<br>
+        → Shape:    approximately Normal<br>
+        → Mean:     E(X̄) = µ          ← unbiased<br>
+        → Variance: Var(X̄) = σ²/n     ← shrinks with n<br>
+        → Std Dev:  σ_X̄ = σ/√n        ← standard error
+      </div>
+      <div class="note">
+        As n increases: (1) sampling distribution of X̄ becomes more normal, (2) variance σ²/n decreases → X̄ becomes more precise estimate of µ. This is the entire mathematical justification for "bigger samples are better."
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Parameter vs. Statistic:</strong> Parameter = describes population (Greek: µ, σ²) — fixed, unknown. Statistic = describes sample (X̄, s²) — known, random variable that varies across samples.</li>
+        <li>✅ <strong>Sampling error</strong> = observed statistic minus population parameter. It is NOT a mistake — it's the inherent cost of using a subset. Larger samples reduce but never eliminate it.</li>
+        <li>✅ <strong>Probability sampling</strong> (SRS, Stratified, Cluster, Systematic) gives every member equal selection chance → representative samples → valid statistical inference. <strong>Non-probability sampling</strong> (Convenience, Judgmental) does NOT → risk of biased, non-representative samples.</li>
+        <li>✅ <strong>Stratified random sampling</strong> guarantees all subgroups (strata) are represented AND produces smaller variance estimates than SRS. Used heavily in bond indexing.</li>
+        <li>✅ <strong>Cluster sampling</strong>: randomly select WHOLE clusters; most cost/time efficient probability method; LOWEST accuracy at equal sample size.</li>
+        <li>✅ <strong>Stratified vs. Cluster distinction:</strong> Stratified = all strata included, sample within each. Cluster = randomly pick which clusters, take all (or subsample) within chosen clusters only.</li>
+        <li>✅ <strong>Central Limit Theorem:</strong> For large n (≥ 30), X̄ ~ Normal(µ, σ²/n) regardless of underlying population distribution (as long as σ² is finite). CLT normalizes the distribution of X̄, NOT the population.</li>
+        <li>✅ <strong>Three CLT properties of X̄ for large n:</strong> (1) Approximately normal, (2) E(X̄) = µ (unbiased), (3) Var(X̄) = σ²/n (decreasing in n).</li>
+        <li>✅ <strong>Standard error of sample mean:</strong> σ_X̄ = σ/√n (known σ) OR s_X̄ = s/√n (estimated σ). In practice always use s/√n.</li>
+        <li>✅ <strong>Standard deviation ≠ standard error.</strong> SD = spread of individual data; SE = precision of the sample mean as estimator of µ. SE shrinks with larger n; SD does not.</li>
+        <li>✅ <strong>1/√n relationship:</strong> To halve the SE, you must quadruple (4×) the sample size. Diminishing returns to larger samples.</li>
+        <li>✅ <strong>Sample variance formula:</strong> s² = Σ(Xᵢ − X̄)² / (n−1). Uses (n−1) — degrees of freedom correction — to make s² an unbiased estimator of σ².</li>
+        <li>✅ <strong>Bootstrap:</strong> Resamples of size n drawn WITH replacement from original sample. Results differ each run. Analyst decides number of repetitions B. Model-free/non-parametric. Works for ANY estimator including median. Used for SE estimation, CI construction, backtesting, asset allocation simulations.</li>
+        <li>✅ <strong>Jackknife:</strong> Drops one observation at a time WITHOUT replacement. Always exactly n subsamples of size (n−1). Same results every run (deterministic). Primary use: bias reduction in estimators. Also provides SE and CIs.</li>
+        <li>✅ <strong>Bootstrap vs. Jackknife key contrast:</strong> Bootstrap = random, with replacement, variable results, analyst-chosen B. Jackknife = systematic, without replacement, reproducible, always n repetitions.</li>
+        <li>✅ <strong>Survivorship bias</strong> (sample selection bias): studying only surviving funds/companies overstates historical performance because failures are excluded.</li>
+        <li>✅ <strong>Look-ahead bias:</strong> using data not available at the time of the modeled decision. Data-mining bias: finding patterns in data by chance through repeated testing on the same dataset.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE FORMULA QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ SAMPLE VARIANCE ═══<br>
+        s² = Σᵢ(Xᵢ − X̄)² / (n − 1)&nbsp;&nbsp;&nbsp;&nbsp;← divide by (n−1), NOT n<br><br>
+
+        ═══ STANDARD ERROR OF SAMPLE MEAN ═══<br>
+        σ_X̄ = σ / √n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← when population σ is known<br>
+        s_X̄ = s / √n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← when population σ is unknown (use in practice)<br><br>
+
+        ═══ CLT: SAMPLING DISTRIBUTION OF X̄ ═══<br>
+        X̄ ~ Normal( µ,  σ²/n )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← for large n, any population distribution<br>
+        E(X̄) = µ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← unbiased<br>
+        Var(X̄) = σ²/n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← decreases with n<br>
+        StdDev(X̄) = σ/√n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← standard error<br><br>
+
+        ═══ BOOTSTRAP STANDARD ERROR ═══<br>
+        s_X̄ = √[ 1/(B−1) × Σᵦ(θ̂ᵦ − θ̄)² ]<br>
+        B = number of resamples; θ̂ᵦ = mean of resample b; θ̄ = mean of all resample means<br><br>
+
+        ═══ KEY RELATIONSHIPS ═══<br>
+        SE halved → need 4× sample size (∝ 1/√n)<br>
+        n ≥ 30   → CLT applies (general rule of thumb)<br>
+        (n−1)    → always use for sample variance (unbiased)
+      </div>
+      <div class="note">
+        <strong>Parameter (µ, σ²):</strong> Describes population — fixed, unknown. Estimated by statistics.<br>
+        <strong>Statistic (X̄, s²):</strong> Describes sample — known, random variable. Used to estimate parameters.<br>
+        <strong>Sampling error:</strong> Statistic minus parameter — inherent in using subsets, not a mistake.<br>
+        <strong>Stratified &gt; SRS &gt; Cluster</strong> for accuracy at equal sample size (all probability methods).<br>
+        <strong>Bootstrap = with replacement, random, variable;</strong> Jackknife = without replacement, systematic, deterministic.<br>
+        <strong>Standard deviation ≠ standard error:</strong> SD = data spread; SE = estimation precision. SE → 0 as n → ∞.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Quantitative Methods · Module 7: Estimation and Inference · Exam Prep Notes
+</footer>
+
+</body>
+</html>

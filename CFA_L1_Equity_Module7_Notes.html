@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 7: Company Analysis: Forecasting</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #140d0f 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 2.0; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+  .four-col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 900px) { .four-col { grid-template-columns: 1fr 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Approach cards */
+  .approach-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .app-hist { background: rgba(76,201,138,0.06); border: 1px solid rgba(76,201,138,0.3); }
+  .app-base { background: rgba(76,139,201,0.06); border: 1px solid rgba(76,139,201,0.3); }
+  .app-mgmt { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.3); }
+  .app-disc { background: rgba(201,76,76,0.06); border: 1px solid rgba(201,76,76,0.3); }
+  .approach-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .app-hist .approach-label { color: var(--accent3); }
+  .app-base .approach-label { color: var(--accent2); }
+  .app-mgmt .approach-label { color: var(--accent); }
+  .app-disc .approach-label { color: var(--danger); }
+  .approach-card p, .approach-card li { font-size: 14px; color: var(--text); }
+  .approach-card ul { padding-left: 16px; margin-top: 6px; }
+  .approach-card li { margin-bottom: 4px; }
+
+  /* Object cards */
+  .obj-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 14px 18px; margin-bottom: 10px; }
+  .obj-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .obj-card p, .obj-card li { font-size: 14px; color: var(--text); }
+  .obj-card ul { padding-left: 16px; margin-top: 6px; }
+  .obj-card li { margin-bottom: 4px; }
+
+  /* Scenario boxes */
+  .scenario-bull { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 14px 18px; }
+  .scenario-base { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 14px 18px; }
+  .scenario-bear { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); border-radius: 6px; padding: 14px 18px; }
+  .scenario-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .scenario-bull .scenario-label { color: var(--accent3); }
+  .scenario-base .scenario-label { color: var(--accent); }
+  .scenario-bear .scenario-label { color: var(--danger); }
+  .scenario-bull p, .scenario-base p, .scenario-bear p { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 7</div>
+  <h1>Company Analysis: <span>Forecasting</span></h1>
+  <p>Exam-ready notes: forecast objects (4 types), forecast approaches (4 types), revenue forecasting (top-down vs. bottom-up), operating expense and working capital forecasting, capital investment and capital structure forecasting, and scenario analysis.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What to Forecast — Forecast Objects</a>
+  <a class="toc-item" href="#s2">02 · Four Forecast Approaches</a>
+  <a class="toc-item" href="#s3">03 · Forecast Horizon</a>
+  <a class="toc-item" href="#s4">04 · Forecasting Revenues</a>
+  <a class="toc-item" href="#s5">05 · Revenue Forecast Approaches Table</a>
+  <a class="toc-item" href="#s6">06 · Forecasting Operating Expenses</a>
+  <a class="toc-item" href="#s7">07 · Forecasting Working Capital</a>
+  <a class="toc-item" href="#s8">08 · Capital Investments &amp; Capital Structure</a>
+  <a class="toc-item" href="#s9">09 · Scenario Analysis</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: FORECAST OBJECTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What to Forecast — The Four Forecast Objects</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Forecast Object</div>
+      <div class="def-body">The specific item or quantity an analyst chooses to project. An analyst's choice of forecast object depends on: <strong>available information, efficiency, accuracy, explanatory value, and verifiability</strong>. Always prefer forecast objects that are <strong>regularly disclosed</strong> or directly calculable from regular disclosures — so forecasts can be confirmed in a timely manner.</div>
+    </div>
+
+    <div class="obj-card">
+      <div class="obj-num">Object 1 — Drivers of Financial Statement Lines</div>
+      <p>Rather than forecasting a line item directly, forecast its underlying drivers separately and multiply them.</p>
+      <ul>
+        <li>Example: Net sales = (average number of stores open) × (average net sales per store)</li>
+        <li>Example: COGS = gross margin % × net sales forecast</li>
+        <li><strong>Benefit:</strong> Improved explanatory value and potentially better accuracy — a line item can have multiple drivers moving in different directions that are difficult to forecast on an aggregated basis</li>
+      </ul>
+    </div>
+
+    <div class="obj-card">
+      <div class="obj-num">Object 2 — Individual Financial Statement Lines</div>
+      <p>Directly forecast individual income statement, balance sheet, or cash flow items.</p>
+      <ul>
+        <li>Used for lines <strong>without clear drivers</strong>, less-material items, or items the analyst has no strong opinion on</li>
+        <li>Analyst may use a management estimate or simply assume the quantity remains the same</li>
+        <li>Examples: amortization expense (often guided by management), "other non-current assets" when small, certain cash flow statement lines with minimal disclosures</li>
+      </ul>
+    </div>
+
+    <div class="obj-card">
+      <div class="obj-num">Object 3 — Summary Measures</div>
+      <p>High-level aggregated metrics: free cash flow, EPS, total assets, EBITDA margins.</p>
+      <ul>
+        <li><strong>Benefit:</strong> Efficiency — fewer individual forecasts required</li>
+        <li><strong>Disadvantage:</strong> Less transparency; harder to audit the forecast</li>
+        <li>Most appropriate when the summary measure is <strong>stable and predictable</strong>, or when issuer disclosures are severely limited</li>
+      </ul>
+    </div>
+
+    <div class="obj-card">
+      <div class="obj-num">Object 4 — Ad Hoc Objects</div>
+      <p>Items not yet reported in historical financial statements but needed for an investment decision.</p>
+      <ul>
+        <li>Used when an analyst needs to forecast a loss/gain before the issuer recognizes an accrual</li>
+        <li>Examples: material legal proceedings, government regulatory actions, tax disputes, natural disasters</li>
+        <li>Forecasted based on judgment and external information (legal opinions, industry precedents, etc.)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Avoid Overly Complex Models</div>
+      <p>More forecasts ≠ better accuracy. Complex models take longer to build and update with no improvement in forecast quality. Use judgment to <strong>focus on the most important drivers</strong>; aggregate and simplify where incremental value is low. Example: Novartis has 35+ drugs in 2 regions — forecasting each drug by illness and geography would take months and the forecasts can't be verified from company disclosures anyway.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Verifiability Principle</div>
+      <p>Only use forecast objects that are <strong>regularly disclosed</strong> (quarterly or annually). If a quantity is disclosed only annually, you can verify the forecast only once a year. If disclosed only at consolidated level, you can't verify segment-level forecasts. Information from third-party consultancy reports is fine to <em>inform</em> a forecast but problematic as a direct forecast object — can't be confirmed in a timely manner.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: FOUR FORECAST APPROACHES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Four Forecast Approaches</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "HHMAD"</div>
+      <p>The four approaches: <strong>H</strong>istorical Results · <strong>H</strong>istorical Base Rates &amp; Convergence · <strong>M</strong>anagement Guidance · <strong>A</strong>nalyst's <strong>D</strong>iscretionary Forecast. In practice, they are often <strong>combined</strong>. Use multiple approaches to cross-check assumptions.</p>
+    </div>
+
+    <div class="approach-card app-hist">
+      <div class="approach-label">Approach 1 — Historical Results (Assume Past is Precedent)</div>
+      <p>Use past observed or calculated values (e.g., historical median) as the forecast. Easiest approach — the default.</p>
+      <p style="margin-top:8px;"><strong>When appropriate:</strong></p>
+      <ul>
+        <li>Companies in industries where industry structure (Porter, PESTLE) is <strong>not expected to change</strong></li>
+        <li>Companies with <strong>low sensitivity to the business cycle</strong></li>
+        <li>Forecast objects that are <strong>not material</strong> or that the analyst has no opinion on</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>When NOT appropriate:</strong></p>
+      <ul>
+        <li><span class="danger-text">Cyclical industries</span> — future period likely at a different point in the cycle than past; an "over-cycle" average disguises year-to-year volatility</li>
+        <li>Companies <strong>changing their competitive strategy</strong> or restructuring (large acquisition/divestiture makes historical results non-comparable)</li>
+      </ul>
+    </div>
+
+    <div class="approach-card app-base">
+      <div class="approach-label">Approach 2 — Historical Base Rates and Convergence</div>
+      <p>Use an industry or peer group average/median (computed over a long period) as the "base rate" that the company's metric will converge to over some time frame. The base rate can also be a macroeconomic variable (e.g., GDP growth). <strong>Requires analyst discretion</strong> in selecting the object, the sample for the base rate, and the convergence time frame.</p>
+      <p style="margin-top:8px;"><strong>When appropriate:</strong></p>
+      <ul>
+        <li>Well-established industries with many publicly traded peers: banks, airlines, restaurants, automakers, retailers</li>
+        <li>When analyst's industry analysis does NOT call for material structural changes</li>
+        <li>Smaller companies "maturing into" a financial profile similar to larger peers (e.g., biotech company growing into industry R&amp;D ratios)</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>When NOT appropriate:</strong></p>
+      <ul>
+        <li>New or changing industries where calculating a base rate is difficult or irrelevant</li>
+        <li>Highly cyclical industries where smooth convergence would obscure year-to-year volatility</li>
+        <li><span class="danger-text">Industry leaders that dominate the peer group</span> — the base rate is mostly their own historical results (e.g., using "digital advertising industry" averages to forecast Alphabet/Meta would just be forecasting Alphabet/Meta using their own history, missing any economies-of-scale benefit)</li>
+      </ul>
+    </div>
+
+    <div class="approach-card app-mgmt">
+      <div class="approach-label">Approach 3 — Management Guidance</div>
+      <p>Public companies may provide targets for revenues, earnings, capex, and other measures for the next quarter, year, or longer term. Guidance is often provided as a <strong>range</strong> and embeds management's assumptions on macro growth, cost inflation, market share, pricing, and exchange rates.</p>
+      <ul>
+        <li>Guidance accounts for a <strong>majority of quarterly financial reporting information used by investors</strong> (Beyer et al. 2010) — due to its forward-looking nature and management's informational advantage at the firm level</li>
+        <li>Analysts should scrutinize the plausibility of the assumptions embedded in guidance</li>
+        <li>Ciconte et al. (2013): the <strong>upper bound</strong> of a guidance range often better represents management's true expectations — the lower bound is "padded" to create an easily cleared hurdle for which management is rewarded</li>
+        <li>Management may suspend guidance in periods of high uncertainty (e.g., COVID-19, recessions)</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>When NOT appropriate:</strong></p>
+      <ul>
+        <li>Companies <strong>highly sensitive to the business cycle</strong> — management has no informational advantage over investors at forecasting macro variables like GDP or commodity prices (Hutton et al. 2012: investors have the macro advantage; management has the firm-level advantage)</li>
+        <li>Management with a <strong>poor track record of accurate estimates</strong> (always analyze past guidance vs. actuals)</li>
+      </ul>
+    </div>
+
+    <div class="approach-card app-disc">
+      <div class="approach-label">Approach 4 — Analyst's Discretionary Forecast</div>
+      <p>All other approaches: surveys, quantitative models, probability distributions, analogies to historical precedents, and other unobservable inputs. Requires significant judgment. Most demanding but most flexible.</p>
+      <p style="margin-top:8px;"><strong>When appropriate:</strong></p>
+      <ul>
+        <li>Companies in <strong>cyclical industries</strong></li>
+        <li>Companies with <strong>no or few comparables</strong></li>
+        <li>Companies that <strong>do not provide guidance</strong></li>
+        <li>Companies undergoing a fundamental change (shift in competitive or regulatory environment)</li>
+        <li>Novel situations with no historical observations (e.g., energy transition to renewables and EVs — unprecedented; no direct comparables)</li>
+      </ul>
+    </div>
+
+    <h3>Choosing an Approach — Decision Factors</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Implication for Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Industry structure stable?</td>
+            <td>Yes → Historical Results or Base Rates; No → Discretionary</td>
+          </tr>
+          <tr>
+            <td>Cyclical industry?</td>
+            <td>Avoid plain historical results; use "over-cycle" average or discretionary</td>
+          </tr>
+          <tr>
+            <td>Company changing strategy?</td>
+            <td>Avoid historical results (non-comparable); use discretionary</td>
+          </tr>
+          <tr>
+            <td>Mature industry with many peers?</td>
+            <td>Historical base rates &amp; convergence appropriate</td>
+          </tr>
+          <tr>
+            <td>Management provides reliable guidance?</td>
+            <td>Use management guidance; always check track record first</td>
+          </tr>
+          <tr>
+            <td>Company is industry leader dominating the peer group?</td>
+            <td>Avoid base rates (base rate = own history); use discretionary</td>
+          </tr>
+          <tr>
+            <td>Object not material / no strong opinion?</td>
+            <td>Historical results or just hold constant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: FORECAST HORIZON -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Selecting the Forecast Horizon</h2>
+    </div>
+
+    <div class="card">
+      <p>The forecast time horizon is determined by four factors:</p>
+      <ol style="padding-left:20px; margin-top:10px;">
+        <li><strong>Investment strategy:</strong> The strategy's described investment time frame and average holding period. Long-term fund managers → focus on 3–5 year forecasts. Short-term managers → focus on next 1–2 quarters.</li>
+        <li><strong>Cyclicality of the industry:</strong> Forecast period should be long enough to allow the business to reach an expected <strong>mid-cycle</strong> level of sales and profitability.</li>
+        <li><strong>Company-specific factors:</strong> Recent acquisition or restructuring activity → extend horizon to allow expected benefits to be reflected in financial statements.</li>
+        <li><strong>Analyst's employer's preferences:</strong> Some employers specify fixed parameters — in that case, there is no individual analyst choice.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: FORECASTING REVENUES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Forecasting Revenues — Top-Down vs. Bottom-Up</h2>
+    </div>
+
+    <h3>Top-Down Revenue Forecast Objects</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">1. Growth Relative to GDP Growth</div>
+        <p>Analyst forecasts nominal GDP growth rate, then determines how the company's growth compares — expressed as a bps premium or discount, or as a relative percentage.</p>
+        <p style="margin-top:8px;"><strong>Formula:</strong> If GDP forecast = 4% and company is expected to grow 50% faster → revenue growth = 4% × (1 + 0.50) = <span class="highlight">6.0%</span> (or +200 bps above GDP)</p>
+        <p style="margin-top:6px;">Alternatively: use real GDP forecast for volumes + inflation forecast for prices.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">2. Market Growth and Market Share</div>
+        <p>Analyst forecasts growth of the company's <strong>product market</strong>, then forecasts the company's <strong>market share</strong> within it.</p>
+        <p style="margin-top:8px;"><strong>Formula:</strong> Revenue = Market size × Market share %</p>
+        <p style="margin-top:6px;">Example: Company has 8% share of CNY144B market → revenues = CNY11.5B. If market grows to CNY154B and share stays at 8% → revenues = CNY12.3B.</p>
+        <p style="margin-top:6px;">If market revenue has a predictable relationship with GDP → use regression analysis to estimate it.</p>
+      </div>
+    </div>
+
+    <h3>Bottom-Up Revenue Forecast Objects</h3>
+    <div class="card">
+      <p>Bottom-up drivers are forecast individually then aggregated to total revenue. Using both top-down and bottom-up approaches simultaneously is valuable — cross-checking uncovers implicit assumptions or errors in either approach alone.</p>
+      <ul style="margin-top:12px;">
+        <li><strong>Volumes and average selling prices:</strong> Forecast volumes and prices separately → multiply. Used when companies disclose these (media/internet: users × revenue per user; airlines; asset managers: AUM × management fee rate; commodity producers).</li>
+        <li><strong>Product-line or segment revenues:</strong> Forecast individual products, business lines, geographic areas, or reporting segments → aggregate. Used when company makes such disclosures and when objects have different economic exposures.</li>
+        <li><strong>Capacity-based measures:</strong> Retail: number of stores × sales per store; <strong>same-store sales growth</strong> (stores open ≥12 months) + new-store contribution.</li>
+        <li><strong>Return- or yield-based measures:</strong> Forecast based on account balances and yield on them. Example: bank net interest income = (loans × avg. lending rate) − (deposits × avg. funding rate).</li>
+      </ul>
+    </div>
+
+    <h3>Non-Recurring Items — Must Be Separated</h3>
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Non-Recurring Revenue Items</div>
+      <p>Non-recurring items must be <strong>excluded from the recurring revenue forecast object and considered separately</strong>. They don't have the same drivers as recurring revenue and will distort it. Two types:</p>
+    </div>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Type 1 — Disclosed by Management</div>
+        <ul>
+          <li>Effects of FX rate changes</li>
+          <li>Extra selling days/weeks in the period</li>
+          <li>Acquisitions and divestitures</li>
+          <li>Other "one-time" revenues or gains</li>
+        </ul>
+        <p style="margin-top:8px;">Separate these to identify "underlying" organic revenue. Straightforward unless the issuer's financial reporting credibility is in doubt — in which case "non-recurring" items may actually be recurring.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Type 2 — Require Analyst Judgment</div>
+        <ul>
+          <li>Not quantified by management</li>
+          <li>Example: COVID-19 e-commerce boost — believed to be "new normal" but reversed by H2 2021</li>
+          <li>Example: GPU sales from crypto mining — companies couldn't/wouldn't quantify exact amount; analyst must judge as potentially non-recurring</li>
+        </ul>
+        <p style="margin-top:8px;">Analyst must identify and estimate the non-recurring component using judgment.</p>
+      </div>
+    </div>
+
+    <h3>Four Risk Factors to Incorporate in Revenue Forecasts</h3>
+    <div class="four-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Competition</div>
+        <p>Market share pressure from existing competitors and new entrants</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Business Cycle</div>
+        <p>Cyclical companies: revenue highly sensitive to GDP swings</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Inflation / Deflation</div>
+        <p>Affects pricing power and real volume demand</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Technological Change</div>
+        <p>Disruptive technologies can cannibalize existing demand</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: REVENUE APPROACHES TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Revenue Forecast Approaches — Master Reference Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Forecast Object</th>
+            <th>Approach</th>
+            <th>Example Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Top-down: Market size &amp; market share</td>
+            <td><span class="tag tag-green">Historical Results</span></td>
+            <td>US retail ex-autos grew avg. 3.4%/yr for 10 years; company's share grew 2 bps/yr → assume both continue</td>
+          </tr>
+          <tr>
+            <td>Top-down: Market size &amp; market share</td>
+            <td><span class="tag tag-blue">Base Rates</span></td>
+            <td>Forecast that sales growth rate converges to market growth rate over 5 years (market share gains decline smoothly to 0 bps)</td>
+          </tr>
+          <tr>
+            <td>Top-down: Market size &amp; market share</td>
+            <td><span class="tag tag-yellow">Mgmt Guidance</span></td>
+            <td>Use management's annual/long-term expectations for market size, market share, or sales</td>
+          </tr>
+          <tr>
+            <td>Top-down: Market size &amp; market share</td>
+            <td><span class="tag tag-red">Discretionary</span></td>
+            <td>Commission a market share study by region → develop market size &amp; share estimates by established/growing/new regions → aggregate</td>
+          </tr>
+          <tr>
+            <td>Bottom-up: Stores &amp; sales/store</td>
+            <td><span class="tag tag-green">Historical Results</span></td>
+            <td>Opened 4–6 stores/yr, grew net sales/store 3.8%/yr, added ~450K members/yr for 10 years → assume same forward</td>
+          </tr>
+          <tr>
+            <td>Bottom-up: Stores &amp; sales/store</td>
+            <td><span class="tag tag-blue">Base Rates</span></td>
+            <td>Mature retailers have stopped opening new stores → gradually slow new-store openings to zero</td>
+          </tr>
+          <tr>
+            <td>Bottom-up: Stores &amp; sales/store</td>
+            <td><span class="tag tag-yellow">Mgmt Guidance</span></td>
+            <td>Management provides guidance on new-store openings/yr and annual membership price</td>
+          </tr>
+          <tr>
+            <td>Bottom-up: Stores &amp; sales/store</td>
+            <td><span class="tag tag-red">Discretionary</span></td>
+            <td>Determine stores/capita and members/store in mature geographies → apply (with haircut) to newer geographies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: OPERATING EXPENSES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Forecasting Operating Expenses</h2>
+    </div>
+
+    <div class="card">
+      <p>Issuer disclosures about operating costs are typically <strong>less detailed than revenue disclosures</strong>. Analysts are often forced to use more aggregated forecast objects: consolidated financial statement lines (cost of sales, SG&amp;A) or summary measures (EBITDA margins) on a consolidated or segment basis.</p>
+      <p><strong>Key coherence principle:</strong> Cost forecasts must be coherent with revenue forecasts. If a relatively low-margin product/segment/geography is expected to grow faster than the rest, some margin deterioration should be forecasted — even without knowing precise segment margins.</p>
+    </div>
+
+    <h3>Cost of Sales (COGS) / Gross Margin</h3>
+    <div class="card">
+      <p><strong>Best approach:</strong> Forecast as a <strong>percentage of sales (gross margin %)</strong> — because COGS has a direct link with sales.</p>
+      <ul style="margin-top:8px;">
+        <li>Losing market share to lower-priced substitutes → gross margins likely <span class="danger-text">decline</span></li>
+        <li>Gaining share from differentiated products + cost advantages → gross margins likely <span class="highlight3">rise</span></li>
+        <li>COGS is typically the <strong>single largest cost</strong> — even 1 basis point change in gross margin can have a material impact on operating profit and free cash flow</li>
+        <li>For companies with fluctuating input costs: separate analysis into <strong>volume and price components</strong> (especially for low-margin businesses — e.g., airline exposure to unhedged jet fuel costs)</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Important: The Gross Margin Dilution Effect When Costs Are Passed On</div>
+      <div class="f">
+        Scenario: COGS/Sales = 25% initially. Input costs double. Company passes 100% of increase to customers via 25% price increase.<br><br>
+        Period 1: Sales = 100, COGS = 25, Gross Profit = 75 → Gross Margin = 75%<br>
+        Period 2: Sales = 125, COGS = 50, Gross Profit = 75 → Gross Margin = 60%
+      </div>
+      <div class="note">
+        KEY INSIGHT: Even if the absolute gross profit is UNCHANGED ($75 both periods), the gross margin FALLS (75% → 60%) because an equal absolute dollar amount was added to both numerator and denominator of the COGS/Sales ratio.<br>
+        This is a classic exam trap: don't assume "passing on cost increases = stable margins."
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Hedging Strategy Matters for Gross Margin Forecasts</div>
+      <p>Incorporate a company's hedging strategy into the cost forecast. Example: brewers often hedge barley costs <strong>one year in advance</strong>. A company expecting higher input costs may implement <strong>gradual price increases</strong> to avoid a sudden price spike and volume loss. Hedging details are disclosed in the notes to financial statements (though specific positions usually are not).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Gross Margin Comparability Between Companies</div>
+      <p>Competitors' gross margins can be a useful cross-check, but margins may NOT be comparable due to business model differences. Example: a retailer that owns and operates its own stores vs. a wholesaler selling to franchisee retailers — the wholesaler will have a <strong>much lower gross margin</strong> but also much lower operating costs. Comparing their gross margins directly would be misleading.</p>
+    </div>
+
+    <h3>SG&amp;A Expenses</h3>
+    <div class="card">
+      <p>SG&amp;A has a <strong>less direct relationship with revenues</strong> than COGS. Two components have different behaviors:</p>
+      <ul>
+        <li><strong>Selling and distribution expenses:</strong> Large variable component → model as a <span class="highlight">percentage of sales</span></li>
+        <li><strong>General corporate costs:</strong> More fixed → model using a <span class="highlight2">fixed growth rate</span> based on expected wage inflation</li>
+      </ul>
+      <p style="margin-top:10px;">Segment disclosures often include operating/EBITDA margins by segment but generally do NOT include COGS or SG&amp;A by segment. For segment-based models, use summary measures (EBITDA margins) at the segment level.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: WORKING CAPITAL -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Forecasting Working Capital</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Working Capital Forecasting Method</div>
+      <div class="def-body">Working capital forecasts use <strong>efficiency ratios</strong> as the forecast object, combined with revenue and cost forecasts to project accounts receivable, inventories, accounts payable, and other current assets/liabilities. Historical results approach is most common, but all four approaches can be used.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Working Capital Efficiency Ratios — Key Forecast Objects</div>
+      <div class="f">
+        DSO (Days Sales Outstanding) = Accounts Receivable / (Revenue / 365)<br>
+        → Accounts Receivable = DSO × (Revenue / 365)<br><br>
+        DOH (Days of Inventory on Hand) = Inventory / (COGS / 365)<br>
+        → Inventory = DOH × (COGS / 365)<br><br>
+        DPO (Days Payable Outstanding) = Accounts Payable / (COGS / 365)<br>
+        → Accounts Payable = DPO × (COGS / 365)<br><br>
+        Cash Conversion Cycle (CCC) = DSO + DOH − DPO
+      </div>
+      <div class="note">
+        Forecast the ratio (DSO, DOH, DPO) using the selected approach, then multiply by the revenue/COGS forecast to get the balance sheet item.<br>
+        Lower DSO = collecting faster (good). Lower DOH = leaner inventory (good). Higher DPO = paying suppliers slower (good for cash).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Working Capital Approach Selection</div>
+      <p>A company with <strong>structurally better working capital ratios than peers</strong> (due to its business model) should NOT use the peer base rate approach — those better ratios are a feature of its model, not something to converge away from. Example: warehouse clubs typically have very low DSO (near zero — customers pay cash), low DOH, and competitive DPO. Industry average would be irrelevant unless the company changes its business model (e.g., launches e-commerce with credit terms).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: CAPEX AND CAPITAL STRUCTURE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Forecasting Capital Investments &amp; Capital Structure</h2>
+    </div>
+
+    <h3>Capital Expenditures (CapEx)</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Maintenance CapEx</div>
+        <ul>
+          <li>Sustains the <strong>current</strong> business (replaces worn-out assets)</li>
+          <li>Forecast often based on <strong>historical depreciation &amp; amortization expenses</strong> + small upward adjustment for capital goods inflation</li>
+          <li>For businesses with low fixed asset turnover → maintenance CapEx requirements can be very high</li>
+          <li>D&amp;A approximation: gross fixed assets ÷ D&amp;A expense = assumed useful life</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Growth CapEx</div>
+        <ul>
+          <li>Expands the business (new stores, new capacity, etc.)</li>
+          <li>More <strong>discretionary</strong> — tied to management's expansion plans and revenue growth</li>
+          <li>Linked to new-store openings, new geographies, new product launches, etc.</li>
+          <li>Often guided by management's capex outlook</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Balance sheet linkage:</strong> Net PP&amp;E and intangible assets on the balance sheet:</p>
+      <ul>
+        <li>Increase due to capital expenditures</li>
+        <li>Decrease due to depreciation and amortization (D&amp;A) expenses</li>
+        <li>D&amp;A forecast = based on net PP&amp;E and intangibles + assumed useful lives (from management's accounting policies)</li>
+      </ul>
+    </div>
+
+    <h3>Capital Structure</h3>
+    <div class="card">
+      <p>Leverage ratios are the primary forecast objects for projecting future debt and equity levels. Common ratios:</p>
+      <ul>
+        <li><strong>Debt to capital</strong></li>
+        <li><strong>Debt to equity</strong></li>
+        <li><strong>Debt to EBITDA</strong> (most common — also often a debt covenant ratio)</li>
+        <li><strong>Net debt to EBITDA</strong> (debt − cash) / EBITDA</li>
+      </ul>
+      <p style="margin-top:10px;">Three inputs to consider when projecting capital structure:</p>
+      <ol style="padding-left:20px; margin-top:6px;">
+        <li><strong>Historical company practice</strong> — what has the company's leverage looked like over time?</li>
+        <li><strong>Management's financial strategy</strong> — target capital structure, target credit rating, debt covenants</li>
+        <li><strong>Capital expenditure requirements</strong> — implied financing needs from the capex forecast</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>Future gross debt</strong> = Forecast Debt/EBITDA ratio × Forecast EBITDA</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CapEx and Leverage — Coherence Check</div>
+      <p>Capital structure forecasts should be coherent with capex forecasts. A company expanding rapidly (high growth CapEx) may need to increase leverage or issue equity to fund the investment. A mature company slowing store openings (declining growth CapEx) might instead <strong>return capital to shareholders</strong> via buybacks and dividends — and increase leverage (following peer norms), as mature retailers often do.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: SCENARIO ANALYSIS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Scenario Analysis</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Scenario Analysis</div>
+      <div class="def-body">Rather than a single point estimate, analysts develop <strong>multiple forecast scenarios</strong> based on different outcomes for key risk factors, and judge the likelihood of each scenario. Used when there is a wide range of potential outcomes (e.g., a binary event like clinical trial results, regulatory approval, or technological adoption rate).</div>
+    </div>
+
+    <div class="card">
+      <p>Generic risk factors that affect all companies (to varying degrees):</p>
+      <ul>
+        <li>Changes in the <strong>business cycle</strong></li>
+        <li><strong>Competition</strong></li>
+        <li><strong>Inflation and deflation</strong></li>
+        <li><strong>Technological developments</strong></li>
+      </ul>
+      <p style="margin-top:10px;">Technological developments can affect:</p>
+      <ul>
+        <li><strong>Demand</strong> for a product (new substitute → demand curve shifts left → lower quantity or price)</li>
+        <li><strong>Supply</strong> of a product (lower manufacturing costs → supply curve shifts right → lower prices at same or higher quantity)</li>
+      </ul>
+    </div>
+
+    <h3>Three Scenarios: Bull, Base, Bear</h3>
+    <div class="three-col">
+      <div class="scenario-bull">
+        <div class="scenario-label">🐂 Bull Case</div>
+        <p>Optimistic assumptions on key risk factors. E.g., clinical trial succeeds; technology adoption is slow; competitive intensity decreases. Results in highest revenue, margin, and EPS estimates.</p>
+      </div>
+      <div class="scenario-base">
+        <div class="scenario-label">📊 Base Case</div>
+        <p>Most likely set of assumptions — analyst's best estimate of the most probable future. Center of the scenario distribution. Used as the primary forecast for valuation.</p>
+      </div>
+      <div class="scenario-bear">
+        <div class="scenario-label">🐻 Bear Case</div>
+        <p>Pessimistic assumptions. E.g., technology cannibalizes demand faster than expected; competition intensifies; regulatory environment worsens. Results in lowest revenue, margin, and EPS estimates.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 How Investors Use Scenarios</div>
+      <p>Investors compare their own scenarios with <strong>sell-side analyst forecasts</strong> and with the <strong>forecasts implied by current market valuations</strong> (i.e., what must be true for the current stock price to be justified). If the market's implied scenario is more optimistic than the analyst's base case, the stock may be overvalued. The analyst adjusts assumptions (sensitivity analysis) to understand how much the outcome changes per unit change in key assumptions.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Scenario vs. Sensitivity Analysis</div>
+      <p><strong>Scenario analysis:</strong> Changes multiple assumptions simultaneously to represent a coherent "world" (e.g., bull/base/bear). Each scenario tells a complete story. <strong>Sensitivity analysis:</strong> Changes <em>one</em> assumption at a time while holding all others constant, to measure the impact of that single variable. Both are tools for understanding forecast uncertainty; they are complementary.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>4 Forecast Objects:</strong> (1) Drivers of financial statement lines (best explanatory value), (2) Individual financial statement lines (for items without clear drivers), (3) Summary measures — free cash flow, EPS, total assets (efficient but less transparent), (4) Ad hoc objects — not yet in historical statements (legal proceedings, regulatory actions, tax disputes, disasters).</li>
+        <li>✅ <strong>Verifiability principle:</strong> Use forecast objects that are regularly disclosed — so forecasts can be confirmed in a timely manner. Third-party consultancy data is fine to inform a forecast but not as a direct forecast object. Avoid overly complex models — more detail ≠ better accuracy.</li>
+        <li>✅ <strong>4 Forecast Approaches:</strong> (1) Historical Results — assume past is precedent; default; NOT for cyclicals or restructuring companies. (2) Historical Base Rates &amp; Convergence — use industry/peer average as base rate; NOT for new/changing industries, cyclicals, or dominant industry leaders. (3) Management Guidance — most important for firm-level objects; NOT for cyclical companies (management has no macro advantage); always check guidance track record; upper bound of range often better represents management's true expectation. (4) Analyst's Discretionary — for cyclicals, no comparables, no guidance, fundamental change.</li>
+        <li>✅ <strong>Management guidance:</strong> Accounts for majority of quarterly financial reporting information used by investors (Beyer et al. 2010). Management advantage = firm-level (expenses, capex). Investor advantage = macroeconomic level (Hutton et al. 2012). Guidance may be suspended in high-uncertainty periods (recessions, COVID-19).</li>
+        <li>✅ <strong>Forecast horizon determinants:</strong> Investment strategy time frame, industry cyclicality (must reach mid-cycle), company-specific factors (recent acquisitions/restructurings), employer's preferences.</li>
+        <li>✅ <strong>Top-down revenue objects:</strong> (1) Growth relative to GDP — nominal GDP forecast × premium/discount based on life cycle position. (2) Market growth and market share — market size × company's share. If GDP-market relationship is predictable → use regression.</li>
+        <li>✅ <strong>GDP revenue formula:</strong> If GDP = 4% and company grows 50% faster → revenue growth = 4% × (1+0.50) = 6.0% = +200 bps. OR if +200 bps premium: revenue = 4% + 2% = 6%.</li>
+        <li>✅ <strong>Market share formula:</strong> Revenue = Market size × Market share %. Example: 8% share × CNY144B = CNY11.5B.</li>
+        <li>✅ <strong>Bottom-up revenue objects:</strong> (1) Volumes × ASP (media: users × ARPU; airlines; asset managers: AUM × fee rate), (2) Product-line/segment revenues, (3) Capacity-based — stores × sales/store, same-store sales growth (≥12 months open), (4) Return/yield-based — bank NII = loans × lending rate − deposits × funding rate.</li>
+        <li>✅ <strong>Non-recurring revenue items:</strong> Must be separated from recurring forecast. Type 1 (disclosed): FX effects, extra selling days, acquisitions/divestitures, one-time gains. Type 2 (analyst judgment): COVID e-commerce boost, crypto GPU demand. Never include in the base recurring forecast.</li>
+        <li>✅ <strong>4 revenue risk factors:</strong> Competition, business cycle changes, inflation/deflation, technological developments. All 4 apply to every company — to varying degrees.</li>
+        <li>✅ <strong>COGS forecasting:</strong> Best as % of sales (gross margin %). Low-margin companies — break into volume and price components. Gross margin falls even when cost increases are fully passed on to customers (because adding equal absolute amounts to numerator AND denominator reduces the ratio — e.g., COGS/Sales goes from 25% to 40% when input costs double and prices rise 25%).</li>
+        <li>✅ <strong>SG&amp;A forecasting:</strong> Less direct link to revenue than COGS. Selling &amp; distribution = variable → % of sales. General corporate costs = more fixed → fixed growth rate (tied to wage inflation). Segments: use EBITDA margins (individual cost lines not usually disclosed by segment).</li>
+        <li>✅ <strong>Working capital forecasting:</strong> Use efficiency ratios as forecast objects → multiply by revenue or COGS to get balance sheet items. DSO → accounts receivable. DOH → inventory. DPO → accounts payable. CCC = DSO + DOH − DPO (lower is better for cash generation).</li>
+        <li>✅ <strong>CapEx — two types:</strong> Maintenance CapEx = sustains current business; typically forecast as ≈ D&amp;A + inflation adjustment. Growth CapEx = expansion; discretionary; tied to management's expansion plan and revenue growth. Net PP&amp;E increases with CapEx, decreases with D&amp;A.</li>
+        <li>✅ <strong>Capital structure forecasting:</strong> Use leverage ratios as forecast objects: Debt/Capital, Debt/Equity, Debt/EBITDA. Future gross debt = Forecast Debt/EBITDA × Forecast EBITDA. Consider: historical practice, management's target structure, debt covenant ratios, CapEx requirements.</li>
+        <li>✅ <strong>Scenario analysis:</strong> Multiple coherent forecasts based on different outcomes for key risk factors, each with a judged probability. Used when wide range of outcomes is possible (binary events, cyclical exposure, technological disruption). Bull (optimistic) / Base (most likely) / Bear (pessimistic). Investors compare analyst scenarios with sell-side consensus and market-implied expectations.</li>
+        <li>✅ <strong>Scenario vs. sensitivity:</strong> Scenario = multiple assumptions change simultaneously (coherent "world"). Sensitivity = one assumption changes at a time, all others held constant. Complementary tools.</li>
+        <li>✅ <strong>Coherence principle:</strong> Revenue forecasts, cost forecasts, working capital forecasts, capex forecasts, and capital structure forecasts must all be internally consistent. If a low-margin product segment grows faster → forecast some margin compression even without knowing the precise segment margin.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas &amp; Relationships — Quick Reference</div>
+      <div class="f">
+        Revenue (Top-Down): Growth = GDP growth × (1 + premium rate)  OR  GDP growth + bps premium<br>
+        Revenue (Market Share): Revenue = Market size × Market share %<br>
+        Revenue (Bottom-Up): Revenue = Volume × Average Selling Price (ASP)<br>
+        Net Interest Income (Bank): NII = (Loans × Avg lending rate) − (Deposits × Avg funding rate)<br><br>
+        COGS as % of Sales = COGS / Net Sales  →  Gross Margin = 1 − (COGS/Sales)<br><br>
+        DSO = Accounts Receivable / (Revenue / 365)  →  AR = DSO × (Revenue / 365)<br>
+        DOH = Inventory / (COGS / 365)  →  Inventory = DOH × (COGS / 365)<br>
+        DPO = Accounts Payable / (COGS / 365)  →  AP = DPO × (COGS / 365)<br>
+        CCC = DSO + DOH − DPO<br><br>
+        Net PP&amp;E (end) = Net PP&amp;E (beg) + CapEx − D&amp;A<br>
+        Gross Debt = Forecast Debt/EBITDA ratio × Forecast EBITDA<br>
+        Useful Life ≈ Gross Fixed Assets / D&amp;A Expense
+      </div>
+      <div class="note">
+        4 Forecast Objects: Drivers · Individual Lines · Summary Measures · Ad Hoc<br>
+        4 Forecast Approaches: Historical Results · Base Rates &amp; Convergence · Management Guidance · Analyst Discretionary<br>
+        2 Revenue Directions: Top-Down (GDP growth, market share) · Bottom-Up (volume × price, stores × sales/store, AUM × fee)<br>
+        2 CapEx Types: Maintenance (≈ D&amp;A) · Growth (expansion plans)<br>
+        3 Scenario Types: Bull · Base · Bear<br>
+        Gross margin trap: passing cost increases on to customers ≠ stable gross margin % — the ratio still falls
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 7: Company Analysis: Forecasting · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 1: Portfolio Risk and Return Part I</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14100d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .investor-block { border-radius: 6px; padding: 20px 24px; margin: 14px 0; }
+  .investor-averse { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.35); }
+  .investor-neutral { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.35); }
+  .investor-seeking { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.35); }
+  .investor-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 12px; text-transform: uppercase; }
+  .investor-averse .investor-label { color: var(--accent3); }
+  .investor-neutral .investor-label { color: var(--accent2); }
+  .investor-seeking .investor-label { color: var(--accent); }
+  .investor-block ul { padding-left: 20px; }
+  .investor-block li { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+
+  .bias-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+  .bias-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--accent2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .bias-body { font-size: 14px; color: var(--text); }
+
+  .corr-block { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; }
+  .corr-value { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .corr-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .corr-body { font-size: 13.5px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 1</div>
+  <h1>Portfolio Risk and <span>Return: Part I</span></h1>
+  <p>Exam-ready notes: historical risk and return of asset classes, risk aversion and utility theory, indifference curves, portfolio variance and correlation, diversification benefits, minimum-variance frontier, Markowitz efficient frontier, capital allocation line, optimal risky portfolio, and two-fund separation theorem.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Historical Risk &amp; Return</a>
+  <a class="toc-item" href="#s2">02 · Other Investment Characteristics</a>
+  <a class="toc-item" href="#s3">03 · Risk Aversion</a>
+  <a class="toc-item" href="#s4">04 · Utility &amp; Indifference Curves</a>
+  <a class="toc-item" href="#s5">05 · Portfolio Return &amp; Risk</a>
+  <a class="toc-item" href="#s6">06 · Correlation &amp; Diversification</a>
+  <a class="toc-item" href="#s7">07 · Many-Asset Portfolios</a>
+  <a class="toc-item" href="#s8">08 · Avenues for Diversification</a>
+  <a class="toc-item" href="#s9">09 · Efficient Frontier</a>
+  <a class="toc-item" href="#s10">10 · CAL &amp; Optimal Portfolio</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: HISTORICAL RISK AND RETURN -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Historical Return &amp; Risk of Asset Classes</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Historical Return vs. Expected Return</div>
+      <div class="def-body"><strong>Historical return</strong> = what was actually earned in the past. <strong>Expected return</strong> = what an investor anticipates earning in the future. The two are <em>conceptually different</em> but often, historical mean is used as a proxy for expected return (an imperfect but common assumption).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Formula — Expected Return Decomposition</div>
+      <div class="f">1 + E(R) = (1 + r<sub>rF</sub>) × [1 + E(π)] × [1 + E(RP)]</div>
+      <div class="note">
+        r<sub>rF</sub> = real risk-free interest rate (compensation for postponing consumption)<br>
+        E(π) = expected inflation rate<br>
+        E(RP) = expected risk premium for asset's risk<br>
+        All three components are typically positive → expected nominal return is generally positive.
+      </div>
+    </div>
+
+    <h3>Historical Performance Rankings (1926–2017, US Data)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Asset Class</th>
+            <th>Nominal Return</th>
+            <th>Risk (σ)</th>
+            <th>Key Observation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Small company stocks</td>
+            <td>12.1%</td>
+            <td>31.7%</td>
+            <td>Highest return AND highest risk. Never had a negative decade</td>
+          </tr>
+          <tr>
+            <td>Large company stocks</td>
+            <td>10.2%</td>
+            <td>19.8%</td>
+            <td>Negative in 1930s &amp; 2000s; best in 1950s &amp; 1990s</td>
+          </tr>
+          <tr>
+            <td>Long-term corporate bonds</td>
+            <td>6.1%</td>
+            <td>8.3%</td>
+            <td>Never had a negative decade</td>
+          </tr>
+          <tr>
+            <td>Long-term government bonds</td>
+            <td>5.5%</td>
+            <td>9.9%</td>
+            <td>⚠️ Higher risk than corporates (unusual) — 1950s negative</td>
+          </tr>
+          <tr>
+            <td>Treasury bills</td>
+            <td>3.4%</td>
+            <td>3.1%</td>
+            <td>Lowest risk; only negative in 1938 (deflation)</td>
+          </tr>
+          <tr>
+            <td>Inflation</td>
+            <td>2.9%</td>
+            <td>4.0%</td>
+            <td>Ranged –10.30% (1932) to +13.31% (1979)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Government vs. Corporate Bond Risk</div>
+      <p>Long-term <strong>government bonds</strong> had HIGHER total risk (9.9%) than long-term <strong>corporate bonds</strong> (8.3%) historically — this does NOT mean they had greater default risk. Government bonds were just more variable in price (due to interest rate sensitivity of longer duration). Don't confuse total risk/volatility with default risk.</p>
+    </div>
+
+    <h3>Risk–Return Trade-off</h3>
+    <div class="card">
+      <p>The <strong>positive relationship between expected risk and return</strong> — higher returns require accepting higher risk in efficient markets over long periods.</p>
+      <ul style="margin-top:8px;">
+        <li>Historical ordering (high → low risk/return): small-cap stocks → large-cap stocks → corporate bonds → government bonds → T-bills</li>
+        <li><strong>Nominal risk premium</strong> = Nominal risky return − Nominal risk-free rate</li>
+        <li><strong>Real risk premium</strong> = Real risky return − Real risk-free rate</li>
+        <li>US equity real risk premium over bonds (1900–2017): 4.4% geometric, 6.5% arithmetic</li>
+        <li>The positive historical relationship confirms that representative investors are <strong>risk averse</strong> — this is the standard assumption in finance</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Geometric vs. Arithmetic Mean</div>
+      <p><strong>Geometric mean ≤ Arithmetic mean</strong> (always). Equality only when all returns are identical. Geometric mean is more accurate for <strong>multi-period returns</strong> (it captures compounding); arithmetic mean is better for single-period expectations. The CFA uses geometric mean for long-term historical performance analysis.</p>
+    </div>
+
+    <h3>World vs. US Returns (1900–2017, Real, Geometric Mean)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Equity Return</th>
+            <th>Equity Risk</th>
+            <th>Bond Return</th>
+            <th>Bond Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>United States</td><td>6.5%</td><td>20.0%</td><td>2.0%</td><td>10.4%</td></tr>
+          <tr><td>World (21-country)</td><td>5.2%</td><td>17.4%</td><td>2.0%</td><td>11.0%</td></tr>
+          <tr><td>World ex-US</td><td>4.5%</td><td>18.9%</td><td>1.7%</td><td>14.4%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Diversification Effect — Visible in the Data</div>
+      <p>US equity risk = 20.0%; World-ex-US equity risk = 18.9%; but <strong>World (combining both) risk = only 17.4%</strong>. The combined portfolio has LOWER risk than either component alone — this is diversification in action from imperfect correlation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: OTHER INVESTMENT CHARACTERISTICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Other Investment Characteristics</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Mean-variance analysis assumes:</strong> (1) returns are normally distributed (fully defined by mean &amp; variance), and (2) markets are informationally AND operationally efficient. When these assumptions break down, additional characteristics must be considered.</p>
+    </div>
+
+    <h3>Distributional Characteristics — Deviations from Normality</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Normal Distribution Properties</div>
+        <ul>
+          <li>Mean = Median</li>
+          <li>Symmetric around mean</li>
+          <li>Defined by mean &amp; variance only</li>
+          <li><strong>68%</strong> of obs within ±1σ</li>
+          <li><strong>95%</strong> of obs within ±2σ</li>
+          <li><strong>99%</strong> of obs within ±3σ</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Real Return Distributions</div>
+        <ul>
+          <li><strong>NOT normally distributed</strong></li>
+          <li>Exhibit skewness (asymmetry)</li>
+          <li>Exhibit excess kurtosis (fat tails)</li>
+          <li>Stock returns typically <strong>negatively skewed</strong></li>
+          <li>Mean-variance framework may understate risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Skewness</div>
+      <div class="def-body">Asymmetry of the return distribution. <strong>Negative (left) skew</strong>: distribution concentrated to the right, with a long left tail → more extreme negative outcomes than normal would predict. Stock returns typically show negative skewness. <strong>Positive (right) skew</strong>: distribution concentrated to the left, long right tail.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Kurtosis (Fat Tails)</div>
+      <div class="def-body">Higher-than-normal probability of extreme returns. <strong>Increases asset risk beyond what mean-variance captures</strong>. Addressed by techniques like <strong>Value at Risk (VaR)</strong> and <strong>conditional tail expectations</strong>. Was a major contributing factor to the 2008 financial crisis (extreme events underappreciated).</div>
+    </div>
+
+    <h3>Market Characteristics — Liquidity &amp; Trading Costs</h3>
+    <div class="card">
+      <p><strong>Three components of trading cost:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Brokerage commission</strong> — fixed fees paid to brokers</li>
+        <li><strong>Bid-ask spread</strong> — difference between buying and selling price (affected by liquidity)</li>
+        <li><strong>Price impact</strong> — how much the price moves in response to an order (affected by liquidity)</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Bid-Ask Spread as % of Price</div>
+      <div class="f">Bid-Ask Spread % = Spread ÷ Price</div>
+      <div class="note">
+        Example: $100 stock with $0.10 spread → 0.1% cost<br>
+        $10 stock with $0.10 spread → 1.0% cost (10× more expensive to trade!)<br>
+        Lower-priced and less-liquid stocks have higher percentage trading costs.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Liquidity Matters Most When...</div>
+      <p>Liquidity concerns are more severe in: <strong>emerging markets</strong> (lower trading volumes), <strong>corporate bond markets</strong> (especially low credit quality — bonds may not trade for days/weeks), <strong>small-cap stocks</strong>, and for <strong>large institutional orders</strong> (greater price impact). Became especially apparent during 2008 global financial crisis.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: RISK AVERSION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Risk Aversion &amp; Investor Types</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Classic Test</strong>: Investor offered two alternatives with <em>same expected value of £50</em>:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Option A</strong>: Guaranteed £50 (certain outcome)</li>
+        <li><strong>Option B</strong>: 50% chance of £100, 50% chance of £0 (gamble, E = £50)</li>
+      </ul>
+      <p style="margin-top:10px;">The investor's choice reveals their risk preference type.</p>
+    </div>
+
+    <div class="investor-block investor-averse">
+      <div class="investor-label">RISK AVERSE — Chooses the Guaranteed Outcome</div>
+      <ul>
+        <li><strong>Behavior</strong>: Prefers certain £50 over the gamble. May even accept £45 guaranteed over the £50 gamble</li>
+        <li><strong>Key principle</strong>: Wants to minimize risk for given return; maximize return for given risk</li>
+        <li><strong>Risk aversion coefficient (A)</strong>: <span class="highlight3">A &gt; 0</span></li>
+        <li><strong>Requires compensation</strong> (positive risk premium) to accept additional risk</li>
+        <li><strong>This is the STANDARD ASSUMPTION</strong> for the representative investor in all CFA finance theory</li>
+        <li>Historical positive risk-return trade-off is <em>evidence</em> that markets are priced by risk-averse investors</li>
+      </ul>
+    </div>
+
+    <div class="investor-block investor-neutral">
+      <div class="investor-label">RISK NEUTRAL — Indifferent Between Choices</div>
+      <ul>
+        <li><strong>Behavior</strong>: Only cares about return, NOT risk. Indifferent between the gamble and certain £50</li>
+        <li><strong>Risk aversion coefficient (A)</strong>: <span class="highlight2">A = 0</span></li>
+        <li>Prefers higher return regardless of risk</li>
+        <li>Billionaires may exhibit risk-neutral behavior for trivial amounts (small fraction of wealth)</li>
+      </ul>
+    </div>
+
+    <div class="investor-block investor-seeking">
+      <div class="investor-label">RISK SEEKING (RISK LOVING) — Chooses the Gamble</div>
+      <ul>
+        <li><strong>Behavior</strong>: Derives extra utility from uncertainty. May accept gamble with E = £45 over certain £50</li>
+        <li><strong>Risk aversion coefficient (A)</strong>: <span class="highlight">A &lt; 0</span></li>
+        <li>Additional risk INCREASES utility</li>
+        <li>Examples: lottery tickets, casino gambling (expected value is negative but players still participate)</li>
+        <li>Note: isolated risky actions ≠ overall risk-seeking preference; only compulsive gamblers are truly risk-seeking</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Tolerance</div>
+      <div class="def-body">The amount of risk an investor can tolerate to achieve an investment goal. Higher risk tolerance = greater willingness to take risk. <strong>Risk tolerance is inversely related to risk aversion</strong> (high tolerance ↔ low aversion).</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — The Three Investor Types</div>
+      <p><strong>"ANS"</strong>: <span class="highlight3">A</span>verse (A &gt; 0, demands premium) · <span class="highlight2">N</span>eutral (A = 0, ignores risk) · <span class="highlight">S</span>eeking (A &lt; 0, pays for risk). Risk aversion coefficient A decreases as you become less averse and eventually goes negative for risk seekers.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: UTILITY THEORY & INDIFFERENCE CURVES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Utility Theory &amp; Indifference Curves</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ THE UTILITY FUNCTION ★ (Memorize!)</div>
+      <div class="f">U = E(r) − ½ A σ²</div>
+      <div class="note">
+        U = utility derived from the investment<br>
+        E(r) = expected return of the investment<br>
+        A = risk aversion coefficient (higher A → more risk averse)<br>
+        σ² = variance of the investment (NOT standard deviation)<br><br>
+        <strong>Critical</strong>: variance (σ²) is used, not standard deviation. Risk aversion is applied to variance.
+      </div>
+    </div>
+
+    <h3>Properties of the Utility Function</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Unbounded</strong>: can be highly positive or highly negative</li>
+        <li><strong>Higher return → higher utility</strong> (positive first term)</li>
+        <li><strong>Higher variance → lower utility</strong> for risk-averse investor (negative second term)</li>
+        <li><strong>Effect amplified by A</strong>: the more risk-averse, the larger the reduction in utility from variance</li>
+        <li><strong>Ordinal, not cardinal</strong>: utility measures RANKINGS, not absolute satisfaction. U = 4 is NOT "twice as good" as U = 2; we only know it's preferred</li>
+        <li><strong>Not comparable across individuals</strong>: personal concept; cannot be summed or compared between people</li>
+        <li><strong>Risk-free asset (σ² = 0)</strong>: generates the <span class="highlight3">same utility for ALL individuals</span> regardless of their A</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Investor Type</th>
+            <th>Risk Aversion (A)</th>
+            <th>Effect of Risk on Utility</th>
+            <th>Indifference Curve</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Risk Averse</td><td>A &gt; 0</td><td>Risk reduces utility</td><td>Upward-sloping &amp; convex</td></tr>
+          <tr><td>Highly Risk Averse</td><td>A very large</td><td>Large reduction in utility from risk</td><td><strong>Steep</strong> upward-sloping convex</td></tr>
+          <tr><td>Less Risk Averse</td><td>A small but positive</td><td>Small reduction from risk</td><td><strong>Flat</strong> upward-sloping convex</td></tr>
+          <tr><td>Risk Neutral</td><td>A = 0</td><td>No effect</td><td><strong>Horizontal</strong> (utility independent of risk)</td></tr>
+          <tr><td>Risk Seeking</td><td>A &lt; 0</td><td>Risk increases utility</td><td><strong>Downward-sloping</strong> (negative slope)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Indifference Curve</div>
+      <div class="def-body">A set of risk-return combinations that provide the <strong>same utility</strong> to an investor. The investor is "indifferent" between any two points on the same curve. Plotted in (σ, E(R)) space with σ on x-axis and E(R) on y-axis.</div>
+    </div>
+
+    <h3>Properties of Indifference Curves (for Risk-Averse Investors)</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Upward-sloping</strong>: higher risk requires higher return to maintain utility (risk-return trade-off)</li>
+        <li><strong>Convex</strong> (curves upward): due to <strong>diminishing marginal utility of return/wealth</strong> — as risk increases, investor needs an INCREASING amount of return per additional unit of risk</li>
+        <li><strong>Higher curves = higher utility</strong>: investors want to move <strong>NORTHWEST</strong> (more return, less risk)</li>
+        <li><strong>Curves never intersect</strong> for same individual (by transitivity: if X preferred to Y and Y to Z, then X preferred to Z)</li>
+        <li><strong>Slope ∝ risk aversion</strong>: steeper slope = more risk averse</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "Move Northwest"</div>
+      <p>Risk-averse investors always want to go <strong>northwest</strong> on the risk-return graph: <strong>N</strong>orth (higher return) + <strong>W</strong>est (lower risk) = higher utility. If an exam question asks "which point has highest utility," look for the point furthest northwest that is still achievable.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Variance vs. Standard Deviation in Utility</div>
+      <p>The utility formula uses <strong>variance (σ²)</strong>, NOT standard deviation. If σ = 20% = 0.20, then σ² = 0.04. Common mistake: plugging in 0.20 instead of 0.04. Also: when return is in decimal form, utility comes out in decimal form.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Example Calculation</div>
+      <div class="f">
+        Portfolio: E(r) = 10% = 0.10, σ = 15% = 0.15, A = 3<br>
+        σ² = 0.15² = 0.0225<br>
+        U = 0.10 − ½ × 3 × 0.0225 = 0.10 − 0.03375<br>
+        U = 0.06625 (or 6.625%)
+      </div>
+      <div class="note">
+        For a risk-neutral investor (A=0): U = E(r) = 0.10 (highest utility goes to highest return regardless of risk).<br>
+        For a more risk-averse investor (A=5): U = 0.10 − ½(5)(0.0225) = 0.04375 (lower utility).
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: PORTFOLIO RETURN & RISK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Portfolio Return &amp; Portfolio Risk</h2>
+    </div>
+
+    <h3>Portfolio Return — Always a Weighted Average</h3>
+
+    <div class="formula-box">
+      <div class="label">Portfolio Return (N assets)</div>
+      <div class="f">
+        R<sub>P</sub> = Σ w<sub>i</sub> R<sub>i</sub> &nbsp;&nbsp;&nbsp; where Σ w<sub>i</sub> = 1
+      </div>
+      <div class="note">
+        w<sub>i</sub> = weight of asset i in portfolio<br>
+        R<sub>i</sub> = return of asset i<br>
+        <strong>Weights must sum to 1</strong> (including cash/risk-free).<br>
+        Weights are constant over the single period (no cash flows).
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Two-Asset Portfolio Return</div>
+      <div class="f">R<sub>P</sub> = w<sub>1</sub>R<sub>1</sub> + (1 − w<sub>1</sub>)R<sub>2</sub></div>
+      <div class="note">Example: 25% in Asset 1 (20% return) + 75% in Asset 2 (5% return) = 0.25(20) + 0.75(5) = 8.75%</div>
+    </div>
+
+    <h3>Portfolio Variance — NOT a Simple Weighted Average</h3>
+
+    <div class="formula-box">
+      <div class="label">★ Portfolio Variance — Two Assets (using Covariance) ★</div>
+      <div class="f">σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ Cov(R₁, R₂)</div>
+      <div class="note">Contains two variance terms plus one COVARIANCE cross-term (multiplied by 2).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Portfolio Variance — Two Assets (using Correlation) ★</div>
+      <div class="f">σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ ρ₁₂ σ₁ σ₂</div>
+      <div class="note">
+        Uses the identity: Cov(R₁,R₂) = ρ₁₂ × σ₁ × σ₂<br>
+        This is the <strong>most commonly tested</strong> form of the formula.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Portfolio Standard Deviation (Two Assets) ★</div>
+      <div class="f">σ<sub>P</sub> = √(w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρ₁₂σ₁σ₂)</div>
+      <div class="note">Take square root of the variance. This is the KEY formula for exam problems.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Covariance ↔ Correlation Relationship</div>
+      <div class="f">
+        Cov(R₁, R₂) = ρ₁₂ × σ₁ × σ₂<br><br>
+        Equivalently: ρ₁₂ = Cov(R₁, R₂) ÷ (σ₁ × σ₂)
+      </div>
+      <div class="note">
+        Covariance is <strong>unbounded</strong> (can be any real number), making it hard to interpret.<br>
+        Correlation is <strong>bounded between −1 and +1</strong>, making it more intuitive.<br>
+        Both contain the same directional information about co-movement.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">General Portfolio Variance (N Assets)</div>
+      <div class="f">
+        σ²<sub>P</sub> = Σ Σ w<sub>i</sub> w<sub>j</sub> Cov(R<sub>i</sub>, R<sub>j</sub>)<br><br>
+        = Σ w<sub>i</sub>² Var(R<sub>i</sub>) + Σ<sub>i≠j</sub> w<sub>i</sub> w<sub>j</sub> Cov(R<sub>i</sub>, R<sub>j</sub>)
+      </div>
+      <div class="note">
+        First term: N variance terms (own variance of each asset).<br>
+        Second term: N(N−1) covariance terms (all pairs, i ≠ j).<br>
+        Note: Cov(R<sub>i</sub>, R<sub>i</sub>) = Var(R<sub>i</sub>) — an asset's covariance with itself equals its variance.
+      </div>
+    </div>
+
+    <h3>Portfolio Return vs. Portfolio Risk — The Critical Distinction</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Measure</th><th>Formula</th><th>Weighted Average?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Portfolio Return</td>
+            <td>R<sub>P</sub> = Σ w<sub>i</sub>R<sub>i</sub></td>
+            <td><span class="tag tag-green">YES — always</span></td>
+          </tr>
+          <tr>
+            <td>Portfolio Variance</td>
+            <td>Contains cross-terms with covariance</td>
+            <td><span class="tag tag-red">NO — except when ρ = +1</span></td>
+          </tr>
+          <tr>
+            <td>Portfolio Std. Dev.</td>
+            <td>σ<sub>P</sub> = √σ²<sub>P</sub></td>
+            <td><span class="tag tag-red">NO — except when ρ = +1</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Portfolio Risk is NEVER Just the Weighted Average</div>
+      <p>The #1 mistake: calculating σ<sub>P</sub> as (w<sub>1</sub>σ<sub>1</sub> + w<sub>2</sub>σ<sub>2</sub>). This is <strong>ONLY correct when ρ₁₂ = +1</strong>. For any ρ &lt; +1, portfolio std. dev. will be LESS than the weighted average — this is the diversification benefit. Always use the full formula with the variance cross-term.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: CORRELATION & DIVERSIFICATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Correlation &amp; Diversification Effects</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Correlation Coefficient (ρ)</div>
+      <div class="def-body">Measures the <strong>consistency or tendency</strong> for two investments to act in a similar way. Bounded between −1 and +1. Determines how much diversification benefit you get from combining two assets.</div>
+    </div>
+
+    <h3>Three Critical Correlation Cases</h3>
+
+    <div class="three-col">
+      <div class="corr-block">
+        <div class="corr-label">Perfect Positive Correlation</div>
+        <div class="corr-value">ρ = +1</div>
+        <div class="corr-body">Assets move <strong>together 100%</strong> of the time. <span class="danger-text">NO diversification benefit.</span> Portfolio std. dev. = weighted average of individual std. devs.</div>
+      </div>
+      <div class="corr-block">
+        <div class="corr-label">Uncorrelated</div>
+        <div class="corr-value">ρ = 0</div>
+        <div class="corr-body">Movement of one asset provides <strong>no prediction</strong> about the other. Some diversification benefit; cross-term in variance becomes 0.</div>
+      </div>
+      <div class="corr-block">
+        <div class="corr-label">Perfect Negative Correlation</div>
+        <div class="corr-value">ρ = −1</div>
+        <div class="corr-body">Assets move in <strong>opposite directions 100%</strong> of the time. <span class="highlight3">Maximum diversification possible.</span> Portfolio can be made <strong>riskless</strong> with correct weights.</div>
+      </div>
+    </div>
+
+    <h3>The Mathematical Proof of Diversification</h3>
+
+    <div class="formula-box">
+      <div class="label">Special Case: ρ₁₂ = +1 (Perfect Positive Correlation)</div>
+      <div class="f">
+        σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂σ₁σ₂<br>
+        = (w₁σ₁ + w₂σ₂)²  ← perfect square!<br><br>
+        σ<sub>P</sub> = w₁σ₁ + w₂σ₂
+      </div>
+      <div class="note">
+        When ρ = +1, portfolio std. dev. IS a weighted average → NO diversification.<br>
+        <strong>Both risk AND return are weighted averages → combining offers no benefit.</strong>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">General Case: ρ₁₂ &lt; +1 (Diversification Occurs)</div>
+      <div class="f">
+        σ<sub>P</sub> = √(w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρ₁₂σ₁σ₂) &lt; (w₁σ₁ + w₂σ₂)
+      </div>
+      <div class="note">
+        Portfolio std. dev. is STRICTLY LESS than the weighted average → <strong>risk reduction via diversification</strong>.<br>
+        Return is still a weighted average → we get <span class="highlight3">lower risk for the same return</span>.
+      </div>
+    </div>
+
+    <h3>Sample Risk-Return Table (Illustrates Diversification)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Asset 1: R=7%, σ=12% · Asset 2: R=15%, σ=25%</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Weight in Asset 1</th>
+            <th>Portfolio Return</th>
+            <th>σ (ρ=1.0)</th>
+            <th>σ (ρ=0.5)</th>
+            <th>σ (ρ=0.2)</th>
+            <th>σ (ρ=−1.0)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0%</td><td>15.0%</td><td>25.0</td><td>25.0</td><td>25.0</td><td>25.0</td></tr>
+          <tr><td>30%</td><td>12.6%</td><td>21.1</td><td>19.6</td><td>18.6</td><td>13.9</td></tr>
+          <tr><td>50%</td><td>11.0%</td><td>18.5</td><td>16.3</td><td>14.9</td><td>6.5</td></tr>
+          <tr><td>70%</td><td>9.4%</td><td>15.9</td><td>13.8</td><td>12.3</td><td><strong>0.9</strong> ← riskless-ish</td></tr>
+          <tr><td>100%</td><td>7.0%</td><td>12.0</td><td>12.0</td><td>12.0</td><td>12.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Observations from the Table</div>
+      <p>
+        <strong>1.</strong> Portfolio return is the SAME for every correlation level (only depends on weights).<br>
+        <strong>2.</strong> At extremes (w=0% and w=100%), portfolio risk equals one asset's risk regardless of ρ.<br>
+        <strong>3.</strong> Lower correlation → lower risk at every intermediate weight.<br>
+        <strong>4.</strong> At ρ = −1, with the right weight (~70% in Asset 1), portfolio can approach ZERO risk.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Concept — Curvilinear Opportunity Set</div>
+      <p>When plotting E(R) vs. σ, the risk-return curve formed by varying portfolio weights is:</p>
+      <ul style="margin-top:6px; padding-left:20px; font-size:14px; color:#dfc8c8;">
+        <li>A <strong>straight line</strong> only when ρ = +1 or ρ = −1 (extremes)</li>
+        <li><strong>Curvilinear (bulges to the left/NW)</strong> for all intermediate ρ values</li>
+        <li>The more the curve bulges left, the more diversification benefit</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: MANY-ASSET PORTFOLIOS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Portfolios of Many Risky Assets</h2>
+    </div>
+
+    <h3>Key Insight — As N Grows, Covariance Dominates</h3>
+
+    <div class="formula-box">
+      <div class="label">Portfolio Variance with Equal Weights (1/N each)</div>
+      <div class="f">
+        σ²<sub>P</sub> = σ̄² / N + [(N−1)/N] × Cov̄
+      </div>
+      <div class="note">
+        σ̄² = average variance across all assets<br>
+        Cov̄ = average covariance across all asset pairs<br><br>
+        <strong>As N → ∞:</strong> first term → 0 (variance contribution vanishes)<br>
+        <strong>As N → ∞:</strong> second term → Cov̄ (covariance dominates)<br><br>
+        <strong>Conclusion</strong>: In large portfolios, covariance between assets accounts for almost ALL portfolio risk.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Portfolio Std. Dev. with Equal Variance &amp; Correlation</div>
+      <div class="f">
+        σ<sub>P</sub> = √[σ²/N + ((N−1)/N) × ρσ²]
+      </div>
+      <div class="note">
+        Assumes all N assets have the same variance σ² and the same pairwise correlation ρ.<br>
+        As N becomes large: first term under the root → 0, leaving:<br>
+        σ<sub>P</sub> ≈ √(ρσ²) = σ√ρ<br><br>
+        If ρ = 0: portfolio risk approaches ZERO as N grows.<br>
+        If ρ &gt; 0: portfolio risk floor = σ√ρ (cannot diversify below this).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Profound Conclusion</div>
+      <p>In a well-diversified portfolio, <strong>individual asset variance becomes irrelevant</strong> — what matters is the <strong>average covariance</strong> between assets. This is why we care so much about correlation: it determines the minimum risk we can achieve through diversification.</p>
+    </div>
+
+    <h3>Historical Risk vs. Historical Correlation</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Risk (volatility)</strong>: relatively stable across decades for a given asset class (though bonds have been riskier in recent decades). Historical risk is a <strong>reasonable proxy for future risk</strong></li>
+        <li><strong>Within-country correlations</strong>: quite stable among assets of the same country</li>
+        <li><strong>Between-country correlations</strong>: have been <strong>RISING</strong> in recent decades due to globalization and economic liberalization → reduced international diversification benefit</li>
+        <li><strong>Correlation &gt; 0.90</strong>: considered HIGH — assets don't offer much diversification</li>
+        <li><strong>Correlation &lt; 0.50</strong>: DESIRABLE for portfolio diversification</li>
+      </ul>
+    </div>
+
+    <h3>Historical Correlations Among US Asset Classes (1970–2017)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Asset Pair</th><th>Correlation</th><th>Diversification Benefit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>US Large-cap ↔ US Small-cap</td><td>~0.70</td><td>Moderate (highest)</td></tr>
+          <tr><td>US Large-cap ↔ International Stocks</td><td>~0.66</td><td>Moderate</td></tr>
+          <tr><td>International ↔ US Small-cap</td><td>~0.50</td><td>Good</td></tr>
+          <tr><td>Stocks ↔ Long-term Government Bonds</td><td>Near zero or negative</td><td><span class="tag tag-green">Excellent</span></td></tr>
+          <tr><td>T-bills ↔ Stocks</td><td>≈ 0</td><td><span class="tag tag-green">Excellent</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: AVENUES FOR DIVERSIFICATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Avenues for Diversification</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">✓ Diversify with Asset Classes</div>
+        <p>Correlations among major asset classes are typically LOW. Include: domestic large/small caps, growth/value, corporate/government bonds, T-bills, emerging/developed markets, real estate, commodities (gold).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">✓ Diversify with Index Funds</div>
+        <p>Cost-effective way to get broad exposure. A single asset class needs ~30 stocks; 10 asset classes = 300 securities → expensive. ETFs and index mutual funds are preferable for small portfolios.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">✓ Diversify Across Countries</div>
+        <p>Different industry focus, economic policies, political climates. Currency returns are uncorrelated with stock returns → extra risk reduction. Include foreign investments in diversified portfolios.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">✗ Avoid Employer's Stock Overexposure</div>
+        <p>You already have massive <strong>human capital</strong> tied to your employer (salary, promotions, job security). Additional stock investment = concentration risk. Evaluate employer stock like any other investment.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">✓ Buy Insurance for Risky Portfolios</div>
+        <p>Insurance has <strong>negative correlation</strong> with assets (pays when assets lose value). Over time has negative expected return BUT reduces tail risk. Classic risk-return trade-off example.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">✓ Gold, Commodities &amp; Put Options</div>
+        <p>Gold historically negatively correlated with stocks. Put options pay when underlying falls (negative correlation). Both have low/negative expected returns but provide portfolio protection against catastrophic losses.</p>
+      </div>
+    </div>
+
+    <h3>Rule for Adding an Asset to a Portfolio</h3>
+
+    <div class="formula-box">
+      <div class="label">★ Condition for Adding a New Asset ★</div>
+      <div class="f">
+        Add asset "new" to portfolio "p" if:<br><br>
+        [E(R<sub>new</sub>) − R<sub>f</sub>] / σ<sub>new</sub> &gt; [E(R<sub>p</sub>) − R<sub>f</sub>] / σ<sub>p</sub> × ρ<sub>new,p</sub><br><br>
+        (Sharpe ratio of new asset &gt; Sharpe ratio of portfolio × correlation)
+      </div>
+      <div class="note">
+        Equivalently: add if the new asset's expected return exceeds:<br>
+        E(R<sub>new</sub>) = R<sub>f</sub> + (σ<sub>new</sub>ρ<sub>new,p</sub> / σ<sub>p</sub>) × [E(R<sub>p</sub>) − R<sub>f</sub>]<br><br>
+        Key insight: a low correlation (ρ<sub>new,p</sub>) makes the RHS smaller → <strong>easier to justify adding the asset</strong>.<br>
+        Low-correlation assets are valuable even with modest returns; high-correlation assets need strong returns to justify inclusion.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Insurance Makes Sense Despite Negative Returns</div>
+      <p>Insurance has negative expected return, BUT its correlation with your portfolio is <strong>negative</strong> (or near zero). In the "add asset" formula, negative ρ means the RHS threshold becomes NEGATIVE — so even a small negative return can satisfy the condition. <strong>Never reject an asset just because its expected return is low; consider its correlation.</strong></p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Costs of Adding Assets</div>
+      <p>Every new asset comes with costs: trading costs, tracking costs, and potentially REDUNDANT exposure (if the "new" asset is in an asset class you already own). Diversification has diminishing returns — beyond a point, more assets just add complexity without meaningful risk reduction.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: EFFICIENT FRONTIER -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>The Efficient Frontier of Risky Assets</h2>
+    </div>
+
+    <h3>Building Up: From Two Assets to the Frontier</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Two assets, ρ = +1</strong>: risk-return opportunity set = straight line connecting them</li>
+        <li><strong>Two assets, ρ &lt; +1</strong>: opportunity set curves/bulges to the left (toward NW) — diversification benefit visible</li>
+        <li><strong>Adding more assets</strong>: opportunity set expands; new combinations become possible</li>
+        <li><strong>All investable assets</strong>: the totality forms the <strong>investment opportunity set</strong> — a region in (σ, E(R)) space containing all achievable portfolios</li>
+        <li>Adding asset classes (e.g., international assets) shifts the opportunity set further <span class="highlight3">NORTHWEST</span> — better risk-return trade-offs</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Investment Opportunity Set</div>
+      <div class="def-body">The set of all portfolios that can be constructed from available investable assets. Includes all possible combinations of weights across all available securities. Forms a region in risk-return space with a left-boundary curve (the minimum-variance frontier).</div>
+    </div>
+
+    <h3>The Three Key Concepts on the Frontier</h3>
+
+    <div class="investor-block investor-averse">
+      <div class="investor-label">1. MINIMUM-VARIANCE FRONTIER</div>
+      <ul>
+        <li><strong>Definition</strong>: The set of portfolios offering the <strong>minimum risk for each given level of expected return</strong></li>
+        <li>Forms the LEFT-BOUNDARY of the investment opportunity set</li>
+        <li>Includes BOTH the upper portion (efficient) AND the lower portion (inefficient)</li>
+        <li>No rational investor would hold a portfolio <em>to the right of</em> this frontier (same return, higher risk)</li>
+      </ul>
+    </div>
+
+    <div class="investor-block investor-neutral">
+      <div class="investor-label">2. GLOBAL MINIMUM-VARIANCE PORTFOLIO (GMVP)</div>
+      <ul>
+        <li><strong>Definition</strong>: The SINGLE portfolio with the <strong>LOWEST risk among ALL portfolios</strong> of risky assets</li>
+        <li>The <strong>LEFT-MOST point</strong> on the minimum-variance frontier</li>
+        <li>No portfolio of risky assets can have lower risk than GMVP (without adding a risk-free asset)</li>
+        <li>Found by solving: minimize σ<sub>P</sub> subject to Σw<sub>i</sub> = 1</li>
+      </ul>
+    </div>
+
+    <div class="investor-block investor-seeking">
+      <div class="investor-label">3. MARKOWITZ EFFICIENT FRONTIER</div>
+      <ul>
+        <li><strong>Definition</strong>: The portion of the minimum-variance frontier <strong>ABOVE and to the RIGHT of the GMVP</strong></li>
+        <li>Contains portfolios offering the <strong>highest return for each level of risk</strong></li>
+        <li>Contains ALL rational portfolio choices for risk-averse investors</li>
+        <li>Below GMVP: portfolios are <span class="danger-text">INEFFICIENT</span> (another portfolio exists with same risk but higher return)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Visualizing the Frontier — The "Nike Swoosh"</div>
+      <p>The minimum-variance frontier looks like a sideways "C" or "bullet" shape. The <strong>GMVP is the leftmost tip</strong>. The <strong>top half</strong> (above GMVP) is the <strong>efficient frontier</strong>. The <strong>bottom half</strong> (below GMVP) is inefficient — for any portfolio on the bottom, there's one directly above it with same risk but higher return.</p>
+    </div>
+
+    <h3>Slope Behavior on the Efficient Frontier</h3>
+    <div class="card">
+      <ul>
+        <li>As you move RIGHT (east) along the efficient frontier, risk AND return both increase</li>
+        <li>But the <strong>slope DECREASES</strong> (curve flattens) — each additional unit of risk gives SMALLER incremental return</li>
+        <li>This reflects <strong>diminishing marginal returns</strong> — at high risk levels, additional risk yields very little extra return</li>
+        <li>This is why risk-averse investors don't pile unlimited risk into their portfolios</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Three Related but Distinct Concepts</div>
+      <p>
+        <strong>Opportunity Set</strong> = ALL achievable portfolios (a region).<br>
+        <strong>Min-Var Frontier</strong> = LEFT BOUNDARY of the opportunity set (a curve).<br>
+        <strong>Efficient Frontier</strong> = TOP HALF of the min-var frontier (from GMVP upward).<br>
+        <strong>GMVP</strong> = SINGLE point at the LEFT TIP of the curve.<br>
+        Don't confuse these. Exam questions often test whether you can identify which is which on a diagram.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: CAL & OPTIMAL PORTFOLIO -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Capital Allocation Line &amp; Optimal Portfolio</h2>
+    </div>
+
+    <h3>Combining a Risk-Free Asset with a Risky Portfolio</h3>
+
+    <div class="formula-box">
+      <div class="label">Two-Asset Portfolio: Risk-Free + Risky (weight w₁ in risk-free)</div>
+      <div class="f">
+        E(R<sub>P</sub>) = w₁R<sub>f</sub> + (1 − w₁)E(R<sub>i</sub>)<br>
+        σ²<sub>P</sub> = (1 − w₁)² σ²<sub>i</sub>  [σ<sub>f</sub> = 0, covariance terms drop out]<br>
+        σ<sub>P</sub> = (1 − w₁) σ<sub>i</sub>
+      </div>
+      <div class="note">
+        Because the risk-free asset has zero variance AND zero covariance with anything, the variance formula <strong>collapses</strong> to just the risky asset's contribution. This is WHY the CAL is a straight line!
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ CAPITAL ALLOCATION LINE (CAL) ★ (Memorize!)</div>
+      <div class="f">
+        E(R<sub>P</sub>) = R<sub>f</sub> + [(E(R<sub>i</sub>) − R<sub>f</sub>) / σ<sub>i</sub>] × σ<sub>P</sub>
+      </div>
+      <div class="note">
+        <strong>Intercept</strong>: R<sub>f</sub> (risk-free return, where σ<sub>P</sub> = 0)<br>
+        <strong>Slope</strong>: (E(R<sub>i</sub>) − R<sub>f</sub>) / σ<sub>i</sub> = the "market price of risk" = <strong>Sharpe ratio</strong> of the risky portfolio<br><br>
+        The slope is the additional expected return per unit of risk taken. Also called the <strong>reward-to-variability ratio</strong>.
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Capital Allocation Line (CAL)</div>
+      <div class="def-body">A straight line plotting all combinations of a risk-free asset and a risky portfolio. Represents the portfolios available to an investor who can lend or borrow at the risk-free rate. <strong>Starts at R<sub>f</sub></strong> on the y-axis and extends through the risky portfolio.</div>
+    </div>
+
+    <h3>Understanding Positions on the CAL</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Position on CAL</th><th>Weight in Risk-Free (w₁)</th><th>Weight in Risky</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>At R<sub>f</sub> (y-intercept)</td><td>w₁ = 100%</td><td>0%</td><td>100% in risk-free — zero risk</td></tr>
+          <tr><td>Between R<sub>f</sub> and risky asset</td><td>0% &lt; w₁ &lt; 100%</td><td>0% &lt; (1−w₁) &lt; 100%</td><td><strong>Lending</strong> portion of wealth at R<sub>f</sub></td></tr>
+          <tr><td>At risky asset</td><td>w₁ = 0%</td><td>100%</td><td>Fully invested in risky portfolio</td></tr>
+          <tr><td>Beyond risky asset</td><td>w₁ &lt; 0% (negative)</td><td>&gt; 100%</td><td><strong>Borrowing</strong> at R<sub>f</sub> to invest more in risky = leveraged/margin</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Borrowing Example</div>
+      <div class="f">
+        If w₁ = −0.50 (borrow 50% at R<sub>f</sub>):<br>
+        Invest 150% in risky asset<br>
+        Portfolio return = 1.50 × E(R<sub>i</sub>) − 0.50 × R<sub>f</sub> &gt; E(R<sub>i</sub>)
+      </div>
+      <div class="note">Because E(R<sub>i</sub>) &gt; R<sub>f</sub>, leverage amplifies both returns and risk.</div>
+    </div>
+
+    <h3>The OPTIMAL Risky Portfolio &amp; Optimal CAL</h3>
+
+    <div class="card">
+      <p>When we have MANY risky assets (efficient frontier) plus a risk-free asset, we can draw MANY possible CALs — one from R<sub>f</sub> to each point on the efficient frontier.</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Best CAL</strong> = the one with the HIGHEST slope (steepest) = highest Sharpe ratio</li>
+        <li>The best CAL is <strong>tangent</strong> to the efficient frontier</li>
+        <li>The point of tangency = <strong>OPTIMAL RISKY PORTFOLIO (P)</strong></li>
+        <li>CAL(P) <strong>dominates</strong> every other CAL and every point on the efficient frontier</li>
+        <li>Portfolios on CAL(P) offer higher return for the same risk than any risky-asset-only portfolio</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Key Insight — Adding a Risk-Free Asset Changes Everything</div>
+      <p>Without the risk-free asset, rational investors pick a point on the Markowitz efficient frontier. WITH the risk-free asset, <strong>all rational investors hold some combination of just TWO assets</strong>: the risk-free asset AND the optimal risky portfolio P. This is the insight that leads to the two-fund separation theorem.</p>
+    </div>
+
+    <h3>The Two-Fund Separation Theorem</h3>
+
+    <div class="def-block">
+      <div class="def-term">Two-Fund Separation Theorem</div>
+      <div class="def-body">All investors — regardless of taste, risk preferences, or initial wealth — will hold a <strong>combination of two funds</strong>: (1) the risk-free asset, and (2) the <strong>optimal risky portfolio (P)</strong>. What differs between investors is the PROPORTION they hold in each fund.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>The two distinct decisions (separation):</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:8px;"><strong>Investment Decision (same for all investors)</strong>: Identify the optimal risky portfolio P. Determined purely by asset characteristics (returns, risks, correlations). Does NOT depend on individual risk preferences.</li>
+        <li style="margin-bottom:8px;"><strong>Financing Decision (unique to each investor)</strong>: Choose the allocation between R<sub>f</sub> and P based on personal risk aversion. More risk-averse = more in R<sub>f</sub> (lending); less risk-averse = more in P (possibly borrowing for leverage).</li>
+      </ol>
+    </div>
+
+    <h3>Finding the OPTIMAL INVESTOR Portfolio</h3>
+    <div class="card">
+      <p>Step-by-step to find the optimal portfolio for a SPECIFIC investor:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Identify CAL(P)</strong> — the optimal capital allocation line (tangent to efficient frontier at P)</li>
+        <li><strong>Overlay the investor's indifference curves</strong></li>
+        <li><strong>Find the highest indifference curve that touches CAL(P)</strong> — this is the TANGENCY point</li>
+        <li>The tangency point = <strong>OPTIMAL INVESTOR PORTFOLIO</strong></li>
+        <li>Higher indifference curves are unattainable (above CAL)</li>
+        <li>Lower indifference curves are achievable but sub-optimal (lower utility)</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Where Different Investors End Up on CAL(P)</div>
+      <p>
+        <strong>Highly risk-averse investor</strong>: optimal portfolio close to y-axis (high w in R<sub>f</sub>, low w in P). May invest up to 100% in R<sub>f</sub>.<br>
+        <strong>Moderately risk-averse</strong>: optimal portfolio between R<sub>f</sub> and P — LENDING at R<sub>f</sub>.<br>
+        <strong>Less risk-averse</strong>: optimal portfolio close to P or AT P (100% in optimal risky).<br>
+        <strong>Least risk-averse (risk tolerant)</strong>: optimal portfolio to the RIGHT of P — BORROWING at R<sub>f</sub> to leverage P.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Two Different "Optimals" — Don't Confuse Them</div>
+      <p>
+        <strong>Optimal Risky Portfolio (P)</strong>: SAME for all investors. Tangency of CAL to efficient frontier. Does NOT involve individual preferences.<br>
+        <strong>Optimal Investor Portfolio</strong>: DIFFERS by investor. Tangency of INDIFFERENCE CURVE to CAL(P). Depends on individual risk aversion.<br>
+        The two-fund separation theorem is literally about separating these two decisions.
+      </p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Summary of the Portfolio Construction Process</div>
+      <div class="f">
+        Step 1: Compute efficient frontier from ALL risky assets.<br>
+        Step 2: Add risk-free asset → find CAL with maximum slope.<br>
+        Step 3: Tangency point = optimal risky portfolio P (SAME for all).<br>
+        Step 4: Overlay investor's indifference curves on CAL(P).<br>
+        Step 5: Tangency of indifference curve &amp; CAL(P) = optimal investor portfolio.
+      </div>
+      <div class="note">This process combines mean-variance optimization (steps 1-3) with utility theory (steps 4-5).</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Expected return formula</strong>: 1 + E(R) = (1 + r<sub>rF</sub>) × [1 + E(π)] × [1 + E(RP)]. Nominal return decomposes into real rf rate × expected inflation × risk premium (all compounded).</li>
+        <li>✅ <strong>Historical ordering</strong>: small-cap (12.1%) &gt; large-cap (10.2%) &gt; corporate bonds (6.1%) &gt; gov bonds (5.5%) &gt; T-bills (3.4%). Risk orders the same way mostly.</li>
+        <li>✅ <strong>Gov bonds had HIGHER risk than corporate bonds historically</strong> due to duration, NOT default risk. Classic exam trap.</li>
+        <li>✅ <strong>Geometric mean ≤ Arithmetic mean</strong> always. Geometric mean for multi-period performance; arithmetic mean for single-period expectations.</li>
+        <li>✅ <strong>Mean-variance analysis requires</strong>: (1) normal distribution, (2) informationally AND operationally efficient markets. Real returns violate both → skewness and kurtosis matter.</li>
+        <li>✅ <strong>Stock returns</strong> typically exhibit <strong>negative skewness</strong> (long left tail) and <strong>excess kurtosis</strong> (fat tails → underestimated crash risk).</li>
+        <li>✅ <strong>VaR and conditional tail expectations</strong> address kurtosis. Not a mean-variance concept.</li>
+        <li>✅ <strong>Three trading costs</strong>: brokerage commission, bid-ask spread, price impact. Bid-ask % = Spread ÷ Price.</li>
+        <li>✅ <strong>Liquidity worst in</strong>: emerging markets, corporate bond markets (especially low credit quality), small caps.</li>
+        <li>✅ <strong>Three investor types</strong>: Risk Averse (A &gt; 0, the assumed norm), Risk Neutral (A = 0), Risk Seeking (A &lt; 0).</li>
+        <li>✅ <strong>Risk tolerance ≠ risk aversion</strong> — they are INVERSE. Higher tolerance = lower aversion.</li>
+        <li>✅ <strong>UTILITY FORMULA</strong>: <strong>U = E(r) − ½Aσ²</strong>. Uses VARIANCE (σ²) not std dev. A higher → more risk averse.</li>
+        <li>✅ <strong>Utility is ordinal</strong>: ranks investments, doesn't measure satisfaction. Can't compare across individuals.</li>
+        <li>✅ <strong>Risk-free asset (σ² = 0)</strong>: same utility for ALL investors (U = E(r) = R<sub>f</sub>).</li>
+        <li>✅ <strong>Indifference curves for risk-averse</strong>: upward-sloping, convex, never intersect, move NORTHWEST for higher utility.</li>
+        <li>✅ <strong>Steeper indifference curve = more risk averse</strong>. Horizontal = risk neutral. Downward-sloping = risk seeking.</li>
+        <li>✅ <strong>PORTFOLIO RETURN is ALWAYS a weighted average</strong>: R<sub>P</sub> = Σw<sub>i</sub>R<sub>i</sub>.</li>
+        <li>✅ <strong>PORTFOLIO STD DEV is NOT a weighted average</strong> except when ρ = +1. Cross-term matters.</li>
+        <li>✅ <strong>2-asset variance</strong>: σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρ₁₂σ₁σ₂.</li>
+        <li>✅ <strong>Cov(R₁,R₂) = ρ₁₂σ₁σ₂</strong>. Covariance unbounded; correlation bounded [−1, +1].</li>
+        <li>✅ <strong>ρ = +1</strong>: no diversification; portfolio risk = weighted avg of asset risks.</li>
+        <li>✅ <strong>ρ &lt; +1</strong>: diversification benefit; portfolio risk &lt; weighted avg of asset risks.</li>
+        <li>✅ <strong>ρ = −1</strong>: MAXIMUM diversification; can theoretically construct a RISKLESS portfolio with right weights.</li>
+        <li>✅ <strong>Ρ = 0</strong>: uncorrelated; cross-term in variance formula drops out.</li>
+        <li>✅ <strong>Correlation &gt; 0.90</strong>: HIGH (little diversification). <strong>&lt; 0.50</strong>: DESIRABLE for diversification.</li>
+        <li>✅ <strong>Risk-return curve</strong>: straight line only when ρ = ±1; curves (bulges NW) for all intermediate ρ.</li>
+        <li>✅ <strong>Large N portfolios</strong>: σ²<sub>P</sub> = σ̄²/N + [(N−1)/N]Cov̄. As N→∞, variance vanishes and <strong>covariance dominates</strong>.</li>
+        <li>✅ <strong>Equal-variance/correlation formula</strong>: σ<sub>P</sub> = √[σ²/N + ((N−1)/N)ρσ²]. As N→∞, σ<sub>P</sub> → σ√ρ (floor).</li>
+        <li>✅ <strong>Historical risk stable</strong>; historical correlations RISING across countries (globalization).</li>
+        <li>✅ <strong>Stock-bond correlations near zero or negative</strong> → excellent diversifier.</li>
+        <li>✅ <strong>Add new asset</strong> if Sharpe(new) &gt; Sharpe(p) × ρ<sub>new,p</sub>. Low correlation makes threshold easier to beat.</li>
+        <li>✅ <strong>Insurance, gold, put options</strong>: may have NEGATIVE expected return but valuable due to NEGATIVE correlation — classic risk-return trade-off.</li>
+        <li>✅ <strong>Employer stock</strong>: avoid concentration because human capital already tied to employer.</li>
+        <li>✅ <strong>MINIMUM-VARIANCE FRONTIER</strong>: set of portfolios with min risk for each return level. Left boundary of opportunity set.</li>
+        <li>✅ <strong>GLOBAL MINIMUM-VARIANCE PORTFOLIO (GMVP)</strong>: single leftmost point on min-var frontier. Lowest risk achievable from risky assets.</li>
+        <li>✅ <strong>MARKOWITZ EFFICIENT FRONTIER</strong>: upper portion of min-var frontier (above GMVP). Contains all rational portfolio choices.</li>
+        <li>✅ <strong>Below GMVP</strong>: inefficient — another portfolio exists with same risk but higher return.</li>
+        <li>✅ <strong>Efficient frontier slope decreases</strong> moving right → diminishing marginal return per unit of risk.</li>
+        <li>✅ <strong>CAL formula</strong>: E(R<sub>P</sub>) = R<sub>f</sub> + [(E(R<sub>i</sub>) − R<sub>f</sub>)/σ<sub>i</sub>] × σ<sub>P</sub>. Straight line.</li>
+        <li>✅ <strong>CAL slope</strong> = Sharpe ratio = market price of risk = extra return per unit of risk.</li>
+        <li>✅ <strong>CAL is a straight line</strong> because risk-free asset has zero variance and zero covariance with anything.</li>
+        <li>✅ <strong>Left of risky asset on CAL</strong> = lending at R<sub>f</sub>. <strong>Right of risky asset</strong> = borrowing at R<sub>f</sub> (leverage).</li>
+        <li>✅ <strong>OPTIMAL RISKY PORTFOLIO (P)</strong>: tangency of CAL with efficient frontier. Highest Sharpe ratio. SAME for all investors.</li>
+        <li>✅ <strong>CAL(P) DOMINATES</strong> every other CAL and every point on the Markowitz efficient frontier (except P itself).</li>
+        <li>✅ <strong>TWO-FUND SEPARATION THEOREM</strong>: all investors hold a combination of (1) risk-free asset and (2) optimal risky portfolio P.</li>
+        <li>✅ <strong>Separation into two decisions</strong>: (1) investment decision (find P — same for all), (2) financing decision (allocate between R<sub>f</sub> and P — differs by investor).</li>
+        <li>✅ <strong>OPTIMAL INVESTOR PORTFOLIO</strong>: tangency of indifference curve with CAL(P). DIFFERS across investors based on risk aversion.</li>
+        <li>✅ <strong>More risk averse</strong> → optimal portfolio closer to R<sub>f</sub>. <strong>Less risk averse</strong> → closer to P or beyond P (leveraged).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ KEY FORMULAS — QUICK REFERENCE (MEMORIZE ALL) ★</div>
+      <div class="f">
+        ─── RETURNS &amp; RISK ───<br>
+        1 + E(R) = (1 + r<sub>rF</sub>) × [1 + E(π)] × [1 + E(RP)]<br>
+        Nominal risk premium = Nominal risky return − Nominal R<sub>f</sub><br>
+        Real risk premium = Real risky return − Real R<sub>f</sub><br><br>
+        ─── UTILITY ───<br>
+        U = E(r) − ½ A σ²<br>
+        (A &gt; 0: risk averse · A = 0: neutral · A &lt; 0: seeking)<br><br>
+        ─── PORTFOLIO RETURN (always weighted avg) ───<br>
+        R<sub>P</sub> = Σ w<sub>i</sub> R<sub>i</sub> &nbsp;&nbsp;&nbsp; Σ w<sub>i</sub> = 1<br><br>
+        ─── PORTFOLIO VARIANCE (2 assets) ───<br>
+        σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ Cov(R₁,R₂)<br>
+        σ²<sub>P</sub> = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ ρ₁₂ σ₁ σ₂<br>
+        σ<sub>P</sub> = √(σ²<sub>P</sub>)<br><br>
+        ─── COVARIANCE ↔ CORRELATION ───<br>
+        Cov(R₁,R₂) = ρ₁₂ × σ₁ × σ₂<br>
+        ρ₁₂ = Cov(R₁,R₂) / (σ₁ × σ₂)<br>
+        −1 ≤ ρ ≤ +1<br><br>
+        ─── SPECIAL CASE ρ = +1 (NO diversification) ───<br>
+        σ<sub>P</sub> = w₁σ₁ + w₂σ₂ (weighted avg!)<br><br>
+        ─── LARGE-N PORTFOLIO (equal weights) ───<br>
+        σ²<sub>P</sub> = σ̄²/N + [(N−1)/N] × Cov̄<br>
+        σ<sub>P</sub> = √[σ²/N + ((N−1)/N) × ρσ²]<br>
+        As N → ∞: σ<sub>P</sub> → σ√ρ (risk floor)<br><br>
+        ─── ADD NEW ASSET CONDITION ───<br>
+        [E(R<sub>new</sub>) − R<sub>f</sub>]/σ<sub>new</sub> &gt; [E(R<sub>p</sub>) − R<sub>f</sub>]/σ<sub>p</sub> × ρ<sub>new,p</sub><br><br>
+        ─── CAPITAL ALLOCATION LINE (CAL) ───<br>
+        E(R<sub>P</sub>) = R<sub>f</sub> + [(E(R<sub>i</sub>) − R<sub>f</sub>)/σ<sub>i</sub>] × σ<sub>P</sub><br>
+        Slope = Sharpe ratio = (E(R<sub>i</sub>) − R<sub>f</sub>) / σ<sub>i</sub><br><br>
+        ─── RISK-FREE + RISKY PORTFOLIO ───<br>
+        E(R<sub>P</sub>) = w₁R<sub>f</sub> + (1−w₁)E(R<sub>i</sub>)<br>
+        σ<sub>P</sub> = (1 − w₁)σ<sub>i</sub>
+      </div>
+      <div class="note">
+        <strong>Remember</strong>: Portfolio return = weighted avg (always). Portfolio std dev = weighted avg ONLY if ρ = +1.<br>
+        <strong>Utility formula uses VARIANCE (σ²), not std dev (σ)</strong> — common mistake.<br>
+        <strong>CAL is straight because risk-free asset has zero σ and zero Cov</strong> with everything.<br>
+        <strong>Two-fund separation</strong>: everyone holds R<sub>f</sub> + P; only proportion differs.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 1: Portfolio Risk and Return Part I · Exam Prep Notes
+</footer>
+
+</body>
+</html>

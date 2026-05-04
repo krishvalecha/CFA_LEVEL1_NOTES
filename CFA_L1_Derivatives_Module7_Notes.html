@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 7: Pricing and Valuation of Interest Rate Swaps</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 7</div>
+  <h1>Pricing &amp; Valuation of <span>Interest Rate and Other Swaps</span></h1>
+  <p>Exam-ready notes: swap as a series of FRAs (similarities and differences), the par swap rate derivation (Equation 3), swap rate as multiperiod breakeven, swap value and price distinction, periodic settlement formula, MTM value over time (passage of time vs. rate changes), the bond analogy (pay-fixed = short fixed bond, receive-fixed = long fixed bond), and directional MTM effects for fixed-rate payers vs. receivers.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Swap vs. Forward — Similarities &amp; Differences</a>
+  <a class="toc-item" href="#s2">02 · Swap as a Series of FRAs</a>
+  <a class="toc-item" href="#s3">03 · Par Swap Rate — Derivation (Eq. 3)</a>
+  <a class="toc-item" href="#s4">04 · Swap Price vs. Swap Value</a>
+  <a class="toc-item" href="#s5">05 · Periodic Settlement Formula (Eq. 4)</a>
+  <a class="toc-item" href="#s6">06 · Swap MTM — Passage of Time</a>
+  <a class="toc-item" href="#s7">07 · Swap MTM — Interest Rate Changes</a>
+  <a class="toc-item" href="#s8">08 · The Bond Analogy — Swap as Long/Short Bonds</a>
+  <a class="toc-item" href="#s9">09 · Swap vs. Bond vs. FRA — Master Table</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: SWAP vs. FORWARD                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Swap vs. Forward — Similarities &amp; Key Differences</h2>
+    </div>
+
+    <div class="card">
+      <p>A swap contract is an agreement between two parties to <strong>exchange a series of future cash flows</strong>, while a forward contract is an agreement for a <strong>single exchange of value at a later date</strong>. Understanding how swaps are similar to — but different from — forward contracts is the foundation of swap pricing and valuation.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="float-card">
+        <div class="float-title">✅ Similarities — Swap and Forward</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li><strong>Firm commitments:</strong> Both parties are obligated to perform</li>
+          <li><strong>Symmetric payoff profiles:</strong> Fixed-rate payer gains when MRR rises; loses when MRR falls — linear</li>
+          <li><strong>No cash exchanged at inception:</strong> V₀(T) = 0 for both</li>
+          <li><strong>Counterparty credit exposure:</strong> Both involve bilateral credit risk</li>
+          <li><strong>Based on same underlying:</strong> Both can be based on MRR or other rates</li>
+          <li>Net settlement (difference only — notional not exchanged)</li>
+        </ul>
+      </div>
+      <div class="swap-card">
+        <div class="swap-title">⚡ Key Differences — Swap vs. Forward</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li><strong>Multiple vs. single settlement:</strong> Swap = periodic settlements throughout life; Forward = single settlement at maturity</li>
+          <li><strong>Constant vs. varying fixed rate:</strong> Swap has ONE fixed rate (swap rate s_N) for all periods; Series of FRAs would have DIFFERENT fixed rates per period (each period's IFR)</li>
+          <li><strong>FRA settles at beginning of period;</strong> standard swap settles at END of each period</li>
+          <li>Swap better matches periodic cash flows of assets/liabilities (bonds, loans)</li>
+          <li>Swap = "portfolio" of implicit forwards embedded in one contract</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The Core Structural Difference — Constant Rate vs. Varying Rates</div>
+      <div class="f">
+        SERIES of FRAs (from Module 5 example):<br>
+        Period 1: Fixed rate = IFR₀,₁ = 2.3960%<br>
+        Period 2: Fixed rate = IFR₁,₁ = 4.4536%<br>
+        Period 3: Fixed rate = IFR₂,₁ = 5.1719%<br>
+        Different rate each period — captures each period's specific forward rate<br><br>
+        STANDARD INTEREST RATE SWAP (same example):<br>
+        Period 1: Fixed rate = s₃ = 3.9641%<br>
+        Period 2: Fixed rate = s₃ = 3.9641%<br>
+        Period 3: Fixed rate = s₃ = 3.9641%<br>
+        ONE constant rate for ALL periods — the par swap rate<br><br>
+        The swap rate 3.9641% is the "average" that makes the PV of all fixed payments<br>
+        equal to the PV of all floating (forward) payments across all periods.
+      </div>
+      <div class="note">
+        <strong>Why use swaps instead of a series of FRAs?</strong><br>
+        1. Simpler: one contract, one rate, one relationship instead of multiple FRAs at different rates<br>
+        2. Better matches: periodic cash flows of bonds, loans, and other fixed-income instruments<br>
+        3. More liquid: swap markets are deeper and more liquid than individual FRA markets<br>
+        4. FRAs are primarily used by financial intermediaries to manage positions period-by-period. Issuers and investors prefer swaps for multi-period rate management.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Individual FRA Value at Inception ≠ Zero for All Periods (Unlike Swaps)</div>
+      <p>When comparing the series of FRAs to the swap: while the <strong>combined value of all FRAs is zero at inception</strong> (since each FRA is priced at its own IFR — the no-arbitrage rate), <strong>individual periods may have positive or negative present values under the swap rate</strong>. For example, using the swap rate of 3.9641% instead of IFR₀,₁ = 2.396% for period 1 means the fixed rate exceeds the forward rate in early periods (fixed payer makes net payments in early periods). But in later periods, the forward rate exceeds the swap rate (fixed payer receives net payments). These individual gains and losses exactly offset in present value terms — making the total swap value zero at inception.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: SWAP AS A SERIES OF FRAs           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Swap as a Series of FRAs — The Building Block Relationship</h2>
+    </div>
+
+    <div class="card">
+      <p>An interest rate swap can be viewed as a <strong>bundle of forward rate agreements (FRAs) — one for each settlement period over the swap's life</strong>. Each period's FRA exchanges the fixed swap rate against the realized MRR for that period. Understanding this relationship is the key to understanding swap pricing.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>From Example 1 (3-year annual swap):</strong></p>
+      <p style="margin-top:8px;">The implied forward rates are: IFR₀,₁ = 2.396%, IFR₁,₁ = 4.4536%, IFR₂,₁ = 5.1719%</p>
+      <p style="margin-top:8px;">These are the no-arbitrage FRA fixed rates for each period. A series of 3 FRAs at these different rates would have a combined value of zero — matching the swap's zero inception value.</p>
+      <p style="margin-top:8px;">But the <strong>swap uses a single constant rate (3.9641%)</strong> for all three periods. The swap rate is the weighted average that makes the PV of all fixed payments equal to the PV of all floating payments.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Series of FRAs</th><th>Standard Swap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fixed rate per period</td><td>Different each period (IFR₀,₁, IFR₁,₁, IFR₂,₁ = 2.396%, 4.454%, 5.172%)</td><td>SAME for all periods (s₃ = 3.9641%)</td></tr>
+          <tr><td>Initial value</td><td>Each FRA = 0; combined = 0</td><td>V₀(T) = 0</td></tr>
+          <tr><td>Settlement timing</td><td>Each FRA settles at the BEGINNING of its period</td><td>Swap settles at the END of each period</td></tr>
+          <tr><td>Periodic cash flows</td><td>Each FRA matches its specific IFR → no in-period surplus/deficit</td><td>Fixed-rate payer pays more than IFR in early periods (upward-sloping curve), receives more later</td></tr>
+          <tr><td>Use case</td><td>Financial intermediaries (period-by-period management)</td><td>Issuers and investors (multi-period, matches bond/loan cash flows)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Esterr Example — Why a Swap is Better Than FRAs for Hedging a Loan</div>
+      <p>Esterr has a 3.5-year floating-rate loan (MRR + 150 bps, quarterly). To hedge with FRAs, they would need to enter 14 separate FRAs at 14 different forward rates — administratively complex and with different fixed rates each period. With a swap: one contract, one fixed rate (2.05%), quarterly settlement dates matched to the loan. Net result: Esterr's effective quarterly interest cost is ALWAYS approximately 3.55% (2.05% swap rate + 1.50% loan spread) regardless of where MRR sets each period. Clean, simple, efficient.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: PAR SWAP RATE DERIVATION           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Par Swap Rate — Definition &amp; Derivation</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Par Swap Rate (s_N)</div>
+      <div class="def-body">The <strong>fixed rate that equates the present value of all future expected floating cash flows to the present value of all future fixed cash flows</strong>. It sets the initial swap value to zero. The par swap rate is analogous to the par rate for a fixed-coupon bond — the coupon rate that prices the bond at par (100). The swap rate is the "coupon" that prices the swap at par (zero initial value).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Par Swap Rate (from Equating PV of Floating vs. Fixed)</div>
+      <div class="f">
+        Condition: Σ PV(Floating payments) = Σ PV(Fixed payments)<br><br>
+        Σᵢ₌₁ᴺ IFRᵢ / (1+zᵢ)ⁱ  =  Σᵢ₌₁ᴺ sₙ / (1+zᵢ)ⁱ<br><br>
+        Solving for sₙ:<br>
+        sₙ = [Σᵢ₌₁ᴺ IFRᵢ / (1+zᵢ)ⁱ] / [Σᵢ₌₁ᴺ 1 / (1+zᵢ)ⁱ]<br><br>
+        Or equivalently: sₙ = [Σᵢ IFRᵢ × DFᵢ] / [Σᵢ DFᵢ]<br>
+        where DFᵢ = 1/(1+zᵢ)ⁱ is the discount factor for period i
+      </div>
+      <div class="note">
+        <strong>IFRᵢ</strong> = implied forward rate for period i (the expected floating rate for that period)<br>
+        <strong>zᵢ</strong> = zero (spot) rate for period i (used to discount)<br>
+        <strong>sₙ</strong> = par swap rate (the constant fixed rate sought)<br><br>
+        <strong>Analogy to par bond rate:</strong> The par bond rate (PMT) satisfies: 100 = Σ PMT/(1+zᵢ)ⁱ + 100/(1+zₙ)ᴺ<br>
+        The swap rate: Σ IFRᵢ/(1+zᵢ)ⁱ = Σ sₙ/(1+zᵢ)ⁱ<br>
+        The only difference: the swap has NO principal exchange at maturity (no +100 at the end).
+      </div>
+    </div>
+
+    <h3>Full Worked Example — 3-Year Swap Rate</h3>
+
+    <div class="auction-box">
+      <div class="label">From the government bond bootstrapping example: z₁=2.396%, z₂=3.4197%, z₃=4.0005%</div>
+      <div class="f">
+        IFR₀,₁ = 2.3960%, IFR₁,₁ = 4.4536%, IFR₂,₁ = 5.1719%<br><br>
+        Step 1: Calculate PV of floating payments (numerator of Eq. 3):<br>
+        Σ PV(Floating) = 2.396%/(1.02396)¹ + 4.4536%/(1.034197)² + 5.1719%/(1.040005)³<br>
+                       = 0.023411 + 0.041561 + 0.045967<br>
+                       = 0.110939 = 0.111017 (with rounding)<br><br>
+        Step 2: Calculate sum of discount factors (denominator):<br>
+        Σ DFᵢ = 1/(1.02396)¹ + 1/(1.034197)² + 1/(1.040005)³<br>
+               = 0.97660 + 0.93496 + 0.88898<br>
+               = 2.80054<br><br>
+        Step 3: Solve for swap rate s₃:<br>
+        s₃ = 0.111017 / 2.800545 = 0.039641 = 3.9641%<br><br>
+        Verification: The fixed-rate payer would expect:<br>
+        Period 1: Pay 3.9641%, receive IFR₀,₁ = 2.396% → net payment = 1.568%<br>
+        Period 2: Pay 3.9641%, receive IFR₁,₁ = 4.454% → net receipt = 0.490%<br>
+        Period 3: Pay 3.9641%, receive IFR₂,₁ = 5.172% → net receipt = 1.208%<br>
+        PV(fixed paid) = PV(floating received) → swap value = 0 ✓
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Three Interpretations of the Swap Rate</div>
+      <p><strong>① Par swap rate:</strong> The fixed rate at which the swap has zero initial value (PV fixed = PV floating).<br>
+      <strong>② Multiperiod breakeven rate:</strong> The fixed rate at which a counterparty is indifferent between paying fixed and receiving the respective forward rates, or receiving fixed and paying the respective forward rates.<br>
+      <strong>③ Internal rate of return of forward rates:</strong> The single constant rate that, as a discount rate, makes the PV of all forward rates exactly equal to the PV of the same constant rate — the "average" forward rate weighted by discount factors.<br><br>
+      All three interpretations describe the same number from different angles. The most testable: ① and ②.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Swap Rate vs. Par Bond Rate — The Key Difference</div>
+      <p>The par swap rate and the par bond rate are calculated similarly (same formula with zero rates as discount factors), but with one critical difference: <strong>the swap does NOT exchange principal at maturity</strong>. In the par bond formula: 100 = Σ PMT/(1+zᵢ)ⁱ + 100/(1+zₙ)ᴺ. In the swap: Σ IFRᵢ/(1+zᵢ)ⁱ = Σ sₙ/(1+zᵢ)ⁱ (no 100 on either side). This is why the 3-year swap rate (3.9641%) is close to but not identical to the 3-year par bond rate (which includes the discounted return of principal). The swap rate is essentially a bond coupon rate without the principal component.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 4: SWAP PRICE vs. SWAP VALUE              -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Swap Price vs. Swap Value — The Same Distinction as Forwards</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="swap-card">
+        <div class="swap-title">Swap PRICE (par swap rate s_N)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+          <li>The <strong>fixed rate agreed at inception</strong> — locked in for the entire swap tenor</li>
+          <li>Set so that V₀(T) = 0 at initiation</li>
+          <li><strong>Does NOT change</strong> over the life of the swap — it is fixed contractually</li>
+          <li>Analogous to: forward price F₀(T) in a forward contract, or the coupon rate on a bond</li>
+          <li>Esterr example: swap fixed rate = 2.05% — this never changes for the life of the swap</li>
+        </ul>
+      </div>
+      <div class="float-card">
+        <div class="float-title">Swap VALUE (MTM)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>The <strong>current mark-to-market value</strong> of the swap at any point in time</li>
+          <li>Zero at inception, then changes as rates and time change</li>
+          <li>Equals: current settlement value + PV of all remaining future settlements</li>
+          <li>Analogous to: Vt(T) for a forward contract, or the market price of a bond</li>
+          <li>Can be positive (gain) or negative (loss) for either party depending on how rates moved</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key relationship:</strong> When a new swap is entered today with the current par swap rate, its value is zero. If rates have since changed, a new par swap rate would be different from the original locked-in rate — and that difference creates a positive or negative MTM value for the existing swap.</p>
+      <p style="margin-top:10px;">If you want to EXIT a swap mid-life, you enter an offsetting (opposite) swap at the current market swap rate. The cost or benefit of this offsetting swap equals the MTM value of the original swap.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 5: PERIODIC SETTLEMENT FORMULA            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Periodic Settlement Formula — Equation 4</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Periodic Swap Settlement Value</div>
+      <div class="f">
+        Periodic settlement value = (MRR − s_N) × Notional × Period<br><br>
+        For FIXED-RATE PAYER (floating receiver):<br>
+        Positive (gain) when MRR &gt; s_N<br>
+        Negative (payment out) when MRR &lt; s_N<br><br>
+        For FIXED-RATE RECEIVER (floating payer):<br>
+        Positive (gain) when MRR &lt; s_N<br>
+        Negative (payment out) when MRR &gt; s_N
+      </div>
+      <div class="note">
+        <strong>MRR</strong> = the market reference rate that set at the BEGINNING of the period (paid at the END)<br>
+        <strong>s_N</strong> = the fixed swap rate (constant, agreed at inception)<br>
+        <strong>Notional</strong> = the notional principal (NOT exchanged — only used for calculations)<br>
+        <strong>Period</strong> = length of period as fraction of year (e.g., 0.25 for quarterly)<br><br>
+        <strong>MRR vs. s_N:</strong> The MRR is the "spot" price; s_N is the "forward price" analog. At maturity of each period, the value is determined by the difference — exactly like a forward contract's payoff of S_T − F₀(T).
+      </div>
+    </div>
+
+    <h3>Esterr Inc. — Settlement Scenarios (Quarterly, 2.05% fixed, 250M CAD)</h3>
+
+    <div class="auction-box">
+      <div class="label">Esterr: Pay-fixed swap at 2.05%, quarterly (Period = 0.25), CAD250M notional</div>
+      <div class="f">
+        Scenario 1: CAD MRR = 3.75%<br>
+        Settlement = (3.75% − 2.05%) × 250M × 0.25 = 1.70% × 250M × 0.25 = +CAD1,062,500 (Esterr receives)<br>
+        Loan payment: (3.75% + 1.50%) × 250M × 0.25 = 5.25% × 250M × 0.25 = −CAD3,281,250<br>
+        Net cost to Esterr: −CAD3,281,250 + CAD1,062,500 = −CAD2,218,750<br>
+        Effective rate: 2,218,750 / (250M × 0.25) = 3.55% per quarter ✓<br><br>
+        Scenario 2: CAD MRR = 1.25%<br>
+        Settlement = (1.25% − 2.05%) × 250M × 0.25 = −0.80% × 250M × 0.25 = −CAD500,000 (Esterr pays)<br>
+        Loan payment: (1.25% + 1.50%) × 250M × 0.25 = 2.75% × 250M × 0.25 = −CAD1,718,750<br>
+        Net cost to Esterr: −CAD1,718,750 − CAD500,000 = −CAD2,218,750<br>
+        Effective rate: 3.55% per quarter ✓<br><br>
+        RESULT: Esterr ALWAYS pays 3.55% (= 2.05% + 1.50%), regardless of MRR.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Swap Locks In the Effective Fixed Rate</div>
+      <p>The key insight from Esterr: regardless of where MRR sets each quarter, the effective interest cost is always approximately fixed at <strong>swap rate + credit spread = 2.05% + 1.50% = 3.55%</strong>. This is the economic purpose of the pay-fixed swap — it converts the floating-rate loan into a synthetic fixed-rate loan. The swap effectively makes Esterr indifferent to interest rate movements — any gain on the swap exactly offsets the increased loan cost (when MRR rises) and vice versa.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 6: SWAP MTM — PASSAGE OF TIME             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Swap MTM — Effect of Passage of Time</h2>
+    </div>
+
+    <div class="card">
+      <p>Even if interest rates remain unchanged (IFRs stay the same), the passage of time affects the swap's MTM value. This is because early settlement periods (where the fixed-rate payer may be making net payments) are "used up," leaving a remaining contract period that may be more favorable.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Esterr's swap with upward-sloping forward curve:</strong></p>
+      <p>At t=0: Fixed-rate payer (Esterr) expects to make net payments in early periods (MRR &lt; swap rate) and receive net payments in later periods (MRR &gt; swap rate). PV(floating) = PV(fixed) → V₀ = 0.</p>
+      <p style="margin-top:10px;">After the first two net payment periods pass (with rates unchanged): Esterr has already MADE the net payments for periods 1 and 2 (where fixed rate exceeded MRR). The remaining contract consists of periods 3–14, which are mostly favorable (expected MRR &gt; fixed rate). Therefore:</p>
+      <p style="margin-top:10px;"><span class="tag tag-green">Esterr (fixed-rate payer) gains MTM</span> as time passes — the unfavorable early periods roll off, leaving the favorable later periods.</p>
+      <p style="margin-top:10px;"><strong>General rule for upward-sloping forward curve (pay-fixed):</strong> Fixed-rate payer gains MTM as time passes because the contract "earns" through the period where fixed rate &gt; MRR, and the remaining contract has more periods where MRR &gt; fixed rate.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">MTM Value on Any Settlement Date</div>
+      <div class="f">
+        Swap MTM value = Current period settlement + PV of all remaining future settlements<br><br>
+        = (MRR_current − s_N) × Notional × Period<br>
+          + Σ PV[(MRR_expected_i − s_N) × Notional × Period] for all remaining periods<br><br>
+        Where MRR_expected_i = the implied forward rate for each remaining period<br><br>
+        Equivalently: Swap MTM = PV(remaining floating payments) − PV(remaining fixed payments)
+      </div>
+      <div class="note">
+        <strong>Note:</strong> At any settlement date, the "current settlement value" is the known cash flow for the current period (MRR was set at the beginning → known). Future settlements are estimated using the prevailing IFRs.<br>
+        <strong>When the forward curve is upward-sloping:</strong> Fixed-rate payer makes net payments in early periods; receives in later periods. As early (unfavorable) periods expire, the remaining contract becomes increasingly favorable → MTM gain accumulates over time (even with no rate change).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Time Passage Effect Depends on Forward Curve Shape</div>
+      <p><strong>Upward-sloping curve, fixed-rate PAYER:</strong> MTM gain over time (unfavorable early periods expire; favorable later periods remain). This is the Esterr scenario.<br>
+      <strong>Upward-sloping curve, fixed-rate RECEIVER (Fyleton):</strong> MTM LOSS over time — the receiver collects more than forward rates in early periods (favorable), then loses as later periods arrive. As favorable early periods expire, the remaining contract is less favorable.<br>
+      <strong>The key:</strong> The direction of the time-passage MTM effect depends on BOTH your position (payer vs. receiver) AND the shape of the forward curve.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 7: SWAP MTM — INTEREST RATE CHANGES       -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Swap MTM — Effect of Interest Rate Changes</h2>
+    </div>
+
+    <div class="card">
+      <p>A change in interest rates (shift in the forward curve) directly affects the MTM value of a swap. The fixed rate s_N is locked in at inception — it never changes. When rates move, the PV of expected floating payments changes, but the PV of fixed payments stays anchored at s_N.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ MTM Rules for Rate Changes — Fixed-Rate Payer vs. Receiver</div>
+      <div class="f">
+        FIXED-RATE PAYER (Floating-Rate Receiver) — e.g., ESTERR:<br>
+        Rates RISE (forward curve shifts up):<br>
+        → PV(floating received) INCREASES (higher expected MRRs)<br>
+        → PV(fixed paid) UNCHANGED (s_N is locked in)<br>
+        → MTM GAIN: Σ PV(floating) &gt; Σ PV(fixed)<br><br>
+        Rates FALL (forward curve shifts down):<br>
+        → PV(floating received) DECREASES<br>
+        → MTM LOSS: Σ PV(floating) &lt; Σ PV(fixed)<br><br>
+        FIXED-RATE RECEIVER (Floating-Rate Payer) — e.g., FYLETON:<br>
+        Rates RISE: MTM LOSS (PV of fixed received falls below PV of floating paid)<br>
+        Rates FALL: MTM GAIN (PV of fixed received exceeds PV of floating paid)
+      </div>
+      <div class="note">
+        <strong>Quick check:</strong> Fixed-rate PAYER benefits from RISING rates (like a borrower with floating debt benefits when they expected fixed costs but rates rose — they receive more floating income).<br>
+        Fixed-rate RECEIVER benefits from FALLING rates (like holding a long fixed-rate bond — when rates fall, bond prices rise → gain).
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Swap Position</th><th>Rates Rise (Forward Curve Up)</th><th>Rates Fall (Forward Curve Down)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fixed-Rate PAYER (Floating-Rate Receiver)</td>
+            <td><span class="tag tag-green">MTM GAIN</span><br>PV(floating received) ↑ &gt; PV(fixed paid)</td>
+            <td><span class="tag tag-red">MTM LOSS</span><br>PV(floating received) ↓ &lt; PV(fixed paid)</td>
+          </tr>
+          <tr>
+            <td>Fixed-Rate RECEIVER (Floating-Rate Payer)</td>
+            <td><span class="tag tag-red">MTM LOSS</span><br>PV(fixed received) &lt; PV(floating paid) ↑</td>
+            <td><span class="tag tag-green">MTM GAIN</span><br>PV(fixed received) &gt; PV(floating paid) ↓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Fyleton Investments — Receive-Fixed Swap MTM</h3>
+
+    <div class="auction-box">
+      <div class="label">Fyleton: Receive-fixed GBP200M, 5-year, s=2.38% semiannual vs. 6M GBP MRR. Initial MRR = 0.71%.</div>
+      <div class="f">
+        First settlement (6 months): GBP200M, Period = 0.5<br>
+        Settlement = (2.38% − 0.71%) × 200M × 0.5 = +GBP1,670,000 (Fyleton RECEIVES)<br>
+        [MRR &lt; fixed → fixed-rate receiver gains this period]<br><br>
+        After first settlement, if forward rates UNCHANGED (upward-sloping curve):<br>
+        → Fyleton has collected the favorable period 1 payment<br>
+        → Remaining periods have HIGHER expected MRRs (upward-sloping forward curve)<br>
+        → Future periods will be progressively less favorable for the receiver<br>
+        → MTM LOSS: Σ PV(floating paid) &gt; Σ PV(fixed received) for remaining periods<br><br>
+        If forward rates DECLINE immediately after inception:<br>
+        → PV(floating paid) falls<br>
+        → PV(fixed received at 2.38%) unchanged<br>
+        → MTM GAIN: Σ PV(fixed) &gt; Σ PV(floating)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Swap Direction vs. Rate Change — Memory Aid</div>
+      <p>Think of the fixed-rate payer as a <strong>SHORT fixed-rate bond + LONG FRN</strong>:<br>
+      When rates rise → short bond gains (bond price falls → gain for short) → net: fixed-rate payer gains<br>
+      When rates fall → short bond loses → net: fixed-rate payer loses<br><br>
+      Think of the fixed-rate receiver as a <strong>LONG fixed-rate bond + SHORT FRN</strong>:<br>
+      When rates fall → long bond gains (bond price rises) → net: fixed-rate receiver gains<br>
+      When rates rise → long bond loses → net: fixed-rate receiver loses<br><br>
+      This bond analogy (fully developed in Section 8) is the clearest way to remember which direction gives gains vs. losses.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 8: THE BOND ANALOGY                       -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>The Bond Analogy — Swap as Long/Short Bond Positions</h2>
+    </div>
+
+    <div class="card">
+      <p>An interest rate swap can be viewed as a <strong>combination of a long bond and a short bond</strong>. This analogy is fundamental to understanding swap risk, duration, and MTM behavior — and ties derivatives directly back to fixed-income concepts.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Pay-Fixed Swap (Esterr)</div>
+        <p style="font-size:14px; color:#c8d0df; margin-bottom:8px;"><strong>= Long FRN + Short Fixed-Rate Bond</strong></p>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d0df;">
+          <li>LONG FRN (priced at MRR): receives floating MRR each period</li>
+          <li>SHORT fixed-rate bond (coupon = swap rate): pays fixed rate each period</li>
+          <li>At inception: Long FRN at par + Short bond at par → net = 0 (cancel out)</li>
+          <li>At maturity: principal receipts/payments cancel → only coupon differences remain</li>
+          <li>Result: NET = receive MRR, pay s_N each period → exactly the swap</li>
+          <li>Risk: benefits from RISING rates (short bond gains when rates rise)</li>
+        </ul>
+      </div>
+      <div class="float-card">
+        <div class="float-title">Receive-Fixed Swap (Fyleton)</div>
+        <p style="font-size:14px; color:#c8dfd0; margin-bottom:8px;"><strong>= Long Fixed-Rate Bond + Short FRN</strong></p>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>LONG fixed-rate bond (coupon = swap rate): receives fixed rate each period</li>
+          <li>SHORT FRN (priced at MRR): pays floating MRR each period</li>
+          <li>At inception: both at par → net = 0</li>
+          <li>At maturity: principal payments/receipts cancel</li>
+          <li>Result: NET = receive s_N, pay MRR each period → exactly the swap</li>
+          <li>Risk: benefits from FALLING rates (long bond gains when rates fall)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Why the principal payments cancel:</strong> The long fixed bond has a final principal receipt of 100. The short FRN has a final principal payment of 100. These exactly offset → only the coupon payments remain in the net cash flows. This is why the notional in a swap is "not exchanged" — it would cancel anyway.</p>
+      <p style="margin-top:10px;"><strong>Duration implications:</strong> The pay-fixed swap has NEGATIVE duration (like being short a fixed-rate bond). The receive-fixed swap has POSITIVE duration (like being long a fixed-rate bond). This is why Fyleton uses a receive-fixed swap to INCREASE portfolio duration — it adds the equivalent of a long fixed-rate bond position without having to buy the actual bond.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Instrument / Position</th><th>Higher Interest Rates</th><th>Lower Interest Rates</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Long fixed-rate bond</td><td><span class="tag tag-red">Loss</span></td><td><span class="tag tag-green">Gain</span></td></tr>
+          <tr><td>Receive-fixed swap</td><td><span class="tag tag-red">Loss</span></td><td><span class="tag tag-green">Gain</span></td></tr>
+          <tr><td>Short floating-rate note (FRN)</td><td><span class="tag tag-red">Loss</span> (short → owe more)</td><td><span class="tag tag-green">Gain</span></td></tr>
+          <tr><td>Short fixed-rate bond</td><td><span class="tag tag-green">Gain</span> (bond price falls)</td><td><span class="tag tag-red">Loss</span></td></tr>
+          <tr><td>Pay-fixed swap</td><td><span class="tag tag-green">Gain</span></td><td><span class="tag tag-red">Loss</span></td></tr>
+          <tr><td>Long floating-rate note (FRN)</td><td><span class="tag tag-green">Gain</span> (higher coupon income)</td><td><span class="tag tag-red">Loss</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Receive-Fixed Swap = Long Fixed-Rate Bond for Portfolio Management</div>
+      <p>Active fixed-income portfolio managers frequently use receive-fixed swaps to add duration and interest rate exposure to a portfolio without buying bonds. If rates are expected to fall, a manager who can't immediately buy long-duration bonds can receive fixed on a swap — gaining the same economic exposure as a long bond position (gains when rates fall) with far less cash outlay. The swap's liquidity, standardization, and minimal capital requirements make it a superior tool for adjusting duration tactically versus buying/selling underlying bonds.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 9: SWAP vs. BOND vs. FRA MASTER TABLE      -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Swap vs. Bond vs. FRA — Complete Master Reference</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Interest Rate Swap</th><th>Series of FRAs</th><th>Fixed-Rate Bond</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Number of settlements</td><td>Multiple periodic (end of each period)</td><td>Multiple — one per FRA period (start of period)</td><td>Multiple coupon payments + principal at maturity</td></tr>
+          <tr><td>Fixed rate</td><td>ONE constant swap rate (s_N) for all periods</td><td>DIFFERENT rate each period (respective IFR)</td><td>ONE coupon rate for all periods</td></tr>
+          <tr><td>Floating component</td><td>MRR received/paid each period</td><td>MRR received/paid for each FRA period</td><td>None (fixed-rate bond); or MRR (FRN)</td></tr>
+          <tr><td>Initial value</td><td>Zero (V₀ = 0)</td><td>Zero (each FRA = 0; combined = 0)</td><td>Par (price = 100 if coupon = YTM)</td></tr>
+          <tr><td>Principal exchange</td><td>Not exchanged (cancels in bond analogy)</td><td>Not exchanged</td><td>Received at maturity</td></tr>
+          <tr><td>Settlement timing</td><td>End of each interest period</td><td>Beginning of each interest period (PV settlement)</td><td>End of each coupon period</td></tr>
+          <tr><td>Rate moves up (long position)</td><td>Pay-fixed: MTM GAIN; Receive-fixed: MTM LOSS</td><td>Long FRA (fixed payer): MTM GAIN; Short FRA: MTM LOSS</td><td>Long fixed bond: price FALLS (loss); Long FRN: price STABLE</td></tr>
+          <tr><td>Used by</td><td>Issuers and investors (multi-period management)</td><td>Financial intermediaries (period-by-period)</td><td>Issuers (financing); Investors (income/duration)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ All Key Swap Formulas at a Glance</div>
+      <div class="f">
+        PAR SWAP RATE (Eq. 3):<br>
+        s_N = Σ (IFRᵢ × DFᵢ) / Σ DFᵢ   [where DFᵢ = 1/(1+zᵢ)ⁱ]<br>
+        Condition: Σ PV(floating payments) = Σ PV(fixed payments)<br><br>
+        PERIODIC SETTLEMENT (Eq. 4):<br>
+        = (MRR_period − s_N) × Notional × Period<br>
+        Positive → fixed-rate payer RECEIVES net payment<br>
+        Negative → fixed-rate payer MAKES net payment<br><br>
+        TOTAL SWAP MTM VALUE:<br>
+        = Current period settlement + PV(all remaining future settlements)<br>
+        = Σ PV(remaining floating payments) − Σ PV(remaining fixed payments)  [for fixed-rate payer]<br><br>
+        RATE CHANGE EFFECTS (Fixed-Rate PAYER):<br>
+        Rates rise → MTM GAIN | Rates fall → MTM LOSS<br><br>
+        RATE CHANGE EFFECTS (Fixed-Rate RECEIVER):<br>
+        Rates rise → MTM LOSS | Rates fall → MTM GAIN<br><br>
+        BOND ANALOGY:<br>
+        Pay-fixed swap = Long FRN + Short fixed-rate bond (negative duration)<br>
+        Receive-fixed swap = Long fixed-rate bond + Short FRN (positive duration)
+      </div>
+      <div class="note">
+        <strong>Swap rate vs. par bond rate:</strong> Same formula, but swap has NO principal exchange at maturity (no +100 at the end). Very similar values but not identical.<br>
+        <strong>Swap rate vs. FRA rates:</strong> Swap rate is the single constant "average" of all the IFRs (weighted by discount factors). Each FRA uses its own specific IFR.<br>
+        <strong>V₀ = 0 for swaps:</strong> Set by choosing s_N so that PV(fixed leg) = PV(floating leg). Like all forward contracts, no cash changes hands at inception.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST & QUICK REFERENCE       -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Swap = series of forward contracts (FRAs)</strong>, but with one key difference: swap has a CONSTANT fixed rate (s_N) for all periods; a series of FRAs would have DIFFERENT fixed rates per period (each period's IFR).</li>
+        <li>✅ <strong>Swap similarities to forwards:</strong> Firm commitment, symmetric payoff, no cash at inception (V₀=0), counterparty credit exposure, net settlement (notional not exchanged).</li>
+        <li>✅ <strong>Swap differences from forwards:</strong> Multiple periodic settlements vs. single settlement; constant fixed rate vs. varying FRA rates; swap settles at END of period vs. FRA at BEGINNING.</li>
+        <li>✅ <strong>FRAs used by financial intermediaries</strong> to manage period-by-period interest rate exposure. <strong>Swaps used by issuers and investors</strong> for multi-period rate management (better matches bond/loan cash flows).</li>
+        <li>✅ <strong>Par swap rate (s_N)</strong> = the fixed rate that equates PV(all expected floating payments) = PV(all fixed payments). Makes V₀ = 0. Analogous to a par bond coupon rate, but WITHOUT principal exchange.</li>
+        <li>✅ <strong>Par swap rate formula (Eq. 3):</strong> Σ (IFRᵢ × DFᵢ) / Σ DFᵢ. Where DFᵢ = 1/(1+zᵢ)ⁱ. The swap rate is the weighted average of forward rates, weighted by discount factors — the "internal rate of return" of the forward rates.</li>
+        <li>✅ <strong>Three interpretations of the swap rate:</strong> (1) Par swap rate (V₀=0); (2) Multiperiod breakeven — indifferent between paying/receiving fixed vs. the respective forward rates; (3) IRR of implied forward rates through swap maturity.</li>
+        <li>✅ <strong>Swap PRICE (s_N)</strong> = fixed rate agreed at inception — never changes. Analogous to forward price F₀(T) or bond coupon rate.</li>
+        <li>✅ <strong>Swap VALUE</strong> = current MTM value — changes with time and interest rates. V₀=0 at inception; fluctuates thereafter. Analogous to forward value Vt(T) or bond market price.</li>
+        <li>✅ <strong>Periodic settlement (Eq. 4):</strong> = (MRR − s_N) × Notional × Period. Positive → fixed-rate payer receives net payment. Negative → fixed-rate payer makes net payment.</li>
+        <li>✅ <strong>Total swap MTM = current period settlement + PV of all remaining future settlements.</strong></li>
+        <li>✅ <strong>Passage of time effect (upward-sloping forward curve):</strong> Fixed-rate PAYER gains MTM (unfavorable early periods expire, favorable later periods remain). Fixed-rate RECEIVER loses MTM (favorable early periods expire, less favorable later periods remain).</li>
+        <li>✅ <strong>Rate change effect:</strong> Rates RISE → PV(floating received) rises → Fixed-rate PAYER gains MTM. Rates FALL → Fixed-rate RECEIVER gains MTM.</li>
+        <li>✅ <strong>Fixed-rate PAYER MTM:</strong> Gain when rates rise (like short fixed-rate bond). Loss when rates fall.</li>
+        <li>✅ <strong>Fixed-rate RECEIVER MTM:</strong> Gain when rates fall (like long fixed-rate bond). Loss when rates rise.</li>
+        <li>✅ <strong>Bond analogy — Pay-fixed swap = Long FRN + Short fixed-rate bond.</strong> Negative duration. Benefits from rising rates.</li>
+        <li>✅ <strong>Bond analogy — Receive-fixed swap = Long fixed-rate bond + Short FRN.</strong> Positive duration. Benefits from falling rates.</li>
+        <li>✅ <strong>Why notional is not exchanged:</strong> In the bond analogy, the long bond principal receipt and short bond principal payment exactly cancel at maturity → only coupon differences matter → notional is irrelevant to actual cash flows.</li>
+        <li>✅ <strong>Esterr net rate = swap rate + loan spread = 2.05% + 1.50% = 3.55%</strong> — always, regardless of MRR. This is the economic purpose of pay-fixed swap: converts floating loan to synthetic fixed-rate.</li>
+        <li>✅ <strong>Portfolio managers prefer receive-fixed swaps</strong> over buying long bonds to add duration: more liquid, lower capital requirement, easy to enter/exit, same economic exposure as a long fixed-rate bond.</li>
+        <li>✅ <strong>Swap vs. par bond rate:</strong> Very similar calculation, but swap rate excludes the discounted principal return at maturity (no +100/(1+zₙ)ᴺ term). Swap rate ≈ par bond rate but slightly different value.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ SWAP vs. FRA ═══<br>
+        Swap: constant fixed rate (s_N) | FRA: different rate each period (IFR)<br>
+        Swap settles at END of period | FRA settles at BEGINNING<br>
+        Both: V₀=0, firm commitment, no upfront cash, counterparty credit risk<br><br>
+
+        ═══ PAR SWAP RATE ═══<br>
+        Condition: Σ PV(floating) = Σ PV(fixed) → V₀ = 0<br>
+        s_N = Σ (IFRᵢ × DFᵢ) / Σ DFᵢ   [DFᵢ = 1/(1+zᵢ)ⁱ]<br>
+        3-year example: s₃ = 3.9641% (vs. IFRs of 2.396%, 4.454%, 5.172%)<br><br>
+
+        ═══ PERIODIC SETTLEMENT ═══<br>
+        = (MRR − s_N) × Notional × Period<br>
+        MRR &gt; s_N → fixed payer RECEIVES | MRR &lt; s_N → fixed payer PAYS<br><br>
+
+        ═══ MTM RULES ═══<br>
+        Fixed-rate PAYER: rates ↑ → MTM GAIN | rates ↓ → MTM LOSS<br>
+        Fixed-rate RECEIVER: rates ↑ → MTM LOSS | rates ↓ → MTM GAIN<br>
+        Upward-sloping curve, time passes: PAYER gains MTM; RECEIVER loses MTM<br><br>
+
+        ═══ BOND ANALOGY ═══<br>
+        Pay-fixed = Long FRN + Short fixed bond → negative duration → gains when rates rise<br>
+        Receive-fixed = Long fixed bond + Short FRN → positive duration → gains when rates fall<br>
+        Notional cancels at maturity → not exchanged → only coupon differences matter
+      </div>
+      <div class="note">
+        <strong>Swap rate = weighted average of IFRs</strong> (weighted by discount factors). The individual FRAs using IFRs each have V₀=0; when converted to a constant swap rate, early periods where fixed &gt; IFR (payer loses) are offset by later periods where IFR &gt; fixed (payer gains) — in PV terms exactly.<br>
+        <strong>Swap rate ≠ par bond rate:</strong> Bond has principal exchange (+100 at maturity); swap does not. Very similar but numerically distinct.<br>
+        <strong>FRA vs. swap use cases:</strong> FRA = financial intermediaries managing single-period exposure. Swap = issuers and investors managing multi-period rate exposure.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 7: Pricing and Valuation of Interest Rate and Other Swaps · Exam Prep Notes
+</footer>
+
+</body>
+</html>

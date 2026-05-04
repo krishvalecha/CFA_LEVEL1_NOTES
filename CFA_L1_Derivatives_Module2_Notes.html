@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Derivatives | Module 2: Forward Commitment and Contingent Claim Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --long-bg: #111a16; --long-border: #4cc98a;
+    --short-bg: #1a1010; --short-border: #c94c4c;
+    --fwd-bg: #1a1510; --fwd-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .long-card { background: var(--long-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .long-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .short-card { background: var(--short-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .short-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .fwd-card { background: var(--fwd-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fwd-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .blue-card { background: #111620; border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .blue-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · DERIVATIVES · MODULE 2</div>
+  <h1>Forward Commitment &amp; <span>Contingent Claim Features and Instruments</span></h1>
+  <p>Exam-ready notes: forward contracts (payoff, profit, linear), futures (MTM, margin, margin calls), swaps (fixed vs. floating, swap rate), call and put options (payoffs, profits, all four positions), intrinsic value vs. time value, in/at/out-of-the-money, credit default swaps, and firm commitments vs. contingent claims comparison.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Forward Contracts</a>
+  <a class="toc-item" href="#s2">02 · Futures Contracts &amp; MTM</a>
+  <a class="toc-item" href="#s3">03 · Futures Margin — Full Example</a>
+  <a class="toc-item" href="#s4">04 · Swaps</a>
+  <a class="toc-item" href="#s5">05 · Options — Core Concepts</a>
+  <a class="toc-item" href="#s6">06 · Call Options — All 4 Positions</a>
+  <a class="toc-item" href="#s7">07 · Put Options — All 4 Positions</a>
+  <a class="toc-item" href="#s8">08 · Option Value Components</a>
+  <a class="toc-item" href="#s9">09 · Credit Default Swaps (CDS)</a>
+  <a class="toc-item" href="#s10">10 · Forward vs. Options — Comparison</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: FORWARD CONTRACTS              -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Forward Contracts</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Forward Contract</div>
+      <div class="def-body">An OTC derivative in which two counterparties agree that the <strong>buyer will purchase an underlying from the seller at a future date at a pre-agreed fixed price</strong> (the forward price). A firm commitment — both parties are obligated. No cash is exchanged at inception. Final settlement occurs at maturity T only (single future exchange). More flexible than futures: custom size, maturity, underlying, credit terms.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key notation:</strong></p>
+      <ul style="padding-left:20px; margin-top:6px;">
+        <li><strong>F₀(T)</strong> = forward price agreed at t=0 for delivery at t=T (subscript = when price is set; parenthesis = when exchange occurs)</li>
+        <li><strong>S₀</strong> = spot price of the underlying at inception (t=0)</li>
+        <li><strong>S_T</strong> = spot price of the underlying at maturity (t=T)</li>
+        <li><strong>No upfront payment</strong> → payoff = profit (no premium to subtract)</li>
+        <li><strong>Buyer = long forward;</strong> benefits from rising underlying prices</li>
+        <li><strong>Seller = short forward;</strong> benefits from falling underlying prices</li>
+      </ul>
+    </div>
+
+    <h3>Forward Payoff Profiles — Buyer &amp; Seller</h3>
+
+    <div class="formula-box">
+      <div class="label">Forward Payoff &amp; Profit Formulas</div>
+      <div class="f">
+        BUYER (Long Forward):<br>
+        Payoff = Profit = S_T − F₀(T)<br>
+        S_T &gt; F₀(T) → Buyer GAINS [S_T − F₀(T)] &gt; 0<br>
+        S_T &lt; F₀(T) → Buyer LOSES [S_T − F₀(T)] &lt; 0<br><br>
+        SELLER (Short Forward):<br>
+        Payoff = Profit = F₀(T) − S_T<br>
+        S_T &lt; F₀(T) → Seller GAINS [F₀(T) − S_T] &gt; 0<br>
+        S_T &gt; F₀(T) → Seller LOSES [F₀(T) − S_T] &lt; 0
+      </div>
+      <div class="note">
+        <strong>Why payoff = profit for forwards?</strong> No upfront payment is made at t=0. The only cash flow occurs at maturity T — the net difference between the spot price and the forward price. There is no premium to deduct from the payoff.<br><br>
+        <strong>Symmetric payoff:</strong> Buyer's gain = Seller's loss (zero-sum game). This symmetric, linear payoff is the defining feature of all firm commitments.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="long-card">
+        <div class="long-title">✅ Long Forward — Buyer</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Agrees to BUY underlying at F₀(T) at time T</li>
+          <li>Benefits when S_T RISES above F₀(T)</li>
+          <li>Unlimited upside (no cap on S_T)</li>
+          <li>Unlimited downside (S_T could fall to zero)</li>
+          <li>No premium paid — payoff = profit</li>
+          <li>Forward buyer benefits like a long position in the spot market</li>
+        </ul>
+      </div>
+      <div class="short-card">
+        <div class="short-title">📉 Short Forward — Seller</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li>Agrees to SELL underlying at F₀(T) at time T</li>
+          <li>Benefits when S_T FALLS below F₀(T)</li>
+          <li>Upside limited to F₀(T) (S_T can't fall below 0)</li>
+          <li>Unlimited downside (S_T could rise infinitely)</li>
+          <li>No premium received — payoff = profit</li>
+          <li>Forward seller benefits like a short position in the spot market</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Firm Commitments Are Linear (Linear Derivatives)</div>
+      <p>Forward contracts (and all firm commitments) have a <strong>linear payoff profile</strong> — payoff is a straight-line function of the underlying price at maturity. A $1 increase in S_T always increases the buyer's payoff by exactly $1 and decreases the seller's payoff by exactly $1. This linearity is why firm commitments are called <strong>linear derivatives</strong>. Compare to options (non-linear/asymmetric — see Section 5).</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Forward vs. Spot Market — Same Economic Exposure, Different Cash Flows</div>
+      <p>A long forward position creates similar exposure to buying the underlying in the spot market, but with key differences. In the spot market, you pay S₀ today and receive a return of (S_T − S₀) at time T. In the forward, you pay nothing today and receive (S_T − F₀(T)) at time T. The forward price F₀(T) is set above S₀ (the spot price) to account for the cost of carry — the financing cost of holding the underlying from today to T. Both approaches give similar total economic exposure, but the timing and amount of cash flows differ.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: FUTURES CONTRACTS & MTM        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Futures Contracts &amp; Mark-to-Market (MTM)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Futures Contract</div>
+      <div class="def-body">A <strong>standardized forward contract</strong> traded on an exchange. All terms (contract size, underlying specifications, maturity dates, delivery type) are set by the exchange. Futures combine: (1) contract uniformity, (2) organized exchange with rules and regulations, and (3) a central clearing facility — providing both greater liquidity and protection against counterparty default.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Futures price notation:</strong></p>
+      <ul style="padding-left:20px; margin-top:6px;">
+        <li><strong>f₀(T)</strong> = futures price agreed at inception (t=0) for delivery at T</li>
+        <li><strong>f_t(T)</strong> = futures price on day t during the contract's life</li>
+        <li><strong>f_T(T)</strong> = final futures settlement price at maturity (converges to spot price S_T)</li>
+        <li>No upfront payment — same as forwards</li>
+        <li>Same final payoff as forward: Buyer = S_T − f₀(T); Seller = f₀(T) − S_T</li>
+        <li><strong>Key difference from forwards: daily MTM settlement of gains and losses</strong></li>
+      </ul>
+    </div>
+
+    <h3>Mark-to-Market (MTM) / Daily Settlement</h3>
+
+    <div class="card">
+      <p>The <strong>most important feature distinguishing futures from forwards</strong> is the daily mark-to-market (MTM) process, also called daily settlement. At the end of each trading day, the clearinghouse:</p>
+      <ol style="padding-left:22px; margin-top:8px;">
+        <li>Calculates the settlement price (end-of-day average of final trading prices)</li>
+        <li>Marks all open contracts to this settlement price</li>
+        <li>Credits the accounts of those with MTM gains (day's price moved in their favor)</li>
+        <li>Debits the accounts of those with MTM losses (day's price moved against them)</li>
+      </ol>
+      <p style="margin-top:10px;">This daily settlement <strong>effectively resets the futures contract each day</strong> — rather than accumulating a single large settlement at maturity, gains and losses are transferred continuously throughout the contract's life.</p>
+    </div>
+
+    <h3>Margin System — Three Key Concepts</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Concept</th><th>Definition</th><th>Key Detail</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial Margin</td>
+            <td>Required minimum deposit when entering a futures contract. Deposited by BOTH buyer and seller into a futures margin account held at the exchange.</td>
+            <td>No cash exchange at inception — but margin must be deposited. E.g., LME gold: $4,950 per 100-oz contract. This is not the full contract value — it's a small fraction (leverage).</td>
+          </tr>
+          <tr>
+            <td>Maintenance Margin</td>
+            <td>Minimum balance that must be maintained in the futures margin account throughout the contract's life. Set BELOW the initial margin.</td>
+            <td>E.g., LME gold: $4,500 (below the $4,950 initial margin). If the margin balance falls below this level, a margin call is triggered.</td>
+          </tr>
+          <tr>
+            <td>Variation Margin / Margin Call</td>
+            <td>When the margin account falls below the maintenance margin, the exchange issues a margin call — a demand to immediately deposit funds to restore the account to the initial margin level.</td>
+            <td>Must be deposited immediately. If a counterparty fails to meet the margin call, the position is closed out and the clearinghouse covers any remaining shortfall from its insurance fund.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Margin Call Trigger &amp; Amount</div>
+      <div class="f">
+        Margin call triggered when: Margin Balance &lt; Maintenance Margin<br><br>
+        Amount of margin call = Initial Margin − Current Margin Balance<br>
+        (Must replenish back to INITIAL margin, not just maintenance margin)<br><br>
+        Example: Initial = $4,950 | Maintenance = $4,500 | Balance falls to $4,362<br>
+        → Margin call triggered ($4,362 &lt; $4,500)<br>
+        → Must deposit $4,950 − $4,362 = $588 (back to initial, not just maintenance)
+      </div>
+      <div class="note">
+        <strong>Key trap:</strong> Margin calls restore the account to INITIAL margin (not maintenance margin). Always top up to the initial margin level.<br>
+        <strong>Daily gain/loss per contract:</strong> (Closing futures price − Previous day's futures price) × Contract size<br>
+        Positive = gain for buyer / loss for seller. Negative = loss for buyer / gain for seller.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Additional Futures Safeguards</div>
+      <p><strong>Price limits:</strong> Some futures contracts restrict daily price moves to a band around the previous settlement price. Trading halts if price moves outside the band until two parties agree within the band. Purpose: prevent panic-driven runaway moves and give the clearinghouse time to call margins.<br>
+      <strong>Circuit breakers:</strong> Brief intraday trading pause if a price limit is hit.<br>
+      <strong>Intraday margin calls:</strong> For large positions or high volatility, exchanges may issue margin calls intraday (not just at end of day) and may increase required margins.<br>
+      <strong>Open interest:</strong> Total number of outstanding futures contracts. At maturity, open interest is settled via cash or physical delivery. Alternatively, a position can be closed before maturity by entering an offsetting contract (buyer sells the contract back).</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward vs. Futures — Same Final Payoff, Different Timing</div>
+      <p>If a forward and a futures contract have the same underlying, same maturity, and same initial price, the <strong>final cumulative settlement is identical</strong>. The difference is TIMING: the forward settles in a single payment at maturity, while the futures settles via daily MTM throughout the contract's life. Due to the time value of money, these are not strictly equivalent — but for short maturities and low interest rates, the difference is negligible. Also: in forwards, the financial intermediary bears counterparty risk; in futures, the clearinghouse guarantees performance.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: FUTURES MARGIN — FULL EXAMPLE      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Futures Margin — Full Worked Example (Procam Investments)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Setup:</strong> Procam Investments buys 1 gold futures contract (100 oz) on the LME at f₀(T) = $1,792.13/oz. Initial margin = $4,950. Maintenance margin = $4,500. Contract settles at $1,780.50/oz after 6 days.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Day</th><th>Futures Price</th><th>Day Gain/(Loss)</th><th>Cumulative G/(L)</th><th>Margin Balance</th><th>Margin Call</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>T−6 (Open)</td><td>$1,792.13</td><td>—</td><td>—</td><td>$4,950</td><td>—</td></tr>
+          <tr><td>T−5</td><td>$1,797.13</td><td>+$500 (+$5×100)</td><td>+$500</td><td>$5,450</td><td>—</td></tr>
+          <tr><td>T−4</td><td>$1,786.25</td><td>−$1,088 (−$10.88×100)</td><td>−$588</td><td>$4,362 ⚠️</td><td>+$588</td></tr>
+          <tr><td>T−3</td><td>$1,782.19</td><td>−$406</td><td>−$994</td><td>$4,544</td><td>—</td></tr>
+          <tr><td>T−2</td><td>$1,777.45</td><td>−$474</td><td>−$1,468</td><td>$4,070 ⚠️</td><td>+$880</td></tr>
+          <tr><td>T−1</td><td>$1,779.50</td><td>+$205</td><td>−$1,263</td><td>$5,155</td><td>—</td></tr>
+          <tr><td>T (Final)</td><td>$1,780.50</td><td>+$100</td><td>−$1,163</td><td>$5,255</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Procam Final Settlement Reconciliation</div>
+      <div class="f">
+        Total cumulative MTM gain/(loss): −$1,163<br>
+        Calculation: (f_T − f₀) × 100 = ($1,780.50 − $1,792.13) × 100 = −$1,163 ✓<br><br>
+        Total margin calls paid: $588 + $880 = $1,468<br>
+        Margin returned at settlement: $5,255 (final balance)<br>
+        Net margin returned above initial: $5,255 − $4,950 = +$305<br><br>
+        Net settlement: $305 (returned margin excess) − $1,468 (margin calls paid) = −$1,163 ✓<br><br>
+        Same loss as the equivalent forward contract from Example 1 = −$1,163
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Takeaway — Forward and Futures Give the Same Cumulative Loss</div>
+      <p>Whether Procam used a forward or a futures contract, the final loss is $1,163. The futures just distributed that loss across multiple days via daily MTM. The forward would settle the full $1,163 in one payment at maturity. Net economic outcome: identical (ignoring time value of money effects on margin flows, which are small for short maturities).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: SWAPS                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Swaps</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Swap Contract</div>
+      <div class="def-body">A <strong>firm commitment under which two counterparties exchange a series of cash flows in the future</strong>. One cash flow stream is typically variable (floating, reset each period based on a market reference rate); the other is typically fixed (the swap rate). Unlike forwards and futures which have a single future exchange, swaps involve multiple future exchanges over the swap's tenor.</div>
+    </div>
+
+    <h3>Interest Rate Swap — The Most Common Swap</h3>
+
+    <div class="card">
+      <p>In an <strong>interest rate swap</strong>, one party pays a fixed rate (the swap rate) and receives a floating rate (MRR), while the other pays floating and receives fixed. The two parties are:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li><strong>Fixed-rate payer / Floating-rate receiver:</strong> Pays fixed swap rate; receives MRR. Benefits when MRR rises above swap rate.</li>
+        <li><strong>Floating-rate payer / Fixed-rate receiver:</strong> Pays MRR; receives fixed swap rate. Benefits when MRR falls below swap rate.</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Notional principal:</strong> NOT exchanged — it is used only for calculating the fixed and floating interest payment amounts. This is a key difference from a loan.</p>
+      <p style="margin-top:10px;"><strong>Net payment:</strong> Counterparties exchange only the net difference between the fixed and floating payment each period (not gross amounts).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Interest Rate Swap — Key Mechanics</div>
+      <div class="f">
+        Each period net payment (from fixed-rate payer's perspective):<br>
+        Net paid = (Swap Rate − MRR) × Notional × Period fraction<br>
+        If MRR &gt; Swap Rate → Fixed-rate payer RECEIVES net (floating payment exceeds fixed)<br>
+        If MRR &lt; Swap Rate → Fixed-rate payer PAYS net (fixed payment exceeds floating)<br><br>
+        Swap rate (fixed leg) is determined by:<br>
+        → Setting fixed leg PV = floating leg PV (using forward MRRs to project future floating payments)<br>
+        → Result: swap rate is the constant fixed yield that makes the two legs equal in PV at inception<br><br>
+        Value at inception = ZERO (by design — like a forward contract)<br>
+        Value changes over time as market rates change (similar to bond price changes)
+      </div>
+      <div class="note">
+        <strong>Swap as a series of forwards:</strong> An interest rate swap can be viewed as a bundle of forward rate agreements (FRAs) — one for each payment date. Each payment date has an implied forward MRR; the fixed rate is set to make the PV of all these forward rates equal the PV of all fixed payments.<br>
+        <strong>Esterr example from Module 1:</strong> Esterr pays fixed, receives CORRA (MRR). Net effect: Esterr effectively fixes its floating-rate loan at a blended fixed rate = (swap fixed rate + credit spread on loan). If CORRA rises, the swap compensates Esterr — its floating loan cost rises, but so does its swap receipt.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Forward Contract</th><th>Swap Contract</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Number of exchanges</td><td>Single (one exchange at maturity T)</td><td>Multiple (series of exchanges over the swap tenor)</td></tr>
+          <tr><td>Cash at inception</td><td>None — value = 0 at initiation</td><td>None — value = 0 at initiation</td></tr>
+          <tr><td>Nature</td><td>Firm commitment (both obligated)</td><td>Firm commitment (both obligated)</td></tr>
+          <tr><td>Market</td><td>OTC (customized)</td><td>Mostly OTC (with central clearing for inter-dealer trades)</td></tr>
+          <tr><td>Cash flows</td><td>Net difference at single future date</td><td>Net difference at each payment period (fixed vs. floating)</td></tr>
+          <tr><td>MTM over life</td><td>Deviates from zero as spot moves</td><td>Deviates from zero as interest rates change</td></tr>
+          <tr><td>Credit risk management</td><td>Bilateral (or collateral); CCP for cleared swaps</td><td>Bilateral with MTM settlement; CCP for cleared swaps (like futures margining)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Using Swaps to Change Duration Without Trading Bonds</div>
+      <p>An investment manager with a long-duration bond portfolio can use a <strong>pay-fixed interest rate swap</strong> to effectively shorten duration. By paying fixed and receiving floating: if rates rise (reducing bond prices), the swap generates a gain (since the floating received exceeds the fixed paid when rates are high). This offsetting gain from the swap partially compensates the bond portfolio losses from rising rates — reducing the portfolio's net interest rate sensitivity (duration) without buying or selling bonds.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: OPTIONS — CORE CONCEPTS        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Options — Core Concepts &amp; Terminology</h2>
+    </div>
+
+    <div class="card">
+      <p>Options are the primary <strong>contingent claim</strong>. The option buyer has the <strong>right but not the obligation</strong> to transact; the option seller (writer) has the <strong>obligation to fulfill</strong> the transaction if the buyer exercises. Because of this asymmetry, the option buyer pays an upfront <strong>option premium</strong> to the seller at t=0.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Option Premium (c₀ or p₀)</td><td>Upfront payment from option BUYER to option SELLER at t=0. Compensates seller for taking on the one-sided obligation. For calls: c₀. For puts: p₀.</td></tr>
+          <tr><td>Exercise Price (Strike Price, X)</td><td>The pre-agreed price at which the buyer can buy (call) or sell (put) the underlying. The "trigger" price. May be above, at, or below the forward price.</td></tr>
+          <tr><td>Maturity Date (T)</td><td>The date on which the option expires. European options may only be exercised AT maturity. American options may be exercised at any time before or at maturity.</td></tr>
+          <tr><td>Exercise</td><td>The act of the option buyer deciding to transact the underlying at the exercise price. Exercised only when profitable.</td></tr>
+          <tr><td>Call Option</td><td>Gives the buyer the RIGHT TO BUY the underlying at X. Buyer exercises when S_T &gt; X.</td></tr>
+          <tr><td>Put Option</td><td>Gives the buyer the RIGHT TO SELL the underlying at X. Buyer exercises when S_T &lt; X.</td></tr>
+          <tr><td>European Option</td><td>Can only be exercised AT maturity (t=T). Note: "European" refers to exercise style, not geography.</td></tr>
+          <tr><td>American Option</td><td>Can be exercised at ANY time from inception to maturity. Note: "American" refers to exercise style, not geography.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Moneyness — In, At, or Out of the Money</h3>
+
+    <div class="three-col">
+      <div class="long-card" style="margin-bottom:0;">
+        <div class="long-title">In-the-Money (ITM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#c8dfd0;">
+          <li><strong>Call ITM:</strong> S_t &gt; X (underlying above strike)</li>
+          <li><strong>Put ITM:</strong> S_t &lt; X (underlying below strike)</li>
+          <li>Intrinsic value &gt; 0 — worth exercising immediately</li>
+          <li>Option has both intrinsic value AND time value</li>
+        </ul>
+      </div>
+      <div class="fwd-card" style="margin-bottom:0;">
+        <div class="fwd-title">At-the-Money (ATM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#dfd0c8;">
+          <li><strong>Call ATM:</strong> S_t = X</li>
+          <li><strong>Put ATM:</strong> S_t = X</li>
+          <li>Intrinsic value = 0</li>
+          <li>Option price = time value only</li>
+        </ul>
+      </div>
+      <div class="short-card" style="margin-bottom:0;">
+        <div class="short-title">Out-of-the-Money (OTM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#dfc8c8;">
+          <li><strong>Call OTM:</strong> S_t &lt; X</li>
+          <li><strong>Put OTM:</strong> S_t &gt; X</li>
+          <li>Intrinsic value = 0</li>
+          <li>Option price = time value only</li>
+          <li>Would not be exercised if maturity today</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 European vs. American Options — "Labels" Don't Mean Geography</div>
+      <p><strong>European options</strong> are exercisable ONLY at maturity. Most index options and many OTC options are European. The CFA exam's Module 2 focuses on European options (all payoff formulas below assume exercise only at T).<br>
+      <strong>American options</strong> are exercisable ANY TIME up to and including maturity. Most individual stock options traded on US exchanges (CBOE, etc.) are American-style. American options are always worth at least as much as their European equivalents (extra flexibility cannot reduce value). The exam may note this distinction but the primary calculations use European-style payoffs.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: CALL OPTIONS — ALL FOUR POSITIONS  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Call Options — All Four Positions</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Call Option Payoff &amp; Profit — All Equations</div>
+      <div class="f">
+        LONG CALL (Buyer) — Equations 1 &amp; 2:<br>
+        Payoff: c_T = max(0, S_T − X)<br>
+        Profit: Π = max(0, S_T − X) − c₀<br><br>
+        SHORT CALL (Seller) — Mirror of buyer:<br>
+        Payoff: −c_T = −max(0, S_T − X) = min(0, X − S_T)<br>
+        Profit: Π = −max(0, S_T − X) + c₀
+      </div>
+      <div class="note">
+        <strong>X</strong> = exercise price (strike) | <strong>S_T</strong> = underlying price at maturity | <strong>c₀</strong> = call premium paid at t=0<br>
+        <strong>max(0, S_T−X)</strong> ensures payoff is NEVER negative for the buyer (the "floor" at zero).<br>
+        The buyer's breakeven: S_T = X + c₀ (underlying must exceed strike by at least the premium paid to profit)
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="long-card">
+        <div class="long-title">✅ Long Call — Buyer</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Pays premium c₀ at t=0 (upfront cost)</li>
+          <li>Has the RIGHT (not obligation) to BUY at X</li>
+          <li>Exercises when S_T &gt; X (option in-the-money)</li>
+          <li>Does NOT exercise when S_T ≤ X (expires worthless)</li>
+          <li>Payoff = max(0, S_T − X) — always ≥ 0</li>
+          <li>Profit = max(0, S_T − X) − c₀</li>
+          <li>Breakeven: S_T = X + c₀</li>
+          <li><strong>Max loss = c₀</strong> (premium paid — known upfront)</li>
+          <li><strong>Upside = unlimited</strong> (S_T has no ceiling)</li>
+          <li>Benefits: rising underlying price</li>
+        </ul>
+      </div>
+      <div class="short-card">
+        <div class="short-title">📉 Short Call — Seller (Writer)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li>Receives premium c₀ at t=0 (max profit)</li>
+          <li>Has the OBLIGATION to sell at X if buyer exercises</li>
+          <li>Buyer exercises against seller when S_T &gt; X</li>
+          <li>Keeps full premium when S_T ≤ X (buyer doesn't exercise)</li>
+          <li>Payoff = −max(0, S_T − X) — always ≤ 0</li>
+          <li>Profit = −max(0, S_T − X) + c₀</li>
+          <li>Breakeven: S_T = X + c₀</li>
+          <li><strong>Max gain = c₀</strong> (premium received)</li>
+          <li><strong>Downside = unlimited</strong> (S_T can rise infinitely)</li>
+          <li>Benefits: stable or falling underlying price</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Call Option — Worked Examples</h3>
+
+    <div class="auction-box">
+      <div class="label">Call Option: c₀ = $5, X = $30, Exercise style: European</div>
+      <div class="f">
+        Scenario 1: S_T = $40 (ITM — buyer exercises)<br>
+        Long Call:  Payoff = max(0, 40−30) = $10 | Profit = $10 − $5 = +$5<br>
+        Short Call: Payoff = −$10 | Profit = −$10 + $5 = −$5<br><br>
+        Scenario 2: S_T = $25 (OTM — buyer does NOT exercise)<br>
+        Long Call:  Payoff = max(0, 25−30) = $0 | Profit = $0 − $5 = −$5 (loss = premium)<br>
+        Short Call: Payoff = $0 | Profit = $0 + $5 = +$5 (gain = premium)<br><br>
+        Scenario 3: S_T = $35 (breakeven)<br>
+        Long Call:  Payoff = max(0, 35−30) = $5 | Profit = $5 − $5 = $0 (breakeven)<br>
+        Short Call: Payoff = −$5 | Profit = −$5 + $5 = $0 (breakeven)
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Short Call — The Most Dangerous Option Position</div>
+      <p>The short call position has <strong>unlimited downside risk</strong> — theoretically, the underlying price could rise to infinity, and the call seller must deliver at the strike price X regardless. This is why writing (selling) uncovered (naked) call options is considered one of the riskiest positions in derivatives. The maximum gain is capped at the premium received (c₀), but losses are unbounded. Institutions that sell calls typically hedge the position by holding the underlying stock (covered call strategy).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: PUT OPTIONS — ALL FOUR POSITIONS   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Put Options — All Four Positions</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Put Option Payoff &amp; Profit — All Equations</div>
+      <div class="f">
+        LONG PUT (Buyer) — Equations 3 &amp; 4:<br>
+        Payoff: p_T = max(0, X − S_T)<br>
+        Profit: Π = max(0, X − S_T) − p₀<br><br>
+        SHORT PUT (Seller) — Mirror of buyer — Equations 5 &amp; 6:<br>
+        Payoff: −p_T = −max(0, X − S_T)<br>
+        Profit: Π = −max(0, X − S_T) + p₀
+      </div>
+      <div class="note">
+        <strong>X</strong> = exercise price | <strong>S_T</strong> = underlying price at maturity | <strong>p₀</strong> = put premium paid at t=0<br>
+        <strong>max(0, X−S_T)</strong>: payoff is positive only when S_T &lt; X (put is in-the-money — buyer SELLS above market)<br>
+        Breakeven for long put buyer: S_T = X − p₀ (underlying must fall below strike by at least the premium)
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="long-card">
+        <div class="long-title">✅ Long Put — Buyer</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Pays premium p₀ at t=0</li>
+          <li>Has the RIGHT to SELL underlying at X</li>
+          <li>Exercises when S_T &lt; X (put in-the-money)</li>
+          <li>Does NOT exercise when S_T ≥ X (expires worthless)</li>
+          <li>Payoff = max(0, X − S_T) — always ≥ 0</li>
+          <li>Profit = max(0, X − S_T) − p₀</li>
+          <li>Breakeven: S_T = X − p₀</li>
+          <li><strong>Max loss = p₀</strong> (premium paid)</li>
+          <li><strong>Max gain = X − p₀</strong> (if S_T falls to 0)</li>
+          <li>Benefits: falling underlying price</li>
+          <li>Used as portfolio insurance against price declines</li>
+        </ul>
+      </div>
+      <div class="short-card">
+        <div class="short-title">📉 Short Put — Seller (Writer)</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li>Receives premium p₀ at t=0 (max profit)</li>
+          <li>Has OBLIGATION to BUY underlying at X if exercised</li>
+          <li>Buyer exercises against seller when S_T &lt; X</li>
+          <li>Keeps full premium when S_T ≥ X (buyer doesn't exercise)</li>
+          <li>Payoff = −max(0, X − S_T) — always ≤ 0</li>
+          <li>Profit = −max(0, X − S_T) + p₀</li>
+          <li>Breakeven: S_T = X − p₀</li>
+          <li><strong>Max gain = p₀</strong> (premium received)</li>
+          <li><strong>Max loss = X − p₀</strong> (if S_T falls to 0)</li>
+          <li>Benefits: stable or rising underlying price</li>
+          <li>Short put resembles a long position in the underlying</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Put Option — Worked Examples</h3>
+
+    <div class="auction-box">
+      <div class="label">Put Option: p₀ = $4, X = $50, European style</div>
+      <div class="f">
+        Scenario 1: S_T = $35 (ITM — buyer exercises)<br>
+        Long Put:  Payoff = max(0, 50−35) = $15 | Profit = $15 − $4 = +$11<br>
+        Short Put: Payoff = −$15 | Profit = −$15 + $4 = −$11<br><br>
+        Scenario 2: S_T = $60 (OTM — buyer does NOT exercise)<br>
+        Long Put:  Payoff = max(0, 50−60) = $0 | Profit = $0 − $4 = −$4 (loss = premium)<br>
+        Short Put: Payoff = $0 | Profit = $0 + $4 = +$4 (gain = premium)<br><br>
+        Scenario 3: S_T = $46 (breakeven: X − p₀ = 50 − 4 = $46)<br>
+        Long Put:  Payoff = max(0, 50−46) = $4 | Profit = $4 − $4 = $0 (breakeven)<br>
+        Short Put: Payoff = −$4 | Profit = −$4 + $4 = $0 (breakeven)
+      </div>
+    </div>
+
+    <h3>All Four Option Positions — Master Summary</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Position</th><th>Action at t=0</th><th>Payoff at T</th><th>Profit at T</th><th>Max Gain</th><th>Max Loss</th><th>Breakeven S_T</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Long Call</td><td>Pay c₀</td><td>max(0, S_T−X)</td><td>max(0, S_T−X) − c₀</td><td>Unlimited</td><td>c₀</td><td>X + c₀</td></tr>
+          <tr><td>Short Call</td><td>Receive c₀</td><td>−max(0, S_T−X)</td><td>−max(0, S_T−X) + c₀</td><td>c₀</td><td>Unlimited</td><td>X + c₀</td></tr>
+          <tr><td>Long Put</td><td>Pay p₀</td><td>max(0, X−S_T)</td><td>max(0, X−S_T) − p₀</td><td>X − p₀</td><td>p₀</td><td>X − p₀</td></tr>
+          <tr><td>Short Put</td><td>Receive p₀</td><td>−max(0, X−S_T)</td><td>−max(0, X−S_T) + p₀</td><td>p₀</td><td>X − p₀</td><td>X − p₀</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Option Buyer's Payoff Is ALWAYS ≥ 0</div>
+      <p>This is the fundamental property of contingent claims: the <strong>option buyer's PAYOFF is always zero or positive — never negative</strong>. The buyer will simply choose not to exercise if doing so would result in a loss. However, the buyer's <strong>PROFIT</strong> (payoff minus premium paid) CAN be negative — if the payoff doesn't recover the upfront premium. Maximum loss for any option buyer = the premium paid. This asymmetry (buyer's limited loss, seller's limited gain) is the defining contrast with firm commitments.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: OPTION VALUE COMPONENTS            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Option Value Components — Intrinsic Value &amp; Time Value</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Option Price Decomposition (Before Maturity, t &lt; T)</div>
+      <div class="f">
+        Option Price (c_t or p_t)  =  Intrinsic Value  +  Time Value<br><br>
+        Call Intrinsic Value = max(0, S_t − X)<br>
+        Put Intrinsic Value  = max(0, X − S_t)<br><br>
+        Time Value = Option Price − Intrinsic Value<br><br>
+        At maturity (t = T): Time value = 0 → Option price = Intrinsic value only
+      </div>
+      <div class="note">
+        <strong>Intrinsic value</strong> = the option's exercise value RIGHT NOW if it could be exercised immediately. For OTM and ATM options, intrinsic value = 0 (not negative — the buyer simply wouldn't exercise).<br><br>
+        <strong>Time value</strong> = the additional value above intrinsic value, reflecting the possibility that the option may become more profitable before expiry. ALWAYS positive before maturity (t &lt; T). Declines to zero as maturity approaches (time value decay / theta decay).<br><br>
+        <strong>Why time value is positive:</strong> The longer the time to maturity, the more time for a favorable price move in the underlying. This increases both the probability and potential magnitude of exercise — increasing the option's value.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Moneyness</th><th>Intrinsic Value (Call)</th><th>Time Value</th><th>Option Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ITM (S_t &gt; X)</td><td>(S_t − X) &gt; 0</td><td>Positive (but lower for deep ITM)</td><td>Intrinsic + Time value</td></tr>
+          <tr><td>ATM (S_t = X)</td><td>0</td><td>Maximum time value (highest uncertainty)</td><td>= Time value only</td></tr>
+          <tr><td>OTM (S_t &lt; X)</td><td>0</td><td>Positive (reflects remaining time for recovery)</td><td>= Time value only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 At Maturity — Time Value Always Decays to Zero</div>
+      <p>As an option approaches maturity, its time value erodes to zero — this is called <strong>time decay</strong> (or theta). At the final expiration moment, the option is worth exactly its intrinsic value (exercise it or let it expire worthless). This is why option sellers (who received the premium upfront) benefit from the passage of time — the option they sold becomes worth less each day, all else equal. Option buyers suffer from time decay — they need a sufficiently large and fast price move to overcome the erosion of time value.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Option Credit Risk — One-Sided</div>
+      <p>For options, counterparty credit risk is <strong>one-sided</strong>: once the premium is paid at t=0, the <strong>option seller has NO credit exposure to the buyer</strong> (the buyer can only decline to exercise — they can't default on a future obligation). However, the <strong>option buyer faces credit risk of the option seller</strong> — at maturity, if the option is in-the-money, the seller must pay. If the seller defaults, the buyer loses the payoff. This is the reverse of typical firm commitment bilateral credit risk.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9: CREDIT DEFAULT SWAPS (CDS)     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Credit Default Swaps (CDS)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Credit Default Swap (CDS)</div>
+      <div class="def-body">The most common credit derivative. A contract in which the <strong>credit protection buyer pays periodic fixed spread payments</strong> to the <strong>credit protection seller</strong> in exchange for the seller assuming the risk of loss from a credit event (default) by an underlying third-party issuer. The CDS notional is not exchanged — it serves as the basis for calculating payments.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="long-card">
+        <div class="long-title">Credit Protection BUYER</div>
+        <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+          <li>Pays a periodic <strong>fixed spread</strong> (CDS spread) to the seller throughout the contract</li>
+          <li>Receives a contingent payment from seller if a <strong>credit event</strong> occurs</li>
+          <li>Credit event = bankruptcy, failure to pay, involuntary debt restructuring</li>
+          <li>Settlement payment = LGD (loss given default) × CDS notional</li>
+          <li>Acts like an <strong>insurance buyer</strong> — pays regular premiums for protection</li>
+          <li>Benefits when issuer CDS spread WIDENS (credit deteriorates)</li>
+          <li>With existing bond exposure → CDS is a HEDGE</li>
+          <li>Without existing bond exposure → CDS is SHORT CREDIT (speculating on deterioration)</li>
+        </ul>
+      </div>
+      <div class="short-card">
+        <div class="short-title">Credit Protection SELLER</div>
+        <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+          <li>Receives periodic fixed spread payments from buyer</li>
+          <li>Must make contingent payment to buyer if credit event occurs</li>
+          <li>Payment = LGD × Notional (timing and amount uncertain until event)</li>
+          <li>Acts like an <strong>insurance seller</strong> — receives premiums, assumes contingent risk</li>
+          <li>Benefits when issuer CDS spread TIGHTENS (credit improves)</li>
+          <li>Similar to a <strong>LONG credit position</strong> in the underlying issuer's bond</li>
+          <li>Loses when credit events occur — required to make large settlement payments</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">CDS — Key Relationships &amp; Mechanics</div>
+      <div class="f">
+        CDS spread (bps) reflects: Probability of Default (POD) × Loss Given Default (LGD)<br>
+        Higher CDS spread → worse credit quality → lower cash bond price<br>
+        Lower CDS spread → better credit quality → higher cash bond price<br><br>
+        CDS at inception priced at PAR SPREAD → NPV = 0 at initiation (like interest rate swap)<br>
+        As CDS spread changes over time → MTM value deviates from zero<br><br>
+        Credit event triggers contract termination:<br>
+        → Seller pays: LGD × Notional to buyer<br>
+        → Three defined credit events: Bankruptcy | Failure to Pay | Involuntary Debt Restructuring<br><br>
+        CDS MTM during life: use effective duration to approximate MTM change<br>
+        CDS spread widens → buyer GAINS (low fixed spread paid vs. higher market spread)
+      </div>
+      <div class="note">
+        <strong>CDS hybrid nature:</strong> Despite the name "swap," CDS contracts are classified as <strong>contingent claims</strong> — because the contingent credit event payment occurs only IF a credit event happens. This is similar to an option payout that depends on a trigger event. However, CDS also shares features of firm commitments (regular fixed spread payments occur regardless — like a swap's periodic cash flows). CDS = hybrid of firm commitment (periodic spread) + contingent claim (credit event payment).<br><br>
+        <strong>At par spread:</strong> Net present value of fixed leg = Net present value of contingent protection leg → NPV = 0. This is analogous to a swap priced at par.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CDS as Insurance — The Structural Analogy</div>
+      <p>A CDS works very similarly to insurance:<br>
+      <strong>Insurance buyer</strong> = CDS protection buyer: pays regular premiums, gets paid if the insured event occurs.<br>
+      <strong>Insurance seller</strong> = CDS protection seller: receives regular premiums, pays out if the insured event occurs.<br>
+      Key difference from traditional insurance: CDS buyers do NOT need to hold the underlying bond to buy protection. A CDS buyer without the bond is "naked" — purely speculating on credit deterioration (short credit). This "insurable interest" distinction is a key regulatory and conceptual point.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SECTION 10: FORWARD vs. OPTIONS COMPARISON               -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Forward Commitments vs. Contingent Claims — Full Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Firm Commitments (Forwards/Futures/Swaps)</th><th>Contingent Claims (Options/CDS)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Both parties obligated?</td><td><span class="tag tag-green">YES</span> — both must perform at settlement</td><td><span class="tag tag-red">NO</span> — only seller obligated; buyer has right</td></tr>
+          <tr><td>Upfront payment</td><td><span class="tag tag-green">None</span> — no cash at inception (except margin for futures)</td><td><span class="tag tag-red">Yes</span> — option buyer pays premium to seller at t=0</td></tr>
+          <tr><td>Payoff profile</td><td><strong>Linear (symmetric)</strong> — payoff changes $1 for every $1 move in underlying. Also called linear derivatives.</td><td><strong>Non-linear (asymmetric)</strong> — buyer's payoff floored at zero; seller's gain capped at premium. Also called non-linear derivatives.</td></tr>
+          <tr><td>Buyer's max loss</td><td>Unlimited (full range of underlying moves)</td><td>Limited to premium paid (c₀ or p₀)</td></tr>
+          <tr><td>Seller's max gain</td><td>Unlimited upside (short forward) or limited (futures)</td><td>Limited to premium received</td></tr>
+          <tr><td>Value at inception</td><td>Zero (no cash exchanged)</td><td>Premium received by seller = premium paid by buyer</td></tr>
+          <tr><td>Credit risk nature</td><td>Bilateral — both parties face credit risk of the other</td><td>One-sided — after premium paid, only buyer faces seller's credit risk</td></tr>
+          <tr><td>Example instruments</td><td>Forward contracts, futures, interest rate swaps</td><td>Call options, put options, CDS (partly)</td></tr>
+          <tr><td>Similar directional exposure</td><td>Long forward: benefits from rising prices (unlimited)</td><td>Long call: benefits from rising prices (unlimited upside, limited downside)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Long Call vs. Long Forward — When Does Each Outperform?</h3>
+
+    <div class="formula-box">
+      <div class="label">Long Call vs. Long Forward (X = F₀(T))</div>
+      <div class="f">
+        Long Forward Profit = S_T − F₀(T)   [no premium, linear, symmetric]<br>
+        Long Call Profit    = max(0, S_T − F₀(T)) − c₀   [non-linear, limited downside]<br><br>
+        Forward profit &gt; Call profit when: S_T − F₀(T) &gt; −c₀<br>
+        → i.e., when S_T &gt; F₀(T) − c₀ (underlying moderately above or well above X)<br><br>
+        Call profit &gt; Forward profit when: S_T − F₀(T) &lt; −c₀<br>
+        → i.e., when S_T &lt; F₀(T) − c₀ (underlying well below X)<br>
+        → The call's downside protection (floor at −c₀) outperforms the forward's unlimited losses<br><br>
+        Key insight:<br>
+        Long call = long forward + downside protection — in exchange for paying a premium (c₀)
+      </div>
+      <div class="note">
+        <strong>Long call vs. long forward analogy:</strong> The long call is like a long forward position with insurance against price declines below X. The premium (c₀) is the cost of that insurance.<br>
+        <strong>Short put vs. long forward analogy:</strong> The short put is like a long forward with the upside gains above X forfeited in exchange for receiving a premium (p₀). The short put gains from rising prices (like a long forward) but profits are capped at p₀.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Four Ways to Get Bullish on an Underlying</div>
+      <p>A market participant who is bullish (expects S_T to rise) can use any of these positions — each with different payoff profiles:<br>
+      <strong>1. Long spot:</strong> Buy the underlying now at S₀ — direct exposure, requires full capital.<br>
+      <strong>2. Long forward:</strong> Agree to buy at F₀(T) — no upfront payment, linear payoff, unlimited downside.<br>
+      <strong>3. Long call:</strong> Pay premium c₀ for the right to buy at X — limited downside (just premium), unlimited upside. Premium = cost of the floor.<br>
+      <strong>4. Short put:</strong> Receive premium p₀ for obligation to buy at X — capped upside (premium only), limited downside (X − p₀ if underlying falls to zero). Premium = compensation for taking on the downside.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST & QUICK REFERENCE       -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Forward contract</strong> = OTC firm commitment; buyer agrees to buy underlying from seller at F₀(T) at time T. No cash at inception. Payoff = Profit = S_T − F₀(T) for buyer; F₀(T) − S_T for seller. Single settlement at maturity.</li>
+        <li>✅ <strong>Long forward benefits when S_T rises. Short forward benefits when S_T falls.</strong> Both sides have symmetric, unlimited risk — linear payoff profile (= linear derivative).</li>
+        <li>✅ <strong>Futures = standardized exchange-traded forwards.</strong> Same final payoff as forwards but settled via daily MTM (mark-to-market) rather than a single settlement at maturity.</li>
+        <li>✅ <strong>Daily MTM:</strong> Clearinghouse settles gains and losses daily. Futures buyer's margin account is credited (debited) when futures price rises (falls). Seller's account is the mirror image.</li>
+        <li>✅ <strong>Initial margin</strong> = deposit required to open a futures position. <strong>Maintenance margin</strong> = minimum balance; set below initial margin. <strong>Margin call</strong> = triggered when balance falls below maintenance margin; must restore to INITIAL margin level (not just maintenance).</li>
+        <li>✅ <strong>Variation margin</strong> = the amount deposited in response to a margin call. Price limits and circuit breakers are additional exchange safeguards.</li>
+        <li>✅ <strong>Swap</strong> = series of future cash flow exchanges (firm commitment). One leg usually fixed (swap rate); other usually floating (MRR). Notional NOT exchanged — used only for payment calculation. Value = 0 at inception.</li>
+        <li>✅ <strong>Interest rate swap (most common):</strong> Fixed-rate payer receives floating (MRR); floating-rate payer receives fixed. Swap rate set so PV(fixed leg) = PV(floating leg) at inception. Net payments exchanged each period.</li>
+        <li>✅ <strong>Options = contingent claims.</strong> Buyer has RIGHT (not obligation); seller has OBLIGATION. Buyer pays upfront premium. Payoff to buyer is ALWAYS ≥ 0 (floored at zero via the max() function).</li>
+        <li>✅ <strong>Call option:</strong> buyer's RIGHT TO BUY at X. Exercise when S_T &gt; X. Payoff = max(0, S_T−X). Profit = max(0, S_T−X) − c₀. Breakeven = X + c₀.</li>
+        <li>✅ <strong>Put option:</strong> buyer's RIGHT TO SELL at X. Exercise when S_T &lt; X. Payoff = max(0, X−S_T). Profit = max(0, X−S_T) − p₀. Breakeven = X − p₀.</li>
+        <li>✅ <strong>Long call:</strong> unlimited upside, max loss = c₀. Short call: max gain = c₀, unlimited downside. Long put: max gain = X−p₀, max loss = p₀. Short put: max gain = p₀, max loss = X−p₀.</li>
+        <li>✅ <strong>European vs. American:</strong> European = exercisable only AT maturity (CFA exam default). American = exercisable at any time before or at maturity. Labels refer to exercise style, not geography.</li>
+        <li>✅ <strong>Moneyness:</strong> Call ITM = S_t &gt; X. Call OTM = S_t &lt; X. Put ITM = S_t &lt; X. Put OTM = S_t &gt; X. ATM = S_t = X for both. ITM options have positive intrinsic value; OTM/ATM options have zero intrinsic value.</li>
+        <li>✅ <strong>Option price = Intrinsic value + Time value.</strong> Intrinsic value = max(0, S_t−X) for call; max(0, X−S_t) for put. Time value always positive before maturity; decays to zero at maturity.</li>
+        <li>✅ <strong>Non-linear (asymmetric) payoff</strong> is the defining feature of contingent claims. Firm commitments have linear (symmetric) payoff. This is the core contrast: non-linear = contingent claim; linear = firm commitment.</li>
+        <li>✅ <strong>CDS (Credit Default Swap):</strong> credit protection buyer pays fixed periodic spread; seller assumes contingent credit event payment. Credit event = bankruptcy/failure to pay/involuntary restructuring. Settlement = LGD × Notional.</li>
+        <li>✅ <strong>CDS buyer = short credit (benefits from spread widening). CDS seller = long credit (benefits from spread tightening).</strong> CDS priced at par spread has NPV = 0 at inception (like a swap). Hybrid: regular fixed payments (firm commitment feature) + contingent credit event payment (contingent claim feature).</li>
+        <li>✅ <strong>Long call vs. Long forward (X = F₀(T)):</strong> Both benefit from rising prices. Long call protects downside (loss floor = −c₀ vs. unlimited for forward) but costs a premium. When S_T is well below X, long call outperforms forward (limited loss vs. large loss). When S_T is well above X, forward outperforms (no premium drag).</li>
+        <li>✅ <strong>Short put vs. Long forward:</strong> Short put benefits from rising prices but caps upside at p₀ (premium received). Underperforms forward when S_T rises far above X (forward profit is unlimited; short put capped). Outperforms forward when prices fall somewhat (premium received provides a cushion).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ FIRM COMMITMENTS ═══<br>
+        Forward: OTC, single settlement, F₀(T) = agreed price, payoff = profit = S_T−F₀(T) (buyer)<br>
+        Futures: ETD, standardized, daily MTM, initial/maintenance/variation margin, same final payoff<br>
+        Swap: series of cash flow exchanges, fixed leg (swap rate) vs floating leg (MRR), NPV=0 at inception<br>
+        All: linear payoff, no upfront payment, bilateral credit risk<br><br>
+
+        ═══ OPTIONS — ALL FOUR POSITIONS ═══<br>
+        Long Call:  Payoff=max(0,S_T−X) | Profit=max(0,S_T−X)−c₀ | BEP=X+c₀ | Max loss=c₀<br>
+        Short Call: Payoff=−max(0,S_T−X) | Profit=c₀−max(0,S_T−X) | BEP=X+c₀ | Max gain=c₀<br>
+        Long Put:   Payoff=max(0,X−S_T) | Profit=max(0,X−S_T)−p₀ | BEP=X−p₀ | Max loss=p₀<br>
+        Short Put:  Payoff=−max(0,X−S_T) | Profit=p₀−max(0,X−S_T) | BEP=X−p₀ | Max gain=p₀<br><br>
+
+        ═══ MONEYNESS ═══<br>
+        Call ITM: S_t&gt;X | Put ITM: S_t&lt;X | ATM: S_t=X | OTM = opposite of ITM<br>
+        Intrinsic value (call) = max(0, S_t−X) | Intrinsic (put) = max(0, X−S_t)<br>
+        Option price = Intrinsic value + Time value (time value &gt;0 before T; =0 at T)<br><br>
+
+        ═══ CDS ═══<br>
+        Buyer: pays fixed spread → receives LGD×Notional if credit event → SHORT CREDIT<br>
+        Seller: receives fixed spread → pays LGD×Notional if credit event → LONG CREDIT<br>
+        Credit event: bankruptcy, failure to pay, involuntary restructuring<br>
+        Priced at par spread → NPV=0 at inception | CDS spread↑ = worse credit = lower bond price<br><br>
+
+        ═══ FORWARD vs. CALL OPTION ═══<br>
+        Long forward: unlimited upside AND downside, linear, no premium<br>
+        Long call: unlimited upside, downside floor at −c₀ (limited loss), costs premium<br>
+        Short put: gains like long forward but capped upside at p₀, earns premium
+      </div>
+      <div class="note">
+        <strong>Firm commitments = linear derivatives</strong> (symmetric payoff; $1 move in underlying → $1 move in payoff for both sides).<br>
+        <strong>Contingent claims = non-linear derivatives</strong> (asymmetric; option buyer's payoff floored at zero via max() function).<br>
+        <strong>Margin call restores to INITIAL margin</strong> (not just maintenance margin) — a frequently tested exam trap.<br>
+        <strong>Options credit risk is one-sided:</strong> after premium paid, only buyer faces seller's credit risk (not bilateral like forwards/swaps).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Derivatives · Module 2: Forward Commitment and Contingent Claim Features and Instruments · Exam Prep Notes
+</footer>
+
+</body>
+</html>

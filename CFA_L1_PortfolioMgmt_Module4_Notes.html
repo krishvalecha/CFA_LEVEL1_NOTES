@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 4: Basics of Portfolio Planning and Construction</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14100d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Risk tolerance 2x2 matrix */
+  .rt-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 3px; margin: 16px 0; }
+  .rt-cell { padding: 14px 16px; border-radius: 4px; font-size: 13.5px; }
+  .rt-header { background: #1e2330; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); display: flex; align-items: center; justify-content: center; text-align: center; }
+  .rt-low-low { background: rgba(201,76,76,0.15); border: 1px solid rgba(201,76,76,0.35); color: var(--danger); font-weight: 600; text-align: center; }
+  .rt-high-high { background: rgba(76,201,138,0.12); border: 1px solid rgba(76,201,138,0.35); color: var(--accent3); font-weight: 600; text-align: center; }
+  .rt-conflict { background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.35); color: var(--accent); font-weight: 600; text-align: center; }
+  .rt-corner { background: transparent; }
+  .rt-side-label { background: #1e2330; display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); padding: 16px 8px; }
+
+  /* Constraint blocks */
+  .constraint-block { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .constraint-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--accent2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ESG approach blocks */
+  .esg-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent3); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+  .esg-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--accent3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .esg-body { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 4</div>
+  <h1>Portfolio Planning and <span>Construction</span></h1>
+  <p>Exam-ready notes: reasons for and components of the IPS, risk and return objectives (absolute vs. relative), willingness vs. ability to take risk, the risk tolerance matrix, five investment constraints (LTTLU), asset class criteria for strategic asset allocation, risk budgeting, active vs. passive, tactical vs. strategic asset allocation, rebalancing policy, and ESG integration approaches.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · The IPS — Purpose &amp; Components</a>
+  <a class="toc-item" href="#s2">02 · Risk Objectives</a>
+  <a class="toc-item" href="#s3">03 · Risk Tolerance Matrix</a>
+  <a class="toc-item" href="#s4">04 · Return Objectives</a>
+  <a class="toc-item" href="#s5">05 · Five Investment Constraints</a>
+  <a class="toc-item" href="#s6">06 · Gathering Client Information</a>
+  <a class="toc-item" href="#s7">07 · Strategic Asset Allocation</a>
+  <a class="toc-item" href="#s8">08 · Asset Class Criteria</a>
+  <a class="toc-item" href="#s9">09 · Portfolio Construction Principles</a>
+  <a class="toc-item" href="#s10">10 · ESG Integration</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: THE IPS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>The Investment Policy Statement — Purpose &amp; Components</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Investment Policy Statement (IPS)</div>
+      <div class="def-body">A <strong>written planning document</strong> governing the portfolio management process. Describes the client's investment objectives and the constraints that apply to the client's portfolio. The <strong>starting point</strong> of the portfolio management process. Without a full understanding of the client's situation and requirements, successful results are unlikely.</div>
+    </div>
+
+    <h3>Why Have a Written IPS? — Reasons</h3>
+    <div class="card">
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Standard procedure</strong>: every investment manager should have a well-constructed IPS for all clients</li>
+        <li style="margin-bottom:6px;"><strong>Legal/regulatory requirement</strong>: in some countries, the IPS (or equivalent) is <em>mandatory</em>. Examples:
+          <ul style="margin-top:6px;">
+            <li>UK Pensions Act 1995 (S.35): pension schemes must have a "statement of investment principles"</li>
+            <li>UK FSA: "know your customer" requirements</li>
+            <li>EU MiFID: assign clients to categories (eligible counterparties, institutional, retail) — category determines protections</li>
+          </ul>
+        </li>
+        <li style="margin-bottom:6px;"><strong>Blueprint for decision making</strong>: enables the manager to assess whether any investment is suitable for the client</li>
+        <li style="margin-bottom:6px;"><strong>Governance framework</strong>: for institutions (e.g., pension plans, endowments) it can set governance arrangements — investment committee powers, manager appointment process, discretion levels</li>
+        <li style="margin-bottom:6px;"><strong>Dispute resolution</strong>: good recordkeeping may be crucial if the client relationship comes into dispute</li>
+      </ol>
+    </div>
+
+    <h3>When to Review and Update the IPS</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Regularly</strong>: at least every <strong>3 years</strong> (UK Pensions Regulator guideline)</li>
+        <li><strong>When material changes occur</strong>: change in client objectives, time horizon, liquidity needs, or circumstances</li>
+        <li><strong>On client's initiative</strong>: whenever client's own goals or situation changes significantly</li>
+      </ul>
+    </div>
+
+    <h3>★ Eight Major Components of an IPS ★</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Section</th><th>Content</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Introduction</strong></td><td>Describes the client</td></tr>
+          <tr><td>2</td><td><strong>Statement of Purpose</strong></td><td>States the purpose of the IPS</td></tr>
+          <tr><td>3</td><td><strong>Statement of Duties &amp; Responsibilities</strong></td><td>Details duties of client, asset custodian, and investment managers</td></tr>
+          <tr><td>4</td><td><strong>Procedures</strong></td><td>Steps to keep IPS current; procedures for contingencies</td></tr>
+          <tr><td>5</td><td><strong>Investment Objectives</strong></td><td>Client's objectives: <span class="highlight">risk tolerance</span> + <span class="highlight">return requirements</span></td></tr>
+          <tr><td>6</td><td><strong>Investment Constraints</strong></td><td>Factors constraining the portfolio: <span class="highlight">LTTLU</span> (see Section 5)</td></tr>
+          <tr><td>7</td><td><strong>Investment Guidelines</strong></td><td>How policy is executed — permissible use of leverage/derivatives; excluded assets</td></tr>
+          <tr><td>8</td><td><strong>Evaluation and Review</strong></td><td>Guidance on obtaining feedback on investment results</td></tr>
+          <tr><td>App A</td><td><strong>Strategic Asset Allocation (SAA)</strong></td><td>Policy portfolio: baseline allocation to asset classes; hedge ratios (currency, interest rate, inflation)</td></tr>
+          <tr><td>App B</td><td><strong>Rebalancing Policy</strong></td><td>Rules for restoring portfolio to target weights when drift occurs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — IPS Components: "IS DP OC GE"</div>
+      <p><strong>I</strong>ntroduction · <strong>S</strong>tatement of Purpose · <strong>D</strong>uties &amp; Responsibilities · <strong>P</strong>rocedures · <strong>O</strong>bjectives · <strong>C</strong>onstraints · <strong>G</strong>uidelines · <strong>E</strong>valuation — plus two Appendices (SAA + Rebalancing).</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Most Important Sections</div>
+      <p>The sections most closely linked to client's distinctive needs are <strong>Objectives</strong> (risk + return) and <strong>Constraints</strong> (LTTLU). An IPS focused on just these two is called the <strong>"objectives and constraints" format</strong> — this is the standard exam focus.</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Key principle</strong>: The IPS must achieve internal consistency:</p>
+      <ul style="margin-top:8px;">
+        <li>Risk objectives ↔ Return objectives must be consistent (high return requires high risk)</li>
+        <li>Return objectives ↔ Constraints must be consistent</li>
+        <li>Risk objectives ↔ Constraints must be consistent</li>
+        <li>All three must align with current market environment (15% return impossible when inflation is 3%)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: RISK OBJECTIVES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Risk Objectives — Absolute vs. Relative</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Objectives</div>
+      <div class="def-body">Specifications for portfolio risk that reflect the client's risk tolerance. Can be stated on an <strong>absolute</strong> basis, a <strong>relative</strong> basis, or a combination of both. The IPS must state the risk tolerance of the client clearly.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Absolute Risk Objectives</div>
+        <p>Stated without reference to any external benchmark. Self-standing standards.</p>
+        <ul style="margin-top:8px;">
+          <li>"Do not suffer any loss of capital"</li>
+          <li>"Do not lose more than X% in any 12-month period"</li>
+          <li>More operational version: probability statement — "With 95% probability, the portfolio shall not lose more than 4% in any 12-month period"</li>
+        </ul>
+        <p style="margin-top:8px; font-size:13px; color:var(--muted);">Measures: variance/standard deviation, Value at Risk (VaR)</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Relative Risk Objectives</div>
+        <p>Stated relative to one or more benchmarks.</p>
+        <ul style="margin-top:8px;">
+          <li>Large-cap UK equities → FTSE 100</li>
+          <li>Large-cap US equities → S&amp;P 500</li>
+          <li>Cash-like → T-bill rate</li>
+          <li>Policy portfolio → band of ±X% around the benchmark return</li>
+        </ul>
+        <p style="margin-top:8px; font-size:13px; color:var(--muted);">Measure: tracking risk / tracking error</p>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Liability-Driven Investment (LDI)</div>
+      <div class="def-body">An approach that takes both assets AND liabilities into account when setting risk objectives. Used when the size, timing, and/or relative certainty of future financial obligations is known. Examples: life insurance companies, DB pension plans, individual post-retirement budgets. <strong>LDI risk objective</strong>: minimize the probability of failing to meet future liability payments. <strong>LDI return objective</strong>: outperform the discount rate used to find the present value of liabilities.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Making Risk Objectives "More Operational"</div>
+      <p>Stating a risk objective as a probability statement makes it measurable and actionable. "Never lose money" is not operational — you can't know if you've met it without a probability. "With 95% confidence, annual loss not exceeding 4%" IS operational — it can be backtested and monitored using tools like VaR.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: RISK TOLERANCE MATRIX -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Risk Tolerance — Willingness vs. Ability</h2>
+    </div>
+
+    <div class="card">
+      <p>A client's overall <strong>risk tolerance</strong> is determined by two distinct components:</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Ability to Bear Risk (Objective)</div>
+        <ul>
+          <li>Based on <strong>objective financial factors</strong></li>
+          <li>Time horizon (longer → greater ability)</li>
+          <li>Expected income and job stability</li>
+          <li>Level of wealth relative to liabilities</li>
+          <li>Assets comfortably exceeding liabilities → HIGH ability</li>
+          <li>Example: 20-year horizon has greater ability than 2-year horizon (time to recover from losses)</li>
+          <li>Example: wealthy individual who remains comfortable after large loss → high ability</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Willingness to Take Risk (Subjective)</div>
+        <ul>
+          <li>Based on <strong>psychological and subjective factors</strong></li>
+          <li>Personality type, self-esteem, inclination to independent thinking</li>
+          <li>Personal comfort or distress with financial uncertainty</li>
+          <li>Measured via: discussion with client, psychometric questionnaires (e.g., Grable's 5- or 13-item scale)</li>
+          <li>Grable 5-item questionnaire: scores 5-20; higher = more risk tolerant; mean ≈ 12.86 (university sample)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>★ The Risk Tolerance Matrix ★</h3>
+
+    <div class="rt-grid">
+      <div class="rt-corner"></div>
+      <div class="rt-header">Willingness: Below Average</div>
+      <div class="rt-header">Willingness: Above Average</div>
+      <div class="rt-side-label">Ability: Below Average</div>
+      <div class="rt-low-low">Below-Average Risk Tolerance<br><span style="font-size:12px; font-weight:400;">(consistent — use low tolerance)</span></div>
+      <div class="rt-conflict">⚠️ Resolution Needed<br><span style="font-size:12px; font-weight:400;">(ability &lt; willingness → use ABILITY [lower])</span></div>
+      <div class="rt-side-label">Ability: Above Average</div>
+      <div class="rt-conflict">⚠️ Resolution Needed<br><span style="font-size:12px; font-weight:400;">(ability &gt; willingness → counsel client; use WILLINGNESS [lower])</span></div>
+      <div class="rt-high-high">Above-Average Risk Tolerance<br><span style="font-size:12px; font-weight:400;">(consistent — use high tolerance)</span></div>
+    </div>
+
+    <h3>Resolving Conflicts Between Ability and Willingness</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Ability low, willingness high (top-right)</strong>: Risk tolerance is <span class="danger-text">below average</span>. Investor wants to take more risk than they can afford. Use the LOWER (ability) factor. Prevent overconfident risk-taking.</li>
+        <li><strong>Ability high, willingness low (bottom-left)</strong>: Risk tolerance is still <span class="tag tag-yellow">constrained</span>. Adviser may counsel client — explain WHY they have high ability, outline the cost of not taking risk (reduced expected return). But: <strong>adviser must NOT attempt to change the client's willingness to take risk</strong> if the low willingness is a genuine personality trait (not based on misperception). Use the LOWER factor.</li>
+        <li><strong>Golden rule</strong>: when ability and willingness differ, <strong>the prudent approach is to use the LOWER of the two</strong> and document the decision.</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Exam Point — The "Lower of Two" Rule</div>
+      <p>When ability and willingness conflict, <strong>ALWAYS use the lower of the two</strong> to set risk tolerance. This protects the client. Modifying a client's genuine personality-based willingness to take risk is <strong>outside the investment adviser's role</strong>. Only if the low willingness is based on a misperception or miscalculation should the adviser try to educate the client.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Institutional Conflict Example</div>
+      <p>DB pension plan: Trustees (fiduciary duty to beneficiaries) may want LOW risk to protect funding status. Plan sponsor may want HIGH risk to reduce future funding costs. When interests conflict, the trustee must act in the <strong>best interests of the BENEFICIARIES</strong> — not the sponsor. The fiduciary duty to beneficiaries overrides the sponsor's preferences.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: RETURN OBJECTIVES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Return Objectives</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Absolute Return Objectives</div>
+        <ul>
+          <li>Achieve a specific percentage rate of return</li>
+          <li>Stated as nominal OR real (inflation-adjusted)</li>
+          <li>Required return: minimum needed to meet a specific future goal (e.g., retirement income)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Relative Return Objectives</div>
+        <ul>
+          <li>Outperform a specific benchmark</li>
+          <li>E.g., "outperform the S&amp;P 500 by 1% per year"</li>
+          <li>Peer group benchmarks (e.g., top quartile among PE universe)</li>
+          <li>Problem with peer benchmarks: limited information, not investable, impossible for all to be "above average"</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Key Requirements for Return Objectives</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Realistic</strong>: consistent with current market environment (15% return unrealistic in a 3% inflation world)</li>
+        <li><strong>Consistent with risk objective</strong>: high return requires accepting high risk</li>
+        <li><strong>Clearly stated basis</strong>: nominal vs. real; gross vs. net of fees; pre-tax vs. after-tax</li>
+        <li><strong>Taxable investors</strong>: baseline is to state returns on an <strong>after-tax basis</strong></li>
+        <li>A good benchmark should be <strong>investable</strong> (can be replicated) — peer benchmarks typically are NOT investable</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Nominal vs. Real Return</div>
+      <p>Nominal return = inflation included. Real return = inflation-adjusted (what the portfolio actually buys in purchasing power). Both can appear in IPS goals. Be careful: the adviser must be sure the client and manager agree on which basis is being used. <strong>Real returns relate better to the actual investment objective</strong> but nominal is easier to measure. Always check the exam question's basis before calculating.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: FIVE INVESTMENT CONSTRAINTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>The Five Investment Constraints — LTTLU</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "LTTLU" for the 5 Constraints</div>
+      <p><strong>L</strong>iquidity · <strong>T</strong>ime horizon · <strong>T</strong>ax concerns · <strong>L</strong>egal and regulatory factors · <strong>U</strong>nique circumstances. These are the five standard IPS constraint categories — every exam on constraints refers to these five.</p>
+    </div>
+
+    <!-- CONSTRAINT 1: LIQUIDITY -->
+    <div class="constraint-block">
+      <div class="constraint-name">① Liquidity Requirements</div>
+      <div style="font-size:14px; color:var(--text);">
+        <p><strong>Definition</strong>: The likelihood and amount of withdrawals needed from the portfolio in the near term.</p>
+        <p style="margin-top:8px;"><strong>Individual examples</strong>: healthcare payments, tuition fees, major purchases</p>
+        <p><strong>Institutional examples</strong>: endowment spending rules, P&amp;C insurance claims, pension benefit payments</p>
+        <p style="margin-top:8px;"><strong>Implication</strong>: Allocate part of the portfolio to <strong>liquid, low-risk assets</strong> to cover near-term needs with known value at the time of need (e.g., a bond maturing when tuition is due). Higher liquidity needs → larger cash/short-term fixed income allocation → less available for higher-return, illiquid investments.</p>
+      </div>
+    </div>
+
+    <!-- CONSTRAINT 2: TIME HORIZON -->
+    <div class="constraint-block">
+      <div class="constraint-name">② Time Horizon</div>
+      <div style="font-size:14px; color:var(--text);">
+        <p><strong>Definition</strong>: The period over which the portfolio is investing before assets need to be withdrawn OR before circumstances change significantly.</p>
+        <p style="margin-top:8px;"><strong>Example</strong>: 55-year-old planning to retire at 65 → 10-year horizon (portfolio structure may need to change at retirement, even if not fully liquidated)</p>
+        <p style="margin-top:8px;"><strong>Implications for asset choice</strong>:</p>
+        <ul style="padding-left:20px; margin-top:6px;">
+          <li><strong>Short horizon</strong>: illiquid or highly risky investments UNSUITABLE (not enough time to recover losses)</li>
+          <li><strong>Long horizon</strong>: illiquid/risky investments suitable (expected higher returns justify the illiquidity)</li>
+        </ul>
+        <p style="margin-top:6px; font-size:13px; color:var(--muted);">Time horizon and liquidity requirements are closely linked — but they are distinct constraints.</p>
+      </div>
+    </div>
+
+    <!-- CONSTRAINT 3: TAX CONCERNS -->
+    <div class="constraint-block">
+      <div class="constraint-name">③ Tax Concerns</div>
+      <div style="font-size:14px; color:var(--text);">
+        <p><strong>Key principle</strong>: Portfolio should reflect the tax status of the client. Taxable investors and tax-exempt investors should be managed differently.</p>
+        <ul style="padding-left:20px; margin-top:8px;">
+          <li><strong>Tax-exempt investors</strong> (e.g., many pension funds, endowments): indifferent to form of returns (income vs. capital gains)</li>
+          <li><strong>Taxable investors</strong>: typically prefer <span class="highlight3">capital gains over income</span> (income usually taxed at higher rates; capital gains may be taxed at lower rates or deferred)</li>
+          <li><strong>US-specific</strong>: taxable investors often include <span class="highlight">municipal bonds</span> (interest exempt from federal and often state taxes)</li>
+          <li><strong>Capital gains deferral</strong>: gains taxed when REALIZED (not accrued) → time-value-of-money benefit vs. income taxed as earned</li>
+          <li><strong>Tax-loss harvesting</strong>: selling securities at a loss to offset capital gains; implemented by robo-advisers</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CONSTRAINT 4: LEGAL & REGULATORY -->
+    <div class="constraint-block">
+      <div class="constraint-name">④ Legal and Regulatory Factors</div>
+      <div style="font-size:14px; color:var(--text);">
+        <p>The IPS must state any legal/regulatory restrictions constraining the portfolio. Two main areas:</p>
+        <ul style="padding-left:20px; margin-top:8px;">
+          <li><strong>Institutional restrictions</strong>: some countries restrict pension fund asset allocation (e.g., limit on equity %, overseas investment %). US has NO such limits but many other countries do. Also, "self-investment limits" — restrictions on investing in securities issued by the plan sponsor (to prevent conflict of interest)</li>
+          <li><strong>Individual restrictions (insider trading)</strong>: If an individual has access to material nonpublic information about a security, this is a constraint. Example: company directors may be restricted from trading the company's stock during "blackout periods" before earnings releases. The IPS must note this so the portfolio manager doesn't inadvertently trade those securities.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CONSTRAINT 5: UNIQUE CIRCUMSTANCES -->
+    <div class="constraint-block">
+      <div class="constraint-name">⑤ Unique Circumstances (Including ESG)</div>
+      <div style="font-size:14px; color:var(--text);">
+        <p>Any other aspect of the client's circumstances, beliefs, or values that materially impacts portfolio composition.</p>
+        <ul style="padding-left:20px; margin-top:8px;">
+          <li><strong>Religious beliefs</strong>: Shari'a-compliant investing (avoid interest-bearing instruments, gambling — e.g., no bonds, no casinos)</li>
+          <li><strong>Socially responsible investing (SRI)</strong>: exclude certain products (weapons, tobacco, gambling) or practices (environmental damage, poor labor standards)</li>
+          <li><strong>ESG considerations</strong>: environmental, social, governance factors (discussed in depth in Section 10)</li>
+          <li><strong>Human capital overlap</strong>: an employee concentrated in employer stock should avoid MORE exposure to that stock in their portfolio (double exposure to same entity)</li>
+          <li><strong>Income-industry overlap</strong>: a stockbroker's income falls when equities decline → should hold relatively LOW equity weight (income is already equity-correlated)</li>
+          <li><strong>Entrepreneur</strong>: reluctant to invest in competitors or businesses with similar risk exposures to their venture</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Constraint Implications — Master Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Constraint</th><th>Client Situation</th><th>Portfolio Implication</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Liquidity</td><td>Major outflows needed soon</td><td>More cash/short-term bonds; less illiquid/alternative assets</td></tr>
+          <tr><td>Time Horizon</td><td>Short horizon (2-3 years)</td><td>Avoid illiquid/high-risk assets; prioritize capital preservation</td></tr>
+          <tr><td>Time Horizon</td><td>Long horizon (20+ years)</td><td>Can hold illiquid/risky assets for the expected return premium</td></tr>
+          <tr><td>Tax</td><td>High-tax investor</td><td>Prefer capital gains; include municipal bonds; tax-loss harvest</td></tr>
+          <tr><td>Tax</td><td>Tax-exempt (pension fund)</td><td>Indifferent to income vs. gains; focus on pre-tax return</td></tr>
+          <tr><td>Legal</td><td>Director with inside info</td><td>Restrict trading in that security; note in IPS to prevent inadvertent trades</td></tr>
+          <tr><td>Legal</td><td>Pension fund in regulated country</td><td>Respect asset class limits on equity, overseas, self-investment</td></tr>
+          <tr><td>Unique / ESG</td><td>Shari'a-compliant investor</td><td>Exclude interest-bearing debt, gambling companies</td></tr>
+          <tr><td>Unique</td><td>Employee holding employer stock</td><td>Reduce further employer stock exposure; note human capital overlap</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: GATHERING CLIENT INFORMATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Gathering Client Information</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>KYC requirement</strong>: EU MiFID II requires substantial fact-finding from financial intermediaries — including in advisory AND execution-only relationships (not just full-service wealth management).</p>
+      <p style="margin-top:10px;"><strong>Data to gather from individuals</strong>:</p>
+      <ul style="margin-top:8px;">
+        <li>Family situation and employment (including spouse/dependents)</li>
+        <li>Health of client and dependents</li>
+        <li>Financial information (assets, liabilities, income, expenses, goals)</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Data to gather from institutions</strong>:</p>
+      <ul style="margin-top:8px;">
+        <li>Key stakeholders and their perspectives/requirements</li>
+        <li>Governance structure</li>
+        <li>Asset-liability management considerations</li>
+        <li>Legal, tax, and regulatory situation</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Good Recordkeeping Matters</div>
+      <p>Accurate recordkeeping of client information gathered during the IPS process is crucial because it may be the <strong>only evidence available if the client relationship comes into dispute</strong>. "Know your customer" is not just best practice — it protects both parties legally.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: STRATEGIC ASSET ALLOCATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Strategic Asset Allocation (SAA) &amp; Capital Market Expectations</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Strategic Asset Allocation (SAA) / Policy Portfolio</div>
+      <div class="def-body">The <strong>set of long-term percentage allocations to IPS-permissible asset classes</strong> that is expected to achieve the client's long-term objectives given their risk profile and constraints. Also called the "policy portfolio." It defines the baseline exposures to systematic risk factors. May include hedge ratios for currency, interest rate, and inflation risk.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Capital Market Expectations</div>
+      <div class="def-body">The investor's expectations about the <strong>risk and return prospects of asset classes</strong>. Quantified as: expected returns, standard deviations, and correlations among asset class pairs. These are combined with the IPS (objectives + constraints) to produce the SAA.</div>
+    </div>
+
+    <h3>How the SAA is Formed</h3>
+    <div class="card">
+      <p><strong>Inputs (two streams)</strong>:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Investment Objectives &amp; Constraints (IPS)</strong>: risk tolerance, return requirements, liquidity, time horizon, tax, legal, unique circumstances</li>
+        <li><strong>Capital Market Expectations</strong>: expected returns, standard deviations, and correlations for each asset class (historically estimated, economic analysis, or valuation models)</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>Process</strong>: Optimization (mean-variance analysis) or simulation → produces efficient frontier → overlay investor's indifference curves → point of tangency = optimal SAA.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Portfolio Return and Risk (Used for SAA Optimization)</div>
+      <div class="f">
+        E(R<sub>p</sub>) = Σ w<sub>i</sub> E(R<sub>i</sub>)   [weighted average of asset class expected returns]<br><br>
+        σ<sub>p</sub> = √[Σ Σ w<sub>p,i</sub> w<sub>p,j</sub> Cov(R<sub>i</sub>, R<sub>j</sub>)]<br><br>
+        Cov(R<sub>i</sub>, R<sub>j</sub>) = ρ<sub>i,j</sub> × σ<sub>i</sub> × σ<sub>j</sub>
+      </div>
+      <div class="note">
+        Same portfolio math as covered in Module 1 — now applied to ASSET CLASSES rather than individual securities.<br>
+        Key difference: we're now allocating among asset classes (e.g., equities, bonds, alternatives) rather than individual stocks.<br>
+        Adding low-correlation asset classes improves the efficient frontier — lowers portfolio risk for each return level.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Utility Function for SAA Optimization</div>
+      <div class="f">
+        U<sub>p</sub> = E(R<sub>p</sub>) − λσ²<sub>p</sub>
+      </div>
+      <div class="note">
+        U<sub>p</sub> = investor's expected utility from the portfolio<br>
+        E(R<sub>p</sub>) = expected return of portfolio<br>
+        σ<sub>p</sub> = standard deviation of portfolio returns<br>
+        λ = measure of investor's risk aversion (higher λ → more risk averse)<br><br>
+        Note: uses σ² (variance) NOT σ, similar to U = E(r) − ½Aσ² from Module 1 (with λ = A/2).<br>
+        Optimal SAA = asset allocation that maximizes this utility function.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 What Changes the SAA?</div>
+      <p>Two things can move the optimal SAA:</p>
+      <p><strong>1. Capital market expectations change</strong> → moves the efficient frontier → tangency point shifts → SAA adjusts.</p>
+      <p><strong>2. Client objectives/constraints change</strong> → indifference curves change shape/location → tangency point shifts → SAA adjusts.</p>
+      <p>This is why the IPS must be reviewed regularly — changes in either the market or the client require SAA reconsideration.</p>
+    </div>
+
+    <h3>Traditional vs. Alternative Asset Classes</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Traditional Asset Classes</th><th>Alternative Asset Classes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Examples</td>
+            <td>Cash, equities, government bonds, corporate bonds, real estate</td>
+            <td>Private equity, hedge funds, high-yield bonds, EM bonds, commodities, art, intellectual property rights</td>
+          </tr>
+          <tr>
+            <td>Liquidity</td>
+            <td>Generally liquid (exchange-traded)</td>
+            <td>Often illiquid — acceptable for long-horizon investors seeking illiquidity premium</td>
+          </tr>
+          <tr>
+            <td>Typical investors</td>
+            <td>All investor types</td>
+            <td>Endowments (Yale model), large institutions with long horizons</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: ASSET CLASS CRITERIA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Asset Class Criteria — Defining Good Asset Classes</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>How asset classes should be defined for SAA purposes</strong>. Four key criteria:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:8px;"><strong>Relatively homogeneous</strong>: assets within the class should have similar risk-return characteristics</li>
+        <li style="margin-bottom:8px;"><strong>High within-class correlations</strong>: assets within the same class should move similarly</li>
+        <li style="margin-bottom:8px;"><strong>Low cross-class correlations</strong>: assets in different classes should have lower correlations with each other → enables diversification across classes</li>
+        <li style="margin-bottom:8px;"><strong>Mutually exclusive and collectively exhaustive</strong>: classes should not overlap, but together should cover the relevant investable universe</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Subdivide Asset Classes?</div>
+      <p>Finer subdivision gives MORE control over risk-return characteristics. Example: instead of one "bonds" class, using government bonds (domestic), government bonds (foreign), investment-grade corporates, and high-yield corporates gives four classes with distinct risk-return profiles. Correlations among these sub-classes can be explicitly estimated and managed.<br><br>
+      Practical reason: asset class definitions often align with how investment managers are actually hired and organized (e.g., separate EM equity manager vs. domestic equity manager).</p>
+    </div>
+
+    <h3>Common Benchmarks for Asset Classes</h3>
+    <div class="card">
+      <ul>
+        <li>Asset class benchmarks typically provided by <strong>FTSE, MSCI, Bloomberg</strong></li>
+        <li>ESG screens (negative screening, best-in-class) can <strong>restrict the investable universe</strong> → standard benchmarks may not apply → need ESG-specific benchmarks from the same providers</li>
+        <li>Benchmark should be <strong>investable</strong>: capable of being replicated by the investor</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Peer Benchmarks Are Problematic</div>
+      <p>Setting return objectives relative to a peer group (e.g., "top 50% of endowments") has three problems: (1) limited information about peers' strategies and methodologies, (2) <strong>it is impossible for all institutions to be above average</strong>, (3) peer benchmarks are NOT investable. A good benchmark must be investable — the manager can actually replicate it.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: PORTFOLIO CONSTRUCTION PRINCIPLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Portfolio Construction Principles</h2>
+    </div>
+
+    <h3>Three Sources of Portfolio Return</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Strategic Asset Allocation (SAA)</div>
+        <p>Long-run policy weights across asset classes based on IPS. Provides exposure to <strong>systematic risk factors</strong>. This is the primary driver of long-run portfolio performance.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Tactical Asset Allocation (TAA)</div>
+        <p><strong>Deliberate short-term deviation</strong> from SAA policy weights to exploit near-term return forecasts. E.g., temporarily overweighting equities if you expect them to outperform soon.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Security Selection</div>
+        <p>Selecting securities with higher expected return than the asset class benchmark. E.g., overweighting IBM vs. benchmark if you expect IBM to outperform.</p>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Risk Budgeting</div>
+      <div class="def-body">The process of deciding the overall amount of risk to assume in the portfolio (the <strong>risk budget</strong>) and then <strong>subdividing that risk</strong> across the three sources: SAA, TAA, and security selection. Sets risk limits and desired payoffs for each activity. Total risk = SAA risk + TAA risk + security selection risk.</div>
+    </div>
+
+    <h3>Active vs. Passive Management Decision</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Active Management</th>
+            <th>Passive Management</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Goal</td>
+            <td>Outperform benchmark through TAA and security selection</td>
+            <td>Match/replicate benchmark return</td>
+          </tr>
+          <tr>
+            <td>Return source</td>
+            <td>SAA + TAA + security selection</td>
+            <td>SAA only (systematic risk)</td>
+          </tr>
+          <tr>
+            <td>Costs</td>
+            <td>Higher (research, trading, management)</td>
+            <td>Lower</td>
+          </tr>
+          <tr>
+            <td>Long-run average result</td>
+            <td>Average active manager UNDERPERFORMS market net of costs</td>
+            <td>Closely tracks market minus small tracking costs</td>
+          </tr>
+          <tr>
+            <td>Security selection</td>
+            <td>Zero-sum game before costs; negative-sum game net of costs</td>
+            <td>Not applicable (hold market weights)</td>
+          </tr>
+          <tr>
+            <td>When active adds value</td>
+            <td>Skilled managers in INEFFICIENT markets</td>
+            <td>Efficient markets (especially large-cap US equities)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Security Selection Is a Zero-Sum Game</div>
+      <p>In aggregate, all active investors in an asset class earn the market return (gross). One investor's gain above market = another's loss below market. After costs, the average active investor UNDERPERFORMS the passive investor. This does NOT mean all active managers underperform — some skilled managers consistently beat benchmarks. But on average, active underperforms passive NET of fees.</p>
+    </div>
+
+    <h3>Drift and Rebalancing</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Drift</strong>: over time, as asset class prices change, portfolio weights drift away from the SAA policy weights</li>
+        <li><strong>Rebalancing policy</strong>: a set of rules to restore the portfolio to policy weights. Two trigger types:
+          <ul style="margin-top:6px;">
+            <li><strong>Calendar rebalancing</strong>: rebalance at fixed intervals (monthly, quarterly, annually)</li>
+            <li><strong>Threshold/bandwidth rebalancing</strong>: rebalance when a weight deviates beyond a specified corridor from the target weight</li>
+          </ul>
+        </li>
+        <li>Rebalancing is part of the <strong>Feedback step</strong> in the portfolio management process</li>
+        <li>Even absent a formal risk budget, a <strong>rebalancing policy is an essential element of risk management</strong></li>
+      </ul>
+    </div>
+
+    <h3>New Developments in Portfolio Management</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">ETFs + Robo-Advice</div>
+        <p>ETFs provide inexpensive, liquid exposure to asset classes. Robo-advisers use algorithms to provide automated asset allocation, rebalancing, and tax-loss harvesting. Together, they reduce costs for retail investors to build well-diversified portfolios.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Risk Parity Investing</div>
+        <p>Weights asset classes by their <strong>risk contribution</strong> rather than by market value or return forecasts. Argues that traditional portfolios are dominated by equity risk (60%+ equity by weight = even more by risk contribution due to equity volatility). After GFC, risk parity results partly explained by bond market tailwind (declining rates).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: ESG INTEGRATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>ESG Considerations in Portfolio Planning &amp; Construction</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>ESG investing</strong>: nearly <span class="highlight">US$31 trillion</span> of AUM dedicated to responsible investment mandates at start of 2018. ESG integration is now mainstream — not just limited to specialized mandates.</p>
+      <p style="margin-top:10px;"><strong>Drivers of ESG integration</strong>: scarcity of natural resources, climate change, demographic trends, diversity/inclusion, rise of social media scrutiny.</p>
+    </div>
+
+    <h3>★ The Six ESG Investment Approaches ★</h3>
+
+    <div class="esg-card">
+      <div class="esg-name">① Negative Screening</div>
+      <div class="esg-body">Excluding companies or sectors from the investable universe based on <strong>business activities or ESG concerns</strong>. Example: exclude tobacco companies, weapons manufacturers, gambling, countries with human rights violations. Most common ESG approach historically. Also called "exclusionary screening."</div>
+    </div>
+
+    <div class="esg-card">
+      <div class="esg-name">② Positive Screening (Best-in-Class)</div>
+      <div class="esg-body">Including sectors or companies based on specific ESG criteria, typically <strong>ESG performance relative to industry peers</strong>. Select the "best ESG performers" within each industry — doesn't exclude entire sectors, just rewards leaders. Example: include only the top 25% ESG-rated companies in each industry.</div>
+    </div>
+
+    <div class="esg-card">
+      <div class="esg-name">③ ESG Integration</div>
+      <div class="esg-body">Systematic consideration of <strong>material ESG factors in traditional asset allocation, security selection, and portfolio construction</strong>. Treats ESG as a process enhancement — factoring in ESG alongside financial analysis. NOT a separate strategy; ESG data is incorporated into valuation models and risk assessment. Most widely adopted approach in mainstream funds.</div>
+    </div>
+
+    <div class="esg-card">
+      <div class="esg-name">④ Thematic Investing</div>
+      <div class="esg-body">Investing in <strong>themes or assets specifically related to ESG factors</strong>. Example: clean energy funds, water infrastructure funds, affordable housing investments. Requires specialist managers who can identify thematic opportunities. Important to manage impact on total portfolio risk-return profile.</div>
+    </div>
+
+    <div class="esg-card">
+      <div class="esg-name">⑤ Engagement / Active Ownership</div>
+      <div class="esg-body">Using <strong>shareholder power to influence corporate behavior</strong> toward ESG objectives alongside financial returns. Includes: exercising voting rights, filing shareholder proposals, engaging with management through direct conversations. <strong>Collaborative engagement</strong> (multiple investors acting together) has gained popularity — easier to gain management's attention collectively. Example: Climate Action 100+ (100+ carbon emitters, two-thirds of global industrial emissions).</div>
+    </div>
+
+    <div class="esg-card">
+      <div class="esg-name">⑥ Impact Investing</div>
+      <div class="esg-body">Investments made with the <strong>intention to generate positive, measurable social and environmental impact alongside a financial return</strong>. Goes beyond avoiding harm — actively seeks to create measurable positive outcomes. Most focused/intentional ESG approach.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "NPETEI" for the Six ESG Approaches</div>
+      <p><strong>N</strong>egative screening · <strong>P</strong>ositive screening · <strong>E</strong>SG integration · <strong>T</strong>hematic investing · <strong>E</strong>ngagement/active ownership · <strong>I</strong>mpact investing. From most exclusionary (negative) to most intentional (impact).</p>
+    </div>
+
+    <h3>ESG Impact on Portfolio Construction</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Negative screening restricts the universe</strong> → potentially impacts expected return and risk estimates. Standard benchmarks may not be appropriate → need ESG-adjusted benchmarks</li>
+        <li><strong>ESG integration</strong> is viewed as process enhancement; managers expected to beat REGULAR benchmarks (not just ESG-adjusted ones)</li>
+        <li><strong>Engagement</strong> requires strong client-manager cooperation on voting rights, shareholder proposals, and dialogue with companies. Either delegated to manager or handled directly by client (or via proxy agent)</li>
+        <li><strong>Impact investing</strong> requires intentional selection of opportunities with positive measurable outcomes</li>
+        <li><strong>Academic research mixed</strong> on ESG impact on returns — but ESG continues rapid adoption (now $31T in AUM)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Key ESG data/metrics used in integration</strong>:</p>
+      <ul style="margin-top:8px;">
+        <li>Environmental: carbon footprint, energy usage, water consumption, waste management</li>
+        <li>Social: employee turnover, lost-time injuries and fatalities, diversity, absenteeism</li>
+        <li>Governance: executive salaries and bonuses, board independence, shareholder rights</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Key frameworks/standards</strong>: Principles of Responsible Investment (PRI), UN Global Compact, OECD Guidelines for Multinational Enterprises</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>IPS = starting point</strong> of the portfolio management process. Without understanding the client, successful portfolio management is unlikely.</li>
+        <li>✅ <strong>Reasons for a written IPS</strong>: standard procedure; legal/regulatory requirement (UK Pensions Act, FSA, EU MiFID); governance framework; dispute resolution; reference for investment suitability decisions.</li>
+        <li>✅ <strong>IPS review frequency</strong>: every <strong>3 years</strong> OR when material changes occur in client circumstances, objectives, or constraints.</li>
+        <li>✅ <strong>Eight IPS components</strong>: Introduction, Statement of Purpose, Duties &amp; Responsibilities, Procedures, Objectives, Constraints, Guidelines, Evaluation &amp; Review + Appendices (SAA + Rebalancing Policy).</li>
+        <li>✅ <strong>"Objectives and constraints" format</strong>: the most important sections — client's risk/return objectives and the five LTTLU constraints.</li>
+        <li>✅ <strong>IPS internal consistency</strong>: risk objectives ↔ return objectives ↔ constraints must all be mutually consistent AND consistent with the market environment.</li>
+        <li>✅ <strong>Absolute risk objectives</strong>: self-standing (e.g., "no more than 4% loss"). More operational when stated as probability (e.g., "95% confidence, no more than 4% loss in 12 months"). Measures: variance, std dev, VaR.</li>
+        <li>✅ <strong>Relative risk objectives</strong>: stated vs. a benchmark (e.g., FTSE 100, S&amp;P 500). Measure: tracking error / tracking risk.</li>
+        <li>✅ <strong>LDI (Liability-Driven Investment)</strong>: considers both assets AND liabilities. Used when future obligations are known (life insurers, DB pensions, retirement). Risk objective: minimize chance of failing to meet liabilities.</li>
+        <li>✅ <strong>Two components of risk tolerance</strong>: (1) <strong>Ability to bear risk</strong> = OBJECTIVE (time horizon, wealth vs. liabilities, income); (2) <strong>Willingness to take risk</strong> = SUBJECTIVE (psychology, personality, questionnaires).</li>
+        <li>✅ <strong>Risk tolerance matrix</strong>: both high → above-average tolerance; both low → below-average tolerance; conflict → use the LOWER of the two factors.</li>
+        <li>✅ <strong>Adviser's role in conflicts</strong>: can EDUCATE if low willingness is based on misperception; but CANNOT change a genuine personality trait. Modify PERSONALITY is NOT within the adviser's role.</li>
+        <li>✅ <strong>Fiduciary duty</strong>: when pension sponsor and beneficiary interests conflict, trustee acts in BENEFICIARY's best interests.</li>
+        <li>✅ <strong>Return objectives: absolute</strong> (specific %) vs. <strong>relative</strong> (vs. benchmark). Can be nominal or real; gross or net of fees; pre- or post-tax. Taxable investors: use after-tax as baseline.</li>
+        <li>✅ <strong>Good benchmark is INVESTABLE</strong>. Peer benchmarks are NOT investable and create comparability problems.</li>
+        <li>✅ <strong>5 LTTLU Constraints</strong>: <strong>L</strong>iquidity · <strong>T</strong>ime horizon · <strong>T</strong>ax · <strong>L</strong>egal &amp; regulatory · <strong>U</strong>nique circumstances.</li>
+        <li>✅ <strong>Liquidity</strong>: near-term outflow needs → allocate to liquid, low-risk assets. Higher liquidity needs = less room for illiquid investments.</li>
+        <li>✅ <strong>Time horizon</strong>: short → avoid illiquid/risky (no time to recover). Long → can hold illiquid/risky for return premium.</li>
+        <li>✅ <strong>Tax</strong>: taxable investors prefer capital gains over income (income taxed higher; gains taxed at realization with TVM benefit). Tax-exempt investors indifferent. US taxable investors often include municipal bonds (tax-exempt income).</li>
+        <li>✅ <strong>Legal</strong>: institutional limits on asset classes (many countries, NOT the US). Self-investment limits (can't invest in plan sponsor's own securities). Directors with inside info → trading restriction must be noted in IPS.</li>
+        <li>✅ <strong>Unique circumstances</strong>: Shari'a-compliant (no interest/gambling), SRI (ethical exclusions), ESG, employer stock concentration (don't double up on human capital concentration), income-industry overlap (stockbroker should underweight equities).</li>
+        <li>✅ <strong>SAA (Strategic Asset Allocation)</strong> = long-term policy weights across asset classes based on IPS + capital market expectations. Also called "policy portfolio."</li>
+        <li>✅ <strong>Capital market expectations</strong>: expected returns, standard deviations, and correlations for asset classes → combined with IPS → produce SAA via optimization.</li>
+        <li>✅ <strong>SAA utility function</strong>: U<sub>p</sub> = E(R<sub>p</sub>) − λσ²<sub>p</sub>. Optimal SAA = tangency of efficient frontier and highest-attainable indifference curve.</li>
+        <li>✅ <strong>Changes to SAA</strong>: (1) capital market expectations change → efficient frontier shifts → new SAA; (2) client objectives/constraints change → indifference curves shift → new SAA.</li>
+        <li>✅ <strong>Asset class criteria (4)</strong>: homogeneous within class, high within-class correlation, low cross-class correlation, mutually exclusive and collectively exhaustive.</li>
+        <li>✅ <strong>3 sources of return</strong>: SAA (systematic risk), TAA (short-term deviations from SAA), security selection (beating the class benchmark).</li>
+        <li>✅ <strong>Risk budgeting</strong>: setting overall risk level and allocating it across SAA, TAA, and security selection. Sets limits on each source.</li>
+        <li>✅ <strong>TAA</strong>: deliberate short-term deviation from SAA policy weights based on near-term return forecasts.</li>
+        <li>✅ <strong>Security selection = zero-sum game</strong>: average active investor equals market before costs; underperforms after costs. Does NOT mean no manager ever beats the market — skilled managers can outperform, especially in inefficient markets.</li>
+        <li>✅ <strong>Drift</strong>: weights deviate from policy weights as markets move. Must be addressed via rebalancing policy.</li>
+        <li>✅ <strong>Rebalancing policy</strong>: rules to restore portfolio to SAA target weights. Calendar-based OR bandwidth/threshold-based. <strong>Essential element of risk management</strong>.</li>
+        <li>✅ <strong>Risk parity</strong>: weights asset classes by risk CONTRIBUTION not by return or market value. Addresses equity-dominance of traditional portfolios.</li>
+        <li>✅ <strong>6 ESG approaches (NPETEI)</strong>: Negative screening, Positive screening (best-in-class), ESG integration, Thematic investing, Engagement/active ownership, Impact investing.</li>
+        <li>✅ <strong>Negative screening</strong>: EXCLUDE based on business activity or ESG concerns (tobacco, weapons, gambling).</li>
+        <li>✅ <strong>Positive screening</strong>: INCLUDE best ESG performers within each industry (best-in-class).</li>
+        <li>✅ <strong>ESG integration</strong>: systematic incorporation of ESG into TRADITIONAL financial analysis. Most widely adopted mainstream approach. Managers expected to beat REGULAR benchmarks.</li>
+        <li>✅ <strong>Impact investing</strong>: invest to generate positive, MEASURABLE social/environmental impact alongside financial return — the most intentional ESG approach.</li>
+        <li>✅ <strong>Engagement/active ownership</strong>: use shareholder power (voting, proposals, management dialogue) to influence company ESG behavior. Collaborative engagement (multiple investors) is growing. Climate Action 100+ = 100+ carbon emitters.</li>
+        <li>✅ <strong>ESG restricts universe</strong>: negative screening limits investable universe → standard benchmarks may not apply → need ESG-adjusted benchmarks from FTSE/MSCI/Bloomberg.</li>
+        <li>✅ <strong>ESG academic evidence mixed</strong> but adoption is massive (~$31T in AUM). Not yet settled whether ESG hurts or helps returns.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ KEY FORMULAS &amp; FRAMEWORKS — QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ SAA OPTIMIZATION ═══<br>
+        U<sub>p</sub> = E(R<sub>p</sub>) − λσ²<sub>p</sub>   [IPS utility function]<br>
+        E(R<sub>p</sub>) = Σ w<sub>i</sub> E(R<sub>i</sub>)   [portfolio return = weighted avg]<br>
+        σ<sub>p</sub> = √[Σ Σ w<sub>i</sub> w<sub>j</sub> Cov(R<sub>i</sub>, R<sub>j</sub>)]   [portfolio std dev]<br>
+        Cov(R<sub>i</sub>, R<sub>j</sub>) = ρ<sub>i,j</sub> × σ<sub>i</sub> × σ<sub>j</sub><br><br>
+        ═══ RISK TOLERANCE MATRIX ═══<br>
+        Ability HIGH + Willingness HIGH → Above-average risk tolerance<br>
+        Ability LOW + Willingness LOW → Below-average risk tolerance<br>
+        Conflict → Use the LOWER of the two (prudent approach)<br><br>
+        ═══ IPS CONSTRAINTS (LTTLU) ═══<br>
+        L = Liquidity needs<br>
+        T = Time horizon<br>
+        T = Tax concerns<br>
+        L = Legal &amp; regulatory factors<br>
+        U = Unique circumstances (incl. ESG)<br><br>
+        ═══ 6 ESG APPROACHES (NPETEI) ═══<br>
+        N = Negative screening (exclude)<br>
+        P = Positive screening (best-in-class)<br>
+        E = ESG integration (embed in analysis)<br>
+        T = Thematic investing (ESG-related themes)<br>
+        E = Engagement/active ownership (shareholder power)<br>
+        I = Impact investing (measurable positive outcomes)<br><br>
+        ═══ 3 RETURN SOURCES ═══<br>
+        1. SAA (strategic, long-run systematic risk)<br>
+        2. TAA (tactical, short-run deviations from SAA)<br>
+        3. Security selection (beating the class benchmark)<br><br>
+        ═══ 4 ASSET CLASS CRITERIA ═══<br>
+        1. Homogeneous within class<br>
+        2. High within-class correlation<br>
+        3. Low cross-class correlation<br>
+        4. Mutually exclusive &amp; collectively exhaustive
+      </div>
+      <div class="note">
+        <strong>Most tested concepts in this module</strong>:<br>
+        Risk tolerance matrix (ability vs. willingness; which is lower)<br>
+        The 5 LTTLU constraints and their implications<br>
+        Absolute vs. relative objectives (risk and return)<br>
+        The 6 ESG approaches and their definitions<br>
+        SAA vs. TAA vs. security selection<br>
+        Good benchmark = investable (peer benchmarks are NOT investable)<br>
+        Adviser cannot change client's genuine personality-based willingness to take risk
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 4: Basics of Portfolio Planning and Construction · Exam Prep Notes
+</footer>
+
+</body>
+</html>

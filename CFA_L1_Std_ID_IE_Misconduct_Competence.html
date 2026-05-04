@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard I(D): Misconduct & I(E): Competence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'I(D/E)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;color:rgba(201,168,76,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(201,168,76,0.12);color:var(--accent);border:1px solid rgba(201,168,76,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent);border-color:var(--accent);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:60px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(201,168,76,0.3);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#ddd0a8;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .warn p+p{margin-top:8px;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#e8c97a;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:var(--accent);border:1px solid rgba(201,168,76,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#e8c97a;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  .divider{border:none;border-top:2px solid var(--border);margin:60px 0;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD I · MODULE 3</div>
+  <h1>Standards <span>I(D)</span>: Misconduct &amp; <span>I(E)</span>: Competence</h1>
+  <p class="subtitle">I(D) covers all professional conduct involving dishonesty, fraud, deceit, and acts that reflect adversely on professional reputation, integrity, or competence — including the important distinction between professional and personal conduct. I(E) is a 2023 addition requiring members to act with and maintain competence necessary to fulfil their professional responsibilities. LES + Handbook synthesised.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#d1">I(D): The Standard</a>
+  <a class="toc-item" href="#d2">What Is "Professional Conduct"</a>
+  <a class="toc-item" href="#d3">Civil Disobedience Exception</a>
+  <a class="toc-item" href="#d4">I(D): Examples</a>
+  <a class="toc-item" href="#e1">I(E): The Standard</a>
+  <a class="toc-item" href="#e2">Knowledge, Skills, Abilities</a>
+  <a class="toc-item" href="#e3">I(E): Examples</a>
+  <a class="toc-item" href="#checklist">★ Combined Checklist</a>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ STANDARD I(D) ═══════════ -->
+<div class="section" id="d1">
+  <div class="section-header"><span class="section-num">I(D)</span><h2>Standard I(D): Misconduct — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard I(D) — Misconduct</div>
+    <p>Members and Candidates must not engage in any professional conduct involving dishonesty, fraud, or deceit or commit any act that reflects adversely on their professional reputation, integrity, or competence.</p>
+  </div>
+  <div class="card">
+    <p>I(D) differs from I(A) (which covers compliance with laws and regulations specifically) by addressing <strong>all professional conduct that reflects poorly on reputation, integrity, or competence</strong> — whether or not the conduct is illegal. Two categories:</p>
+    <ol>
+      <li><strong>Professional conduct involving dishonesty, fraud, or deceit</strong> — lying, cheating, stealing, or other dishonest conduct IF the offense reflects adversely on professional activities</li>
+      <li><strong>Any act that reflects adversely on professional reputation, integrity, or competence</strong> — even if not technically dishonest (e.g., intoxication at work)</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section" id="d2">
+  <div class="section-header"><span class="section-num">D2</span><h2>What Constitutes "Professional Conduct" — The Handbook's Key Addition</h2></div>
+  <div class="card">
+    <p>The Handbook provides a significantly expanded definition of "professional activities" and "professional conduct" — which is the critical threshold for whether I(D) applies. <strong>Professional activity = any activity relating to financial analysis, investment management, security analysis, stewardship, or similar professional endeavours that:</strong></p>
+    <ol>
+      <li>Involves activity or conduct in the <strong>workplace or academia</strong>, or participation in the investment profession or security markets, OR</li>
+      <li>Explicitly or implicitly encompasses the <strong>use of the CFA charter</strong> or CIPM designation, membership in CFA Institute or local societies, or candidacy for a CFA Institute-sponsored designation</li>
+    </ol>
+  </div>
+
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Professional Activities Include</div>
+      <ul>
+        <li>Interactions with colleagues, employees, or clients in the workplace</li>
+        <li>Activities where the member represents as a CFA charterholder</li>
+        <li>Conduct as unpaid officer/volunteer with CFA Institute or local society</li>
+        <li>Conduct at CFA Institute, local society, or industry events</li>
+        <li>Writing about investments or markets in articles, books, message boards, or blogs outside the workplace</li>
+        <li>Communicating with government/regulators about matters within the scope of professional responsibilities</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">NOT Professional Activities (Personal Conduct)</div>
+      <ul>
+        <li>Activities with no connection to employment or the investment profession</li>
+        <li>Activities that don't involve the CFA charter or CFA Institute affiliation</li>
+        <li>Personal civic or political activities not involving investment profession role</li>
+        <li>Acts tangential to employment that don't implicate CFA candidacy/membership (Tan parking permit example)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Key Examples from Handbook</div>
+      <ul>
+        <li><strong>Brink (charity board)</strong>: serves on board because of CFA charter status → professional activity → I(D) applies to the deceptive pricing scheme</li>
+        <li><strong>Mewis (ESG blog)</strong>: investment-related analysis on a blog in her personal time, with employer permission → professional activity → I(D) applies to false statements</li>
+        <li><strong>Nehjer (casino letter)</strong>: retired CFA charterholder uses "CFA" designation when publishing falsified statistics on economic impact → professional activity via charter use</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ Conduct Outside the Workplace Can Still Be Professional Conduct</div>
+    <p>The two "Mondelo" and "Tan" examples from the Handbook are designed to calibrate the line. <strong>Mondelo</strong> (violent protests at election, racist slurs, fire-setting) — deplorable conduct involving dishonesty (lying to investigators) — but NOT professional conduct because unrelated to his employment, investment profession participation, or CFA charter use. However, if convicted of a crime punishable by more than one year in prison, he could be summarily suspended under CFA Institute Rules. <strong>Tan</strong> (fraudulent disabled parking permit) — dishonest and involving false documentation — but acts are "at most tangential to his employment and do not implicate his participation in the CFA Program." Not I(D) because not professional conduct.</p>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — The Professional/Personal Conduct Line</div>
+    <p>The critical test is whether the conduct <strong>relates to financial analysis, investment management, or similar professional endeavours</strong> AND either (1) occurs in a workplace/academia/market context or (2) uses the CFA charter/affiliation. <strong>Hanse (civil disobedience at Extinction Rebellion) = NOT professional conduct</strong> — protests are personal beliefs, no dishonesty, fraud, or deceit involved, and location in the financial district doesn't create the professional link. <strong>Brink (charity board fraud) = PROFESSIONAL CONDUCT</strong> — she serves because of her CFA charter status and investment industry prominence. Key question: does the conduct involve dishonesty AND does it connect to professional activities?</p>
+  </div>
+
+  <h3>Conduct That Reflects on Competence (Not Just Integrity)</h3>
+  <div class="card">
+    <p>I(D) covers acts that reflect adversely on <em>competence</em>, not just integrity. Example: <strong>Sasserman</strong> — excessive drinking at lunch and subsequent intoxication at work = I(D) violation because the conduct raises questions about his ability to fulfill professional responsibilities (competence), not just his honesty. Note: personal bankruptcy by itself does NOT reflect on integrity — but bankruptcy arising from fraudulent or deceitful business conduct DOES.</p>
+  </div>
+
+  <h3>Absence of Appropriate Conduct = Violation</h3>
+  <div class="card">
+    <p>The Handbook notes that in some cases, the <em>absence</em> of appropriate conduct or <em>lack of sufficient effort</em> can be an I(D) violation. Investment professionals are expected to conduct necessary due diligence before making recommendations. Failing to do so — relying on others to perform steps they should perform themselves — may violate the trust clients have placed in them, damaging reputation and the operation of financial markets.</p>
+  </div>
+</div>
+
+<div class="section" id="d3">
+  <div class="section-header"><span class="section-num">D3</span><h2>The Civil Disobedience Exception — A Critical Bright Line</h2></div>
+  <div class="card">
+    <p>Both the LES and Handbook are explicit: <strong>"Standard I(D) is not meant to cover legal transgressions resulting from acts of civil disobedience in support of personal beliefs, because such conduct does not reflect poorly on the member's or candidate's professional reputation, integrity, or competence."</strong></p>
+    <p>Garcia (Example 4 / LES) and Hanse (Module 5 LES) are both canonical examples: arrested multiple times for nonviolent protests/trespassing in support of environmental causes. These acts do not involve dishonesty, fraud, or deceit — and do not reflect adversely on professional competence or integrity.</p>
+  </div>
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Why Civil Disobedience Is NOT I(D)</div>
+    <p>Three elements must be present for I(D) to apply to personal conduct: (1) the conduct involves dishonesty, fraud, or deceit OR reflects adversely on professional reputation/integrity/competence, AND (2) the conduct is related to the member's professional activities or carries professional implications. Civil disobedience arrests typically satisfy neither: (1) no dishonesty, fraud, or deceit involved — the acts are openly done in public based on personal beliefs, and (2) no professional connection — the arrests reflect personal political convictions, not professional conduct. The key trap: the examiners may place protests in "the financial district" or near the member's workplace. Location does NOT create the professional connection.</p>
+  </div>
+</div>
+
+<div class="section" id="d4">
+  <div class="section-header"><span class="section-num">D4</span><h2>I(D) Worked Examples</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1 (LES)</div><div class="ex-title">Sasserman — Intoxicated at Work</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Sasserman, a trust investment officer, drinks heavily at lunch daily. Back at work after lunch, he is clearly intoxicated while making investment decisions. Colleagues distrust his afternoon judgment.</div>
+      <div class="ex-verdict"><strong>Violation of I(D).</strong> Excessive drinking at lunch and subsequent intoxication at work = conduct that has raised questions about his professionalism and <em>competence</em>. His behavior reflects poorly on him, his employer, and the investment industry.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>I(D) covers conduct that damages competence — not just dishonesty. Intoxication impairs professional functioning. Note: drinking off-hours and off-duty in private would likely not be I(D). The violation is the intoxication DURING professional activities.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Examples 2 + 3 (LES)</div><div class="ex-title">Hoffman + Brink — Fraud in Workplace / Charity Board</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Hoffman: submits altered healthcare bills to his firm's insurance over two years. Brink: agrees to a price 20% above normal for charity vans, splits the surcharge with a friend (to repay a debt and compensate herself).</div>
+      <div class="ex-verdict"><strong>Both: violation of I(D).</strong> Hoffman: intentional fraud in the workplace adversely reflecting on integrity. Brink: her board service is a professional activity (serves because of CFA status/investment expertise) → dishonesty, fraud, and misrepresentation in that role = I(D) violation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Brink is the key Handbook addition — distinguishing from the LES version where she was simply "an analyst." The Handbook stresses her volunteer board position is a professional activity because she serves on the board DUE TO her professional status as an experienced investment analyst and CFA charterholder. When conduct occurs in a professional capacity (even unpaid), I(D) applies.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (Handbook-Only)</div><div class="ex-title">O'Hara — Sexual Harassment as CFA Society Volunteer</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">O'Hara volunteers as an instructor at his local CFA society's exam review course. He engages in inappropriate behaviour with female candidates — suggestive remarks, unwanted touching, repeatedly asking candidates out on dates after being rebuffed.</div>
+      <div class="ex-verdict"><strong>Violation of I(D).</strong> O'Hara is engaging in sexual harassment that reflects poorly on his professional reputation and integrity. Although the actions don't take place in the workplace, they occur as part of his work with the local society and encompass the use of his charter and CFA Institute membership.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Volunteer work for CFA Institute or local societies = professional activity. Misconduct in that capacity = I(D) violation even though no employment relationship exists and no financial transaction is involved. The professional affiliation is the link.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6 (Handbook-Only)</div><div class="ex-title">Nehjer — Retired CFA Charterholder Uses Charter on False Letter</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Retired Nehjer objects to a casino being built near her estate. She publishes an open letter with fabricated/altered statistics about economic impacts of gambling venues, signing with "PhD and CFA charterholder" to add credibility.</div>
+      <div class="ex-verdict"><strong>Violation of I(D).</strong> By engaging in fraud, dishonesty, and deceit using fabricated statistics AND by identifying herself as a CFA charterholder, she explicitly used her charter to give her analysis more credibility — making this professional conduct under I(D) even though she is retired.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Using the CFA designation in connection with an activity converts that activity into professional conduct. The fact that she is retired is irrelevant — she chose to invoke her professional credentials to lend weight to a communication that contained fabrications. The charter use is the professional link.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES)</div><div class="ex-title">Rasmussen — Discovering Possible Fraud in Hedge Fund Reporting</div><div class="ex-tag"><span class="tag tag-yellow">MUST ESCALATE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Rasmussen, a buy-side trader, notices that the hedge fund she trades for is reporting performance that doesn't reflect a major market decline she witnessed. Her supervisor and the compliance officer both dismiss her concerns.</div>
+      <div class="ex-verdict"><strong>Rasmussen should pursue the issue</strong> by gathering proof and, if all internal communications fail to satisfy her concerns, consider reporting the potential unethical activity to the appropriate regulator. This also raises IV(A) (supervisor's whistleblowing obligations) and IV(C) (responsibilities of supervisors).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>When internal escalation fails, the option to report to regulators remains — and in cases involving clear client harm, may be necessary. The supervisor and compliance officer's dismissal is itself problematic under IV(C). Rasmussen must gather evidence of her concerns before escalating externally.</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ STANDARD I(E) ═══════════ -->
+<div class="section" id="e1">
+  <div class="section-header"><span class="section-num">I(E)</span><h2>Standard I(E): Competence — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard I(E) — Competence (New in 2023)</div>
+    <p>Members and Candidates must act with and maintain the competence necessary to fulfill their professional responsibilities.</p>
+  </div>
+  <div class="card">
+    <p>I(E) is a <strong>2023 addition</strong> to the Standards, making explicit what was already implicit in the Code of Ethics requirement to "act with integrity, competence, and diligence" and "maintain and improve their professional competence." The standard has two elements:</p>
+    <ol>
+      <li><strong>Act with competence</strong> — having sufficient knowledge, skills, and abilities to currently perform professional responsibilities at a professional level</li>
+      <li><strong>Maintain competence</strong> — ongoing obligation to continuously maintain or improve competence as roles and knowledge requirements evolve</li>
+    </ol>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 I(E) Does NOT Require</div>
+    <p>Standard I(E) does not mandate participation in any specific continuing education programme or professional development plan. There are many ways to achieve and maintain competence — formal CE, self-study, conferences, expert groups, peer consultation, professional certifications, internal training. The standard is flexible on method; it is not flexible on the outcome: you must actually be competent in your role.</p>
+  </div>
+</div>
+
+<div class="section" id="e2">
+  <div class="section-header"><span class="section-num">E2</span><h2>Knowledge, Skills, and Abilities — The Three Components</h2></div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Knowledge</div>
+      <p>The body of information applied directly to the performance of a function and how effectively it is applied. Covers factual content, frameworks, regulatory understanding, and domain expertise required for the role.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Skills</div>
+      <p>Capabilities to perform role-specific acts or functions to complete specific tasks and achieve professional goals. Covers analytical capabilities, technical proficiencies, communication abilities, and role-specific execution competencies.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Abilities</div>
+      <p>Capabilities and attitudes that support behaviours resulting in observable outcomes. Covers judgment, decision-making ability, interpersonal skills, and the capacity to apply knowledge and skills effectively in context.</p>
+    </div>
+  </div>
+
+  <h3>Key Principles of I(E)</h3>
+  <div class="card">
+    <ul>
+      <li><strong>Competence is role-specific:</strong> What constitutes competence varies by role and by the facts and circumstances of each member or candidate. There is no single definition.</li>
+      <li><strong>Failure ≠ incompetence:</strong> Lack of competence cannot necessarily be determined by an unsuccessful or negative outcome. A competent investment manager may not always make profitable decisions. A competent analyst may not accurately predict future prospects despite diligent analysis.</li>
+      <li><strong>Education level ≠ competence:</strong> A highly educated investment consultant may not have the experience to undertake consulting activities in an unfamiliar area. An accounting expert in financial statement audits may not be competent in performance presentation standards (GIPS). Education is necessary but not sufficient.</li>
+      <li><strong>Roles change:</strong> When professional responsibilities change or expand, members must obtain new or different knowledge, skills, and abilities required by the new role — not just the old ones. (Evans example: promoted to director of research without developing management/supervisory competencies)</li>
+    </ul>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Mahajan (Module 5 LES) — Partial Competence</div>
+    <p>Mahajan takes a new role with two new dimensions: (1) new sectors (transportation, construction) and (2) first-time supervisory responsibility. He develops sector competence through courses and reading. He takes no steps to develop supervisory skills. <strong>Violation of I(E) on the supervisory dimension.</strong> The key principle: when a role requires multiple new competencies, the member must develop ALL of them — not just the ones that feel natural or familiar. Supervisory competence includes management training, compliance credentials, and internal training on managing subordinates — distinct from investment analysis competence.</p>
+  </div>
+
+  <h3>Recommended Activities for Achieving and Maintaining Competence</h3>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Formal Pathways</div>
+      <ul>
+        <li>Regularly engaging in professional development or CE programmes</li>
+        <li>Studying for or earning professional certifications or designations</li>
+        <li>Attending conferences, seminars, or webinars</li>
+        <li>Regularly participating in employer training</li>
+        <li>Earning compliance credentials (e.g., for supervisory roles)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Informal Pathways</div>
+      <ul>
+        <li>Diligently engaging in self-study: outside reading of subject matter articles, treatises, and publications</li>
+        <li>Participating in expert groups or organisations</li>
+        <li>Consulting with experts in fields outside one's direct expertise</li>
+        <li>Becoming proficient with any new skill or knowledge as professional responsibilities change</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="e3">
+  <div class="section-header"><span class="section-num">E3</span><h2>I(E) Worked Examples</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-title">Lee — Trade Deal Expert: Staying Current</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Lee runs a geopolitical consulting firm. A major multinational trade deal is ratified. Lee immediately downloads and reads the agreement, consults with experts to understand its implications, and produces an informed research report for her investment management firm clients.</div>
+      <div class="ex-verdict"><strong>Satisfied I(E).</strong> Lee maintained competence by staying current with developments in her field, independently studying relevant primary sources, and consulting experts to confirm her understanding. Her process ensures her knowledge is up to date before advising clients.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Staying current with relevant developments in your field = maintaining competence. This doesn't require formal CE — diligent independent research and expert consultation are sufficient. The key: the effort must be taken before advising clients, not after.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-title">Choe — Expanding into ESG Before Offering ESG Research</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Choe is director of research. Clients ask for ESG ratings incorporated into research reports. She hires an experienced ESG analyst, requires all analysts (including herself) to attend ESG seminars and earn an ESG investment specialist certificate. Then they begin incorporating ESG into reports.</div>
+      <div class="ex-verdict"><strong>Satisfied I(E).</strong> Choe extended competence before offering the new service — she hired for the skill gap, obtained external education, and only then incorporated ESG. The key: competence was built first, then deployed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>When expanding into new service areas, build competence before offering the service — not after. Choe didn't attempt to incorporate ESG analysis with her existing knowledge and learn as she went — she filled the knowledge gap systematically first.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-title">Glusker — Passing Licensing Exam Without Learning the Material</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Glusker is a regulatory attorney transitioning to a sales role. There is a licensing exam covering client fairness rules and regulations he needs to pass. He was never asked to cover these rules as an attorney and doesn't know them. He doesn't study or learn the material — relies on his general industry knowledge to pass.</div>
+      <div class="ex-verdict"><strong>Violated I(E).</strong> Passing the exam alone is not adequate to demonstrate competency. Glusker's failure to actually learn the rules and regulations relating to fairness when dealing with clients means he doesn't possess the required knowledge for his new role, despite having passed the licensing examination.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Compliance with licensing requirements is necessary but not sufficient for competence. The standard is actual knowledge, skills, and abilities — not mere credentialling. Passing an exam by guessing/relying on general knowledge without truly understanding the material = I(E) violation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-title">Mifune — Thorough Research, Unforeseen Fraud</div><div class="ex-tag"><span class="tag tag-green">NOT A VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Mifune recommends Vouchsafe Insurance based on high credit rating, strong financials, and a decade of history. Within 18 months, Vouchsafe goes bankrupt due to previously unknown CFO fraud. Clients claim he was incompetent.</div>
+      <div class="ex-verdict"><strong>Not a violation.</strong> Assuming Mifune's research of Vouchsafe was thorough and appropriate, his failure to uncover fraudulent practices that had misled the entire investment industry does not, by itself, indicate incompetence. A negative outcome from a professionally conducted process ≠ incompetence.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Bad outcomes do not prove incompetence. Competent professionals can make recommendations that turn out badly due to factors beyond reasonable discovery. The test is the quality of the process, not the outcome. This is the I(E) analogue of the "best interests" standard under III(A) — process-based, not outcome-based.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6</div><div class="ex-title">Halsey — Investing in Cryptocurrency Without Understanding It</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Halsey is a portfolio manager whose clients urge him to invest in cryptocurrency. He has read some newspaper articles about it but is unfamiliar with the nature of the asset or the differences between cryptocurrency products. Not wanting to seem out of touch or delay, he hastily buys a cryptocurrency product heavily promoted through social media for several clients.</div>
+      <div class="ex-verdict"><strong>Violation of I(E).</strong> Halsey is not competent to invest in cryptocurrency for his clients. By hastily investing without understanding the nature of the investment or its suitability, Halsey violated I(E).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Client pressure to invest in an asset class the member doesn't understand = the member must first build competence before acting. Fear of seeming "out of touch" or losing clients is not a justification for proceeding without the required knowledge. Competence must precede action.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMBINED CHECKLIST ═══════════ -->
+<div class="section" id="checklist">
+  <div class="section-header"><span class="section-num">★</span><h2>Combined Exam Checklist — Standards I(D) and I(E)</h2></div>
+
+  <div class="card" style="border-color:rgba(155,127,212,0.3);">
+    <h3 style="margin-top:0;">Standard I(D): Misconduct</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Two triggers:</strong> (1) Professional conduct involving dishonesty, fraud, or deceit. (2) Any act that reflects adversely on professional reputation, integrity, OR competence.</li>
+      <li>✅ <strong>"Professional activities" defined broadly:</strong> Workplace conduct + academia + investment profession participation + use of CFA charter/CFA Institute affiliation — even when unpaid or retired.</li>
+      <li>✅ <strong>Using the CFA charter in any context</strong> makes that context a professional activity — including in published letters, blogs, or public statements while retired.</li>
+      <li>✅ <strong>Volunteer work for CFA Institute/local societies</strong> = professional activity. Misconduct in that context = I(D) violation.</li>
+      <li>✅ <strong>Civil disobedience exception:</strong> Legal transgressions resulting from acts of civil disobedience in support of personal beliefs generally do NOT violate I(D) — no dishonesty, fraud, or deceit involved; does not reflect adversely on professional competence or integrity.</li>
+      <li>✅ <strong>Location doesn't create professional connection.</strong> Protests in "the financial district" ≠ professional conduct unless the member is acting in a professional capacity.</li>
+      <li>✅ <strong>Competence-based violations:</strong> Intoxication at work, failing to perform necessary due diligence, or other conduct that damages professional functioning can violate I(D) even without dishonesty.</li>
+      <li>✅ <strong>Personal bankruptcy</strong> does NOT violate I(D) unless it involves fraudulent or deceitful business conduct.</li>
+      <li>✅ <strong>Absence of appropriate conduct</strong> can violate I(D) — failing to do necessary due diligence when clients rely on you to do so.</li>
+      <li>✅ <strong>I(D) ≠ I(A):</strong> I(A) addresses compliance with laws/regulations governing professional activities. I(D) addresses ALL professional conduct reflecting on reputation/integrity/competence, whether or not it violates a law.</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard I(E): Competence</h3>
+    <ul class="checklist">
+      <li>✅ <strong>New 2023 standard.</strong> Makes explicit the competence obligation from the Code of Ethics. Two-part: act with competence AND maintain competence.</li>
+      <li>✅ <strong>Competence is role-specific:</strong> Different criteria for different roles based on facts and circumstances. No single universal definition.</li>
+      <li>✅ <strong>Failure ≠ incompetence.</strong> Competent professionals can have bad outcomes. The test is the quality of the process, not the outcome. (Mifune/Vouchsafe example)</li>
+      <li>✅ <strong>Education level ≠ competence.</strong> A highly educated person may lack experience in a specific area. A licensed professional may lack knowledge of specific regulations.</li>
+      <li>✅ <strong>Passing a licensing exam ≠ competence</strong> if the underlying material wasn't actually learned. (Glusker example)</li>
+      <li>✅ <strong>Role changes require new competencies</strong> — must develop knowledge, skills, and abilities for ALL dimensions of the new role, not just familiar ones. (Mahajan, Evans examples)</li>
+      <li>✅ <strong>Build competence before acting</strong> in a new area — not after. Client pressure does not justify proceeding without required knowledge. (Halsey/cryptocurrency)</li>
+      <li>✅ <strong>No specific CE programme required.</strong> Many pathways: formal CE, professional certifications, conferences, self-study, expert consultation, employer training, expert groups.</li>
+      <li>✅ <strong>Ongoing obligation:</strong> Must continuously maintain or improve competence — it is not a one-time achievement. Competence must keep pace with evolving professional responsibilities.</li>
+      <li>✅ <strong>I(E) connects to I(A):</strong> The Handbook notes that maintaining knowledge of applicable laws is also required under I(E) competence, not just I(A). Failure to stay current on regulations = both I(A) and I(E) issue.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ I(D) + I(E) QUICK REFERENCE</div>
+    <div class="f">
+      ═══ I(D): MISCONDUCT ═══<br>
+      TWO TRIGGERS:         Dishonesty/fraud/deceit in professional conduct OR acts adverse to professional reputation/integrity/competence<br>
+      PROFESSIONAL CONDUCT: Workplace + CFA charter use + CFA Institute volunteer work + investment-related writing/communication<br>
+      CIVIL DISOBEDIENCE:   NOT I(D) — no dishonesty, no professional connection (Hanse, Garcia)<br>
+      CHARTER USE:          Using CFA charter anywhere = professional activity (Nehjer)<br>
+      VOLUNTEER:            CFA society volunteer = professional activity (O'Hara, Brink)<br>
+      PERSONAL ≠ PROF:      Must have clear link to investment profession or charter (Tan, Mondelo)<br>
+      COMPETENCE:           Intoxication at work, lack of due diligence = I(D) if reflects on professional ability<br><br>
+      ═══ I(E): COMPETENCE ═══<br>
+      NEW IN 2023:          Makes Code competence requirement explicit and standalone<br>
+      TWO PARTS:            Act with competence + MAINTAIN competence (ongoing obligation)<br>
+      ROLE-SPECIFIC:        Criteria differ per role — no universal standard<br>
+      FAILURE ≠ INCOMPETENCE: Bad outcomes from proper process ≠ violation<br>
+      EDUCATION ≠ COMPETENCE: Level of education insufficient on its own<br>
+      EXAM ≠ COMPETENCE:    Passing without learning = violation (Glusker)<br>
+      ROLE CHANGE:          Must develop ALL new competencies required by new role<br>
+      BUILD FIRST ACT SECOND: Competence before action — client pressure not an excuse (Halsey)<br>
+      NO SPECIFIC METHOD:   Many pathways — formal CE, self-study, experts, certifications
+    </div>
+    <div class="note">
+      <strong>Top I(D) exam traps:</strong><br>
+      (1) "She was protesting in the financial district so it relates to her financial work" — location alone doesn't create professional connection<br>
+      (2) "He's retired so the CFA charter doesn't apply" — retired charterholders who invoke the charter = professional activity<br>
+      (3) "The firm approved his volunteer role so no liability" — firm approval doesn't override individual I(D) obligation<br>
+      (4) "The bankruptcy was unfortunate but not dishonest" — correct, unless the bankruptcy itself involved fraudulent conduct<br><br>
+      <strong>Top I(E) exam traps:</strong><br>
+      (1) "He passed the licensing exam, so he has demonstrated competence" — passing ≠ competence if material wasn't learned<br>
+      (2) "The investment lost money so she was incompetent" — negative outcomes don't prove incompetence<br>
+      (3) "He must enrol in a formal CE programme to comply" — no specific programme required; many pathways<br>
+      (4) "She studied the new sector so her role change is covered" — must study ALL new dimensions (including supervisory responsibilities, not just technical content)
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standards I(D): Misconduct &amp; I(E): Competence · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

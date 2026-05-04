@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 8: Yield Measures for Floating-Rate & Money Market Instruments</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --frn-bg: #111a16; --frn-border: #4cc98a;
+    --mm-bg: #1a1020; --mm-border: #4c8bc9;
+    --dr-bg: #1a1510; --dr-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .frn-card { background: var(--frn-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .frn-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .dr-card { background: var(--dr-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .dr-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .mm-card { background: var(--mm-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .mm-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 8</div>
+  <h1>Yield Measures for <span>Floating-Rate &amp; Money Market Instruments</span></h1>
+  <p>Exam-ready notes: floating-rate note (FRN) mechanics, quoted margin vs. discount margin, FRN pricing model, FRN price vs. par relationship, money market instruments (discount rate vs. add-on rate), pricing formulas, bond equivalent yield conversion, and comparing instruments on a common basis.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · FRN Mechanics &amp; Key Definitions</a>
+  <a class="toc-item" href="#s2">02 · Quoted Margin vs. Discount Margin</a>
+  <a class="toc-item" href="#s3">03 · FRN Pricing Model (Eq. 1)</a>
+  <a class="toc-item" href="#s4">04 · FRN Price vs. Par — The Rules</a>
+  <a class="toc-item" href="#s5">05 · Fixed-Rate vs. Floating-Rate — Key Contrasts</a>
+  <a class="toc-item" href="#s6">06 · Money Market — Overview &amp; Key Differences</a>
+  <a class="toc-item" href="#s7">07 · Discount Rate Basis (Eq. 2 &amp; 3)</a>
+  <a class="toc-item" href="#s8">08 · Add-On Rate Basis (Eq. 4)</a>
+  <a class="toc-item" href="#s9">09 · Bond Equivalent Yield (BEY)</a>
+  <a class="toc-item" href="#s10">10 · MM Instruments — Master Table</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: FRN MECHANICS & KEY DEFINITIONS     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Floating-Rate Note (FRN) — Mechanics &amp; Key Definitions</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>floating-rate note (FRN)</strong> — also called a floater — is a debt instrument whose coupon payments are not fixed. Instead, the coupon is reset periodically based on a <strong>market reference rate (MRR)</strong> plus a stated spread. The coupon adjusts automatically with changing interest rates, which is the fundamental reason FRNs have much less <strong>price risk</strong> than fixed-rate bonds.</p>
+      <p style="margin-top:10px;"><strong>Most loans are floating-rate instruments.</strong> Banks prefer making floating-rate loans because their funding (deposits, short-term borrowings) is also floating — this maintains an asset-liability match on their balance sheet.</p>
+    </div>
+
+    <div class="frn-card">
+      <div class="frn-title">Antelas AG FRN — Term Sheet Summary (Key Terms)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Issuer:</strong> Antelas AG (German emerging technology company)</li>
+        <li><strong>Maturity:</strong> 4 years | <strong>Principal:</strong> EUR 250 million</li>
+        <li><strong>Coupon:</strong> MRR + 250 bps per annum</li>
+        <li><strong>Reset &amp; Payment frequency:</strong> Quarterly (MRR is reset quarterly; interest paid quarterly)</li>
+        <li><strong>Payment structure:</strong> "In arrears" — MRR is determined at the START of each period; interest paid at the END</li>
+        <li><strong>Day-count:</strong> Actual/360 or Actual/365 (most common for FRNs and loans)</li>
+        <li><strong>Quoted margin:</strong> 250 bps — the fixed spread above MRR locked in at issuance</li>
+      </ul>
+    </div>
+
+    <h3>Key Terminology — All Definitions</h3>
+
+    <div class="def-block">
+      <div class="def-term">Market Reference Rate (MRR)</div>
+      <div class="def-body">The floating benchmark rate to which the FRN's coupon is linked. Usually a short-term money market rate (e.g., 3-month SOFR, EURIBOR, MRR). The MRR is reset on predetermined dates — typically at the beginning of each coupon period. Also sometimes generically called "Index" in pricing models.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Quoted Margin (QM)</div>
+      <div class="def-body">The <strong>fixed spread</strong> above (or below) the MRR specified in the bond's indenture at the time of issuance. It compensates investors for the difference between the credit risk of the issuer and that implied by the MRR (which reflects the risk of high-quality banks). The QM is <strong>contractually fixed for the life of the bond</strong> — it does NOT change when the issuer's credit quality changes. Example: Antelas FRN QM = 250 bps.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Discount Margin (DM) / Required Margin</div>
+      <div class="def-body">The <strong>spread over (or under) the MRR that the market currently requires</strong> to price the FRN at its fair value given current credit risk. The DM is the FRN equivalent of a yield spread for a fixed-rate bond. It is determined by the market at any point in time and <strong>changes when the issuer's credit risk changes</strong>. Also called the "required margin."</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Hook — QM is Contractual, DM is Market</div>
+      <p><strong>QM = contractually fixed (set at issuance, never changes)</strong> — like the coupon rate on a fixed-rate bond.<br>
+      <strong>DM = market-determined (changes with credit risk)</strong> — like the YTM on a fixed-rate bond.<br>
+      The gap between DM and QM is what drives the FRN's price away from par. When DM = QM, the FRN prices at par. When DM &gt; QM, the FRN prices at a discount. When DM &lt; QM, the FRN prices at a premium.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 "In Arrears" Payment Structure</div>
+      <p>For most FRNs and loans: the MRR is observed/set at the <strong>beginning</strong> of the coupon period, and interest is paid at the <strong>end</strong> of the period. This is called "in arrears." For example, a quarterly FRN determines its coupon on January 1 based on MRR observed that day, then pays that coupon on April 1. The coupon amount is known for the full period as soon as the MRR resets — this is a key difference from having unknown future coupon cash flows.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: QUOTED MARGIN vs. DISCOUNT MARGIN   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Quoted Margin vs. Discount Margin — The Price Driver</h2>
+    </div>
+
+    <div class="card">
+      <p>The relationship between QM and DM determines whether the FRN is priced at par, at a discount, or at a premium. This is the FRN equivalent of comparing coupon rate to YTM for a fixed-rate bond — the same logic applies, just with margins instead of rates.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Condition</th><th>FRN Price vs. Par</th><th>Reason</th><th>Fixed-Rate Bond Analogy</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DM = QM</td>
+            <td><span class="tag tag-green">Price = Par (100)</span></td>
+            <td>Required spread equals the quoted spread — investors receive exactly the compensation they require; no premium or discount needed</td>
+            <td>Coupon rate = YTM → price at par</td>
+          </tr>
+          <tr>
+            <td>DM &gt; QM</td>
+            <td><span class="tag tag-yellow">Price &lt; Par (Discount)</span></td>
+            <td>Market requires more spread than the bond pays. The "deficient" interest payment per period = DM − QM. The discount = PV of this shortfall annuity for remaining life</td>
+            <td>Coupon rate &lt; YTM → price at discount</td>
+          </tr>
+          <tr>
+            <td>DM &lt; QM</td>
+            <td><span class="tag tag-blue">Price &gt; Par (Premium)</span></td>
+            <td>Market requires less spread than the bond pays. The "excess" interest payment per period = QM − DM. The premium = PV of this excess annuity for remaining life</td>
+            <td>Coupon rate &gt; YTM → price at premium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ The FRN Rule of Three — Commit This to Memory</div>
+      <div class="f">
+        DM = QM  →  FRN at PAR<br>
+        DM &gt; QM  →  FRN at DISCOUNT  (market wants MORE than bond pays → penalizes price)<br>
+        DM &lt; QM  →  FRN at PREMIUM   (market wants LESS than bond pays → rewards price)
+      </div>
+      <div class="note">
+        <strong>What causes DM to change?</strong> Changes in the issuer's credit risk (most common), changes in liquidity, or changes in tax status. The MRR itself changing does NOT change the DM — the coupon adjusts automatically to absorb MRR moves, which is the whole point of a floater.<br><br>
+        <strong>Example — Antelas credit downgrade:</strong><br>
+        Originally: DM = QM = 50 bps → FRN at par<br>
+        After downgrade: DM rises to 75 bps, QM stays at 50 bps<br>
+        Deficiency = 75 − 50 = 25 bps per period<br>
+        FRN now trades at a discount = PV of 25 bps annuity for remaining periods<br><br>
+        <strong>Example — Credit improvement:</strong><br>
+        If DM falls to 40 bps, QM still = 50 bps → excess = 10 bps per period → FRN at premium
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Pull-to-par for FRNs:</strong> Between reset dates, if the MRR moves, the flat price temporarily deviates from par:</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>MRR rises between resets → current coupon (fixed until next reset) is now relatively low → flat price falls slightly below par</li>
+        <li>MRR falls between resets → current coupon is relatively high → flat price rises slightly above par</li>
+        <li>But at each reset date (assuming DM = QM), the flat price is pulled back to par — the same pull-to-par mechanism as for fixed-rate bonds, but operating on a much shorter cycle (quarterly or semiannual resets)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Distinction — What Moves Price for Fixed vs. Floating Rate Bonds</div>
+      <p>
+        <strong>Fixed-rate bond price changes:</strong> driven by changes in BOTH benchmark rates AND credit risk (spread). Both affect the YTM directly.<br>
+        <strong>FRN price changes:</strong> driven almost entirely by changes in CREDIT RISK (changes in DM). Changes in the benchmark MRR affect the coupon — but the price barely moves because the cash flows adjust with the rate. This is the core advantage of floating-rate bonds: they hedge interest rate risk while retaining credit risk.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: FRN PRICING MODEL                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>FRN Pricing Model — Equation 1</h2>
+    </div>
+
+    <div class="card">
+      <p>Unlike fixed-rate bonds, FRNs require a specialized pricing model because both the numerator (coupon) and denominator (discount rate) include the floating MRR. The simplified model below assumes: (1) pricing on a rate reset date (so flat price = full price, no accrued interest); (2) 30/360 day count so periodicity m is an integer; (3) the same MRR applies to all future periods (a key simplification — more complex models project future rates).</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — FRN Pricing Model (Simplified)</div>
+      <div class="f">
+        PV = [(MRR + QM)/m × FV] / (1 + (MRR + DM)/m)¹<br>
+           + [(MRR + QM)/m × FV] / (1 + (MRR + DM)/m)²<br>
+           + ...<br>
+           + [(MRR + QM)/m × FV + FV] / (1 + (MRR + DM)/m)ᴺ
+      </div>
+      <div class="note">
+        <strong>Variables:</strong><br>
+        PV = price of the FRN (flat price = full price on reset date)<br>
+        MRR = market reference rate (annual percentage rate)<br>
+        QM = quoted margin (annual percentage rate — fixed in the indenture)<br>
+        DM = discount margin (annual percentage rate — market-determined required margin)<br>
+        FV = face/par value of the bond<br>
+        m = periodicity (number of payment periods per year; e.g., 2 = semiannual, 4 = quarterly)<br>
+        N = number of periods to maturity<br><br>
+        <strong>Coupon per period</strong> = (MRR + QM)/m × FV   ← numerator uses QUOTED margin<br>
+        <strong>Discount rate per period</strong> = (MRR + DM)/m   ← denominator uses DISCOUNT margin<br><br>
+        Key: divide all annual rates by m since they are stated as annual APRs.
+      </div>
+    </div>
+
+    <h3>Worked Example 1 — Pricing FRN (Given DM, Solve for Price)</h3>
+
+    <div class="auction-box">
+      <div class="label">Example: 2-year semiannual FRN, MRR + 0.50%, MRR = 1.25%, DM = 0.40%</div>
+      <div class="f">
+        Inputs: MRR = 0.0125, QM = 0.0050, FV = 100, m = 2, DM = 0.0040, N = 4<br><br>
+        Coupon per period = (0.0125 + 0.0050)/2 × 100 = 0.875 per period<br>
+        Discount rate per period = (0.0125 + 0.0040)/2 = 0.00825 per period<br><br>
+        PV = 0.875/(1.00825)¹ + 0.875/(1.00825)² + 0.875/(1.00825)³ + (0.875 + 100)/(1.00825)⁴<br>
+        PV = 100.196<br><br>
+        Result: PV = 100.196 &gt; 100 → PREMIUM because QM (50 bps) &gt; DM (40 bps)
+      </div>
+    </div>
+
+    <h3>Worked Example 2 — Solving for Discount Margin (Given Price)</h3>
+
+    <div class="auction-box">
+      <div class="label">Example: 2-year semiannual FRN, MRR + 0.75%, MRR = 1.10%, Price = 95.50</div>
+      <div class="f">
+        Inputs: PV = 95.50, MRR = 0.0110, QM = 0.0075, FV = 100, m = 2, N = 4<br><br>
+        Use Excel Solver: set PV = 95.50, solve for DM<br>
+        → DM = 3.12% = 312 bps<br><br>
+        Interpretation: The FRN was issued at par (DM = QM = 75 bps).<br>
+        After credit downgrade: DM rose to 312 bps, but QM is still fixed at 75 bps.<br>
+        Deficiency = 312 − 75 = 237 bps per period → FRN trades at DISCOUNT (price = 95.50 &lt; 100)
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Solving for DM — The Process</div>
+      <p>When given the market price of an FRN, solving for DM requires iteration (cannot be solved algebraically, like solving for YTM). Use:<br>
+      <strong>Excel Solver:</strong> Set the cell containing PV formula equal to the observed market price. Set DM as the "changing variable." Solve.<br>
+      This is the same approach as using Excel IRR or Goal Seek for YTM on fixed-rate bonds. The DM is an estimate — it is model-dependent on the simplifying assumption that the same MRR applies to all future periods.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ DM is an Estimate — Model Limitations</div>
+      <p>The DM from Equation 1 is a simplified estimate for three reasons: (1) the model prices as of a reset date — between reset dates, more complex adjustments are needed; (2) it uses a 30/360 day count, but most FRNs use actual/360; (3) it assumes the same MRR for ALL future periods — in reality, future MRR will change. More complex models project future MRR using forward rates and use spot rates for discounting. The exam tests the simplified model, but know why it's an approximation.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: FRN PRICE vs. PAR                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>FRN Price vs. Par — Complete Rules &amp; Pull-to-Par</h2>
+    </div>
+
+    <div class="card">
+      <p>Understanding when an FRN trades at a discount, par, or premium — and why — is critical. The key insight is that <strong>the MRR level itself does NOT drive the FRN away from par</strong>. The FRN adjusts its coupon automatically as MRR moves. Only the MARGIN gap (DM vs. QM) creates a persistent deviation from par.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="frn-card" style="margin-bottom:0;">
+        <div class="frn-title">At Par (DM = QM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#c8dfd0;">
+          <li>Investor receives exactly the required spread</li>
+          <li>No deficiency or excess payment</li>
+          <li>Priced at 100 on every reset date</li>
+          <li>Regardless of MRR level — because coupon adjusts with MRR</li>
+        </ul>
+      </div>
+      <div class="dr-card" style="margin-bottom:0;">
+        <div class="dr-title">Discount (DM &gt; QM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#dfd0c8;">
+          <li>Deficiency per period = DM − QM</li>
+          <li>Discount = PV of deficiency annuity</li>
+          <li>Caused by: credit downgrade, liquidity deterioration</li>
+          <li>Pulled back to par at each reset date (if DM stays &gt; QM, pulled to new discount level)</li>
+        </ul>
+      </div>
+      <div class="mm-card" style="margin-bottom:0;">
+        <div class="mm-title">Premium (DM &lt; QM)</div>
+        <ul style="padding-left:16px; font-size:13px; color:#c8d0df;">
+          <li>Excess per period = QM − DM</li>
+          <li>Premium = PV of excess annuity</li>
+          <li>Caused by: credit upgrade, improvement in issuer quality</li>
+          <li>Some issuers (very low credit risk) can issue at negative quoted margin (below MRR)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Price Deviation from Par — Conceptual Formula</div>
+      <div class="f">
+        Premium or Discount vs. Par  =  PV of (QM − DM) annuity for remaining periods<br><br>
+        If QM &gt; DM: Premium = PV of (QM − DM) per period for N remaining periods<br>
+        If QM &lt; DM: Discount = PV of (DM − QM) per period for N remaining periods (a negative deviation)<br>
+        If QM = DM: No deviation → price = par
+      </div>
+      <div class="note">
+        This annuity is discounted at the discount rate per period = (MRR + DM)/m.<br>
+        The pull-to-par works because as N decreases, the PV of the annuity shrinks → the price deviation from par narrows as maturity approaches, just like for fixed-rate bonds.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: FIXED-RATE vs. FLOATING-RATE KEY CONTRASTS     -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Fixed-Rate vs. Floating-Rate Bonds — Key Contrasts</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Fixed-Rate Bond</th><th>Floating-Rate Note (FRN)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Coupon structure</td>
+            <td>Fixed coupon rate for the life of the bond</td>
+            <td>Coupon resets periodically: MRR + QM (QM fixed; MRR floats)</td>
+          </tr>
+          <tr>
+            <td>Effect of benchmark rate changes</td>
+            <td><strong>Major price impact.</strong> If MRR rises, the fixed coupon looks cheap → price falls significantly</td>
+            <td><strong>Minimal price impact.</strong> If MRR rises, the coupon adjusts upward → price stays near par</td>
+          </tr>
+          <tr>
+            <td>Effect of credit risk changes</td>
+            <td>Spread widens/tightens → YTM changes → price changes</td>
+            <td>DM changes → price deviates from par (discount or premium). Magnitude = PV of (DM − QM) annuity</td>
+          </tr>
+          <tr>
+            <td>Par pricing rule</td>
+            <td>Coupon rate = YTM → price at par</td>
+            <td>QM = DM → price at par (on reset date)</td>
+          </tr>
+          <tr>
+            <td>Discount pricing rule</td>
+            <td>Coupon rate &lt; YTM → price at discount</td>
+            <td>QM &lt; DM → price at discount</td>
+          </tr>
+          <tr>
+            <td>Premium pricing rule</td>
+            <td>Coupon rate &gt; YTM → price at premium</td>
+            <td>QM &gt; DM → price at premium</td>
+          </tr>
+          <tr>
+            <td>Interest rate (price) risk</td>
+            <td><strong>High</strong> — fixed coupons not protected against rate changes; duration drives sensitivity</td>
+            <td><strong>Low</strong> — cash flows adjust automatically with rate changes; very short effective duration</td>
+          </tr>
+          <tr>
+            <td>Credit risk</td>
+            <td>Captured in the spread (YTM − benchmark rate)</td>
+            <td>Captured in the discount margin (DM)</td>
+          </tr>
+          <tr>
+            <td>Yield spread analog</td>
+            <td>G-spread, I-spread, Z-spread, OAS</td>
+            <td>Discount Margin (DM)</td>
+          </tr>
+          <tr>
+            <td>Day-count convention</td>
+            <td>30/360 (most corporate bonds); actual/actual (government)</td>
+            <td>Actual/360 or actual/365 (most FRNs and loans)</td>
+          </tr>
+          <tr>
+            <td>Primary users</td>
+            <td>Investors seeking fixed income streams; pension funds, insurance companies</td>
+            <td>Banks (asset-liability matching); corporate borrowers; investors hedging rate risk</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Banks Love Floating-Rate Loans</div>
+      <p>Bank liabilities (deposits, short-term borrowings) are predominantly floating-rate — they reset frequently with market rates. If banks made mostly fixed-rate loans, a rise in market rates would increase their funding costs while their loan income stayed fixed → a dangerous mismatch. By making floating-rate loans (tied to MRR), banks ensure that when their funding costs rise, their loan income rises too. This is the core of asset-liability management (ALM).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: MONEY MARKET OVERVIEW              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Money Market Instruments — Overview &amp; Key Differences from Bonds</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Money Market Instruments</div>
+      <div class="def-body">Debt securities with <strong>original maturities of one year or less</strong>. They are a significant source of short-term financing for issuers and a short-duration, low-risk investment for investors. Short maturity means: investors can reinvest quickly, and issuers can refinance quickly — both reducing interest rate risk.</div>
+    </div>
+
+    <h3>Types of Money Market Instruments</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Discount Rate Basis Instruments</div>
+        <ul>
+          <li><strong>Treasury bills (T-bills)</strong> — short-term sovereign debt (1 to 52 weeks)</li>
+          <li><strong>Commercial paper</strong> — short-term corporate unsecured debt</li>
+          <li><strong>Bankers' acceptances</strong> — bank-guaranteed trade finance instruments</li>
+          <li>Quoted at face value; interest is the discount from face value</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Add-On Rate Basis Instruments</div>
+        <ul>
+          <li><strong>Bank certificates of deposit (CDs)</strong> — time deposits at banks</li>
+          <li><strong>Repurchase agreements (repos)</strong> — short-term collateralized borrowing</li>
+          <li><strong>Market reference rate indices</strong> (SOFR, EURIBOR, etc.)</li>
+          <li>Quoted at issuance price; interest is added to principal at maturity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Money market mutual funds</strong> invest solely in eligible money market securities and are sometimes used as an alternative to bank deposits — they offer higher yields but are not insured like bank deposits.</p>
+    </div>
+
+    <h3>Three Key Differences: Money Market vs. Bond Yield Measures</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Simple interest, not compound interest.</strong>
+          Bond YTMs are annualized and compounded (using TVM with (1+r)^N). Money market yields are annualized but NOT compounded — they use simple interest. This means money market rates understate the true compound return, especially for longer maturities within the sub-1-year space.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Different periodicities for different maturities.</strong>
+          Bond YTMs use a consistent periodicity (e.g., all semiannual bonds use periodicity 2). Money market periodicity = Year/Days — a 90-day instrument has periodicity 365/90 ≈ 4.06; a 30-day instrument has periodicity 365/30 ≈ 12.2. Different maturities → different periodicities → rates are NOT directly comparable without conversion.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Non-standard interest rate conventions.</strong>
+          Money market instruments use either discount rate (DR) basis or add-on rate (AOR) basis — not standard TVM formulas. These require different pricing equations (Eq. 2–4 below). Some use 360-day year; others use 365-day year. This inconsistency makes direct comparisons across instruments impossible without converting to a common basis.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: DISCOUNT RATE BASIS                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Discount Rate Basis — Equations 2 &amp; 3</h2>
+    </div>
+
+    <div class="dr-card">
+      <div class="dr-title">What is a Money Market Discount Rate?</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfd0c8;">
+        <li>NOT the same as a "discount rate" in TVM (which is the rate used to calculate present value)</li>
+        <li>In the money market, the discount rate (DR) means: <strong>interest is embedded in (included in) the face value</strong> of the instrument</li>
+        <li>The investor pays LESS than face value; at maturity, receives face value — the difference IS the interest</li>
+        <li>The "quoted amount" for DR instruments = <strong>face value at maturity (FV)</strong></li>
+        <li>Interest = FV − PV (the discount from face value)</li>
+        <li>T-bills, commercial paper, and bankers' acceptances are quoted on DR basis</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Price of a Discount Rate Money Market Instrument</div>
+      <div class="f">
+        PV = FV × (1 − Days/Year × DR)
+      </div>
+      <div class="note">
+        <strong>PV</strong> = price (purchase price) of the instrument<br>
+        <strong>FV</strong> = face value paid at maturity<br>
+        <strong>Days</strong> = number of days from settlement to maturity<br>
+        <strong>Year</strong> = number of days in the year (360 or 365 depending on convention)<br>
+        <strong>DR</strong> = discount rate (annual percentage rate)<br><br>
+        <strong>Worked Example — 91-day Indian T-bill, FV = INR 10,000,000, DR = 3.45%, Year = 360:</strong><br>
+        PV = 10,000,000 × (1 − 91/360 × 0.0345)<br>
+        PV = 10,000,000 × (1 − 0.008725)<br>
+        PV = 10,000,000 × 0.991275 = INR 9,912,750 ≈ 9,912,792
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Solving for the Discount Rate (Rearranging Equation 2)</div>
+      <div class="f">
+        DR = (Year/Days) × [(FV − PV)/FV]
+      </div>
+      <div class="note">
+        <strong>First term (Year/Days)</strong> = the periodicity of the annual rate for this specific instrument<br>
+        <strong>Second term [(FV − PV)/FV]</strong> = interest earned ÷ FACE VALUE (not purchase price)<br><br>
+        <strong>Why this understates the true return:</strong><br>
+        In theory, an interest rate = earnings ÷ investment amount (PV). The DR uses FV in the denominator, not PV.<br>
+        Since PV &lt; FV (whenever DR &gt; 0), dividing by FV gives a SMALLER number than dividing by PV.<br>
+        Therefore: DR &lt; actual rate of return on the investment (measured on the PV invested).<br>
+        DR understates both: (1) the rate of return to the investor, and (2) the cost of borrowed funds to the issuer.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Exam Trap — DR Understates True Return</div>
+      <p>The money market discount rate is intentionally designed with FV in the denominator — which makes it an understated rate. The investor earned (FV − PV) on an investment of PV, not FV. The correct return measure should use PV in the denominator, which is what the add-on rate does. <strong>DR always understates the investor's true return</strong> when PV &lt; FV (i.e., when DR &gt; 0). This is why converting to AOR or BEY gives a higher number than the quoted DR.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: ADD-ON RATE BASIS                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Add-On Rate Basis — Equation 4</h2>
+    </div>
+
+    <div class="frn-card">
+      <div class="frn-title">What is a Money Market Add-On Rate?</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li>Interest is ADDED to the principal (investment amount) at maturity</li>
+        <li>The investor pays the principal (PV) upfront; at maturity receives PV + interest = FV</li>
+        <li>The "quoted amount" for AOR instruments = <strong>price at issuance (PV)</strong></li>
+        <li>Interest = FV − PV, but now denominator is PV (the actual investment) — conceptually correct</li>
+        <li>Bank CDs, repos, and MRR indices (SOFR, EURIBOR) are quoted on AOR basis</li>
+        <li>AOR &gt; DR for the same instrument — because AOR uses PV (smaller denominator) → higher rate</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Price of an Add-On Rate Money Market Instrument</div>
+      <div class="f">
+        PV = FV / (1 + Days/Year × AOR)
+      </div>
+      <div class="note">
+        <strong>PV</strong> = price at issuance (principal invested)<br>
+        <strong>FV</strong> = redemption amount at maturity (principal + interest)<br>
+        <strong>Days</strong> = number of days from settlement to maturity<br>
+        <strong>Year</strong> = number of days in the year (360 or 365)<br>
+        <strong>AOR</strong> = add-on rate (annual percentage rate)<br><br>
+        Solving for AOR from observed PV and FV:<br>
+        AOR = (Year/Days) × [(FV − PV)/PV]<br><br>
+        Note: denominator is PV (correct — interest earned ÷ amount invested). This is conceptually correct as a rate of return measure.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Discount Rate (DR)</th><th>Add-On Rate (AOR)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Interest structure</td><td>Included in face value; investor pays below face value</td><td>Added to principal at maturity; investor pays principal, receives more</td></tr>
+          <tr><td>Quoted amount</td><td>Face value at maturity (FV)</td><td>Price at issuance (PV)</td></tr>
+          <tr><td>Rate formula</td><td>DR = (Year/Days) × (FV−PV)/FV</td><td>AOR = (Year/Days) × (FV−PV)/PV</td></tr>
+          <tr><td>Denominator in rate</td><td>FV (face value — includes interest)</td><td>PV (investment amount — correct denominator)</td></tr>
+          <tr><td>Understates return?</td><td><span class="tag tag-red">YES — always understates</span></td><td><span class="tag tag-green">NO — conceptually correct</span></td></tr>
+          <tr><td>Pricing formula</td><td>PV = FV × (1 − Days/Year × DR)</td><td>PV = FV / (1 + Days/Year × AOR)</td></tr>
+          <tr><td>Typical instruments</td><td>T-bills, commercial paper, bankers' acceptances</td><td>Bank CDs, repos, MRR indices (SOFR, EURIBOR)</td></tr>
+          <tr><td>Which is higher?</td><td>Lower (same cash flows, different denominator)</td><td>Higher (same cash flows, PV &lt; FV as denominator)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 DR vs. AOR — The Denominator Is Everything</div>
+      <p>Both rates have the same numerator: (FV − PV) = the interest earned. The ONLY difference is the denominator: DR uses FV, AOR uses PV. Since PV &lt; FV, dividing by PV (AOR) gives a LARGER rate. So for the same instrument and same cash flows: <strong>AOR &gt; DR</strong>. To convert: given a DR, the AOR will always be higher. This is the key relationship tested on the exam.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: BOND EQUIVALENT YIELD (BEY)        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Bond Equivalent Yield (BEY) — Converting to a Common Basis</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Bond Equivalent Yield (BEY)</div>
+      <div class="def-body">A money market rate restated on a <strong>365-day add-on rate basis</strong>. It allows money market instruments to be compared to each other and to bonds on a standardized basis. BEY is the standard "common basis" for converting money market instruments.</div>
+    </div>
+
+    <div class="card">
+      <p>To compare money market instruments with different: (1) quote conventions (DR vs. AOR), (2) day-count assumptions (360 vs. 365), and (3) maturities — all instruments must be restated on a BEY basis.</p>
+    </div>
+
+    <h3>Three-Step Process to Convert DR-Basis Instrument to BEY</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Calculate the price (PV) using the discount rate.</strong><br>
+          PV = FV × (1 − Days/Year × DR)<br>
+          Use Year = 360 if the instrument is quoted on a 360-day basis.
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Calculate the Add-On Rate (AOR) using the price from Step 1.</strong><br>
+          AOR = (Year/Days) × [(FV − PV)/PV]<br>
+          This restates the return using PV as the denominator (the correct investment amount).
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Restate the AOR on a 365-day basis = Bond Equivalent Yield (BEY).</strong><br>
+          If Year used in Step 2 was 360: BEY = AOR × 365/360<br>
+          The BEY is now the standard metric — comparable across all money market instruments and to bonds.
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Worked Example — Converting 91-day T-bill (DR = 3.45%, 360-day) to BEY</div>
+      <div class="f">
+        Step 1: PV = 100 × (1 − 91/360 × 0.0345) = 100 × 0.99128 = 99.128<br><br>
+        Step 2: AOR = (360/91) × [(100 − 99.128)/99.128]<br>
+               = 3.956 × (0.872/99.128)<br>
+               = 3.956 × 0.008797 = 0.03480 = 3.480%<br><br>
+        Step 3: BEY = 3.480% × (365/360) = 3.528%<br><br>
+        Result: A T-bill quoted at DR = 3.45% (360-day basis) has a BEY of 3.528%<br>
+        Note: BEY (3.528%) &gt; DR (3.45%) — confirming DR understates true return
+      </div>
+      <div class="note">
+        The BEY (3.528%) is the rate that can now be directly compared to other money market instruments and to bond yields stated on a 365-day AOR basis.
+      </div>
+    </div>
+
+    <h3>Converting Money Market Rate to Semiannual Bond Basis</h3>
+
+    <div class="card">
+      <p>To compare a money market rate directly to a bond YTM (expressed on a semiannual bond basis, periodicity = 2), the BEY must be further converted using the periodicity conversion formula from Module 7.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">MM Rate to Semiannual Bond Basis — Worked Example</div>
+      <div class="f">
+        Given: 91-day Indian T-bill, BEY = 3.50% (stated on 365/91 periodicity basis)<br>
+        Target: Convert to semiannual bond basis (periodicity = 2)<br><br>
+        Periodicity conversion formula: (1 + APRm/m)^m = (1 + APRn/n)^n<br><br>
+        m = 365/91 (MM periodicity),  n = 2 (semiannual bond basis)<br>
+        (1 + 0.035/(365/91))^(365/91) = (1 + APR₂/2)²<br>
+        (1 + 0.035 × 91/365)^(365/91) = (1 + APR₂/2)²<br>
+        APR₂ = 3.515%<br><br>
+        Difference: 3.515% − 3.500% = +1.5 bps<br>
+        (The semiannual equivalent is slightly HIGHER since you're compounding less frequently)
+      </div>
+      <div class="note">
+        <strong>General rule:</strong> The difference between a MM rate and its semiannual bond equivalent is small but depends on the rate level. At lower interest rates, the difference between any two periodicities shrinks. At higher rates, it grows. On the exam, this conversion is tested to confirm you know MM periodicity ≠ bond periodicity and that they cannot be compared directly.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Money Market Periodicity = Year/Days</div>
+      <p>Unlike bonds (which always have a fixed periodicity of 1, 2, or 4), money market instruments have a periodicity that CHANGES with maturity: periodicity = Year/Days. A 90-day instrument in a 365-day year has periodicity = 365/90 ≈ 4.06. A 180-day instrument has periodicity = 365/180 ≈ 2.03. This is why a 90-day MM rate and a 180-day MM rate CANNOT be directly compared — even if they have the same AOR, they have different periodicities, so their effective annual returns differ.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: MM INSTRUMENTS MASTER TABLE        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Money Market Instruments — Complete Master Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Discount Rate (DR)</th><th>Add-On Rate (AOR)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Formula (rate)</td><td>DR = (Year/Days) × (FV−PV)/FV</td><td>AOR = (Year/Days) × (FV−PV)/PV</td></tr>
+          <tr><td>Formula (price)</td><td>PV = FV × (1 − Days/Year × DR)</td><td>PV = FV / (1 + Days/Year × AOR)</td></tr>
+          <tr><td>Quoted amount</td><td>Face Value (FV) at maturity</td><td>Price at issuance (PV)</td></tr>
+          <tr><td>Interest location</td><td>Embedded in face value; investor buys at discount</td><td>Added to principal at maturity</td></tr>
+          <tr><td>Denominator in rate</td><td>FV → understates return</td><td>PV → conceptually correct</td></tr>
+          <tr><td>Relative magnitude</td><td>Lower (for same instrument)</td><td>Higher (for same instrument)</td></tr>
+          <tr><td>Typical instruments</td><td>T-bills, commercial paper, bankers' acceptances</td><td>Bank CDs, repos, MRR indices</td></tr>
+          <tr><td>Day-count</td><td>Usually 360-day year</td><td>Usually 360 or 365-day year</td></tr>
+          <tr><td>To compare fairly</td><td>Convert to BEY: Step 1 → PV; Step 2 → AOR; Step 3 → restate on 365-day basis</td><td>Restate on 365-day basis if currently on 360-day basis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ All Money Market Formulas at a Glance</div>
+      <div class="f">
+        ── DISCOUNT RATE BASIS ──<br>
+        PV  = FV × (1 − Days/Year × DR)          ← price given DR<br>
+        DR  = (Year/Days) × (FV − PV) / FV        ← DR given price<br>
+        Interest = FV − PV  |  Denominator = FV → UNDERSTATES return<br><br>
+        ── ADD-ON RATE BASIS ──<br>
+        PV  = FV / (1 + Days/Year × AOR)          ← price given AOR<br>
+        AOR = (Year/Days) × (FV − PV) / PV        ← AOR given price<br>
+        Interest = FV − PV  |  Denominator = PV → CORRECT return measure<br><br>
+        ── CONVERTING DR → BEY ──<br>
+        Step 1: PV = FV × (1 − Days/360 × DR)<br>
+        Step 2: AOR₃₆₀ = (360/Days) × (FV−PV)/PV<br>
+        Step 3: BEY = AOR₃₆₀ × 365/360    [if originally on 360-day basis]<br><br>
+        ── MONEY MARKET TO SEMIANNUAL BOND BASIS ──<br>
+        m = 365/Days  (MM periodicity)   →   n = 2  (semiannual bond)<br>
+        Use: (1 + APRm/m)^m = (1 + APRn/n)^n   from Module 7
+      </div>
+      <div class="note">
+        <strong>Key relationship: AOR &gt; DR</strong> for the same instrument (same cash flows, PV &lt; FV, so PV gives larger denominator → higher rate).<br>
+        <strong>BEY &gt; DR:</strong> Converting DR to BEY always gives a higher number — DR understates return; BEY corrects for this.<br>
+        <strong>MM periodicity ≠ bond periodicity:</strong> MM periodicity = Year/Days (varies); bonds have fixed periodicity (1, 2, or 4). Never compare directly without conversion.
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Instrument</th><th>Quote Basis</th><th>Day-Count Year</th><th>Conversion to BEY</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>US Treasury Bills</td><td>Discount Rate</td><td>360</td><td>DR → PV → AOR₃₆₀ → BEY = AOR × 365/360</td></tr>
+          <tr><td>Indian T-bills</td><td>Discount Rate</td><td>360</td><td>Same as US T-bills</td></tr>
+          <tr><td>Commercial Paper</td><td>Discount Rate</td><td>360</td><td>Same as US T-bills</td></tr>
+          <tr><td>Bankers' Acceptances</td><td>Discount Rate</td><td>360</td><td>Same as US T-bills</td></tr>
+          <tr><td>Bank CDs</td><td>Add-On Rate</td><td>360 or 365</td><td>If 360-day: BEY = AOR × 365/360. If 365-day: BEY = AOR</td></tr>
+          <tr><td>Repos</td><td>Add-On Rate</td><td>360</td><td>BEY = AOR × 365/360</td></tr>
+          <tr><td>MRR (SOFR, EURIBOR)</td><td>Add-On Rate</td><td>360 (most)</td><td>BEY = AOR × 365/360</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST & QUICK REFERENCE   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>FRN coupon = MRR + QM.</strong> MRR resets on predetermined dates (usually quarterly); QM is fixed for the bond's life. Payment structure: "in arrears" — MRR set at START of period, interest paid at END.</li>
+        <li>✅ <strong>QM (quoted margin) is contractually fixed at issuance — never changes.</strong> DM (discount margin / required margin) is market-determined — changes with credit risk, liquidity, or tax status. DM = FRN equivalent of YTM spread for a fixed-rate bond.</li>
+        <li>✅ <strong>FRN Rule of Three:</strong> DM = QM → price = par. DM &gt; QM → price at DISCOUNT (deficient coupon). DM &lt; QM → price at PREMIUM (excess coupon). This is the direct analog of coupon vs. YTM for fixed-rate bonds.</li>
+        <li>✅ <strong>Deficiency/excess per period = |DM − QM|.</strong> The price deviation from par = PV of this deficiency or excess as an annuity over remaining periods, discounted at (MRR + DM)/m per period.</li>
+        <li>✅ <strong>FRN pull-to-par:</strong> On each reset date (if DM = QM), the FRN reprices to par. Between reset dates, MRR changes cause small temporary deviations from par that reverse at the next reset.</li>
+        <li>✅ <strong>FRN price risk is LOW:</strong> Cash flows adjust with MRR → MRR changes barely affect price. Only credit risk changes (DM changes) create meaningful price movements. This is why FRNs have very short effective duration.</li>
+        <li>✅ <strong>Fixed-rate bond vs. FRN:</strong> For benchmark rate changes — fixed-rate bond price changes significantly; FRN price barely moves. For credit risk changes — both experience similar price impacts (discount/premium from spread gap).</li>
+        <li>✅ <strong>FRN Pricing Formula (Eq. 1):</strong> Numerator uses (MRR + QM)/m × FV. Denominator uses (MRR + DM)/m as the discount rate per period. Priced as of reset date (no accrued interest). Simplified model — same MRR assumed for all periods.</li>
+        <li>✅ <strong>Solving for DM from price:</strong> Given PV, use Excel Solver — set sum of discounted cash flows = observed price, with DM as the variable. DM is an estimate (model-dependent). DM &gt; QM → discount; DM &lt; QM → premium.</li>
+        <li>✅ <strong>Banks prefer floating-rate loans</strong> to maintain asset-liability match — their funding is floating (deposits, short-term borrowings), so floating-rate assets prevent a damaging mismatch when interest rates rise.</li>
+        <li>✅ <strong>Money market instruments:</strong> Original maturity ≤ 1 year. Types: T-bills, commercial paper, bankers' acceptances (DR basis); bank CDs, repos, MRR indices (AOR basis). MM mutual funds = alternative to bank deposits.</li>
+        <li>✅ <strong>Three MM vs. bond differences:</strong> (1) Simple interest, not compound. (2) Variable periodicity (Year/Days) vs. fixed periodicity. (3) Non-standard conventions (DR vs. AOR, 360 vs. 365).</li>
+        <li>✅ <strong>Discount Rate (DR) formula:</strong> PV = FV × (1 − Days/Year × DR). DR = (Year/Days) × (FV−PV)/FV. Quoted amount = FV. Instruments: T-bills, commercial paper, bankers' acceptances.</li>
+        <li>✅ <strong>DR understates true return</strong> because denominator is FV (includes interest), not PV (the actual investment amount). DR always &lt; AOR for the same cash flows.</li>
+        <li>✅ <strong>Add-On Rate (AOR) formula:</strong> PV = FV / (1 + Days/Year × AOR). AOR = (Year/Days) × (FV−PV)/PV. Quoted amount = PV. Instruments: bank CDs, repos, MRR indices. AOR is conceptually correct (denominator = investment amount).</li>
+        <li>✅ <strong>AOR &gt; DR for the same instrument</strong> — same numerator (FV−PV), but AOR divides by smaller PV vs. DR divides by larger FV → AOR is always the higher number.</li>
+        <li>✅ <strong>Bond Equivalent Yield (BEY)</strong> = MM rate restated on a 365-day AOR basis. Steps to convert DR → BEY: (1) PV = FV × (1−Days/360 × DR); (2) AOR = (360/Days) × (FV−PV)/PV; (3) BEY = AOR × 365/360.</li>
+        <li>✅ <strong>BEY &gt; DR</strong> always (corrects for DR understating return AND adjusts from 360-day to 365-day basis).</li>
+        <li>✅ <strong>MM periodicity = Year/Days</strong> (varies by maturity). To convert to semiannual bond basis (periodicity 2): use the periodicity conversion formula (1 + APRm/m)^m = (1 + APRn/n)^n from Module 7.</li>
+        <li>✅ <strong>Never directly compare:</strong> (a) MM instruments with different maturities — different periodicities; (b) DR-basis and AOR-basis instruments without conversion; (c) 360-day and 365-day instruments without adjustment. Always convert to BEY first.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ FRN KEY RELATIONSHIPS ═══<br>
+        Coupon per period = (MRR + QM)/m × FV   [QM = fixed; MRR = floating]<br>
+        DM = required margin (market-determined, changes with credit risk)<br>
+        QM = quoted margin (contractually fixed at issuance, never changes)<br>
+        DM = QM → Price = Par | DM &gt; QM → Discount | DM &lt; QM → Premium<br>
+        Deficiency = DM − QM per period → Discount = PV of deficiency annuity<br>
+        Excess = QM − DM per period → Premium = PV of excess annuity<br><br>
+
+        ═══ FRN PRICING MODEL (Eq. 1) ═══<br>
+        PV = Σ [(MRR+QM)/m × FV] / (1+(MRR+DM)/m)ᵗ  + FV/(1+(MRR+DM)/m)ᴺ<br>
+        Numerator: QM (what bond pays) | Denominator: DM (what market requires)<br>
+        Simplified: on reset date, same MRR for all periods, 30/360 day count<br>
+        Solve for DM given price → use Excel Solver (iterative, not algebraic)<br><br>
+
+        ═══ MONEY MARKET — DISCOUNT RATE ═══<br>
+        PV = FV × (1 − Days/Year × DR)<br>
+        DR = (Year/Days) × (FV−PV)/FV ← denominator FV → UNDERSTATES return<br>
+        Instruments: T-bills, commercial paper, bankers' acceptances<br>
+        Quoted amount = FV (face value at maturity)<br><br>
+
+        ═══ MONEY MARKET — ADD-ON RATE ═══<br>
+        PV = FV / (1 + Days/Year × AOR)<br>
+        AOR = (Year/Days) × (FV−PV)/PV ← denominator PV → correct measure<br>
+        Instruments: bank CDs, repos, MRR indices<br>
+        Quoted amount = PV (price at issuance)<br>
+        AOR &gt; DR (same instrument, same cash flows, PV &lt; FV)<br><br>
+
+        ═══ CONVERTING TO BOND EQUIVALENT YIELD ═══<br>
+        DR → BEY: Step1: PV=FV×(1−Days/360×DR) | Step2: AOR=(360/Days)×(FV−PV)/PV | Step3: BEY=AOR×365/360<br>
+        AOR (360-day) → BEY: BEY = AOR × 365/360<br>
+        BEY to semiannual bond basis: (1+BEY×Days/365)^(365/Days) = (1+APR₂/2)²
+      </div>
+      <div class="note">
+        <strong>FRN vs. fixed-rate bond:</strong> Both use same Rule of Three (QM vs. DM ↔ coupon vs. YTM). FRNs insulated from MRR changes (coupon adjusts); sensitive only to credit risk changes (DM changes).<br>
+        <strong>DR always understates return; AOR is conceptually correct.</strong> Converting DR → BEY always gives a higher number.<br>
+        <strong>MM vs. bond yield measures:</strong> MM = simple interest, variable periodicity, DR or AOR basis. Bonds = compound interest, fixed periodicity, YTM basis. Never mix without conversion.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 8: Yield Measures for Floating-Rate &amp; Money Market Instruments · Exam Prep Notes
+</footer>
+
+</body>
+</html>

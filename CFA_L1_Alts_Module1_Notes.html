@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 1: Features, Methods, and Structures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --teal: #4cc9c9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1414 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,201,0.12); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--teal); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--teal); border-color: var(--teal); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--teal); background: rgba(76,201,201,0.1); border: 1px solid rgba(76,201,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-teal { background: rgba(76,201,201,0.15); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .highlight-t { color: var(--teal); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--teal); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Alt category cards */
+  .cat-card { border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .cat-pe   { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); }
+  .cat-ra   { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); }
+  .cat-hf   { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); }
+  .cat-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .cat-pe .cat-label { color: var(--accent2); }
+  .cat-ra .cat-label { color: var(--accent3); }
+  .cat-hf .cat-label { color: var(--accent); }
+  .cat-card p, .cat-card li { font-size: 14px; color: var(--text); }
+  .cat-card ul { padding-left: 16px; margin-top: 6px; }
+  .cat-card li { margin-bottom: 4px; }
+
+  /* Method cards */
+  .method-fund   { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); border-radius: 6px; padding: 16px 20px; }
+  .method-co     { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 16px 20px; }
+  .method-direct { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 16px 20px; }
+  .method-label  { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .method-fund   .method-label { color: var(--danger); }
+  .method-co     .method-label { color: var(--accent); }
+  .method-direct .method-label { color: var(--accent3); }
+  .method-fund p, .method-co p, .method-direct p, .method-fund li, .method-co li, .method-direct li { font-size: 14px; color: var(--text); }
+  .method-fund ul, .method-co ul, .method-direct ul { padding-left: 16px; margin-top: 6px; }
+  .method-fund li, .method-co li, .method-direct li { margin-bottom: 4px; }
+
+  /* Waterfall boxes */
+  .wfall-deal { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); border-radius: 6px; padding: 14px 18px; }
+  .wfall-fund { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 14px 18px; }
+  .wfall-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .wfall-deal .wfall-label { color: var(--danger); }
+  .wfall-fund .wfall-label { color: var(--accent3); }
+  .wfall-deal p, .wfall-fund p, .wfall-deal li, .wfall-fund li { font-size: 14px; color: var(--text); }
+  .wfall-deal ul, .wfall-fund ul { padding-left: 16px; margin-top: 6px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 1</div>
+  <h1>Alternative Investment Features, <span>Methods, and Structures</span></h1>
+  <p>Exam-ready notes: categories (private capital, real assets, hedge funds), 3 investment methods (fund, co-investment, direct), LP/GP structures, management and performance fees, hurdle rates (hard/soft), catch-up clause, high-water mark, clawback provision, and waterfall structures (deal-by-deal vs. whole-of-fund).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What Are Alternatives?</a>
+  <a class="toc-item" href="#s2">02 · Private Capital</a>
+  <a class="toc-item" href="#s3">03 · Real Assets</a>
+  <a class="toc-item" href="#s4">04 · Hedge Funds &amp; Digital Assets</a>
+  <a class="toc-item" href="#s5">05 · 3 Investment Methods</a>
+  <a class="toc-item" href="#s6">06 · Investment Methods Comparison</a>
+  <a class="toc-item" href="#s7">07 · LP / GP Ownership Structure</a>
+  <a class="toc-item" href="#s8">08 · Compensation: Fees &amp; Hurdle Rate</a>
+  <a class="toc-item" href="#s9">09 · Catch-Up, High-Water Mark &amp; Clawback</a>
+  <a class="toc-item" href="#s10">10 · Waterfall Structures</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WHAT ARE ALTERNATIVES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What Are Alternative Investments?</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Alternative Investments</div>
+      <div class="def-body">Investments <strong>other than</strong> ownership of public equity securities, fixed-income instruments, or cash. Grouped together not because they are similar to each other, but because they are <strong>distinct from traditional assets</strong>. Categories: private capital, real assets, and hedge funds.</div>
+    </div>
+
+    <h3>Key Features That Distinguish Alternatives</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--teal);">Distinctive Characteristics</div>
+        <ul>
+          <li>Need for <strong>specialized knowledge</strong> to value cash flows and risks</li>
+          <li>Typically <strong>low correlation</strong> with traditional asset classes</li>
+          <li><strong>Illiquidity</strong> and long investment time horizons</li>
+          <li>Large capital outlays required</li>
+          <li>Less efficient markets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Resulting Structural Features</div>
+        <ul>
+          <li>Different investment structures (LP/GP partnerships)</li>
+          <li><strong>Incentive-based fees</strong> to address information asymmetry</li>
+          <li>Performance appraisal challenges</li>
+          <li>More complex, richer compensation structures</li>
+          <li>Longer commitment periods (PE fund life ~10 years)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Why Invest in Alternatives?</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Greater portfolio diversification</strong> — low correlation with public equity and bonds</li>
+        <li><strong>Higher expected returns</strong> — illiquidity premium; access to less efficient markets</li>
+        <li>Investors accept: longer investment periods, reduced liquidity, and less efficient markets</li>
+        <li>Most investors limit alternatives to the portion of their portfolio designated for obligations several years in the future</li>
+        <li><strong>Largest allocators:</strong> large pension funds, sovereign wealth funds, and not-for-profit endowments — have the longest time horizons and highest sophistication</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Three Alternative Investment Categories</div>
+      <p><strong>Private Capital</strong> = private equity + private debt<br>
+      <strong>Real Assets</strong> = real estate + infrastructure + natural resources + commodities + collectibles + digital assets<br>
+      <strong>Hedge Funds</strong> = distinguished by investment approach (leverage, derivatives, short selling), not asset class</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: PRIVATE CAPITAL -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Private Capital</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Private Capital</div>
+      <div class="def-body">Funding provided to companies sourced from <strong>neither</strong> the public equity nor the public debt markets. Includes private equity (ownership) and private debt (loans/debt instruments).</div>
+    </div>
+
+    <div class="cat-card cat-pe">
+      <div class="cat-label">Private Equity (PE)</div>
+      <p>Investment in <strong>privately owned companies</strong> or in public companies with <strong>intent to take them private</strong>.</p>
+      <ul>
+        <li><strong>Leveraged buyouts (LBOs):</strong> Key approach for mature or declining firms; uses debt to acquire and restructure companies over several years</li>
+        <li>PE managers use greater control and flexibility (vs. public) to make management/strategy changes, close/sell/reorganize business lines to increase profitability</li>
+        <li><strong>Venture capital (VC):</strong> Specialized PE for non-public companies in early life cycle or startup phase; uses ownership capital where an idea/business plan exists with limited operations or customers</li>
+        <li>Both private and public equity investors are company owners with residual claims on future cash flows and dividends</li>
+        <li>Key difference: private equity investors may have <strong>full access to company information</strong> and can influence day-to-day management; public equity investors only receive publicly available information with voting rights limited to shareholder approval decisions</li>
+      </ul>
+    </div>
+
+    <div class="cat-card" style="background:rgba(76,139,201,0.04); border:1px solid rgba(76,139,201,0.25); border-radius:6px; padding:16px 20px; margin-bottom:10px;">
+      <div class="cat-label" style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent2); margin-bottom:8px;">Private Debt</div>
+      <ul style="padding-left:16px; margin-top:6px;">
+        <li><strong>Private loans or bonds</strong> — direct lending to private companies without going through public markets</li>
+        <li><strong>Venture debt:</strong> Extended to early-stage firms with little or no cash flow (alongside venture capital)</li>
+        <li><strong>Distressed debt:</strong> Public or private debt of corporate issuers believed to be close to or in bankruptcy; benefits from investors with capital restructuring skills</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 PE vs. VC — Life Cycle Stage</div>
+      <p><strong>Venture capital</strong> → early stage / startup (idea or limited operations). <strong>Private equity (LBO)</strong> → mature or declining stage (restructuring for profitability). Both are forms of private equity — VC is a specialized subset of PE.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: REAL ASSETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Real Assets</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Real Assets</div>
+      <div class="def-body">Generally <strong>tangible physical assets</strong> (real estate, natural resources) but also include intangibles (patents, intellectual property, goodwill). Either generate current/expected future cash flows AND/OR are considered a <strong>store of value</strong>.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Definition</th>
+            <th>Examples</th>
+            <th>Cash Flow Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Real Estate</td>
+            <td>Borrowed or ownership capital in buildings or land</td>
+            <td>Commercial (offices, retail), residential, industrial</td>
+            <td>Commercial: private business activity. Residential: rents or mortgage payments</td>
+          </tr>
+          <tr>
+            <td>Infrastructure</td>
+            <td>Long-lived fixed assets for public use providing essential services</td>
+            <td>Bridges, toll roads, airports, broadband networks, utilities</td>
+            <td>Fees, leases, access rights OR indirectly via economic growth → government tax revenue</td>
+          </tr>
+          <tr>
+            <td>Natural Resources (developed)</td>
+            <td>Less developed land as source of economic value</td>
+            <td>Farmland, timberland, mineral/energy deposits</td>
+            <td>Crop yields, agricultural lease payments, future timber harvests, mineral/drilling rights</td>
+          </tr>
+          <tr>
+            <td>Commodities</td>
+            <td>Standardized, traded goods</td>
+            <td>Energy (oil, gas), metals, agriculture, livestock</td>
+            <td>No direct cash flow — return from price changes. Inflation hedge. Countercyclical.</td>
+          </tr>
+          <tr>
+            <td>Collectibles</td>
+            <td>Tangible rare assets</td>
+            <td>Fine art, wine, rare coins, watches</td>
+            <td>Price appreciation; no income yield</td>
+          </tr>
+          <tr>
+            <td>Digital Assets</td>
+            <td>Assets created, stored, transmitted electronically with ownership/use rights</td>
+            <td>Cryptocurrencies, tokens, NFTs</td>
+            <td>Price appreciation; utility/governance rights</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Infrastructure — Key Details</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Public-Private Partnership (PPP):</strong> Agreement between public sector and private sector to finance, build, and operate public infrastructure. Used to attract long-term private investment.</li>
+        <li><strong>Special purpose entity (SPE):</strong> Often raises borrowed and ownership capital for construction and operation of a specific asset (road, bridge, etc.)</li>
+        <li><strong>Concession agreement:</strong> Contract governing private investor's obligations to construct and maintain infrastructure AND the exclusive right to operate and earn fees for a pre-determined period, after which the asset reverts to the public sector</li>
+        <li>Infrastructure assets are <strong>long-lived</strong> and provide <strong>essential services</strong> — relatively stable, predictable cash flows</li>
+      </ul>
+    </div>
+
+    <h3>Commodities — Investment Rationale</h3>
+    <div class="card">
+      <ul>
+        <li>Commodities themselves <strong>do not generate cash flows</strong> — ultimate return comes from price changes when sold by producers to consumers</li>
+        <li>Investors benefit from: (1) commodity price appreciation based on future economic use, (2) lower correlation with other asset classes over the economic cycle</li>
+        <li>Commodities serve as a <strong>countercyclical holding</strong> and an <strong>inflation hedge</strong></li>
+      </ul>
+    </div>
+
+    <h3>Publicly Traded Forms of Real Assets</h3>
+    <div class="card">
+      <ul>
+        <li><strong>REITs (Real Estate Investment Trusts):</strong> Equity securities — publicly traded form of real estate investment</li>
+        <li><strong>Mortgage-backed securities (MBS):</strong> Publicly traded debt form of real estate exposure</li>
+        <li><strong>Master Limited Partnerships (MLPs):</strong> Common for real estate or natural resource fund investors; similar to LP structure but more liquid and often publicly traded</li>
+        <li>Other liquid alternatives: commodity funds, ETFs</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: HEDGE FUNDS & DIGITAL ASSETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Hedge Funds &amp; Digital Assets</h2>
+    </div>
+
+    <div class="cat-card cat-hf">
+      <div class="cat-label">Hedge Funds</div>
+      <p><strong>Private investment vehicles</strong> distinguished by their <strong>investment approach</strong> rather than by the investments themselves. May invest in public equities, public fixed income, private capital, AND/OR real assets.</p>
+      <ul>
+        <li>Frequent use of: <strong>leverage, derivatives, short selling</strong>, and other strategies</li>
+        <li>Results in a substantially <strong>different risk and return profile</strong> from simply buying and holding the underlying assets</li>
+        <li><strong>Fund of funds:</strong> An investor investing in a portfolio of hedge funds (adds another layer of fees but provides additional diversification)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Hedge Funds vs. Other Alternatives</div>
+      <p>Hedge funds are <strong>distinguished by their investment APPROACH</strong> (leverage, derivatives, short selling), NOT by the asset classes they invest in. They may actually hold the same underlying assets as traditional investors — the difference is how they use them. Private capital and real assets are distinguished by the asset type; hedge funds are not.</p>
+    </div>
+
+    <h3>Digital Assets</h3>
+    <div class="card">
+      <p>Umbrella term for assets that can be created, stored, and transmitted electronically with associated ownership or use rights.</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Cryptocurrencies:</strong> Have their <em>own</em> blockchain (native asset). Examples: Bitcoin (BTC), Ethereum (ETH). Use cryptography for authenticity.</li>
+        <li><strong>Tokens:</strong> Built on an <em>existing</em> blockchain (not their own). Examples: ERC-20 tokens on the Ethereum ecosystem, used in DeFi and NFT marketplaces.</li>
+        <li><strong>NFTs (Non-Fungible Tokens):</strong> Digital collectibles — unique, non-interchangeable digital assets</li>
+        <li>Key distinction: cryptocurrencies have their own blockchains; tokens do not — they are built on another chain (e.g., Ethereum)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: 3 INVESTMENT METHODS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Three Investment Methods</h2>
+    </div>
+
+    <div class="card">
+      <p>Investors can access alternative investments in three ways. Institutional investors typically begin with funds, then progress to co-investing and direct investing as they gain experience.</p>
+      <p style="margin-top:8px;"><strong>Progression:</strong> Fund → Co-investment → Direct investment (increasing sophistication, control, and lower fees; but higher oversight costs)</p>
+    </div>
+
+    <div class="method-fund">
+      <div class="method-label">Method 1 — Fund Investment (Indirect)</div>
+      <p>Investor contributes capital to a fund → fund identifies, selects, and manages investments on the investor's behalf. Most common starting point for institutional investors.</p>
+      <ul>
+        <li><strong>Control:</strong> Minimal — investment decision is limited to investing in the fund or not; cannot affect underlying investments</li>
+        <li><strong>Fees:</strong> Highest — management fee + performance fee</li>
+        <li><strong>Transparency:</strong> Lowest — less frequent reporting on returns and positions</li>
+        <li><strong>Expertise required:</strong> Lowest — investor relies on manager's specialized knowledge</li>
+        <li><strong>Pre-commitment:</strong> Funds require pre-commitment of capital prior to investment selection; extended period during which fund may not be sold</li>
+        <li>Available for: hedge funds, private capital, real estate, infrastructure, natural resources</li>
+        <li>Suited for: investors with limited resources and/or experience</li>
+      </ul>
+    </div>
+
+    <div class="method-co">
+      <div class="method-label">Method 2 — Co-Investment</div>
+      <p>Investor invests in assets indirectly via the fund AND also possesses <strong>co-investment rights</strong> to invest directly alongside the fund in the same deals. A middle ground between fund and direct investing.</p>
+      <ul>
+        <li><strong>Control:</strong> Moderate — investor makes additional direct investment in specific deals the fund identifies</li>
+        <li><strong>Fees:</strong> Lower than fund-only — investor access to deals at lower fee than pure fund investment</li>
+        <li><strong>For investors:</strong> Expands knowledge and experience; learn from fund's process; prepare for direct investing</li>
+        <li><strong>For managers (GP benefits of offering co-investment):</strong>
+          <ul>
+            <li>Accelerate investment timing when available funds are insufficient for a specific deal</li>
+            <li>Expand the scope of available new investments</li>
+            <li>Increase diversification of existing fund investment pool</li>
+          </ul>
+        </li>
+        <li>Co-investors weigh: benefits of greater control and lower fees vs. higher oversight costs</li>
+      </ul>
+    </div>
+
+    <div class="method-direct">
+      <div class="method-label">Method 3 — Direct Investment</div>
+      <p>Largest, most sophisticated investors invest without using an intermediary fund. Maximum flexibility and control.</p>
+      <ul>
+        <li><strong>Control:</strong> Maximum — over investment choice, financing methods, and timing</li>
+        <li><strong>Fees:</strong> Lowest — no external fund manager or GP</li>
+        <li><strong>Expertise required:</strong> Highest — must have internal specialized knowledge, skills, and oversight capabilities</li>
+        <li>In private equity: purchase a direct stake in a private company without using an external fund manager/GP</li>
+        <li>Primarily applies to: private capital and real estate; some very large investors (pension funds, sovereign wealth funds) also invest directly in infrastructure and natural resources</li>
+        <li>The largest, most sophisticated direct investors (some sovereign wealth funds) compete directly with fund managers for the best investment opportunities</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: METHODS COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Investment Methods — Master Comparison Table</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Fund Investment</th>
+            <th>Co-Investment</th>
+            <th>Direct Investment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Investor control</td>
+            <td><span class="tag tag-red">Minimal</span></td>
+            <td><span class="tag tag-yellow">Moderate</span></td>
+            <td><span class="tag tag-green">Maximum</span></td>
+          </tr>
+          <tr>
+            <td>Fees paid</td>
+            <td>Highest (mgmt + perf)</td>
+            <td>Lower than fund-only</td>
+            <td>Lowest (no external mgr)</td>
+          </tr>
+          <tr>
+            <td>Expertise required</td>
+            <td>Lowest</td>
+            <td>Moderate</td>
+            <td>Highest</td>
+          </tr>
+          <tr>
+            <td>Transparency</td>
+            <td>Lowest</td>
+            <td>Moderate</td>
+            <td>Highest</td>
+          </tr>
+          <tr>
+            <td>Oversight costs</td>
+            <td>Lowest</td>
+            <td>Moderate</td>
+            <td>Highest</td>
+          </tr>
+          <tr>
+            <td>Investment decision</td>
+            <td>Invest in fund or not</td>
+            <td>Invest in fund + selected deals</td>
+            <td>Full selection and management</td>
+          </tr>
+          <tr>
+            <td>Typical investor profile</td>
+            <td>Less sophisticated; starting out</td>
+            <td>Intermediate; gaining experience</td>
+            <td>Largest / most sophisticated (SWFs, large pensions)</td>
+          </tr>
+          <tr>
+            <td>Management outsourced?</td>
+            <td>Fully outsourced</td>
+            <td>Partially outsourced</td>
+            <td>Fully in-house</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Progression of Sophistication</div>
+      <p>Institutional investors typically start with <strong>fund investing</strong> → gain experience → move to <strong>co-investing</strong> → eventually pursue <strong>direct investing</strong>. The largest and most sophisticated investors (some sovereign wealth funds) bypass funds entirely and compete directly with fund managers for deals. Co-investing is a crucial intermediate step to learn the process before going fully direct.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: LP/GP STRUCTURE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Ownership Structures — Limited Partnership (LP/GP)</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Limited Partnership Structure</div>
+      <div class="def-body">The most common alternative investment ownership structure. Maximizes flexibility in allocating business risk, return, and responsibilities between investors (LPs) and managers (GPs).</div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">General Partner (GP)</div>
+        <ul>
+          <li>Manages the fund; theoretically <strong>unlimited liability</strong></li>
+          <li>Responsible for all fund operations and decisions</li>
+          <li>Buys/sells assets, borrows funds, establishes reserves, enters contracts</li>
+          <li>May manage <strong>multiple funds</strong> simultaneously</li>
+          <li>Receives management fee + performance fee (carried interest)</li>
+          <li>Has specialized knowledge and control → information asymmetry vs. LPs</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Limited Partners (LPs)</div>
+        <ul>
+          <li>Outside investors; <strong>liability capped</strong> at amount invested</li>
+          <li>Own a fractional interest based on initial investment and LPA terms</li>
+          <li>Play <strong>passive roles</strong> — not involved in day-to-day management</li>
+          <li>Commit to future capital contributions (upfront cash = small portion of total commitment)</li>
+          <li>Must meet minimum regulatory net worth / institutional requirements (<strong>accredited investors</strong>)</li>
+          <li>Restricted number allowed per fund</li>
+          <li>Co-investment rights allow LPs to make additional direct investments in portfolio companies</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Limited Partnership Agreement (LPA)</h3>
+    <div class="card">
+      <p>The governing document of the limited partnership. Key features:</p>
+      <ul>
+        <li>Distribution of profits and losses between GP and LPs</li>
+        <li>Manager roles and responsibilities: investment criteria and restrictions</li>
+        <li>Terms governing transfers, withdrawals, and dissolution</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Side Letter:</strong> A supplemental document issued between a GP and one or more specific LPs, with terms that <strong>override or modify</strong> the original LPA terms. May include:</p>
+      <ul>
+        <li>Increased ability to transfer investments to a related/successor fund</li>
+        <li>First right of refusal and other preferential terms</li>
+        <li><strong>Excusal right:</strong> Ability to forgo a contractual capital contribution</li>
+        <li>Additional investment reporting beyond standard LPA</li>
+        <li><strong>"Most Favored Nation" (MFN) clause:</strong> Ensures any more favorable terms negotiated with other LPs will also apply to this LP</li>
+      </ul>
+      <p style="margin-top:10px;">Contrast with public bond indenture: LPA and side letters are <strong>highly customized</strong> per investor; bond indentures are <strong>standardized</strong> for all bondholders.</p>
+    </div>
+
+    <h3>Other Alternative Investment Ownership Structures</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Master Limited Partnership (MLP):</strong> Similar to LP but more liquid and often publicly traded. Common for real estate and natural resource fund investors (classified as unitholders).</li>
+        <li><strong>Public-Private Partnership (PPP):</strong> Agreement between public and private sectors to finance, build, and operate public infrastructure. Often uses a special purpose entity (SPE) and governed by a concession agreement.</li>
+        <li><strong>Joint Ventures:</strong> Common for direct real estate investments. Two or more parties share ownership and management.</li>
+        <li><strong>Trusts and Limited Liability Companies (LLCs):</strong> Other legal structures for alternative investments</li>
+        <li><strong>REITs:</strong> Equity securities that are publicly traded forms of real estate</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: COMPENSATION STRUCTURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Compensation Structures — Fees &amp; Hurdle Rate</h2>
+    </div>
+
+    <div class="card">
+      <p>Asymmetry of information between GP (specialized knowledge + control) and LPs requires <strong>complex, incentive-aligned compensation structures</strong>. Traditional public funds: flat % of AUM. Alternative funds: management fee + performance fee.</p>
+      <p style="margin-top:10px;"><strong>Standard fee structure for alternatives:</strong></p>
+      <ul>
+        <li><strong>Management fee:</strong> 1%–2% of assets under management (hedge funds) OR of <strong>committed capital</strong> (private equity)</li>
+        <li><strong>Performance fee</strong> (incentive fee / carried interest): Based on a percentage of periodic fund returns above a hurdle rate</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Committed Capital vs. AUM for Management Fees</div>
+      <p><strong>Private equity funds:</strong> Management fee typically based on <strong>committed capital</strong> (total LPs have promised), NOT invested capital or AUM. Reason: using committed capital (not AUM) reduces the incentive for GPs to deploy capital hastily to maximize near-term fee income — allows GPs to be selective. Also, since GPs have so much influence over asset values, basing fees on AUM would be inappropriate.<br><strong>Hedge funds and REITs:</strong> Management fees based on <strong>AUM (assets under management)</strong>.</p>
+    </div>
+
+    <h3>Hurdle Rate (Preferred Return)</h3>
+    <div class="card">
+      <p>A minimum fund return that must be achieved before the manager earns a performance fee. Also called the "preferred return" — LPs receive the hurdle rate first before GPs earn performance fees.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Hard Hurdle Rate — GP Performance Fee Formula</div>
+      <div class="f">
+        rGP = max[0,  p × (r − rh)]<br><br>
+        where:<br>
+        r   = fund rate of return for the period<br>
+        rh  = hard hurdle rate<br>
+        p   = GP performance fee % (e.g., 20%)<br><br>
+        Example: r = 18%, rh = 8%, p = 20%<br>
+        rGP = max[0, 20% × (18% − 8%)] = max[0, 20% × 10%] = 2.0%
+      </div>
+      <div class="note">
+        Hard hurdle rate: manager earns performance fee only on returns IN EXCESS of the hurdle rate.<br>
+        Soft hurdle rate: once the hurdle is exceeded, the fee is calculated on the ENTIRE return (not just the excess). GP can "catch up" once hurdle is exceeded.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Hard Hurdle Rate</div>
+        <p>Manager earns performance fee <strong>only on returns IN EXCESS of the hurdle rate</strong>.</p>
+        <p style="margin-top:6px;">Example: Hurdle = 8%, Fund return = 18%, Performance fee = 20%<br>Fee = 20% × (18% − 8%) = <strong>2%</strong> on excess only</p>
+        <p style="margin-top:6px; color:var(--muted); font-size:12px;">More favorable to LPs — GP earns less.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Soft Hurdle Rate</div>
+        <p>Once the hurdle is exceeded, fee is calculated on the <strong>ENTIRE return</strong> (not just the excess).</p>
+        <p style="margin-top:6px;">GP can "catch up" — receives 100% of distributions after the hurdle until profit split reaches the agreed ratio (e.g., 80/20).</p>
+        <p style="margin-top:6px; color:var(--muted); font-size:12px;">More favorable to GPs — larger total fee.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: CATCH-UP, HWM, CLAWBACK -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Catch-Up Clause, High-Water Mark &amp; Clawback</h2>
+    </div>
+
+    <h3>Catch-Up Clause</h3>
+    <div class="card">
+      <p>The <strong>acceleration of performance fees</strong> once a fund exceeds the soft hurdle rate. Under a catch-up clause:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li>LP receives <strong>100% of all distributions</strong> until the hurdle rate (e.g., 8%) is met</li>
+        <li>GP then receives <strong>100% of distributions</strong> until the profit split reaches the agreed ratio (e.g., 80/20 LP/GP)</li>
+        <li>Remaining distributions split at the agreed ratio (e.g., 80/20)</li>
+      </ol>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">GP Return with Catch-Up Clause</div>
+      <div class="f">
+        rGP = max[0,  rcu + p × (r − rh − rcu)]<br><br>
+        where rcu = catch-up return to GP (e.g., 2%)<br><br>
+        Example: r = 18%, rh = 8%, rcu = 2%, p = 20%<br>
+        rGP = max[0, 2.0% + 20% × (18% − 8% − 2%)]<br>
+        rGP = max[0, 2.0% + 20% × 8%] = 2.0% + 1.6% = 3.6%<br><br>
+        Without catch-up: rGP = 2.0%  →  With catch-up: rGP = 3.6%  (+1.6% to GP)
+      </div>
+      <div class="note">
+        The catch-up clause allows the GP to receive a larger total fee once the hurdle is exceeded, making the soft hurdle more valuable to the GP than the hard hurdle.<br>
+        Under the catch-up clause: LP gets 100% first (to meet hurdle), then GP gets 100% (to "catch up" to agreed split), then both share at agreed ratio.
+      </div>
+    </div>
+
+    <h3>High-Water Mark (HWM)</h3>
+    <div class="def-block">
+      <div class="def-term">High-Water Mark</div>
+      <div class="def-body">The fund's <strong>peak value</strong> as of a performance calculation date, net of fees. If the fund's value subsequently declines below the HWM, the hedge fund manager <strong>may NOT charge performance fees</strong> until the fund value exceeds the previous HWM. Purpose: reward sustained performance and protect LPs from paying twice for the same returns.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>How HWM works:</strong></p>
+      <ul>
+        <li>Fund reaches peak of $120M → HWM = $120M</li>
+        <li>Fund drops to $90M → NO performance fees payable (below HWM)</li>
+        <li>Fund recovers to $95M → still below HWM ($120M) → NO performance fees</li>
+        <li>Fund rises to $125M → now above HWM → performance fees payable on the $5M gain above $120M HWM</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Hedge fund nuance:</strong> Investor high-water marks generally carry over into new calendar years, but in hedge funds, an investor may no longer claw back incentive fees paid in a prior calendar year if losses are incurred later.</p>
+    </div>
+
+    <h3>Clawback Provision</h3>
+    <div class="def-block">
+      <div class="def-term">Clawback Provision</div>
+      <div class="def-body">Grants LPs the right to <strong>reclaim a portion of the GP's previously paid performance fees</strong>. Activated when GP exits successful deals early but incurs losses on deals later in the fund's life. More common in private equity and real estate (illiquid, longer-term) than hedge funds. Applies for the entire life of the portfolio in PE/real estate.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 HWM vs. Clawback — Know the Distinction</div>
+      <p><strong>High-water mark:</strong> Prevents future performance fees until prior losses are recovered — FORWARD-looking protection. Used primarily in hedge funds.<br>
+      <strong>Clawback:</strong> Requires GP to return previously paid performance fees if later losses occur — BACKWARD-looking reclaim. Used primarily in private equity and real estate (more illiquid, longer-term). LPs literally get money back from the GP.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: WATERFALL STRUCTURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Waterfall Structures — Distribution of Cash Flows</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Waterfall Structure</div>
+      <div class="def-body">Determines the distribution of cash flows between GPs and LPs in alternative investment funds. GPs typically receive a <strong>disproportionately large share</strong> of profits relative to their initial investment (to incentivize maximizing profitability). Two types: deal-by-deal (American) and whole-of-fund (European).</div>
+    </div>
+
+    <div class="two-col">
+      <div class="wfall-deal">
+        <div class="wfall-label">Deal-by-Deal Waterfall (American)</div>
+        <p><strong>More advantageous to the GP.</strong></p>
+        <ul>
+          <li>Performance fees collected on a <strong>per-deal basis</strong></li>
+          <li>GP gets paid before LPs receive both their initial investment AND the hurdle rate on the entire fund</li>
+          <li>GP can earn fees from early successful deals even if later deals underperform</li>
+          <li>Often paired with a clawback provision to address potential LP disadvantage</li>
+          <li>GP faces risk of having to return fees (via clawback) if total fund performance falls short</li>
+        </ul>
+      </div>
+      <div class="wfall-fund">
+        <div class="wfall-label">Whole-of-Fund Waterfall (European)</div>
+        <p><strong>More advantageous to the LPs.</strong></p>
+        <ul>
+          <li>Distributions go to LPs as deals are exited</li>
+          <li><strong>GP does not participate in any profits</strong> until LPs receive their initial investment AND the hurdle rate has been met at the <strong>aggregate fund level</strong></li>
+          <li>GP only paid after all LP capital returned + hurdle achieved across the entire fund</li>
+          <li>Less need for clawback provisions (GP hasn't been paid early)</li>
+          <li>If fund breaks even: GP receives NO performance payouts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Waterfall Exam Example — Fund That Breaks Even</div>
+      <p>Deal-by-deal waterfall: GP earns $2M, $3M, $8M on early successful deals. Later deals break even or lose. If the fund breaks even overall → <strong>GP must return all early payouts via clawback.</strong><br>
+      Whole-of-fund waterfall: GP receives no payouts until LPs are fully returned + hurdle met. If fund breaks even → <strong>GP receives $0 in performance fees.</strong><br>
+      Same fund, same result — but the timing and mechanism differ: one is a payment + clawback, the other is no payment at all.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Deal-by-Deal (American)</th>
+            <th>Whole-of-Fund (European)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Also called</td>
+            <td>American waterfall</td>
+            <td>European waterfall</td>
+          </tr>
+          <tr>
+            <td>Performance fee basis</td>
+            <td>Per-deal (individual investment)</td>
+            <td>Aggregate fund level</td>
+          </tr>
+          <tr>
+            <td>GP gets paid when?</td>
+            <td>After each successful deal exits</td>
+            <td>After ALL LPs receive capital back + hurdle</td>
+          </tr>
+          <tr>
+            <td>LP protection</td>
+            <td>Lower — GP paid first before LP fully made whole</td>
+            <td>Higher — LP fully recovered before GP gets anything</td>
+          </tr>
+          <tr>
+            <td>Advantageous to</td>
+            <td><span class="tag tag-red">GP</span></td>
+            <td><span class="tag tag-green">LP</span></td>
+          </tr>
+          <tr>
+            <td>Clawback needed?</td>
+            <td>Often yes — to protect LP if later deals fail</td>
+            <td>Rarely — GP hasn't been paid early</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Alternative investments definition:</strong> NOT public equity, fixed income, or cash. Three categories: (1) Private capital (PE + private debt), (2) Real assets (real estate, infrastructure, natural resources, commodities, collectibles, digital assets), (3) Hedge funds. Grouped by distinction from traditional assets, not similarity to each other.</li>
+        <li>✅ <strong>Key features of alternatives:</strong> Specialized knowledge needed, low correlation with traditional assets, illiquidity, long horizons, large capital outlays. Lead to: complex structures, incentive-based fees, appraisal challenges.</li>
+        <li>✅ <strong>Why invest in alternatives:</strong> Greater diversification (low correlation), higher expected returns (illiquidity premium). Trade-off: longer periods, lower liquidity, less efficient markets. Largest allocators: large pension funds, sovereign wealth funds, endowments.</li>
+        <li>✅ <strong>Private equity:</strong> Investment in private companies OR public companies taken private. LBOs = mature/declining firms. VC = early stage/startup. PE investors: full info access, can influence management. Public equity investors: only public info, voting limited.</li>
+        <li>✅ <strong>VC vs. PE life cycle:</strong> VC = early stage / startup. LBO = mature or declining stage.</li>
+        <li>✅ <strong>Private debt types:</strong> Private loans/bonds, venture debt (early-stage firms, little/no cash flow), distressed debt (near-bankrupt companies; benefits restructuring-skilled investors).</li>
+        <li>✅ <strong>Real assets:</strong> Tangible physical or intangible assets that generate cash flows AND/OR store of value. Real estate (commercial: business activity; residential: rents/mortgages), infrastructure (essential services; concession agreements), natural resources (farmland, timberland, minerals), commodities (no cash flows; inflation hedge; countercyclical), collectibles, digital assets.</li>
+        <li>✅ <strong>Infrastructure:</strong> Long-lived, essential public services. PPP = public-private partnership. Concession agreement = private investor builds/operates for set period → reverts to public sector. SPE often used to raise capital for a specific project.</li>
+        <li>✅ <strong>Commodities:</strong> Do NOT generate cash flows directly. Return from price changes. Low correlation with other assets → inflation hedge and countercyclical holding.</li>
+        <li>✅ <strong>Publicly traded alternatives:</strong> REITs (equity, real estate), MBS (debt, real estate), MLPs (natural resources/real estate, more liquid than standard LP), commodity funds, ETFs.</li>
+        <li>✅ <strong>Hedge funds:</strong> Distinguished by INVESTMENT APPROACH (leverage, derivatives, short selling), NOT asset class. May invest in anything. Fund of funds = portfolio of hedge funds.</li>
+        <li>✅ <strong>Digital assets:</strong> Cryptocurrencies = have OWN blockchain (Bitcoin, Ethereum). Tokens = built on EXISTING blockchain (ERC-20 tokens on Ethereum). NFTs = non-fungible digital collectibles.</li>
+        <li>✅ <strong>3 investment methods:</strong> Fund (least control, highest fees, least expertise) → Co-investment (moderate; lower fees; learn from fund) → Direct (maximum control, lowest fees, most expertise). Progression: fund → co-invest → direct as sophistication grows.</li>
+        <li>✅ <strong>Co-investment — GP benefits:</strong> (1) Accelerate timing when funds insufficient for a deal, (2) Expand scope of new investments, (3) Increase diversification.</li>
+        <li>✅ <strong>Fund investment unique features:</strong> Pre-commitment of capital before investment selection; extended lock-up period; higher/more complex fees; less frequent transparency on returns and positions.</li>
+        <li>✅ <strong>LP/GP structure:</strong> GP = manager, unlimited liability, controls fund. LPs = passive investors, liability capped at investment amount, accredited investors, restricted number per fund.</li>
+        <li>✅ <strong>LPA (Limited Partnership Agreement):</strong> Governs profit/loss distribution, manager roles/restrictions, transfer/withdrawal/dissolution terms. Side letters modify LPA for specific LPs — can include MFN clause, excusal rights, additional reporting. Contrast: LPA is customized (vs. standardized bond indentures).</li>
+        <li>✅ <strong>PE management fees:</strong> Typically based on COMMITTED CAPITAL (not AUM). Reason: reduces incentive to deploy capital hastily; GP has too much influence over asset values to use AUM. Hedge fund management fees: based on AUM. PE fund life: typically 10 years. PE capital drawdown: generally over 3–5 years.</li>
+        <li>✅ <strong>Standard alt fee structure:</strong> Management fee (1%–2%) + performance fee (carried interest, % of returns above hurdle). Performance fee aligns manager with investor over long periods.</li>
+        <li>✅ <strong>Hard hurdle rate:</strong> Performance fee on returns IN EXCESS of hurdle only. rGP = max[0, p(r − rh)]. More favorable to LPs.</li>
+        <li>✅ <strong>Soft hurdle rate:</strong> Once hurdle exceeded, fee calculated on ENTIRE return. GP can "catch up." More favorable to GPs.</li>
+        <li>✅ <strong>Catch-up clause formula:</strong> rGP = max[0, rcu + p(r − rh − rcu)]. Under catch-up: LP gets 100% to hurdle → GP gets 100% to catch up to agreed split → both share at agreed ratio (e.g., 80/20).</li>
+        <li>✅ <strong>High-water mark:</strong> Fund's peak value net of fees. No performance fees until fund exceeds prior HWM. Prevents LPs paying twice for same returns. Primarily used in hedge funds. Carries over into new calendar years; hedge fund HWM may not survive year-end.</li>
+        <li>✅ <strong>Clawback:</strong> LPs reclaim previously paid GP performance fees if later losses occur. Activated when early wins → later losses. More common in PE/real estate (illiquid, long-term) than hedge funds. Applies entire fund life in PE/real estate.</li>
+        <li>✅ <strong>Waterfall — deal-by-deal (American):</strong> Performance fees per deal. GP paid before LPs fully recovered. More favorable to GP. Often requires clawback provision for protection.</li>
+        <li>✅ <strong>Waterfall — whole-of-fund (European):</strong> GP paid ONLY after LPs receive full capital return + hurdle rate at aggregate fund level. More favorable to LPs. Less need for clawback. If fund breaks even: GP gets $0.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        Hard hurdle rate GP return:<br>
+        rGP = max[0,  p × (r − rh)]<br><br>
+        Soft hurdle rate with catch-up GP return:<br>
+        rGP = max[0,  rcu + p × (r − rh − rcu)]<br><br>
+        where: r = fund return,  rh = hurdle rate,  p = performance fee %,  rcu = catch-up return<br><br>
+        Example (hard hurdle): r=18%, rh=8%, p=20% → rGP = 20%×10% = 2.0%<br>
+        Example (catch-up): r=18%, rh=8%, rcu=2%, p=20% → rGP = 2.0% + 20%×8% = 3.6%
+      </div>
+      <div class="note">
+        3 alt categories: Private capital (PE + private debt) | Real assets (RE, infra, natural resources, commodities, collectibles, digital) | Hedge funds<br>
+        3 investment methods: Fund (outsource, high fee) | Co-investment (partial control, lower fee) | Direct (full control, lowest fee)<br>
+        LP: passive, capped liability. GP: active, unlimited liability, manages fund.<br>
+        PE management fee = committed capital basis. Hedge fund = AUM basis.<br>
+        Hard hurdle = fee on excess only. Soft hurdle = fee on entire return (with catch-up).<br>
+        HWM = no fees until prior peak recovered (hedge funds). Clawback = reclaim prior fees (PE/real estate).<br>
+        Deal-by-deal waterfall = GP-friendly (American). Whole-of-fund = LP-friendly (European).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 1: Features, Methods, and Structures · Exam Prep Notes
+</footer>
+
+</body>
+</html>

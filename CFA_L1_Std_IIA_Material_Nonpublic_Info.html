@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard II(A): Material Nonpublic Information</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'II(A)';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:9rem;font-weight:900;color:rgba(76,139,201,0.06);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(76,139,201,0.12);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--accent2);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--accent2);border-color:var(--accent2);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:60px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent2);background:rgba(76,139,201,0.1);border:1px solid rgba(76,139,201,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(76,139,201,0.35);border-left:4px solid var(--accent2);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent2);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#c8d8ea;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid #9b7fd4;border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#9b7fd4;margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .warn p+p{margin-top:8px;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--accent2);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#90c4f0;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-blue{background:rgba(76,139,201,0.15);color:var(--accent2);border:1px solid rgba(76,139,201,0.3);}
+  .tag-purple{background:rgba(155,127,212,0.15);color:#9b7fd4;border:1px solid rgba(155,127,212,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-source{font-size:10px;color:var(--accent2);font-family:'JetBrains Mono',monospace;background:rgba(76,139,201,0.1);padding:2px 7px;border-radius:3px;border:1px solid rgba(76,139,201,0.2);}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(76,139,201,0.06);border:1px solid rgba(76,139,201,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#90c4f0;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  /* materiality grid */
+  .mat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+  .mat-yes{background:#0f1a12;border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:14px 16px;}
+  .mat-no{background:#1a0f12;border:1px solid rgba(201,76,76,0.2);border-radius:6px;padding:14px 16px;}
+  .mat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+  .mat-yes .mat-title{color:var(--accent3);}
+  .mat-no .mat-title{color:var(--danger);}
+  .mat-yes ul,.mat-no ul{padding-left:14px;}
+  .mat-yes li,.mat-no li{font-size:13px;margin-bottom:5px;color:var(--text);}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD II · MODULE 3</div>
+  <h1>Standard <span>II(A)</span>: Material Nonpublic Information</h1>
+  <p class="subtitle">The insider trading standard. Covers what makes information "material" and "nonpublic," the mosaic theory, selective disclosure, expert networks, social media nuances, the tipper-tippee chain, and firm compliance through information barriers. 12 worked examples synthesised from both LES and Handbook — including LES-only examples not in the Handbook.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">The Standard</a>
+  <a class="toc-item" href="#s2">What Is "Material"?</a>
+  <a class="toc-item" href="#s3">What Is "Nonpublic"?</a>
+  <a class="toc-item" href="#s4">Mosaic Theory</a>
+  <a class="toc-item" href="#s5">Social Media</a>
+  <a class="toc-item" href="#s6">Expert Networks</a>
+  <a class="toc-item" href="#s7">Research Reports as MNPI</a>
+  <a class="toc-item" href="#s8">Procedures</a>
+  <a class="toc-item" href="#s9">Worked Examples</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+<!-- ═══ SECTION 1: THE STANDARD ═══ -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><h2>The Standard — Verbatim Text</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard II(A) — Material Nonpublic Information</div>
+    <p>Members and Candidates who possess material nonpublic information that could affect the value of an investment must not act or cause others to act on the information.</p>
+  </div>
+  <div class="card">
+    <p>II(A) has two key prohibitions that apply once a member or candidate <em>possesses</em> MNPI:</p>
+    <ol>
+      <li><strong>Must not act</strong> on the information — no trading in the affected security or any related instrument (derivatives, mutual funds, alternatives)</li>
+      <li><strong>Must not cause others to act</strong> — no tipping, no indirectly facilitating trades by others based on the information</li>
+    </ol>
+    <p>The standard applies to <em>any</em> investment — not just the individual security at issue. Trading options, futures, or other derivatives on the basis of MNPI about the underlying = violation. The expansion of financial products and global interconnectivity have created many new potential avenues for trading on MNPI.</p>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Why This Standard Exists</div>
+    <p>Trading on MNPI erodes confidence in capital markets by creating the perception that insiders have an unfair advantage. When investors believe markets are "rigged," they avoid participation — reducing market efficiency and capital allocation. II(A) protects market integrity as the foundational condition for efficient capital markets.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2: WHAT IS MATERIAL ═══ -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><h2>What Is "Material" Information?</h2></div>
+
+  <div class="card">
+    <p>Information is "material" if:</p>
+    <ul>
+      <li>Its disclosure is likely to have an <strong>impact on the price</strong> of a security, OR</li>
+      <li>Reasonable investors would <strong>want to know</strong> the information before making an investment decision</li>
+    </ul>
+    <p>In other words: would the information significantly alter the total mix of information available about the security in a way that affects price?</p>
+  </div>
+
+  <h3>Categories of Material Information</h3>
+  <div class="card">
+    <p>The following are examples of material information — note this list is not exhaustive:</p>
+    <div class="two-col" style="margin-top:12px;">
+      <ul>
+        <li>Earnings (current quarter, projections)</li>
+        <li>Mergers, acquisitions, tender offers, joint ventures</li>
+        <li>Changes in assets or asset quality</li>
+        <li>Innovative products, processes, or discoveries (e.g., new product trials)</li>
+        <li>New licenses, patents, trademarks, regulatory approval/rejection</li>
+        <li>Developments regarding customers or suppliers (acquisition or loss of contracts)</li>
+        <li>Changes in management</li>
+      </ul>
+      <ul>
+        <li>Change in auditor or inability to rely on auditor's report/qualified opinion</li>
+        <li>Events re: issuer's securities (defaults, redemptions, repurchases, stock splits, dividend changes, rights changes, new issuance)</li>
+        <li>Bankruptcies</li>
+        <li>Significant legal disputes</li>
+        <li>Government economic trend reports (employment, housing starts, currency)</li>
+        <li>Orders for large trades before execution</li>
+        <li>New or changing equity or debt ratings from third parties (sell-side recommendations, credit ratings)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>The Four Factors That Determine Materiality</h3>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Specificity</div>
+      <p>The more specific and concrete the information, the more likely it is material. General expectations and educated guesses are less specific and therefore less material than factual information from an insider.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Difference from Public Information</div>
+      <p>The greater the difference between what the insider knows and what the public knows, the more likely the information is material. Information already publicly available cannot be MNPI.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Source Reliability</div>
+      <p>Information from a corporate insider about a significant new contract = highly material. Speculation by a competitor about the same contract = less reliable, therefore less material. Educated conjecture by experts not connected to drug trials ≠ material vs. information from qualified trial personnel.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Ambiguity of Price Effect</div>
+      <p>If the effect on price is unclear or ambiguous, the information may not be considered material. Also, passage of time can render previously material information immaterial — stale information loses its market-moving power.</p>
+    </div>
+  </div>
+
+  <div class="mat-grid">
+    <div class="mat-yes">
+      <div class="mat-title">✓ Likely Material (High Specificity + Reliable Source)</div>
+      <ul>
+        <li>Corporate insider confirms a major new contract</li>
+        <li>Drug trial personnel report on preliminary trial results</li>
+        <li>Company reports upcoming earnings far above/below consensus</li>
+        <li>CEO announcement of pending acquisition target</li>
+        <li>Credit rating agency downgrade prior to publication</li>
+        <li>Well-known analyst's recommendation change before publication (Zito example)</li>
+      </ul>
+    </div>
+    <div class="mat-no">
+      <div class="mat-title">✗ Likely Not Material (Unreliable Source / Ambiguous Effect)</div>
+      <ul>
+        <li>Doctor's casual market rumor about a takeover (Fechtman example)</li>
+        <li>Competitor speculation about another company's contract</li>
+        <li>Text message from another trader predicting strong earnings — with no established insider connection (Nadler example)</li>
+        <li>Educated conjecture by outside experts not connected to ongoing trials</li>
+        <li>Broad market noise and "whisper numbers" without insider basis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Materiality Is a Threshold Question</div>
+    <p>The exam routinely tests whether a specific piece of information crosses the materiality threshold. The key variables are: <strong>(1) How reliable is the source?</strong> (insider vs. rumour), <strong>(2) How specific is the information?</strong> (confirmed fact vs. educated guess), <strong>(3) How clear is the price impact?</strong> (directional certainty vs. ambiguity). The Fechtman example is the canonical "not material" scenario: a doctor's casual tip about a potential takeover — unreliable source, speculative, not an insider. Kellogg (Example 8) is the canonical "acting despite uncertainty" violation: even if Kellogg thought Mayfield wouldn't break the law, the earnings information came from a senior executive and was specific — he had an obligation to verify before acting, not assume compliance.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: WHAT IS NONPUBLIC ═══ -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><h2>What Constitutes "Nonpublic" Information?</h2></div>
+
+  <div class="card">
+    <p>Information is "nonpublic" until it has been <strong>disseminated or is available to the marketplace in general</strong> — as opposed to a select group of investors. "Disseminated" = made known broadly. Key principles:</p>
+    <ul>
+      <li>A company report of profits posted on the internet and distributed via press release or regulatory filing = effectively disseminated to the marketplace</li>
+      <li>Members and candidates must have a <strong>reasonable expectation that people have received the information</strong> before it can be considered public</li>
+      <li>It is <strong>not necessary to wait for the slowest method of delivery</strong> — once the information is broadly disseminated, it is public</li>
+    </ul>
+  </div>
+
+  <h3>Selective Disclosure — A Critical Concept</h3>
+  <div class="warn">
+    <div class="warn-label">⚠️ A Room Full of Analysts ≠ Public Dissemination</div>
+    <p>Information disclosed to a small group — even a group of 10 large shareholders (Levenson example), or a room full of sell-side analysts on a conference call — remains nonpublic until it is made available to investors in general. The size of the group receiving the disclosure does not determine whether information is public. The test is whether it is available to the <em>investing public generally</em>.</p>
+    <p>Analysts must be alert to the possibility that they are selectively receiving MNPI when a company provides guidance or interpretation of publicly available financial statements or regulatory filings — even seemingly innocuous interpretive guidance can cross into MNPI territory.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 The Legitimate Due Diligence Exception</div>
+    <p>A member or candidate may use inside information provided <strong>legitimately by the source company for the specific purpose of conducting due diligence</strong> according to a business agreement — e.g., mergers, loan underwriting, credit ratings, offering engagements. This is insider information provided for an explicitly permitted purpose. However, using that same information for other purposes — especially to trade or to induce others to trade — is a violation. The insider information is "borrowed" for a defined task; it cannot be repurposed for personal gain.</p>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Tipper-Tippee Chain</div>
+    <p>Standard II(A) covers the <strong>entire chain of communication</strong>. The Barnes → sister → daughter → Staple → Halsey chain (Example 1) illustrates: <strong>both the tipper and the tippee violate II(A).</strong> Staple (not an insider himself) violated by communicating inside information to his broker. Halsey (the broker) violated by buying on that information. The violation is not limited to the original insider — it extends to everyone who receives MNPI from an insider and acts on it or passes it further. Note from the Zito example (7): even <em>providing</em> the information to a family member who does NOT trade is itself a violation — the act of communication is prohibited, regardless of whether the recipient acts.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: MOSAIC THEORY ═══ -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><h2>The Mosaic Theory</h2></div>
+
+  <div class="card">
+    <p>Under the mosaic theory, a financial analyst may use <strong>significant conclusions derived from the analysis of public and nonmaterial nonpublic information</strong> as the basis for investment recommendations and decisions — even if those conclusions would have been material inside information had they been communicated directly to the analyst by the company.</p>
+    <p>The key: the analyst's conclusion is derived from their own analytical work on permitted information, not from a single piece of material inside information. Analysts are free to act on the mosaic of such information without violating II(A).</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">What Can Go Into the Mosaic</div>
+      <ul>
+        <li>Public financial statements, press releases, SEC filings</li>
+        <li>Interviews with company management and investor relations staff</li>
+        <li>Conversations with customers, contractors, suppliers, competitors</li>
+        <li>Industry trend data and economic indicators</li>
+        <li>Opinions from designers, retailers, and industry participants who are not company insiders</li>
+        <li>Currency and macro analyst projections</li>
+        <li>Labor leader and banking official interviews</li>
+        <li>Nonmaterial nonpublic information (e.g., executive's vague cautionary comment about development timelines)</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">What Makes the Mosaic Work Legally</div>
+      <p>The conclusion may be identical to what you would have gotten from an insider directly — but if the building blocks are all public or nonmaterial nonpublic, the conclusion is yours. Analysts' value creation through diligent research is explicitly recognised and protected under the mosaic theory (citing <em>Dirks v. SEC</em> in the LES).</p>
+      <p><strong>Critical requirement:</strong> Document all sources. Save and maintain records of the public and nonmaterial nonpublic information used to reach conclusions. Documentation is the primary defence against allegations that conclusions were based on material inside information. See V(C) Record Retention.</p>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Mosaic vs. Insider Information: The Line</div>
+    <p>The Teja example (Example 5) and the Clement example (Example 6) are the core mosaic demonstrations. Both analysts reached material conclusions (Teja: SFC earnings will drop; Clement: Turgot is overvalued) using ONLY public information and nonmaterial nonpublic inputs. Neither received a direct tip about earnings or valuation from a company insider. Contrast with Watson (Example 11/12): Watson speaks with an expert who has inside knowledge of ongoing semiconductor tests and reveals material nonpublic information (disappointing test results for an unreleased product). The expert's information is <strong>not a permitted mosaic input</strong> — it is a material nonpublic fact from someone with inside knowledge of an ongoing process. The compliance agreement Watson signed does not override his obligation to independently assess materiality. <strong>The distinction: nonmaterial opinions + public data = mosaic. Material inside fact from qualified insider = MNPI regardless of channel.</strong></p>
+    <p>The Doll example (LES Example 9): Doll asks a senior product executive a general question at a social event. The executive makes a vague cautionary statement: "I would not get too excited about the medium-term prospects; we have a lot of work to do first." <strong>This is nonmaterial nonpublic information</strong> — it is vague, unspecific, and from one conversation. Doll can incorporate it into his mosaic BUT must weigh it against other known public facts to determine if it is material. Key: if he concludes it rises to materiality, he cannot act on it until public.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: SOCIAL MEDIA ═══ -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><h2>Social Media and II(A)</h2></div>
+
+  <div class="card">
+    <p>Members and candidates may use social media platforms to communicate with clients or investors <strong>without conflicting with II(A)</strong> — as long as:</p>
+    <ul>
+      <li>The information reaches <em>all clients</em>, or</li>
+      <li>The information is available to the <em>investing public generally</em></li>
+    </ul>
+    <p>In those cases, social media communication is comparable to traditional channels (emails, press releases). The LES adds that members should also complete all appropriate regulatory filings related to information distributed through social media platforms, as required under I(A).</p>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ Members-Only Social Media Groups ≠ Public Information</div>
+    <p>Some social media platforms require membership in specific groups to access published content. <strong>Information obtained from a members-only group or a restricted forum is NOT necessarily public information</strong> — even if it appears on the internet. Before using such information as the basis for investment decisions, members and candidates must verify that the material information can also be accessed from a source that is genuinely available to the public (company filings, public webpages, press releases). The internet access alone is not sufficient to establish that information is public if access requires group membership.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6: EXPERT NETWORKS ═══ -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><h2>Using Industry Experts</h2></div>
+
+  <div class="card">
+    <p>Members and candidates may engage expert networks and pay for expert insights <strong>without violating II(A)</strong> — provided they do not receive or act on confidential information from those experts. Expert networks are legitimate and enhance market efficiency when used properly.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">✓ Acceptable Expert Network Use</div>
+      <ul>
+        <li>Enhancing understanding of industry conditions, economic trends, and technical issues</li>
+        <li>Receiving expert opinions, published knowledge, and general industry insights</li>
+        <li>Discussions that don't involve confidential company information</li>
+        <li>Paying for expert time and knowledge</li>
+        <li>Using general interpretive guidance to build a mosaic of information</li>
+        <li>McCoy example: conversations enhancing understanding of cancer therapies — no material or nonpublic information received</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">⚠️ Prohibited Expert Network Use</div>
+      <ul>
+        <li>Requesting or receiving confidential company information from experts</li>
+        <li>Acting on material nonpublic information received from an expert regardless of compliance agreements</li>
+        <li>Relying on network agreements as a substitute for the member's own independent materiality determination</li>
+        <li>Watson example: semiconductor trial results from a scientist directly involved in testing = material nonpublic information; cannot act regardless of the network's NDA and compliance frameworks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — Compliance Agreements Don't Override II(A)</div>
+    <p>This is the key principle from the Watson expert network example. The expert network required both parties to sign agreements about MNPI. Watson received disappointing semiconductor test results from the scientist leading the tests — who has direct inside knowledge of an ongoing, unreleased process. Watson then tipped his colleagues and the fund traded on it. <strong>The signed compliance agreement is irrelevant.</strong> II(A) applies based on the nature of the information received, not on what agreements were signed. Members must make their own independent assessment of whether information received from an expert constitutes MNPI — and if it does, they cannot act on it regardless of what the network's policies say. The member's personal responsibility cannot be outsourced to a third-party compliance framework.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: RESEARCH REPORTS AS MNPI ═══ -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><h2>Investment Research Reports as MNPI</h2></div>
+
+  <div class="card">
+    <p>When a particularly well-known or respected analyst issues a report or changes a recommendation, that information alone may influence the market and thus may be considered <strong>material</strong>. However, the analyst is not a company insider and presumably derived the conclusions from public information and expertise. This creates a nuanced situation:</p>
+    <ul>
+      <li>The analyst's report conclusions may be material to the market</li>
+      <li>But the analyst did NOT receive inside information — the conclusions are derived from legitimate research (mosaic)</li>
+      <li>The analyst's clients have paid for this expertise — they are entitled to it first</li>
+      <li>Non-clients can either do the research themselves or become clients to access the conclusions</li>
+    </ul>
+    <p>However, the information in the report is <strong>nonpublic until distributed</strong> — and anyone who receives advance notice of the report's conclusions before publication has received MNPI. The Zito example (7) illustrates: Zito is not a client of Clement but gets advance notice of his recommendation change. This is MNPI for her — and acting on it or passing it to others is a II(A) violation.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 8: COMPLIANCE PROCEDURES ═══ -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><h2>Recommended Procedures for Compliance</h2></div>
+
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Public Dissemination</div>
+      <ul>
+        <li>If MNPI is obtained, make reasonable efforts to achieve public dissemination — encourage the issuing company to make it public</li>
+        <li>If public dissemination is not possible: communicate only to designated supervisory and compliance personnel within the firm</li>
+        <li>Must not take investment action or alter investment recommendations based on MNPI</li>
+        <li>Must not induce company insiders to privately disclose MNPI</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Disclosure Procedures (LES-Only)</div>
+      <ul>
+        <li>Companies should ensure information is disseminated equitably — analysts from small firms should receive the same information as those from large firms</li>
+        <li>Companies should not provide information to buy-side but not sell-side (or vice versa)</li>
+        <li>Companies should not discriminate among analysts or "blackball" analysts who gave negative reports</li>
+        <li>Firms should develop procedures for distributing updated investment opinions to clients fairly</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Compliance Procedures</div>
+      <ul>
+        <li>Adopt firm procedures to prevent misuse — review employee and proprietary trading, review investment recommendations, supervise interdepartmental communications</li>
+        <li>Procedures must suit firm size and nature of business</li>
+        <li>Inform supervisor and compliance personnel of suspected inappropriate use of MNPI</li>
+        <li>Circulate written compliance policies and guidelines to all employees</li>
+        <li>Implement training programs enabling employees to recognise MNPI</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Information Barriers (Firewalls)</h3>
+  <div class="card">
+    <p>A firewall is the most widely used approach for preventing the communication of MNPI within firms. Key elements:</p>
+    <ul>
+      <li><strong>Interdepartmental communication control:</strong> Substantial control through a clearance area in compliance or legal</li>
+      <li><strong>Employee trading review:</strong> Maintain watch, restricted, and rumour lists; watch list shared only with compliance (not broad distribution, which would trigger the very trading it's designed to prevent)</li>
+      <li><strong>Documentation:</strong> Written records of procedures and actions taken to enforce them</li>
+      <li><strong>Heightened review or restriction of proprietary trading</strong> while firm possesses MNPI</li>
+      <li><strong>Physical separation of departments</strong> (LES addition): IB/corporate finance separated from sales/research; bank commercial lending separated from trust/research</li>
+      <li><strong>No personnel overlap:</strong> Employees on only one side of the firewall at any time</li>
+      <li><strong>Reporting system:</strong> Authorised people review and approve cross-department communications; single compliance officer with authority to decide materiality and publicness</li>
+    </ul>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 The "Looking Over the Wall" Process</div>
+    <p>When an employee behind a firewall needs to share information with someone on the other side, they must consult a designated compliance officer, who determines whether sharing is necessary and how much should be shared. If sharing is approved, the compliance officer coordinates the "looking over the wall" process to ensure information is shared appropriately without breaking the integrity of the firewall. An analyst who "looks over the wall" must then be treated as though they are on the IB side — they cannot return to using that information for research purposes until it is publicly disclosed.</p>
+  </div>
+
+  <h3>Personal Trading Limitations (LES adds specificity)</h3>
+  <div class="card">
+    <ul>
+      <li>Firms should restrict or prohibit employee personal trading and carefully monitor both proprietary and personal trading</li>
+      <li>Firms should require periodic reports of employees' own transactions and transactions for family member benefit</li>
+      <li>Securities should be placed on a <strong>restricted list</strong> when the firm has or may have MNPI — broad distribution of the restricted list triggers trading, so a <strong>watch list</strong> (shown only to compliance) should be used alongside it</li>
+      <li>For proprietary trading: market-making activities may be permitted (with passive stance — only the contra side of unsolicited customer trades) but risk-arbitrage trading should be suspended when a security is on the watch list</li>
+      <li>Maintain written records; implement comprehensive training programs</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ SECTION 9: WORKED EXAMPLES ═══ -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><h2>Worked Examples — LES + Handbook</h2></div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 1</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Barnes → Staple → Halsey — The Tipper-Tippee Chain</div>
+      <div class="ex-tag"><span class="tag tag-red">ALL VIOLATE</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Barnes (president) tells his sister (treasurer) he is selling the family business at nearly double market price. Sister → daughter → husband Staple → stockbroker Halsey, who immediately buys SmartTown stock for himself.</div>
+      <div class="ex-verdict"><strong>Both Staple and Halsey violated II(A).</strong> Staple: communicated inside information to his broker. Halsey: bought shares on the basis of MNPI. The information is clearly material (pending sale at double market price) and nonpublic (communicated through a private chain, not publicly disclosed).</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        The violation is not limited to the original insider. Every person in the chain who communicates or acts on MNPI violates II(A). Halsey didn't receive it from an insider directly — he received it from Staple — but the violation is the same. The information retains its MNPI character through the entire tipping chain.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 2</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Peter — Failing to Control MNPI in an Open Office Environment</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Peter (analyst) participates in a video/phone conference call with IB colleagues and the CEO of Bright Ideas, learning that earnings projections have significantly dropped. Sales people and portfolio managers walk in and out of Peter's office during the call and overhear the information. Before the call ends, firm personnel trade the stock for clients and proprietary accounts.</div>
+      <div class="ex-verdict"><strong>Peter violated II(A)</strong> by failing to prevent the transfer and misuse of MNPI to others in his firm. The firm personnel who traded also violated II(A). The firm should have adopted information barriers to prevent this communication.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Responsibility for controlling MNPI includes the physical environment. Conducting a call with MNPI in an open-plan office where other personnel can overhear = failure to prevent transfer of inside information. The LES version also explicitly notes that trading in personal accounts by firm personnel is covered — not just client accounts or proprietary accounts.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 3</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Levenson — Small Shareholder Meeting ≠ Public Disclosure</div>
+      <div class="ex-tag"><span class="tag tag-red">CANNOT USE INFORMATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Levenson, along with 10 largest shareholders, meets with the finance director of a manufacturing company. The finance director discloses that the workforce is expected to strike next Friday, crippling productivity and distribution. Can Levenson change her rating from buy to sell?</div>
+      <div class="ex-verdict"><strong>No.</strong> Levenson must first determine whether the information is public. A meeting with 10 of the company's largest shareholders does not qualify as public dissemination. The information remains nonpublic. She cannot use it to change her rating until it is made available to investors generally.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        "A small group forum does not qualify as a method of public dissemination." This applies regardless of the prestige of the attendees (10 largest shareholders are still a select group, not the investing public). The information about the impending strike is clearly material (will cripple productivity) and nonpublic (disclosed only in this meeting).
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 4</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Fechtman — Doctor's Casual Tip = Not Material</div>
+      <div class="ex-tag"><span class="tag tag-green">NO VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Fechtman is considering her position in an oil-and-gas company. Her doctor casually mentions she thinks the company will soon be bought out by a large multinational. Fechtman independently consults various investment professionals, checks industry trends, and then decides to accumulate more stock.</div>
+      <div class="ex-verdict"><strong>No violation.</strong> Although a takeover bid is generally material and nonpublic information, the source here is unreliable — a doctor who "casually follows the markets." The information cannot be considered material because of the source's low reliability. Fechtman then conducted independent research, further supporting her decision.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Materiality has two components: the nature of the information AND the reliability of the source. Even if the type of information (takeover) would typically be material, an unreliable source (doctor with no insider connection) renders it non-material. Fechtman's subsequent independent research is also important — she didn't just act on the tip; she independently verified the thesis.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Examples 5 + 6</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Teja + Clement — Mosaic Theory in Action</div>
+      <div class="ex-tag"><span class="tag tag-green">NO VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Teja:</strong> analyzes furniture makers using financial reports, operational visits, and conversations with designers and retailers. Concludes SFC will have a major earnings drop and issues a sell recommendation. <strong>Clement:</strong> interviews salespeople, labour leaders, currency analysts, and banking officials about Turgot Chariots. Pieces together four separate concerns and downgrades from outperform to underperform. Retains all supporting materials.</div>
+      <div class="ex-verdict"><strong>Neither violated II(A).</strong> Both used only public information and nonmaterial nonpublic information (opinions from industry contacts not involving inside knowledge of the company). The conclusions, while material, were reached through legitimate analytical work — the mosaic theory permits this.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        The conclusion can be material and still be legitimate if every input was either public or nonmaterial nonpublic. Clement's retention of supporting materials is an excellent compliance practice — it provides documentary evidence that conclusions were reached through appropriate means. Note Teja's inputs: designer and retailer opinions about consumer preferences = nonmaterial nonpublic. He received no corporate insider information.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 7</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Zito — Pre-Publication Tip on Analyst Recommendation</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Clement tells the show's producers and interviewer Zito about his changed recommendation on Turgot before broadcasting it publicly. Zito sells her holdings in Turgot before the show airs and phones her father with the information because family members have investments in Turgot.</div>
+      <div class="ex-verdict"><strong>Zito violated II(A)</strong> in two ways: (1) selling her own holdings based on MNPI, and (2) relaying the information to her father. The LES version adds: "It would not matter if he or any other family member traded; the act of providing the information violated Standard II(A). The fact that the information is provided to a family member does not absolve someone of the prohibition."</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Two violations, two rules: (1) Acting on MNPI — Zito had advance access to a recommendation change that would have material price impact. She is not a client of Clement and has no legitimate right to act on this. (2) Tipping — the act of communicating MNPI to a third party is itself a violation, regardless of whether the recipient acts. Family relationship provides no exemption.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 8</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">Kellogg — Acting Despite Uncertainty About Source</div>
+      <div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts">Kellogg is a retired investment professional who owns shares in National Savings. His close friend Mayfield, a senior executive at National, tells him on the golf course that National will "surprise the investment community" with excellent earnings in a few days. Kellogg buys more shares, thinking Mayfield "knows the law" and wouldn't disclose inside information. National announces good operating earnings but also large loan loss reserves; the stock falls 60%.</div>
+      <div class="ex-verdict"><strong>Kellogg violated II(A).</strong> The fact that he lost money does not absolve the violation. The fact that he thought Mayfield was compliant does not absolve the violation. It is the member's or candidate's responsibility to verify, before executing investment actions, that comments about earnings are not MNPI.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        Three key principles: (1) <strong>Outcome doesn't matter</strong> — losing money on a trade based on MNPI is still a violation. (2) <strong>Good faith belief that the source wouldn't share inside information doesn't override the obligation</strong> — if the information is specific and material (earnings announcement from a senior executive), the recipient must independently assess it before acting. (3) <strong>Retired professionals are still subject to II(A)</strong> — managing your own personal portfolio is still subject to the Code.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Example 9 (LES) / Example 9 (Handbook)</div>
+      <div class="ex-source">LES Extended</div>
+      <div class="ex-title">Nadler / Doll — Market Noise vs. Mosaic</div>
+      <div class="ex-tag"><span class="tag tag-green">NO VIOLATION (BOTH)</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>Nadler:</strong> Gets a text from another trader predicting strong earnings 2 days before announcement. Has a legitimate buy order from his portfolio manager. Completes the purchase ahead of the announcement. <strong>Doll (LES-only):</strong> Research analyst for a hedge fund meets a senior Boyce Health executive at a wedding. Executive makes a cautionary statement about the medium-term prospects of a new product ("we have a lot of work to do first"). Doll incorporates this into a long-term recommendation of Boyce.</div>
+      <div class="ex-verdict"><strong>Nadler:</strong> No violation — the text from a trader with no established business relationship with the company = market noise. He had a legitimate client order and no reason to suspect he was receiving MNPI. <strong>Doll:</strong> The cautionary statement is nonmaterial nonpublic information — vague, unspecific, one comment from a casual social interaction. Doll can incorporate it into his mosaic and weigh it against other known facts, but should guard against soliciting or obtaining MNPI in future conversations.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule (Nadler)</div>
+        "There are often rumors and whisper numbers before a release of any kind." The standard for whether a random market communication is MNPI requires knowing that the source has an established business relationship with the company. Without that link, it is market noise. Nadler executed a legitimate client order — there was no reason to stop.
+        <br><br><strong>🔑 Core Rule (Doll):</strong> Executive's vague cautionary statement at a social event = nonmaterial nonpublic — too imprecise to be "material." The mosaic includes it but does not become illegal because of it. However, analysts must guard against asking questions that would elicit MNPI from company insiders.
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header">
+      <div class="ex-num">Examples 10–11 (LES) / 11–12 (Handbook)</div>
+      <div class="ex-source">Both Sources</div>
+      <div class="ex-title">McCoy vs. Watson — Acceptable vs. Prohibited Expert Network Use</div>
+      <div class="ex-tag"><span class="tag tag-blue">CONTRAST PAIR</span></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-facts"><strong>McCoy:</strong> Uses expert network to speak with cancer treatment experts. Gains general understanding of latest therapies. Uses this to inform recommendations of companies producing the drugs. <strong>Watson:</strong> Calls an expert network to discuss a semiconductor company that's testing a new product. The scientist leading the tests shares his "disappointment" with the semiconductor's performance — material inside information about an ongoing process. Watson passes this to the fund, which trades.</div>
+      <div class="ex-verdict"><strong>McCoy: No violation</strong> — received general industry knowledge, not material nonpublic information (specifically, no preliminary trial results). <strong>Watson: Violation</strong> — received MNPI from a qualified insider (scientist leading the tests = inside knowledge of an ongoing unreleased process). The compliance agreements signed by network participants do not override Watson's obligation to independently assess materiality.</div>
+      <div class="ex-key">
+        <div class="ex-key-label">🔑 Core Rule</div>
+        The distinction: McCoy received general industry knowledge available to any informed person. Watson received specific material information from someone with inside access to a live corporate process. The expert's NDA with the network is irrelevant — if the expert provided MNPI, Watson cannot act on it regardless of what agreements were signed. Watson's own assessment of materiality is required; he cannot delegate that determination to the network's compliance structure.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 10: EXAM CHECKLIST ═══ -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">★</span><h2>Exam Checklist — Standard II(A): Material Nonpublic Information</h2></div>
+
+  <div class="card" style="border-color:rgba(76,139,201,0.3);">
+    <ul class="checklist">
+      <li>✅ <strong>Two prohibitions:</strong> (1) Must not ACT on MNPI. (2) Must not CAUSE OTHERS to act. Both require possession of MNPI.</li>
+      <li>✅ <strong>Scope extends beyond stocks:</strong> Derivatives, mutual funds, and alternative investments — any trading based on MNPI violates II(A).</li>
+      <li>✅ <strong>Materiality = price impact OR what a reasonable investor would want to know</strong> before making an investment decision. Both conditions independently qualify.</li>
+      <li>✅ <strong>Four materiality factors:</strong> Specificity + difference from public info + source reliability + ambiguity of price effect. Unreliable source = less likely material (doctor's tip, competitor speculation).</li>
+      <li>✅ <strong>Passage of time</strong> can render previously material information immaterial — stale information loses its market-moving power.</li>
+      <li>✅ <strong>Nonpublic = not disseminated to the marketplace in general.</strong> A room full of analysts ≠ public. A meeting of 10 shareholders ≠ public. Company guidance to select analysts ≠ public.</li>
+      <li>✅ <strong>Selective disclosure:</strong> Even interpretive guidance on public financial statements can be MNPI if provided selectively to a limited group.</li>
+      <li>✅ <strong>Legitimate due diligence exception:</strong> May use insider information provided for specifically agreed purposes (mergers, underwriting, credit ratings, offering engagements) — cannot repurpose for trading.</li>
+      <li>✅ <strong>Tipper-tippee chain:</strong> BOTH tipper and tippee violate II(A). The violation applies through the entire chain of communication, not just to the original insider.</li>
+      <li>✅ <strong>Tipping family members:</strong> The act of communicating MNPI to a family member is itself a violation — regardless of whether the family member trades. (Zito example)</li>
+      <li>✅ <strong>Losing money doesn't absolve a violation.</strong> (Kellogg: stock fell 60% but still violated.)</li>
+      <li>✅ <strong>Good faith belief that source wouldn't break the law doesn't override the obligation</strong> to independently assess whether information is MNPI before acting.</li>
+      <li>✅ <strong>Retired professionals still bound</strong> — managing personal portfolio is still subject to II(A).</li>
+      <li>✅ <strong>Mosaic theory:</strong> Public + nonmaterial nonpublic information → material conclusion = PERMITTED. The conclusion can be material; the inputs must not include any material inside information.</li>
+      <li>✅ <strong>Document all mosaic sources</strong> under V(C) Record Retention — this is the primary defence against MNPI allegations.</li>
+      <li>✅ <strong>Compliance agreements signed by expert network participants do NOT override II(A).</strong> Members must independently assess the materiality of every piece of information received from experts.</li>
+      <li>✅ <strong>Social media from members-only groups ≠ public information</strong> — must verify the information is also accessible from a genuinely public source before acting.</li>
+      <li>✅ <strong>Analyst recommendation changes are MNPI</strong> until published — even though they are derived from public information, they are nonpublic before distribution. (Zito: advance notice of Clement's change = MNPI for her.)</li>
+      <li>✅ <strong>Watch list vs. restricted list:</strong> Restricted list (broadly distributed) triggers trading; watch list (compliance-only) prevents this — use watch list for monitoring, restricted list for compliance controls.</li>
+      <li>✅ <strong>Firewall: no personnel overlap</strong> — employee on only one side at any time. Analyst who "looks over the wall" must remain on the IB side until the information becomes public.</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ II(A) QUICK REFERENCE</div>
+    <div class="f">
+      TWO PROHIBITIONS:     Must not ACT + must not CAUSE OTHERS to act on MNPI<br>
+      SCOPE:                Any investment — stocks, bonds, derivatives, funds, alternatives<br><br>
+      MATERIAL =            Price impact OR what reasonable investor would want to know<br>
+      MATERIAL FACTORS:     Specificity + difference from public + source reliability + price ambiguity<br>
+      UNRELIABLE SOURCE:    Doctor's tip, competitor speculation = likely NOT material<br>
+      PASSAGE OF TIME:      Can render previously material information immaterial<br><br>
+      NONPUBLIC =           Not available to the investing public generally<br>
+      NOT PUBLIC:           Room full of analysts / 10 shareholders / conference call / members-only social media<br>
+      PUBLIC =              Broadly disseminated via press release, internet, regulatory filing<br>
+      NO NEED TO WAIT:      For slowest delivery method — once broadly disseminated, it is public<br><br>
+      TIPPER-TIPPEE:        Both violate II(A). Chain extends through all recipients.<br>
+      TIPPING FAMILY:       Act of communicating MNPI = violation regardless of whether they trade<br>
+      LOST MONEY:           Irrelevant — violation is the act, not the outcome<br>
+      GOOD FAITH:           Does not override obligation to independently assess whether info is MNPI<br><br>
+      MOSAIC THEORY:        Public + nonmaterial nonpublic → material conclusion = PERMITTED<br>
+      MOSAIC INPUTS:        Industry opinions, public data, conversations with non-insiders<br>
+      NOT MOSAIC:           Material inside fact from qualified insider (Watson/semiconductor)<br>
+      DOCUMENT:             Save all mosaic sources under V(C) — primary defence against MNPI allegations<br><br>
+      EXPERT NETWORKS:      Permitted; but members independently assess materiality of info received<br>
+      COMPLIANCE AGREEMENT: Does NOT override II(A) — member's personal assessment required<br>
+      SOCIAL MEDIA:         Members-only groups ≠ public; verify info accessible from public source<br>
+      RESEARCH REPORTS:     Material once widely known; nonpublic until distributed — advance notice = MNPI<br><br>
+      FIREWALL:             No personnel overlap; watch list (compliance-only) + restricted list (firm-wide)<br>
+      LOOKED OVER WALL:     Must stay on IB side until info publicly disclosed
+    </div>
+    <div class="note">
+      <strong>Top II(A) exam traps:</strong><br>
+      (1) "He told only family members so no violation" — tipping family = violation regardless of whether they trade<br>
+      (2) "She lost money so she wasn't benefiting from MNPI" — outcome doesn't affect whether a violation occurred<br>
+      (3) "The conference call had 50 analysts on it, so the information became public" — size of group doesn't determine publicness<br>
+      (4) "The expert network agreement says they didn't receive MNPI" — member must independently assess; agreements are not a shield<br>
+      (5) "The mosaic conclusion would be material if disclosed by the company" — that's fine; what matters is that the INPUTS are all public or nonmaterial nonpublic<br>
+      (6) "The doctor mentioned a takeover so Fechtman can't trade" — source was unreliable (doctor with no connection to the company); information was not material because of source reliability
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard II(A): Material Nonpublic Information · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

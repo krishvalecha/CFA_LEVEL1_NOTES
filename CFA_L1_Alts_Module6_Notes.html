@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 6: Hedge Funds</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --teal: #4cc9c9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1414 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,201,0.12); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--teal); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--teal); border-color: var(--teal); }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--teal); background: rgba(76,201,201,0.1); border: 1px solid rgba(76,201,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-teal { background: rgba(76,201,201,0.15); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--teal); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+  /* Strategy category cards */
+  .strat-eq { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .strat-ev { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .strat-rv { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .strat-op { background: rgba(160,76,201,0.07); border: 1px solid rgba(160,76,201,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .strat-mm { background: rgba(76,201,201,0.07); border: 1px solid rgba(76,201,201,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .strat-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .strat-eq .strat-label { color: var(--accent2); }
+  .strat-ev .strat-label { color: var(--accent); }
+  .strat-rv .strat-label { color: var(--accent3); }
+  .strat-op .strat-label { color: #a04cc9; }
+  .strat-mm .strat-label { color: var(--teal); }
+  .strat-eq p, .strat-ev p, .strat-rv p, .strat-op p, .strat-mm p,
+  .strat-eq li, .strat-ev li, .strat-rv li, .strat-op li, .strat-mm li { font-size: 14px; color: var(--text); }
+  .strat-eq ul, .strat-ev ul, .strat-rv ul, .strat-op ul, .strat-mm ul { padding-left: 16px; margin-top: 6px; }
+  .strat-eq li, .strat-ev li, .strat-rv li, .strat-op li, .strat-mm li { margin-bottom: 4px; }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 6</div>
+  <h1><span>Hedge Funds</span></h1>
+  <p>Exam-ready notes: hedge fund features vs. mutual funds, 5 strategy categories (equity, event-driven, relative value, opportunistic, multi-manager), investment forms (master-feeder, SMA, fund of funds, replication ETFs), fee structures ("2 and 20", "1 or 30"), return sources (market beta, strategy beta, alpha), index biases, and diversification characteristics.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · What Are Hedge Funds?</a>
+  <a class="toc-item" href="#s2">02 · HF vs. Mutual Funds</a>
+  <a class="toc-item" href="#s3">03 · 5 Strategy Categories</a>
+  <a class="toc-item" href="#s4">04 · Equity Hedge Strategies</a>
+  <a class="toc-item" href="#s5">05 · Event-Driven Strategies</a>
+  <a class="toc-item" href="#s6">06 · Relative Value Strategies</a>
+  <a class="toc-item" href="#s7">07 · Opportunistic &amp; Multi-Manager</a>
+  <a class="toc-item" href="#s8">08 · Investment Forms &amp; Vehicles</a>
+  <a class="toc-item" href="#s9">09 · Fees: "2 and 20" &amp; "1 or 30"</a>
+  <a class="toc-item" href="#s10">10 · Return Sources &amp; Index Biases</a>
+  <a class="toc-item" href="#s11">11 · Diversification &amp; Risk Data</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WHAT ARE HEDGE FUNDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What Are Hedge Funds?</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Hedge Funds</div>
+      <div class="def-body"><strong>Private pooled investment vehicles</strong> that can invest in a wide variety of products (equities, fixed income, derivatives, FX, private capital, real assets). Distinguished by their <strong>investment approach</strong> rather than the underlying investments. Objective: generate high returns in an absolute sense or on a risk-adjusted basis relative to portfolio-level volatility.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>7 Distinguishing Characteristics of Hedge Funds:</strong></p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Less legal and regulatory constraints</strong> — lightly regulated vs. mutual funds</li>
+        <li><strong>Flexible mandates</strong> — permitting use of shorting and derivatives</li>
+        <li><strong>Larger investment universe</strong> — equities, credit, fixed income, commodities, futures, FX, loans, real estate</li>
+        <li><strong>Aggressive styles</strong> — concentrated positions; exposure to credit, volatility, and liquidity risk premiums</li>
+        <li><strong>Liberal use of leverage</strong> — through short selling, borrowing, derivatives, or combining all three</li>
+        <li><strong>Liquidity constraints</strong> — lockups and liquidity gates; not suitable for daily-liquidity products</li>
+        <li><strong>High fee structures</strong> — management and incentive fees ("2 and 20" or variants)</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <p><strong>Key clarifications about hedge funds:</strong></p>
+      <ul>
+        <li>NOT an asset class — a variety of investment vehicles driven by disparate strategies</li>
+        <li>"Hedge fund" is a misnomer — they are not restricted to equities or hedging strategies; many amplify risks rather than purely hedge them</li>
+        <li>The investment strategy splits a portfolio such that each component hedges the other → internally neutralizes market risk</li>
+        <li>Available <strong>only to institutional and accredited investors</strong> (not retail)</li>
+        <li>Lightly regulated vs. mutual funds (which are highly regulated as public offerings)</li>
+        <li>Different from PE funds: hedge funds have <strong>shorter time horizons</strong> and invest in <strong>more liquid asset classes</strong></li>
+        <li>Many hedge funds use an absolute return standard (not benchmark-relative) due to difficulty in benchmarking</li>
+        <li>Attractive for <strong>low correlation with traditional asset classes</strong> → diversification benefit</li>
+        <li>Soft lockup: redemption fee (payable to the fund, not manager) creates a path to redeem during lockup period — expensive but available</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: HF vs. MUTUAL FUNDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Hedge Funds vs. Mutual Funds — Key Differences</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Hedge Funds</th><th>Mutual Funds</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Investor access</td><td>Institutional + accredited investors only</td><td>Open to public (retail) investors</td></tr>
+          <tr><td>Regulation</td><td>Lightly regulated</td><td>Heavily regulated (public offering)</td></tr>
+          <tr><td>Manager compensation</td><td>Performance-based fee; managers often required to invest in the fund</td><td>Fixed compensation; manager may not invest in own fund</td></tr>
+          <tr><td>Investment flexibility</td><td>Great freedom: leverage, shorting, derivatives, concentrated positions</td><td>Restricted mandates; limited shorting/leverage</td></tr>
+          <tr><td>Liquidity</td><td>Lockup periods + notice periods; gates possible; NOT daily liquidity</td><td>Often daily liquidity; easier redemption</td></tr>
+          <tr><td>Transparency</td><td>Minimal disclosure; infrequent reporting</td><td>Regular, standardized disclosure</td></tr>
+          <tr><td>Benchmarking</td><td>Absolute return or fund-of-funds composite</td><td>Benchmark-relative (vs. market index)</td></tr>
+          <tr><td>High-water mark</td><td>Often used — manager earns perf fee only above prior peak NAV</td><td>Not typically used</td></tr>
+          <tr><td>Ownership structure</td><td>Private (LP/GP or LLC)</td><td>Public/registered investment company</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: 5 STRATEGY CATEGORIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Five Broad Hedge Fund Strategy Categories</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "EERMO" or "Every Event Requires Meticulous Oversight"</div>
+      <p><strong>E</strong>quity Hedge · <strong>E</strong>vent-Driven · <strong>R</strong>elative Value · <strong>O</strong>pportunistic · <strong>M</strong>ulti-Manager</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Sub-Strategies</th><th>Core Approach</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Equity Hedge</td><td>Long/Short, Short Biased, Market Neutral, Fundamental Growth/Value</td><td>Long/short positions in equities and equity derivatives</td></tr>
+          <tr><td>Event-Driven</td><td>Merger Arbitrage, Distressed/Restructuring, Special Situations, Activist</td><td>Profit from corporate events that change valuations</td></tr>
+          <tr><td>Relative Value</td><td>Convertible Bond Arb, Fixed Income (general), ABS/MBS/HY, Multi-Strategy</td><td>Exploit pricing discrepancies between related securities</td></tr>
+          <tr><td>Opportunistic</td><td>Global Macro, Managed Futures (CTAs)</td><td>Top-down macro or trend-following; directional positions</td></tr>
+          <tr><td>Multi-Manager</td><td>Fund of Funds, Multi-Strategy</td><td>Portfolio of funds or strategies; diversification across approaches</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: EQUITY HEDGE STRATEGIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Equity Hedge Fund Strategies</h2>
+    </div>
+
+    <div class="card">
+      <p>The original hedge fund category. Focus on public equity markets; take long AND short positions in equity and equity derivative securities. Most use a <strong>bottom-up</strong> (company → industry → market) security-specific approach. Some use <strong>top-down</strong> (global macro → sector → company).</p>
+    </div>
+
+    <div class="strat-eq">
+      <div class="strat-label">Equity Strategy — Long/Short Equity</div>
+      <p><strong>Fundamental Long/Short:</strong> Long undervalued stocks + short overvalued stocks, intending to reverse positions to earn alpha. Typically <strong>net long bias</strong> but adjustable. May use index shorts (for market risk reduction) or single-name shorts (for alpha).</p>
+      <p style="margin-top:6px;"><strong>Fundamental Growth:</strong> Long high-growth companies + short low/negative-growth companies. Net long biased → non-zero beta → not market neutral.</p>
+      <p style="margin-top:6px;"><strong>Fundamental Value:</strong> Long undervalued/unloved companies with turnaround potential + short growth-overestimated companies. Spread between value and growth expectations drives performance.</p>
+    </div>
+
+    <div class="strat-eq" style="background:rgba(201,76,76,0.06); border-color:rgba(201,76,76,0.3);">
+      <div class="strat-label" style="color:var(--danger);">Equity Strategy — Short Biased</div>
+      <p>Primarily <strong>short overvalued equity securities</strong> with limited or no long exposures. Uses quantitative, technical, and fundamental analysis. Managers are often forensic — exposing accounting flaws or unrecognized business problems. Contrarian by nature. <strong>Difficult long-term performance record</strong> (30+ years of generally positive markets).</p>
+      <p style="margin-top:6px;"><strong>Useful during periods of market stress</strong> (short positions profit in market downturns).</p>
+    </div>
+
+    <div class="strat-eq" style="background:rgba(76,201,138,0.06); border-color:rgba(76,201,138,0.3);">
+      <div class="strat-label" style="color:var(--accent3);">Equity Strategy — Market Neutral</div>
+      <p>Long undervalued + short overvalued equities, targeting <strong>beta ≈ 0</strong> (market-neutral net position). Seeks stable, single-digit returns <strong>independent of market direction</strong>.</p>
+      <p style="margin-top:6px;"><strong>Requires leverage</strong> to generate meaningful returns — amplifies returns but increases risk during unexpected volatility.</p>
+      <p style="margin-top:6px;">Profit from individual security movements (undervalued rising, overvalued falling) while avoiding overall market moves.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: EVENT-DRIVEN STRATEGIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Event-Driven Strategies</h2>
+    </div>
+
+    <div class="card">
+      <p>Bottom-up strategies that seek to profit from <strong>defined events expected to change valuations</strong> — typically involving changes in corporate structure (acquisitions, restructurings). May use long and short positions in common/preferred stocks, debt, and options. Generally <strong>long biased</strong>. Timeline: merger arb = 6–24 months; bankruptcy = years.</p>
+    </div>
+
+    <div class="strat-ev">
+      <div class="strat-label">Event — Merger Arbitrage</div>
+      <p><strong>Long the target company</strong> (acquired company stock at discount to announced takeover price) + <strong>short the acquirer</strong>.</p>
+      <ul>
+        <li>Profit when deal spread narrows to closing price after transaction is consummated</li>
+        <li>Spread exists due to: timing uncertainty, legal/regulatory hurdles, risk acquirer walks away</li>
+        <li>Shorting acquirer also expresses risk of merger overpayment</li>
+        <li><strong>Primary risk:</strong> Deal fails to close → fund holdings negatively impacted before position can unwind</li>
+        <li>Leverage commonly used to amplify modest spread returns → magnifies losses when deal fails</li>
+        <li><strong>Least long biased</strong> of the event-driven strategies</li>
+      </ul>
+    </div>
+
+    <div class="strat-ev">
+      <div class="strat-label">Event — Distressed / Restructuring</div>
+      <p>Focus on securities of companies <strong>in or near bankruptcy</strong>.</p>
+      <ul>
+        <li>Approach 1: Buy fixed-income securities at a significant discount to par but senior enough to be backed by sufficient corporate assets → expect recovery to par (or significant premium) in bankruptcy reorganization/liquidation</li>
+        <li>Approach 2: Buy a <strong>fulcrum security</strong> (debt expected to convert into equity upon restructuring) → hold or exit the new equity post-restructuring</li>
+      </ul>
+    </div>
+
+    <div class="strat-ev">
+      <div class="strat-label">Event — Special Situations</div>
+      <p>Buy equity of companies engaged in: security issuance or repurchase, special capital distributions, rescue finance, asset sales/spin-offs, or other catalyst-oriented situations.</p>
+    </div>
+
+    <div class="strat-ev">
+      <div class="strat-label">Event — Activist</div>
+      <p>Manager secures <strong>sufficient equity holdings to influence corporate policy or direction</strong> by seeking a board seat.</p>
+      <ul>
+        <li>Advocates for: divestitures, restructuring, capital distributions to shareholders, management changes, strategy changes</li>
+        <li>Distinct from private equity: operates <strong>primarily in public equity markets</strong></li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Fulcrum Security — Key Term</div>
+      <p>A debt instrument expected to be converted into new equity upon bankruptcy restructuring. The "fulcrum" is the point in the capital structure where debt flips to equity. Investors buy it cheaply before restructuring, receive equity, then either hold or exit at a higher valuation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: RELATIVE VALUE STRATEGIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Relative Value Strategies</h2>
+    </div>
+
+    <div class="card">
+      <p>Seek to profit from <strong>pricing discrepancies between related securities</strong> based on unusual short-term relationships, with the expectation that the discrepancy will resolve over time. Conceptually <strong>market-neutral</strong> approaches.</p>
+    </div>
+
+    <div class="strat-rv">
+      <div class="strat-label">Relative Value — Convertible Bond Arbitrage</div>
+      <p>Exploit mispricing between a <strong>convertible bond and its component parts</strong> (underlying bond + embedded call option).</p>
+      <ul>
+        <li>Typically: <strong>Long convertible bond + short the issuer's common stock</strong> (based on the delta of the embedded call option)</li>
+        <li>Sensitive to bankruptcy risk → can hedge using equity put options or credit default swaps (CDS)</li>
+        <li>Conceptually market-neutral</li>
+      </ul>
+    </div>
+
+    <div class="strat-rv">
+      <div class="strat-label">Relative Value — Fixed Income (General)</div>
+      <p>Focus on relative value within fixed-income markets: sovereign debt (relative value rates) and investment-grade corporate debt (relative value credit).</p>
+      <ul>
+        <li>Long-short trades between: two different issuers, corporate vs. government, different parts of same issuer's capital structure, or different parts of yield curve</li>
+        <li>Drivers: spread dynamics, currency dynamics, yield curve shape</li>
+      </ul>
+    </div>
+
+    <div class="strat-rv">
+      <div class="strat-label">Relative Value — Fixed Income (ABS, MBS, High Yield)</div>
+      <p>Focus on relative value in higher-yielding securities: ABS, MBS, high-yield loans/bonds, and their derivatives. Seek attractive secured coupon returns and exploit relative security/quality mispricings.</p>
+    </div>
+
+    <div class="strat-rv">
+      <div class="strat-label">Relative Value — Multi-Strategy</div>
+      <p>Trades relative value <strong>within and across asset classes</strong>. Instead of one type of trade or one asset class, looks for any available investment opportunity — often with different "pods" of managers executing unique approaches.</p>
+      <ul>
+        <li>Goal: deploy (and redeploy) capital efficiently and quickly across strategy areas as conditions change</li>
+        <li>More flexible than single-strategy funds</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: OPPORTUNISTIC & MULTI-MANAGER -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Opportunistic &amp; Multi-Manager Strategies</h2>
+    </div>
+
+    <div class="strat-op">
+      <div class="strat-label">Opportunistic — Global Macro</div>
+      <p>Top-down approach to identify <strong>economic trends</strong>. Trade based on expected movements in economic variables.</p>
+      <ul>
+        <li>Trade opportunistically in: fixed income, equity, currency, and commodity markets</li>
+        <li>Use long AND short positions based on overall market direction → driven by major economic trends and events</li>
+        <li>Benefit most from <strong>periods of higher volatility</strong></li>
+        <li>Active moves by central banks to smooth economic shocks → shrinks the investment sphere for macro funds</li>
+      </ul>
+    </div>
+
+    <div class="strat-op">
+      <div class="strat-label">Opportunistic — Managed Futures (CTAs — Commodity Trading Advisers)</div>
+      <p>Actively managed funds making <strong>diversified directional investments primarily in futures markets</strong> using technical and fundamental strategies.</p>
+      <ul>
+        <li>Historically focused on commodity futures (hence "CTAs") but now include equities, fixed income, FX, and commodity futures</li>
+        <li>Use <strong>trend-following and momentum models</strong> over different time horizons</li>
+        <li><strong>Diversification benefit:</strong> Useful during strong trending markets and during <strong>extended market stress</strong> when fundamental strategies underperform — CTAs profit from holding short positions in falling markets</li>
+        <li><strong>Risk:</strong> Mean-reverting markets create false momentum signals → extended drawdown periods before strong trends emerge</li>
+        <li>As CTAs migrated to more financial products (stock/bond futures), reliability of diversification benefits has <strong>diminished</strong></li>
+        <li>Commodity futures unique feature: constant price tension between suppliers and consumers (high prices → reduce demand; low prices → reduce supply) → balance absent in stocks/bonds</li>
+      </ul>
+    </div>
+
+    <div class="strat-mm">
+      <div class="strat-label">Multi-Manager — Fund of Funds</div>
+      <p>A managed portfolio of hedge funds. Also classified under multi-manager. See Section 8 for full details.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: INVESTMENT FORMS & VEHICLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Investment Forms &amp; Vehicles</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Legal structure:</strong> Typically organized as private limited partnerships or LLCs. GP = hedge fund manager. LPs = investors. Available only to limited number of investors meeting income and net worth requirements. Fund documents: private placement memorandum, partnership agreement, or articles of incorporation.</p>
+    </div>
+
+    <h3>Direct Forms</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Master-Feeder Structure</div>
+        <p>Most common HF structure. An <strong>onshore feeder fund</strong> and an <strong>offshore feeder fund</strong> both feed into a single <strong>master fund</strong> that invests the capital.</p>
+        <p style="margin-top:6px;">Purpose: tax efficiency. The offshore and onshore vehicles allow different investor types (domestic vs. international/tax-exempt) to access the same underlying portfolio.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Separately Managed Account (SMA)</div>
+        <p>For <strong>large institutional investors</strong>. Investor creates their own investment vehicle; assets held and registered in the investor's name. Day-to-day management delegated to the HF manager.</p>
+        <p style="margin-top:6px;"><strong>Advantages:</strong> Customizable, better transparency, efficient capital allocation, higher liquidity, investor retains enhanced control, lower fees.</p>
+        <p style="margin-top:6px;"><strong>Disadvantages:</strong> Operationally complex, requires greater governance oversight. Managers may only allocate the most liquid trades to SMAs (lower motivation without a stake in results). Fee incentives help mitigate this.</p>
+      </div>
+    </div>
+
+    <div class="mini-card" style="margin-bottom:14px;">
+      <div class="mc-title" style="color:var(--accent);">Fund of One</div>
+      <p>A hedge fund created for a <strong>single investor</strong>. Similar to SMA but structured as a dedicated fund vehicle. The investor retains more influence than in a typical commingled fund. Requires additional agreements and service providers.</p>
+    </div>
+
+    <h3>Indirect Forms</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--teal);">Fund of Hedge Funds (FoF)</div>
+        <p>Managed portfolio of hedge funds — pools investor capital across a diversified portfolio of hedge funds.</p>
+        <p style="margin-top:6px;"><strong>Advantages:</strong> Direct diversification (strategies, regions, management styles); lower investment minimums; reduced lockup periods; better exit liquidity; manager conducts HF due diligence; may access closed funds.</p>
+        <p style="margin-top:6px;"><strong>Disadvantages:</strong> <span class="danger-text">Extra layer of fees</span> (often additional 1% mgmt + 10% incentive on top of underlying HF fees); fee layering reduces investor returns; greater liquidity may → weaker performance (redemptions during market turmoil).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Hedge Fund Replication ETFs</div>
+        <p>Seek to replicate HF investment styles through indexing or active management using <strong>liquid, publicly traded assets</strong>. No direct HF investment.</p>
+        <p style="margin-top:6px;"><strong>vs. Actual HFs:</strong></p>
+        <ul>
+          <li>Returns often fall short (cannot use leverage to same level; public = regulatory burden)</li>
+          <li>Cannot impose redemption restrictions</li>
+        </ul>
+        <p style="margin-top:6px;"><strong>Advantages vs. HFs:</strong> Greater liquidity, lower fees, increased transparency. Seek to match monthly hedge fund index returns.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 SMA vs. Fund of One vs. Standard Fund</div>
+      <p><strong>Standard commingled fund:</strong> Manager has a stake → high motivation; manager invests across all strategies; less investor influence. <strong>SMA:</strong> Manager has no stake → potentially lower motivation; investor gets most liquid trades only; maximum transparency. <strong>Fund of One:</strong> Dedicated fund for single investor; more influence than commingled; more structure required.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: FEES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Fee Structures — "2 and 20" and "1 or 30"</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Standard "2 and 20" Fee Structure</div>
+      <div class="f">
+        Management fee = 2% of AUM (charged to the fund entity)<br>
+        Performance fee = 20% of net profits (charged to GP)<br><br>
+        Investor net return = Gross return − management fee − performance fee<br><br>
+        "1 or 30" alternative (newer structure):<br>
+        Manager receives the GREATER of:<br>
+        (a) 1% management fee  OR<br>
+        (b) 30% incentive fee on alpha/outperformance vs. benchmark<br>
+        → whichever is greater
+      </div>
+      <div class="note">
+        "2 and 20": 2% management + 20% performance. Traditional standard structure.<br>
+        "1 or 30": More investor-friendly in good years (only one fee paid); better alignment in bad years (1% covers expenses).<br>
+        Fund of funds ADDS: typically +1% management fee + 10% incentive fee on top of underlying HF fees → significant fee layering.<br>
+        High-water mark: manager earns performance fee only when NAV exceeds prior highest value net of fees.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Fee Layering in Fund of Funds</div>
+      <p>FoF investors pay fees at TWO levels: the underlying hedge fund level (e.g., 2%+20%) AND the FoF level (e.g., 1%+10%). The incentive fee at the FoF level is typically calculated on profits <strong>net of management fees at both levels</strong>. This significantly reduces the investor's net return compared to direct HF investment. Fee layering can result in an investor effectively paying fees more than once for management of the same assets.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: RETURN SOURCES & INDEX BIASES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Return Sources &amp; Hedge Fund Index Biases</h2>
+    </div>
+
+    <h3>Three Sources of Hedge Fund Returns</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Market Beta</div>
+        <p>Broad market exposure that can be replicated using market index-based funds or ETFs. Not unique to hedge funds.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Strategy Beta</div>
+        <p>Beta attributable to the hedge fund's specific investment strategy applied across the broad market. Reflects systematic factors specific to the strategy (e.g., merger risk premium, credit risk premium).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Alpha (Manager Skill)</div>
+        <p>Manager-specific returns from: identifying mispriced securities/sectors, market timing, operational control over business models, and leverage to amplify results. The primary focus of hedge funds.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Primary sources of alpha:</strong></p>
+      <ul>
+        <li>Manager skill in specific stock selection</li>
+        <li>Utilizing higher-return strategies that minimize risks</li>
+        <li>Exploiting <strong>market inefficiencies</strong> (which may be short-lived)</li>
+        <li>Systematic and idiosyncratic <strong>alternative risk factors</strong> not captured by traditional asset pricing models</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Return drag from fees:</strong> High fees reduce the alpha generated. When underperforming funds close and liquidate positions, capital redeemed may receive disadvantageous prices → further diminishes total return.</p>
+    </div>
+
+    <h3>Hedge Fund Index Biases</h3>
+    <div class="warn">
+      <div class="warn-label">⚠️ HF Index Data Is Voluntary Self-Reporting → Performance Likely Overestimated</div>
+      <p>Reporting is voluntary → introduces multiple biases. Most HF indexes rely on information reported by HF managers themselves.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bias Type</th><th>Description</th><th>Direction of Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Survivorship Bias</td>
+            <td>Funds that stop reporting (due to poor performance or closure) are removed from the index. Underperformers have limited incentive to continue reporting.</td>
+            <td>Overstates returns (only winners remain)</td>
+          </tr>
+          <tr>
+            <td>Backfill Bias (Instant History)</td>
+            <td>When a successful fund starts reporting, its prior stellar performance is backfilled into the index. Only funds with favorable returns typically join indexes.</td>
+            <td>Overstates returns (only historically good funds add history)</td>
+          </tr>
+          <tr>
+            <td>Selection Bias</td>
+            <td>Funds allocated to strategy peer groups inconsistently (by prospectus, historical analysis, or combination). Indexes may have inconsistent data sources.</td>
+            <td>Distorts performance comparisons</td>
+          </tr>
+          <tr>
+            <td>Equal Weighting Bias</td>
+            <td>Most HF indexes are NOT AUM-weighted — each fund gets equal weight. Large funds (often better managed) have no higher weight than tiny funds.</td>
+            <td>Skews comparison vs. size-weighted index</td>
+          </tr>
+          <tr>
+            <td>Reporting Lag</td>
+            <td>HF data published with a ~4-week delay. Indexes are non-investable and illiquid.</td>
+            <td>Performance replication is difficult</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Best HF Benchmark: Fund-of-Funds Composite</div>
+      <p>Risk and return comparisons are typically made to <strong>fund-of-funds composite indexes</strong> (e.g., HFRI Fund of Funds Composite Index) to minimize return distortions. This approach: (1) controls for self-reporting and selection bias, (2) ensures the benchmark is <strong>investable</strong>, (3) reflects actual performance of portfolios of hedge funds. Returns may be slightly lower (extra FoF fee layer) but represent a <strong>fairer, more conservative, and more accurate</strong> estimate of average hedge fund performance.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: DIVERSIFICATION & RISK DATA -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Diversification Benefits &amp; Historical Risk-Return Data</h2>
+    </div>
+
+    <h3>Historical Performance (HFRI FoF Composite, 1990–2019)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>HF FoF (1990–2014)</th><th>Global Stocks</th><th>Global Bonds</th><th>HF FoF (2015–2019)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Annualized return</td><td>7.2%</td><td>6.9%</td><td>6.3%</td><td>2.48% ↓</td></tr>
+          <tr><td>Annualized volatility</td><td>6.0%</td><td>16.5%</td><td>5.8%</td><td>1.08%</td></tr>
+          <tr><td>Correlation with global stocks</td><td>0.56</td><td>—</td><td>—</td><td>0.86 ↑</td></tr>
+          <tr><td>Correlation with global bonds</td><td>0.07</td><td>—</td><td>—</td><td>0.03</td></tr>
+          <tr><td>Worst drawdown</td><td>−22.2%</td><td>−54.6%</td><td>−10.1%</td><td>—</td></tr>
+          <tr><td>% Positive months</td><td>69.3%</td><td>61.3%</td><td>62.7%</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>Key interpretations:</strong></p>
+      <ul>
+        <li><strong>1990–2014:</strong> HFs had higher returns than both stocks AND bonds, with volatility nearly identical to bonds → strong risk-adjusted performance. Low correlation with stocks (0.56) and near-zero with bonds (0.07) → meaningful diversification.</li>
+        <li><strong>2015–2019:</strong> HF returns declined sharply (2.48% vs. 10.41% for stocks). Correlation with equities increased to 0.86 → diversification benefit diminished. HF allocations became <strong>less popular</strong>.</li>
+        <li>Some allocators still value HFs as a <strong>bond market substitute</strong> or for risk-diversification properties.</li>
+        <li>Adding HFs to a 60/40 portfolio: typically <strong>decreases total portfolio standard deviation and increases Sharpe ratio</strong>.</li>
+      </ul>
+    </div>
+
+    <h3>2001–2021 Correlation Data (Exhibit 8)</h3>
+    <div class="formula-box">
+      <div class="label">Hedge Fund Monthly Return Correlations, 2001–2021</div>
+      <div class="f">
+        Hedge Funds vs. S&P 500:                   0.82  (fairly HIGH correlation with equities)<br>
+        Hedge Funds vs. Investment-Grade Bonds:     0.10  (very LOW correlation with bonds)<br>
+        S&P 500 vs. Investment-Grade Bonds:        −0.06  (slightly negative)
+      </div>
+      <div class="note">
+        Hedge funds = Dow Jones Credit Suisse Hedge Fund Index.<br>
+        Bonds = Bloomberg Barclays US Aggregate Bond Index.<br>
+        Implication: HFs provide better diversification AGAINST bonds (low correlation = 0.10) than against stocks (high correlation = 0.82).<br>
+        Most useful as bond substitute or for reducing portfolio volatility through uncorrelated idiosyncratic returns.
+      </div>
+    </div>
+
+    <h3>When Hedge Fund Strategies Work Best</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Market-Neutral, Relative Value, Event-Driven — Best When:</div>
+        <ul>
+          <li>During <strong>market downturns</strong> (outperform equity markets)</li>
+          <li>When <strong>individual stock correlations fall</strong> (more relative value opportunities)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Weaker When:</div>
+        <ul>
+          <li>When <strong>correlations are high</strong> → fewer relative value opportunities</li>
+          <li>When <strong>equities move uniformly higher</strong> → short positions drag returns</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Hedge fund definition:</strong> Private pooled investment vehicle, distinguished by INVESTMENT APPROACH (not asset type). Can invest in equities, FI, derivatives, FX, private capital, real assets. NOT an asset class.</li>
+        <li>✅ <strong>7 distinguishing characteristics:</strong> Less regulation, flexible mandates (shorting/derivatives), larger investment universe, aggressive styles (concentrated positions), liberal leverage, liquidity constraints (lockups/gates), high fees.</li>
+        <li>✅ <strong>Soft lockup:</strong> Redemption fee payable to the FUND (not manager) during lockup period — an expensive but available early exit path.</li>
+        <li>✅ <strong>HF vs. mutual funds:</strong> HF = institutional/accredited only, lightly regulated, perf-based fees, managers invest in own fund, lockups/gates, minimal disclosure, absolute return benchmark. MF = public investors, heavily regulated, fixed fees, easy redemption, daily liquidity.</li>
+        <li>✅ <strong>HF vs. PE:</strong> HF has shorter time horizons and invests in more liquid asset classes than PE.</li>
+        <li>✅ <strong>5 strategy categories (EERMO):</strong> Equity Hedge, Event-Driven, Relative Value, Opportunistic, Multi-Manager.</li>
+        <li>✅ <strong>Equity strategies:</strong> Long/Short (bottom-up, typically net long bias). Short Biased (short overvalued; useful during market stress; difficult long-term returns). Market Neutral (beta ≈ 0; stable single-digit returns; requires leverage for meaningful returns).</li>
+        <li>✅ <strong>Event-driven:</strong> Bottom-up; corporate events (M&A, restructurings). Merger arb = long target + short acquirer; profit when deal spread narrows; risk = deal fails; leverage used. Least long-biased of event-driven strategies. Timeline: merger = 6–24 months; bankruptcy = years.</li>
+        <li>✅ <strong>Fulcrum security:</strong> Debt expected to convert to equity upon restructuring. Distressed/restructuring strategy buys it cheaply pre-restructuring.</li>
+        <li>✅ <strong>Activist:</strong> PE in public markets — seeks board seat, influences policy (divestitures, buybacks, management changes). Distinct from PE (operates in PUBLIC equity).</li>
+        <li>✅ <strong>Relative value:</strong> Profit from pricing discrepancies between related securities. Convertible bond arb = long convertible + short issuer stock (based on call option delta). Fixed income general = long-short between sovereign/corporate/yield curve positions. Multi-strategy = any available opportunity, multiple pods of managers.</li>
+        <li>✅ <strong>Opportunistic — Global Macro:</strong> Top-down; economic variables drive trades; uses FI/equity/currency/commodity. Benefits most from HIGH VOLATILITY. Central bank smoothing → shrinks investment sphere.</li>
+        <li>✅ <strong>Managed futures (CTAs):</strong> Directional futures investments; trend-following models. Historically commodity-focused but now multi-asset. Good for diversification during MARKET STRESS (profit from short positions in falling markets). Risk: mean-reverting markets → false signals → drawdowns. Migration to financial futures → reduced diversification reliability.</li>
+        <li>✅ <strong>Legal structure:</strong> Typically LP or LLC. GP = HF manager. LPs = investors. Fund documents: private placement memo, partnership agreement, articles of incorporation. Side letters for specific investor requirements.</li>
+        <li>✅ <strong>Master-feeder structure:</strong> Onshore + offshore feeder funds → single master fund. Purpose: tax efficiency for different investor types.</li>
+        <li>✅ <strong>SMA:</strong> Large institutional investors. Assets in investor's name. Manager runs day-to-day. Advantages: customizable, transparent, liquid, lower fees. Disadvantages: operationally complex, manager has no stake → may only allocate most liquid trades.</li>
+        <li>✅ <strong>Fund of Funds:</strong> Portfolio of hedge funds. Advantages: diversification (strategies/regions/styles), lower minimums, reduced lockups, better liquidity, may access closed funds. Disadvantages: fee layering (+1%/+10%), potential weaker performance due to redemption pressures.</li>
+        <li>✅ <strong>HF replication ETFs:</strong> Replicate HF styles using liquid assets. Lower returns than actual HFs (can't leverage as much, regulatory burden, no redemption restrictions). BUT: better liquidity, lower fees, more transparent.</li>
+        <li>✅ <strong>Fee "2 and 20":</strong> 2% AUM management fee + 20% performance fee (GP). "1 or 30": max(1% flat, 30% incentive above benchmark) — newer, investor-friendly. FoF adds: +1%/+10% on top. High-water mark: performance fee only when NAV exceeds prior peak.</li>
+        <li>✅ <strong>3 return sources:</strong> Market beta (replicable by ETF) + Strategy beta (systematic strategy-specific factor) + Alpha (manager skill: stock selection, timing, operational control, leverage).</li>
+        <li>✅ <strong>HF index biases (all overstate returns):</strong> Survivorship (poor performers stop reporting → removed), Backfill (only successful funds join and add past history), Selection (inconsistent strategy classification), Equal weighting (no AUM weighting → small funds same weight as large). Reporting lag ~4 weeks.</li>
+        <li>✅ <strong>Best benchmark for HFs:</strong> Fund-of-funds composite index (e.g., HFRI FoF Composite). Controls for self-reporting/selection bias; investable.</li>
+        <li>✅ <strong>1990–2014 HF performance:</strong> Return 7.2% (> stocks 6.9% > bonds 6.3%). Volatility 6.0% (≈ bonds 5.8%, much less than stocks 16.5%). Correlation with stocks 0.56; with bonds 0.07. Strong diversification era.</li>
+        <li>✅ <strong>2015–2019 trend:</strong> HF returns fell (2.48%). Correlation with equities rose to 0.86 → diversification benefit diminished. HF allocations less popular but still used as bond substitutes.</li>
+        <li>✅ <strong>2001–2021 correlations:</strong> HF vs. S&P 500 = 0.82 (high). HF vs. IG bonds = 0.10 (low). S&P 500 vs. IG bonds = −0.06.</li>
+        <li>✅ <strong>HFs and 60/40 portfolio:</strong> Adding HFs typically decreases total portfolio standard deviation AND increases Sharpe ratio. Better diversifier against bonds than against equities.</li>
+        <li>✅ <strong>When HF strategies work best:</strong> Market-neutral/relative value/event-driven → best during market downturns and when stock correlations fall (more mispricing opportunities). Weakest when correlations high and equities rise uniformly.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Key Facts &amp; Numbers — Quick Reference</div>
+      <div class="f">
+        FEES:<br>
+        "2 and 20" = 2% management (AUM) + 20% performance (net profits)<br>
+        "1 or 30"  = max(1% flat, 30% incentive above benchmark)<br>
+        FoF adds   = +1% management + 10% incentive on top of underlying HF fees<br><br>
+        RETURN SOURCES: Market beta + Strategy beta + Alpha<br><br>
+        HISTORICAL DATA (HFRI FoF vs. Global Stocks vs. Global Bonds, 1990–2014):<br>
+        Returns:     7.2%  vs.  6.9%  vs.  6.3%<br>
+        Volatility:  6.0%  vs. 16.5%  vs.  5.8%<br>
+        Worst draw: -22.2% vs. -54.6% vs. -10.1%<br>
+        Correlation with stocks: 0.56 (1990-2014) → 0.86 (2015-2019) [increasing!]<br>
+        Correlation with bonds:  0.07 (1990-2014) → 0.03 (2015-2019) [stable low]<br><br>
+        CURRENT CORRELATIONS (2001-2021):<br>
+        HF vs. S&P 500:          0.82 (HIGH)<br>
+        HF vs. IG Bonds:         0.10 (LOW)<br>
+        S&P 500 vs. IG Bonds:   -0.06
+      </div>
+      <div class="note">
+        5 strategies: Equity Hedge | Event-Driven | Relative Value | Opportunistic | Multi-Manager<br>
+        Key equity: L/S (net long) | Short Biased (useful in downturns) | Market Neutral (beta≈0, needs leverage)<br>
+        Key event: Merger Arb (long target+short acquirer; least biased) | Activist (public equity version of PE)<br>
+        Key relative value: Convertible bond arb (long convert+short stock) | Multi-strategy (any opportunity)<br>
+        Key opportunistic: Global Macro (top-down, benefits from volatility) | CTA (trend-following, good in stressed markets)<br>
+        Index biases (all overstate): Survivorship + Backfill + Selection + Equal-weighting. Best benchmark = FoF composite.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 6: Hedge Funds · Exam Prep Notes
+</footer>
+
+</body>
+</html>

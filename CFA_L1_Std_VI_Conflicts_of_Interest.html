@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Standard VI: Conflicts of Interest — VI(A), VI(B), VI(C)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0f14;--surface:#13161e;--card:#1a1e28;--border:#252a38;--accent:#c9a84c;--accent2:#4c8bc9;--accent3:#4cc98a;--danger:#c94c4c;--purple:#9b7fd4;--text:#e8eaf0;--muted:#8892a4;--tip-bg:#1a2218;--warn-bg:#221a18;--exam-bg:#1a1428;--formula-bg:#12151f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15.5px;line-height:1.75;}
+  .page-header{background:linear-gradient(135deg,#0d0f14 0%,#0f1018 50%,#0d0f14 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;position:relative;overflow:hidden;}
+  .page-header::after{content:'VI';position:absolute;bottom:-24px;right:48px;font-family:'Playfair Display',serif;font-size:12rem;font-weight:900;color:rgba(155,127,212,0.05);pointer-events:none;}
+  .badge{display:inline-block;background:rgba(155,127,212,0.12);color:var(--purple);border:1px solid rgba(155,127,212,0.3);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;}
+  .page-header h1 span{color:var(--purple);}
+  .page-header .subtitle{color:var(--muted);font-size:14px;max-width:820px;line-height:1.7;}
+  .toc-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:0 48px;display:flex;overflow-x:auto;scrollbar-width:none;}
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-item{font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;text-decoration:none;}
+  .toc-item:hover{color:var(--purple);border-color:var(--purple);}
+  .container{max-width:1020px;margin:0 auto;padding:48px 48px 80px;}
+  .section{margin-bottom:56px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--purple);background:rgba(155,127,212,0.1);border:1px solid rgba(155,127,212,0.25);padding:4px 10px;border-radius:2px;letter-spacing:0.08em;white-space:nowrap;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+  h3{font-weight:700;font-size:1rem;color:var(--purple);text-transform:uppercase;letter-spacing:0.07em;margin:26px 0 12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:14px;}
+  .card p{font-size:15px;}.card p+p{margin-top:10px;}
+  .card ul,.card ol{padding-left:20px;margin-top:8px;}
+  .card ul li,.card ol li{margin-bottom:7px;font-size:15px;}
+  .standard-box{background:#0f1219;border:1px solid rgba(155,127,212,0.3);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:20px 24px;margin-bottom:20px;}
+  .standard-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--purple);margin-bottom:12px;}
+  .standard-box p{font-size:14.5px;color:#d8c8f0;line-height:1.85;font-style:italic;}
+  .examiner{background:var(--exam-bg);border:1px solid rgba(155,127,212,0.25);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0;}
+  .examiner-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--purple);margin-bottom:8px;}
+  .examiner-label::before{content:'🎯 ';font-size:13px;}
+  .examiner p{font-size:14px;color:#d4c8f0;line-height:1.75;}
+  .examiner p+p{margin-top:8px;}
+  .examiner strong{color:#b89fe8;}
+  .tip{background:var(--tip-bg);border-left:3px solid var(--accent3);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .tip-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:6px;}
+  .tip p{font-size:14px;color:#c8dfd0;}
+  .tip p+p{margin-top:8px;}
+  .warn{background:var(--warn-bg);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 20px;margin:16px 0;}
+  .warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--danger);margin-bottom:6px;}
+  .warn p{font-size:14px;color:#dfc8c8;}
+  .formula-box{background:var(--formula-bg);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;padding:16px 20px;margin:16px 0;}
+  .formula-box .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+  .formula-box .f{color:#c8b4e8;font-size:13px;font-weight:600;line-height:2.1;font-family:'JetBrains Mono',monospace;}
+  .formula-box .note{color:var(--muted);font-size:12.5px;margin-top:10px;font-family:'Source Sans 3',sans-serif;line-height:1.7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  @media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr;}}
+  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .mc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:10px;}
+  .mini-card ul{padding-left:16px;}
+  .mini-card li{font-size:13.5px;margin-bottom:6px;}
+  .mini-card p{font-size:13.5px;line-height:1.65;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+  .tag-red{background:rgba(201,76,76,0.15);color:var(--danger);border:1px solid rgba(201,76,76,0.3);}
+  .tag-green{background:rgba(76,201,138,0.15);color:var(--accent3);border:1px solid rgba(76,201,138,0.3);}
+  .tag-yellow{background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);}
+  .tag-purple{background:rgba(155,127,212,0.15);color:var(--purple);border:1px solid rgba(155,127,212,0.3);}
+  .example{background:#0e1218;border:1px solid var(--border);border-radius:6px;margin:16px 0;overflow:hidden;}
+  .ex-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#12161e;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .ex-source{font-size:10px;color:var(--purple);font-family:'JetBrains Mono',monospace;background:rgba(155,127,212,0.1);padding:2px 7px;border-radius:3px;border:1px solid rgba(155,127,212,0.2);}
+  .ex-title{font-weight:700;font-size:14px;color:#fff;}
+  .ex-tag{margin-left:auto;}
+  .ex-body{padding:16px 18px;}
+  .ex-facts{font-size:13.5px;color:#c8d0dc;line-height:1.8;margin-bottom:12px;}
+  .ex-verdict{background:rgba(155,127,212,0.06);border:1px solid rgba(155,127,212,0.2);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:14px;line-height:1.75;}
+  .ex-verdict strong{color:#c8b4e8;}
+  .ex-key{background:rgba(76,201,138,0.06);border:1px solid rgba(76,201,138,0.2);border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13.5px;color:#c8dfd0;line-height:1.7;}
+  .ex-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent3);margin-bottom:5px;}
+  .divider{border:none;border-top:2px solid var(--border);margin:56px 0;}
+  .checklist{list-style:none;padding-left:0;}
+  .checklist li{padding:9px 0 9px 4px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.75;}
+  .checklist li:last-child{border-bottom:none;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · STANDARD VI · MODULE 3</div>
+  <h1>Standard <span>VI</span>: Conflicts of Interest — VI(A), VI(B), VI(C)</h1>
+  <p class="subtitle">VI(A) requires avoiding or fully disclosing all conflicts of interest to clients, prospective clients, and employers — prominently, in plain language. VI(B) establishes the priority hierarchy: client transactions → employer transactions → personal transactions. VI(C) requires disclosure of referral fees to all affected parties. All three standards from both LES and Handbook synthesised — all examples covered with cross-references.</p>
+</div>
+<div class="toc-strip">
+  <a class="toc-item" href="#a1">VI(A) Standard</a>
+  <a class="toc-item" href="#a2">Conflict Sources</a>
+  <a class="toc-item" href="#a3">Employer Disclosure</a>
+  <a class="toc-item" href="#a4">Client Disclosure</a>
+  <a class="toc-item" href="#a5">Board Conflicts</a>
+  <a class="toc-item" href="#a6">VI(A) Examples</a>
+  <a class="toc-item" href="#b1">VI(B) Standard</a>
+  <a class="toc-item" href="#b2">Priority Hierarchy</a>
+  <a class="toc-item" href="#b3">Compliance Procedures</a>
+  <a class="toc-item" href="#b4">VI(B) Examples</a>
+  <a class="toc-item" href="#c1">VI(C) Standard</a>
+  <a class="toc-item" href="#c2">VI(C) Examples</a>
+  <a class="toc-item" href="#checklist">★ Checklists</a>
+</div>
+<div class="container">
+
+<!-- ═══════════ VI(A) ═══════════ -->
+<div class="section" id="a1">
+  <div class="section-header"><span class="section-num">VI(A)</span><h2>Standard VI(A): Avoid or Disclose Conflicts — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard VI(A) — Avoid or Disclose Conflicts</div>
+    <p>Members and Candidates must avoid or make full and fair disclosure of all matters that could reasonably be expected to impair their independence and objectivity or interfere with respective duties to their clients, prospective clients, and employer. Members and Candidates must ensure that such disclosures are prominent, are delivered in plain language, and communicate the relevant information effectively.</p>
+  </div>
+  <div class="card">
+    <p>A conflict of interest = any matter that could reasonably be expected to impair independence and objectivity OR raise a question about whether actions, judgment, or decision-making is free from bias. The preferred order: (1) avoid, (2) disclose and mitigate. When conflict is unavoidable, full disclosure allows clients and employers to evaluate the objectivity of advice and actions taken on their behalf.</p>
+    <p>The Handbook adds a meaningful nuance: when avoidance is not possible, members should also <strong>seek to mitigate the conflict to the extent possible</strong> and <strong>disclose how the conflict has been mitigated</strong> — not just disclose that it exists.</p>
+  </div>
+</div>
+
+<div class="section" id="a2">
+  <div class="section-header"><span class="section-num">A2</span><h2>Conflict Sources and Disclosure Quality</h2></div>
+  <div class="card">
+    <p>Common sources of conflicts: compensation structures (especially incentive and bonus structures rewarding short-term results with little regard for long-term value creation), stock ownership in recommended companies, board membership, underwriting/investment banking relationships, market-making activities, broker/dealer relationships, referral arrangements, and cross-departmental pressures.</p>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title">Disclosure Quality Requirements</div>
+      <ul>
+        <li><strong>Prominent</strong> — cannot be buried in fine print or boilerplate</li>
+        <li><strong>Plain language</strong> — accessible to the intended recipient</li>
+        <li><strong>Effectively communicates the relevant information</strong> — not just a technical formality</li>
+        <li>Must be updated when the nature of a conflict changes materially (e.g., quarterly bonus structure is more conflicted than annual)</li>
+        <li>Err on the side of caution when deciding whether to disclose</li>
+        <li>Members are responsible for determining how often, in what manner, and in what circumstances disclosure must be made</li>
+      </ul>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Beneficial Ownership Definition (VI(A))</div>
+      <p>For VI(A) purposes, members and candidates beneficially own securities or investments if they have:</p>
+      <ul>
+        <li>A direct or indirect <strong>pecuniary interest</strong> in the securities</li>
+        <li>The power to <strong>vote or direct the voting</strong> of shares</li>
+        <li>The power to <strong>dispose or direct the disposition</strong> of the security</li>
+      </ul>
+      <p>This includes securities held through spouses, family members, trusts, and similar arrangements.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="a3">
+  <div class="section-header"><span class="section-num">A3</span><h2>Disclosure to Employers</h2></div>
+  <div class="card">
+    <p>When reporting conflicts to employers, members must give enough information to allow the employer to assess the impact of the conflict. Reportable situations include:</p>
+    <ul>
+      <li>Conflicts that would interfere with rendering unbiased investment advice</li>
+      <li>Conflicts that would cause the member to act not in the employer's best interest</li>
+      <li>Ownership of stocks analysed or recommended</li>
+      <li>Participation on outside boards</li>
+      <li>Financial or other pressures that could influence a decision</li>
+    </ul>
+    <p>Many employers explicitly prohibit certain activities (personal trading, board membership) to avoid even the appearance of conflicts — members must comply with these restrictions. If conflicts arise despite efforts to avoid them, they must be reported promptly.</p>
+  </div>
+</div>
+
+<div class="section" id="a4">
+  <div class="section-header"><span class="section-num">A4</span><h2>Disclosure to Clients</h2></div>
+  <div class="card">
+    <p>The most obvious conflicts that must always be avoided or disclosed are relationships between an issuer and the member/candidate/firm, including:</p>
+    <ul>
+      <li>Directorships or consultancies involving the member</li>
+      <li>Investment banking, underwriting, and financial relationships</li>
+      <li>Broker/dealer market-making activities</li>
+      <li>Material beneficial ownership of stock</li>
+    </ul>
+    <p>Additional areas requiring disclosure:</p>
+    <ul>
+      <li>Fee arrangements, subadvisory agreements, or other situations with non-standard fee structures</li>
+      <li>Arrangements where the firm benefits directly from investment recommendations</li>
+      <li>Mutual fund service fee rebates (trail fees)</li>
+      <li>Personal stock ownership in companies being recommended</li>
+      <li>Cross-departmental pressure to write reports on specific companies</li>
+    </ul>
+  </div>
+  <div class="tip">
+    <div class="tip-label">💡 Cross-Departmental Pressures</div>
+    <p>Sell-side analysts may be encouraged by corporate issuers AND by their own firm's investment banking division to write favourable research reports. Buy-side analysts face similar conflicts when banks exercise underwriting and security-dealing powers. Marketing divisions may pressure analysts to recommend stocks to win business from those companies. Broker-sponsored limited partnerships create conflicts when analysts are expected to promote these investments in the secondary market. All such conflicts must be disclosed.</p>
+  </div>
+</div>
+
+<div class="section" id="a5">
+  <div class="section-header"><span class="section-num">A5</span><h2>Conflicts as a Board Member or Director</h2></div>
+  <div class="card">
+    <p>Board service creates three distinct conflicts:</p>
+    <ol>
+      <li><strong>Duty conflict:</strong> Duties owed to clients vs. duties owed to shareholders of the company the member serves as a director</li>
+      <li><strong>Compensation conflict:</strong> Investment personnel who serve as directors may receive securities or options as board compensation, creating incentives for trading actions that increase the value of those securities</li>
+      <li><strong>MNPI conflict:</strong> Board service creates access to material nonpublic information — even if the information is confidential, the perception exists that non-public information is being communicated to the director's firm</li>
+    </ol>
+    <p><strong>Remedy:</strong> When members providing investment services also serve as directors, they should be isolated from those making investment decisions by <strong>firewalls or similar restrictions.</strong></p>
+  </div>
+</div>
+
+<div class="section" id="a6">
+  <div class="section-header"><span class="section-num">A6</span><h2>VI(A) Worked Examples — All 7 (Identical in Both Sources)</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">Weiss/Williamsburg — Undisclosed 20-Year Underwriting Relationship in Research Report</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Weiss writes a research report on Jimco. Williamsburg (his employer) has represented Jimco in all its acquisitions for 20 years and Williamsburg officers sit on Jimco subsidiary boards. Weiss does not disclose this in the report.</div>
+      <div class="ex-verdict"><strong>Weiss must disclose Williamsburg's special relationship with Jimco in his research report.</strong> Broker/dealer management of and participation in public offerings must be disclosed. The underwriting relationship — entailing both a special past and potential future relationship — threatens the independence and objectivity of the report and must be disclosed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Investment banking/underwriting relationships must always be disclosed in research reports. The length and depth of the relationship (20 years, all acquisitions, board seats) makes this particularly material. The conflict exists regardless of whether Weiss's individual opinion is actually affected.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Hobbs/Dover &amp; Roe — Changing Recommendation After Selling Firm Interest to the Company</div><div class="ex-tag"><span class="tag tag-red">VIOLATION WITHOUT DISCLOSURE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Dover & Roe sells a 25% interest to First of New York. Immediately after, Hobbs changes First of New York's recommendation from "sell" to "buy" and adds its commercial paper to the approved list.</div>
+      <div class="ex-verdict"><strong>Best practice:</strong> Hobbs should discontinue research coverage of First of New York because the new ownership interest creates an unavoidable conflict. <strong>At minimum:</strong> Hobbs must disclose the new relationship to all Dover & Roe clients. Portfolio managers must also disclose the ownership interest when making specific investment recommendations or taking investment actions with respect to First of New York's securities.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Business ownership interests in a company being covered/recommended = classic conflict requiring disclosure. The timing (immediate recommendation change right after the business deal) heightens the appearance of conflict. "Best practice" = discontinue coverage entirely; minimum = disclose prominently to all clients.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Fargmon — Spouse Inherits Large Position in Covered Company</div><div class="ex-tag"><span class="tag tag-yellow">MINIMUM: DISCLOSE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Fargmon covers Kincaid Printing and has recommended purchase. His wife then inherits US$3 million of Kincaid stock from a distant relative. He is asked to write a follow-up report.</div>
+      <div class="ex-verdict"><strong>At minimum:</strong> Fargmon must disclose his wife's ownership of Kincaid stock to his employer AND in his follow-up report. <strong>Best practice:</strong> ask his employer to assign another analyst to draft the follow-up report to avoid the conflict entirely.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Beneficial ownership through a spouse or family member = same disclosure obligation as direct personal ownership. The inheritance was not sought or arranged by Fargmon — but the conflict it creates is real regardless. Best practice = avoid by transferring the assignment; minimum = disclose prominently.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-source">Both</div><div class="ex-title">Roberts — Personal Stock Position in a Company Being Assigned for Research Coverage</div><div class="ex-tag"><span class="tag tag-red">MUST DISCLOSE / CONSIDER DECLINING</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Roberts speculates in Drew Mining penny stocks (100,000 shares at $0.30), intending to sell on any price surge. Her employer then asks her to write a report on mining penny stocks — she would recommend Drew Mining anyway, but a price surge to ~$2.00 is likely once the report is published.</div>
+      <div class="ex-verdict"><strong>Roberts must disclose the conflict to her employer and should consider declining the assignment on Drew Mining.</strong> If her employer has her write the report despite the conflict, she must disclose the conflict in the report itself. The potential for self-dealing is acute: her personal position would benefit directly from her own recommendation.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Personal stock positions in companies being recommended create conflicts that must be disclosed — even when the analyst claims they would make the same recommendation regardless. The "I would recommend it anyway" argument does not eliminate the appearance of conflict. The member's financial interest in the recommended investment's price increase is a direct conflict that readers of the report must be able to evaluate.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-source">Both</div><div class="ex-title">Snead — Quarterly Bonus Structure Creates Conflict with Client IPSs</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Snead manages long-term pension accounts. Her employer introduces a quarterly performance-based bonus. She purchases high-beta stocks (contrary to clients' long-term IPSs) to boost short-term performance and earn the bonus — without informing clients of the compensation change.</div>
+      <div class="ex-verdict"><strong>Violation of VI(A).</strong> Snead failed to inform clients of the change in her compensation arrangement that created a conflict between her financial incentive and her clients' IPSs. Also violates III(C) (investing contrary to IPSs). Firms may pay on performance — but the compensation structure's conflict with the clients' long-term objectives must be disclosed.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Compensation structure changes that create conflicts with client interests must be disclosed to clients. A quarterly bonus that incentivises short-term trading in long-term accounts is exactly the type of structural conflict that "could reasonably be expected to impair independence and objectivity." Cross-standard: also III(C) for investing contrary to IPS.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 6</div><div class="ex-source">Both</div><div class="ex-title">Carter — Accepting Third-Party Compensation to Recommend a Specific Stock</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">A stock promoter for Badger Company offers Carter (a registered broker/dealer representative) additional compensation for each sale of Badger stock to his clients. Carter accepts but doesn't disclose to clients or his employer.</div>
+      <div class="ex-verdict"><strong>Violation of VI(A).</strong> Carter failed to disclose to clients that he is receiving additional compensation for recommending and selling Badger stock. At minimum: disclose to clients so they can evaluate whether recommendations were affected. Best practice: decline the offer of additional compensation entirely to avoid the conflict.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Third-party compensation for recommending or selling specific products = fundamental conflict that clients must know about. Also a VI(C) referral fee issue. Clients are entitled to know that their broker/adviser has a financial incentive to steer them toward a specific investment — the conflict assessment ("were my recommendations affected?") belongs to the client, not the member.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 7</div><div class="ex-source">Both</div><div class="ex-title">Papis — Allocating Fund Assets to Business School Classmate Without Disclosing Personal Relationship</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Papis (CIO of a state retirement fund) changes the real estate allocation to his business school classmate Nagle's new firm without conducting proper due diligence and without disclosing the personal relationship to his employer. Only notice appears in the next annual report.</div>
+      <div class="ex-verdict"><strong>Violation of VI(A).</strong> Papis failed to disclose his personal relationship with Nagle to his employer. This disclosure would allow the firm to determine whether the conflict impaired Papis's independence in the selection decision. This is one example that spans multiple standards: also V(A) (inadequate due diligence in adviser selection), IV(C) (inadequate supervision procedures), and V(B) (inadequate notification of the process change to stakeholders).</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Personal relationships with beneficiaries of professional decisions (especially fiduciary decisions) must be disclosed to the employer. The employer — not the member — should assess whether the conflict impairs independence. The Papis example is a multi-standard violation used repeatedly throughout both sources: VI(A) (personal relationship not disclosed), V(A) (arbitrary/inadequate due diligence), IV(C) (supervision failure), V(B) (process change inadequately disclosed).</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ VI(B) ═══════════ -->
+<div class="section" id="b1">
+  <div class="section-header"><span class="section-num">VI(B)</span><h2>Standard VI(B): Priority of Transactions — The Standard</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard VI(B) — Priority of Transactions</div>
+    <p>Investment transactions for clients and employers must have priority over investment transactions in which a Member or Candidate is the beneficial owner.</p>
+  </div>
+  <div class="card">
+    <p>VI(B) establishes the priority hierarchy for investment transactions: clients first, then employers, then personal accounts. The objective: prevent personal transactions from adversely affecting the interests of clients or employers. Nothing is inherently unethical about making money from personal investments — provided: (1) the client is not disadvantaged by the trade, (2) the member does not personally benefit from trades undertaken for clients, and (3) the member complies with applicable regulatory requirements.</p>
+  </div>
+</div>
+
+<div class="section" id="b2">
+  <div class="section-header"><span class="section-num">B2</span><h2>Priority Hierarchy and Beneficial Ownership</h2></div>
+  <div class="card">
+    <p>Members may undertake personal transactions only after clients and employers have had adequate opportunity to act on a recommendation. Personal transactions include:</p>
+    <ul>
+      <li>The member's or candidate's own account</li>
+      <li>Accounts of immediate family members (spouse, children, other immediate family)</li>
+      <li>Any account in which the member has a direct or indirect financial/pecuniary interest (trust accounts, retirement accounts, etc.)</li>
+    </ul>
+    <p><strong>Family accounts that are client accounts</strong> must be treated like any other firm account — neither given special treatment (favoured) NOR disadvantaged simply because of the family relationship. If the member has beneficial ownership in such an account, they may be subject to preclearance and reporting requirements.</p>
+  </div>
+
+  <div class="examiner">
+    <div class="examiner-label">Examiner Focus — The Toffler Trap: Disadvantaging Family Accounts</div>
+    <p>The Toffler example is a classic exam question. Toffler DELIBERATELY puts her parents' accounts LAST for IPO allocations, after all other clients, specifically to avoid the appearance of favouritism. <strong>This violates VI(B).</strong> Her parents are fee-paying clients of the firm and are entitled to the same pro-rata treatment as any other account. By systematically deprioritising them, she discriminates against them based on the family relationship. The principle: family client accounts must be treated identically to all other client accounts — not better (which would be a different violation) and not worse (which is what Toffler did). The preclearance/reporting caveat: if Toffler has beneficial ownership in the parents' account, she would also have to comply with preclearance requirements.</p>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">⚠️ Co-Investing with Clients ≠ Always a Conflict</div>
+    <p>Having the same investment positions as clients (being "co-invested") does not automatically create a conflict. Some clients specifically require members to have aligned interests. What is prohibited is personal transactions that adversely affect client investments — not simply holding the same securities. The test is whether the personal transaction harms clients, not whether the member invests in similar instruments.</p>
+  </div>
+</div>
+
+<div class="section" id="b3">
+  <div class="section-header"><span class="section-num">B3</span><h2>Compliance Procedures — Personal Investing Policies</h2></div>
+  <div class="three-col">
+    <div class="mini-card">
+      <div class="mc-title">Limited IPO Participation</div>
+      <p>Hot IPO purchases by investment personnel create two conflicts: (1) appearance of taking investment opportunities from clients for personal gain; (2) appearance that the opportunity was provided as an incentive for future favourable investment decisions.</p>
+      <p>Best practice: don't participate. When permitted: must preclear even when no apparent conflict exists. Must not benefit from clients' marketplace position through preferred trading, limited offering allocations, or oversubscription.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Restrictions on Private Placements</div>
+      <p>Firms may place strict limits on investment personnel acquiring securities in private placements. Conflict: if the investment goes public, the participant has an incentive to recommend it to clients (to increase their own position's value) regardless of suitability. Also creates the appearance of a favour or gift designed to influence future judgment or reward past business.</p>
+      <p>Members must not participate in transactions that could be perceived as designed to influence future judgment.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">Blackout / Restricted Periods</div>
+      <p>Investment personnel involved in investment decision-making should comply with established blackout periods to prevent "front-running" — trading for personal accounts before trading for client accounts.</p>
+      <p>Each firm determines specific blackout requirements. In large firms, a blackout may effectively be a total trading ban (firm continuously trades in most securities). In small firms, blackouts more specifically prevent front-running of individual decisions.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p><strong>Reporting requirements for personal transactions:</strong></p>
+    <ul>
+      <li><strong>Disclosure of holdings with beneficial interest:</strong> At commencement of employment and at least annually thereafter. Handled confidentially.</li>
+      <li><strong>Duplicate confirmations:</strong> Investment personnel should direct their brokers to supply duplicate copies of all personal securities transactions and periodic account statements to the firm. Two purposes: (1) sends a message of independent verification, reducing likelihood of unethical behaviour; (2) enables verification of the flow of personal investments that cannot be determined from holdings alone.</li>
+      <li><strong>Preclearance procedures:</strong> All planned personal trades should be examined for possible conflicts before execution. Identifies problems before they arise.</li>
+      <li><strong>Disclosure of policies:</strong> Members should fully disclose the firm's personal investing policies to clients and prospective clients. Must be helpful information — not boilerplate ("investment personnel are subject to policies and procedures regarding their personal trading").</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="b4">
+  <div class="section-header"><span class="section-num">B4</span><h2>VI(B) Worked Examples — All 5 (Identical in Both Sources)</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both</div><div class="ex-title">Long — Withholding Employer Recommendation to Buy the Stock Personally First</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Long (research analyst) wants to buy a stock personally and doesn't recommend it to his employer's pension account because he doesn't want to wait until the employer acts on it first.</div>
+      <div class="ex-verdict"><strong>Violation of VI(B).</strong> Long took advantage of his knowledge of the stock's value before allowing his employer to benefit from that information. By withholding the recommendation to preserve personal trading priority, he placed his personal interests above his employer's.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Personal transactions come AFTER clients AND employers have had adequate opportunity to act. Withholding a recommendation from an employer to trade personally first is the paradigmatic front-running violation under VI(B). The priority order is inviolable.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Baker — Directing Hot IPOs to Husband's Account Before Clients Get Any</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Baker (aggressive growth fund manager) has her husband's account at several brokerages where the fund also does business. She directs hot IPOs to her husband's account, meaning her clients often cannot participate in those issues.</div>
+      <div class="ex-verdict"><strong>Violation of VI(B).</strong> Baker must acquire shares for her mutual fund first; only then may she consider her husband's account with any remaining allocation. She must also disclose the trading for her husband's account to her employer — it creates a conflict between her personal interests and her employer's interests.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>A family member's account (husband = family member account) is subject to the same priority rules as the member's own account. Directing scarce hot IPOs to personal/family accounts while clients miss out = quintessential VI(B) violation. Two obligations: (1) clients first in IPO allocation, (2) disclose family account trading to employer.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Toffler — Systematically Disadvantaging Parents' Client Account to Avoid Appearance of Favouritism</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Toffler manages her parents' retirement account. For all IPOs, she first allocates to all other clients, then places any remainder in the parents' account — deliberately putting them last to avoid any accusation of favouritism.</div>
+      <div class="ex-verdict"><strong>Violation of VI(B) — breached duty to her parents.</strong> As fee-paying clients, Toffler's parents are entitled to the same treatment as any other client. Deliberately disadvantaging them because of the family relationship violates the equal treatment obligation. If Toffler has beneficial ownership in the account, she must also comply with preclearance and reporting requirements.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The principle is symmetrical: family client accounts must be treated identically to other client accounts — not better AND not worse. The attempt to avoid one problem (apparent favouritism) by creating another (systematic disadvantage) = violation. The good intention to avoid favouritism does not cure the systematic underprioritisation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4</div><div class="ex-source">Both</div><div class="ex-title">Michaels — Front-Running Firm's "Buy" List Recommendations</div><div class="ex-tag"><span class="tag tag-red">VIOLATION + SUPERVISORY FAILURE</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Michaels (entry-level employee in research and investment management) buys stocks just before they are placed on the firm's "buy" list. He repeatedly declines to complete the quarterly personal transaction form. The investment management director eventually discovers the pattern and the omissions.</div>
+      <div class="ex-verdict"><strong>Michaels violated VI(B)</strong> by placing personal transactions ahead of client transactions (front-running). <strong>George/the director violated IV(C)</strong> by allowing Michaels to continue without completing the required personal transaction form — the reporting mechanism is the supervisor's tool for detecting this exact behaviour.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The quarterly personal transaction form is not optional — it is the compliance mechanism for detecting front-running. Declining to complete it is itself a red flag and compliance failure. The supervisor's failure to enforce the form completion = IV(C) violation. Note: if Michaels had communicated the upcoming recommendations to a third party who traded on it, that would also be II(A) MNPI misappropriation.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5</div><div class="ex-source">Both</div><div class="ex-title">Riley — Firm's Trading Desk Trades Before Client Report Is Disseminated</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Wilson (insurance analyst) makes a negative video conference presentation on an insurance company to firm branches. Seven minutes later, before the written follow-up report is printed/distributed, Riley (head of trading) closes a long call position and establishes a large put position. Riley claims it was to "facilitate anticipated institutional client sales."</div>
+      <div class="ex-verdict"><strong>Riley violated VI(B).</strong> The firm did not give clients the opportunity to act on Wilson's recommendation before trading for the firm's own account. The firm's trading may have depressed call prices and increased put prices — to the detriment of clients who would later receive the recommendation. The "facilitating client sales" justification is not accepted.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Employer (firm proprietary) accounts have the same priority constraint as personal accounts — both come after clients. A firm's trading desk cannot front-run its own published research recommendations to the detriment of the clients who will receive those recommendations. The obligation: wait until clients have had adequate opportunity to receive and act on the recommendation before the firm trades for its own account.</div>
+    </div>
+  </div>
+
+<hr class="divider">
+
+<!-- ═══════════ VI(C) ═══════════ -->
+<div class="section" id="c1">
+  <div class="section-header"><span class="section-num">VI(C)</span><h2>Standard VI(C): Referral Fees — The Standard and Guidance</h2></div>
+  <div class="standard-box">
+    <div class="standard-label">Standard VI(C) — Referral Fees</div>
+    <p>Members and Candidates must disclose to their employer, clients, and prospective clients, as appropriate, any compensation, consideration, or benefit received from or paid to others for the recommendation of products or services.</div>
+  </div>
+  <div class="card">
+    <p>VI(C) is a bilateral disclosure standard — members must disclose both compensation received from referrals to them AND compensation they pay to others for referring clients to them. The purpose: allow clients and employers to evaluate (1) any partiality shown in recommendations and (2) the full cost of the services.</p>
+    <p><strong>Key disclosure requirements:</strong></p>
+    <ul>
+      <li>Must be made <strong>before entry into any formal agreement</strong> for services — not after</li>
+      <li>Must include: the <strong>nature</strong> of the consideration (flat fee, percentage, one-time, continuing, performance-based, research, other non-cash), and the <strong>estimated dollar value</strong></li>
+      <li>Consideration includes <em>all</em> fees — cash, soft dollars, and in-kind</li>
+      <li>Disclosure to employer: must provide at least quarterly updates on the amount and nature of compensation received through referral arrangements</li>
+      <li><strong>No distinction between external and internal referral fees</strong> — fees paid within a firm between departments are treated identically to external referral fees</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="c2">
+  <div class="section-header"><span class="section-num">C2</span><h2>VI(C) Worked Examples</h2></div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 1</div><div class="ex-source">Both (different numbers)</div><div class="ex-title">White/Lewis Brothers — Not Disclosing Extensive Mutual Referral Arrangement to New Client</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Lewis Brothers has an extensive referral arrangement with Brady Securities: Brady refers tax-exempt accounts to Lewis Brothers; Lewis Brothers provides research services and directs all commission business back to Brady. A new prospective client (Branch/Maxwell Inc.) was referred by a Brady representative (Hill) without qualification. White secures the account but doesn't disclose the referral arrangement. LES: incremental cost US$20,000/yr, referral fee income US$200,000/yr, additional client costs US$10,000. Handbook: US$200,000/yr costs, US$1.8M fee income, US$100,000 client costs.</div>
+      <div class="ex-verdict"><strong>Violation of VI(C).</strong> White failed to disclose the referral arrangement before accepting Branch as a client. Had Branch known about the arrangement, she might have reassessed Hill's "without qualification" recommendation and made a more critical evaluation of Lewis Brothers' services.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>The existence of a referral arrangement must be disclosed before the client enters into a formal relationship. The disclosure must include the nature of the consideration (research services, redirected commissions) and the estimated dollar value. The scale of the arrangement here (US$1.8M fee income from referrals vs. US$200K cost = substantial benefit to Lewis Brothers) makes the non-disclosure particularly significant.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 2</div><div class="ex-source">Both</div><div class="ex-title">Handley/Central Trust — Internal Referral Fee Between Departments Not Disclosed</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Handley works in Central Trust Bank's trust department and receives compensation for each referral he makes to other Central Trust departments (brokerage, personal financial management) that results in a sale. He refers clients without disclosing this arrangement.</div>
+      <div class="ex-verdict"><strong>Violation of VI(C).</strong> VI(C) does NOT distinguish between external referral payments and internal payments between a firm's departments. Handley is required to disclose, at the time of referral, any referral fee agreement in place between Central Trust's departments. Disclosure must include the nature and value of the benefit, in writing.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Internal cross-departmental referral fees = same disclosure obligation as external referral fees. The fact that the money stays within the firm doesn't change the client's interest in knowing that the person recommending them to a service has a financial incentive to do so. This is one of the most frequently tested VI(C) nuances: the standard applies equally to internal and external referral arrangements.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 3</div><div class="ex-source">Both</div><div class="ex-title">Roberts/Katama — Directing Commissions to a Classmate's Firm in Exchange for Client Referrals</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Roberts directs Katama's trading commissions to Naushon (run by a business school classmate) despite Naushon being uncompetitive on pricing and providing low-quality research. In return, Naushon refers its wealthiest clients to Roberts and Katama. Neither Katama nor the referred clients know about this arrangement.</div>
+      <div class="ex-verdict"><strong>Violation of VI(C).</strong> Roberts failed to inform her employer AND clients of the referral arrangement. The Handbook version explicitly adds "and clients" — emphasising that both must be informed. There is also a III(A) dimension: directing client commissions to an uncompetitive broker without corresponding client benefit = breach of loyalty to clients.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>Must disclose to BOTH employer AND clients. The arrangement here has multiple layers of wrongdoing: (1) VI(C) — referral fee not disclosed; (2) III(A) — client commissions used for personal benefit (building Roberts's business through referrals) without corresponding client benefit; (3) potentially III(A) — using client brokerage through a broker not providing best execution.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 4 (LES) / Not in Handbook</div><div class="ex-source">LES Only</div><div class="ex-title">Burl — Charitable School Referral Program With Prior Approval and Full Disclosure</div><div class="ex-tag"><span class="tag tag-green">COMPLIANT</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Burl (portfolio manager) devises a plan to donate a portion of his service fees from new clients referred by parents of students at his child's school. He gets his supervisor's approval from Helpful Investments, then presents the plan to the school's board and directors who agree. He distributes appropriate written materials. When the first referral comes in, he clearly discusses the school's referral arrangement when developing the client's IPS.</div>
+      <div class="ex-verdict"><strong>Compliant with VI(C).</strong> Burl secured permission from his employer and the school before beginning the program AND disclosed the arrangement to the client at the time of establishing the IPS. All required disclosures were made to all required parties before entering the formal relationship.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule (LES-Only)</div>The compliant path for referral arrangements: (1) get employer approval, (2) disclose the arrangement to clients BEFORE (or at the outset of) the formal relationship. This example shows the contrast with the violating examples — the sequence of prior approval + timely disclosure = compliance. The charitable nature of the beneficiary doesn't change the disclosure obligation, but here all parties were properly informed.</div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="ex-header"><div class="ex-num">Example 5 (LES) / Example 4 (Handbook)</div><div class="ex-source">Both</div><div class="ex-title">Arrow/Arronski — Consultant Taking Kickbacks from Recommended Investment Managers</div><div class="ex-tag"><span class="tag tag-red">VIOLATION</span></div></div>
+    <div class="ex-body">
+      <div class="ex-facts">Arrow/Arronski is contracted by a state pension plan to represent its best interest in selecting new investment managers. Without disclosure, he also charges fees to investment managers he recommends once they are awarded allocations. Even though the recommendation was ultimately appropriate and objective, the non-disclosure is the violation.</div>
+      <div class="ex-verdict"><strong>Violation of VI(C).</strong> Arrow/Arronski failed to disclose to the pension plan (his client) that he was also being compensated by the recommended managers. The fact that the recommendation happened to be objective and appropriate does not cure the failure to disclose the fee arrangement. Withholding this information raises the question of potential lack of objectivity — and it is the client's right to make that assessment.</div>
+      <div class="ex-key"><div class="ex-key-label">🔑 Core Rule</div>"The outcome was appropriate" does not retroactively cure a failure to disclose. Clients have the right to evaluate partiality before entering into arrangements — not after. The consultant was hired specifically to represent the pension plan's best interest, making the undisclosed compensation from recommended managers a fundamental breach of that relationship. The LES version also notes that regulators may have additional requirements for investment consultants in this context.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMBINED CHECKLIST ═══════════ -->
+<div class="section" id="checklist">
+  <div class="section-header"><span class="section-num">★</span><h2>Combined Exam Checklists — VI(A), VI(B), VI(C)</h2></div>
+  <div class="card" style="border-color:rgba(155,127,212,0.3);">
+    <h3 style="margin-top:0;">Standard VI(A): Avoid or Disclose Conflicts</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Preferred order:</strong> (1) Avoid the conflict entirely; (2) If unavoidable: disclose fully AND mitigate AND disclose how it was mitigated.</li>
+      <li>✅ <strong>Disclosure quality:</strong> Prominent + plain language + effectively communicates information. Must be updated when the conflict changes materially.</li>
+      <li>✅ <strong>Beneficial ownership for VI(A) purposes:</strong> Direct or indirect pecuniary interest + power to vote shares + power to dispose. Includes spouse/family holdings.</li>
+      <li>✅ <strong>Always disclose to employers:</strong> Stock ownership in recommended/analysed companies; outside board participation; financial pressures that could influence decisions.</li>
+      <li>✅ <strong>Always disclose to clients:</strong> Investment banking/underwriting relationships; board/consultancy positions; market-making activities; personal stock ownership in recommended companies; compensation arrangements creating conflicts (including performance bonuses that conflict with client IPSs); mutual fund fee rebates.</li>
+      <li>✅ <strong>Spouse/family member ownership:</strong> Treated as member's own for disclosure purposes — must disclose AND consider transferring the assignment to another analyst. (Fargmon)</li>
+      <li>✅ <strong>Board service:</strong> Creates three conflicts — duty conflict, compensation conflict (stock options), MNPI access. Remedy: firewalls between board service and investment decision-making.</li>
+      <li>✅ <strong>Compensation structure changes</strong> that create conflicts with client interests (quarterly vs. annual bonus) must be disclosed to clients. (Snead)</li>
+      <li>✅ <strong>Cross-departmental pressures</strong> (marketing, investment banking) on analysts = conflicts requiring disclosure.</li>
+      <li>✅ <strong>Personal relationship with beneficiaries of fiduciary decisions</strong> (e.g., business classmate receiving allocation) must be disclosed to employer. (Papis)</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard VI(B): Priority of Transactions</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Priority order:</strong> Client transactions → Employer/firm transactions → Personal transactions.</li>
+      <li>✅ <strong>Personal transactions = those for:</strong> Own account + immediate family accounts + any account with direct or indirect pecuniary interest (trusts, retirement accounts, etc.).</li>
+      <li>✅ <strong>Family CLIENT accounts:</strong> Treated identically to all other client accounts — not better AND not worse. (Toffler: deliberately deprioritising parents' account = violation)</li>
+      <li>✅ <strong>Three criteria for permissible personal trading:</strong> (1) Client not disadvantaged; (2) Member doesn't benefit personally from client trades; (3) Member complies with applicable regulatory requirements.</li>
+      <li>✅ <strong>Co-investing with clients ≠ automatic conflict.</strong> Some clients require aligned interests. What's prohibited is personal trades that adversely affect client investments.</li>
+      <li>✅ <strong>IPO participation:</strong> Two conflicts — appears to take opportunity from clients; appears to be an incentive payment. Best practice: don't participate. When permitted: preclear all IPO purchases.</li>
+      <li>✅ <strong>Private placements:</strong> Similar conflicts to IPOs — if the investment goes public, creates incentive to recommend regardless of suitability. Must not participate in transactions appearing to be favours designed to influence future judgment.</li>
+      <li>✅ <strong>Blackout periods:</strong> Required for investment decision-makers to prevent front-running client trades.</li>
+      <li>✅ <strong>Reporting requirements:</strong> Annual holdings disclosure + duplicate trade confirmations + preclearance. Declining to complete required forms = red flag + supervisor's IV(C) violation if not enforced. (Michaels)</li>
+      <li>✅ <strong>Firm proprietary trading:</strong> Firm's own account has the same second-tier priority as personal accounts — cannot front-run own published research to the detriment of clients who will receive the recommendation. (Riley)</li>
+    </ul>
+    <h3 style="margin-top:24px;">Standard VI(C): Referral Fees</h3>
+    <ul class="checklist">
+      <li>✅ <strong>Bilateral standard:</strong> Must disclose compensation received for referrals TO the member AND compensation PAID to others for referring clients to the member.</li>
+      <li>✅ <strong>Must disclose to:</strong> Employer + clients + prospective clients (as appropriate).</li>
+      <li>✅ <strong>Timing:</strong> Before entry into any formal agreement for services — not after.</li>
+      <li>✅ <strong>What to disclose:</strong> Nature of consideration (flat fee / percentage / one-time / continuing / performance / research / in-kind) AND estimated dollar value.</li>
+      <li>✅ <strong>Consideration includes:</strong> Cash + soft dollars + in-kind benefits — all forms of compensation.</li>
+      <li>✅ <strong>Internal referral fees:</strong> Treated identically to external referral fees — no distinction between inter-departmental payments within a firm and payments to third parties. (Handley)</li>
+      <li>✅ <strong>"Outcome was appropriate" ≠ cure for non-disclosure.</strong> Clients have the right to assess partiality BEFORE engaging services, not after. (Arrow/Arronski)</li>
+      <li>✅ <strong>Employer reporting:</strong> At least quarterly updates on the amount and nature of compensation received through referral arrangements.</li>
+      <li>✅ <strong>Compliant approach:</strong> Prior employer approval + timely disclosure to clients at or before the formal relationship begins. (Burl — LES-only)</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">★ STANDARD VI QUICK REFERENCE</div>
+    <div class="f">
+      ══ VI(A): AVOID OR DISCLOSE CONFLICTS ══<br>
+      PREFERRED ORDER:      Avoid > Disclose + Mitigate + Disclose how mitigated<br>
+      DISCLOSURE QUALITY:   Prominent + plain language + effectively communicates<br>
+      BENEFICIAL OWNERSHIP: Pecuniary interest + voting power + disposition power<br>
+      ALWAYS DISCLOSE:      IB/underwriting + board service + stock ownership in covered cos + compensation conflicts<br>
+      BOARD CONFLICTS:      Duty conflict + compensation (stock options) + MNPI access → use firewalls<br>
+      UPDATE:               When nature of conflict changes materially; err on side of caution<br><br>
+      ══ VI(B): PRIORITY OF TRANSACTIONS ══<br>
+      PRIORITY ORDER:       Clients first → Employer/firm second → Personal last<br>
+      PERSONAL INCLUDES:    Own account + immediate family accounts + any account with pecuniary interest<br>
+      FAMILY CLIENT ACCTS:  Treat IDENTICALLY to all other client accounts — not better, not worse<br>
+      CO-INVESTING:         Not automatically a conflict; prohibited only if it adversely affects clients<br>
+      IPO PARTICIPATION:    Two conflicts (take from clients + appearance of incentive); best practice: don't participate<br>
+      PRIVATE PLACEMENTS:   Conflict: incentive to recommend regardless of suitability; restrictions appropriate<br>
+      BLACKOUT PERIODS:     Required for investment decision-makers; prevents front-running<br>
+      REPORTING:            Annual holdings + duplicate trade confirms + preclearance<br>
+      FIRM PROPRIETARY:     Same second-tier priority — cannot front-run own research publication<br><br>
+      ══ VI(C): REFERRAL FEES ══<br>
+      BILATERAL:            Disclose fees received AND fees paid for referrals<br>
+      TO WHOM:              Employer + clients + prospective clients (as appropriate)<br>
+      TIMING:               BEFORE formal agreement for services<br>
+      WHAT:                 Nature (flat/percentage/one-time/continuing/performance/in-kind) + estimated dollar value<br>
+      INTERNAL = EXTERNAL:  No distinction between inter-departmental and third-party referral fees<br>
+      OUTCOME ≠ CURE:       Appropriate recommendation doesn't retroactively cure undisclosed fee
+    </div>
+    <div class="note">
+      <strong>Top VI(A) exam traps:</strong><br>
+      (1) "The analyst would have made the same recommendation anyway, so no need to disclose" — the appearance of conflict requires disclosure regardless of whether it actually affected the recommendation<br>
+      (2) "He got prior approval from his employer, so no client disclosure needed" — employer disclosure ≠ client disclosure; both may be required<br>
+      (3) "She disclosed the conflict in general terms in the firm's standard disclosure document" — must be prominent, plain language, and effectively communicate the specific relevant information<br><br>
+      <strong>Top VI(B) exam traps:</strong><br>
+      (1) "She put her parents' account last so no one could accuse her of favouritism" — deliberately deprioritising family client accounts = violation (Toffler)<br>
+      (2) "He is co-invested alongside his clients in the same fund" — co-investing alone is not a conflict; what matters is whether personal trades adversely affect clients<br>
+      (3) "The firm traded first to facilitate anticipated client sales" — employer accounts still have second-tier priority; cannot trade ahead of the recommendation being disseminated to clients (Riley)<br><br>
+      <strong>Top VI(C) exam traps:</strong><br>
+      (1) "The referral is between departments within the same firm, so no disclosure needed" — internal referral fees require the same disclosure as external ones (Handley)<br>
+      (2) "The recommendation turned out to be appropriate, so the undisclosed fee didn't matter" — the outcome doesn't cure the failure to disclose before engagement (Arrow/Arronski)<br>
+      (3) "The referral fee is paid in research services, not cash, so it doesn't need to be disclosed" — consideration includes cash + soft dollars + in-kind; all must be disclosed
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>CFA Level 1 · Standard VI: Conflicts of Interest — VI(A) Avoid or Disclose Conflicts, VI(B) Priority of Transactions, VI(C) Referral Fees · Module 3 Guidance Notes · LES + Handbook Synthesis</footer>
+</body>
+</html>

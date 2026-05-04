@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Equity Investments | Module 1: Market Organization and Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1420 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,138,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,138,0.12); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent3); background: rgba(76,201,138,0.1); border: 1px solid rgba(76,201,138,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 6px; font-family: 'Source Sans 3', sans-serif; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent3); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent3); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .prop-block { border-radius: 6px; padding: 18px 22px; margin: 14px 0; }
+  .prop-blue { background: rgba(76,139,201,0.08); border: 1px solid rgba(76,139,201,0.3); }
+  .prop-green { background: rgba(76,201,138,0.08); border: 1px solid rgba(76,201,138,0.3); }
+  .prop-yellow { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); }
+  .prop-red { background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.3); }
+  .prop-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; text-transform: uppercase; }
+  .prop-blue .prop-label { color: var(--accent2); }
+  .prop-green .prop-label { color: var(--accent3); }
+  .prop-yellow .prop-label { color: var(--accent); }
+  .prop-red .prop-label { color: var(--danger); }
+  .prop-block ul, .prop-block ol { padding-left: 20px; }
+  .prop-block li { font-size: 14px; color: var(--text); margin-bottom: 5px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · EQUITY INVESTMENTS · MODULE 1</div>
+  <h1>Market Organization <span>&amp; Structure</span></h1>
+  <p>Exam-ready notes: functions of the financial system, asset classifications, securities/contracts/currencies, financial intermediaries, long/short positions, margin mechanics, order types, primary &amp; secondary markets, market structures, and regulation.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Functions of the Financial System</a>
+  <a class="toc-item" href="#s2">02 · Asset &amp; Market Classifications</a>
+  <a class="toc-item" href="#s3">03 · Securities</a>
+  <a class="toc-item" href="#s4">04 · Currencies, Commodities &amp; Real Assets</a>
+  <a class="toc-item" href="#s5">05 · Contracts</a>
+  <a class="toc-item" href="#s6">06 · Financial Intermediaries</a>
+  <a class="toc-item" href="#s7">07 · Long &amp; Short Positions</a>
+  <a class="toc-item" href="#s8">08 · Leveraged Positions &amp; Margin Math</a>
+  <a class="toc-item" href="#s9">09 · Order Types &amp; Instructions</a>
+  <a class="toc-item" href="#s10">10 · Primary Markets</a>
+  <a class="toc-item" href="#s11">11 · Secondary Market Structures</a>
+  <a class="toc-item" href="#s12">12 · Well-Functioning Financial Systems</a>
+  <a class="toc-item" href="#s13">13 · Market Regulation</a>
+  <a class="toc-item" href="#s14">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: FUNCTIONS OF THE FINANCIAL SYSTEM -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Functions of the Financial System</h2>
+    </div>
+
+    <div class="card">
+      <p>The financial system includes <strong>markets and financial intermediaries</strong> that transfer financial assets, real assets, and financial risks between entities, across places, and through time.</p>
+    </div>
+
+    <h3>6 Purposes for Which People Use the Financial System</h3>
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "SB-RME-I" → Save, Borrow, Raise equity, Manage risk, Exchange (spot), Inform-trade</div>
+      <p><strong>S</strong>aving · <strong>B</strong>orrowing · <strong>R</strong>aising equity capital · <strong>M</strong>anaging risks · <strong>E</strong>xchanging assets (spot) · <strong>I</strong>nformation-motivated trading</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Saving</div>
+        <p>Moving money from present → future. Savers buy notes, bonds, stocks, mutual funds, real estate. When committed to earn a return, savers are called <strong>investors</strong>.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Borrowing</div>
+        <p>Moving money from future → present. People via mortgages/loans; companies via bonds/credit lines; governments via bills/notes/bonds. Collateral lowers borrowing costs.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Raising Equity Capital</div>
+        <p>Companies sell ownership interests (stocks, partnership shares). Investment banks, analysts, and disclosures facilitate fair pricing. Liquid secondary markets encourage equity investment.</p>
+      </div>
+    </div>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Managing Risks</div>
+        <p>Hedgers use forward, futures, option, swap, and insurance contracts. E.g., a farmer sells grain forward to lock in price; food processor buys forward to lock in cost. Both eliminate price risk.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Exchanging Assets (Spot)</div>
+        <p>Trading one asset for another for immediate delivery. E.g., Volkswagen converts USD → EUR in FX markets; investor buys gold as inflation hedge. Facilitated by liquid spot markets.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Information-Motivated Trading</div>
+        <p>Active managers trade on superior analysis to earn <strong>conditional returns</strong> above normal (unconditional) returns. Buy undervalued, sell overvalued. Distinct from pure investors by <em>motive</em>, not by holding period.</p>
+      </div>
+    </div>
+
+    <h3>3 Main Functions of the Financial System</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:8px;"><strong>Facilitate achievement of purposes</strong> — helps people save, borrow, raise capital, manage risk, exchange assets, and trade on information</li>
+        <li style="margin-bottom:8px;"><strong>Discover equilibrium rates of return</strong> — the rate at which aggregate savings = aggregate borrowings. If rate too high → excess savings; if too low → excess borrowing demand. Rate adjusts until supply = demand</li>
+        <li style="margin-bottom:8px;"><strong>Allocate capital to best uses</strong> — <span class="highlight3">allocational efficiency</span>: only the most productive projects obtain scarce capital. Investors' fear of loss keeps capital allocation disciplined</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Investors vs. Information-Motivated Traders</div>
+      <p>The distinction is <strong>motive</strong>, not holding period or risk level. A bank treasurer moving money overnight = investor. A pension fund moving money 30 years = investor. A trader acting on superior analysis expecting a short-term price move = information-motivated trader. They are <strong>not mutually exclusive</strong> — many investors are also information-motivated traders.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: ASSET & MARKET CLASSIFICATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Asset &amp; Market Classifications</h2>
+    </div>
+
+    <h3>Asset Classification</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Examples</th>
+            <th>Financial or Physical?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Securities</td>
+            <td>Debt, Equity, Pooled vehicles</td>
+            <td>Bonds, stocks, ETFs, mutual funds</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+          </tr>
+          <tr>
+            <td>Currencies</td>
+            <td>Monies issued by monetary authorities</td>
+            <td>USD, EUR, JPY</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+          </tr>
+          <tr>
+            <td>Contracts</td>
+            <td>Derivatives — forward, futures, swap, option, insurance</td>
+            <td>S&amp;P 500 futures, interest rate swaps, put options</td>
+            <td><span class="tag tag-blue">Financial</span></td>
+          </tr>
+          <tr>
+            <td>Commodities</td>
+            <td>Precious metals, energy, industrial metals, agricultural, carbon credits</td>
+            <td>Gold, oil, copper, wheat</td>
+            <td><span class="tag tag-yellow">Physical</span></td>
+          </tr>
+          <tr>
+            <td>Real Assets</td>
+            <td>Tangible properties</td>
+            <td>Real estate, aircraft, machinery, timber</td>
+            <td><span class="tag tag-yellow">Physical</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Market Classifications</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Classification</th>
+            <th>Category A</th>
+            <th>Category B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>By delivery timing</td>
+            <td><strong>Spot markets</strong> — immediate delivery (≤3 days)</td>
+            <td><strong>Forward/futures markets</strong> — future delivery</td>
+          </tr>
+          <tr>
+            <td>By issuance stage</td>
+            <td><strong>Primary market</strong> — issuer sells to investors; funds flow to issuer</td>
+            <td><strong>Secondary market</strong> — investors trade among themselves; funds flow between traders</td>
+          </tr>
+          <tr>
+            <td>By maturity</td>
+            <td><strong>Money markets</strong> — debt maturing ≤1 year (T-bills, repos, CDs, commercial paper)</td>
+            <td><strong>Capital markets</strong> — longer duration instruments (bonds, equities)</td>
+          </tr>
+          <tr>
+            <td>By investment type</td>
+            <td><strong>Traditional</strong> — publicly traded debt, equity, pooled vehicles of these</td>
+            <td><strong>Alternative</strong> — hedge funds, private equity, VC, commodities, real estate, securitized debt, collectibles</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Derivatives: Physical vs. Financial</div>
+      <p>A <strong>derivative</strong>'s value depends on an underlying asset. Physical derivatives have physical underlying (petroleum, lumber, gold). Financial derivatives have financial underlying (interest rates, stock indexes, currencies, credit default swaps). The underlying determines the classification, not the derivative itself.</p>
+    </div>
+
+    <h3>Securities: Public vs. Private</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Public Securities</div>
+        <ul>
+          <li>Registered to trade in public markets (exchanges, dealers)</li>
+          <li>Must meet stringent regulatory standards (reporting, governance)</li>
+          <li>Generally liquid — sellers can easily find buyers</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Private Securities</div>
+        <ul>
+          <li>Only qualified (sophisticated, wealthy) investors can buy</li>
+          <li>Less disclosure required — cheaper to issue but buyers require higher returns</li>
+          <li>Generally <strong>illiquid</strong> — no organized secondary market</li>
+          <li>Venture capital = private equity for startups</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: SECURITIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Securities</h2>
+    </div>
+
+    <h3>Fixed-Income Instruments</h3>
+    <div class="card">
+      <p>Contractually include predetermined payment schedules (interest and principal). Generally promises to repay borrowed money. Payment amounts may be pre-specified or vary by formula (linked to interest rate or commodity price).</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Instrument</th>
+            <th>Issued By</th>
+            <th>Key Features</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bonds</td>
+            <td>Corporations, Governments</td>
+            <td>Maturity &gt;10 years (convention); fixed or floating interest</td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>Corporations, Governments</td>
+            <td>Maturity &lt;10 years (convention); terms often used interchangeably with bonds</td>
+          </tr>
+          <tr>
+            <td>Bills</td>
+            <td>Governments</td>
+            <td>Mature within 1 year; money market instrument</td>
+          </tr>
+          <tr>
+            <td>Certificates of Deposit (CDs)</td>
+            <td>Banks</td>
+            <td>Usually &lt;1 year; sometimes longer initial maturities</td>
+          </tr>
+          <tr>
+            <td>Commercial Paper</td>
+            <td>Corporations</td>
+            <td>Short-term (&lt;1 year); money market instrument</td>
+          </tr>
+          <tr>
+            <td>Repurchase Agreements (Repos)</td>
+            <td>Any borrower using high-quality bond as collateral</td>
+            <td>Short-term (can be overnight); borrower sells bond with agreement to repurchase at higher price. Difference = implied interest</td>
+          </tr>
+          <tr>
+            <td>Convertible Bonds</td>
+            <td>Corporations</td>
+            <td>Can be converted into stock (usually at holder's option). Valued like stock if conversion likely; like bond if not</td>
+          </tr>
+          <tr>
+            <td>Mortgages</td>
+            <td>Banks / individuals</td>
+            <td>Loan secured by real estate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Term Maturity Guide</div>
+      <p>Short-term: &lt;1–2 years | Intermediate: 2–10 years | Long-term: &gt;5–10 years. These are conventions, not rigid definitions — the CFA exam won't test exact boundaries, but will test that bills/CDs/commercial paper/repos are <strong>money market instruments</strong> (≤1 year).</p>
+    </div>
+
+    <h3>Equities</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Key Rights</th>
+            <th>Exam Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Common Stock</td>
+            <td>Residual claim on assets and cash flows; vote for directors; receive declared dividends</td>
+            <td>Last in liquidation after all others; unlimited upside; most commonly traded equity</td>
+          </tr>
+          <tr>
+            <td>Preferred Stock</td>
+            <td>Fixed dividend (must be paid before common dividends); higher claim than common in liquidation</td>
+            <td>Analysts treat as <strong>fixed income</strong> when dividends clearly payable. Cumulative preferred = unpaid dividends accumulate and must be paid before common gets anything</td>
+          </tr>
+          <tr>
+            <td>Warrants</td>
+            <td>Right to buy company stock at a specified exercise price, at any time before expiry</td>
+            <td>Issued by the corporation itself (unlike options — issued by third parties). Considered equity because holder can obtain equity by exercising</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Pooled Investment Vehicles</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>Structure</th>
+            <th>Key Features</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Open-End Mutual Fund</td>
+            <td>Issues/redeems shares daily at <strong>NAV</strong></td>
+            <td>NAV = (Assets − Liabilities) / Shares outstanding. Price always = NAV</td>
+          </tr>
+          <tr>
+            <td>Closed-End Fund</td>
+            <td>Fixed number of shares; trade in secondary market</td>
+            <td>Price can differ from NAV — usually trades at <strong>discount</strong>. Premium/discount reflects management quality, sentiment, or mispricing of underlying assets</td>
+          </tr>
+          <tr>
+            <td>ETF / ETN</td>
+            <td>Open-end; trades in secondary market like a stock</td>
+            <td><strong>Authorized Participants (APs)</strong> arbitrage ETF price vs. NAV → price stays close to NAV. Many permit in-kind deposits/redemptions ("depositories")</td>
+          </tr>
+          <tr>
+            <td>Asset-Backed Securities (ABS)</td>
+            <td>Pool of assets (mortgages, car loans, credit cards) → tranches</td>
+            <td>Pass interest and principal to holders. Tranches: senior (safer) to junior ("toxic waste" = riskiest). SPV/SPE used to keep off balance sheet</td>
+          </tr>
+          <tr>
+            <td>Hedge Funds</td>
+            <td>Limited partnership; GP = manager; LP = qualified investors</td>
+            <td>Key features: (1) <strong>"2 and 20"</strong> fee structure — 2% annual management + 20% performance fee; (2) Use of leverage; (3) Only one strategy per fund typically; (4) Restricted access (qualified/accredited investors only)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — ETF Price vs. Closed-End Fund Price</div>
+      <p>ETFs stay near NAV because APs can create/redeem shares directly with the fund at NAV, eliminating persistent discounts/premiums. Closed-end funds <strong>cannot</strong> do this — investors must sell in the secondary market, so persistent discounts are common. This distinction is heavily tested.</p>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 ABS Tranching Memory Trick</div>
+      <p>Think of a building: <strong>Senior tranche</strong> = ground floor (safest, paid first, lowest return). <strong>Junior/toxic waste</strong> = top floor (highest risk, last paid, but highest potential return if pool performs). The total risk of the pool doesn't change — tranching just redistributes who bears it.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: CURRENCIES, COMMODITIES & REAL ASSETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Currencies, Commodities &amp; Real Assets</h2>
+    </div>
+
+    <h3>Currencies</h3>
+    <div class="card">
+      <ul>
+        <li>Monies issued by <strong>national monetary authorities</strong>; ~180 currencies currently in use</li>
+        <li><strong>Reserve currencies</strong> = held by central banks in significant quantities
+          <ul style="margin-top:6px;">
+            <li><span class="highlight">Primary</span>: USD, EUR</li>
+            <li><span class="highlight2">Secondary</span>: GBP, JPY, CHF</li>
+          </ul>
+        </li>
+        <li>Institutional FX trades: in multiples of large amounts (e.g., US$1M or ¥100M); settle in <strong>2 business days</strong></li>
+        <li>Retail FX: via commercial banks, ATMs, airport kiosks, credit cards</li>
+      </ul>
+    </div>
+
+    <h3>Commodities</h3>
+    <div class="card">
+      <ul>
+        <li>Include: precious metals, energy products, industrial metals, agricultural products, carbon credits</li>
+        <li><strong>Spot commodity markets</strong>: immediate delivery — used mainly by producers/processors who can handle physical goods</li>
+        <li><strong>Futures markets</strong>: preferred by information-motivated traders and investment managers — don't need to handle physical product; more liquid than spot; easy to close positions before delivery</li>
+        <li>Best commodities for spot trading (low delivery/storage cost): non-perishable, high value-to-weight ratio, low quality variation → precious metals, industrial diamonds, copper, aluminum, carbon credits</li>
+      </ul>
+    </div>
+
+    <h3>Real Assets</h3>
+    <div class="card">
+      <ul>
+        <li>Tangible properties: real estate, airplanes, machinery, lumber stands</li>
+        <li>Generally held by operating companies; institutional managers add them for <strong>income, tax benefits, and low correlation</strong> with financial assets</li>
+        <li><span class="danger-text">Challenges</span>: heterogeneous (no two alike), illiquid, high management costs, hard to value → prone to mispricing</li>
+        <li><strong>Indirect investment</strong> vehicles: REITs (Real Estate Investment Trusts) and MLPs (Master Limited Partnerships) — securitize real assets → more liquid and homogeneous → more suitable for investment portfolios</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Real Assets — Why They're Illiquid</div>
+      <p>Every parcel of real estate is unique (location alone makes it so). Because no two are identical, the market for any given asset is very small — few buyers. This is why REITs (which hold <em>portfolios</em> of properties) are far more liquid than direct property investments.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: CONTRACTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Contracts</h2>
+    </div>
+
+    <div class="card">
+      <p>Contracts are agreements to do something in the future. Their values typically depend on an <strong>underlying asset</strong> (commodity, security, index, currency pair, or other contract). Settlement is either <strong>physical</strong> (exchange of item) or <strong>cash</strong> (cash payment based on formula).</p>
+    </div>
+
+    <h3>Contract Types Compared</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Contract</th>
+            <th>Definition</th>
+            <th>Key Feature / Advantage</th>
+            <th>Key Risk / Limitation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Forward</td>
+            <td>Agreement to trade underlying at a price agreed today, for future delivery</td>
+            <td>Customizable terms; used for hedging known future transactions</td>
+            <td><span class="danger-text">Counterparty risk</span> + <span class="danger-text">illiquidity</span> (cannot easily exit without other party's consent)</td>
+          </tr>
+          <tr>
+            <td>Futures</td>
+            <td>Standardized forward, with <strong>clearinghouse guarantee</strong></td>
+            <td>No counterparty risk; highly liquid (standardized, exchange-traded); daily mark-to-market (variation margin)</td>
+            <td>Standardization means terms may not perfectly match hedging need; basis risk</td>
+          </tr>
+          <tr>
+            <td>Swap</td>
+            <td>Agreement to exchange periodic cash flows (e.g., fixed for floating interest)</td>
+            <td>Convert fixed to floating (or vice versa), or one currency to another; flexible for long-term risk management</td>
+            <td>Counterparty risk (OTC); complex valuation</td>
+          </tr>
+          <tr>
+            <td>Option (Call)</td>
+            <td>Holder has the <strong>right but not obligation</strong> to <strong>buy</strong> at strike price</td>
+            <td>No obligation — max loss for holder = premium paid; useful when uncertain if you'll need to transact</td>
+            <td>Premium cost; option writer bears potentially unlimited liability on calls</td>
+          </tr>
+          <tr>
+            <td>Option (Put)</td>
+            <td>Holder has the <strong>right but not obligation</strong> to <strong>sell</strong> at strike price</td>
+            <td>Downside protection (floor on sale price); equivalent to a guaranteed sell limit order</td>
+            <td>Premium cost</td>
+          </tr>
+          <tr>
+            <td>Insurance / CDS</td>
+            <td>Pay premium; receive payment if specified event occurs (loss, default)</td>
+            <td>Hedge against specific events (default risk for CDS); pooled diversification</td>
+            <td>CDS historically not subject to same reserve requirements as traditional insurance</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Futures Mechanics — Must Know</h3>
+    <div class="formula-box">
+      <div class="label">Futures Margin Key Terms</div>
+      <div class="f">
+        Initial Margin: amount posted when entering a futures contract<br>
+        Variation Margin (Daily Settlement): daily gains/losses added/deducted from margin account<br>
+        Maintenance Margin: minimum balance required in margin account<br>
+        Margin Call: triggered when balance falls below maintenance margin → must replenish
+      </div>
+      <div class="note">Clearinghouse acts as buyer to every seller and seller to every buyer → eliminates counterparty risk. Traders can close positions by arranging offsetting trades with anyone (not just original counterparty).</div>
+    </div>
+
+    <h3>Options — Key Definitions</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Call Option</div>
+        <p>Right to <strong>buy</strong> at strike price. Exercise when market price &gt; strike price (in-the-money). Holder is long; writer is short. Writer has obligation to sell if holder exercises.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Put Option</div>
+        <p>Right to <strong>sell</strong> at strike price. Exercise when market price &lt; strike price (in-the-money). Holder benefits from price decline despite holding a long put — has <strong>short exposure to underlying</strong>.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Option Type</th>
+            <th>Position</th>
+            <th>Exposure to Underlying</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Call</td>
+            <td>Long (Holder)</td>
+            <td><span class="tag tag-green">Long</span> — benefits when underlying rises</td>
+          </tr>
+          <tr>
+            <td>Call</td>
+            <td>Short (Writer)</td>
+            <td><span class="tag tag-red">Short</span> — loses when underlying rises</td>
+          </tr>
+          <tr>
+            <td>Put</td>
+            <td>Long (Holder)</td>
+            <td><span class="tag tag-red">Short</span> — benefits when underlying falls</td>
+          </tr>
+          <tr>
+            <td>Put</td>
+            <td>Short (Writer)</td>
+            <td><span class="tag tag-green">Long</span> — loses when underlying falls</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Put Holder Exposure</div>
+      <p>A <strong>long put</strong> position gives you <strong>short exposure to the underlying</strong>. This trips many candidates. You hold a long position in the <em>option contract</em> but you have indirect short exposure to the <em>underlying asset</em>. Always distinguish the position in the contract vs. the exposure to the underlying.</p>
+    </div>
+
+    <h3>Swap Types — Quick Reference</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Interest rate swap</strong>: fixed payments ↔ variable payments (based on SOFR or similar). Converts fixed income to floating or vice versa.</li>
+        <li><strong>Commodity swap</strong>: fixed payments ↔ payments based on future commodity price (e.g., oil)</li>
+        <li><strong>Currency swap</strong>: payments in one currency ↔ payments in another currency (may be fixed or variable)</li>
+        <li><strong>Equity swap</strong>: fixed cash payments ↔ payments based on equity/index returns</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Forward vs. Futures — The 2 Problems Futures Solve</div>
+      <p>Forwards have two problems: (1) <strong>Counterparty risk</strong> — solved by the clearinghouse guarantee in futures. (2) <strong>Illiquidity</strong> — solved by standardization, which allows traders to close positions with any counterparty, not just the original. Remember: forwards = bilateral, customized, OTC. Futures = standardized, exchange-traded, clearinghouse-guaranteed.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: FINANCIAL INTERMEDIARIES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Financial Intermediaries</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic for Intermediary Types — "BAD-CAB-DI"</div>
+      <p><strong>B</strong>rokers · <strong>A</strong>lternative Trading Systems · <strong>D</strong>ealers · <strong>C</strong>learinghouses · <strong>A</strong>rbitrageurs · <strong>B</strong>anks (depository) · <strong>D</strong>epositories/Custodians · <strong>I</strong>nsurance companies · (+ Securitizers, Investment banks)</p>
+    </div>
+
+    <h3>Brokers, Exchanges, and ATSs</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Intermediary</th>
+            <th>Role</th>
+            <th>Key Distinction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Broker</td>
+            <td><strong>Agent</strong> — finds counterparties for clients; does NOT trade with clients directly</td>
+            <td>Earns commission; fiduciary duty to find best price for client</td>
+          </tr>
+          <tr>
+            <td>Block Broker</td>
+            <td>Specialized in large orders; carefully manages order exposure to avoid moving market</td>
+            <td>Large buy order → fills at premium; large sell → fills at discount (price concession)</td>
+          </tr>
+          <tr>
+            <td>Investment Bank</td>
+            <td>Advises corporate clients; arranges IPOs, seasoned offerings, M&amp;A</td>
+            <td>Corporate finance division issues securities; has conflict of interest in IPO pricing (wants to underprice to benefit buy-side clients)</td>
+          </tr>
+          <tr>
+            <td>Exchange</td>
+            <td>Provides trading venue; matches orders; regulates members and listed issuers</td>
+            <td>Regulatory authority distinguishes exchanges from brokers; examples: NYSE, Tokyo SE, Frankfurt SE</td>
+          </tr>
+          <tr>
+            <td>ATS / ECN / MTF</td>
+            <td>Functions like exchange but with NO regulatory authority over subscribers</td>
+            <td><strong>Dark pools</strong> = ATSs that don't display client orders — large investors prefer these to avoid market impact. Examples: BATS, Liquidnet, POSIT</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dealers vs. Arbitrageurs</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Dealers</div>
+        <ul>
+          <li>Trade <strong>with</strong> clients (principal, not agent) — buy from clients who want to sell; sell to clients who want to buy</li>
+          <li>Provide <strong>liquidity on demand</strong> — profit from bid-ask spread</li>
+          <li>Connect buyers and sellers arriving at <strong>same place, different times</strong></li>
+          <li><strong>Primary dealers</strong>: trade with central banks in open market operations</li>
+          <li><strong>Conflict of interest</strong> as broker-dealer: agent duty (best price) vs. principal interest (own profit)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Arbitrageurs</div>
+        <ul>
+          <li>Buy and sell identical or similar instruments at different prices in different markets</li>
+          <li>Connect buyers and sellers in <strong>different places at same time</strong></li>
+          <li>Also provide liquidity; compete with dealers</li>
+          <li>Use <strong>replication</strong> strategies to hedge and create/eliminate contracts to meet excess demand/supply</li>
+          <li>When calls are overpriced vs. stock → sell calls, buy stock (replicate + hedge)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Securitizers — Key Concepts</h3>
+    <div class="card">
+      <p><strong>Securitization</strong>: buy assets → pool them → sell securities representing ownership of the pool.</p>
+      <ul style="margin-top:10px;">
+        <li><strong>Mortgage-backed securities (MBS)</strong>: pool of mortgages → pass-through securities; default losses more predictable at portfolio level; more liquid than individual mortgages</li>
+        <li><strong>SPV/SPE</strong> (Special Purpose Vehicle/Entity): separate legal entity used to hold the asset pool, keeping it off the intermediary's balance sheet; better protects investors if intermediary goes bankrupt</li>
+        <li><strong>Tranches</strong>: senior (first claim, safest), mezzanine, junior/equity tranche ("toxic waste" — disproportionate risk). <span class="danger-text">Complexity of tranching contributed to 2007 financial crisis.</span></li>
+        <li>ABS classes: mortgage-backed securities, car loans, credit card receivables, bank loans, airplane leases</li>
+      </ul>
+    </div>
+
+    <h3>Depository Institutions &amp; Insurance</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Depository Institutions</div>
+        <p>Commercial banks, savings &amp; loans, credit unions. Raise funds from depositors → lend to borrowers. Equity owners bear residual risk → aligns incentives to lend responsibly. Shareholders' equity absorbs losses before depositors lose.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Insurance Companies</div>
+        <p>Create policies that pay on loss events. <strong>Fraud</strong>: deliberate false claims. <strong>Moral hazard</strong>: insured takes more risks because losses are covered. <strong>Adverse selection</strong>: only high-risk individuals buy insurance → pool worse than average.</p>
+      </div>
+    </div>
+
+    <h3>Clearinghouses &amp; Depositories</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Clearinghouses</strong>: arrange final settlement; guarantee futures contract performance; only clear trades for members (who must post margins). Hierarchical: retail → broker/dealer → clearinghouse member → clearinghouse</li>
+        <li><strong>Depositories/Custodians</strong>: hold securities on behalf of clients; prevent loss through fraud, oversight, or disaster. Securities increasingly issued in electronic form only</li>
+        <li><strong>Prime brokers</strong>: provide margin loans to hedge funds; act as custodian and settle trades on behalf of clients using multiple execution brokers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: LONG & SHORT POSITIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Long &amp; Short Positions</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Long Position</div>
+        <ul>
+          <li>Own an asset or contract</li>
+          <li>Benefit when price <strong>rises</strong></li>
+          <li>Maximum loss: 100% of investment (can't lose more than you paid for unlevered position)</li>
+          <li>Maximum gain: <strong>unlimited</strong> (price can rise indefinitely)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Short Position</div>
+        <ul>
+          <li>Sold asset/contract you don't own; borrow security → sell it → repurchase to close ("cover")</li>
+          <li>Benefit when price <strong>falls</strong></li>
+          <li>Maximum gain: 100% (price can only fall to zero)</li>
+          <li>Maximum loss: <strong>unlimited</strong> (price can rise indefinitely — short squeeze)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Short Selling Mechanics</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li style="margin-bottom:6px;">Short seller <strong>borrows</strong> securities from a security lender (who is long the stock)</li>
+        <li style="margin-bottom:6px;"><strong>Sells</strong> the borrowed securities in the market</li>
+        <li style="margin-bottom:6px;">Short seller holds proceeds as <strong>collateral</strong> with the lender; lender invests collateral in short-term securities</li>
+        <li style="margin-bottom:6px;">Lender pays short seller a <strong>short rebate rate</strong> on the collateral (lower than market rate — difference = implicit lending fee)</li>
+        <li style="margin-bottom:6px;">Short seller must pay the lender all <strong>dividends/interest</strong> the lender would have received ("payments-in-lieu")</li>
+        <li style="margin-bottom:6px;">Short seller eventually <strong>repurchases</strong> and returns securities to lender (covering the position)</li>
+      </ol>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Hard-to-Borrow Securities ("On Special")</div>
+      <p>If a stock is hard to borrow, the short rebate rate may be very small or even <strong>negative</strong> — meaning the short seller pays to borrow the stock (instead of receiving interest). Securities in high demand for shorting are described as "on special."</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Security Lender's True Position</div>
+      <p>Although lenders believe they are "long" the stock, during the loan period they actually own a <strong>promise</strong> from the short seller (not the actual shares). The security lending agreement specifies payment-in-lieu of dividends. This may have different tax treatment than actual dividends — a tested detail.</p>
+    </div>
+
+    <h3>Position Identification in Contracts</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Contract Type</th>
+            <th>Long Side</th>
+            <th>Short Side</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Forward / Futures</td>
+            <td>Will <strong>take</strong> delivery (or cash equivalent)</td>
+            <td>Liable to <strong>make</strong> delivery; benefits when underlying falls</td>
+          </tr>
+          <tr>
+            <td>Option (Call/Put)</td>
+            <td><strong>Holder</strong> — has the right to exercise</td>
+            <td><strong>Writer</strong> — has the obligation to perform if holder exercises</td>
+          </tr>
+          <tr>
+            <td>Swap</td>
+            <td>Side that benefits when <strong>quoted price rises</strong></td>
+            <td>Side that benefits when quoted price falls</td>
+          </tr>
+          <tr>
+            <td>Currency (FX)</td>
+            <td>Long one currency = short the other (e.g., "Long USD/Short JPY")</td>
+            <td>Symmetric — buying one is always selling the other</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: LEVERAGED POSITIONS & MARGIN MATH -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Leveraged Positions &amp; Margin Math</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Key Margin Terms</div>
+      <div class="def-body">
+        <strong>Margin loan</strong>: money borrowed from broker to buy securities<br>
+        <strong>Call money rate</strong>: interest rate on margin loan (above T-bill rate; negotiable)<br>
+        <strong>Trader's equity</strong>: the portion of the position funded by the investor's own money<br>
+        <strong>Initial margin requirement</strong>: minimum % of purchase price that must be trader's equity (set by government/exchange/broker)<br>
+        <strong>Maintenance margin requirement</strong>: minimum equity % required to hold the position (usually ~25% of current value)<br>
+        <strong>Margin call</strong>: demand for more equity when maintenance margin is breached
+      </div>
+    </div>
+
+    <h3>Core Formulas — Must Know</h3>
+    <div class="formula-box">
+      <div class="label">★ Leverage Ratio</div>
+      <div class="f">Leverage Ratio = Value of Position / Value of Equity Investment</div>
+      <div class="note">
+        Maximum leverage ratio = 1 / Initial Margin Requirement<br>
+        Example: 40% initial margin → max leverage = 1/0.40 = 2.5×<br>
+        Interpretation: if stock rises 10%, equity return = 2.5 × 10% = 25%. If stock falls 10%, equity return = −25% (before interest and commissions).
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Return on Margin Transaction (Long Purchase)</div>
+      <div class="f">
+        Return on Equity = [Price change + Dividends received − Margin interest − Commissions] / Initial Equity<br><br>
+        Initial Equity = Purchase Price × Initial Margin Requirement<br>
+        Margin Loan = Purchase Price × (1 − Initial Margin Requirement)
+      </div>
+      <div class="note">All dollar amounts, then divide by initial equity. Don't forget to subtract margin interest paid and commissions paid.</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Margin Call Price (Long Position)</div>
+      <div class="f">
+        Margin Call Price = Purchase Price × (1 − Initial Margin%) / (1 − Maintenance Margin%)<br><br>
+        Alternative derivation:<br>
+        At margin call: Equity / Position Value = Maintenance Margin%<br>
+        Equity = Position Value − Loan<br>
+        Loan = Purchase Price × (1 − Initial Margin%)<br>
+        → Solve: P_MC × (1 − MM%) = Loan → P_MC = Loan / (1 − MM%)
+      </div>
+      <div class="note">
+        Example: Buy 100 shares at $50, 40% initial margin, 25% maintenance margin<br>
+        Loan = $50 × 0.60 = $30 per share<br>
+        P_MC = $30 / (1 − 0.25) = $30 / 0.75 = $40 per share<br>
+        If stock drops below $40, you receive a margin call.
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Margin Call Price (Short Position)</div>
+      <div class="f">
+        P_MC (short) = Short Sale Price × (1 + Initial Margin%) / (1 + Maintenance Margin%)<br><br>
+        Logic: for short, equity DECREASES as price RISES → margin call triggered when price rises too far
+      </div>
+      <div class="note">
+        Example: Short 100 shares at $50, 50% initial margin, 25% maintenance margin<br>
+        P_MC = $50 × (1 + 0.50) / (1 + 0.25) = $75 / 1.25 = $60<br>
+        If price rises above $60, short seller receives a margin call.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Common Margin Math Errors</div>
+      <p>1) <strong>Long vs. Short formula</strong>: long gets a margin call when price <em>drops</em>; short gets one when price <em>rises</em>. Use different formulas. 2) Margin interest accrues over the holding period — don't forget to include it in return calculation. 3) The leverage ratio amplifies both gains AND losses symmetrically (before interest). 4) Brokers can require margins <em>above</em> the regulatory minimum — they often do for volatile securities.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Quick Margin Call Check</div>
+      <p>For a <strong>long</strong> position, think: "How far can the price fall before my equity (position value minus fixed loan) equals maintenance margin % of position value?" For a <strong>short</strong> position: "How far can price rise before my equity (fixed collateral minus position value) equals maintenance margin % of position value?" Set up the equation, not just the formula.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: ORDER TYPES & INSTRUCTIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Order Types &amp; Instructions</h2>
+    </div>
+
+    <div class="card">
+      <p>All orders specify: <strong>instrument</strong>, <strong>side</strong> (buy or sell), and <strong>quantity</strong>. Additional instructions include:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Execution instructions</strong>: how to fill the order</li>
+        <li><strong>Validity instructions</strong>: when the order may be filled</li>
+        <li><strong>Clearing instructions</strong>: how to arrange final settlement</li>
+      </ul>
+    </div>
+
+    <h3>Execution Instructions — Market vs. Limit Orders</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Market Order</div>
+        <ul>
+          <li>Fill immediately at <strong>best available price</strong></li>
+          <li>Certainty of execution ✓</li>
+          <li>Uncertainty of price ✗</li>
+          <li>Can be expensive in thinly traded or illiquid markets (large price concession)</li>
+          <li>Price may move between order submission and execution</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Limit Order</div>
+        <ul>
+          <li>Fill at best price available, but <strong>no worse than limit price</strong></li>
+          <li>Certainty of price (floor/ceiling) ✓</li>
+          <li>No certainty of execution ✗ — may never fill</li>
+          <li>Limit buy: won't pay <em>more</em> than limit; Limit sell: won't accept <em>less</em> than limit</li>
+          <li>Limit orders often fill <em>better</em> than limit price if better prices are available</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Common Misconception About Limit Orders</div>
+      <p>Many people think limit orders always execute at the limit price. <strong>Wrong</strong>. The first instruction is to get the best available price — the limit price is only a floor (for sells) or ceiling (for buys). If better prices are available, the order fills at those better prices. The limit is only a constraint, not a target.</p>
+    </div>
+
+    <h3>Limit Order Positioning — Key Terminology</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Buy Order Placement</th>
+            <th>Relative to Market</th>
+            <th>Execution Likelihood</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Above best offer</td>
+            <td><span class="tag tag-green">Marketable limit order</span> — trades immediately at or below limit</td>
+            <td>Very high — essentially a market order with a price cap</td>
+          </tr>
+          <tr>
+            <td>Between best bid and best offer</td>
+            <td><span class="tag tag-blue">Makes a new market</span> — becomes new best bid; waits for sellers</td>
+            <td>Medium — may attract sellers</td>
+          </tr>
+          <tr>
+            <td>At best bid</td>
+            <td><span class="tag tag-yellow">Makes market</span> — joins queue at best bid; waits behind earlier orders</td>
+            <td>Lower — queued after time-priority predecessors</td>
+          </tr>
+          <tr>
+            <td>Below best bid</td>
+            <td><span class="tag tag-red">Behind the market</span> — only executes if prices drop</td>
+            <td>Low — standing limit order waiting for market to come to it</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Other Execution Instructions</h3>
+    <div class="card">
+      <ul>
+        <li><strong>All-or-nothing (AON)</strong>: entire order must fill or not at all</li>
+        <li><strong>Minimum fill</strong>: specify minimum quantity that must be filled in a single transaction</li>
+        <li><strong>Hidden orders</strong>: not displayed to other traders; only broker/exchange sees them. Traders discover hidden size only by submitting orders that trade with it</li>
+        <li><strong>Iceberg orders</strong> (display orders): only a portion (display size) is visible; remainder is hidden. When display size is consumed, next tranche becomes visible up to display size. Used to hide true size while maintaining visible presence</li>
+      </ul>
+    </div>
+
+    <h3>Validity Instructions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Order Type</th>
+            <th>Validity Period</th>
+            <th>Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Day Order</td>
+            <td>Expires at end of trading day if unfilled</td>
+            <td>Default order type; most common</td>
+          </tr>
+          <tr>
+            <td>Good-till-Cancelled (GTC)</td>
+            <td>Stays open until filled or cancelled (brokers may cap at a few months)</td>
+            <td>Patient trader willing to wait for target price</td>
+          </tr>
+          <tr>
+            <td>Immediate-or-Cancel (IOC) / Fill-or-Kill (FOK)</td>
+            <td>Valid only upon receipt; any unfilled portion cancelled immediately</td>
+            <td>High-frequency/algo trading to probe for hidden liquidity; thousands submitted per executed order</td>
+          </tr>
+          <tr>
+            <td>Good-on-Close (Market-on-Close)</td>
+            <td>Only filled at market close</td>
+            <td>Mutual funds (value portfolios at closing prices); index rebalancing</td>
+          </tr>
+          <tr>
+            <td>Good-on-Open</td>
+            <td>Only filled at market open</td>
+            <td>Trade at opening price</td>
+          </tr>
+          <tr>
+            <td>Stop Order (Stop-Loss)</td>
+            <td>Becomes valid only after stop price is triggered</td>
+            <td>Limit losses; confirm momentum before entering. <span class="danger-text">Does NOT guarantee execution at stop price</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Stop Orders — Important Details</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Stop-sell order</strong>: sell trigger activates when price falls <em>to or below</em> stop price → useful to limit losses on long positions</li>
+        <li><strong>Stop-buy order</strong>: buy trigger activates when price rises <em>to or above</em> stop price → useful to limit losses on short positions, or to confirm upside momentum</li>
+        <li>Can be combined: "GTC, stop 30, market sell" or "GTC, stop 30, limit 25 sell" (limit adds price floor)</li>
+        <li><span class="danger-text">Stop orders do NOT guarantee execution at the stop price</span> — in fast-moving markets, execution may be far worse</li>
+        <li>Stop orders contribute to <strong>market momentum</strong> — sell stops push prices down further; buy stops push prices up further</li>
+        <li>A put option is equivalent to a limit sell order with <strong>guaranteed</strong> execution at the strike price (but requires paying a premium)</li>
+      </ul>
+    </div>
+
+    <h3>Clearing Instructions</h3>
+    <div class="card">
+      <ul>
+        <li>Specify which entity is responsible for settling the trade (customer's broker for retail; custodian or other broker for institutional)</li>
+        <li>When client uses one broker to trade and another to settle: first broker "gives up" trade to the <strong>prime broker</strong></li>
+        <li>Long sale vs. short sale must be indicated: broker must confirm securities are available for delivery (long sale) or can be borrowed (short sale)</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Bid–Ask Spread Terminology</div>
+      <p><strong>Best bid</strong> = highest price anyone will pay. <strong>Best offer/ask</strong> = lowest price anyone will sell at. <strong>Market spread</strong> = best ask − best bid. <strong>Making a market</strong> = quoting both a bid and ask (two-sided market). <strong>Taking the market</strong> = trading at the quoted prices. Traders who improve price or display orders and arrive early get <strong>order precedence</strong> in order-driven markets.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: PRIMARY MARKETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Primary Markets</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Primary Market Definition</div>
+      <div class="def-body">Where issuers first sell securities to investors. Funds flow from investor → issuer. Compare: in secondary markets, funds flow between traders (issuer receives nothing).</div>
+    </div>
+
+    <h3>Primary Market Offering Types</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Offering Type</th>
+            <th>Description</th>
+            <th>Key Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IPO (Initial Public Offering)</td>
+            <td>First-ever public sale of a company's securities</td>
+            <td>Investment bank builds "book" (book building / book runner in London). Typically underwritten. IPOs often underpriced → price rises in secondary market post-IPO</td>
+          </tr>
+          <tr>
+            <td>Seasoned / Secondary Offering</td>
+            <td>Additional sale of a security that has already been issued</td>
+            <td>Pricing anchored by secondary market — less risk of mispricing vs. IPO</td>
+          </tr>
+          <tr>
+            <td>Underwritten Offering</td>
+            <td>Investment bank <strong>guarantees</strong> the sale at the offering price</td>
+            <td>Bank buys any unsold shares. Syndicate of banks for large issues. Fee ≈ 7%. Bank supports secondary market for ~1 month post-IPO. <strong>Conflict of interest</strong>: bank wants to underprice to allocate to favored clients</td>
+          </tr>
+          <tr>
+            <td>Best Efforts Offering</td>
+            <td>Bank acts only as <strong>broker</strong> (no guarantee)</td>
+            <td>If undersubscribed, issuer sells less than planned. No bank risk of buying unsold shares</td>
+          </tr>
+          <tr>
+            <td>Private Placement</td>
+            <td>Sale directly to small group of qualified investors (with bank help)</td>
+            <td>Less disclosure than public offering → cheaper. Buyers require higher returns (no liquid secondary market). Qualified investors: sufficient knowledge + wealth</td>
+          </tr>
+          <tr>
+            <td>Shelf Registration</td>
+            <td>Make full disclosures once; sell shares directly into secondary market over time</td>
+            <td>Flexible timing; reduces downward price pressure of large single offering</td>
+          </tr>
+          <tr>
+            <td>Dividend Reinvestment Plan (DRP/DRIP)</td>
+            <td>Shareholders reinvest dividends into newly issued shares</td>
+            <td>Sometimes allows purchases at slight discount; new shares issued (not open market purchases)</td>
+          </tr>
+          <tr>
+            <td>Rights Offering</td>
+            <td>Existing shareholders receive rights to buy stock at a discount to market price, in proportion to holdings</td>
+            <td>Rights = short-term stock warrants. Exercise price below market → dilution for non-exercising shareholders. Shareholders can sell rights to others. Generally unpopular with shareholders</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ IPO Underpricing — Investment Bank Conflict of Interest</div>
+      <p>The bank has <strong>two conflicting interests</strong>: as agent for the issuer, it should maximize proceeds (higher price). As underwriter, it wants a lower price to: (1) allocate cheap shares to favored clients, and (2) avoid buying overpriced shares if undersubscribed. This structural conflict systematically leads to IPO underpricing — and why post-IPO prices often rise immediately.</p>
+    </div>
+
+    <h3>Why Secondary Markets Support Primary Markets</h3>
+    <div class="card">
+      <p>Investors <strong>pay more</strong> for securities they can easily sell later. Higher secondary market liquidity → higher prices at primary offering → <strong>lower cost of capital</strong> for issuers. Without liquid secondary markets, primary capital raising would be much more expensive.</p>
+    </div>
+
+    <h3>Government Securities Issuance</h3>
+    <div class="card">
+      <ul>
+        <li>Financially strong national governments: issue bills/notes/bonds via <strong>public auctions</strong> organized by finance ministry; may also sell directly to dealers</li>
+        <li>Smaller/less creditworthy governments and most regional governments: contract with investment banks; many laws require them to auction securities</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: SECONDARY MARKET STRUCTURES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Secondary Market Structures</h2>
+    </div>
+
+    <h3>Trading Sessions: Call Markets vs. Continuous Markets</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Call Market</div>
+        <ul>
+          <li>Trades only arranged when market is "called" at specific time/place</li>
+          <li>Very liquid <em>when called</em> (all traders present simultaneously)</li>
+          <li><strong>Completely illiquid</strong> between sessions</li>
+          <li>Uses single price auction → price that maximizes total volume traded</li>
+          <li>Often used for opening/closing auctions in continuous markets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Continuous Trading Market</div>
+        <ul>
+          <li>Trades arranged anytime market is open</li>
+          <li>Can be difficult if buyers/sellers not simultaneously present</li>
+          <li>Most exchanges operate this way (with call auctions at open/close)</li>
+          <li>Uses discriminatory pricing rule (standing order's limit price = trade price)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Three Main Execution Mechanisms</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Market Type</th>
+            <th>How Trades Are Arranged</th>
+            <th>Who Provides Liquidity</th>
+            <th>Examples / Instruments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Quote-Driven</strong><br>(Price-Driven / Dealer Market)</td>
+            <td>Customers trade <strong>with dealers</strong> at dealer-quoted bid/ask prices</td>
+            <td>Dealers (exclusively)</td>
+            <td>Most bonds, most currencies, most spot commodities; OTC markets. Also called "over-the-counter" markets</td>
+          </tr>
+          <tr>
+            <td><strong>Order-Driven</strong></td>
+            <td>Automated system matches buy and sell orders using rules</td>
+            <td>Public traders AND dealers submitting limit orders</td>
+            <td>Almost all exchanges; all automated trading systems (ECNs); stock markets</td>
+          </tr>
+          <tr>
+            <td><strong>Brokered</strong></td>
+            <td>Brokers find counterparties for unique, illiquid instruments</td>
+            <td>Brokers (search for buyers/sellers)</td>
+            <td>Large block trades, real estate, fine art, intellectual property, operating companies, taxi medallions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Order-Driven Markets — Order Precedence Rules</h3>
+    <div class="card">
+      <p>Orders are ranked by a <strong>hierarchy</strong>:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:6px;"><strong>Price priority</strong> (first): highest-priced buys and lowest-priced sells go first (most aggressively priced)</li>
+        <li style="margin-bottom:6px;"><strong>Display precedence</strong> (second): at same price, displayed orders go before hidden orders</li>
+        <li style="margin-bottom:6px;"><strong>Time precedence</strong> (third): at same price and display status, earlier orders go first</li>
+      </ol>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">These rules incentivize traders to improve price, display orders publicly, and arrive early → all of which increase market liquidity.</p>
+    </div>
+
+    <h3>Trade Pricing Rules</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rule</th>
+            <th>Used In</th>
+            <th>How It Works</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Uniform Pricing Rule</td>
+            <td>Call markets</td>
+            <td>All trades execute at the <strong>same single price</strong> that maximizes total volume traded</td>
+          </tr>
+          <tr>
+            <td>Discriminatory Pricing Rule</td>
+            <td>Continuous trading markets</td>
+            <td>The <strong>standing order's limit price</strong> determines trade price. Arriving (aggressing) trader fills at each standing order's own limit price — most aggressive first, then less aggressive. Allows price discrimination across standing orders</td>
+          </tr>
+          <tr>
+            <td>Derivative Pricing Rule</td>
+            <td>Crossing networks (e.g., POSIT)</td>
+            <td>Trade price <strong>derived from another market</strong> (usually midpoint of primary exchange's best bid/ask). Price does not depend on orders submitted to the crossing network itself</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Market Transparency</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Pre-Trade Transparency</div>
+        <p>Market publishes <strong>real-time quotes and orders</strong> before trades occur. Buyers benefit — can see best available prices and manage trading decisions. Enables tighter bid-ask spreads.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Post-Trade Transparency</div>
+        <p>Market publishes <strong>trade prices and sizes</strong> shortly after execution. Allows participants to verify execution quality and benchmark transaction costs.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Transparent vs. Opaque Markets</div>
+      <p>Opaque markets have wider bid-ask spreads (harder to determine market value) and higher transaction costs. <strong>Dealers prefer opaque</strong> markets — they have information advantages as frequent traders. <strong>Buy-side traders prefer transparent</strong> markets — better price discovery and transaction cost management. Dark pools (ATSs) are deliberately opaque — favored by large institutional traders who want to hide order size.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: WELL-FUNCTIONING FINANCIAL SYSTEMS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h2>Well-Functioning Financial Systems</h2>
+    </div>
+
+    <h3>Three Types of Efficiency</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Complete Markets</div>
+        <p>All instruments needed to solve investment and risk management problems are <strong>available to trade</strong>. The system has the right products.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Operational Efficiency</div>
+        <p>Markets are <strong>liquid</strong> — low transaction costs (commissions, bid-ask spreads, price impact). Liquid markets lower the cost of raising capital.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Informational Efficiency</div>
+        <p>Prices <strong>reflect all available information</strong> about fundamental values. Made possible by informed traders buying undervalued and selling overvalued instruments. Requires timely disclosures + liquid markets to be profitable for informed traders.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p><strong>Characteristics of a well-functioning financial system:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Well-developed markets with instruments to solve financial problems (complete markets)</li>
+        <li>Low transaction costs — commissions, bid-ask spreads, and order price impacts are minimal</li>
+        <li>Timely financial disclosures by corporations and governments → supports informational efficiency</li>
+        <li>Prices reflect fundamental values → vary with changes in fundamentals, not just liquidity demands of uninformed traders</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Informational Efficiency Needs Liquid Markets</div>
+      <p>Informed traders make prices efficient by trading on their information. But if transaction costs are too high, informed trading is not profitable → no incentive to collect/analyze information → prices become less informative. <strong>Liquidity enables informational efficiency.</strong> This is why liquid markets and price discovery go hand in hand.</p>
+    </div>
+
+    <h3>What Intermediaries Must Do to Create a Well-Functioning System</h3>
+    <div class="card">
+      <ul>
+        <li>Organize exchanges, brokerages, and ATSs that match buyers to sellers</li>
+        <li>Provide liquidity on demand to traders</li>
+        <li>Securitize assets to create attractive investment instruments → lower borrowing costs</li>
+        <li>Run banks that match investors to borrowers (take deposits, make loans)</li>
+        <li>Run insurance companies that pool uncorrelated risks</li>
+        <li>Provide investment advisory services</li>
+        <li>Organize clearinghouses to ensure settlement</li>
+        <li>Organize depositories to protect assets</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 13: MARKET REGULATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <h2>Market Regulation</h2>
+    </div>
+
+    <h3>6 Objectives of Market Regulation</h3>
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "CF-PS-UL"</div>
+      <p><strong>C</strong>ontrol fraud · <strong>F</strong>oster agency problem solutions · <strong>P</strong>romote fairness · <strong>S</strong>et common standards · <strong>U</strong>ndercapitalization prevention · <strong>L</strong>ong-term liability funding</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Objective</th>
+            <th>Why Needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><strong>Control fraud</strong></td>
+            <td>Financial markets are complex; customers less sophisticated; potential for fraud is high in unregulated markets. Regulators create systems to protect customers from fraud</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><strong>Control agency problems</strong></td>
+            <td>Customers cannot easily judge agent quality (broker, adviser, fund manager). Regulators set minimum competence standards and standards of practice. Random performance makes it hard to distinguish skill from luck</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><strong>Promote fairness</strong></td>
+            <td>Insider trading rules prevent corporate insiders from exploiting non-public information → keeps markets liquid (uninformed traders won't participate if they consistently lose to insiders)</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><strong>Set mutually beneficial standards</strong></td>
+            <td>Common financial reporting standards (IASB/FASB) allow easy comparison of companies; convergence toward IFRS. Without common standards, analysis would be far more costly</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><strong>Prevent undercapitalized firms from exploiting investors</strong></td>
+            <td>Minimum capital requirements ensure firms can honor obligations; ensure owners have skin in the game → discourages excessive risk-taking. Without capital, owners take all the upside, depositors bear the downside</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><strong>Ensure long-term liabilities are funded</strong></td>
+            <td>Insurance companies and pension funds tend to underestimate reserves (managers won't be around when liabilities come due). Regulation requires adequate reserves</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Self-Regulating Organizations (SROs)</h3>
+    <div class="card">
+      <ul>
+        <li>SROs regulate their own members (exchanges, clearinghouses, dealer trade organizations)</li>
+        <li>Members voluntarily subject themselves to SRO rules, or governments delegate regulatory authority to SROs (subject to government oversight)</li>
+        <li>High SRO standards build member credibility with customers and reduce losses when dealing with other members</li>
+        <li>Examples: exchanges, FINRA (US), CFA Institute (sets investment management standards)</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ When Regulation Fails</div>
+      <p>If regulation fails, financial systems malfunction: people stop saving, good projects go unfunded, hedgers withdraw (hedging costs too high), specialization declines (riskier without hedging), production becomes less efficient, and economies become less wealthy. Regulation is not just compliance overhead — it is foundational infrastructure for economic welfare.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 14: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s14">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>6 purposes of the financial system</strong>: Saving, Borrowing, Raising equity, Managing risk, Exchanging assets (spot), Information trading. Mnemonic: SB-RME-I.</li>
+        <li>✅ <strong>3 functions</strong>: Facilitate purposes → Determine equilibrium rates → Allocate capital efficiently.</li>
+        <li>✅ <strong>Asset types</strong>: Securities + Currencies + Contracts = Financial assets. Commodities + Real assets = Physical assets.</li>
+        <li>✅ <strong>Money market instruments</strong> (≤1 year): T-bills, repos, CDs, commercial paper. Capital markets: bonds, equities (longer duration).</li>
+        <li>✅ <strong>Primary vs. secondary market</strong>: Primary = issuer sells to investors, funds go to issuer. Secondary = investors trade among themselves.</li>
+        <li>✅ <strong>Public vs. private securities</strong>: Public = regulated, liquid. Private = less disclosure, illiquid, qualified investors only, higher required return.</li>
+        <li>✅ <strong>Repo</strong>: short-term borrowing using bond as collateral. Sell bond + agree to repurchase at higher price. Difference = implied interest.</li>
+        <li>✅ <strong>Convertible bond</strong>: if stock price high → valued like stock; if stock price low → valued like bond.</li>
+        <li>✅ <strong>Preferred stock</strong>: treated as fixed income when dividends clearly payable. Cumulative = unpaid dividends accumulate before common gets any dividend.</li>
+        <li>✅ <strong>Warrants</strong>: issued by the corporation (not third parties like options). Right to buy company stock at exercise price.</li>
+        <li>✅ <strong>Open-end fund</strong>: issues/redeems at NAV daily. <strong>Closed-end fund</strong>: fixed shares; trade in secondary market, usually at discount to NAV. <strong>ETF</strong>: open-end but trades in secondary market; APs keep price close to NAV via arbitrage.</li>
+        <li>✅ <strong>Hedge fund fees</strong>: typically "2 and 20" — 2% AUM fee + 20% performance fee. Limited partnership structure; qualified investors only.</li>
+        <li>✅ <strong>ABS tranches</strong>: Senior (safest, paid first) → Junior/toxic waste (riskiest, last paid). SPV/SPE used to isolate assets from intermediary's balance sheet.</li>
+        <li>✅ <strong>Forward contracts</strong>: two problems — counterparty risk + illiquidity. Futures solve both via clearinghouse + standardization.</li>
+        <li>✅ <strong>Option exposure table</strong>: Long call = long underlying; Short call = short underlying; Long put = SHORT underlying; Short put = long underlying.</li>
+        <li>✅ <strong>Long position</strong>: max gain = unlimited; max loss = 100%. <strong>Short position</strong>: max gain = 100%; max loss = unlimited. Short sellers benefit from price declines.</li>
+        <li>✅ <strong>Short rebate rate</strong>: paid to short seller on collateral. If stock is hard to borrow → rate may be zero or negative (stock "on special").</li>
+        <li>✅ <strong>Payment-in-lieu of dividends</strong>: short seller pays lender any dividends the lender would have received. May have different tax treatment.</li>
+        <li>✅ <strong>Leverage ratio</strong> = Position value / Equity. Max leverage = 1 / Initial margin requirement. Return on equity = Leverage ratio × return on unleveraged position (before interest/commissions).</li>
+        <li>✅ <strong>Margin call price (long)</strong> = Purchase price × (1 − Initial margin%) / (1 − Maintenance margin%)</li>
+        <li>✅ <strong>Margin call price (short)</strong> = Short sale price × (1 + Initial margin%) / (1 + Maintenance margin%)</li>
+        <li>✅ <strong>Market order</strong>: execution certain, price uncertain. <strong>Limit order</strong>: price certain (floor/ceiling), execution uncertain. Limit orders may fill better than limit price if better prices available.</li>
+        <li>✅ <strong>Marketable limit order</strong>: limit buy above best offer (or limit sell below best bid) → trades immediately. NOT the same as a market order — it has a price cap/floor.</li>
+        <li>✅ <strong>Stop orders</strong>: do NOT guarantee execution at stop price. Contribute to market momentum. Put option = guaranteed execution at strike price (but costs premium).</li>
+        <li>✅ <strong>Order precedence in order-driven markets</strong>: (1) Price priority → (2) Display precedence → (3) Time precedence.</li>
+        <li>✅ <strong>Three market execution mechanisms</strong>: Quote-driven (dealer markets — bonds, currencies), Order-driven (exchanges — stocks), Brokered (unique/illiquid instruments — real estate, art, large blocks).</li>
+        <li>✅ <strong>Three trade pricing rules</strong>: Uniform (call markets — single clearing price), Discriminatory (continuous — standing order's limit price), Derivative (crossing networks — midpoint from another market).</li>
+        <li>✅ <strong>IPO underwriting conflict</strong>: bank should maximize issuer proceeds BUT incentivized to underprice (to benefit buy-side clients and avoid buying overpriced shares). Result: IPOs typically underpriced → post-IPO price rise.</li>
+        <li>✅ <strong>Rights offering</strong>: existing shareholders get right to buy new shares below market price proportionally. Rights = short-term warrants. Non-exercising shareholders suffer dilution. Generally unpopular.</li>
+        <li>✅ <strong>Secondary markets support primary markets</strong>: liquidity in secondary market → investors pay more → lower cost of capital for issuers.</li>
+        <li>✅ <strong>Dark pools</strong>: ATSs that don't display client orders. Favored by large institutional investors who don't want to reveal large orders (avoid market impact).</li>
+        <li>✅ <strong>Three efficiencies</strong>: Complete markets (right products exist), Operational efficiency (low transaction costs), Informational efficiency (prices reflect fundamentals).</li>
+        <li>✅ <strong>6 objectives of regulation</strong>: Control fraud, Control agency problems, Promote fairness, Set standards, Prevent undercapitalization, Fund long-term liabilities. Mnemonic: CF-PS-UL.</li>
+        <li>✅ <strong>Insurance problems</strong>: Fraud (deliberate false claims), Moral hazard (less careful when insured), Adverse selection (only high-risk buy coverage).</li>
+        <li>✅ <strong>Brokers</strong> = agents (don't trade with clients). <strong>Dealers</strong> = principals (trade with clients from own account). <strong>Broker-dealer conflict</strong>: agent duty to get best price vs. principal interest in spread profit.</li>
+        <li>✅ <strong>Arbitrageurs</strong>: connect buyers/sellers in different places at same time. Dealers: connect buyers/sellers in same place at different times.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        Leverage Ratio = Value of Position / Value of Equity<br>
+        Max Leverage Ratio = 1 / Initial Margin Requirement<br><br>
+        Return on Margin (Long) = [ΔPrice + Dividends − Margin Interest − Commissions] / Initial Equity<br><br>
+        Margin Call Price (Long) = Purchase Price × (1 − Initial Margin%) / (1 − Maintenance Margin%)<br>
+        Margin Call Price (Short) = Short Sale Price × (1 + Initial Margin%) / (1 + Maintenance Margin%)<br><br>
+        Initial Equity (Long) = Purchase Price × Initial Margin%<br>
+        Margin Loan = Purchase Price × (1 − Initial Margin%)<br><br>
+        NAV per share = (Fund Assets − Fund Liabilities) / Shares Outstanding
+      </div>
+      <div class="note">Margin call price (long): triggered when price DROPS. Margin call price (short): triggered when price RISES. Know which formula applies to which scenario — this is heavily tested.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Equity Investments · Module 1: Market Organization and Structure · Exam Prep Notes
+</footer>
+
+</body>
+</html>

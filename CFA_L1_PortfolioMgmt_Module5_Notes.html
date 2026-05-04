@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 5: Behavioral Biases of Individuals</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --cog-bg: #14111e; --cog-border: #6b4cc9;
+    --emo-bg: #141118; --emo-border: #c94c6b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1014 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(107,76,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(107,76,201,0.15); color: #a47cf5; border: 1px solid rgba(107,76,201,0.3); }
+  .tag-pink { background: rgba(201,76,107,0.15); color: #f57ca4; border: 1px solid rgba(201,76,107,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Cognitive bias cards - purple left border */
+  .cog-bias { background: #16131f; border: 1px solid rgba(107,76,201,0.25); border-left: 3px solid #6b4cc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .cog-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #a47cf5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Emotional bias cards - pink left border */
+  .emo-bias { background: #1e131a; border: 1px solid rgba(201,76,107,0.25); border-left: 3px solid #c94c6b; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .emo-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #f57ca4; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .bias-section { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 10px 0 4px; }
+  .bias-content { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+  .bias-content ul { padding-left: 18px; margin-top: 4px; }
+  .bias-content li { margin-bottom: 4px; font-size: 13.5px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 5</div>
+  <h1>Behavioral <span>Biases of Individuals</span></h1>
+  <p>Exam-ready notes: cognitive errors vs. emotional biases, five belief perseverance biases (conservatism, confirmation, representativeness, illusion of control, hindsight), four processing error biases (anchoring, mental accounting, framing, availability), six emotional biases (loss aversion, overconfidence, self-control, status quo, endowment, regret aversion), and market anomalies explained by behavioral biases.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Cognitive vs. Emotional</a>
+  <a class="toc-item" href="#s2">02 · Belief Perseverance Biases</a>
+  <a class="toc-item" href="#s3">03 · Processing Error Biases</a>
+  <a class="toc-item" href="#s4">04 · Emotional Biases</a>
+  <a class="toc-item" href="#s5">05 · Master Comparison Table</a>
+  <a class="toc-item" href="#s6">06 · Market Anomalies &amp; Behavioral Finance</a>
+  <a class="toc-item" href="#s7">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: COGNITIVE VS. EMOTIONAL -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Cognitive Errors vs. Emotional Biases — Core Distinction</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Traditional finance</strong>: individuals act rationally, considering all available information → leads to optimal outcomes → supports market efficiency.</p>
+      <p style="margin-top:10px;"><strong>Behavioral finance</strong>: individuals do NOT always act rationally — behavioral biases cause deviations from rational decision-making → suboptimal outcomes → can explain market anomalies.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#a47cf5;">Cognitive Errors</div>
+        <p><strong>Source</strong>: faulty reasoning — statistical, information-processing, or memory errors</p>
+        <ul style="margin-top:8px;">
+          <li>Result from faulty thinking or knowledge gaps</li>
+          <li>More susceptible to <strong>correction</strong> via better information, education, and advice</li>
+          <li>Two sub-types:
+            <ul>
+              <li><strong>Belief perseverance biases</strong> (5): conservatism, confirmation, representativeness, illusion of control, hindsight</li>
+              <li><strong>Processing error biases</strong> (4): anchoring, mental accounting, framing, availability</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#f57ca4;">Emotional Biases</div>
+        <p><strong>Source</strong>: impulse or intuition — feelings rather than conscious calculations</p>
+        <ul style="margin-top:8px;">
+          <li>Arise spontaneously, not through conscious effort</li>
+          <li>May even be undesired by the person feeling them</li>
+          <li>Harder to <strong>correct</strong> — can typically only be <strong>adapted to</strong> (recognized and accommodated)</li>
+          <li>Six types: loss aversion, overconfidence, self-control, status quo, endowment, regret aversion</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Cognitive Dissonance</div>
+      <div class="def-body">The mental discomfort that occurs when new information conflicts with previously held beliefs or cognitions. To resolve this discomfort, people may ignore or modify conflicting information and seek only information that confirms existing beliefs. This is the psychological root of <strong>belief perseverance biases</strong>.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Moderate vs. Adapt</div>
+      <p>
+        <strong>Moderate a bias</strong>: recognize it and attempt to REDUCE or ELIMINATE it within the individual. Possible for cognitive errors (can be fixed with better information).<br>
+        <strong>Adapt to a bias</strong>: recognize and ACCEPT the bias and ADJUST for it (rather than fixing it). Necessary for emotional biases (feelings are hard to change).<br><br>
+        Cognitive errors → aim to <strong>moderate</strong>. Emotional biases → aim to <strong>adapt</strong>.
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Note — Overconfidence Is Both</div>
+      <p>Overconfidence has aspects of BOTH cognitive errors AND emotional biases, but is <strong>classified as emotional</strong> because the bias primarily results from emotion. A single bias can have elements of both — one type typically dominates.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: BELIEF PERSEVERANCE BIASES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Cognitive Errors — Belief Perseverance Biases (5)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Belief perseverance</strong>: tendency to cling to previously held beliefs by committing statistical, information-processing, or memory errors. Triggered by <strong>cognitive dissonance</strong>. Mnemonic: <span class="highlight">"CCRI H"</span> — Conservatism, Confirmation, Representativeness, Illusion of control, Hindsight.</p>
+    </div>
+
+    <!-- 1. CONSERVATISM -->
+    <div class="cog-bias">
+      <div class="cog-name">① Conservatism Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Maintaining prior views or forecasts by <strong>inadequately incorporating new, conflicting information</strong>. In Bayesian terms: overweights prior probability, underweights new information → beliefs underreact to new information.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Slow or no updating of views even when presented with new information</li>
+        <li>Maintaining prior beliefs to avoid mental stress of processing complex/abstract data</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "How does this new information change my forecast?" Use Bayes' Rule to systematically update beliefs. If information is difficult to interpret, seek expert guidance. Be especially alert with technical, abstract, or statistical information (higher cognitive cost to process).</div>
+    </div>
+
+    <!-- 2. CONFIRMATION -->
+    <div class="cog-bias">
+      <div class="cog-name">② Confirmation Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Tendency to <strong>look for and notice what confirms prior beliefs</strong> while ignoring or undervaluing contradictory information. A predisposition to justify what we already want to believe.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Consider only positive information about an existing investment; ignore negatives</li>
+        <li>Develop flawed screening criteria by ignoring contrary evidence</li>
+        <li><strong>Under-diversify portfolios</strong> (convinced of one stock; ignore all negatives; build oversized position)</li>
+        <li>Hold disproportionate amount of employer's stock (believe in company; ignore unfavorable news)</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Actively seek out information that CHALLENGES existing beliefs. Corroborate investment decisions from a different perspective or source (e.g., if convinced a stock is good, read the analyst with a sell rating).</div>
+    </div>
+
+    <!-- 3. REPRESENTATIVENESS -->
+    <div class="cog-bias">
+      <div class="cog-name">③ Representativeness Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Classifying new information based on past experiences and classifications — judging how likely something is based on how well it matches an existing stereotype or pattern. Two sub-types:
+        <ul style="margin-top:6px;">
+          <li><strong>Base-rate neglect</strong>: neglect general population rates (base rates) in favor of specific, individual information</li>
+          <li><strong>Sample-size neglect</strong>: incorrectly assume small samples are representative of populations ("law of small numbers")</li>
+        </ul>
+      </div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Adopt a view based almost exclusively on individual/specific information or a small sample</li>
+        <li>Update beliefs using simple classifications instead of rigorous analysis</li>
+        <li>May lead to over-extrapolating recent past performance into expected future performance</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "What is the probability that X belongs to Group A vs. Group B (which it's statistically more likely to belong to)?" Seek base-rate information; widen sample size of observations. Do more thorough research before classifying an investment.</div>
+    </div>
+
+    <!-- 4. ILLUSION OF CONTROL -->
+    <div class="cog-bias">
+      <div class="cog-name">④ Illusion of Control Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Tendency to <strong>believe one can control or influence outcomes when one cannot</strong>. People perceive more control than they actually have, infer causal connections where none exist, or display surprising certainty in predictions of chance events. Classic example: people prefer choosing their own lottery numbers.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li><strong>Inadequately diversify</strong> — prefer to invest in companies they believe they control (e.g., employer)</li>
+        <li><strong>Trade more than is prudent</strong> — portfolio turnover negatively correlated with returns</li>
+        <li>Construct overly detailed models and forecasts, believing model complexity controls uncertainty</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Recognize that investing is a PROBABILISTIC activity — even the largest firms have little control over outcomes. Actively seek contrary viewpoints. Ask: "What are the downside risks? What might go wrong?" Speak with someone who has an opposing view.</div>
+    </div>
+
+    <!-- 5. HINDSIGHT -->
+    <div class="cog-bias">
+      <div class="cog-name">⑤ Hindsight Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Believing <strong>past events were predictable and reasonable to expect</strong>. Outcomes that occurred are more readily evident than outcomes that did not. People also remember their own predictions as more accurate than they were (biased by knowing what actually happened). Poorly reasoned decisions with positive results remembered as brilliant; poor results of well-reasoned decisions remembered as avoidable mistakes.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Overestimate degree to which they correctly predicted an investment outcome</li>
+        <li>Unfairly assess portfolio manager performance by comparing against "what happened" rather than "what was expected at the time"</li>
+        <li>Closely related to <strong>overconfidence bias</strong></li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "Am I re-writing history or being honest about mistakes I made?" <strong>Keep written records</strong> of investment decisions and key reasons at or around the time decisions are made. Consulting actual records (not memory) produces a far more accurate picture of past decisions.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: PROCESSING ERROR BIASES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Cognitive Errors — Processing Error Biases (4)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Processing errors</strong>: information is processed and used <em>illogically or irrationally</em>. Less related to memory or probability errors; more related to flaws in HOW information itself is processed. Mnemonic: <span class="highlight">"AMFA"</span> — Anchoring, Mental accounting, Framing, Availability.</p>
+    </div>
+
+    <!-- 6. ANCHORING -->
+    <div class="cog-bias">
+      <div class="cog-name">⑥ Anchoring and Adjustment Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Relying on an <strong>initial piece of information</strong> (the "anchor") to make subsequent estimates and adjustments. When required to estimate an unknown value, people start from an initial anchor and adjust up or down — but <strong>adjust insufficiently</strong>, producing biased estimates. Closely related to conservatism bias. Bayes' Rule again provides guidance for proper belief updating.</div>
+      <div class="bias-section">Classic Example</div>
+      <div class="bias-content">An analyst with last year's EPS of £1.00 as anchor only adjusts to £0.90 even when business conditions have severely deteriorated — the anchor is last year's EPS rather than expected future conditions.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Stick too closely to original estimates when learning new information (underreact to changes)</li>
+        <li>Price anchors: hold a stock hoping to break even at purchase price rather than selling based on new information</li>
+        <li>Common anchors: purchase price, prior-year earnings, 52-week highs/lows</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "Am I holding this stock to attain a price I'm anchored to (e.g., purchase price, high water mark)?" "Am I making this forecast based on past conditions or future expected conditions?" A company's revenues reflect the conditions of that period — not the prior period's conditions. Focus on fundamentals, not historical reference points.</div>
+    </div>
+
+    <!-- 7. MENTAL ACCOUNTING -->
+    <div class="cog-bias">
+      <div class="cog-name">⑦ Mental Accounting Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Mentally dividing money into separate "accounts" that influence decisions, even though <strong>money is fungible</strong> (one dollar is the same as any other dollar regardless of source). Investors mentally construct portfolios in layers, each addressing a specific financial goal — without considering interactions across layers.</div>
+      <div class="bias-section">Classic Example</div>
+      <div class="bias-content">Using windfall gains ("house money") to make higher-risk investments than would otherwise be appropriate — treating a gain differently because of its source, even though the money has the same value.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Neglect opportunities to reduce risk by combining assets with low correlations across layers</li>
+        <li>Irrationally distinguish between income returns and capital appreciation returns</li>
+        <li>"Playing with house money" — believing greater risk is acceptable with returns than with principal</li>
+        <li>Suboptimal aggregate portfolio performance due to lack of holistic view</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Combine ALL assets onto one spreadsheet WITHOUT account labels. View the holistic asset allocation. This often reveals surprising results (higher cash than expected, hidden concentration). Then create a strategy considering ALL assets together.</div>
+    </div>
+
+    <!-- 8. FRAMING -->
+    <div class="cog-bias">
+      <div class="cog-name">⑧ Framing Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Answering a question differently based on the <strong>way it is asked or framed</strong>. The same information presented with a gain context vs. a loss context leads to different decisions. <strong>Narrow framing</strong>: evaluating information based on a narrow frame of reference — losing sight of the big picture in favor of one or two specific points.</div>
+      <div class="bias-section">Classic Example</div>
+      <div class="bias-content">"One out of four start-ups succeed" (gain frame → positive outlook → invest in VC) vs. "Three out of four start-ups fail" (loss frame → negative outlook → don't invest). Same information; different decisions due to framing.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Misidentify own risk tolerance based on how risk questions are framed:
+          <ul>
+            <li>Gain frame → more risk-averse</li>
+            <li>Loss frame → more risk-seeking</li>
+          </ul>
+        </li>
+        <li>Focus on short-term price fluctuations; ignore long-run considerations</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "Is this decision the result of focusing on a net gain or net loss position?" Try to eliminate any reference to gains and losses already incurred. Focus on the FUTURE prospects of an investment. Be neutral and open-minded when interpreting investment situations.</div>
+    </div>
+
+    <!-- 9. AVAILABILITY -->
+    <div class="cog-bias">
+      <div class="cog-name">⑨ Availability Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Estimating the probability of an outcome or importance of a phenomenon based on <strong>how easily the information is recalled</strong>. Four sources applicable to FMPs:
+        <ul style="margin-top:6px;">
+          <li><strong>Retrievability</strong>: ideas that come to mind first are judged as more likely/important</li>
+          <li><strong>Categorization</strong>: difficulty categorizing a search set leads to biased estimates</li>
+          <li><strong>Narrow range of experience</strong>: using a limited personal experience base (e.g., only considering tech stocks due to prior work experience)</li>
+          <li><strong>Resonance</strong>: bias toward situations that closely parallel personal experience</li>
+        </ul>
+      </div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Limit investment opportunity set to familiar classifications (one country, one sector)</li>
+        <li>Choose investments based on advertising or media coverage quantity</li>
+        <li>Fail to diversify (narrow range of experience → overweight familiar industries)</li>
+        <li>Overweight importance of events receiving heavy media attention</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ask: "How did I decide which investments to consider? Did I choose based on familiarity, media coverage, or advertised products?" Develop a proper investment policy strategy. Research and analyze decisions carefully. Focus on long-term historical data. Consult colleagues/external resources to widen the search beyond familiar categories.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: EMOTIONAL BIASES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Emotional Biases (6)</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Emotional biases</strong>: originate from impulse or intuition rather than conscious calculations. Harder to correct — typically can only be <strong>recognized and adapted to</strong>. Mnemonic: <span class="highlight">"LOSSER"</span> — Loss aversion, Overconfidence, Self-control, Status quo, Endowment, Regret aversion.</p>
+    </div>
+
+    <!-- 10. LOSS AVERSION -->
+    <div class="emo-bias">
+      <div class="emo-name">① Loss-Aversion Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Tendency to <strong>strongly prefer avoiding losses to achieving equivalent gains</strong>. Losses feel more painful than equivalent gains feel pleasurable. Paradoxically: FMPs accept more risk to AVOID losses than to ACHIEVE gains (the opposite of rational behavior).
+        <ul style="margin-top:6px;">
+          <li><strong>Utility function is S-shaped and asymmetric</strong> (Kahneman &amp; Tversky 1979): steeper in the domain of losses than gains</li>
+          <li>Risk-SEEKING behavior below the reference point (domain of losses)</li>
+          <li>Risk-AVOIDING behavior above the reference point (domain of gains)</li>
+          <li><strong>Disposition effect</strong>: hold losing investments too long; sell winning investments too quickly ("hold losers, sell winners")</li>
+        </ul>
+      </div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Hold investments in a LOSS position longer than justified (hope to break even)</li>
+        <li>Sell investments in a GAIN position sooner than justified (fear gains will erode)</li>
+        <li>Portfolio becomes riskier than optimal (holding losers adds risk; selling winners eliminates future gains)</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Disciplined investment approach. Analyze investments and realistically consider probabilities of future gains and losses. It's impossible to make losses painless — but rational analysis can guide better decisions despite the emotion.</div>
+    </div>
+
+    <!-- 11. OVERCONFIDENCE -->
+    <div class="emo-bias">
+      <div class="emo-name">② Overconfidence Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Unwarranted faith in one's own abilities. Classified as EMOTIONAL (primarily from emotion) but also has cognitive aspects. Often intensified by <strong>self-attribution bias</strong>: take too much credit for successes (self-enhancing); assign failures to others or external factors (self-protecting). Two forms:
+        <ul style="margin-top:6px;">
+          <li><strong>Prediction overconfidence</strong>: confidence intervals assigned to predictions are too NARROW (underestimate range of outcomes)</li>
+          <li><strong>Certainty overconfidence</strong>: probabilities assigned to outcomes are too HIGH (overstate certainty of outcomes)</li>
+        </ul>
+      </div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Underestimate risks and overestimate expected returns</li>
+        <li>Hold poorly diversified portfolios → significant downside risk</li>
+        <li>Trade excessively (overconfident = active traders = lower returns, higher risk)</li>
+        <li>In bubbles: overtrading, rejection of contradictory information, failure to diversify</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Review trading records — identify winners AND losers. Calculate portfolio performance over at least 2 years. Overconfident investors overcount winners and undercount losers. "Don't confuse brains with a bull market." Try to identify patterns in both profitable and unprofitable decisions. Distinguish between skill and luck.</div>
+    </div>
+
+    <!-- 12. SELF-CONTROL -->
+    <div class="emo-bias">
+      <div class="emo-name">③ Self-Control Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Failure to act in pursuit of <strong>long-term goals in favor of short-term satisfaction</strong>. Related to <strong>hyperbolic discounting</strong>: human tendency to prefer smaller payoffs now over larger payoffs in the future — present sacrifices require disproportionately large future rewards to be worthwhile.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Save insufficiently for the future → may then accept TOO MUCH RISK in portfolios to try to generate required returns</li>
+        <li>Borrow excessively to finance present consumption</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Ensure a proper investment plan is in place AND maintain a personal budget. Plans must be IN WRITING for regular review. Maintain a strategic asset allocation based on thorough evaluation.</div>
+    </div>
+
+    <!-- 13. STATUS QUO -->
+    <div class="emo-bias">
+      <div class="emo-name">④ Status Quo Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Choosing to do nothing ("maintain the status quo") instead of making a change, <strong>even when change is warranted</strong>. Driven by <strong>inertia</strong> rather than conscious choice. Distinguished from endowment and regret-aversion by the source: status quo = inertia; endowment/regret = conscious (but possibly incorrect) decisions.</div>
+      <div class="bias-section">Classic Example</div>
+      <div class="bias-content">Automatic 401(k) enrollment study: &gt;65% of employees stuck with the default contribution rate (2-3%) and default investment option even when they had full freedom to change. Inertia, not conscious preference, kept them there.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Unknowingly maintain portfolios with inappropriate risk characteristics</li>
+        <li>Fail to explore other (potentially superior) opportunities</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Education is essential. Quantify the risk-reducing and return-enhancing advantages of diversification and proper asset allocation. Show concrete examples of what can happen if status quo is maintained (e.g., concentrated stock position collapse scenarios).</div>
+    </div>
+
+    <!-- 14. ENDOWMENT -->
+    <div class="emo-bias">
+      <div class="emo-name">⑤ Endowment Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Valuing an asset MORE when you OWN it than when you do not. Inconsistent with standard theory: the price someone is willing to pay for a good should equal the price they'd accept to sell it. In reality: minimum selling price &gt; maximum purchase price. Ownership "endows" the asset with added value. Can be caused by: loss aversion, anchoring, and overconfidence. Applies to purchased AND inherited securities.</div>
+      <div class="bias-section">Classic Test</div>
+      <div class="bias-content">Ask the FMP: "Would you BUY this security today at the current price?" If the answer is no (or "probably not"), but the FMP is also not willing to sell — endowment bias is present. Also: "Why are you not buying more of this security today?"</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Fail to sell certain assets and replace them with superior alternatives</li>
+        <li>Continue to hold familiar assets because familiarity adds perceived value</li>
+        <li>Maintain inappropriate asset allocation inconsistent with risk tolerance and goals</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">For inherited securities: "If you received an equivalent cash sum, how would you invest it?" (Often: very differently from the inherited portfolio). For purchased securities: ask the "buy today?" test. Turn focus from past cost to current and future value.</div>
+    </div>
+
+    <!-- 15. REGRET AVERSION -->
+    <div class="emo-bias">
+      <div class="emo-name">⑥ Regret-Aversion Bias</div>
+      <div class="bias-section">Definition</div>
+      <div class="bias-content">Avoiding making decisions out of <strong>fear that the decision will turn out poorly</strong>. "No action" becomes the default because regret is more intense when unfavorable outcomes result from an action TAKEN vs. an action NOT taken. Two dimensions: regret from actions taken and from actions not taken.</div>
+      <div class="bias-section">Consequences</div>
+      <div class="bias-content"><ul>
+        <li>Too <strong>conservative</strong> in investment choices after past losses → long-term underperformance</li>
+        <li><strong>Herding behavior</strong>: follow crowd to limit potential future regret. Safer to fail conventionally than to succeed unconventionally (Keynes: "Worldly wisdom teaches that it is better for reputation to fail conventionally than to succeed unconventionally")</li>
+        <li>Prefer well-known company stocks over less-familiar ones (even with same risk/return) — choosing less-familiar involves more personal responsibility and potential for regret</li>
+      </ul></div>
+      <div class="bias-section">Detection &amp; Mitigation</div>
+      <div class="bias-content">Quantify risk-reducing and return-enhancing advantages of diversification. Recognize that losses happen to everyone — keep in mind long-term benefits of including risky assets. Recognize bubbles and keep long-term objectives in mind to prevent chasing popular investments.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: MASTER COMPARISON TABLE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Master Comparison Table — All 15 Biases</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Bias</th>
+            <th>Type</th>
+            <th>Sub-Type</th>
+            <th>Core Issue</th>
+            <th>Key Consequences</th>
+            <th>Key Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Conservatism</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Belief Perseverance</td>
+            <td>Slow to update beliefs with new info</td>
+            <td>Underreact to new information; miss important changes</td>
+            <td>Ask "how does new info change my forecast?"; use Bayes' Rule</td>
+          </tr>
+          <tr>
+            <td>Confirmation</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Belief Perseverance</td>
+            <td>Seek confirming info; ignore contradicting info</td>
+            <td>Under-diversify; oversize positions; hold employer stock</td>
+            <td>Actively seek disconfirming evidence; read bear-case analysts</td>
+          </tr>
+          <tr>
+            <td>Representativeness</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Belief Perseverance</td>
+            <td>Classify by resemblance not probability (base-rate neglect, sample-size neglect)</td>
+            <td>Extrapolate past performance; use tiny samples as "proof"</td>
+            <td>Research base rates; widen sample sizes</td>
+          </tr>
+          <tr>
+            <td>Illusion of Control</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Belief Perseverance</td>
+            <td>Believe one controls uncontrollable outcomes</td>
+            <td>Underdiversify; overtrade; overcomplex models</td>
+            <td>Recognize investing is probabilistic; seek contrary views</td>
+          </tr>
+          <tr>
+            <td>Hindsight</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Belief Perseverance</td>
+            <td>Past events seem predictable in retrospect</td>
+            <td>Overestimate past accuracy; unfairly judge managers</td>
+            <td>Keep written records of decisions AND reasoning at time of decision</td>
+          </tr>
+          <tr>
+            <td>Anchoring &amp; Adjustment</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Processing Error</td>
+            <td>Over-rely on initial anchor; adjust insufficiently</td>
+            <td>Under-react to changes; hold at purchase price</td>
+            <td>Ask "am I anchored?"; focus on future not past reference points</td>
+          </tr>
+          <tr>
+            <td>Mental Accounting</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Processing Error</td>
+            <td>Treat money differently based on source/category</td>
+            <td>Ignore cross-account correlations; "house money" risk-taking</td>
+            <td>View all assets on one spreadsheet without labels</td>
+          </tr>
+          <tr>
+            <td>Framing</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Processing Error</td>
+            <td>Decision changes based on how question is asked</td>
+            <td>Misidentify risk tolerance; focus on short-term losses/gains</td>
+            <td>Eliminate gain/loss framing; focus on future prospects neutrally</td>
+          </tr>
+          <tr>
+            <td>Availability</td>
+            <td><span class="tag tag-purple">Cognitive</span></td>
+            <td>Processing Error</td>
+            <td>Estimate probability by ease of recall (retrievability, categorization, narrow experience, resonance)</td>
+            <td>Limit investment universe; follow media; fail to diversify</td>
+            <td>Systematically broaden search; develop IPS; focus on long-term data</td>
+          </tr>
+          <tr>
+            <td>Loss Aversion</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>—</td>
+            <td>Losses feel worse than equivalent gains feel good (S-shaped utility)</td>
+            <td>Disposition effect: hold losers, sell winners too soon</td>
+            <td>Disciplined analysis; consider future prospects, not breakeven prices</td>
+          </tr>
+          <tr>
+            <td>Overconfidence</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>— (also cognitive)</td>
+            <td>Unwarranted faith in own abilities (prediction + certainty forms)</td>
+            <td>Overtrade; underdiversify; underestimate risk</td>
+            <td>Track records; review losers; don't confuse brains with bull market</td>
+          </tr>
+          <tr>
+            <td>Self-Control</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>—</td>
+            <td>Favor short-term pleasure over long-term goals</td>
+            <td>Undersave; overborrow; take too much risk to compensate</td>
+            <td>Written investment plan; personal budget; stick to SAA</td>
+          </tr>
+          <tr>
+            <td>Status Quo</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>—</td>
+            <td>Maintain current state via inertia (not conscious choice)</td>
+            <td>Hold inappropriate portfolio; miss better opportunities</td>
+            <td>Education; show concrete cost of inaction; quantify diversification benefits</td>
+          </tr>
+          <tr>
+            <td>Endowment</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>—</td>
+            <td>Value what you own more than the same item not owned (selling price &gt; buying price)</td>
+            <td>Fail to sell inferior assets; hold familiar assets too long</td>
+            <td>"Would you buy this today?" test; "What if you received cash instead?"</td>
+          </tr>
+          <tr>
+            <td>Regret Aversion</td>
+            <td><span class="tag tag-pink">Emotional</span></td>
+            <td>—</td>
+            <td>Avoid decisions to avoid feeling regret if decision goes wrong</td>
+            <td>Too conservative OR herd (prefer popular investments); miss targets</td>
+            <td>Proper diversification; recognize losses happen to everyone</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Three Biases That Lead to Under-Diversification</div>
+      <p>Multiple biases lead to under-diversification — a common exam question asks "which biases lead to this outcome?"<br>
+      <strong>Confirmation</strong>: convinced one stock is great, ignore negatives → oversized position<br>
+      <strong>Illusion of control</strong>: believe you control the company → concentrate in employer stock<br>
+      <strong>Overconfidence</strong>: believe your ability is above-average → don't feel need to diversify<br>
+      <strong>Availability</strong>: familiar with only one industry → overweight that industry<br>
+      <strong>Endowment</strong>: love what you own → can't diversify away from inherited holdings</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 "LOSSER" Emotional Biases — Key Portfolio Patterns</div>
+      <p>
+        <strong>Loss aversion</strong> → disposition effect (hold losers, sell winners)<br>
+        <strong>Overconfidence</strong> → overtrade, underdiversify<br>
+        <strong>Self-control</strong> → undersave, then take too much risk<br>
+        <strong>Status quo</strong> → inertia → wrong portfolio persists<br>
+        <strong>Endowment</strong> → won't sell even inappropriate holdings<br>
+        <strong>Regret aversion</strong> → herd behavior or excessive conservatism
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Status Quo vs. Endowment vs. Regret Aversion — Don't Confuse Them!</div>
+      <p>All three result in maintaining existing positions, but for different reasons:<br>
+      <strong>Status quo</strong>: pure inertia — no conscious thought involved<br>
+      <strong>Endowment</strong>: conscious belief that what you own is MORE VALUABLE than its market price<br>
+      <strong>Regret aversion</strong>: conscious fear that making a change might turn out WORSE than the status quo<br>
+      The OUTCOME looks similar; the MECHANISM differs. Exam tests the mechanism.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: MARKET ANOMALIES & BEHAVIORAL FINANCE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Behavioral Finance &amp; Market Anomalies</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Market Anomalies (from Behavioral Finance Perspective)</div>
+      <div class="def-body">Apparent deviations from the EMH — <strong>persistent abnormal returns that differ from zero and are predictable in direction</strong>. Not every deviation is a true anomaly. Misclassifications stem from: (1) choice of asset pricing model, (2) statistical issues (small sample, survivorship bias, data mining), (3) temporary disequilibria that reverse once arbitraged.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Three reasons apparent anomalies may not be real</strong>:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Model mismatch</strong>: "abnormal" return disappears when a better model is used (e.g., Fama-French 3-factor explains away many apparent anomalies)</li>
+        <li><strong>Statistical issues</strong>: small sample bias, survivorship bias, data mining (finding patterns by chance in historical data)</li>
+        <li><strong>Temporary disequilibria</strong>: anomaly exists briefly but is arbitraged away once publicized (e.g., January effect, weekend effect)</li>
+      </ol>
+    </div>
+
+    <h3>Momentum — Behavioral Explanation</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Observation</strong>: future price behavior correlates with recent past (top performers continue outperforming for up to 2 years; then reversal in 2-5 year horizon)</li>
+        <li><strong>London Business School study (2007)</strong>: top 20% of stocks (prior 12 months) returned 18.3% annually vs. 6.8% for bottom 20% vs. 13.5% market average</li>
+        <li><strong>Behavioral explanations</strong>:
+          <ul style="margin-top:6px;">
+            <li><strong>Availability bias (recency effect)</strong>: investors recall recent price rises more vividly → extrapolate trend to future</li>
+            <li><strong>Hindsight bias</strong>: past moves seem predictable → investors feel they "missed out" → buy into trend (regret)</li>
+            <li><strong>Loss aversion</strong>: fear of missing gains (FOMO) drives investors into trending stocks</li>
+          </ul>
+        </li>
+        <li>Private investors tend to extrapolate trends (recency effect); professionals tend to expect mean reversion</li>
+      </ul>
+    </div>
+
+    <h3>Bubbles and Crashes — Behavioral Explanation</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Dominant Biases</th><th>How They Drive the Bubble/Crash</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bubble Formation</td>
+            <td>Overconfidence, confirmation, hindsight, regret aversion</td>
+            <td>Overtrading + underestimating risks + rejecting contradictory info + fear of missing out (FOMO from regret aversion) → prices inflate beyond fundamentals</td>
+          </tr>
+          <tr>
+            <td>During Bubble</td>
+            <td>Self-attribution, overconfidence</td>
+            <td>Investors take personal credit for gains → faulty learning → reinforces overconfidence → more trading</td>
+          </tr>
+          <tr>
+            <td>Bubble Unwinding (Early)</td>
+            <td>Anchoring, cognitive dissonance</td>
+            <td>Investors don't sufficiently update beliefs as prices fall. Anchored to high prices. Ignore losses and rationalize flawed decisions.</td>
+          </tr>
+          <tr>
+            <td>Crash (Capitulation)</td>
+            <td>Loss aversion, panic</td>
+            <td>Eventually investors capitulate → accelerates price declines → crash</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Career Risk and Bubble Participation</div>
+      <p>Rational investors may participate in bubbles KNOWINGLY — not just irrationally. Example: a fund manager who avoids the bubble may underperform peers → face redemptions → fund closure (even after 17 years of strong performance). Short-term performance accountability creates incentives to join bubbles even when you know they'll end badly. This is NOT necessarily irrational — it's a rational response to career incentives.</p>
+    </div>
+
+    <h3>Value Effect — Behavioral Explanation</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Observation</strong>: value stocks (low P/E, high book-to-market, high dividend yield) historically outperform growth stocks over long periods. Fama-French: value outperformed in 12 of 13 markets (1975–1995)</li>
+        <li><strong>Risk-based explanation</strong> (Fama-French): value stocks carry more systematic risk → higher returns are compensation for risk, not mispricing. In the 3-factor model, the anomaly DISAPPEARS</li>
+        <li><strong>Behavioral explanations</strong>:
+          <ul style="margin-top:6px;">
+            <li><strong>Halo effect</strong>: favorable track record of growth stocks leads investors to expect high future returns → growth stocks become overvalued</li>
+            <li><strong>Representativeness</strong>: extrapolate recent past performance → overvalue past winners (growth stocks)</li>
+            <li><strong>Overconfidence</strong>: overpredicting growth rates → growth stocks overvalued relative to fundamentals</li>
+          </ul>
+        </li>
+        <li><strong>Home bias</strong>: related anomaly — portfolios exhibit strong bias toward domestic securities. Reasons: perceived informational advantage, comfort with proximity, psychological desire to invest locally</li>
+        <li><strong>Emotional attraction</strong>: stocks of companies with well-known brands, personally used products, or nearby headquarters may be irrationally favored. Investors behave as if risk and return are negatively correlated (prefer "safe" popular stocks) — contrary to CAPM which assumes positive correlation</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Fortune 500 / Popular Stock Phenomenon</div>
+      <p>Companies rated "popular" (e.g., positive Fortune magazine ratings) subsequently showed LOW stock returns. A more positive emotional rating leads investors to perceive the company as LESS risky → they pay MORE for the stock → expected return falls. This inverts the CAPM relationship (risk and expected return become negatively correlated in practice for many investors).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Two broad categories</strong>: Cognitive errors (faulty reasoning — can be CORRECTED) vs. Emotional biases (impulse/intuition — can only be ADAPTED TO).</li>
+        <li>✅ <strong>Moderate vs. Adapt</strong>: Cognitive → moderate (reduce/eliminate). Emotional → adapt (recognize and adjust for).</li>
+        <li>✅ <strong>Cognitive dissonance</strong>: mental discomfort when new info conflicts with existing beliefs → root cause of belief perseverance biases.</li>
+        <li>✅ <strong>Overconfidence</strong>: classified as EMOTIONAL despite having cognitive aspects. Two forms: prediction (intervals too narrow) and certainty (probabilities too high). Often paired with self-attribution bias.</li>
+        <li>✅ <strong>5 Belief Perseverance biases (CCRI H)</strong>: Conservatism, Confirmation, Representativeness, Illusion of control, Hindsight.</li>
+        <li>✅ <strong>Conservatism</strong>: underreact to new info; slow to update beliefs. Fix: use Bayes' Rule; explicitly ask "how does this change my forecast?"</li>
+        <li>✅ <strong>Confirmation</strong>: seek confirming info; ignore disconfirming. Consequences: under-diversify, oversize positions, hold employer stock. Fix: read the bear case.</li>
+        <li>✅ <strong>Representativeness</strong>: judge by resemblance, not probability. Two sub-types: base-rate neglect (ignore population statistics) + sample-size neglect (small sample ≠ proof).</li>
+        <li>✅ <strong>Illusion of control</strong>: believe you control what you cannot. Consequences: underdiversify, overtrade, overcomplex models. Classic: prefer choosing own lottery numbers.</li>
+        <li>✅ <strong>Hindsight</strong>: past looks predictable; memory of own forecasts is distorted. Closely related to overconfidence. Fix: keep WRITTEN records at time of decision.</li>
+        <li>✅ <strong>4 Processing Error biases (AMFA)</strong>: Anchoring, Mental accounting, Framing, Availability.</li>
+        <li>✅ <strong>Anchoring</strong>: over-rely on initial reference point; adjust insufficiently. Classic anchors: purchase price, prior EPS, 52-week high. Fix: focus on future, not historical reference points.</li>
+        <li>✅ <strong>Mental accounting</strong>: treat money differently based on source even though money is FUNGIBLE. "House money" bias. Fix: view all assets together on one spreadsheet without labels.</li>
+        <li>✅ <strong>Framing</strong>: same question answered differently depending on gain vs. loss frame. Gain frame → more risk-averse; loss frame → more risk-seeking. Narrow framing = focus on one detail, miss big picture.</li>
+        <li>✅ <strong>Availability</strong>: estimate probability by ease of recall. Sources: retrievability, categorization, narrow experience, resonance. Fix: systematically broaden search; don't rely on what's familiar.</li>
+        <li>✅ <strong>6 Emotional biases (LOSSER)</strong>: Loss aversion, Overconfidence, Self-control, Status quo, Endowment, Regret aversion.</li>
+        <li>✅ <strong>Loss aversion</strong>: S-shaped asymmetric utility; losses hurt more than equivalent gains feel good. Key: DISPOSITION EFFECT = hold losers too long + sell winners too soon. Risk-seeking below reference point, risk-avoiding above.</li>
+        <li>✅ <strong>Disposition effect</strong>: portfolio becomes riskier than optimal (holding losers = extra risk; selling winners = eliminate future gains).</li>
+        <li>✅ <strong>Overconfidence consequences</strong>: overtrade, underdiversify, underestimate risk. Key in bubbles — overtrading + rejection of contradictory info + failure to diversify.</li>
+        <li>✅ <strong>Self-control</strong>: prefer short-term pleasure over long-term goals. Related to hyperbolic discounting. Consequence: undersave → take too much risk to compensate.</li>
+        <li>✅ <strong>Status quo vs. endowment vs. regret aversion</strong>: all maintain existing positions BUT: status quo = INERTIA (no conscious choice), endowment = CONSCIOUSLY VALUE what you own more, regret aversion = CONSCIOUSLY FEAR making a change that might turn out worse.</li>
+        <li>✅ <strong>Endowment</strong>: selling price stated &gt; buying price for same item. Applies to both purchased and inherited securities. Test: "Would you buy this today at current price?"</li>
+        <li>✅ <strong>Regret aversion</strong>: avoids action to avoid future regret. Two outcomes: too conservative OR herding. Keynes: "better to fail conventionally than succeed unconventionally."</li>
+        <li>✅ <strong>Biases leading to underdiversification</strong>: confirmation, illusion of control, overconfidence, availability, endowment.</li>
+        <li>✅ <strong>Market anomalies</strong>: persistent abnormal returns predictable in direction. May be explained by: model choice, statistical issues, temporary disequilibria.</li>
+        <li>✅ <strong>Momentum behavioral explanation</strong>: availability (recency effect), hindsight (regret), loss aversion (FOMO). Lasts up to 2 years; reversal at 2-5 years.</li>
+        <li>✅ <strong>Bubbles behavioral explanation</strong>: formation = overconfidence + confirmation + regret (FOMO); peak = self-attribution + hindsight; unwinding = anchoring + cognitive dissonance; crash = loss aversion + panic.</li>
+        <li>✅ <strong>Value effect behavioral explanation</strong>: halo effect + representativeness (extrapolate past growth) + overconfidence → growth stocks overvalued → value stocks appear to outperform.</li>
+        <li>✅ <strong>Halo effect</strong>: favorable evaluation of some characteristics (past growth) extends to all characteristics (expected future returns) → overvaluation of growth stocks.</li>
+        <li>✅ <strong>Home bias</strong>: portfolio over-weights domestic vs. international. Reasons: perceived informational advantage, proximity comfort, psychological local preference.</li>
+        <li>✅ <strong>Popular stocks paradox</strong>: emotionally attractive stocks perceived as LESS risky → investors pay MORE → expected return falls. Violates CAPM's positive risk-return relationship in practice.</li>
+        <li>✅ <strong>Rational bubble participation</strong>: investment managers may rationally participate in bubbles due to career risk (short-term performance accountability). Fund B closed despite 17-year strong record for avoiding tech bubble.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE BIAS QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ COGNITIVE — BELIEF PERSEVERANCE (CCRI H) ═══<br>
+        Conservatism: slow to update → underreact to new info<br>
+        Confirmation: seek confirming → ignore disconfirming<br>
+        Representativeness: judge by resemblance (base-rate + sample-size neglect)<br>
+        Illusion of Control: believe you control uncontrollable outcomes<br>
+        Hindsight: past looks predictable; memory biased by knowing outcome<br><br>
+        ═══ COGNITIVE — PROCESSING ERRORS (AMFA) ═══<br>
+        Anchoring &amp; Adjustment: rely on initial anchor; adjust insufficiently<br>
+        Mental Accounting: treat money differently by source; ignore correlations<br>
+        Framing: decision changes based on gain vs. loss presentation<br>
+        Availability: estimate probability by ease of recall (4 sources)<br><br>
+        ═══ EMOTIONAL (LOSSER) ═══<br>
+        Loss Aversion: S-shaped utility; disposition effect (hold losers, sell winners)<br>
+        Overconfidence: unwarranted faith; prediction + certainty forms; self-attribution<br>
+        Self-Control: short-term pleasure over long-term goals; hyperbolic discounting<br>
+        Status Quo: inertia; maintain current state regardless of optimality<br>
+        Endowment: value owned assets more than same assets not owned<br>
+        Regret Aversion: avoid decisions → herd or be too conservative<br><br>
+        ═══ MARKET ANOMALIES — BEHAVIORAL EXPLANATIONS ═══<br>
+        Momentum → Availability (recency), Hindsight, Loss aversion<br>
+        Bubbles → Overconfidence, Confirmation, Regret aversion (formation)<br>
+              → Anchoring, Cognitive dissonance (unwinding)<br>
+              → Loss aversion (crash)<br>
+        Value Anomaly → Halo effect, Representativeness, Overconfidence<br>
+        Home Bias → Availability, Resonance, Informational comfort<br><br>
+        ═══ STATUS QUO vs. ENDOWMENT vs. REGRET AVERSION ═══<br>
+        Status quo = INERTIA (no conscious choice to maintain)<br>
+        Endowment = VALUE owned more than market price<br>
+        Regret aversion = FEAR making a change will turn out worse
+      </div>
+      <div class="note">
+        <strong>Correctable (moderate)</strong>: Cognitive errors → better information, education, advice.<br>
+        <strong>Adaptable (adapt to)</strong>: Emotional biases → recognize, accept, adjust for.<br>
+        <strong>Overconfidence</strong>: classified EMOTIONAL despite having cognitive aspects.<br>
+        <strong>3 biases with similar outcome (maintain existing position)</strong>: Status quo (inertia) + Endowment (overvalue owned) + Regret aversion (fear change).<br>
+        <strong>Disposition effect</strong>: hold losers + sell winners → from LOSS AVERSION.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 5: The Behavioral Biases of Individuals · Exam Prep Notes
+</footer>
+
+</body>
+</html>

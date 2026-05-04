@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | FSA | Module 12: Introduction to Financial Statement Modeling</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --exam-bg: #1a1428; --exam-border: #9b7fd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0f1018 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::after { content: 'FSM'; position: absolute; bottom: -20px; right: 48px; font-family: 'Playfair Display', serif; font-size: 7rem; font-weight: 900; color: rgba(76,201,138,0.05); pointer-events: none; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent3); }
+  .page-header .subtitle { color: var(--muted); font-size: 14px; max-width: 820px; line-height: 1.7; }
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 11.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 16px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 14px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 7px; }
+  .examiner { background: var(--exam-bg); border: 1px solid rgba(155,127,212,0.25); border-left: 3px solid #9b7fd4; border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 18px 0; }
+  .examiner-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9b7fd4; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .examiner-label::before { content: '🎯'; font-size: 13px; }
+  .examiner p { font-size: 14px; color: #d4c8f0; line-height: 1.75; }
+  .examiner p + p { margin-top: 8px; }
+  .examiner strong { color: #b89fe8; }
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 13.5px; font-weight: 600; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+  .tip p + p { margin-top: 8px; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+  .warn p + p { margin-top: 8px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; line-height: 1.65; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+  .pos { color: var(--accent3) !important; }
+  .neg { color: var(--danger) !important; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+  .tag-purple { background: rgba(155,127,212,0.15); color: #9b7fd4; border: 1px solid rgba(155,127,212,0.3); }
+
+  /* Bias cards */
+  .bias-card { background: #1a1212; border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 12px; }
+  .bias-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #c94c4c; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .bias-card p { font-size: 13.5px; color: #dfc8c8; line-height: 1.7; }
+  .bias-card p + p { margin-top: 8px; }
+  .bias-card strong { color: #e8a0a0; }
+
+  /* Force cards */
+  .force-card { background: #121f14; border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 16px 20px; margin-bottom: 10px; }
+  .force-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #4cc98a; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .force-card p { font-size: 13.5px; color: #c8dfd0; line-height: 1.7; }
+
+  /* Process flow */
+  .process-flow { display: flex; align-items: stretch; gap: 0; margin: 16px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .pf-step { flex: 1; background: var(--card); padding: 14px 16px; border-right: 1px solid var(--border); }
+  .pf-step:last-child { border-right: none; }
+  .pf-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--accent); margin-bottom: 6px; letter-spacing: 0.08em; }
+  .pf-title { font-size: 12.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .pf-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  @media (max-width: 750px) { .process-flow { flex-direction: column; } .pf-step { border-right: none; border-bottom: 1px solid var(--border); } }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.75; }
+  .checklist li:last-child { border-bottom: none; }
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FINANCIAL STATEMENT ANALYSIS · MODULE 12</div>
+  <h1>Introduction to Financial Statement <span>Modeling</span></h1>
+  <p class="subtitle">Complete module replacement: building a sales-based pro forma model (IS, CFS, BS), forecasting revenue by volume/price/mix/FX, working capital modeling via days ratios, behavioral biases in analyst forecasting (with mitigants), Porter's five forces and competitive impact on prices and costs, inflation and deflation effects on revenues and expenses, and long-term forecasting considerations including normalized earnings and terminal value.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Model Overview</a>
+  <a class="toc-item" href="#s2">02 · Pro Forma Income Statement</a>
+  <a class="toc-item" href="#s3">03 · Cash Flow &amp; Balance Sheet</a>
+  <a class="toc-item" href="#s4">04 · Valuation Inputs (FCFF)</a>
+  <a class="toc-item" href="#s5">05 · Behavioral Biases</a>
+  <a class="toc-item" href="#s6">06 · Porter's Five Forces</a>
+  <a class="toc-item" href="#s7">07 · Inflation &amp; Deflation</a>
+  <a class="toc-item" href="#s8">08 · Forecast Horizon &amp; Long-Term</a>
+  <a class="toc-item" href="#s9">&#9733; Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1 -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Financial Statement Model — Overview</h2>
+    </div>
+    <div class="card">
+      <p>A <strong>financial statement model</strong> (also called a pro forma model) is the foundation for most valuation work — it produces the future income statements, balance sheets, and cash flow statements that feed into DCF models, EPS-based valuations, EBITDA multiples, and credit analysis. The model is <strong>sales-based</strong>: the revenue forecast drives almost everything else.</p>
+    </div>
+
+    <h3>What a Pro Forma Model Produces</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Pro Forma Income Statement</div>
+        <ul>
+          <li>Revenue (by segment: volume × price/mix × FX)</li>
+          <li>COGS → Gross profit → Gross margin %</li>
+          <li>SG&amp;A / Distribution costs</li>
+          <li>EBIT, EBITDA (D&amp;A add-back)</li>
+          <li>Interest expense, taxes → Net income</li>
+          <li>EPS (basic and diluted)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Pro Forma Cash Flow Statement</div>
+        <ul>
+          <li>Starts with net income from IS</li>
+          <li>Add back D&amp;A; adjust for working capital changes</li>
+          <li>Capex in investing section</li>
+          <li>Debt issuance/repayment, dividends, share activity in financing</li>
+          <li>Ending cash flows to balance sheet</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Pro Forma Balance Sheet</div>
+        <ul>
+          <li>Largely derived by linking IS and CFS</li>
+          <li>Retained earnings: prior year + NI − dividends</li>
+          <li>AR, Inventory, AP: derived from days ratios × revenue/COGS</li>
+          <li>Fixed assets: prior year + capex − D&amp;A</li>
+          <li>Cash: ending balance from CFS</li>
+          <li>Must balance (Assets = Liabilities + Equity)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>4-Step Income Statement Forecast Process</h3>
+    <div class="process-flow">
+      <div class="pf-step">
+        <div class="pf-num">STEP 1</div>
+        <div class="pf-title">Revenue Forecast</div>
+        <div class="pf-desc">Segment-level: Volume × Price/Mix × FX × Scope change. Most important input — drives everything downstream.</div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">STEP 2</div>
+        <div class="pf-title">Operating Expense Forecast</div>
+        <div class="pf-desc">COGS (as % of revenue = gross margin target). SG&amp;A distribution and admin costs (as % of revenue or fixed absolute amounts).</div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">STEP 3</div>
+        <div class="pf-title">Pro Forma EBIT</div>
+        <div class="pf-desc">Check: compare consolidated EBIT to sum of segment operating profits. Segment approach = a "check" on consolidated model.</div>
+      </div>
+      <div class="pf-step">
+        <div class="pf-num">STEP 4</div>
+        <div class="pf-title">Non-Operating Items</div>
+        <div class="pf-desc">Interest expense (debt × rate), income taxes (revenue × effective tax rate), shares outstanding → EPS computation.</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">Valuation Metrics From the Model</div>
+      <p>A financial statement model feeds all major valuation approaches: <strong>FCF-based DCF</strong> (requires EBIT, taxes, D&amp;A, capex, working capital change), <strong>EPS-based P/E</strong> (net income ÷ shares), <strong>EBITDA multiples</strong> (EBIT + D&amp;A), and <strong>book value per share</strong> (equity from the balance sheet). The same model, built once, serves all of these.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Building the Pro Forma Income Statement</h2>
+    </div>
+
+    <h3>Step 1 — Revenue Forecast</h3>
+    <div class="card">
+      <p>Revenue is the most critical forecast input. For each segment, revenue change is broken into four components that must be estimated separately:</p>
+      <ul>
+        <li><strong>Volume growth:</strong> Unit growth based on demand trends, industry capacity, competitive dynamics</li>
+        <li><strong>Price/mix:</strong> Price changes per unit + revenue impact of selling more high-priced vs. low-priced items (mix shift). Price/mix is strongly accretive to gross margins.</li>
+        <li><strong>Scope change:</strong> Impact of acquisitions/divestitures — kept separate from organic growth</li>
+        <li><strong>FX impact:</strong> Revenue realized in foreign currencies translated at expected FX rates. For export-heavy companies (e.g., Rémy: >70% of revenues outside eurozone), FX can be very significant.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Organic Revenue Growth Formula</div>
+      <div class="f">
+        Organic Growth  =  [(1 + Volume Growth) × (1 + Price/Mix)]  −  1<br><br>
+        Example (Rémy Cognac FY2022E):<br>
+        Volume = 7.0%,  Price/Mix = 4.0%<br>
+        Organic Growth = [(1.07) × (1.04)] − 1  =  11.3%<br><br>
+        Total Revenue Growth = Organic Growth + FX Impact + Scope Change
+      </div>
+      <div class="note">
+        <strong>Why multiply (1+v)(1+p) instead of adding?</strong> Because the price/mix change applies to the post-volume level of revenue, not the original. The combined effect is multiplicative, not additive. For small percentages the difference is minor, but technically the multiplicative formula is correct.<br>
+        <strong>Organic growth</strong> excludes acquisitions and FX — this is the "clean" underlying business performance. Analysts and investors watch organic growth most closely.
+      </div>
+    </div>
+
+    <h3>Step 2 — COGS and Gross Margin</h3>
+    <div class="card">
+      <p>COGS is typically modeled as a percentage of revenue (i.e., 100% − gross margin %). The gross margin assumption is built from:</p>
+      <ul>
+        <li>Historical gross margin trend</li>
+        <li>Expected volume leverage (higher revenue → fixed costs spread over more units → margin expansion)</li>
+        <li>Expected price/mix — premium product mix shifts → higher gross margin</li>
+        <li>Input cost inflation (raw materials, packaging, labour) — passed through or absorbed?</li>
+        <li>Management targets or strategic milestones (e.g., Rémy's FY2030 72% gross margin target)</li>
+      </ul>
+    </div>
+
+    <h3>Step 3 — SG&amp;A and Operating Expenses</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Distribution / Selling Costs</div>
+        <p>Typically modeled as % of revenue. If a company is investing in building out a distribution network, this % may rise before it can leverage the investment. Check for trend reversals (Rémy: rose from 26% to 38%, then declined to 34% — network build-out phase complete).</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Administrative Expenses</div>
+        <p>Often modeled as: (a) fixed absolute amount growing at a fixed % per year (e.g., +1%/year), or (b) as % of revenue. In declining revenue periods, admin % of revenue rises because these are mostly fixed costs. As revenue recovers, admin % falls (operating leverage).</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">Other Operating Items — Zero by Default</div>
+      <p>Items like restructuring charges, impairment provisions, and divestiture gains/losses are highly irregular and unpredictable. <strong>Standard practice: forecast zero</strong> unless there is specific evidence of a known transaction. If an analyst includes these as recurring, it distorts the underlying earnings picture. They are disclosed separately on the IS precisely because they are non-recurring.</p>
+    </div>
+
+    <h3>Step 4 — Non-Operating Items</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>How to Forecast</th><th>Key Consideration</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Interest Expense</td>
+            <td>Beginning gross debt balance × interest rate</td>
+            <td>Fixed rate: straightforward. Variable rate: reference rate + credit spread. Update as debt schedule changes.</td>
+          </tr>
+          <tr>
+            <td>Interest Income</td>
+            <td>Average cash balance × expected yield</td>
+            <td>Often near zero if company keeps cash in low-yield instruments. Forecast after completing the CFS cash projection.</td>
+          </tr>
+          <tr>
+            <td>Income Tax</td>
+            <td>Pre-tax income × effective tax rate</td>
+            <td>Use historical effective rate (not statutory rate) unless there's a known reason for it to change. Effective rate reflects jurisdiction mix, tax credits, deferred taxes.</td>
+          </tr>
+          <tr>
+            <td>Shares Outstanding</td>
+            <td>Prior year ± net share issuance/repurchases</td>
+            <td>Basic: common shares only. Diluted: add in-the-money options/convertibles less assumed repurchases. Weighted average for EPS calculation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Segment Cross-Check</h3>
+    <div class="card">
+      <p>Always build a segment-level operating profit estimate and compare to the consolidated EBIT forecast. The two should reconcile (sum of segment current operating profits ≈ consolidated EBIT before non-recurring items). If there's a large gap, one of the assumptions is likely wrong. The segment approach also reveals <strong>what is driving the consolidated margin</strong> — e.g., in Rémy, almost all margin improvement came from the high-margin Cognac segment; the other two segments contributed little.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Pro Forma Cash Flow Statement &amp; Balance Sheet</h2>
+    </div>
+
+    <h3>Cash Flow Statement — Key Forecasting Inputs</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>CFS Section</th><th>Line Item</th><th>How Modeled</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Operating (CFO)</td>
+            <td>Net income</td>
+            <td>Directly from forecasted IS</td>
+          </tr>
+          <tr>
+            <td>Operating (CFO)</td>
+            <td>D&amp;A</td>
+            <td>% of prior year fixed assets (e.g., 4.2% of beginning PP&amp;E). Add back to net income as non-cash.</td>
+          </tr>
+          <tr>
+            <td>Operating (CFO)</td>
+            <td>Working capital changes</td>
+            <td>Derived from change in AR, inventory, and AP computed via days ratios. WC increasing = cash use (negative). WC decreasing = cash source (positive).</td>
+          </tr>
+          <tr>
+            <td>Operating (CFO)</td>
+            <td>Share-based compensation</td>
+            <td>Non-cash; add back. Usually forecast flat at recent year level unless major change in comp structure.</td>
+          </tr>
+          <tr>
+            <td>Investing (CFI)</td>
+            <td>Capex</td>
+            <td>% of revenue (e.g., 5% of sales). Or absolute amount based on known investment plans.</td>
+          </tr>
+          <tr>
+            <td>Financing (CFF)</td>
+            <td>Debt issuance / repayment</td>
+            <td>Based on known maturity schedule or assumption of flat debt</td>
+          </tr>
+          <tr>
+            <td>Financing (CFF)</td>
+            <td>Dividends</td>
+            <td>Forecast flat at last known level, or apply expected payout ratio to net income</td>
+          </tr>
+          <tr>
+            <td>Financing (CFF)</td>
+            <td>Share repurchases/issuance</td>
+            <td>Zero unless management has disclosed a buyback program. Check shares outstanding schedule.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Working Capital Modeling — The Days Ratio Method</h3>
+    <div class="formula-box">
+      <div class="label">Working Capital Derived From Days Ratios</div>
+      <div class="f">
+        Accounts Receivable  =  (DSO ÷ 365) × Revenue<br>
+        Inventories          =  (DOH ÷ 365) × COGS<br>
+        Accounts Payable     =  (DPO ÷ 365) × COGS<br><br>
+        Net Working Capital  =  AR + Inventory − AP<br>
+        Change in WC         =  Current year NWC − Prior year NWC<br>
+        CFS treatment: ↑ WC = Cash USED (negative in CFS) | ↓ WC = Cash PROVIDED (positive in CFS)
+      </div>
+      <div class="note">
+        <strong>Key modeling practice:</strong> Hold days ratios (DSO, DOH, DPO) approximately constant at historical levels, unless there is a specific reason to expect a change (e.g., Rémy: DOH was temporarily elevated by COVID-19 inventory buildup → forecast DOH declining back toward normal as situation normalizes → positive CFS contribution from WC release).<br>
+        <strong>Rémy's unusual working capital:</strong> Net WC = 105% of sales (FY2021) because cognac must age for years — extremely high DOH (~1,500 days). This is industry-specific, not a management problem.
+      </div>
+    </div>
+
+    <h3>Forecasted Balance Sheet — Linking Rules</h3>
+    <div class="card">
+      <p>Once IS and CFS are complete, the BS is largely mechanical linking:</p>
+      <ul>
+        <li><strong>Cash:</strong> Ending cash from CFS</li>
+        <li><strong>AR / Inventory / AP:</strong> From days ratios applied to revenue/COGS forecasts</li>
+        <li><strong>PP&amp;E (net):</strong> Prior year net PP&amp;E + Capex − D&amp;A</li>
+        <li><strong>Debt:</strong> Prior year + issuance − repayment (from CFS)</li>
+        <li><strong>Common equity:</strong> Prior year + Net income + Share-based comp − Dividends ± Share activity</li>
+        <li><strong>All other items:</strong> Held flat unless there is a specific reason to change them</li>
+        <li><strong>Check:</strong> Total assets = Total liabilities + Total equity must hold in every forecast year. If it doesn't, a linking error exists.</li>
+      </ul>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — BS Balance Check</div>
+      <p>The balance sheet must balance in every forecast period. Common errors: forgetting to add NI to retained earnings, linking capex as positive instead of negative, not updating AP/AR when COGS/Revenue forecasts change. In a model, <strong>retained earnings = prior year RE + NI − dividends</strong>. The accounting identity (A = L + E) is the key check that the entire model is correctly linked.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Valuation Inputs — Free Cash Flow to the Firm (FCFF)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">FCFF Formula — From the Pro Forma Model</div>
+      <div class="f">
+        FCFF  =  After-Tax EBIT  +  D&amp;A  +  Change in Working Capital  −  Capex<br><br>
+        Where:<br>
+        After-Tax EBIT  =  EBIT × (1 − Effective Tax Rate)<br>
+        Change in WC    =  Positive if WC decreasing (releasing cash); Negative if WC increasing (using cash)<br><br>
+        Example (Rémy FY2022E):<br>
+        EBIT = 272 | Tax rate = 32% | After-Tax EBIT = 185<br>
+        D&amp;A = 36 | Change in WC = +64 (WC declining → cash inflow) | Capex = –55<br>
+        FCFF = 185 + 36 + 64 − 55 = 230 EUR million
+      </div>
+      <div class="note">
+        <strong>FCFF vs. FCFE:</strong> FCFF = free cash flow to all capital providers (debt + equity). Used in enterprise value DCF. FCFE = FCFF − after-tax interest + net borrowings. Used in equity value DCF. FCFF is more commonly used in CFA context as it is unaffected by financing decisions.<br>
+        <strong>Range of outcomes:</strong> Small changes in key assumptions (organic growth, EBIT margin, working capital %) produce a very wide range of FCFF estimates — highlighting why scenario analysis is critical (Rémy: base case $230M vs. Alt Scenario 1 $318M vs. Alt Scenario 2 $240M in FY2022E alone).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">ROIC — The Competitive Advantage Metric</div>
+      <p>ROIC = Net Operating Profit After Tax (NOPAT) ÷ (Operating Assets − Operating Liabilities). NOPAT = EBIT × (1 − tax rate). <strong>High and persistent ROIC is a strong indicator of competitive advantage</strong> (durable moat). Companies earning ROIC above their cost of capital create value; those below destroy it. Porter's five forces analysis helps explain WHY a company earns a particular level of ROIC.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Behavioral Biases in Analyst Forecasting</h2>
+    </div>
+
+    <div class="card">
+      <p>Experts in many fields make systematic forecasting errors arising from behavioral biases. Investment analysts are not immune. Studies show that 90% confidence intervals for forecasts are wrong as much as <strong>40% of the time</strong> (vs. an expected 10% error rate). Knowing the five key biases — and their mitigants — is directly testable.</p>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-title">① Overconfidence Bias</div>
+      <p><strong>Definition:</strong> Unwarranted faith in one's own forecasting ability. Manifests as overly narrow confidence intervals and excessive certainty in point forecasts. More common when making contrarian predictions (predicting what others don't expect).</p>
+      <p><strong>Mitigant:</strong> Record forecasts and review them regularly — compare actual vs. predicted. Use <strong>scenario analysis</strong> ("where could I be wrong and by how much?") to widen confidence intervals and acknowledge uncertainty. Recognizing that forecast error rates are inherently high is the first step.</p>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-title">② Illusion of Control</div>
+      <p><strong>Definition:</strong> A subset of overconfidence. Tendency to overestimate one's ability to control what cannot be controlled. In modeling, this manifests as building overly complex, highly granular models with data that isn't regularly disclosed — believing that more data and complexity equals more accuracy.</p>
+      <p><strong>Why it fails:</strong> (1) Undisclosed data cannot be back-checked vs. actuals. (2) Complex models are overfitted to history and fail in novel environments. (3) Complexity buries key assumptions. (4) Opportunity cost — time modeling one company means fewer companies analyzed.</p>
+      <p><strong>Mitigant:</strong> Restrict modeling variables to <strong>regularly disclosed data</strong>. Focus on the most impactful variables. Speak only with those likely to have unique/significant perspectives. Simpler, flexible models are often more robust.</p>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-title">③ Conservatism Bias (Anchoring &amp; Adjustment)</div>
+      <p><strong>Definition:</strong> Maintaining prior views by inadequately incorporating new information. Analysts use their previous forecast as an "anchor" and adjust too little — the updated forecast stays too close to the prior one even when evidence strongly warrants a larger change. Also called anchoring and adjustment.</p>
+      <p><strong>Common form:</strong> Reluctance to lower estimates after disappointing results or competitor actions. Can also work in reverse — reluctance to raise estimates after positive surprises.</p>
+      <p><strong>Mitigant:</strong> Regular team reviews of forecasts (e.g., quarterly). Build <strong>flexible models with fewer variables</strong> — easier to update when assumptions need to change. Mitigating overconfidence and illusion of control also reduces conservatism bias.</p>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-title">④ Representativeness Bias (Base-Rate Neglect)</div>
+      <p><strong>Definition:</strong> Classifying new information based on superficial resemblance to past patterns, while ignoring the broader statistical base rate. Specifically: <strong>base-rate neglect</strong> is focusing on company-specific ("inside view") factors while ignoring industry-wide ("outside view") norms.</p>
+      <p><strong>Inside view:</strong> Company-specific factors (specific product types, salesforce size, customer relationships).<br>
+      <strong>Outside view:</strong> Industry or sector averages for gross margin, R&amp;D%, operating margin, etc.</p>
+      <p><strong>Best practice:</strong> <strong>Neither view is superior alone</strong>. Start with the base rate (outside view / industry averages), then adjust for specific factors that make the target company genuinely different. E.g., start with spirits industry average EBIT margin of 26%, then adjust for Rémy-specific factors (premium positioning, cognac focus, geographic mix).</p>
+    </div>
+
+    <div class="bias-card">
+      <div class="bias-title">⑤ Confirmation Bias</div>
+      <p><strong>Definition:</strong> Tendency to seek out, notice, and weight information that confirms prior beliefs while ignoring or discounting contradictory evidence. In practice: structuring the research process to only hear positive views, speaking only to management (who are inherently optimistic) and like-minded analysts.</p>
+      <p><strong>Classic example:</strong> 2007 annual report of a major European bank (published months before nationalization) used "good" 55 times, "strong/stronger/strongly" 78 times, "success/successful" 35 times — and "disappoint" 0 times, "bad" 0 times, "poor" 0 times.</p>
+      <p><strong>Mitigants:</strong> (1) Seek out and read research from analysts with a <strong>negative view</strong> on the security. (2) Consult colleagues who are not economically or psychologically invested. (3) Be aware that management commentary will almost always be optimistic — weight it accordingly.</p>
+    </div>
+
+    <div class="examiner">
+      <div class="examiner-label">Examiner Focus — Bias Identification in Item Sets</div>
+      <p>Exam questions will describe an analyst behavior and ask you to identify the bias. Key distinguishing features:</p>
+      <p><strong>Overconfidence</strong> = too-narrow range, excessive certainty. <strong>Illusion of control</strong> = more data/complexity = better (wrong). <strong>Conservatism</strong> = not updating enough after new info (anchor effect). <strong>Representativeness</strong> = ignoring industry base rates, classifying by superficial resemblance. <strong>Confirmation</strong> = only speaking to optimistic sources, ignoring contrary evidence. Conservatism and Confirmation are distinct: conservatism is about insufficient UPDATE; confirmation is about selective SEARCH.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Porter's Five Forces &amp; Competitive Impact on Prices and Costs</h2>
+    </div>
+
+    <div class="card">
+      <p>Porter's five forces framework helps analysts assess the <strong>long-run profit potential</strong> of an industry by identifying how competitive forces divide the economic value created. Understanding a company's position within its industry allows analysts to estimate whether revenue growth and profit margins will be relatively high or low vs. history and vs. peers. Note: government/regulation is NOT a sixth force — it is best understood by analyzing how government policies affect the five existing forces.</p>
+    </div>
+
+    <h3>The Five Forces</h3>
+    <div class="force-card">
+      <div class="force-title">① Threat of Substitutes</div>
+      <p><strong>High threat:</strong> Customers can easily switch to alternatives → limits pricing power, compresses margins. <strong>Low threat:</strong> Brand loyalty, unique product, no comparable alternatives → supports premium pricing and stable volumes. Example: Cognac consumers show high brand loyalty → Low threat → supports Rémy's pricing power.</p>
+    </div>
+    <div class="force-card">
+      <div class="force-title">② Rivalry Among Existing Competitors</div>
+      <p><strong>High rivalry:</strong> Fragmented market, declining volumes, low differentiation → price wars → margin compression. <strong>Low rivalry:</strong> Concentrated oligopoly, stable or growing demand, differentiated products → price discipline, stable margins. UK beer: High rivalry (fragmented, declining volumes). Brazil beer: Low rivalry (AmBev 65% share, volume growth).</p>
+    </div>
+    <div class="force-card">
+      <div class="force-title">③ Bargaining Power of Suppliers</div>
+      <p><strong>High supplier power:</strong> Concentrated suppliers, unique inputs, switching costs → cost inflation risk. <strong>Low supplier power:</strong> Many small suppliers, commodity inputs, easy substitution → company can push back on input cost increases. Cognac: many small independent vineyards and distillers → Low/medium supplier power. Beer: barley/hops/water = commodities → Low supplier power for both Brazil and UK.</p>
+    </div>
+    <div class="force-card">
+      <div class="force-title">④ Bargaining Power of Buyers</div>
+      <p><strong>High buyer power:</strong> Concentrated customer base (e.g., dominant supermarket chains), private labels available, undifferentiated product → price pressure on producers. <strong>Low buyer power:</strong> Fragmented retail, specialty outlets, consumers willing to pay premium → pricing power retained. UK beer: High buyer power (Tesco, Sainsbury's, Walmart negotiate hard). Brazil beer: Low buyer power (fragmented supermarkets, small bar/restaurant buyers). Cognac: Low buyer power (retail wine shops don't coordinate purchasing).</p>
+    </div>
+    <div class="force-card">
+      <div class="force-title">⑤ Threat of New Entrants</div>
+      <p><strong>High barriers to entry:</strong> Capital intensity, brand heritage requirements, regulatory constraints, distribution network → Low threat → incumbents retain market position. <strong>Low barriers:</strong> Easy entry → more competition over time → margin pressure. Cognac: production is geographically regulated, requires aging inventory (massive working capital), brand heritage essential → Very low threat of new entrants.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Market</th><th>Substitutes</th><th>Rivalry</th><th>Supplier Power</th><th>Buyer Power</th><th>New Entrants</th><th>Profit Outlook</th></tr></thead>
+        <tbody>
+          <tr><td>Cognac (Rémy)</td><td class="pos">Low</td><td class="pos">Low</td><td class="pos">Low/Med</td><td class="pos">Low</td><td class="pos">Low</td><td class="pos">Highly favorable — supports high ROIC</td></tr>
+          <tr><td>Brazil Beer (AmBev)</td><td>Medium</td><td class="pos">Low</td><td class="pos">Low</td><td class="pos">Low</td><td class="pos">Low</td><td class="pos">Favorable — 50% EBITDA margin</td></tr>
+          <tr><td>UK Beer (AB InBev)</td><td>Medium</td><td class="neg">High</td><td class="pos">Low</td><td class="neg">High</td><td class="pos">Low/Med</td><td class="neg">Unfavorable — &lt;10% operating margin</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">Porter's Forces → ROIC Link</div>
+      <p>There is no <em>mechanical</em> formula linking Porter's analysis to specific revenue growth or margin numbers — the link is <strong>probabilistic and judgmental</strong>. A company with all five forces favorable might be forecast to have above-average margins, but the exact margin requires additional analysis. The forces framework <em>informs</em> the assumptions, not mechanically <em>determines</em> them.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Modeling Inflation &amp; Deflation</h2>
+    </div>
+
+    <div class="card">
+      <p>Inflation and deflation affect revenue and costs differently — and often at different rates even within a single company. The key analytical question is: <strong>can the company pass through cost increases to customers without losing volume?</strong> The answer depends on price elasticity of demand, industry structure, competitive dynamics, and strategy.</p>
+    </div>
+
+    <h3>Inflation Impact on Revenue (Sales Projections)</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Industry-Level Revenue &amp; Inflation</div>
+        <ul>
+          <li><strong>Oligopoly with fragmented buyers</strong> (US beer, three-tier distribution) → can pass through cost increases → prices rise with CPI → revenue holds up</li>
+          <li><strong>Concentrated buyers / fragmented producers</strong> (European beer, dominant supermarkets) → buyers push back → prices rise ~100bps below CPI → revenue squeezed</li>
+          <li>Industry structure is the primary determinant of pricing power</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Company-Level Revenue &amp; Inflation</div>
+        <ul>
+          <li>Depends on <strong>price elasticity</strong> of demand for the specific product</li>
+          <li>Inelastic demand → price increases pass through cleanly → revenue benefits</li>
+          <li>Elastic demand → price increases reduce volume → revenue may fall even if unit prices rise</li>
+          <li>Consider geographic mix — different countries have different inflation rates → adjust pricing assumption per geography</li>
+          <li>Strategy matters: pass-through vs. absorb cost (sacrifice margin to gain market share)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Price–Volume Trade-Off in Inflation</div>
+      <div class="f">
+        If price raised 10% to offset 10% cost increase AND volume unchanged:<br>
+        → Gross margin % same, but absolute gross profit HIGHER (on higher revenue base)<br><br>
+        If price raised 10% but volume falls (elastic demand):<br>
+        → Depends on elasticity: Revenue = Price × Volume<br>
+        → If elasticity &gt; 1 (elastic): Revenue FALLS even as price rises<br>
+        → If elasticity &lt; 1 (inelastic): Revenue RISES when price rises<br><br>
+        Unilever example: Input prices surged in 2008 → large price increases → volume deteriorated significantly.
+        Input prices fell 2009–2010 → prices lowered → volumes recovered strongly. Classic price-volume trade-off.
+      </div>
+      <div class="note">
+        <strong>Key regression insight (UK food):</strong> For every 1pp increase in food price inflation → volume declines approximately 0.4%. This kind of historical regression gives a concrete empirical basis for modeling the volume impact of expected price changes.
+      </div>
+    </div>
+
+    <h3>Inflation Impact on Costs</h3>
+    <div class="card">
+      <p>Cost inflation analysis requires breaking the cost structure into categories and geographies:</p>
+      <ul>
+        <li><strong>Commodity inputs:</strong> Subject to market prices — weather (grain harvests), oil prices (packaging). Monitor commodity markets and long-term supply contracts.</li>
+        <li><strong>Long-term fixed-price contracts and hedges:</strong> Delay the impact of input price changes. Industry that customarily hedges will see cost inflation slowly (company has time to react with price increases). Model by spreading the cost impact over the contract/hedge horizon.</li>
+        <li><strong>Input substitution:</strong> Some companies can substitute cheaper inputs without affecting product quality (e.g., JDE coffee blending different bean types). This reduces exposure to spot price volatility for any single commodity.</li>
+        <li><strong>Vertical integration:</strong> Companies that own their supply chain are less exposed to third-party input price volatility.</li>
+        <li><strong>Short-term cost lever — A&amp;P spending:</strong> Cutting advertising and promotional spend can offset rising COGS in the short term to protect margins, but risks weakening brand equity in the longer term.</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ High Inflation in Export Markets — FX Offsett Effect</div>
+      <p>High inflation in a company's export market implies that country's currency will likely weaken over time (purchasing power parity). So pricing gains from high local inflation get partially or fully offset by FX losses on translation. <strong>AB InBev Latin America South (Argentina, 2011):</strong> 24.7% organic revenue growth, of which only 2.1% was volume and the rest was price. No negative currency impact that year — but analysts treated this as a positive surprise, not a sustainable baseline. Most analysts normalize to a constant-currency growth rate after 1–2 years to avoid projecting inflation-driven revenue growth indefinitely.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Forecast Horizon &amp; Long-Term Forecasting</h2>
+    </div>
+
+    <div class="card">
+      <p>The choice of forecast horizon is not arbitrary. It depends on: investment strategy time frame, industry cyclicality, company-specific factors (recent M&amp;A, restructuring), and the analyst's employer's parameters. The forecast period should ideally be long enough for the business to reach a normalized, mid-cycle level of profitability.</p>
+    </div>
+
+    <h3>Factors Determining the Forecast Horizon</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Factor</th><th>Implication for Horizon Length</th></tr></thead>
+        <tbody>
+          <tr><td>Investment strategy time frame</td><td>Stated holding period (e.g., 3–5 years) → annual portfolio turnover 20–33%. Horizon should match strategy.</td></tr>
+          <tr><td>Industry cyclicality</td><td>Cyclical industries need longer horizon to capture a full cycle and reach mid-cycle profitability</td></tr>
+          <tr><td>Recent M&amp;A or restructuring</td><td>Extend horizon enough to see benefits/synergies realized in financial statements</td></tr>
+          <tr><td>Employer/institutional preference</td><td>Sometimes fixed (e.g., always 3 years); analyst has no discretion</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Normalized Earnings</h3>
+    <div class="card">
+      <p><strong>Normalized earnings</strong> = the expected level of mid-cycle earnings in the absence of unusual or temporary factors. Temporary factors that distort current earnings include: stage of business cycle, recent M&amp;A (integration charges), restructuring charges, and one-time items. Similarly, <strong>normalized free cash flow</strong> = mid-cycle CFO adjusted for unusual items minus recurring capex.</p>
+      <p>A longer forecast period allows the analyst to "see through" these temporary distortions and arrive at a sustainable earnings level. The terminal value in a DCF model should be based on normalized, mid-cycle cash flow — not a boom-year or trough-year figure.</p>
+    </div>
+
+    <h3>Terminal Value Considerations</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Why Terminal Value Matters So Much</div>
+        <p>Most DCF models use a perpetuity for terminal value: TV = FCF<sub>T</sub> × (1+g) ÷ (WACC−g). Because the perpetuity captures all value after the explicit forecast period, it often represents 60–80% of total enterprise value. A small change in the terminal growth rate has a disproportionate impact on valuation. Using a boom-year FCF → grossly overstated valuation. Using a trough-year FCF → grossly understated.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Long-Term Growth Rate Considerations</div>
+        <ul>
+          <li>Cannot exceed the long-run GDP growth rate of the economy (a company can't grow faster than the economy forever)</li>
+          <li>Some companies can sustain above-GDP growth for extended periods (tech, emerging market leaders)</li>
+          <li>Some mature or declining industries grow below GDP (print media, traditional retail)</li>
+          <li>Product innovation and market expansion can extend above-average growth (Apple example)</li>
+          <li>Technology disruption can suddenly end above-average growth (Eastman Kodak example)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Inflection Points — The Greatest Forecasting Challenge</h3>
+    <div class="warn">
+      <div class="warn-label">⚠ Anticipating Inflection Points</div>
+      <p>An <strong>inflection point</strong> is when the future will look significantly different from the recent past — when trend-based forecasting completely fails. The three main sources are:</p>
+      <p><strong>1. Economic disruption:</strong> Sudden, unprecedented events (2008 GFC, COVID-19 pandemic). Even well-run companies with sound strategies can be thrown off course, especially those with high financial leverage.</p>
+      <p><strong>2. Regulation:</strong> Government actions can have extreme, sudden, and unpredictable impacts. Affects utilities (intense regulation, slow tech change) and pharma (both heavy regulation AND technology) more than others.</p>
+      <p><strong>3. Technology:</strong> Fast-growing innovators can become obsolete in months. Semiconductor companies must constantly keep up; utilities may not see significant tech change for decades. Classic example: Eastman Kodak — dominant in film photography, destroyed by digital cameras despite being the company that actually invented the digital camera.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">Normalizing Revenue — Continental AG Method</div>
+      <p>For cyclical companies, use <strong>regression-based trend revenue</strong> as the normalized estimate. Plot 10+ years of actual revenue, run a linear regression (OLS), and use the fitted trend line as normalized revenue. Actual revenue above trend = above-cycle; below trend = below-cycle. Terminal value should be based on normalized (trend) revenue, not the last actual year if it's at a cyclical peak or trough.</p>
+    </div>
+  </div>
+
+  <!-- EXAM CHECKLIST -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">&#9733;</span>
+      <h2>Exam Checklist — Module 12</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Financial statement model = starting point for valuation.</strong> Produces forecasted IS, CFS, and BS. Feeds DCF (FCFF), EPS-based valuation, EBITDA multiples, and book value estimates from a single integrated model.</li>
+        <li>✅ <strong>4 IS forecasting steps:</strong> (1) Revenue → (2) Operating expenses (COGS, SG&amp;A) → (3) Pro forma EBIT (segment cross-check) → (4) Non-operating items (interest, taxes, shares). Revenue is the most critical input.</li>
+        <li>✅ <strong>Revenue decomposition:</strong> Volume × Price/Mix × Scope × FX. Organic growth = [(1+Vol) × (1+Price/Mix)] − 1. Price/mix is strongly accretive to gross margin. Keep FX and scope change separate from organic growth.</li>
+        <li>✅ <strong>COGS modeled as % of revenue</strong> (gross margin %). Gross margin depends on: volume leverage, price/mix improvement, input cost inflation/deflation, and management targets.</li>
+        <li>✅ <strong>Other operating items (restructuring, impairment):</strong> Forecast as zero unless specific evidence of a known transaction. These are non-recurring by definition.</li>
+        <li>✅ <strong>Interest expense = beginning debt balance × interest rate.</strong> Interest income = average cash balance × yield. Tax expense = pre-tax income × effective tax rate (use effective, not statutory, unless known change). EPS = net income ÷ weighted average shares.</li>
+        <li>✅ <strong>Segment cross-check:</strong> Sum of segment current operating profits should ≈ consolidated EBIT before non-recurring items. Used to identify which segment is driving margin improvement.</li>
+        <li>✅ <strong>CFS starts with net income.</strong> CFO = NI + D&amp;A + share-based comp ± WC changes. CFI = −Capex ± other investing. CFF = ±debt ± shares − dividends.</li>
+        <li>✅ <strong>Working capital modeling via days ratios:</strong> AR = (DSO/365) × Revenue. Inventory = (DOH/365) × COGS. AP = (DPO/365) × COGS. Change in WC: increase = cash used (negative in CFS); decrease = cash source (positive in CFS).</li>
+        <li>✅ <strong>BS linking rules:</strong> Cash from CFS. AR/Inv/AP from days ratios. Net PP&amp;E = prior year + capex − D&amp;A. Equity = prior year + NI + SBC − dividends. Unexplained items held flat. BS must balance (A = L + E) every period.</li>
+        <li>✅ <strong>FCFF = After-Tax EBIT + D&amp;A + Change in WC − Capex.</strong> High/persistent ROIC signals competitive advantage (durable moat). ROIC = NOPAT ÷ (Operating Assets − Operating Liabilities).</li>
+        <li>✅ <strong>5 behavioral biases:</strong> Overconfidence (too narrow confidence intervals) | Illusion of control (more complexity = better accuracy, wrong) | Conservatism/Anchoring (insufficient update when new info arrives) | Representativeness/Base-rate neglect (ignores industry base rates, inside view only) | Confirmation (seeks only confirming evidence).</li>
+        <li>✅ <strong>Mitigants:</strong> Overconfidence → scenario analysis, forecast review. Illusion of control → limit to disclosed variables, simpler models. Conservatism → regular team reviews, flexible models. Representativeness → combine inside + outside view, start with base rate then adjust. Confirmation → seek negative opinion analysts, consult uninvested colleagues.</li>
+        <li>✅ <strong>Best practice for representativeness:</strong> Start with industry base rate (outside view), then adjust for company-specific factors that genuinely differentiate the subject company. Neither inside nor outside view alone is superior.</li>
+        <li>✅ <strong>Porter's 5 Forces:</strong> Threat of substitutes | Rivalry | Supplier bargaining power | Buyer bargaining power | Threat of new entrants. All favorable (Low threats, Low power) → high long-run profit potential → high ROIC. Government is NOT a 6th force — analyze its effects through the 5 existing forces.</li>
+        <li>✅ <strong>Porter's link to forecasting:</strong> Probabilistic, NOT mechanical. Favorable forces → analyst forecasts above-average margins, but the specific margin number requires further judgment.</li>
+        <li>✅ <strong>Inflation and pricing power:</strong> Can company pass through input cost increases? Depends on: price elasticity of demand, industry structure (concentrated vs. fragmented buyers), and strategy. Inelastic demand → revenue benefits from price increases. Elastic → volume falls, revenue may decline despite price increase.</li>
+        <li>✅ <strong>Industry structure and inflation pass-through:</strong> US beer (three-tier, fragmented buyers) → can pass through, prices track CPI. European beer (concentrated supermarket buyers) → prices rise ~100bps below CPI. Industry structure matters as much as the inflation itself.</li>
+        <li>✅ <strong>High inflation in export markets:</strong> Currency weakens over time (PPP). Pricing gains offset by FX losses. Most analysts normalize to constant-currency growth after 1–2 years rather than projecting inflation-driven revenue growth forever.</li>
+        <li>✅ <strong>Cost inflation mitigants:</strong> Hedges/long-term contracts (delay impact), input substitution (blending/alternative materials), vertical integration, A&amp;P spending cuts (short-term fix, long-term brand risk).</li>
+        <li>✅ <strong>Normalized earnings</strong> = expected mid-cycle earnings without unusual/temporary factors. Terminal value in DCF must use normalized cash flow — not boom-year (over-valued) or trough-year (under-valued).</li>
+        <li>✅ <strong>Forecast horizon drivers:</strong> Investment strategy holding period, industry cyclicality (longer horizon for cyclicals), M&amp;A/restructuring activity, employer preferences.</li>
+        <li>✅ <strong>Inflection points</strong> = when future diverges significantly from past. Sources: economic disruption (GFC, COVID), regulation, technology. Greatest forecasting challenge because trend extrapolation breaks down completely. Kodak example: destroyed by digital photography despite being the camera market leader.</li>
+        <li>✅ <strong>Terminal value long-term growth</strong> cannot exceed long-run GDP growth permanently. Small change in terminal growth rate has outsized impact on valuation (perpetuity math). Normalize the terminal year FCF before applying perpetuity formula.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ FSA MODULE 12 — COMPLETE QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ REVENUE DECOMPOSITION ═══<br>
+        Organic Growth = [(1 + Volume) × (1 + Price/Mix)] − 1<br>
+        Total Revenue Growth = Organic + FX Impact + Scope Change<br>
+        Price/mix is strongly accretive to gross margin<br><br>
+
+        ═══ WORKING CAPITAL FROM DAYS RATIOS ═══<br>
+        AR  = (DSO ÷ 365) × Revenue<br>
+        Inv = (DOH ÷ 365) × COGS<br>
+        AP  = (DPO ÷ 365) × COGS<br>
+        WC increasing → Cash USED (negative in CFO) | WC decreasing → Cash PROVIDED (positive in CFO)<br><br>
+
+        ═══ FCFF ═══<br>
+        FCFF = After-Tax EBIT + D&amp;A + Change in WC − Capex<br>
+        After-Tax EBIT = EBIT × (1 − effective tax rate)<br>
+        ROIC = NOPAT ÷ (Operating Assets − Operating Liabilities) — high persistent ROIC = competitive advantage<br><br>
+
+        ═══ BEHAVIORAL BIASES &amp; MITIGANTS ═══<br>
+        Overconfidence     → Scenario analysis; track forecast errors<br>
+        Illusion of control → Limit to disclosed variables; simpler models<br>
+        Conservatism       → Regular team reviews; flexible, easy-to-update models<br>
+        Representativeness → Combine inside view + outside view (base rate); start with industry avg, adjust<br>
+        Confirmation       → Seek negative opinion analysts; consult uninvested colleagues<br><br>
+
+        ═══ PORTER'S FIVE FORCES ═══<br>
+        ① Threat of substitutes  ② Rivalry  ③ Supplier power<br>
+        ④ Buyer power  ⑤ Threat of new entrants<br>
+        All Low → high long-run profit potential. Government is NOT a 6th force.<br>
+        Link to forecasts: PROBABILISTIC, not mechanical.<br><br>
+
+        ═══ INFLATION KEY RULES ═══<br>
+        Pricing power depends on: price elasticity + industry structure + strategy<br>
+        Oligopoly/fragmented buyers → can pass through → revenue tracks costs<br>
+        Concentrated buyers → price below inflation → margin squeeze<br>
+        High export market inflation → currency weakens → FX offsets pricing gains → normalize after 1–2 years<br>
+        Terminal value must be NORMALIZED (mid-cycle) — not peak, not trough
+      </div>
+      <div class="note">
+        <strong>Top exam traps for Module 12:</strong><br>
+        (1) Organic growth = multiplicative: (1+Vol)(1+Price/Mix) − 1, not Vol + Price/Mix. The difference matters for exam calculations.<br>
+        (2) Working capital INCREASING = cash USED (negative in CFS). Students often get the sign wrong. WC release = cash inflow.<br>
+        (3) Forecast other operating expenses/restructuring = ZERO unless specific evidence of known transaction.<br>
+        (4) Conservatism bias = insufficient updating after new info (anchoring). Confirm bias = selective search for confirming evidence. These are different and both testable.<br>
+        (5) Representativeness best practice = start with industry base rate (outside view), then adjust for company-specific factors — neither view alone is best.<br>
+        (6) Porter's analysis → probabilistic link to margins, not mechanical. Don't state "low rivalry = X% EBIT margin."<br>
+        (7) Government is NOT a 6th force. Government affects the 5 forces — don't call it one.<br>
+        (8) Terminal value must be normalized. Boom year → overstatement. Trough year → understatement. Especially important for cyclical industries.<br>
+        (9) High inflation in export markets → currency depreciation will offset pricing gains over time. The AB InBev Argentina case was a positive surprise, not a repeatable pattern.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Financial Statement Analysis · Module 12: Introduction to Financial Statement Modeling · Exam Prep Notes
+</footer>
+
+</body>
+</html>

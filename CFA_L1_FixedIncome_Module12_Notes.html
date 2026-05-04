@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 12: Yield-Based Bond Convexity and Portfolio Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --fixed-bg: #1a1020; --fixed-border: #4c8bc9;
+    --float-bg: #111a16; --float-border: #4cc98a;
+    --swap-bg: #1a1510; --swap-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.78; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1318 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,139,201,0.12); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 880px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 28px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 7px; font-size: 15px; color: var(--text); }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 18px 22px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.2; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.78; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 22px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .auction-box .f { color: #9ecef5; font-size: 13.5px; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 8px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 22px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 8px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 780px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 6px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1a1f2e; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.total-row { background: rgba(76,139,201,0.08); border-top: 2px solid rgba(76,139,201,0.3); }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 10px 16px; color: var(--text); vertical-align: top; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  tbody td.label-col { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--accent2); font-size: 13px; }
+  tbody td.highlight { color: #e8c97a; font-weight: 700; }
+  tbody td.good { color: var(--accent3); font-weight: 700; }
+  tbody td.bad { color: var(--danger); font-weight: 700; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .fixed-card { background: var(--fixed-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .fixed-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .float-card { background: var(--float-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .float-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .swap-card { background: var(--swap-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .swap-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 22px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+
+  /* Convexity benefit visual */
+  .convex-benefit { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .cb-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .cb-card.rise { background: rgba(201,76,76,0.06); border-left: 3px solid var(--danger); }
+  .cb-card.fall { background: rgba(76,201,138,0.06); border-left: 3px solid var(--accent3); }
+  .cb-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
+  .rise .cb-title { color: var(--danger); }
+  .fall .cb-title { color: var(--accent3); }
+  .cb-card p, .cb-card li { font-size: 13.5px; color: var(--text); }
+  .cb-card ul { padding-left: 14px; }
+  .cb-card li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 9px 0 9px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.78; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 12</div>
+  <h1>Yield-Based Bond <span>Convexity</span> &amp; Portfolio Properties</h1>
+  <p>Exam-ready notes with full depth: what convexity measures and why it is always positive for option-free bonds; the 7-column tabular calculation with Col. 7 formula; approximate convexity (Eq. 2); the full price change formula combining duration + convexity adjustment (Eq. 1); money convexity (Eq. 3 &amp; 4); convexity properties vs. bond features; the dispersion insight; portfolio duration and convexity (weighted-average method); the parallel shift limitation; BRWA and Romanian bond full worked examples; Exhibit 4 and 5 precision comparison.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why Convexity — The Limitation of Duration Alone</a>
+  <a class="toc-item" href="#s2">02 · What Convexity Measures — Second-Order Effect</a>
+  <a class="toc-item" href="#s3">03 · Tabular Convexity Calculation (7-Column Method)</a>
+  <a class="toc-item" href="#s4">04 · Approximate Convexity (Eq. 2)</a>
+  <a class="toc-item" href="#s5">05 · Full Price Change Formula — Duration + Convexity (Eq. 1)</a>
+  <a class="toc-item" href="#s6">06 · Money Convexity (Eq. 3 &amp; 4)</a>
+  <a class="toc-item" href="#s7">07 · Convexity Properties — Bond Features</a>
+  <a class="toc-item" href="#s8">08 · Convexity as a Valuable Asset</a>
+  <a class="toc-item" href="#s9">09 · Portfolio Duration &amp; Convexity</a>
+  <a class="toc-item" href="#s10">10 · Limitations of Portfolio Duration</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: WHY CONVEXITY                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why Convexity — The Limitation of Duration Alone</h2>
+    </div>
+
+    <div class="card">
+      <p>In Module 11, we used modified duration to estimate percentage price changes: %ΔPV ≈ −AnnModDur × ΔYield. This is a <strong>linear approximation</strong> — it treats the price–yield curve as a straight line (the tangent at the current price).</p>
+      <p style="margin-top:10px;">The problem: <strong>the true price–yield relationship is curved (convex), not straight.</strong> For small yield changes, the linear approximation is close enough. But for larger yield changes, or for bonds with high duration, the error can be significant. Convexity captures this curvature — the second-order effect — and corrects the duration estimate.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="fixed-card">
+        <div class="fixed-title">Duration Alone — First-Order Linear Effect</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8d5f5;">
+          <li>Assumes a straight-line price–yield relationship</li>
+          <li>Gives the same absolute % change for +/− yield moves</li>
+          <li>Underestimates price gain when yields fall</li>
+          <li>Overestimates price loss when yields rise</li>
+          <li>Error grows with: (1) size of yield change, (2) longer maturity, (3) lower coupon/yield</li>
+        </ul>
+      </div>
+      <div class="float-card">
+        <div class="float-title">Duration + Convexity — Second-Order Correction</div>
+        <ul style="padding-left:16px; font-size:13.5px; color:#c8dfd0;">
+          <li>Accounts for the curvature of the price–yield relationship</li>
+          <li>Convexity adjustment is ALWAYS positive → improves both up and down estimates</li>
+          <li>When yields fall: estimated gain is HIGHER than duration alone</li>
+          <li>When yields rise: estimated loss is LOWER than duration alone</li>
+          <li>More accurate for large yield moves or high-duration bonds</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Geometry — Why the Convexity Adjustment is Always Positive</div>
+      <p>The price–yield curve is convex (bows upward toward the investor). The tangent line (= duration estimate) lies BELOW the actual price curve everywhere except at the current point. So the actual price is always ABOVE the duration estimate — whether yields rise or fall. This means: actual price gain &gt; duration estimate, and actual price loss &lt; duration estimate. The convexity adjustment (always positive) corrects for this by adding a positive term, pulling both estimates up toward the actual curve.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: WHAT CONVEXITY MEASURES            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>What Convexity Measures — The Second Derivative of Price</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Convexity (AnnConvexity)</div>
+      <div class="def-body">A measure of the <strong>second-order (non-linear) effect</strong> of yield changes on a bond's full price. Mathematically, it is the second derivative of the bond price with respect to yield, divided by price (d²PV/dr² / PV). It captures the curvature of the price–yield relationship — the rate at which duration (the slope) itself changes as yield changes. For option-free fixed-rate bonds, convexity is <strong>always positive</strong>.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>First derivative</strong> of price w.r.t. yield = Duration (slope of price–yield curve at a given point)</p>
+      <p style="margin-top:8px;"><strong>Second derivative</strong> of price w.r.t. yield = Convexity (rate of change of slope = curvature)</p>
+      <p style="margin-top:10px;">Just as modified duration uses the first derivative, convexity uses the second derivative. Together, they provide a second-order Taylor expansion approximation of the bond's price change — far more accurate than the first-order (duration-only) estimate.</p>
+      <p style="margin-top:10px;"><strong>Why is convexity always positive for option-free bonds?</strong> Because the price–yield curve always bows upward (toward the investor) for such bonds. Duration decreases as yield rises and increases as yield falls — the curvature is always in the investor's favor. This is not true for callable bonds, which have negative convexity at low yields (the call option limits price appreciation).</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: TABULAR CALCULATION                -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Tabular Convexity Calculation — The 7-Column Method</h2>
+    </div>
+
+    <div class="card">
+      <p>The tabular method extends the 6-column MacDur table by adding a seventh column (Col. 7) that computes the convexity contribution of each cash flow. The sum of Col. 7, divided by the number of periods per year squared (m²), gives AnnConvexity.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Column 7 Formula — Convexity of Each Cash Flow</div>
+      <div class="f">
+        Col. 7 = t × (t + 1) × w_t × (1 + r_period)^(−2)<br><br>
+        WHERE:<br>
+        t        = time to receipt of cash flow (in periods, from Col. 2)<br>
+        t + 1    = one more than the time to receipt (introduces the second-order term)<br>
+        w_t      = PV weight of the cash flow (Col. 5 = PV_t / Full price)<br>
+        r_period = yield-to-maturity per period (e.g., 3.2%/2 = 1.6% for semiannual)<br>
+        (1+r)^−2 = discounting factor specific to convexity calculation<br><br>
+        AnnConvexity = Σ(Col. 7) / m²<br><br>
+        WHERE m = number of coupon periods per year (m=2 for semiannual)<br>
+        So AnnConvexity = Σ(Col. 7) / 4 for semiannual bonds
+      </div>
+      <div class="note">
+        <strong>Why t × (t+1)?</strong> The second derivative of a discounted cash flow with respect to yield introduces t and (t+1) as factors — it's the mathematical consequence of differentiating twice. This is where the "non-linearity" (squared time) enters, which is what makes convexity a second-order measure.<br><br>
+        <strong>Key difference from duration:</strong> Duration uses t × w_t (Col. 6). Convexity uses t × (t+1) × w_t × (1+r)^−2 (Col. 7). The (1+r)^−2 factor adjusts for the periodicity of cash flows in the convexity calculation.<br><br>
+        <strong>Annualizing:</strong> Σ(Col. 7) is in periodic units² (e.g., semiannual periods squared). Dividing by m² converts to annual years² — the standard annualized convexity quoted in the market.
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Full 7-Column Convexity Table (at Issuance)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:4px;">5yr BRWA, 3.2% semiannual, at par, YTM=3.2%. r_period = 1.6% = 0.016. (1+0.016)^−2 = 0.96892.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>(1) Period</th>
+            <th>(2) Time t</th>
+            <th>(3) Cash Flow</th>
+            <th>(4) PV</th>
+            <th>(5) Weight w_t</th>
+            <th>(6) t × w_t</th>
+            <th>(7) t×(t+1)×w_t×(1+r)^−2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1.0</td><td>1.6</td><td>1.5748</td><td>0.0157</td><td>0.0157</td><td>0.0305</td></tr>
+          <tr><td>2</td><td>2.0</td><td>1.6</td><td>1.5500</td><td>0.0155</td><td>0.0310</td><td>0.0901</td></tr>
+          <tr><td>3</td><td>3.0</td><td>1.6</td><td>1.5256</td><td>0.0153</td><td>0.0458</td><td>0.1774</td></tr>
+          <tr><td>4</td><td>4.0</td><td>1.6</td><td>1.5016</td><td>0.0150</td><td>0.0601</td><td>0.2909</td></tr>
+          <tr><td>5</td><td>5.0</td><td>1.6</td><td>1.4779</td><td>0.0148</td><td>0.0739</td><td>0.4295</td></tr>
+          <tr><td>6</td><td>6.0</td><td>1.6</td><td>1.4546</td><td>0.0145</td><td>0.0873</td><td>0.5919</td></tr>
+          <tr><td>7</td><td>7.0</td><td>1.6</td><td>1.4317</td><td>0.0143</td><td>0.1002</td><td>0.7767</td></tr>
+          <tr><td>8</td><td>8.0</td><td>1.6</td><td>1.4092</td><td>0.0141</td><td>0.1127</td><td>0.9829</td></tr>
+          <tr><td>9</td><td>9.0</td><td>1.6</td><td>1.3870</td><td>0.0139</td><td>0.1248</td><td>1.2093</td></tr>
+          <tr><td>10</td><td>10.0</td><td>101.6</td><td>86.6875</td><td>0.8669</td><td>8.6688</td><td>92.3766</td></tr>
+          <tr class="total-row">
+            <td class="label-col" colspan="2">TOTAL</td>
+            <td>—</td>
+            <td class="highlight">100.0000</td>
+            <td class="highlight">1.0000</td>
+            <td class="highlight">9.3203</td>
+            <td class="highlight">96.9558</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="auction-box">
+      <div class="label">Computing AnnConvexity and AnnMacDur from the table</div>
+      <div class="f">
+        AnnMacDur = Σ(Col. 6) / m = 9.3203 / 2 = 4.6601 years<br>
+        (or: Σ(Col. 6) = 9.3203 semiannual periods; divide by 2 for annual)<br><br>
+        AnnConvexity = Σ(Col. 7) / m² = 96.9558 / 4 = 24.2389<br><br>
+        Note: The final row (period 10, final coupon + par) dominates BOTH columns:<br>
+        Col. 6 contribution: 8.6688 / 9.3203 = 93.0% of total duration<br>
+        Col. 7 contribution: 92.3766 / 96.9558 = 95.3% of total convexity<br>
+        → The large final payment dominates duration AND especially convexity.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Convexity is Dominated by the Final Payment Even More Than Duration</div>
+      <p>In the MacDur table, the final period (coupon + principal) accounts for ~87% of the PV weight. In the convexity table, because the Col. 7 formula uses t×(t+1), the final period is weighted even more heavily (squaring the time amplifies distant cash flows). This is why convexity is even more sensitive to maturity and the final large payment than duration is. A small extension in maturity increases convexity proportionally more than it increases duration.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: APPROXIMATE CONVEXITY              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Approximate Convexity — The Two-Price Method (Equation 2)</h2>
+    </div>
+
+    <div class="card">
+      <p>Just as approximate modified duration uses PV+, PV−, and PV₀ to estimate the slope numerically, approximate convexity uses the same three prices to estimate the curvature numerically. This approach is particularly useful for bonds with uncertain or changing cash flows (callable bonds, default-risky bonds) where the tabular method cannot be directly applied.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 2 — Approximate Annualized Convexity</div>
+      <div class="f">
+        ApproxCon = (PV− + PV+ − 2×PV₀) / ((ΔYield)² × PV₀)<br><br>
+        WHERE:<br>
+        PV₀     = current full price at current YTM<br>
+        PV+     = full price when YTM is increased by ΔYield<br>
+        PV−     = full price when YTM is decreased by ΔYield<br>
+        ΔYield  = yield change used (e.g., 0.0005 for 5bps, 0.0001 for 1bp)<br><br>
+        Note: This uses the SAME three prices as approximate ModDur (Eq. 4 of Module 11).<br>
+        Same prices, different formula → both duration AND convexity from one set of calculations.
+      </div>
+      <div class="note">
+        <strong>Mathematical intuition:</strong> The numerator (PV− + PV+ − 2×PV₀) captures the degree to which the two off-center prices deviate from the center price. If price–yield were perfectly linear, PV− + PV+ would exactly equal 2×PV₀ → numerator = 0 → zero convexity. Any positive deviation reveals curvature (convexity). The (ΔYield)² in the denominator normalizes for the size of the yield perturbation.<br><br>
+        <strong>Why use PV− + PV+?</strong> For ModDur, we needed PV− − PV+ (to get the slope direction). For convexity, we need to add them (to capture how both deviate from the center — the curvature is symmetric, so adding removes the linear/directional component and isolates the second-order effect).<br><br>
+        <strong>ΔYield choice:</strong> Must be small enough to be meaningful but large enough to avoid floating-point errors. Typically 1bp to 10bps. Results should be nearly identical regardless of the specific ΔYield chosen within this range.
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Approximate Convexity Worked Example</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semi, at par. ΔYield = 5bps = 0.0005. Using Excel PRICE function.</div>
+      <div class="f">
+        PV₀ = PRICE(DATE(2025,10,15), DATE(2030,10,15), 0.032, 0.0320, 100, 2, 0) = 100.000000<br>
+        PV+ = PRICE(DATE(2025,10,15), DATE(2030,10,15), 0.032, 0.0325, 100, 2, 0) = 99.770965<br>
+        PV− = PRICE(DATE(2025,10,15), DATE(2030,10,15), 0.032, 0.0315, 100, 2, 0) = 100.229641<br><br>
+        ApproxCon = (PV− + PV+ − 2×PV₀) / ((ΔYield)² × PV₀)<br>
+                  = (100.229641 + 99.770965 − 2×100.000000) / ((0.0005)² × 100.000000)<br>
+                  = (200.000606 − 200.000000) / (0.00000025 × 100)<br>
+                  = 0.000606 / 0.000025<br>
+                  = 24.23896<br><br>
+        Compare to exact tabular result: 24.23895 ✓ (difference of 0.00001 — essentially identical)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: DURATION + CONVEXITY PRICE CHANGE  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Full Price Change Formula — Duration + Convexity Adjustment (Equation 1)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 1 — Full Percentage Price Change with Convexity Adjustment</div>
+      <div class="f">
+        %ΔPV^Full ≈ (−AnnModDur × ΔYield) + [½ × AnnConvexity × (ΔYield)²]<br><br>
+        WHERE:<br>
+        First term:  −AnnModDur × ΔYield          = duration effect (linear, 1st order)<br>
+        Second term: ½ × AnnConvexity × (ΔYield)²  = convexity adjustment (2nd order)<br><br>
+        The convexity adjustment:<br>
+        • Is always POSITIVE (for option-free bonds) because (ΔYield)² &gt; 0 always<br>
+        • Grows with the SQUARE of the yield change → matters most for large moves<br>
+        • Is the same whether yield rises or falls (ΔYield² is the same for ±ΔYield)<br><br>
+        Net effect:<br>
+        Yield RISES (+ΔYield): Duration term is negative; convexity adds back positive → loss is smaller<br>
+        Yield FALLS (−ΔYield): Duration term is positive; convexity adds more positive → gain is larger
+      </div>
+      <div class="note">
+        <strong>The ½ comes from the Taylor expansion:</strong> f(x+h) ≈ f(x) + f'(x)h + ½f''(x)h². ModDur is the first-order term (f'), convexity is the second-order term (f''). The ½ is a mathematical constant from calculus, not an arbitrary scaling factor.<br><br>
+        <strong>When does convexity matter most?</strong> (1) Large yield changes (the (ΔYield)² grows fast — doubling the yield change quadruples the convexity adjustment). (2) Longer-maturity bonds (higher convexity → larger adjustment). (3) Lower-coupon or lower-yield bonds (same reason).
+      </div>
+    </div>
+
+    <h3>BRWA Bond — Precision Comparison (Exhibit 4) — ±100bps</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Yield Change</th>
+            <th>Actual %ΔPV^Full</th>
+            <th>Duration Only Estimate</th>
+            <th>Error (Duration Only)</th>
+            <th>Duration + Convexity Estimate</th>
+            <th>Error (D + C)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">+100 bps (yield rises)</td>
+            <td class="bad">−4.46788%</td>
+            <td>−4.58676%</td>
+            <td class="bad">−0.11887% (≈12bps error)</td>
+            <td class="good">−4.46556%</td>
+            <td class="good">+0.00232% (&lt;¼bp error)</td>
+          </tr>
+          <tr>
+            <td class="label-col">−100 bps (yield falls)</td>
+            <td class="good">+4.71035%</td>
+            <td>+4.58676%</td>
+            <td class="bad">−0.12359% (≈12bps error)</td>
+            <td class="good">+4.70795%</td>
+            <td class="bad">−0.00239% (&lt;¼bp error)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Step-by-step: BRWA bond, AnnModDur=4.58676, AnnConvexity=24.23895, ΔYield=±0.0100</div>
+      <div class="f">
+        YIELD RISES +100bps (ΔYield = +0.0100):<br>
+        Duration term:     −4.58676 × 0.0100                = −0.04587 = −4.58676%<br>
+        Convexity term:    ½ × 24.23895 × (0.0100)²         = +0.00121 = +0.12120%<br>
+        Combined estimate: −4.58676% + 0.12120%              = −4.46556%<br>
+        Actual change:     −4.46788%   Error: only 0.00232% ✓<br><br>
+        YIELD FALLS −100bps (ΔYield = −0.0100):<br>
+        Duration term:     −4.58676 × (−0.0100)             = +0.04587 = +4.58676%<br>
+        Convexity term:    ½ × 24.23895 × (−0.0100)²        = +0.00121 = +0.12120%<br>
+        Combined estimate: +4.58676% + 0.12120%              = +4.70796%<br>
+        Actual change:     +4.71035%   Error: only 0.00239% ✓<br><br>
+        KEY: Same convexity adjustment (+0.12120%) applies in BOTH scenarios<br>
+        because (ΔYield)² = (−0.01)² = (0.01)² = 0.0001
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Duration-Only Symmetry vs. Duration+Convexity Asymmetry</div>
+      <p>Duration alone gives the same estimate (±4.587%) for both +100bps and −100bps yield changes — symmetric. Adding convexity breaks this symmetry: the gain estimate (4.708%) exceeds the loss estimate (4.466%) in absolute value. This asymmetry is real and correct — it reflects the curvature of the price–yield relationship. A higher yield rise causes a smaller-than-linear price loss; a yield decline causes a larger-than-linear price gain. This is the mathematical expression of why convexity benefits investors.</p>
+    </div>
+
+    <h3>Example 1 — Romanian vs. BRWA: Duration and Convexity Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond</th><th>Maturity</th><th>Coupon</th><th>YTM</th><th>ApproxModDur</th><th>ApproxCon</th><th>Key Driver</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Romanian Govt.</td>
+            <td>30 yrs</td>
+            <td>4.625% annual</td>
+            <td>4.75%</td>
+            <td class="highlight">15.90637</td>
+            <td class="highlight">369.64203</td>
+            <td>Much longer maturity dominates</td>
+          </tr>
+          <tr>
+            <td class="label-col">BRWA Corp.</td>
+            <td>5 yrs</td>
+            <td>3.20% semi</td>
+            <td>3.20%</td>
+            <td>4.58676</td>
+            <td>24.23896</td>
+            <td>Short maturity = low duration/convexity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <p>The Romanian bond's ApproxModDur (15.91) is <strong>3.5× higher</strong> than BRWA's (4.59). Its ApproxCon (369.64) is <strong>15× higher</strong> than BRWA's (24.24). The massive difference is driven primarily by the <strong>30-year vs. 5-year maturity</strong>. Although the Romanian bond has a higher coupon (4.625% vs. 3.2%) and higher yield (4.75% vs. 3.2%), both of which would decrease duration — these effects are overwhelmed by the 6× longer maturity. Convexity scales even more aggressively with maturity because of the t×(t+1) term in the calculation — a 6× maturity increase produces a ~15× convexity increase.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: MONEY CONVEXITY                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Money Convexity — Convexity in Currency Units (Equations 3 &amp; 4)</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 3 — Money Convexity</div>
+      <div class="f">
+        MoneyCon = AnnConvexity × PV^Full<br><br>
+        WHERE:<br>
+        AnnConvexity = annualized convexity statistic<br>
+        PV^Full      = full price (market value) of the bond or position<br><br>
+        PARALLEL to MoneyDur = AnnModDur × PV^Full (Module 11)<br>
+        MoneyCon scales AnnConvexity by the position's market value<br>
+        → Gives the second-order price change in currency units
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Equation 4 — Currency Price Change Using MoneyDur + MoneyCon</div>
+      <div class="f">
+        ΔPV^Full ≈ −(MoneyDur × ΔYield) + [½ × MoneyCon × (ΔYield)²]<br><br>
+        PARALLEL to Equation 1 (percentage), but in CURRENCY UNITS:<br>
+        First term:  −MoneyDur × ΔYield            = currency duration effect<br>
+        Second term: ½ × MoneyCon × (ΔYield)²       = currency convexity adjustment<br><br>
+        Both terms in the same currency as the bond position's market value.
+      </div>
+      <div class="note">
+        <strong>Relationship between percentage and currency formulas:</strong><br>
+        Equation 1 (%) × PV^Full = Equation 4 (currency)<br>
+        (AnnModDur × ΔYield) × PV^Full = MoneyDur × ΔYield<br>
+        (½ × AnnConvexity × ΔYield²) × PV^Full = ½ × MoneyCon × ΔYield²<br>
+        All the percentage changes, when multiplied by the portfolio value, become currency changes.
+      </div>
+    </div>
+
+    <h3>Worked Example — BRWA USD 100M Position, +100bps Yield Rise (Exhibit 5)</h3>
+    <div class="auction-box">
+      <div class="label">BRWA 5yr, 3.2% semi, at par. USD 100M par = USD 100M market value. AnnModDur=4.58676, AnnCon=24.23895.</div>
+      <div class="f">
+        MoneyDur = 4.58676 × $100,000,000 = $458,675,875<br>
+        MoneyCon = 24.23895 × $100,000,000 = $2,423,895,000<br><br>
+        ACTUAL change (from Excel PRICE function):<br>
+        New price = 95.53212 → New market value = $95,532,120 → Loss = −$4,467,880<br><br>
+        USING MONEY DURATION ALONE (Eq. 7 of Module 11):<br>
+        ΔPV ≈ −$458,675,875 × 0.0100 = −$4,586,759<br>
+        Error vs. actual: $4,586,759 − $4,467,880 = $118,879 (too large by $118k)<br><br>
+        USING MONEY DURATION + MONEY CONVEXITY (Eq. 4):<br>
+        ΔPV ≈ −($458,675,875 × 0.01) + [½ × $2,423,895,000 × (0.01)²]<br>
+             = −$4,586,759 + [½ × $2,423,895,000 × 0.0001]<br>
+             = −$4,586,759 + $121,195<br>
+             = −$4,465,564<br>
+        Error vs. actual: only $4,467,880 − $4,465,564 = $2,316 ← 98% accuracy improvement ✓
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead>
+          <tr><th>Yield Change</th><th>Actual ΔPV (USD)</th><th>MoneyDur Only</th><th>Error</th><th>MoneyDur + MoneyCon</th><th>Error</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">+100 bps</td>
+            <td class="bad">−$4,467,884</td>
+            <td>−$4,586,759</td>
+            <td class="bad">$118,875 too large</td>
+            <td class="good">−$4,465,564</td>
+            <td class="good">$2,320 (negligible)</td>
+          </tr>
+          <tr>
+            <td class="label-col">−100 bps</td>
+            <td class="good">+$4,710,348</td>
+            <td>+$4,586,759</td>
+            <td class="bad">$123,590 too small</td>
+            <td class="good">+$4,707,953</td>
+            <td class="good">$2,395 (negligible)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: CONVEXITY PROPERTIES               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Convexity Properties — What Increases or Decreases Convexity</h2>
+    </div>
+
+    <div class="swap-card">
+      <div class="swap-title">★ Same Relationships as Duration — Plus One Extra Factor</div>
+      <p style="font-size:14px; color:#dfd0c8;">Convexity has the <strong>same directional relationships with bond features</strong> as duration. The only additional factor unique to convexity is cash flow dispersion.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature (increase in...)</th><th>Effect on Convexity</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Coupon rate ↑</td>
+            <td><span class="tag tag-red">↓ Decreases</span></td>
+            <td>Higher coupons → more weight on early cash flows → less "spread" of payments → lower curvature. Same logic as duration: more early CF weight → less sensitivity at the far end where curvature builds.</td>
+          </tr>
+          <tr>
+            <td class="label-col">YTM ↑</td>
+            <td><span class="tag tag-red">↓ Decreases</span></td>
+            <td>Higher yield → greater discounting of far-off cash flows → less weight on distant payments → lower weighted-average time² → lower convexity. Also: bond price is lower, so the percentage curvature is reduced.</td>
+          </tr>
+          <tr>
+            <td class="label-col">Time-to-maturity ↑</td>
+            <td><span class="tag tag-green">↑ Increases</span></td>
+            <td>Longer maturity → large final payment is further away → t×(t+1) for the final period is much larger → dominates the Col. 7 sum → much higher convexity. Convexity scales approximately with maturity² for zero-coupon bonds.</td>
+          </tr>
+          <tr>
+            <td class="label-col">Cash flow dispersion ↑ (same duration)</td>
+            <td><span class="tag tag-green">↑ Increases</span></td>
+            <td><strong>Unique to convexity.</strong> For two bonds with the same duration, the one whose cash flows are more spread out over time (higher dispersion) has greater convexity. A barbell portfolio (bonds at very short and very long maturities) has higher convexity than a bullet portfolio (bonds concentrated at one maturity), even if durations are matched.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Dispersion Insight — Barbell vs. Bullet Portfolios</div>
+      <p>This is a frequently tested concept. Two portfolios with equal modified duration can have different convexity if their cash flows are distributed differently over time. A <strong>barbell</strong> (concentrating bonds at very short and very long maturities) has more convexity than a <strong>bullet</strong> (concentrating around one specific maturity), for the same duration. Portfolio managers seeking to maximize convexity (and the associated price protection) prefer barbells — but the extra convexity is typically priced in (lower yield), so there's a cost-benefit tradeoff.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: CONVEXITY AS A VALUABLE ASSET      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Convexity Is Valuable to Investors — And Has a Price</h2>
+    </div>
+
+    <div class="convex-benefit">
+      <div class="cb-card rise">
+        <div class="cb-title">📈 When Yields Rise</div>
+        <ul>
+          <li>More convex bond: price falls LESS than less convex bond</li>
+          <li>Duration effect (price loss) partially offset by curvature</li>
+          <li>More convex bond outperforms for the same yield increase</li>
+          <li>Example: +100bps → −4.466% (with convexity) vs. −4.587% (duration only)</li>
+        </ul>
+      </div>
+      <div class="cb-card fall">
+        <div class="cb-title">📉 When Yields Fall</div>
+        <ul>
+          <li>More convex bond: price rises MORE than less convex bond</li>
+          <li>Duration effect (price gain) amplified by curvature</li>
+          <li>More convex bond outperforms for the same yield decrease</li>
+          <li>Example: −100bps → +4.708% (with convexity) vs. +4.587% (duration only)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="swap-card" style="margin-top:16px;">
+      <div class="swap-title">★ Key Insight — More Convex Bond Outperforms in ALL Scenarios</div>
+      <p style="font-size:14px; color:#dfd0c8;">For two bonds with the same duration (same tangent line), <strong>the more convex bond always outperforms in both rising and falling rate environments</strong> — by falling less when yields rise and rising more when yields fall. This assumes both bonds are priced at the same YTM (same tangent line), so convexity is the only differentiator. In practice, the more convex bond is priced to reflect this advantage — it trades at a higher price (lower yield). <strong>Investors pay for convexity.</strong> If convexity is not reflected in the price, it represents a free risk-reduction benefit — but arbitrage quickly eliminates such mispricings.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Convexity Advantage Requires Significant Yield Moves to Matter</div>
+      <p>For tiny yield changes (1–5bps), the convexity adjustment (½ × C × ΔY²) is negligibly small and doesn't meaningfully improve the duration estimate. Convexity only becomes important for larger moves — typically 25bps or more, and increasingly so for moves of 50bps, 100bps, or beyond. For the short 5yr BRWA bond, the improvement at ±100bps is 12bps. For the 30yr Romanian bond with convexity of 370, the improvement would be enormous. Always check whether the yield change is large enough to make convexity adjustment worthwhile.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: PORTFOLIO DURATION AND CONVEXITY   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Portfolio Duration &amp; Convexity — Two Methods, One Preferred</h2>
+    </div>
+
+    <div class="card">
+      <p>Duration and convexity can be calculated for a <strong>portfolio of bonds</strong>, not just individual bonds. This allows portfolio managers to measure and manage the interest rate risk of their entire bond portfolio with a single set of numbers.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Method 1: Aggregate Cash Flow Timing</div>
+        <ul>
+          <li>Treat the portfolio as a single bond with all cash flows combined</li>
+          <li>Compute the weighted-average time to receipt of all aggregate cash flows</li>
+          <li><strong>Theoretically correct</strong> — uses actual portfolio cash flows</li>
+          <li><strong>Impractical</strong> — requires knowing every cash flow from every bond at every future date; computationally intensive for large portfolios</li>
+          <li>Rarely used in practice</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Method 2: Weighted Average of Individual Bonds</div>
+        <ul>
+          <li>Compute each bond's duration and convexity separately</li>
+          <li>Weight by each bond's market value as a share of total portfolio market value</li>
+          <li>Portfolio Duration = Σ (w_i × ModDur_i)</li>
+          <li>Portfolio Convexity = Σ (w_i × Convexity_i)</li>
+          <li><strong>Practically preferred</strong> — simple, intuitive, widely used</li>
+          <li><strong>Limitation:</strong> implicitly assumes parallel yield curve shifts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Portfolio Duration and Convexity — Weighted-Average Method</div>
+      <div class="f">
+        Portfolio ModDur    = Σ_i (w_i × ModDur_i)<br>
+        Portfolio Convexity = Σ_i (w_i × Convexity_i)<br><br>
+        WHERE:<br>
+        w_i = market value of bond i / total portfolio market value<br>
+        Σ w_i = 1 (weights sum to 1)<br><br>
+        Portfolio %ΔPV ≈ (−Portfolio ModDur × ΔYield) + [½ × Portfolio Con × (ΔYield)²]
+      </div>
+      <div class="note">
+        <strong>Weights are market-value weights, not par-value weights.</strong> A bond trading at a premium has a higher market value per $100 par than a bond trading at a discount — this difference matters when computing weights.<br><br>
+        <strong>The approximation becomes more accurate when:</strong> (1) Yield differences between bonds in the portfolio are smaller, and (2) the yield curve is approximately flat. If bonds in the portfolio have very different YTMs, the weighted-average duration is a less accurate representation of actual price sensitivity.
+      </div>
+    </div>
+
+    <h3>Worked Example — BRWA + Romanian Bond Portfolio (Exhibit 6)</h3>
+    <div class="auction-box">
+      <div class="label">Portfolio: $50M par each of BRWA (5yr, 3.2%) and Romanian (30yr, 4.625%). Both USD-denominated.</div>
+      <div class="f">
+        BOND DETAILS:<br>
+        BRWA:     Price=100.000, YTM=3.20%, ModDur=4.58676, Convexity=24.23896<br>
+        Romanian: Price=98.022,  YTM=4.75%, ModDur=15.90637, Convexity=369.64203<br><br>
+        MARKET VALUES:<br>
+        BRWA market value:     $50M × (100.000/100) = $50,000,000<br>
+        Romanian market value: $50M × (98.022/100)  = $49,011,224<br>
+        Total portfolio value:                         $99,011,224<br><br>
+        PORTFOLIO WEIGHTS (market value):<br>
+        w_BRWA     = $50,000,000 / $99,011,224 = 0.5050 (50.50%)<br>
+        w_Romanian = $49,011,224 / $99,011,224 = 0.4950 (49.50%)<br><br>
+        PORTFOLIO MODIFIED DURATION:<br>
+        = (4.58676 × 0.5050) + (15.90637 × 0.4950)<br>
+        = 2.31631 + 7.87365 = 10.19004<br><br>
+        PORTFOLIO CONVEXITY:<br>
+        = (24.23896 × 0.5050) + (369.64203 × 0.4950)<br>
+        = 12.24067 + 182.97281 = 195.21348<br><br>
+        ESTIMATED PORTFOLIO %ΔPV if ALL yields rise +100bps:<br>
+        %ΔPV ≈ (−10.19004 × 0.0100) + [½ × 195.21348 × (0.0100)²]<br>
+             = −10.19004% + 0.97607%<br>
+             = −9.21397%<br><br>
+        The portfolio loses approximately 9.21% if all yields rise by 100bps.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 10: LIMITATIONS                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Limitations of Portfolio Duration — The Parallel Shift Assumption</h2>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Critical Limitation — Parallel Yield Curve Shift Assumption</div>
+      <p>The weighted-average portfolio duration and convexity approach <strong>implicitly assumes that ALL yields in the portfolio change by the SAME amount in the SAME direction simultaneously</strong> — a "parallel shift" in the yield curve. In reality:</p>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>Parallel shifts are rare.</strong> The yield curve usually changes non-uniformly — short rates may rise while long rates fall (flattening), or long rates may rise more than short rates (steepening), or different parts may twist in different directions.</li>
+        <li><strong>The BRWA + Romanian portfolio is particularly exposed to this.</strong> The two bonds have very different maturities (5yr vs. 30yr) — their yields may change by different amounts. If only long rates rise (30yr Romanian yield rises but 5yr BRWA yield stays unchanged), the portfolio duration estimate would be inaccurate.</li>
+        <li><strong>The approximation is better when:</strong> bonds in the portfolio have similar maturities and similar yields, and the yield curve shift is approximately parallel.</li>
+        <li><strong>Curve duration measures (effective duration, key rate duration)</strong> address this by measuring sensitivity to specific parts of the yield curve — covered in later modules.</li>
+        <li><strong>The first method (aggregate cash flows) is theoretically superior</strong> because it doesn't require a parallel shift assumption — it works with the actual aggregate cash flows. But its impracticality for large portfolios makes the weighted-average method the standard in practice.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 When Does the Parallel Shift Assumption Matter Most?</div>
+      <p>It matters most for portfolios that are spread across the yield curve — long/short combinations, barbells, or portfolios mixing investment-grade and high-yield bonds (which have very different yield sensitivities). It matters less for portfolios concentrated at a single maturity (bullet portfolios) or portfolios where all bonds have similar yields and maturities. For the exam: always acknowledge the parallel shift assumption as the key limitation when discussing portfolio duration or convexity.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>What convexity measures:</strong> The second-order (non-linear) effect of yield changes on bond price. Mathematically: second derivative of price w.r.t. yield, divided by price. It captures the curvature of the price–yield relationship that duration (linear, first-order) misses.</li>
+        <li>✅ <strong>Convexity is always positive for option-free fixed-rate bonds.</strong> This means: estimated price gains from yield declines are always higher than duration alone suggests, and estimated price losses from yield rises are always lower. The price–yield curve always bows upward (toward the investor) for standard bonds.</li>
+        <li>✅ <strong>Convexity adjustment is always positive.</strong> The term ½ × AnnConvexity × (ΔYield)² is always ≥ 0 because (ΔYield)² is always positive. This means the convexity correction always makes the combined estimate more favorable than duration alone — regardless of the direction of the yield change.</li>
+        <li>✅ <strong>Full price change formula (Eq. 1):</strong> %ΔPV^Full ≈ (−AnnModDur × ΔYield) + [½ × AnnConvexity × (ΔYield)²]. Know both terms: the linear (duration) term and the quadratic (convexity) term. The ½ comes from the second-order Taylor expansion.</li>
+        <li>✅ <strong>Tabular convexity (7-column method):</strong> Same as MacDur table but add Col. 7 = t × (t+1) × w_t × (1+r_period)^−2. AnnConvexity = Σ(Col. 7) / m². The final payment dominates Col. 7 even more than it dominates Col. 6 (MacDur).</li>
+        <li>✅ <strong>Approximate convexity (Eq. 2):</strong> ApproxCon = (PV− + PV+ − 2×PV₀) / ((ΔYield)² × PV₀). Uses the same three prices as ApproxModDur. Useful for bonds with uncertain CFs. Very close to exact result (BRWA: 24.23896 vs. exact 24.23895).</li>
+        <li>✅ <strong>Money convexity (Eq. 3):</strong> MoneyCon = AnnConvexity × PV^Full. Currency price change (Eq. 4): ΔPV^Full ≈ −(MoneyDur × ΔYield) + [½ × MoneyCon × (ΔYield)²].</li>
+        <li>✅ <strong>Convexity reduces estimation error dramatically for large yield moves.</strong> BRWA bond: at ±100bps, duration-only error ≈12bps; with convexity adjustment: &lt;¼bp error. For the Romanian 30yr bond with convexity ~370, the improvement would be enormous.</li>
+        <li>✅ <strong>More convex bond outperforms in ALL rate environments</strong> (same duration): gains more when yields fall, loses less when yields rise. This is why convexity is valuable to investors. If the higher convexity is not priced in, it's a free benefit — but markets usually price it in (lower yield for more convex bond).</li>
+        <li>✅ <strong>Convexity properties — same direction as duration:</strong> Maturity ↑ → convexity ↑. Coupon ↓ → convexity ↑. YTM ↓ → convexity ↑. All three same direction as duration effects. PLUS: cash flow dispersion ↑ → convexity ↑ (unique to convexity — barbell vs. bullet).</li>
+        <li>✅ <strong>Cash flow dispersion:</strong> Two bonds with the same duration but different cash flow spread → the one with more spread has higher convexity. Barbell portfolio &gt; bullet portfolio convexity, for equal durations. This is why portfolio managers prefer barbells for convexity optimization.</li>
+        <li>✅ <strong>Maturity amplifies convexity more than duration.</strong> In the Romanian vs. BRWA example: 6× longer maturity → 3.5× higher duration BUT 15× higher convexity. Because convexity uses t×(t+1) (approximately t²), it scales with maturity approximately quadratically for zero-coupon bonds.</li>
+        <li>✅ <strong>Portfolio duration (Eq. Method 2):</strong> Portfolio ModDur = Σ (w_i × ModDur_i). Portfolio Convexity = Σ (w_i × Convexity_i). Weights = market value of bond i / total portfolio market value (NOT par value).</li>
+        <li>✅ <strong>Portfolio price change estimate:</strong> Use portfolio ModDur and portfolio convexity in Eq. 1. BRWA + Romanian: portfolio ModDur = 10.190; portfolio convexity = 195.21. At +100bps: %ΔPV ≈ −10.19% + ½×195.21×0.01² = −9.214%.</li>
+        <li>✅ <strong>Key limitation of weighted-average method:</strong> Assumes PARALLEL yield curve shifts (all yields change by same amount simultaneously). In reality: yield curves steepen, flatten, or twist. The approximation is most accurate when bonds have similar maturities/yields and the shift is approximately parallel.</li>
+        <li>✅ <strong>Method 1 (aggregate CFs) is theoretically superior</strong> but impractical for large portfolios. Method 2 (weighted average of individual bonds) is used in practice despite its limitations.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE — FIXED INCOME MODULE 12</div>
+      <div class="f">
+        ═══ CORE FORMULAS ═══<br>
+        Full price change (Eq. 1):<br>
+        %ΔPV^Full ≈ (−AnnModDur × ΔYield) + [½ × AnnConvexity × (ΔYield)²]<br><br>
+        Money convexity (Eq. 3):    MoneyCon = AnnConvexity × PV^Full<br>
+        Currency price change (Eq. 4):<br>
+        ΔPV^Full ≈ −(MoneyDur × ΔYield) + [½ × MoneyCon × (ΔYield)²]<br><br>
+        Tabular:  AnnConvexity = Σ(Col. 7) / m²<br>
+        Col. 7  = t × (t+1) × w_t × (1+r_period)^−2<br><br>
+        Approximate (Eq. 2): ApproxCon = (PV− + PV+ − 2×PV₀) / ((ΔYield)² × PV₀)<br><br>
+
+        ═══ CONVEXITY PROPERTIES ═══<br>
+        Maturity ↑     → Convexity ↑ (direct, same as duration)<br>
+        Coupon ↑       → Convexity ↓ (inverse, same as duration)<br>
+        YTM ↑          → Convexity ↓ (inverse, same as duration)<br>
+        CF dispersion ↑ → Convexity ↑ (barbell &gt; bullet, unique to convexity)<br>
+        Option-free: Convexity always positive → benefit in all rate environments<br><br>
+
+        ═══ PORTFOLIO MEASURES ═══<br>
+        Portfolio ModDur    = Σ (w_i × ModDur_i)    [w = MV weight]<br>
+        Portfolio Convexity = Σ (w_i × Convexity_i)<br>
+        Limitation: assumes PARALLEL yield curve shifts<br><br>
+
+        ═══ BRWA REFERENCE NUMBERS ═══<br>
+        AnnModDur = 4.58676; AnnConvexity = 24.23895<br>
+        At ±100bps: Duration only: ±4.587%. With convexity: −4.466% / +4.708%<br>
+        Convexity adjustment = ½ × 24.239 × 0.01² = +0.121% (both directions)<br><br>
+
+        ═══ ROMANIAN BOND REFERENCE ═══<br>
+        ApproxModDur = 15.906; ApproxCon = 369.642<br>
+        15× higher convexity than BRWA despite only 3.5× higher duration<br>
+        → Maturity amplifies convexity much more than duration<br><br>
+
+        ═══ PORTFOLIO EXAMPLE ═══<br>
+        50/50 BRWA + Romanian (by par value; ~50/50 by MV too)<br>
+        Portfolio ModDur = 10.190; Portfolio Convexity = 195.21<br>
+        +100bps: %ΔPV ≈ −10.19% + 0.976% = −9.214%
+      </div>
+      <div class="note">
+        <strong>The sign logic for Equation 1:</strong> Duration term: −ModDur × (+ΔYield) = negative (price falls when yield rises). Convexity term: +½ × C × (ΔYield)² = always positive (always adds back). For yield falls: −ModDur × (−ΔYield) = positive; convexity term still positive → both terms add → gain exceeds pure duration estimate. For yield rises: duration term is negative; convexity term is positive → partially offsets → loss is less than pure duration estimate.<br><br>
+        <strong>Remember: both ApproxModDur and ApproxCon use the same PV₀, PV+, PV− inputs.</strong> ModDur uses (PV− − PV+) in the numerator. Convexity uses (PV− + PV+ − 2×PV₀) in the numerator. One subtraction, one addition — but same three prices.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 12: Yield-Based Bond Convexity and Portfolio Properties · Exam Prep Notes
+</footer>
+
+</body>
+</html>

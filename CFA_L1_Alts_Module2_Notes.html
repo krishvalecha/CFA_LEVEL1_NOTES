@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 2: Performance and Returns</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --teal: #4cc9c9;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d1414 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,201,201,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(76,201,201,0.12); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--teal); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--teal); border-color: var(--teal); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--teal); background: rgba(76,201,201,0.1); border: 1px solid rgba(76,201,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-teal { background: rgba(76,201,201,0.15); color: var(--teal); border: 1px solid rgba(76,201,201,0.3); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .highlight-t { color: var(--teal); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--teal); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  /* Life cycle phase cards */
+  .phase-1 { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .phase-2 { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .phase-3 { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 10px; }
+  .phase-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .phase-1 .phase-label { color: var(--danger); }
+  .phase-2 .phase-label { color: var(--accent); }
+  .phase-3 .phase-label { color: var(--accent3); }
+  .phase-1 p, .phase-2 p, .phase-3 p, .phase-1 li, .phase-2 li, .phase-3 li { font-size: 14px; color: var(--text); }
+  .phase-1 ul, .phase-2 ul, .phase-3 ul { padding-left: 16px; margin-top: 6px; }
+  .phase-1 li, .phase-2 li, .phase-3 li { margin-bottom: 4px; }
+
+  /* Fair value hierarchy */
+  .fv-1 { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.3); border-radius: 6px; padding: 14px 18px; }
+  .fv-2 { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 14px 18px; }
+  .fv-3 { background: rgba(201,76,76,0.07); border: 1px solid rgba(201,76,76,0.3); border-radius: 6px; padding: 14px 18px; }
+  .fv-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .fv-1 .fv-label { color: var(--accent3); }
+  .fv-2 .fv-label { color: var(--accent); }
+  .fv-3 .fv-label { color: var(--danger); }
+  .fv-1 p, .fv-2 p, .fv-3 p { font-size: 14px; color: var(--text); }
+
+  /* Fee structure cards */
+  .fee-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: 0 6px 6px 0; padding: 14px 18px; margin-bottom: 10px; }
+  .fee-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--teal); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .fee-card p, .fee-card li { font-size: 14px; color: var(--text); }
+  .fee-card ul { padding-left: 16px; margin-top: 6px; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 2</div>
+  <h1>Alternative Investment <span>Performance and Returns</span></h1>
+  <p>Exam-ready notes: investment life cycle (J-curve), IRR vs. MOIC, leverage formula, fair value hierarchy (Levels 1–3), redemption mechanics (lockup, notice period, gate), custom fee arrangements (founders shares, either/or fees), return formulas before and after fees, survivorship bias and backfill bias.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Why Appraisal Is Complex</a>
+  <a class="toc-item" href="#s2">02 · Investment Life Cycle &amp; J-Curve</a>
+  <a class="toc-item" href="#s3">03 · IRR vs. MOIC</a>
+  <a class="toc-item" href="#s4">04 · Leverage &amp; Borrowed Funds</a>
+  <a class="toc-item" href="#s5">05 · Valuation &amp; Fair Value Hierarchy</a>
+  <a class="toc-item" href="#s6">06 · Redemption Mechanics</a>
+  <a class="toc-item" href="#s7">07 · Custom Fee Arrangements</a>
+  <a class="toc-item" href="#s8">08 · Return Calculations Before &amp; After Fees</a>
+  <a class="toc-item" href="#s9">09 · Survivorship &amp; Backfill Bias</a>
+  <a class="toc-item" href="#s10">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: WHY APPRAISAL IS COMPLEX -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Why Performance Appraisal of Alternatives Is Complex</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Traditional Assets (Simple)</div>
+        <ul>
+          <li>Standardized claims; no further capital commitments required</li>
+          <li>Identical periodic cash flows (dividends, coupons)</li>
+          <li>Continuously quoted market prices</li>
+          <li>Large peer groups; common benchmark indexes</li>
+          <li>Returns approximately normally distributed</li>
+          <li>Straightforward performance comparison</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Alternative Investments (Complex)</div>
+        <ul>
+          <li>Customized investments; staggered capital calls</li>
+          <li>Variable timing of cash inflows and outflows</li>
+          <li>Often no continuous market pricing (illiquid)</li>
+          <li>Use of leverage magnifies gains and losses</li>
+          <li>Complex fee structures affecting different investors differently</li>
+          <li>Returns usually <strong>NOT normally distributed</strong></li>
+          <li>Different tax and accounting treatment</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Four Key Areas Requiring Additional Scrutiny</h3>
+    <div class="card">
+      <ol style="padding-left:20px;">
+        <li><strong>Investment life cycle phase</strong> — timing and direction of cash flows vary by phase</li>
+        <li><strong>Use of borrowed funds (leverage)</strong> — magnifies both gains and losses</li>
+        <li><strong>Valuation of assets</strong> — often requires Level 3 "mark-to-model" inputs; potential for stale or smoothed valuations</li>
+        <li><strong>Fee structure</strong> — complex, customized, and investor-specific; results vary by when and how an investor participated</li>
+      </ol>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 The Core Challenge</div>
+      <p>Unlike public securities where all investors in the same fund earn the same return, alternative investment returns can <strong>vary significantly by investor</strong> depending on when they invested, what fee structure they negotiated, and what liquidity restrictions they accepted. This makes generalized performance appraisal unreliable.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: LIFE CYCLE & J-CURVE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Investment Life Cycle &amp; the J-Curve Effect</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">J-Curve Effect</div>
+      <div class="def-body">The characteristic pattern of alternative investment returns — initial <strong>negative returns</strong> in the early phase (due to fees and expenses before assets generate income) followed by an <strong>acceleration of returns</strong> as investments mature. The return profile resembles the letter "J."</div>
+    </div>
+
+    <div class="phase-1">
+      <div class="phase-label">Phase 1 — Capital Commitment (Negative Returns)</div>
+      <p>Manager identifies and selects investments. Capital is committed via a capital call (immediate or delayed).</p>
+      <ul>
+        <li>Returns are typically <strong>negative</strong> — fees and expenses incurred immediately before assets generate income</li>
+        <li>Investments may generate little or no income during this phase</li>
+        <li>Applies to: early-stage companies (VC), mature firms (PE), or properties (real estate)</li>
+      </ul>
+    </div>
+
+    <div class="phase-2">
+      <div class="phase-label">Phase 2 — Capital Deployment (Cash Outflows Exceed Inflows)</div>
+      <p>Manager deploys funds for operations: construction or improvements (real estate/infrastructure), turnaround expenses (PE), or startup operations (VC).</p>
+      <ul>
+        <li>Cash outflows typically exceed inflows</li>
+        <li>Management fees further reduce returns</li>
+        <li>Investments begin to develop but have not yet reached profitability</li>
+      </ul>
+    </div>
+
+    <div class="phase-3">
+      <div class="phase-label">Phase 3 — Capital Distribution (Acceleration of Returns)</div>
+      <p>Turnaround, startup phase, or improvements completed → investments mature.</p>
+      <ul>
+        <li>Underlying assets appreciate and/or generate income in excess of costs</li>
+        <li>Fund may realize substantial capital gains from liquidating or exiting investments</li>
+        <li>Exit methods: IPO (VC), sale of properties (real estate), sale of portfolio companies (PE)</li>
+        <li>Returns accelerate, then level off as capital is distributed, investments sold, and fund closed</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 J-Curve — Why It Matters for Performance Comparison</div>
+      <p>A private equity fund in Phase 1 will show poor performance vs. a fund in Phase 3. This is why <strong>vintage year comparisons</strong> are more appropriate than simply comparing current returns. Using a composite benchmark where funds are at different phases is misleading — like comparing a startup vs. a mature company and calling one "better managed."</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Interim Valuations Are Less Reliable Mid-Life Cycle</div>
+      <p>After a PE fund has fully drawn capital commitments, <strong>interim accounting values become less critical</strong> for a period. Accounting conventions often leave longer-lived investments marked at or near initial cost until clear impairment events or realization events occur. These "stale" values may not reflect actual changes in underlying investment value — potentially understating volatility and overstating apparent stability.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: IRR vs. MOIC -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Return Metrics — IRR vs. MOIC</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">IRR (Internal Rate of Return)</div>
+        <p><strong>Preferred measure</strong> for alternative investments — especially private equity and real estate.</p>
+        <ul>
+          <li>Accounts for the <strong>timing and magnitude</strong> of all cash flows in and out</li>
+          <li>GP is rewarded or penalized for timing decisions</li>
+          <li>Requires assumptions: (1) financing rate for outgoing cash flows (typically WACC), (2) reinvestment rate for incoming cash flows</li>
+          <li>Cannot be solved algebraically — requires iteration/calculator/Excel</li>
+          <li>Best for assessing longer-term PE and real estate investments</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">MOIC (Multiple of Invested Capital)</div>
+        <p><strong>Shortcut measure</strong> — easier to calculate and intuitively understand.</p>
+        <ul>
+          <li>Also called: money multiple</li>
+          <li>Formula: MOIC = (Realized value + Unrealized value) / Total invested capital</li>
+          <li><span class="danger-text">Ignores the timing of cash flows</span> — a key limitation</li>
+          <li>Easy to communicate: "We made 2× or 3× our initial investment"</li>
+          <li>Total invested capital = paid-in capital less management fees and fund expenses</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">MOIC Formula</div>
+      <div class="f">
+        MOIC = (Realized value of investment + Unrealized value of investment) / Total amount of invested capital<br><br>
+        Total invested capital = paid-in capital − management fees − fund expenses
+      </div>
+      <div class="note">
+        MOIC ignores time value of money — a 2× return in 2 years is far better than 2× in 15 years.<br>
+        IRR captures the time dimension; MOIC does not.<br>
+        Unrealized value = residual asset values still awaiting their ultimate sale (not yet exited).<br>
+        Both IRR and MOIC are commonly reported together for private equity funds.
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ MOIC Exam Trap — Time Blindness</div>
+      <p>A MOIC of 3× sounds impressive, but you must know how long it took. 3× in 3 years ≈ IRR of ~44%. 3× in 15 years ≈ IRR of ~8%. Same MOIC, radically different IRRs. <strong>Always use IRR to assess performance when timing matters</strong> — which for alternatives, it always does.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: LEVERAGE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Use of Borrowed Funds — Leverage</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Leveraged Rate of Return</div>
+      <div class="f">
+        rL = [r × (Vc + Vb) − (Vb × rb)] / Vc<br><br>
+        Rearranged to show relationship clearly:<br>
+        rL = r + (Vb / Vc) × (r − rb)<br><br>
+        where:<br>
+        rL = leveraged rate of return<br>
+        r  = unleveraged cash portfolio return<br>
+        Vc = cash (equity) invested by investor<br>
+        Vb = borrowed funds<br>
+        rb = periodic borrowing rate
+      </div>
+      <div class="note">
+        If r &gt; rb → leverage INCREASES returns (positive carry)<br>
+        If r &lt; rb → leverage DECREASES returns (negative carry)<br>
+        If r = rb → leverage has no effect<br>
+        Leverage amplifies BOTH gains AND losses — same formula applies in both directions.
+      </div>
+    </div>
+
+    <h3>How Hedge Funds Use Leverage</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Derivatives:</strong> Take large notional exposures with small capital outlay</li>
+        <li><strong>Prime broker borrowing:</strong> Hedge fund borrows shares, bonds, or derivatives; deposits cash or collateral into a <strong>margin account</strong></li>
+        <li>Margin account = hedge fund's net equity in its positions</li>
+        <li>Minimum margin depends on portfolio riskiness and hedge fund creditworthiness</li>
+        <li><strong>Margin call:</strong> If margin account falls below minimum → lender demands more collateral → hedge fund may be forced to liquidate positions → can lock in or magnify losses</li>
+        <li>Forced liquidation of large positions can move security prices further against the fund before the position is fully closed</li>
+        <li>Leverage is necessary for meaningful returns from arbitrage, relative value, and quantitative strategies</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Leverage Risk — Margin Calls and Forced Liquidation</div>
+      <p>If a hedge fund cannot meet a margin call, it must liquidate positions — potentially at the worst possible time. If the position is large enough to move the market, the fund's forced selling worsens the price further before the position is closed. This is why leverage can turn modest losses into catastrophic ones, and why "access to borrowed funds or lack thereof is an important factor in evaluating the risk of leveraged investments."</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: VALUATION & FAIR VALUE HIERARCHY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Valuation &amp; Fair Value Hierarchy</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Fair Value</div>
+      <div class="def-body">A market-based measure based on observable or derived assumptions to determine the <strong>exit price</strong> a market participant would use to sell an asset (or transfer a liability) in an orderly transaction at a specific date. Accounting rules require investments to be recorded at fair value for financial reporting purposes.</div>
+    </div>
+
+    <div class="three-col">
+      <div class="fv-1">
+        <div class="fv-label">Level 1 — Observable Market Prices</div>
+        <p><strong>Quoted prices in active markets</strong> for identical assets/liabilities accessible as of the measurement date.</p>
+        <p style="margin-top:6px; font-size:13px;"><strong>Example:</strong> Exchange-traded public equity securities (observed closing market price).</p>
+        <p style="margin-top:6px; font-size:13px; color:var(--muted);">Most reliable; no estimation required.</p>
+      </div>
+      <div class="fv-2">
+        <div class="fv-label">Level 2 — Observable Inputs (Indirect)</div>
+        <p><strong>Inputs other than Level 1 quoted prices</strong> that are directly or indirectly observable for the asset/liability.</p>
+        <p style="margin-top:6px; font-size:13px;"><strong>Example:</strong> OTC interest rate derivatives (pricing model using quoted market prices).</p>
+        <p style="margin-top:6px; font-size:13px; color:var(--muted);">Model-based but anchored to observable market data.</p>
+      </div>
+      <div class="fv-3">
+        <div class="fv-label">Level 3 — Unobservable Inputs ("Mark-to-Model")</div>
+        <p><strong>Unobservable inputs</strong> used when there is little or no market activity for the asset/liability.</p>
+        <p style="margin-top:6px; font-size:13px;"><strong>Example:</strong> Private equity or real estate (cash flow projection models with reasonably available market participant assumptions).</p>
+        <p style="margin-top:6px; font-size:13px; color:var(--muted);">Least reliable; highest estimation risk; increased scrutiny required.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Level 3 Valuation Risks — Smoothing and Conflicts of Interest</div>
+      <p>Alternative investments often rely on Level 3 ("mark-to-model") inputs, creating several risks:</p>
+    </div>
+
+    <div class="card">
+      <ul>
+        <li><strong>Smoothed or overstated returns:</strong> Stable accounting valuations (no new market price information) give a false impression that returns are less correlated and less volatile than actual underlying asset value changes</li>
+        <li><strong>Understated volatility:</strong> Mark-to-model valuations don't fluctuate with market prices → standard deviation of reported returns understates true risk</li>
+        <li><strong>Conflict of interest:</strong> When managers self-value their own portfolios (mark-to-model), there is incentive to overstate values → must have independent testing, benchmarking, and calibration to industry standards</li>
+        <li><strong>"More realistic picture" emerges</strong> if managers are forced to liquidate a portfolio prematurely — true market prices revealed</li>
+        <li><strong>Rule of thumb:</strong> Any investment vehicle heavily involved with Level 3 priced assets <strong>deserves increased scrutiny and due diligence</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: REDEMPTION MECHANICS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Redemption Mechanics — Lockup, Notice Period, Gate</h2>
+    </div>
+
+    <div class="card">
+      <p>Redemptions (investor withdrawals) are particularly damaging when a hedge fund is performing poorly — forcing the manager to sell positions at disadvantageous prices under pressure, incurring transaction costs, and potentially locking in or magnifying losses. Funds use several mechanisms to manage this risk:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Mechanism</th>
+            <th>Definition</th>
+            <th>Purpose</th>
+            <th>Typical Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lockup Period</td>
+            <td>Minimum holding period before investors can withdraw or redeem shares</td>
+            <td>Allows manager time to implement strategy and realize expected results; prevents premature forced selling</td>
+            <td>Varies; longer lockups → lower fees</td>
+          </tr>
+          <tr>
+            <td>Notice Period</td>
+            <td>Advance notice investors must give before redeeming</td>
+            <td>Allows manager to liquidate positions in an orderly manner without distressing prices</td>
+            <td>Typically 30–90 days in advance</td>
+          </tr>
+          <tr>
+            <td>Redemption Fee</td>
+            <td>Fee charged on withdrawals</td>
+            <td>Discourages redemptions; offsets transaction costs for remaining investors</td>
+            <td>Varies; typically a % of redeemed amount</td>
+          </tr>
+          <tr>
+            <td>Gate</td>
+            <td>A provision that limits or restricts redemptions for a period of time</td>
+            <td>Prevents a "run on the fund" during stressed conditions; preserves orderly operations</td>
+            <td>Usually at discretion of fund manager</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Fund of Funds — More Redemption Flexibility</div>
+      <p>Funds of hedge funds may offer <strong>more redemption flexibility</strong> than direct hedge fund investments because of: (1) special redemption arrangements with underlying fund managers, (2) maintained cash reserves, (3) access to bridge-loan financing, or (4) avoidance of less-liquid hedge fund strategies. However, they add another layer of fees.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Redemption Terms Should Match Asset Liquidity</div>
+      <p>Ideally, redemption terms should match the expected liquidity of the assets being invested in. However, even careful planning can fail when assets are illiquid and obscure — initial drawdowns can become much more serious. These left-tailed loss events (rare but catastrophic) are not easily modeled for hedge funds.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: CUSTOM FEE ARRANGEMENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Custom Fee Arrangements</h2>
+    </div>
+
+    <div class="card">
+      <p>Alternative investment fees are often customized to vary based on the <strong>size, timing, and terms</strong> of investor participation. Different investors in the same fund can face different fee structures, leading to different net returns from the same underlying performance.</p>
+    </div>
+
+    <div class="fee-card">
+      <div class="fee-title">1 — Fees Based on Liquidity Terms &amp; Asset Size</div>
+      <ul>
+        <li>Longer lockup periods → lower management fees</li>
+        <li>Larger investors receive fee discounts</li>
+        <li>Placement agents who introduced investors may also receive fee reductions</li>
+        <li>Large LP management fees: 0.5%–1.5% with incentive fees of 10%–15%</li>
+        <li>Strong small funds may <strong>decline business from large investors</strong> rather than reduce fees (capacity constraints)</li>
+      </ul>
+    </div>
+
+    <div class="fee-card">
+      <div class="fee-title">2 — Founders Shares (Founders Class)</div>
+      <ul>
+        <li>Incentives for <strong>early investors in startup funds</strong> — lower fee structure in exchange for early commitment</li>
+        <li>Typical founders share terms: <strong>1.5% management fee / 10% performance fee</strong> vs. standard <strong>2% management fee / 20% performance fee</strong></li>
+        <li>Often applies only to the first $100 million in assets invested (cutoff thresholds vary)</li>
+        <li>Alternative: fees reduced once fund achieves a critical mass or performance targets</li>
+      </ul>
+    </div>
+
+    <div class="fee-card">
+      <div class="fee-title">3 — "Either/Or" Fee Structure</div>
+      <ul>
+        <li>Major institutional investors (e.g., Teacher Retirement System of Texas) may negotiate an <strong>either/or fee</strong> agreement</li>
+        <li>Manager chooses between: (a) <strong>1% fixed management fee</strong> (covers expenses in down years) OR (b) <strong>30% incentive fee</strong> above an agreed hurdle (rewards performance in up years) — <strong>whichever is greater</strong></li>
+        <li>Effectively: if fund performs well → fund charges performance fee only; if fund performs poorly → fund charges management fee only</li>
+        <li>Designed to reward returns in excess of a benchmark while covering expenses when underperforming</li>
+        <li>Typically negotiated by large investors with large commitments; smaller investors (high-net-worth individuals) face more traditional fee structures</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Fee Structure Summary — Standard vs. Custom</div>
+      <p><strong>Standard "2 and 20":</strong> 2% management fee + 20% performance fee above hurdle rate (most common traditional hedge fund structure).<br>
+      <strong>Founders shares:</strong> ~1.5% + 10% for early investors.<br>
+      <strong>Either/or:</strong> max(1% flat, 30% incentive above hurdle) — large institutional investors only.<br>
+      Because fees differ by investor, the same fund's performance can produce <strong>different net returns for different LPs</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: RETURN CALCULATIONS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Return Calculations — Before and After Fees</h2>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">GP Return and Investor Net Return Formulas</div>
+      <div class="f">
+        GP Return in currency terms:<br>
+        RGP = (P₁ × rm) + max[0, (P₁ − P₀) × p]<br><br>
+        Investor's periodic net rate of return:<br>
+        rᵢ = (P₁ − P₀ − RGP) / P₀<br><br>
+        where:<br>
+        P₀ = beginning-of-period assets (fund value at start)<br>
+        P₁ = end-of-period assets (fund value at end)<br>
+        rm = management fee rate (% of AUM, applied to end-of-period assets P₁)<br>
+        p  = performance fee rate (% of positive return)<br>
+        RGP = total GP compensation in currency terms
+      </div>
+      <div class="note">
+        The GP earns: (1) management fee on end-of-period fund value + (2) performance fee on positive period return.<br>
+        Performance fee only earned when (P₁ − P₀) &gt; 0 → max[0, ...] ensures no negative performance fee.<br>
+        Investor's net return = gross return minus all GP compensation.<br>
+        Applying fees to gross vs. net basis has different effects — fees calculated on net basis give higher investor returns.
+      </div>
+    </div>
+
+    <h3>Impact of Hurdle Rate on Investor Returns</h3>
+    <div class="card">
+      <p>When a performance fee includes a hurdle rate, the fee reduction for a specific investor is:</p>
+      <p style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#e8c97a; padding: 10px 0;">Fee reduction = P₁ × rh × p   (product of end-of-period fund value × hurdle rate × performance fee)</p>
+      <p>This is the same for any investor regardless of when they entered the fund. However, <strong>high-water marks produce different results depending on entry timing</strong>:</p>
+      <ul style="margin-top:8px;">
+        <li>Original investor who has been in since inception → benefits from HWM if fund previously fell and is now recovering</li>
+        <li>New investor entering after a fund decline → gets NO HWM benefit because the new investor's HWM starts at their entry price, not the fund's prior peak</li>
+        <li>Result: new investor faces <strong>higher performance fees than the original investor for the same period of fund recovery</strong></li>
+      </ul>
+    </div>
+
+    <h3>Effect of Clawback on Investor Returns</h3>
+    <div class="card">
+      <p>Clawback provisions are activated when early success is followed by later losses. The timing of returns has a meaningful impact:</p>
+      <ul>
+        <li>GP earns performance fees on early successful deal exits</li>
+        <li>Later deals generate losses</li>
+        <li>Clawback requires GP to return previously paid performance fees to LPs</li>
+        <li>Protects LPs from paying performance fees on an overall losing fund</li>
+        <li>Net effect on investor return: LP recovers some or all performance fees paid on early gains if those gains are offset by later losses at the fund level</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Timing-Dependent Returns — An Important Nuance</div>
+      <p>Two investors with <strong>identical fee structures</strong> in the same fund can earn <strong>different net returns</strong> purely because of when they invested: (1) Investor entering after a fund drop may face performance fees on the same recovery period where an earlier investor owes nothing (protected by HWM). (2) Fees generally higher for later entrants in recovering funds. (3) Alternative investment databases report fund performance <strong>net of aggregated fees</strong> — but if fee structures vary, individual investor returns may differ.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: SURVIVORSHIP & BACKFILL BIAS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Relative Returns, Survivorship Bias &amp; Backfill Bias</h2>
+    </div>
+
+    <h3>Benchmarking Alternatives</h3>
+    <div class="card">
+      <ul>
+        <li>Alternative investment returns are compared to <strong>benchmarks of investments with similar features</strong></li>
+        <li>A composite benchmark for PE or real estate can be misleading if a specific investment is in a <strong>different life cycle phase</strong> than most peers</li>
+        <li><strong>Vintage year comparisons</strong> (same year investments started) on annual or "since inception" basis lead to more accurate results</li>
+        <li><strong>Key limitation:</strong> Lockups and illiquidity prevent investors from reacting to underperformance by selling — unlike public securities</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--danger);">Survivorship Bias</div>
+        <p>Exclusion of <strong>failed or closed funds</strong> from a benchmark, leading to overly optimistic return expectations.</p>
+        <p style="margin-top:8px; font-size:13px;">Studies suggest: <strong>over a quarter of all hedge funds fail within the first 3 years</strong> due to performance problems → investor defections → fund closure.</p>
+        <p style="margin-top:6px; font-size:13px;">Hedge fund indexes that include only currently operating funds and exclude those no longer available <strong>overstate true average returns</strong>.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Backfill Bias (Instant History Bias)</div>
+        <p>The <strong>selective inclusion</strong> of prior performance data for newly added funds in an index — inflating average reported returns.</p>
+        <p style="margin-top:8px; font-size:13px;">Example: Manager launches several funds simultaneously → only includes the most successful ones in an index a few years later → selectively "backfills" favorable history.</p>
+        <p style="margin-top:6px; font-size:13px;">The selective backfilling of only successful funds serves to <strong>increase reported average returns</strong>.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Combined Effect of Both Biases</div>
+      <p>Hedge fund indexes may NOT reflect actual average hedge fund performance — they reflect only the returns of funds that: (1) initially performed best (backfill bias) AND (2) have not failed (survivorship bias). The true average hedge fund return is likely considerably lower than index performance suggests. Investors using hedge fund index returns to set expectations are likely to be disappointed.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Bias</th>
+            <th>What Is Excluded / Distorted</th>
+            <th>Direction of Effect</th>
+            <th>Asset Class Most Affected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Survivorship Bias</td>
+            <td>Failed/closed funds excluded from historical benchmark returns</td>
+            <td>Overstates reported returns (upward bias)</td>
+            <td>Hedge funds (25%+ fail within 3 years)</td>
+          </tr>
+          <tr>
+            <td>Backfill Bias</td>
+            <td>Only successful fund histories selectively added to index</td>
+            <td>Overstates reported returns (upward bias)</td>
+            <td>Hedge funds; any index with voluntary reporting</td>
+          </tr>
+          <tr>
+            <td>Vintage Year Mismatch</td>
+            <td>Comparing funds at different life cycle phases</td>
+            <td>Misleading performance comparisons</td>
+            <td>PE and real estate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Why alt performance appraisal is complex:</strong> Staggered capital calls, longer horizons, illiquidity, leverage, complex fees, different tax/accounting, returns NOT normally distributed.</li>
+        <li>✅ <strong>4 key appraisal focus areas:</strong> (1) Investment life cycle phase, (2) Leverage/borrowed funds, (3) Valuation of assets, (4) Fee structure.</li>
+        <li>✅ <strong>3 life cycle phases:</strong> Phase 1 = Capital commitment (negative returns, fees before income). Phase 2 = Capital deployment (outflows exceed inflows, management fees reduce returns). Phase 3 = Capital distribution (assets appreciate, capital gains realized, returns accelerate then level off as fund closes).</li>
+        <li>✅ <strong>J-curve effect:</strong> Initial negative returns → acceleration of returns later. Resembles letter "J." Caused by fees/expenses in Phase 1 before assets generate income.</li>
+        <li>✅ <strong>IRR = preferred return measure</strong> for PE and real estate. Accounts for timing AND magnitude of cash flows. GP rewarded/penalized for timing decisions. Requires assumptions for financing rate (WACC) and reinvestment rate.</li>
+        <li>✅ <strong>MOIC = shortcut measure.</strong> MOIC = (Realized + Unrealized value) / Total invested capital. Easy to communicate (2×, 3×). IGNORES TIMING OF CASH FLOWS — critical limitation. Total invested capital = paid-in capital − management fees − expenses.</li>
+        <li>✅ <strong>MOIC vs. IRR trap:</strong> 2× in 2 years vs. 2× in 15 years → same MOIC but vastly different IRRs. Always use IRR when time dimension matters.</li>
+        <li>✅ <strong>Leveraged return formula:</strong> rL = r + (Vb/Vc)(r − rb). If r &gt; rb → leverage amplifies gains. If r &lt; rb → leverage amplifies losses. Symmetric amplification.</li>
+        <li>✅ <strong>Margin account:</strong> Hedge fund's net equity in leveraged positions with prime broker. If margin falls below minimum → margin call → forced liquidation → can magnify/lock in losses. Large liquidation can move market against fund before position closed.</li>
+        <li>✅ <strong>Fair value hierarchy:</strong> Level 1 = quoted prices (exchange-traded stocks). Level 2 = observable but indirect inputs (OTC derivatives). Level 3 = unobservable/model-based inputs (PE, real estate). Most alternatives = Level 3.</li>
+        <li>✅ <strong>Level 3 risks:</strong> Mark-to-model (not mark-to-market). Stable valuations give false impression of low correlation and low volatility. True risk may be understated. Conflict of interest in self-valuation. Models must be independently tested. Increased scrutiny warranted for Level 3-heavy funds.</li>
+        <li>✅ <strong>Interim valuations mid-life cycle:</strong> After PE fund fully draws commitments, interim accounting values may be anchored near initial cost — adjustments only on impairment or realization events. Not that value isn't changing; accounting conventions just don't reflect it immediately.</li>
+        <li>✅ <strong>Redemption mechanisms:</strong> Lockup period = minimum holding before withdrawal. Notice period = advance notice required (30–90 days). Redemption fee = discourages early redemptions; offsets transaction costs for remaining investors. Gate = manager-discretionary limit on redemptions during stressed periods.</li>
+        <li>✅ <strong>Fund of funds redemption flexibility:</strong> Greater than direct HF investment due to special arrangements with underlying managers, cash reserves, bridge loans, or avoidance of illiquid strategies. But adds another layer of fees.</li>
+        <li>✅ <strong>Custom fee types:</strong> (1) Liquidity/size-based: longer lockup or larger investment → lower fees. (2) Founders shares: early investors get ~1.5%/10% vs. standard 2%/20%; applies to first ~$100M invested. (3) Either/or: max(1% flat, 30% incentive above hurdle) — major institutional investors only.</li>
+        <li>✅ <strong>GP return formula:</strong> RGP = (P₁ × rm) + max[0, (P₁ − P₀) × p]. Investor net return: rᵢ = (P₁ − P₀ − RGP) / P₀.</li>
+        <li>✅ <strong>Hurdle rate fee reduction (same for all investors):</strong> P₁ × rh × p. But HIGH-WATER MARK effects are TIMING-DEPENDENT: new investor entering after fund decline gets NO HWM benefit (their HWM starts at entry price, not fund's prior peak) → faces higher effective fees than the original investor for the same recovery period.</li>
+        <li>✅ <strong>Vintage year comparisons:</strong> More accurate for PE/real estate than composite benchmarks, because funds at different life cycle phases are not comparable.</li>
+        <li>✅ <strong>Survivorship bias:</strong> Exclusion of failed/closed funds from indexes → overstates returns. 25%+ of hedge funds fail within 3 years. Indexes including only currently operating funds are biased upward.</li>
+        <li>✅ <strong>Backfill bias (instant history bias):</strong> Selective inclusion of only successful fund histories when adding new funds to an index → inflates reported average returns. Manager may launch multiple funds, add only winners, and backfill their favorable performance history.</li>
+        <li>✅ <strong>Combined effect:</strong> Hedge fund indexes likely overstate true average returns due to BOTH biases. Real average hedge fund performance is lower than indexes suggest.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Formulas — Quick Reference</div>
+      <div class="f">
+        MOIC:<br>
+        MOIC = (Realized value + Unrealized value) / Total invested capital<br>
+        Total invested capital = Paid-in capital − Mgmt fees − Fund expenses<br><br>
+        LEVERAGE:<br>
+        rL = r + (Vb / Vc) × (r − rb)<br>
+        rL = [r × (Vc + Vb) − Vb × rb] / Vc<br>
+        r &gt; rb → leverage helps | r &lt; rb → leverage hurts<br><br>
+        GP RETURN AND INVESTOR NET RETURN:<br>
+        RGP = (P₁ × rm) + max[0, (P₁ − P₀) × p]<br>
+        rᵢ = (P₁ − P₀ − RGP) / P₀<br><br>
+        HURDLE RATE FEE REDUCTION (same for all investors):<br>
+        Fee reduction = P₁ × rh × p
+      </div>
+      <div class="note">
+        IRR = preferred metric; accounts for timing of cash flows. MOIC = shortcut; ignores timing.<br>
+        J-curve: Phase 1 = negative (fees before income) → Phase 2 = deployment (outflows) → Phase 3 = distribution (gains).<br>
+        Fair value: Level 1 (market price) &gt; Level 2 (observable model) &gt; Level 3 (mark-to-model, highest risk).<br>
+        Redemption: lockup (min holding period) | notice period (30–90 days) | gate (manager-discretionary limit) | redemption fee.<br>
+        Fee types: founders shares (1.5%/10%) | either/or (max of 1% flat or 30% incentive) | size/lockup discounts.<br>
+        Biases: survivorship (excludes failures) + backfill (includes only winners) = hedge fund indexes overstate returns.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 2: Alternative Investment Performance and Returns · Exam Prep Notes
+</footer>
+
+</body>
+</html>

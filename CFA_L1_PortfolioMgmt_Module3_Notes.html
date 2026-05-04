@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Portfolio Management | Module 3: Portfolio Management Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #14100d 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,76,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,76,76,0.12); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(76,139,201,0.1); border: 1px solid rgba(76,139,201,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { color: #e8c97a; font-size: 15px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent2); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent2); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .step-block { border-radius: 6px; padding: 20px 24px; margin: 14px 0; }
+  .step-plan { background: rgba(76,201,138,0.07); border: 1px solid rgba(76,201,138,0.35); }
+  .step-exec { background: rgba(76,139,201,0.07); border: 1px solid rgba(76,139,201,0.35); }
+  .step-feed { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.35); }
+  .step-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 12px; text-transform: uppercase; }
+  .step-plan .step-label { color: var(--accent3); }
+  .step-exec .step-label { color: var(--accent2); }
+  .step-feed .step-label { color: var(--accent); }
+  .step-block ul { padding-left: 20px; }
+  .step-block li { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+
+  .investor-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .investor-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--accent2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .investor-body { font-size: 14px; color: var(--text); }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · PORTFOLIO MANAGEMENT · MODULE 3</div>
+  <h1>Portfolio Management: <span>An Overview</span></h1>
+  <p>Exam-ready notes: the portfolio approach to investing, diversification benefits and Modern Portfolio Theory, the three steps of the portfolio management process (planning, execution, feedback), types of investors (individual and institutional), defined benefit vs. defined contribution pension plans, the asset management industry, mutual funds, and other pooled investment products.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Portfolio Approach &amp; Diversification</a>
+  <a class="toc-item" href="#s2">02 · MPT &amp; Downside Protection</a>
+  <a class="toc-item" href="#s3">03 · Portfolio Management Process</a>
+  <a class="toc-item" href="#s4">04 · Individual Investors &amp; DC Plans</a>
+  <a class="toc-item" href="#s5">05 · Institutional Investors</a>
+  <a class="toc-item" href="#s6">06 · DB vs. DC Pension Plans</a>
+  <a class="toc-item" href="#s7">07 · Asset Management Industry</a>
+  <a class="toc-item" href="#s8">08 · Mutual Funds</a>
+  <a class="toc-item" href="#s9">09 · Types of Mutual Funds</a>
+  <a class="toc-item" href="#s10">10 · Other Pooled Products</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: PORTFOLIO APPROACH & DIVERSIFICATION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>The Portfolio Approach to Investing</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Portfolio Approach</div>
+      <div class="def-body">Evaluating individual securities in relation to their <strong>contribution to the investment characteristics of the whole portfolio</strong> — rather than evaluating each security in isolation. The central idea: what matters is how an asset behaves within a portfolio, not just by itself.</div>
+    </div>
+
+    <h3>Why the Portfolio Approach Matters — Key Benefits</h3>
+    <div class="card">
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li style="margin-bottom:8px;"><strong>Avoid disaster (downside protection)</strong>: Don't put all eggs in one basket. Concentrated holdings create catastrophic loss exposure</li>
+        <li style="margin-bottom:8px;"><strong>Risk reduction</strong>: Combining assets with less-than-perfect correlations reduces standard deviation for the same expected return</li>
+        <li style="margin-bottom:8px;"><strong>Risk-return trade-off optimization</strong>: Different weight combinations produce different risk-return profiles — enabling customization</li>
+      </ol>
+    </div>
+
+    <h3>The Enron Case Study — Lesson in Concentration Risk</h3>
+    <div class="card">
+      <ul>
+        <li>1990-2000: Enron stock returned 27% per year vs. 13% for S&amp;P 500</li>
+        <li>Enron 401(k): <strong>62% of employee retirement assets in Enron shares</strong> (US$1.3 billion out of US$2.1 billion)</li>
+        <li>Employees could have diversified — only ~US$150M of shares were actually restricted</li>
+        <li>Between Jan 2001 – Jan 2002: Enron stock fell from ~US$90 to <strong>$0</strong></li>
+        <li>Other examples: Owens Corning, Northern Telecom, Corning, ADC Telecommunications — all had &gt;25% employee concentration and saw ~90% declines</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Key Lesson — Human Capital Concentration</div>
+      <p>Enron employees were <strong>doubly exposed</strong>: their human capital (wages, job security) AND financial capital (retirement portfolio) were both concentrated in one company. When a Enron-like failure occurs, you lose your job AND your savings. <strong>Never concentrate financial investments where your human capital is already invested.</strong></p>
+    </div>
+
+    <h3>The Diversification Ratio — Measuring Risk Reduction</h3>
+
+    <div class="formula-box">
+      <div class="label">★ Diversification Ratio ★</div>
+      <div class="f">
+        Diversification Ratio = σ<sub>portfolio</sub> / σ<sub>avg individual security</sub>
+      </div>
+      <div class="note">
+        Measures risk reduction from equal-weight diversification.<br>
+        <strong>Lower ratio = greater diversification benefit</strong>.<br>
+        Example from reading: HKSE portfolio had σ = 17.9% vs. avg individual stock σ = 24.9% → ratio ≈ 0.72 (i.e., portfolio risk is only 72% of average individual risk — a 28% risk reduction).<br><br>
+        Even stronger reduction is possible with assets from different industries (chosen for low correlation).
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Critical Insight — Portfolios Affect Risk More Than Returns</div>
+      <p>When you form an equally-weighted portfolio, the <strong>expected return is the SAME as the average of individual returns</strong> — but the <strong>standard deviation is LESS than the average</strong> of individual standard deviations (unless correlations are all +1). This is the free lunch of diversification: same return, less risk.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: MPT & DOWNSIDE PROTECTION -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Modern Portfolio Theory &amp; Downside Protection</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Modern Portfolio Theory (MPT)</div>
+      <div class="def-body">The theoretical foundation for diversification-based investing, formalized by <strong>Harry Markowitz (1952)</strong>. Main conclusion: investors should not only hold portfolios but should also focus on <strong>how individual securities are related to one another</strong> (correlation). Extended by Sharpe, Lintner, and Treynor (1960s) to derive the CAPM.</div>
+    </div>
+
+    <h3>Key MPT Contributors</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Contributor</th><th>Contribution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1952</td><td><strong>Harry Markowitz</strong></td><td>Founding paper on portfolio selection → Modern Portfolio Theory. Emphasizes correlations among securities</td></tr>
+          <tr><td>1961</td><td><strong>Jack Treynor</strong></td><td>Early work on CAPM and risk pricing</td></tr>
+          <tr><td>1964</td><td><strong>William Sharpe</strong></td><td>CAPM — role of systematic risk in pricing</td></tr>
+          <tr><td>1965</td><td><strong>John Lintner</strong></td><td>Independent CAPM derivation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Limitation of Diversification — Correlation Changes in Crises</h3>
+    <div class="card">
+      <p>Diversification works best in "normal" market conditions. When market turmoil hits, correlations can <strong>converge toward 1</strong> — reducing or eliminating the diversification benefit:</p>
+      <ul style="margin-top:8px;">
+        <li>During Q4 2007–Q1 2009 (Global Financial Crisis): equally-weighted portfolio of 5 global equity indexes returned <strong>−48.5%</strong></li>
+        <li>All 5 indexes declined in unison during the crisis</li>
+        <li>The benefit reduced to "only avoiding being in the single worst-performing market"</li>
+        <li>Diversification offers <strong>no protection from worldwide contagion</strong> or total economic/market failure</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Diversification Is Not a Panacea</div>
+      <p>A common exam question: "Is diversification always effective at reducing risk?" Answer: <strong>NO</strong>. Diversification reduces risk under NORMAL market conditions but may fail during severe market turmoil when correlations spike. It does NOT protect against systemic/global crises or total market failure.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 MPT's Key Insight — Correlation Matters More Than Individual Risk</div>
+      <p>Before MPT, investors evaluated assets one-by-one. MPT's revolutionary insight: two risky assets can combine into a less-risky portfolio if they have low/negative correlation. What matters is not just how risky each asset is, but <strong>how they move together</strong>. This insight led directly to the CAPM's focus on systematic (market) risk only.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: PORTFOLIO MANAGEMENT PROCESS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The Portfolio Management Process — Three Steps</h2>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Mnemonic — "PEF" for the Three Steps</div>
+      <p><strong>P</strong>lanning → <strong>E</strong>xecution → <strong>F</strong>eedback. Remember this order for exam questions that ask about the sequence or for identification of a specific activity's step.</p>
+    </div>
+
+    <!-- STEP 1: PLANNING -->
+    <div class="step-block step-plan">
+      <div class="step-label">STEP 1 — PLANNING</div>
+      <ul>
+        <li><strong>Understand the client's needs</strong>: objectives (return) and constraints</li>
+        <li><strong>Prepare the Investment Policy Statement (IPS)</strong> — written planning document</li>
+        <li>IPS contents: investment objectives, constraints, benchmarks (e.g., target return or index)</li>
+        <li>IPS should be <strong>reviewed and updated regularly</strong>: every ~3 years OR when major changes occur in client's objectives, constraints, or circumstances</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Investment Policy Statement (IPS)</div>
+      <div class="def-body">A written planning document describing a client's investment objectives and constraints. Acts as a <strong>roadmap</strong> for portfolio construction and a <strong>benchmark</strong> for future performance evaluation. Without an IPS, a manager cannot appropriately serve a client's needs.</div>
+    </div>
+
+    <!-- STEP 2: EXECUTION -->
+    <div class="step-block step-exec">
+      <div class="step-label">STEP 2 — EXECUTION (Three Sub-Steps)</div>
+      <ul>
+        <li><strong>Asset Allocation</strong>: determine weights across asset classes (equity, fixed-income, alternatives, cash). Often driven by economic/capital market expectations</li>
+        <li><strong>Security Analysis</strong>: identify attractive securities within each asset class</li>
+        <li><strong>Portfolio Construction</strong>: assemble securities with appropriate weights given the IPS; trades executed (often by a separate buy-side trader)</li>
+      </ul>
+    </div>
+
+    <h3>Top-Down vs. Bottom-Up Analysis</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Top-Down Analysis</div>
+        <p>Starts with macroeconomic conditions → evaluates markets/industries → identifies companies within favored industries.</p>
+        <p style="margin-top:6px;"><strong>Sequence</strong>: economy → industry → company.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Bottom-Up Analysis</div>
+        <p>Focuses on <strong>company-specific factors</strong>: management quality, business prospects, financials.</p>
+        <p style="margin-top:6px;"><strong>Sequence</strong>: company → may or may not consider industry/economy.</p>
+      </div>
+    </div>
+
+    <!-- STEP 3: FEEDBACK -->
+    <div class="step-block step-feed">
+      <div class="step-label">STEP 3 — FEEDBACK (Two Sub-Steps)</div>
+      <ul>
+        <li><strong>Portfolio Monitoring and Rebalancing</strong>: review composition; rebalance if weights drift from targets; adjust if client circumstances change</li>
+        <li><strong>Performance Measurement and Reporting</strong>: evaluate whether objectives have been met; compare to benchmark; may trigger IPS review</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Key insight — Asset allocation has the greatest impact on portfolio performance</strong>, compared to individual security selection and market timing. This is why the IPS → Asset Allocation chain is so important.</p>
+    </div>
+
+    <h3>Summary of the Process — Master Flow</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Step</th><th>Activities</th><th>Outputs</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Planning</td>
+            <td>Understand client needs · Prepare IPS</td>
+            <td>Investment Policy Statement (IPS)</td>
+          </tr>
+          <tr>
+            <td>2. Execution</td>
+            <td>Asset allocation · Security analysis · Portfolio construction</td>
+            <td>Constructed portfolio</td>
+          </tr>
+          <tr>
+            <td>3. Feedback</td>
+            <td>Monitoring &amp; rebalancing · Performance measurement &amp; reporting</td>
+            <td>Performance report; potential IPS updates</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Identifying the Step</div>
+      <p>Common exam question: "Which step is [specific activity]?" Watch for these common items:<br>
+      • Rebalancing → <strong>Feedback</strong> (NOT Execution)<br>
+      • Preparing the IPS → <strong>Planning</strong><br>
+      • Asset allocation → <strong>Execution</strong><br>
+      • Performance evaluation → <strong>Feedback</strong><br>
+      • Understanding the client → <strong>Planning</strong></p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: INDIVIDUAL INVESTORS & DC PLANS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Individual Investors &amp; Defined Contribution Plans</h2>
+    </div>
+
+    <h3>Individual Investor Goals</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Short-term goals</strong>: children's education, major purchase (car, house), starting a business</li>
+        <li><strong>Long-term goals</strong>: retirement income, wealth transfer to heirs</li>
+        <li><strong>Growth vs. income needs</strong>: varies by life stage (younger investors typically growth-oriented; retirees typically income-oriented)</li>
+        <li><strong>Pre-requisites</strong>: cash reserve, appropriate insurance, residence considerations before long-term investing</li>
+      </ul>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Defined Contribution Plan (DC Plan)</div>
+      <div class="def-body">A retirement plan in the <strong>employee's name</strong>, usually funded by both employee and employer. The employee makes investment decisions and bears <strong>investment risk and inflation risk</strong>. The benefit depends on investment performance. Examples: <strong>401(k)</strong> in the US, <strong>group personal pension schemes</strong> in the UK, <strong>superannuation plans</strong> in Australia.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 DC Plan — Who Bears the Risk?</div>
+      <p>In a DC plan, the <strong>EMPLOYEE bears all investment risk</strong>. The final retirement benefit depends on the employee's investment choices and market performance. The employer's obligation ends once the contribution is made. No guarantee of any particular retirement income.</p>
+    </div>
+
+    <h3>Distribution Channels for Individual Investors (Geographical Differences)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Region</th><th>Primary Distribution Channels</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>United States</td><td>Independent financial advisers, national/regional broker-dealers, banks, trust companies, online brokerages</td></tr>
+          <tr><td>Continental Europe</td><td>Financial advisers affiliated with retail and private banks</td></tr>
+          <tr><td>United Kingdom</td><td>Independent advisers + advisers representing banks/insurance groups</td></tr>
+          <tr><td>Switzerland &amp; Nordic countries</td><td>Large regional and private banks</td></tr>
+          <tr><td>Asia</td><td>Large regional retail banks; global banks with private banking divisions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>High-net-worth investors</strong>: often served by wealth management firms offering customized investment solutions alongside <strong>tax and estate planning services</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: INSTITUTIONAL INVESTORS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Institutional Investors — Types &amp; Characteristics</h2>
+    </div>
+
+    <h3>The Six Major Institutional Investor Types</h3>
+
+    <div class="investor-card">
+      <div class="investor-name">① Defined Benefit (DB) Pension Plans</div>
+      <div class="investor-body">Company-sponsored plans offering employees a <strong>predefined retirement benefit</strong>. Employer makes contributions and <strong>bears investment risk</strong>. Assets must fund liabilities. Global pension assets &gt; $41 trillion (end of 2017). US, UK, Japan = top 3 markets (76% of global pension assets).</div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">② Endowments &amp; Foundations</div>
+      <div class="investor-body">
+        <strong>Endowments</strong>: funds of NON-PROFIT institutions (e.g., universities) to provide services.<br>
+        <strong>Foundations</strong>: GRANT-MAKING entities.<br>
+        US market ≈ $1.6 trillion. Typically <strong>very long time horizon, intended perpetual life, high risk tolerance</strong>. Large allocations to alternatives (Yale/Swensen model). Objective: maintain real capital + generate spending income.
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">③ Banks</div>
+      <div class="investor-body">Financial intermediaries (accept deposits, lend money). Invest <strong>excess reserves in conservative, short-duration fixed-income</strong> to earn an excess return above depositor interest obligations. <strong>Liquidity is paramount</strong> — must meet withdrawal requests. Short time horizon, low risk tolerance.</div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">④ Insurance Companies</div>
+      <div class="investor-body">
+        Receive premiums; invest to pay future claims. Two types:<br>
+        <strong>Life insurers</strong>: long-term liabilities (policies over decades).<br>
+        <strong>Property &amp; Casualty (P&amp;C)</strong>: short-term liabilities (claims paid quickly).<br><br>
+        <strong>General account</strong>: regulated, <strong>conservative fixed-income</strong>, matches liabilities.<br>
+        <strong>Surplus account</strong> (assets − liabilities): higher-return assets like public/private equities, real estate, hedge funds.<br><br>
+        High liquidity needs; low risk tolerance. Example: <strong>MassMutual has ~80% in bonds/mortgages/loans/cash</strong>.
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">⑤ Investment Companies (e.g., mutual funds)</div>
+      <div class="investor-body">Pooled investment vehicles. Characteristics vary by fund type (money market, bond, stock, balanced). Generally need high liquidity to meet redemptions.</div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">⑥ Sovereign Wealth Funds (SWFs)</div>
+      <div class="investor-body">
+        State-owned investment funds investing in financial/real assets. <strong>Do NOT typically manage specific liability obligations</strong> (unlike pensions). Goals: budget stabilization, future development projects. SWF assets &gt; $7.6 trillion (March 2018) — more than doubled from 2007. Concentrated in <strong>Asia and natural-resource-rich countries</strong>.
+      </div>
+    </div>
+
+    <h3>★ Master Table — Investment Needs by Client Type ★</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client Type</th>
+            <th>Time Horizon</th>
+            <th>Risk Tolerance</th>
+            <th>Income Needs</th>
+            <th>Liquidity Needs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Individual Investors</td>
+            <td>Varies</td>
+            <td>Varies</td>
+            <td>Varies</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <td>DB Pension Plans</td>
+            <td><span class="tag tag-blue">Long term</span></td>
+            <td><span class="tag tag-green">Typically high</span></td>
+            <td>High for mature funds; low for growing</td>
+            <td>Varies by maturity</td>
+          </tr>
+          <tr>
+            <td>Endowments &amp; Foundations</td>
+            <td><span class="tag tag-blue">Very long term</span></td>
+            <td><span class="tag tag-green">Typically high</span></td>
+            <td>To meet spending commitments</td>
+            <td><span class="tag tag-green">Quite LOW</span></td>
+          </tr>
+          <tr>
+            <td>Banks</td>
+            <td><span class="tag tag-red">Short term</span></td>
+            <td><span class="tag tag-red">Quite LOW</span></td>
+            <td>Pay interest on deposits, operational expenses</td>
+            <td><span class="tag tag-red">HIGH</span> (deposit withdrawals)</td>
+          </tr>
+          <tr>
+            <td>Insurance Co. (P&amp;C)</td>
+            <td><span class="tag tag-red">Short term</span></td>
+            <td><span class="tag tag-red">Quite LOW</span></td>
+            <td>Typically low</td>
+            <td><span class="tag tag-red">HIGH</span> (claims)</td>
+          </tr>
+          <tr>
+            <td>Insurance Co. (Life)</td>
+            <td><span class="tag tag-blue">Long term</span></td>
+            <td><span class="tag tag-red">Quite LOW</span></td>
+            <td>Typically low</td>
+            <td><span class="tag tag-red">HIGH</span> (claims)</td>
+          </tr>
+          <tr>
+            <td>Investment Companies</td>
+            <td>Varies by fund</td>
+            <td>Varies by fund</td>
+            <td>Varies</td>
+            <td><span class="tag tag-red">HIGH</span> (redemptions)</td>
+          </tr>
+          <tr>
+            <td>Sovereign Wealth Funds</td>
+            <td>Varies</td>
+            <td>Varies</td>
+            <td>Varies</td>
+            <td>Varies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Pattern Recognition — Who Has What Profile?</div>
+      <p>
+        <strong>Long horizon, high risk tolerance, LOW liquidity</strong> → Endowments &amp; Foundations (can afford illiquid alternatives)<br>
+        <strong>Short horizon, LOW risk, HIGH liquidity</strong> → Banks &amp; P&amp;C Insurers (must pay depositors/claims quickly)<br>
+        <strong>Long horizon, LOW risk, HIGH liquidity</strong> → Life Insurers (long liabilities but claims must be paid on demand)<br>
+        <strong>Long horizon, HIGH risk, varies on liquidity</strong> → DB Pension Plans (depends on funded status and maturity)
+      </p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Exam Trap — Endowments vs. Insurance Companies</div>
+      <p>Yale endowment: <strong>&lt;5% in fixed income</strong>, &gt;95% in growth/alternatives (real estate, equities, hedge funds).<br>
+      MassMutual: <strong>~80% in bonds/mortgages/loans/cash</strong>.<br>
+      Completely opposite asset allocations because of completely opposite liability structures. Endowments have no defined liabilities; insurers must pay claims on demand. Tie-in: asset allocation should MATCH liability structure.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: DB vs DC PENSION PLANS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>DB vs. DC Pension Plans — Master Comparison</h2>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ High-Priority Exam Topic</div>
+      <p>Defined Benefit vs. Defined Contribution is a classic CFA exam question. Memorize who bears risk, what's defined, and the direction of the industry shift.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Defined Benefit (DB) Plan</th>
+            <th>Defined Contribution (DC) Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>What is "defined"</td>
+            <td>The <strong>retirement BENEFIT</strong> (guaranteed income)</td>
+            <td>The <strong>CONTRIBUTION</strong> amount (what goes in)</td>
+          </tr>
+          <tr>
+            <td>Who bears investment risk</td>
+            <td><span class="tag tag-red">EMPLOYER</span></td>
+            <td><span class="tag tag-red">EMPLOYEE</span></td>
+          </tr>
+          <tr>
+            <td>Who bears inflation risk</td>
+            <td>Employer (must fund defined benefit despite inflation)</td>
+            <td>Employee</td>
+          </tr>
+          <tr>
+            <td>Who makes investment decisions</td>
+            <td>Plan sponsor (employer/trustees)</td>
+            <td>Employee</td>
+          </tr>
+          <tr>
+            <td>Account ownership</td>
+            <td>Company-owned pension pool</td>
+            <td>Individual employee's account</td>
+          </tr>
+          <tr>
+            <td>Benefit certainty</td>
+            <td>Predefined, guaranteed income</td>
+            <td>Depends on investment performance</td>
+          </tr>
+          <tr>
+            <td>Investor type</td>
+            <td>Institutional investor</td>
+            <td>Individual investor</td>
+          </tr>
+          <tr>
+            <td>Examples</td>
+            <td>Traditional pension plans</td>
+            <td>401(k) (US), group personal pension (UK), superannuation (Australia)</td>
+          </tr>
+          <tr>
+            <td>Industry trend</td>
+            <td><span class="tag tag-red">DECLINING</span> (higher cost/risk to employer)</td>
+            <td><span class="tag tag-green">GROWING</span> (employers prefer this)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — What's Defined = Who's Protected</div>
+      <p>
+        <strong>DB — Benefit Defined</strong>: benefit is guaranteed → employee protected → employer takes risk.<br>
+        <strong>DC — Contribution Defined</strong>: only the input is fixed → employee gets whatever the investment is worth → employee takes risk.<br><br>
+        Think of it as: "What's promised is what's safe." In DB, the benefit is promised. In DC, only the contribution is promised.
+      </p>
+    </div>
+
+    <h3>Industry Shift: DC Gaining Share</h3>
+    <div class="card">
+      <p>Why are DB plans declining in favor of DC plans?</p>
+      <ul style="margin-top:8px;">
+        <li><strong>Lower cost to employers</strong>: employer's obligation ends after contribution</li>
+        <li><strong>Lower risk to employers</strong>: investment risk transferred to employee</li>
+        <li><strong>Simpler accounting</strong>: no future liability to estimate and disclose</li>
+        <li><strong>Portable</strong>: employees can take DC plans with them between employers</li>
+        <li>Despite the shift, DB plans REMAIN SIZEABLE globally ($41 trillion in pension assets; 76% in US/UK/Japan)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: ASSET MANAGEMENT INDUSTRY -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>The Asset Management Industry</h2>
+    </div>
+
+    <div class="card">
+      <p>At the end of 2017, the asset management industry managed more than <strong>US$79 trillion</strong> globally. Nearly 80% of professionally managed assets are in North America and Europe, but <strong>Asia and Latin America are the fastest-growing markets</strong>.</p>
+    </div>
+
+    <h3>Buy-Side vs. Sell-Side</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Buy-Side Firms</div>
+        <p><strong>Asset managers</strong> — USE (buy) the services of sell-side firms. Manage portfolios for clients.</p>
+        <ul style="margin-top:6px;">
+          <li>Mutual fund companies</li>
+          <li>Hedge funds</li>
+          <li>Pension fund managers</li>
+          <li>Insurance investment arms</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Sell-Side Firms</div>
+        <p><strong>Broker-dealers</strong> — SELL securities and provide research/recommendations to buy-side clients.</p>
+        <ul style="margin-top:6px;">
+          <li>Investment banks (trading desks)</li>
+          <li>Broker-dealers</li>
+          <li>Independent research firms</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Asset Manager Classifications</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Classification Axis</th><th>Types</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><strong>Scope</strong></td>
+            <td>Specialist</td>
+            <td>Focus on one asset class (e.g., EM equities) or style (e.g., quantitative)</td>
+          </tr>
+          <tr>
+            <td>Full-service</td>
+            <td>Wide variety of asset classes and styles</td>
+          </tr>
+          <tr>
+            <td><strong>Structure</strong></td>
+            <td>Multi-boutique</td>
+            <td>Holding company owns several specialized asset management firms — keeps unique cultures while benefiting from shared services</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>Management Style</strong></td>
+            <td><span class="tag tag-blue">Active</span></td>
+            <td>Try to OUTPERFORM benchmark. Fundamental/quantitative research. Higher fees. <strong>~80% of global AUM, ~94% of industry revenue</strong></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-green">Passive</span></td>
+            <td>Try to REPLICATE benchmark. Low costs. <strong>~20% of global AUM but only ~6% of revenue</strong> due to low fees</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>Asset Type</strong></td>
+            <td>Traditional</td>
+            <td>Long-only equity, fixed-income, multi-asset. Revenue = asset-based management fees</td>
+          </tr>
+          <tr>
+            <td>Alternative</td>
+            <td>Hedge funds, private equity, venture capital. Revenue = management fees + performance fees ("carried interest"). Low AUM share but HIGH revenue share</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>Ownership</strong></td>
+            <td>Privately owned (most common)</td>
+            <td>Usually LLCs or limited partnerships; owned by founders/key personnel</td>
+          </tr>
+          <tr>
+            <td>Publicly traded</td>
+            <td>Less common but substantial AUM</td>
+          </tr>
+          <tr>
+            <td>Subsidiaries of financial conglomerates</td>
+            <td>Banks/insurance companies offering asset management alongside other services</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Smart Beta</div>
+      <div class="def-body">A middle-ground strategy between pure passive and active. Uses <strong>simple, transparent, rules-based strategies</strong> based on factors like size, value, momentum, or dividend characteristics. Features somewhat higher management fees and higher portfolio turnover than pure passive market-cap-weighted strategies.</div>
+    </div>
+
+    <h3>Three Key Industry Trends</h3>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">① Growth of Passive Investing</div>
+        <ul>
+          <li>Passive assets ≈ 20% of global AUM at end of 2017</li>
+          <li>Top 3 managers = 70% of passive industry</li>
+          <li>Concentrated in equity strategies</li>
+          <li>Drivers: LOW COSTS and difficulty of active managers generating alpha in efficient markets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">② "Big Data" in Investing</div>
+        <ul>
+          <li>90% of world's data created in 2011-2013 (IBM)</li>
+          <li>Structured data: order books, returns</li>
+          <li>Unstructured: social media, satellite imagery, sensor data, geolocation</li>
+          <li>Machine learning used for both fundamental and quantitative strategies</li>
+          <li>Creates an "information arms race"</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">③ Robo-Advisers</div>
+        <ul>
+          <li>$180 billion AUM at end of 2017</li>
+          <li>Automated platforms: planning, asset allocation, tax-loss harvesting, strategy selection</li>
+          <li>Drivers: mass affluent/younger demand, lower fees (~0.20% vs. 1% traditional), low barriers to entry</li>
+          <li>Use underlying ETFs/index funds</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Key Revenue Disparity — Active vs. Passive</div>
+      <p>Active = 80% of AUM but ~94% of revenue. Passive = 20% of AUM but only ~6% of revenue. Why? <strong>Passive fees are a tiny fraction of active fees</strong> (often 0.05% vs. 1%+). This explains why asset managers resist the passive shift — it dramatically compresses margins.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: MUTUAL FUNDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Mutual Funds — Structure &amp; Mechanics</h2>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Mutual Fund</div>
+      <div class="def-body">A <strong>commingled investment pool</strong> where investors each hold a pro-rata claim on the income and value of the fund. Value is measured as <strong>Net Asset Value (NAV)</strong>, computed daily based on closing prices of securities in the portfolio. Worldwide open-end fund assets ≈ $50 trillion (Q1 2018).</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Net Asset Value (NAV) per Share ★</div>
+      <div class="f">
+        NAV per share = (Total fund assets − liabilities) / Number of shares outstanding
+      </div>
+      <div class="note">
+        Computed daily based on closing prices of all securities held.<br>
+        For open-end funds: new investors buy at NAV; existing investors redeem at NAV.
+      </div>
+    </div>
+
+    <h3>Advantages of Mutual Funds</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Low investment minimums</strong> — accessible to small investors</li>
+        <li><strong>Diversified portfolios</strong> — instant diversification with one purchase</li>
+        <li><strong>Daily liquidity</strong> (for open-end funds)</li>
+        <li><strong>Standardized performance and tax reporting</strong></li>
+        <li>Professional management</li>
+      </ul>
+    </div>
+
+    <h3>Open-End vs. Closed-End Funds — Master Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Open-End Fund</th>
+            <th>Closed-End Fund</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>New money accepted?</td>
+            <td><span class="tag tag-green">YES</span> — creates new shares at NAV</td>
+            <td><span class="tag tag-red">NO</span> — fixed share count after IPO</td>
+          </tr>
+          <tr>
+            <td>How investors exit</td>
+            <td>Redeem to fund at NAV (fund sells assets to pay)</td>
+            <td>Sell shares to other investors on exchange</td>
+          </tr>
+          <tr>
+            <td>Share price</td>
+            <td><strong>Always = NAV</strong> (no premium/discount)</td>
+            <td><strong>May trade at premium or discount to NAV</strong> based on supply/demand</td>
+          </tr>
+          <tr>
+            <td>Size over time</td>
+            <td>Grows/shrinks with net flows</td>
+            <td>Fixed (unless secondary offering)</td>
+          </tr>
+          <tr>
+            <td>Manager pressure</td>
+            <td>Must manage cash in/outflows; may have to sell assets at unfavorable times</td>
+            <td>No cash flow pressure; stable asset base</td>
+          </tr>
+          <tr>
+            <td>Cash holdings</td>
+            <td>Maintain some cash for redemptions</td>
+            <td>Can be fully invested</td>
+          </tr>
+          <tr>
+            <td>Market share (US 2017)</td>
+            <td>~99% of mutual fund NAV</td>
+            <td>~1%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Worked Example — Open-End Fund Mechanics</div>
+      <p>Fund has $12M NAV, 100,000 shares → NAV per share = $120.<br>
+      • New investor wants to invest $0.96M → gets $0.96M/$120 = 8,000 NEW shares. Fund now has $12.96M and 108,000 shares.<br>
+      • Existing investor redeems 5,000 shares → fund pays $600,000 (liquidates $600K of assets) and retires 5,000 shares.<br>
+      • <strong>Other investors' NAV per share is unaffected</strong> by these transactions.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Closed-End Fund Discount — Important Concept</div>
+      <p>Closed-end funds often trade at a DISCOUNT to NAV. Example: NAV per share = $100, but market price = $95 (5% discount). This is a market efficiency anomaly — theoretically you could buy all shares, liquidate the fund, and profit $5 per share. In practice, transaction costs and other frictions prevent arbitrage. (This is a topic revisited in Equity Module 3 — Market Efficiency.)</p>
+    </div>
+
+    <h3>Load vs. No-Load Funds</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">No-Load Funds</div>
+        <ul>
+          <li>NO sales charge for purchase or redemption</li>
+          <li>Only an annual fee (% of NAV)</li>
+          <li>Generally preferred by cost-conscious investors</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Load Funds</div>
+        <ul>
+          <li>Sales charge (a "load") on purchase and/or redemption PLUS annual fee</li>
+          <li>Usually sold through retail brokers who receive part of the upfront fee</li>
+          <li><strong>Declining in popularity</strong> over time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: TYPES OF MUTUAL FUNDS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Types of Mutual Funds</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fund Type</th>
+            <th>Holdings</th>
+            <th>Key Characteristics</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Money Market</strong></td>
+            <td>Short-term instruments: T-bills, CDs, commercial paper</td>
+            <td>Maturity: overnight to 90 days. Aims: safety of principal, high liquidity, money-market-rate returns. NOT FDIC insured. Taxable vs. tax-free versions (US). CNAV vs. VNAV</td>
+          </tr>
+          <tr>
+            <td><strong>Bond Funds</strong></td>
+            <td>Bonds (occasionally preferred shares)</td>
+            <td>Maturity: 1 to 30+ years. Many sub-types (see below)</td>
+          </tr>
+          <tr>
+            <td><strong>Stock (Equity) Funds</strong></td>
+            <td>Common stocks</td>
+            <td>Historically the LARGEST type by AUM. Active vs. index funds</td>
+          </tr>
+          <tr>
+            <td><strong>Hybrid/Balanced</strong></td>
+            <td>Both bonds AND stocks</td>
+            <td>Small fraction in US; more common in Europe. Includes <strong>Lifecycle/Target Date</strong> funds</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Money Market Funds — CNAV vs. VNAV</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Constant NAV (CNAV)</div>
+        <p>Share price maintained at $1 (or local equivalent). Focus on stability for cash-equivalent investors.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Variable NAV (VNAV)</div>
+        <p>Unit price can fluctuate. More transparent but potentially confusing for cash-substitute users.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Money Market Funds Are NOT Bank Accounts</div>
+      <p>Although money market funds are often treated as bank account substitutes (since the 1980s), they are <strong>NOT insured</strong> the same way as bank deposits (e.g., FDIC in US). There is no guarantee of principal — money market funds have "broken the buck" (fallen below $1 NAV) during crises.</p>
+    </div>
+
+    <h3>Bond Mutual Fund Categories</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Securities Held</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Global</td><td>Domestic and non-domestic government, corporate, and securitized debt</td></tr>
+          <tr><td>Government</td><td>Government bonds and government-affiliated bonds</td></tr>
+          <tr><td>Corporate</td><td>Corporate debt</td></tr>
+          <tr><td>High Yield</td><td>Below investment-grade (junk) corporate debt</td></tr>
+          <tr><td>Inflation Protected</td><td>Inflation-protected government debt (e.g., TIPS)</td></tr>
+          <tr><td>National Tax-Free</td><td>National tax-free bonds (e.g., US municipal bonds)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Stock Funds: Active vs. Index</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Actively Managed Funds</th>
+            <th>Index Funds</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Goal</td>
+            <td>OUTPERFORM a benchmark</td>
+            <td>TRACK/match a benchmark</td>
+          </tr>
+          <tr>
+            <td>Management fees</td>
+            <td><span class="tag tag-red">HIGHER</span> (research-intensive)</td>
+            <td><span class="tag tag-green">LOWER</span></td>
+          </tr>
+          <tr>
+            <td>Portfolio turnover</td>
+            <td>HIGH</td>
+            <td>LOW (buy-and-hold)</td>
+          </tr>
+          <tr>
+            <td>Tax efficiency</td>
+            <td>LOWER — more capital gains distributions</td>
+            <td>HIGHER — fewer distributions</td>
+          </tr>
+          <tr>
+            <td>Historical first</td>
+            <td>—</td>
+            <td>First index fund: <strong>Vanguard Group in 1976</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Lifecycle / Target-Date Funds</h3>
+    <div class="card">
+      <p>A specific type of hybrid/balanced fund designed around a <strong>target retirement date</strong>. The asset mix <strong>evolves automatically</strong> over time:</p>
+      <ul style="margin-top:8px;">
+        <li>Early years (far from retirement): high equity allocation (e.g., 90% stocks / 10% bonds) — growth focus</li>
+        <li>As target date approaches: gradually shift to bonds (more conservative)</li>
+        <li>At target date: mostly fixed-income — capital preservation</li>
+        <li>Example: A 40-year-old in 2019 targeting age 67 → invest in a "2046" fund; manager handles the glide path</li>
+        <li>Popular in 401(k) plans as default options</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: OTHER POOLED PRODUCTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Other Pooled Investment Products</h2>
+    </div>
+
+    <h3>Separately Managed Accounts (SMAs)</h3>
+
+    <div class="def-block">
+      <div class="def-term">Separately Managed Account (SMA)</div>
+      <div class="def-body">Also called "managed account," "wrap account," or "individually managed account." Managed <strong>exclusively for one individual or institution</strong>. Unlike mutual funds, <strong>assets are owned directly</strong> by the client. Allows customization for specific objectives, constraints, tax situation, and ESG preferences. Main disadvantage: <strong>much higher minimum investment</strong>.</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Key features of SMAs</strong>:</p>
+      <ul style="margin-top:8px;">
+        <li>Direct ownership (not pro-rata claim on a pool)</li>
+        <li>Customized for individual needs</li>
+        <li>Can incorporate ESG or socially responsible preferences (e.g., exclude tobacco/defense)</li>
+        <li>Used primarily by <strong>large institutional investors and high-net-worth individuals</strong></li>
+        <li>Higher minimum investment than mutual funds</li>
+      </ul>
+    </div>
+
+    <h3>Exchange-Traded Funds (ETFs)</h3>
+
+    <div class="card">
+      <p>Investment funds that <strong>trade on exchanges like stocks</strong>. Generally structured as open-end funds. Global ETF assets: $428B (2005) → $4.9 trillion (June 2018) — one of the fastest-growing products.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>ETF</th>
+            <th>Mutual Fund</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trading</td>
+            <td><span class="tag tag-green">Intraday on exchange</span> (like stocks)</td>
+            <td>Once per day at closing NAV</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>Market price (close to but may differ from NAV)</td>
+            <td>NAV (open-end only)</td>
+          </tr>
+          <tr>
+            <td>Short selling?</td>
+            <td><span class="tag tag-green">YES</span></td>
+            <td><span class="tag tag-red">NO</span></td>
+          </tr>
+          <tr>
+            <td>Buy on margin?</td>
+            <td><span class="tag tag-green">YES</span></td>
+            <td><span class="tag tag-red">NO</span></td>
+          </tr>
+          <tr>
+            <td>How bought</td>
+            <td>From other investors on exchange</td>
+            <td>Directly from the fund</td>
+          </tr>
+          <tr>
+            <td>Dividends</td>
+            <td>PAID OUT to shareholders</td>
+            <td>Usually REINVESTED</td>
+          </tr>
+          <tr>
+            <td>Minimum investment</td>
+            <td><span class="tag tag-green">Typically LOWER</span></td>
+            <td>Higher minimum typical</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Hedge Funds</h3>
+
+    <div class="def-block">
+      <div class="def-term">Hedge Fund</div>
+      <div class="def-body"><strong>Private investment vehicles</strong> typically using leverage, derivatives, and long/short strategies. Origin: A.W. Jones &amp; Co. (1949). Global hedge fund AUM: $3.3 trillion (May 2017). Not readily available to all investors — high minimum investment and restricted liquidity (quarterly withdrawals or long lock-ups).</div>
+    </div>
+
+    <div class="card">
+      <p><strong>Distinguishing Characteristics of Hedge Funds:</strong></p>
+      <ul style="margin-top:8px;">
+        <li><strong>Short selling</strong>: directly or via options, futures, credit default swaps</li>
+        <li><strong>Absolute return seeking</strong>: aim for positive returns in ALL market environments</li>
+        <li><strong>Leverage</strong>: financial (borrowing) or implicit (derivatives)</li>
+        <li><strong>Low correlation</strong>: some hedge funds historically exhibited low correlation with traditional assets</li>
+        <li><strong>Fee structure</strong>: traditionally <span class="highlight">"2 and 20"</span> — 2% management fee + 20% incentive fee on gains (though now under downward pressure)</li>
+      </ul>
+    </div>
+
+    <h3>Private Equity &amp; Venture Capital Funds</h3>
+
+    <div class="card">
+      <p><strong>Alternative funds</strong> that buy, optimize, and sell portfolio companies. Global PE AUM: $3.1 trillion (Dec 2017). Typical lifespan: <strong>7-10 years</strong> (with contractual extensions).</p>
+    </div>
+
+    <div class="card">
+      <p><strong>Key characteristics:</strong></p>
+      <ul style="margin-top:8px;">
+        <li><strong>"Hands-on" approach</strong>: financial engineering, new management, board changes, strategic development — not passive ownership</li>
+        <li><strong>Structure</strong>: limited partnerships with:
+          <ul style="margin-top:6px;">
+            <li><strong>General Partner (GP)</strong>: the fund manager</li>
+            <li><strong>Limited Partners (LPs)</strong>: the investors</li>
+          </ul>
+        </li>
+        <li><strong>"Exit" or "Harvesting" stage</strong>: divest via merger, acquisition, or IPO</li>
+        <li><strong>Revenue sources</strong> (four types):
+          <ul style="margin-top:6px;">
+            <li><strong>Management fees</strong>: 1-3% of committed/invested capital (may step down over time)</li>
+            <li><strong>Transaction fees</strong>: paid by portfolio companies for services; typically partially offset management fee</li>
+            <li><strong>Carried interest</strong>: GP's share of profits (typically 20%); earned only after LPs recover initial investment</li>
+            <li><strong>Investment income</strong>: on GP's own capital contributions</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h3>★ Pooled Products Master Comparison ★</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Ownership</th>
+            <th>Liquidity</th>
+            <th>Minimum</th>
+            <th>Typical Fees</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mutual Fund (Open-End)</td>
+            <td>Pro-rata claim on pool</td>
+            <td>Daily at NAV</td>
+            <td>Low</td>
+            <td>Annual % of NAV</td>
+          </tr>
+          <tr>
+            <td>Mutual Fund (Closed-End)</td>
+            <td>Pro-rata claim on pool</td>
+            <td>Exchange-traded (possible discount/premium)</td>
+            <td>Low</td>
+            <td>Annual % of NAV</td>
+          </tr>
+          <tr>
+            <td>SMA</td>
+            <td><strong>Direct ownership</strong></td>
+            <td>Customized</td>
+            <td><strong>HIGH</strong></td>
+            <td>Negotiable; customized</td>
+          </tr>
+          <tr>
+            <td>ETF</td>
+            <td>Pro-rata claim on pool</td>
+            <td>Intraday on exchange</td>
+            <td>Low (price of 1 share)</td>
+            <td>Annual % (typically low)</td>
+          </tr>
+          <tr>
+            <td>Hedge Fund</td>
+            <td>Limited partnership interest</td>
+            <td>Restricted (quarterly/lock-up)</td>
+            <td><strong>HIGH</strong></td>
+            <td>"2 and 20" (2% mgmt + 20% performance)</td>
+          </tr>
+          <tr>
+            <td>Private Equity / VC</td>
+            <td>LP interest</td>
+            <td>7-10 year lock-up</td>
+            <td><strong>VERY HIGH</strong></td>
+            <td>1-3% mgmt + 20% carried interest</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Pattern — Liquidity vs. Returns Trade-off</div>
+      <p>The LESS liquid a product, the HIGHER expected returns needed to compensate investors:<br>
+      Mutual Funds/ETFs (daily liquidity) → modest fees, lower returns<br>
+      Hedge Funds (quarterly liquidity) → higher fees, aim for higher returns<br>
+      PE/VC (7-10 year lock-up) → highest fees, aim for highest returns<br><br>
+      This is the "liquidity premium" in action — investors demand more return for giving up liquidity.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Portfolio approach</strong>: evaluate individual securities by their contribution to the WHOLE portfolio, not in isolation.</li>
+        <li>✅ <strong>Three main benefits of portfolios</strong>: (1) avoid disaster from concentration, (2) reduce risk via diversification, (3) optimize risk-return trade-off.</li>
+        <li>✅ <strong>Enron lesson</strong>: concentrated holdings (62% of 401(k) in Enron shares) → catastrophic loss. Don't concentrate where your human capital is invested.</li>
+        <li>✅ <strong>Diversification ratio</strong> = σ<sub>portfolio</sub> / σ<sub>avg security</sub>. Lower = more diversification benefit. HKSE example: ~0.72 (28% risk reduction).</li>
+        <li>✅ <strong>"Portfolios affect risk more than returns"</strong>: equally-weighted portfolio has SAME avg return as individual assets but LOWER standard deviation.</li>
+        <li>✅ <strong>Modern Portfolio Theory (MPT)</strong>: <strong>Markowitz (1952)</strong>. Focuses on correlations among assets in a portfolio. Extended by Sharpe/Lintner/Treynor → CAPM.</li>
+        <li>✅ <strong>Diversification limitation</strong>: correlations converge toward +1 during market turmoil. 2007-2009 GFC: equally-weighted global equity portfolio returned −48.5%.</li>
+        <li>✅ <strong>Diversification does NOT protect</strong> against systemic/global contagion or total market failure.</li>
+        <li>✅ <strong>Three steps of portfolio management</strong>: <strong>P</strong>lanning → <strong>E</strong>xecution → <strong>F</strong>eedback (PEF).</li>
+        <li>✅ <strong>Planning step</strong>: understand client needs + prepare IPS. Review IPS every ~3 years OR when major change occurs.</li>
+        <li>✅ <strong>IPS</strong> = Investment Policy Statement (written). Contains objectives, constraints, benchmarks.</li>
+        <li>✅ <strong>Execution step (3 substeps)</strong>: (1) Asset allocation, (2) Security analysis, (3) Portfolio construction.</li>
+        <li>✅ <strong>Top-down</strong>: economy → industry → company. <strong>Bottom-up</strong>: company-specific fundamentals.</li>
+        <li>✅ <strong>Asset allocation has the greatest impact</strong> on portfolio performance (vs. security selection/timing).</li>
+        <li>✅ <strong>Feedback step (2 substeps)</strong>: (1) Monitoring/rebalancing, (2) Performance measurement/reporting.</li>
+        <li>✅ <strong>Rebalancing belongs to FEEDBACK</strong>, not Execution. Common trap.</li>
+        <li>✅ <strong>DC plan</strong>: CONTRIBUTION defined. EMPLOYEE bears investment AND inflation risk. Examples: 401(k), UK group personal pension, Australian superannuation.</li>
+        <li>✅ <strong>DB plan</strong>: BENEFIT defined (guaranteed). EMPLOYER bears risk. Company-sponsored pension.</li>
+        <li>✅ <strong>Industry trend</strong>: DB declining, DC growing (DC is cheaper/less risky for employer).</li>
+        <li>✅ <strong>6 institutional investor types</strong>: DB pensions, endowments/foundations, banks, insurance companies, investment companies, sovereign wealth funds.</li>
+        <li>✅ <strong>Endowments vs. foundations</strong>: endowments support non-profit institutions (e.g., universities); foundations make grants.</li>
+        <li>✅ <strong>Endowments: long horizon, HIGH risk tolerance, LOW liquidity</strong> (can afford alternatives — Yale model).</li>
+        <li>✅ <strong>Banks: short horizon, LOW risk tolerance, HIGH liquidity</strong> (must meet depositor withdrawals).</li>
+        <li>✅ <strong>Insurance: general account</strong> = regulated, conservative, fixed-income. <strong>Surplus account</strong> = (assets − liabilities) invested in higher-return assets.</li>
+        <li>✅ <strong>P&amp;C vs. Life insurers</strong>: P&amp;C has SHORT-term liabilities; Life has LONG-term liabilities. Both need high liquidity.</li>
+        <li>✅ <strong>SWFs</strong>: state-owned, do NOT typically manage liability obligations (unlike pensions). Concentrated in Asia &amp; resource-rich countries.</li>
+        <li>✅ <strong>Buy-side</strong> = asset managers. <strong>Sell-side</strong> = broker-dealers offering securities and research.</li>
+        <li>✅ <strong>Multi-boutique</strong>: holding company owns several specialized asset managers, keeping unique cultures while sharing services.</li>
+        <li>✅ <strong>Active ≈ 80% of global AUM but ~94% of revenue</strong>. Passive ≈ 20% AUM but only 6% revenue (low fees).</li>
+        <li>✅ <strong>Smart beta</strong>: rules-based strategies based on factors (size, value, momentum, dividend). Between active and passive.</li>
+        <li>✅ <strong>Traditional managers</strong>: long-only; management fees. <strong>Alternative managers</strong>: hedge/PE/VC; management + performance fees ("carried interest").</li>
+        <li>✅ <strong>Three industry trends</strong>: passive growth, big data, robo-advisers.</li>
+        <li>✅ <strong>Robo-advisers</strong>: $180B AUM (2017). Fees ~0.20% vs. ~1% traditional. Services: planning, asset allocation, tax-loss harvesting, strategy selection.</li>
+        <li>✅ <strong>Mutual fund</strong>: commingled pool. Value = NAV per share = (assets − liabilities) / shares. Computed daily.</li>
+        <li>✅ <strong>Mutual fund advantages</strong>: low minimums, diversification, daily liquidity, standardized reporting.</li>
+        <li>✅ <strong>Open-end fund</strong>: accepts new money, creates/redeems shares at NAV. Always trades AT NAV.</li>
+        <li>✅ <strong>Closed-end fund</strong>: fixed share count, trades on exchange, CAN have premium/discount to NAV. ~1% of US mutual fund market.</li>
+        <li>✅ <strong>Load funds</strong>: have sales charge (load). <strong>No-load funds</strong>: only annual fee. Load funds declining in popularity.</li>
+        <li>✅ <strong>4 types of mutual funds</strong>: Money Market, Bond, Stock, Hybrid/Balanced.</li>
+        <li>✅ <strong>Money market funds</strong>: short-term (overnight to 90 days). CNAV (maintains $1) vs. VNAV (variable). NOT FDIC insured.</li>
+        <li>✅ <strong>Stock funds</strong>: historically largest by AUM. Active (higher fees, higher turnover, lower tax efficiency) vs. Index (opposite). First index fund: <strong>Vanguard 1976</strong>.</li>
+        <li>✅ <strong>Lifecycle/Target-Date funds</strong>: hybrid funds that glide from equity-heavy to bond-heavy over time based on retirement target date.</li>
+        <li>✅ <strong>SMA</strong>: Separately Managed Account. DIRECT ownership (not pro-rata). Customized. HIGH minimum. Used by institutions/HNW.</li>
+        <li>✅ <strong>ETF vs. mutual fund</strong>: ETF trades intraday, can short, can margin, dividends paid out. Mutual fund: once-a-day NAV, no short/margin, dividends reinvested.</li>
+        <li>✅ <strong>Hedge funds</strong>: private, leverage, derivatives, long/short, absolute return focus. <strong>"2 and 20" fees</strong>. Restricted liquidity (quarterly or lock-up).</li>
+        <li>✅ <strong>Hedge fund characteristics (5)</strong>: short selling, absolute return, leverage, low correlation, fee structure.</li>
+        <li>✅ <strong>Private Equity/VC</strong>: 7-10 year lifespan. GP (manager) + LP (investors). Hands-on approach. Exit via merger/acquisition/IPO.</li>
+        <li>✅ <strong>PE/VC revenue (4 types)</strong>: management fees (1-3%), transaction fees, carried interest (20%), investment income.</li>
+        <li>✅ <strong>Carried interest</strong>: GP's 20% share of profits; earned only AFTER LPs recover their initial investment.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ KEY CONCEPTS — QUICK REFERENCE ★</div>
+      <div class="f">
+        ═══ PORTFOLIO FUNDAMENTALS ═══<br>
+        Diversification Ratio = σ<sub>portfolio</sub> / σ<sub>avg security</sub><br>
+        MPT (Markowitz 1952): focus on correlations among assets<br>
+        Portfolios affect RISK more than RETURNS<br><br>
+        ═══ PORTFOLIO PROCESS (PEF) ═══<br>
+        1. PLANNING: understand client → prepare IPS<br>
+        2. EXECUTION: asset allocation → security analysis → portfolio construction<br>
+        3. FEEDBACK: monitoring/rebalancing → performance measurement<br><br>
+        ═══ PENSION PLANS ═══<br>
+        DB: Benefit defined; employer bears risk<br>
+        DC: Contribution defined; employee bears risk<br>
+        Trend: DB declining, DC growing<br><br>
+        ═══ NAV ═══<br>
+        NAV per share = (Total assets − liabilities) / Shares outstanding<br><br>
+        ═══ FEE STRUCTURES ═══<br>
+        Hedge funds: "2 and 20" (2% mgmt + 20% performance)<br>
+        PE/VC: 1-3% mgmt + 20% carried interest<br>
+        Robo-adviser: ~0.20% vs. traditional adviser ~1%<br><br>
+        ═══ OPEN-END vs. CLOSED-END MUTUAL FUNDS ═══<br>
+        Open-end: accepts new $, creates/redeems at NAV, trades AT NAV<br>
+        Closed-end: fixed shares, trades on exchange, may have premium/discount<br><br>
+        ═══ ETF vs. MUTUAL FUND KEY DIFFERENCES ═══<br>
+        ETF: intraday trading, short/margin allowed, dividends paid<br>
+        MF: once-a-day NAV, no short/margin, dividends reinvested
+      </div>
+      <div class="note">
+        <strong>Key patterns to remember</strong>:<br>
+        DB = Benefit fixed = Employer risk<br>
+        DC = Contribution fixed = Employee risk<br>
+        Endowment = long horizon, high risk, low liquidity<br>
+        Bank = short horizon, low risk, high liquidity<br>
+        Insurance = high liquidity needs + low risk (match liabilities)<br>
+        Active: high AUM %, high revenue %. Passive: high AUM %, low revenue %.<br>
+        Less liquid products command higher fees and higher expected returns (illiquidity premium).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Portfolio Management · Module 3: Portfolio Management: An Overview · Exam Prep Notes
+</footer>
+
+</body>
+</html>

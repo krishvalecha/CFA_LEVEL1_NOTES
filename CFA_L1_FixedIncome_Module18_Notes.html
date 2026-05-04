@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 18: ABS Instrument and Market Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --auction-bg: #111620; --auction-border: #4c8bc9;
+    --covered-bg: #111a16; --covered-border: #4cc98a;
+    --enhance-bg: #1a1020; --enhance-border: #c9a84c;
+    --clo-bg: #12141f; --clo-border: #4c8bc9;
+    --risk-bg: #1a1510; --risk-border: #c94c4c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0e1114 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14.5px; font-weight: 600; line-height: 2.1; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .auction-box { background: var(--auction-bg); border-left: 3px solid var(--auction-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .auction-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 8px; }
+  .auction-box .f { color: #9ecef5; font-size: 14px; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  .covered-card { background: var(--covered-bg); border: 1px solid rgba(76,201,138,0.2); border-left: 3px solid #4cc98a; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .covered-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4cc98a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .enhance-card { background: var(--enhance-bg); border: 1px solid rgba(201,168,76,0.2); border-left: 3px solid #c9a84c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .enhance-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c9a84c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .clo-card { background: var(--clo-bg); border: 1px solid rgba(76,139,201,0.2); border-left: 3px solid #4c8bc9; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .clo-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4c8bc9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .risk-card { background: var(--risk-bg); border: 1px solid rgba(201,76,76,0.2); border-left: 3px solid #c94c4c; border-radius: 0 6px 6px 0; padding: 18px 22px; margin-bottom: 14px; }
+  .risk-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #c94c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .step-block { background: #13161e; border: 1px solid var(--border); border-radius: 6px; margin: 16px 0; overflow: hidden; }
+  .step-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { background: rgba(76,139,201,0.12); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 14px 18px; min-width: 52px; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .step-content { padding: 14px 18px; font-size: 14px; color: var(--text); flex: 1; }
+  .step-content strong { color: var(--accent); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 0 8px 4px; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.7; }
+  .checklist li:last-child { border-bottom: none; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 18</div>
+  <h1>ABS Instrument and <span>Market Features</span></h1>
+  <p>Exam-ready notes: covered bond characteristics and redemption regimes, the three internal credit enhancements (overcollateralization, excess spread, subordination/tranching), the waterfall loss structure with the BRWA/CLT worked example, non-mortgage ABS (credit card and solar), amortizing vs. non-amortizing collateral, CDOs and CLOs with their structures, risks, and collateral manager role.</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Covered Bonds — Deep Dive</a>
+  <a class="toc-item" href="#s2">02 · Credit Enhancement Types</a>
+  <a class="toc-item" href="#s3">03 · Waterfall Structure — CLT Example</a>
+  <a class="toc-item" href="#s4">04 · Amortizing vs. Non-Amortizing ABS</a>
+  <a class="toc-item" href="#s5">05 · Credit Card ABS</a>
+  <a class="toc-item" href="#s6">06 · Solar ABS</a>
+  <a class="toc-item" href="#s7">07 · CDOs &amp; CLOs</a>
+  <a class="toc-item" href="#s8">08 · Master Comparison Table</a>
+  <a class="toc-item" href="#s9">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1: COVERED BONDS — DEEP DIVE          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Covered Bonds — Deep Dive</h2>
+    </div>
+
+    <div class="covered-card">
+      <div class="covered-title">Covered Bond — Full Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Senior debt obligations</strong> issued by a financial institution (mainly banks), backed by a segregated pool of assets (the "cover pool") that <strong>remains on the issuer's balance sheet</strong>.</li>
+        <li>Cover pool typically contains: commercial or residential mortgages, public sector assets (e.g., government bonds), or (less commonly) ships and aircraft loans.</li>
+        <li>Originated as the German <strong>Pfandbrief</strong> over 250 years ago in Prussia — oldest securitized product. Now used in Europe, Asia, and Australia.</li>
+        <li>The EU is harmonizing covered bond rules across member states. Jurisdiction-specific rules set eligible collateral types and permissible structures.</li>
+        <li><strong>Green covered bonds:</strong> Cover pool made up of mortgages on green buildings (identified via green building certification standards). Growing segment for ESG investors.</li>
+        <li>Covered bonds usually consist of <strong>one bond class per cover pool</strong> — unlike ABS which can have many tranches.</li>
+      </ul>
+    </div>
+
+    <h3>Covered Bond vs. ABS — Key Structural Difference</h3>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Covered Bond</div>
+        <ul>
+          <li>Assets stay ON the bank's balance sheet</li>
+          <li>Ringfenced into a separate cover pool (but not legally separate entity)</li>
+          <li><strong>Dual recourse:</strong> ① cover pool AND ② unencumbered bank assets</li>
+          <li>Bank pays investors directly</li>
+          <li>Single bond class</li>
+          <li>Fixed rate; matures on a fixed date like a normal bond</li>
+          <li>Lower yield (safer structure) than similar ABS</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c94c4c;">ABS (Pass-Through / Structured)</div>
+        <ul>
+          <li>Assets LEAVE the balance sheet — transferred to SPE</li>
+          <li>SPE is legally independent and bankruptcy-remote</li>
+          <li><strong>Single recourse:</strong> pool cash flows only — no claim on originator</li>
+          <li>SPE passes pool cash flows to investors</li>
+          <li>Multiple tranches (senior/mezzanine/equity)</li>
+          <li>Floating rate; passes through prepayments</li>
+          <li>Higher yield (more risk) than similar covered bonds</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Credit Risk Mitigants Unique to Covered Bonds</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">①</div>
+        <div class="step-content"><strong>Overcollateralization:</strong> The face value of the cover pool <em>exceeds</em> the face value of the issued covered bonds. Germany requires at least 2% overcollateralization above the economic value of outstanding covered bonds. Some German issuers voluntarily overcollateralize further. This buffer absorbs losses before investors are impacted.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">②</div>
+        <div class="step-content"><strong>LTV (Loan-to-Value) Criteria:</strong> Mortgages included in the cover pool must meet specific LTV standards. If a mortgage's LTV exceeds the threshold, it must be replaced with one that qualifies. Ensures only quality collateral in the pool.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">③</div>
+        <div class="step-content"><strong>Dynamic Cover Pool:</strong> The cover pool is actively monitored by a third-party asset monitor for performance and adherence to underwriting standards. The issuer must <em>replace</em> any prepaid or non-performing assets (ones not generating promised cash flows) to maintain sufficient cash flows until covered bond maturity.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">④</div>
+        <div class="step-content"><strong>Dual Recourse:</strong> In case of issuer bankruptcy, covered bond investors have two claims: first against the ringfenced cover pool, and second against the issuer's remaining unencumbered assets. This is fundamentally safer than single-recourse ABS.</div>
+      </div>
+    </div>
+
+    <h3>Redemption Regimes — What Happens If the Issuer Defaults?</h3>
+
+    <div class="card">
+      <p>Redemption regimes govern how covered bond cash flows are handled if the issuing institution (financial sponsor) defaults. Three types:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Regime</th>
+            <th>What Happens on Issuer Default?</th>
+            <th>Effect on Investors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hard Bullet</td>
+            <td>If payments do not occur per the original schedule → immediate bond default triggered → principal payments are accelerated. No grace period.</td>
+            <td>Investors get principal early but through a default event. Higher legal/operational risk for issuers.</td>
+          </tr>
+          <tr>
+            <td>Soft Bullet <span class="tag tag-green">Most Common</span></td>
+            <td>Bond default and payment acceleration are delayed until a new "final maturity date," typically up to 1 year after the original maturity. Grace period gives issuer/administrator time to arrange payments.</td>
+            <td>Smoother resolution. Investors wait up to 1 extra year but avoid the chaos of immediate default declaration. Reduces acceleration risk.</td>
+          </tr>
+          <tr>
+            <td>Conditional Pass-Through</td>
+            <td>If all bond payments haven't been made by the original maturity date, the covered bond converts to a pass-through security — investors now receive pool cash flows as they come in, like an ABS.</td>
+            <td>Uncertainty around timing of repayment increases post-conversion. But investors are protected from immediate crystallization of losses.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why Covered Bonds Have Lower Yields Than Similar ABS</div>
+      <p>Four reasons covered bonds are safer: (1) <strong>Dual recourse</strong> — claim on pool AND the bank's assets; (2) <strong>Dynamic cover pool</strong> — non-performing assets must be replaced; (3) <strong>Strict eligibility criteria</strong> (LTV limits, quality standards); (4) <strong>Overcollateralization</strong> — extra buffer above bond face value. This combination makes covered bonds reliably lower credit risk → lower spread → lower yield than otherwise similar ABS. The tradeoff: ABS removes risk from the bank's balance sheet entirely (securitization benefit); covered bonds do not.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Covered Bond vs. ABS — Key Quote for the Exam</div>
+      <p>"ABS are a vehicle for packaging and selling exposure to private credit risk, with the promise of higher returns. Covered bonds are a means for banks to raise long-term funding at a lower cost than unsecured debt. Securitization increases the financial system's lending capacity (loans leave B/S, freeing up capital). Covered bonds, which keep loans on the B/S, do NOT offer this benefit." — Know this distinction cold. ABS = capital relief + risk transfer. Covered bonds = cheap funding + no capital relief.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2: CREDIT ENHANCEMENT TYPES           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Credit Enhancement Structures</h2>
+    </div>
+
+    <div class="card">
+      <p>In a simple (single-class) ABS, all investors share the pool's cash flows equally — and equally absorb defaults. <strong>Credit enhancements</strong> are structures that absorb losses or reduce variability for certain investors, making the ABS more attractive. There are <strong>three main internal credit enhancements</strong> and external alternatives.</p>
+    </div>
+
+    <h3>① Overcollateralization (OC)</h3>
+
+    <div class="enhance-card">
+      <div class="enhance-title">Overcollateralization</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c97a;">
+        <li><strong>Definition:</strong> The collateral value exceeds the face value of the issued bonds. Even with some defaults in the pool, there is sufficient collateral cushion to continue paying investors.</li>
+        <li><strong>Formula:</strong> OC Ratio = Total Collateral Value ÷ Total Face Value of ABS Issued</li>
+        <li><strong>Example (CLT):</strong> If CLT's EUR1,000m ABS is backed by EUR1,200m in car loans → OC = EUR200m. If 10% of loans default → EUR120m in defaults. Remaining collateral = EUR1,080m > EUR1,000m bond face value → all investors still covered.</li>
+        <li><strong>SolarCity Example (2013):</strong> USD54.4m ABS backed by USD143.9m solar assets → OC ratio = 2.66×. This high OC level achieved a BBB+ rating and kept the interest rate at only ~0.50% above the 30-year mortgage rate.</li>
+        <li>Particularly important for new/unproven asset classes (e.g., first-ever solar ABS) where investors need extra comfort.</li>
+      </ul>
+    </div>
+
+    <h3>② Excess Spread</h3>
+
+    <div class="enhance-card">
+      <div class="enhance-title">Excess Spread</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c97a;">
+        <li><strong>Definition:</strong> The difference between the coupon (interest rate) earned on the underlying collateral pool and the coupon paid out to ABS investors.</li>
+        <li><strong>Formula:</strong> Excess Spread = Collateral Pool Yield − ABS Coupon Rate</li>
+        <li><strong>Example (CLT):</strong> Average car loan earns 8%; ABS investors receive 6% → Excess spread = 2%. This 2% can: (a) absorb collateral shortfalls / defaults before they hit investors, or (b) be accumulated in a reserve account as a further buffer.</li>
+        <li>Excess spread is the first line of defense against small losses — it provides ongoing, automatic protection throughout the life of the ABS.</li>
+        <li>Think of it as a "profit margin" that protects investors before the OC cushion is needed.</li>
+      </ul>
+    </div>
+
+    <h3>③ Subordination / Credit Tranching</h3>
+
+    <div class="enhance-card">
+      <div class="enhance-title">Subordination (Credit Tranching)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#e8c97a;">
+        <li><strong>Definition:</strong> Creating multiple bond classes (tranches) from the same collateral pool. Tranches differ in how they share losses. Junior tranches absorb losses first; senior tranches absorb losses last.</li>
+        <li>Also called the <strong>waterfall structure</strong> — because cash flows cascade downward from senior to junior; losses cascade upward from junior to senior.</li>
+        <li>The more junior tranches outstanding, the greater the credit protection for the senior tranche — each junior tranche is a loss buffer for all tranches above it.</li>
+        <li>Ratings are assigned to each tranche based on: (1) quality of underlying collateral, and (2) seniority of the tranche. A pool of sub-investment-grade loans can produce AAA-rated senior tranches through subordination.</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Internal Credit Enhancements</div>
+        <ul>
+          <li><strong>Overcollateralization</strong> — excess collateral > bond face value</li>
+          <li><strong>Excess spread</strong> — pool yield − ABS coupon; absorbed losses first</li>
+          <li><strong>Subordination (tranching)</strong> — junior tranches absorb losses before senior</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">All three work together — excess spread first, then OC buffer, then junior tranches. Layered protection.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">External Credit Enhancements</div>
+        <ul>
+          <li><strong>Financial guarantees</strong> — by banks or insurance companies (e.g., bond insurance / "wraps")</li>
+          <li><strong>Letters of credit</strong> — a bank commits to cover losses up to a stated amount</li>
+          <li><strong>Cash collateral accounts</strong> — cash deposited upfront as a reserve against losses</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Note: External CEs introduce counterparty risk — if the guarantor fails, the protection disappears. Not covered in depth by the LES.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick — Three Layers of Internal Credit Protection</div>
+      <p><strong>ESO → OC → SUB</strong><br>
+      Think of them as three lines of defense, triggered in sequence:<br>
+      ① <strong>E</strong>xcess <strong>S</strong>pread (ES) absorbs small, ongoing losses first (pool earns more than it pays out)<br>
+      ② <strong>O</strong>ver<strong>c</strong>ollateralization (OC) cushion absorbs larger losses (extra collateral buffer)<br>
+      ③ <strong>Sub</strong>ordination (SUB) — when losses exceed OC buffer, junior tranches absorb in order<br>
+      Only when ALL junior tranches are wiped out do senior tranche investors face losses.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3: WATERFALL — CLT WORKED EXAMPLE    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Waterfall Structure — CLT Four-Tranche Worked Example</h2>
+    </div>
+
+    <div class="card">
+      <p>The waterfall structure shows how losses cascade upward through tranches. In the BRWA/CLT example, CLT issues <strong>four bond classes</strong> from a total EUR1,000m pool of car loans.</p>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">CLT Four-Tranche Capital Structure — Notes Issued by Car Loan Trust</div>
+      <div class="f">
+        ┌──────────────────────────────────────────────────────────────────────────────┐<br>
+        │  TRANCHE A  (Senior)     EUR 825m  MRR + 0.50%  ← Paid FIRST / Last loss   │<br>
+        │             Credit enhancement: subordination of B, C, D notes              │<br>
+        ├──────────────────────────────────────────────────────────────────────────────┤<br>
+        │  TRANCHE B  (Mezzanine)  EUR 100m  MRR + 1.50%  ← Paid SECOND             │<br>
+        │             Credit enhancement: subordination of C, D notes                 │<br>
+        ├──────────────────────────────────────────────────────────────────────────────┤<br>
+        │  TRANCHE C  (Junior)     EUR  50m  MRR + 2.50%  ← Paid THIRD              │<br>
+        │             Credit enhancement: subordination of D notes only               │<br>
+        ├──────────────────────────────────────────────────────────────────────────────┤<br>
+        │  TRANCHE D  (Equity)     EUR  25m  Variable      ← Paid LAST / First loss  │<br>
+        │             Credit enhancement: NONE                                        │<br>
+        └──────────────────────────────────────────────────────────────────────────────┘<br><br>
+        TOTAL: EUR 825 + 100 + 50 + 25 = EUR 1,000m<br><br>
+        Loss Absorption Order (bottom-up):<br>
+        D absorbs first EUR 25m → C absorbs next EUR 50m → B absorbs next EUR 100m → A absorbs beyond EUR 175m<br>
+        ∴ Class A only loses money if total pool losses EXCEED EUR 175m (17.5% of pool)
+      </div>
+    </div>
+
+    <h3>Loss Waterfall — Worked Scenarios</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Total Loss Scenario</th>
+            <th>Tranche D (EUR 25m)</th>
+            <th>Tranche C (EUR 50m)</th>
+            <th>Tranche B (EUR 100m)</th>
+            <th>Tranche A (EUR 825m)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EUR 0 (No defaults)</td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+          </tr>
+          <tr>
+            <td>EUR 20m</td>
+            <td><span class="tag tag-yellow">Partial: receives EUR 5m</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+          </tr>
+          <tr>
+            <td>EUR 70m</td>
+            <td><span class="tag tag-red">Wiped out (−EUR 25m)</span></td>
+            <td><span class="tag tag-yellow">Partial: receives EUR 5m (absorbs EUR 45m)</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+          </tr>
+          <tr>
+            <td>EUR 90m</td>
+            <td><span class="tag tag-red">Wiped out</span></td>
+            <td><span class="tag tag-red">Wiped out</span></td>
+            <td><span class="tag tag-yellow">Partial (absorbs EUR 15m of EUR 100m)</span></td>
+            <td><span class="tag tag-green">Fully repaid</span></td>
+          </tr>
+          <tr>
+            <td>EUR 200m</td>
+            <td><span class="tag tag-red">Wiped out</span></td>
+            <td><span class="tag tag-red">Wiped out</span></td>
+            <td><span class="tag tag-red">Wiped out</span></td>
+            <td><span class="tag tag-yellow">Partial: absorbs EUR 25m (loses 3% of investment)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Interest Waterfall — Example 3 (MRR = 4.0%)</h3>
+
+    <div class="card">
+      <p>An investor holds: Class B notes (EUR 3m face) and Class C notes (EUR 2m face). Monthly interest payments vary by loss scenario:</p>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Interest Payments — MRR = 4.0% | Monthly payments shown</div>
+      <div class="f">
+        Class B (EUR 3m at MRR+1.50% = 5.50%): Annual interest = EUR 165,000 (EUR 13,750/month)<br>
+        Class C (EUR 2m at MRR+2.50% = 6.50%): Annual interest = EUR 130,000 (EUR 10,833/month)<br><br>
+        Scenario 1 — No defaults:         B pays EUR 165k  |  C pays EUR 130k  |  Total: EUR 295k  ✓<br>
+        Scenario 2 — EUR 20m defaults:    B pays EUR 165k  |  C pays EUR 130k  |  Total: EUR 295k  ✓ (D absorbs loss)<br>
+        Scenario 3 — EUR 90m defaults:    B pays EUR 140k  |  C pays EUR 0k    |  Total: EUR 140k<br>
+          → C is wiped out (pool loss = 90m > D(25m) + C(50m) = 75m); C's coupon = EUR 0<br>
+          → B absorbs EUR 15m of its EUR 100m → gets interest on remaining EUR 85m face: ~5.50%×85m = EUR 140k ✓
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Waterfall Logic — Two Separate Waterfalls</div>
+      <p>There are actually <strong>two waterfall structures</strong> in ABS: (1) <strong>Principal waterfall</strong> — principal repayments go to Tranche A first, then B, then C, then D (top-down). (2) <strong>Loss waterfall</strong> — losses are absorbed by Tranche D first, then C, then B, then A (bottom-up). These work in opposite directions. Losses hitting D first means senior investors are the last to absorb losses. Principal payments going to A first means senior investors recover their capital earliest.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Rating vs. Seniority — Key Exam Point</div>
+      <p>Each tranche receives a rating from rating agencies that reflects both (1) the quality of the underlying collateral and (2) the seniority of that class. The senior class (A) typically earns the highest rating (e.g., AAA) even if the collateral pool is only BBB-quality — because the subordinated tranches absorb losses before A is touched. Some tranches may even have a better credit rating than the originating company itself, because the SPE's collateral isolates the tranche from the originator's credit risk.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4: AMORTIZING VS. NON-AMORTIZING ABS  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Amortizing vs. Non-Amortizing ABS — Critical Distinction</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Amortizing Loans (e.g., Auto Loans, Mortgages)</div>
+        <ul>
+          <li>Periodic payments = both <strong>principal + interest</strong></li>
+          <li>Outstanding balance declines over time as principal is repaid</li>
+          <li>Number of loans and total pool value <strong>shrinks over time</strong></li>
+          <li>Investors receive scheduled principal repayments throughout</li>
+          <li>Exposed to <strong>prepayment risk</strong> from inception (borrowers can repay early)</li>
+          <li>Exposed to <strong>default risk</strong> from inception</li>
+          <li>No revolving/lockout period needed</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Non-Amortizing Loans (e.g., Credit Cards)</div>
+        <ul>
+          <li>Periodic payments = <strong>interest/fees only</strong> (no scheduled principal repayments)</li>
+          <li>Outstanding balance can remain stable or fluctuate</li>
+          <li>Pool maintained via a <strong>revolving / lockout period</strong></li>
+          <li>During revolving period: principal repaid → reinvested in new receivables (pool stays full)</li>
+          <li><strong>No prepayment risk</strong> during revolving period (prepaid principal gets reinvested)</li>
+          <li>After revolving period ends → amortization period: principal repaid to investors (not reinvested)</li>
+          <li>Rapid/early amortization provisions protect quality during the lockout period</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Lockout Period = Revolving Period</div>
+      <div class="def-body">During the lockout/revolving period of a non-amortizing ABS (e.g., credit card ABS): principal repayments by borrowers are NOT passed to investors — instead, they are reinvested to purchase additional receivables and replenish the collateral pool. Investors only receive interest/fee income during this period. After the lockout period ends, the amortization period begins and principal repayments flow to investors.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5: CREDIT CARD ABS                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Credit Card Receivable ABS</h2>
+    </div>
+
+    <div class="covered-card">
+      <div class="covered-title">Credit Card ABS — Core Features</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Collateral:</strong> Pool of credit card receivables (the outstanding balances owed by cardholders). Non-amortizing — no scheduled principal repayments on credit cards.</li>
+        <li><strong>Cash flows from the pool:</strong> (1) Finance charges (periodic interest on unpaid balances — fixed or floating, floating typically capped); (2) Fees (late payment fees, annual membership fees); (3) Principal repayments (as cardholders pay down balances).</li>
+        <li><strong>Structure:</strong> Revolving period followed by amortization period. In the CFP example: 3-year revolving + 6-year amortization = 9-year total ABS.</li>
+        <li><strong>During revolving period:</strong> Investors receive ONLY finance charges and fees. Principal repayments are reinvested to buy new credit card receivables → pool stays replenished.</li>
+        <li><strong>After revolving period:</strong> Principal repayments now flow to investors. Pool shrinks as balances are paid down.</li>
+        <li><strong>Benefits to issuer (CFP):</strong> Removes receivables from B/S → capital efficiency + lower funding cost + lower default risk exposure + fee income.</li>
+      </ul>
+    </div>
+
+    <div class="auction-box">
+      <div class="label">Commercial Finance Partners AG — Credit Card ABS Term Sheet (CFP, CHF)</div>
+      <div class="f">
+        Issue Size:     CHF 900m | Maturity: 9 years from settlement<br>
+        Collateral:     Credit card receivables (Switzerland); pool = CHF 925m<br>
+                        Avg balance: CHF 2,300 | Weighted avg rate: 12%<br>
+        Revolving:      Years 0–3 (principal repaid → reinvested)<br>
+        Amortizing:     Years 3–9 (principal repaid → paid to investors)<br><br>
+        Capital Structure:<br>
+        Tranche A: CHF 400m  @  7.00%  — CE: subordination of B, C, D<br>
+        Tranche B: CHF 300m  @  8.00%  — CE: subordination of C, D<br>
+        Tranche C: CHF 150m  @ 10.50%  — CE: subordination of D<br>
+        Tranche D: CHF  50m  @ Variable — CE: none (equity tranche)<br><br>
+        Overcollateralization: CHF 25m (pool CHF 925m vs. ABS CHF 900m)<br>
+        Total subordination + OC = CHF 75m protection before Tranche C is touched<br>
+        (i.e., losses must exceed CHF 75m = 8.33% of ABS before Tranche C investors are affected)
+      </div>
+    </div>
+
+    <h3>Rapid / Early Amortization Provision</h3>
+
+    <div class="risk-card">
+      <div class="risk-title">Rapid Amortization — When Triggered &amp; Why It Matters</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li><strong>Definition:</strong> A provision in credit card ABS that can accelerate principal amortization (i.e., end the revolving period early) if specific adverse events occur.</li>
+        <li><strong>Triggers include:</strong> Principal repayments during the revolving period are insufficient to replenish the pool; defaults significantly alter the pool's credit quality; issuer financial distress; pool performance deteriorates below specified thresholds.</li>
+        <li><strong>Effect when triggered:</strong> The revolving period ends immediately and early amortization begins — investors start receiving their principal back ahead of schedule, which they can redeploy elsewhere.</li>
+        <li><strong>Why beneficial for investors:</strong> Protects against being locked into a deteriorating pool. Early return of capital during economic stress allows reallocation to better opportunities. Particularly valuable in macroeconomic uncertainty.</li>
+        <li><strong>Exam note:</strong> Rapid amortization is a <em>safety valve</em> — it changes the timing of cash flows (extension protection in reverse) rather than preventing credit losses. It complements subordination and OC as a credit safeguard during the revolving period.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Card ABS vs. Auto Loan ABS — Quick Contrast</div>
+      <p><strong>Credit Card ABS:</strong> Non-amortizing collateral. Revolving period first (investors get interest only; principal reinvested). No prepayment risk during revolving period. Rapid amortization provision protects the pool. Cash flows: finance charges + fees → then principal.<br><br>
+      <strong>Auto Loan ABS:</strong> Amortizing collateral. No revolving period. Investors receive principal AND interest from day one. Exposed to both prepayment risk AND default risk from inception. Pool shrinks continuously as loans are repaid. Simpler cash flow profile but active prepayment/default risk throughout.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6: SOLAR ABS                         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Solar ABS — ESG-Linked Non-Mortgage ABS</h2>
+    </div>
+
+    <div class="card">
+      <p>Solar ABS is backed by solar energy system loans or leases made to homeowners. Two product types: <strong>Solar loans</strong> (consumer borrows to purchase a system) and <strong>Solar leases</strong> (consumer rents the equipment). The underlying asset is the stream of loan/lease payments from solar energy customers.</p>
+    </div>
+
+    <div class="covered-card">
+      <div class="covered-title">Solar ABS — Key Features (Al-Shims Example)</div>
+      <ul style="padding-left:18px; font-size:14px; color:#c8dfd0;">
+        <li><strong>Collateral:</strong> 10,000 amortizing residential solar home improvement loans. Face value: EUR 320m. Average loan: EUR 32,500. Weighted avg rate: 7.5%. Weighted avg maturity: 17 years.</li>
+        <li><strong>ABS issued:</strong> EUR 300m in notes → OC = EUR 20m (EUR 320m collateral / EUR 300m ABS = 1.067× OC).</li>
+        <li><strong>Amortizing collateral:</strong> Unlike credit card ABS, solar loans have scheduled principal + interest payments. No revolving period.</li>
+        <li><strong>Pre-funding period:</strong> Many solar ABS include a period after closing during which the trust can acquire additional qualifying loans meeting eligibility criteria. Builds up the pool post-transaction close.</li>
+        <li><strong>Legal collateral structure:</strong> Solar loans can be collateralized by: (a) a lien on the installed solar system, (b) a lien on the property itself, or (c) both. Structured as subordinated (junior) mortgages on the property when residential home improvement loans.</li>
+        <li><strong>Green bond qualification:</strong> Proceeds directed to financing green/environmentally friendly projects (solar installations = renewable energy) → solar ABS may qualify as <strong>green bonds</strong>, attracting ESG-focused institutional investors.</li>
+      </ul>
+    </div>
+
+    <h3>Why Solar ABS Credit Risk Is Low</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">①</div>
+        <div class="step-content"><strong>Prime borrower profile:</strong> Solar loan borrowers are typically homeowners with above-average credit quality. Through 2019, all solar ABS pools had weighted-average FICO scores above 700.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">②</div>
+        <div class="step-content"><strong>Economic incentive NOT to default:</strong> Solar loan payments effectively replace (and often reduce) the homeowner's energy bill. Defaulting on a solar loan would likely result in higher energy expenses — borrowers revert to paying utility rates. This behavioral disincentive reduces default probability.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">③</div>
+        <div class="step-content"><strong>Multiple credit enhancements:</strong> Typically includes: (i) overcollateralization, (ii) subordinated bond tranches, (iii) general reserve account, (iv) inverter replacement reserve account (covers solar system equipment failure), (v) excess spread.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">④</div>
+        <div class="step-content"><strong>ESG demand:</strong> Growing institutional demand for ESG/climate finance instruments expands the investor base and supports tighter spreads on solar ABS. Dual benefit: sustainability + yield pickup vs. government bonds.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Solar ABS Risk — Limited Credit Cycle History</div>
+      <p>The first publicly issued solar ABS was SolarCity's SOCTY 2013-1 in November 2013. This means solar ABS has not been through a full credit cycle — we don't have long-term historical default data across a recession. This is why: (1) the first solar ABS required very high OC (2.66×) to compensate for investor uncertainty; (2) analysts rely on borrower credit quality and behavioral incentives (not to default) as proxies. Exam takeaway: solar ABS is a relatively new asset class with limited track record, but low default risk is supported by prime borrowers + strong repayment incentives.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7: CDOs & CLOs                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Collateralized Debt Obligations (CDOs) &amp; CLOs</h2>
+    </div>
+
+    <div class="clo-card">
+      <div class="clo-title">CDO — Core Definition</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li><strong>CDO (Collateralized Debt Obligation):</strong> A generic ABS structure backed by a <em>diversified pool</em> of debt obligations (not mortgage loans, but bonds, loans, or other ABS). The CDO issues multiple tranches that redistribute the pool's cash flows.</li>
+        <li><strong>Key distinction from standard ABS:</strong> The collateral pool of most CDOs is NOT static — it is actively managed by a <strong>collateral manager</strong> who buys and sells debt instruments within the pool throughout the CDO's life.</li>
+        <li><strong>Proceeds to CDO bond classes come from:</strong> (1) Interest payments from collateral assets; (2) Maturing of collateral assets; (3) Sale of collateral assets by the manager.</li>
+        <li><strong>CDO economics:</strong> Return on collateral pool must exceed the aggregate cost (weighted average coupon) of the bond classes. CDO = a leveraged transaction — equity tranche holders use bond-class funding to earn a spread above funding costs.</li>
+      </ul>
+    </div>
+
+    <h3>CDO Subtypes</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Subtype</th><th>Collateral Pool</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CBO — Collateralized Bond Obligation</td>
+            <td>Corporate and/or emerging market bonds</td>
+            <td>Pool of bonds; manager buys/sells bonds.</td>
+          </tr>
+          <tr>
+            <td>CLO — Collateralized Loan Obligation <span class="tag tag-green">Most Common Today</span></td>
+            <td>Senior secured leveraged bank loans (100–225 issuers, diversified)</td>
+            <td>Prevailing CDO structure. Actively managed collateral pool of bank loans.</td>
+          </tr>
+          <tr>
+            <td>Structured Finance CDO</td>
+            <td>Other CDO tranches (CDOs backed by CDOs)</td>
+            <td>Very complex; no longer common after GFC. Was common 2003–2007.</td>
+          </tr>
+          <tr>
+            <td>Synthetic CDO / Synthetic CLO</td>
+            <td>Credit default swaps (CDS) on other assets</td>
+            <td>No actual loans — exposure created synthetically via derivatives. Less common post-GFC.</td>
+          </tr>
+          <tr>
+            <td>CDO² (CDO Squared)</td>
+            <td>Tranches of other CDOs</td>
+            <td>Extreme complexity. Not common today.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Generic CLO Structure — Deep Dive</h3>
+
+    <div class="clo-card">
+      <div class="clo-title">CLO Capital Structure &amp; Features</div>
+      <ul style="padding-left:18px; font-size:14px; color:#9ecef5;">
+        <li><strong>Collateral pool:</strong> Diversified portfolio of senior secured leveraged bank loans, typically from 100–225 different company issuers. Collateral value exceeds total CLO debt issued (overcollateralized).</li>
+        <li><strong>Tranches (typical, highest to lowest claim):</strong> AAA → AA → A → BBB → BB → Equity (unrated, first loss).</li>
+        <li><strong>Senior/mezzanine bond classes:</strong> Earn fixed returns; higher yield than comparable corporate bonds; gain access to loans not normally accessible to institutional investors.</li>
+        <li><strong>Equity tranche:</strong> Not rated; no fixed coupon — earns all excess cash flows after all debt tranche obligations are met. Equity-like return; equity-like risk. The equity tranche's competitive return is essential — if it's not attractive enough, the CLO cannot be assembled.</li>
+        <li><strong>Three CLO types:</strong> (1) Cash Flow CLOs (most common) — redistribute actual interest and principal from loans; (2) Market Value CLOs — tranche values depend on market value of portfolio; (3) Synthetic CLOs — pool created via credit derivatives.</li>
+      </ul>
+    </div>
+
+    <h3>CLO Lifecycle</h3>
+
+    <div class="step-block">
+      <div class="step-row">
+        <div class="step-num">①</div>
+        <div class="step-content"><strong>Ramp-up period:</strong> After transaction closes, the collateral manager acquires most of the loans but adds additional assets over a subsequent ramp-up period. The collateral portfolio is NOT finalized at transaction close.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">②</div>
+        <div class="step-content"><strong>Reinvestment / Management period:</strong> Manager may replace loans in the portfolio as long as new assets meet the portfolio selection criteria (credit quality, diversity, sector limits, OC ratios). Active bond portfolio management within the CLO's constraints.</div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">③</div>
+        <div class="step-content"><strong>Amortization / Wind-down:</strong> Underlying loans mature. Proceeds used to pay off tranches in order of seniority. Recourse is typically limited to the collateral pool.</div>
+      </div>
+    </div>
+
+    <h3>CLO Performance Tests &amp; Covenants</h3>
+
+    <div class="risk-card">
+      <div class="risk-title">CLO Coverage Tests — Exam Must-Know</div>
+      <ul style="padding-left:18px; font-size:14px; color:#dfc8c8;">
+        <li><strong>Overcollateralization (OC) Test:</strong> Each tranche has a targeted OC ratio (principal of loan pool ÷ principal of that tranche and all senior tranches). If the loan pool's principal value falls below the OC test trigger (e.g., due to defaults), cash is diverted from equity/junior tranches to purchase additional collateral OR repay the most senior tranche. This deleverages the CLO by reducing the cheapest funding source (senior tranche).</li>
+        <li><strong>Industry Diversification Test:</strong> Limits the CLO's exposure to any single industry sector in the loan pool. Prevents concentration risk.</li>
+        <li><strong>Single Obligor Limits:</strong> Caps the exposure to any one borrower. Ensures diversification across 100–225 issuers.</li>
+        <li><strong>Non-Senior Secured Loan Limits:</strong> Limits the share of unsecured or subordinated loans in the pool. Keeps collateral quality high.</li>
+        <li><strong>CCC-Rated Debt Limit:</strong> Caps the percentage of CCC-rated loans in the pool. Prevents negative credit drift — if CCC exposure rises too high, the CLO's senior tranche protections are weakened.</li>
+        <li><strong>Effect of failing a test:</strong> Cash is redirected from junior/equity tranches toward senior tranches → reduces junior returns → protects senior investors.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 CLO = Active Bond Portfolio + ABS Structure</div>
+      <p>Think of a CLO as a <strong>leveraged loan mutual fund wrapped in an ABS structure</strong>. The collateral manager acts as an active fund manager: selecting bank loans, managing diversification, replacing non-performing assets, and staying within test limits. The fund is financed through bond classes (debt) and an equity tranche. The manager's skill directly determines CLO performance — good managers generate excess spread for equity investors; poor managers trigger OC tests and divert cash to senior tranches. This active management risk is unique to CDOs/CLOs vs. static ABS pools.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ CLO vs. GFC-era CDOs — Know the Difference</div>
+      <p>The 2003–2007 CDO market included "structured finance CDOs" backed by other CDOs and CMBS — multiple layers of complexity and opacity. Modern CLOs are simpler: backed directly by senior secured bank loans. Additionally: synthetic CLOs (using CDS) are less common today; single-obligor diversification is better enforced; and post-GFC regulatory scrutiny means underlying asset quality receives more attention. The exam may ask about CLO structure risk — focus on the active collateral management risk and the OC test cascade mechanism.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 8: MASTER COMPARISON TABLE           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Master Comparison Table — All ABS Types</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Covered Bond</th>
+            <th>CDO / CLO</th>
+            <th>MBS</th>
+            <th>Non-Mortgage ABS (Credit Card / Solar)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Collateral Type</td>
+            <td>Commercial/residential mortgages, public sector assets</td>
+            <td>Leveraged bank loans (CLO); bonds (CBO)</td>
+            <td>Residential or commercial mortgage loans</td>
+            <td>Credit card receivables (non-amortizing); Solar loans (amortizing)</td>
+          </tr>
+          <tr>
+            <td>B/S Impact on Originator</td>
+            <td><span class="tag tag-red">Stays on B/S (ringfenced)</span></td>
+            <td><span class="tag tag-green">Removed from B/S</span></td>
+            <td><span class="tag tag-green">Removed from B/S</span></td>
+            <td><span class="tag tag-green">Removed from B/S</span></td>
+          </tr>
+          <tr>
+            <td>Collateral Pool Stability</td>
+            <td>Unstable — issuer actively manages (replaces non-performing assets)</td>
+            <td>Unstable — collateral manager buys/sells actively</td>
+            <td>Stable — fixed pool of mortgages</td>
+            <td>Unstable during revolving period (CC); stable for solar (amortizing)</td>
+          </tr>
+          <tr>
+            <td>Number of Bond Classes</td>
+            <td><span class="tag tag-yellow">One per cover pool</span></td>
+            <td>Typically several (AAA to equity)</td>
+            <td>Typically several</td>
+            <td>Typically several</td>
+          </tr>
+          <tr>
+            <td>Recourse</td>
+            <td>Dual recourse (cover pool + unencumbered bank assets)</td>
+            <td>Single recourse (pool only)</td>
+            <td>Single recourse (pool only)</td>
+            <td>Single recourse (pool only)</td>
+          </tr>
+          <tr>
+            <td>Collateral Manager?</td>
+            <td>Yes — asset monitor (3rd party)</td>
+            <td><span class="tag tag-red">Yes — active manager (key role)</span></td>
+            <td>No — static pool</td>
+            <td>No — static pool (servicer manages loans, not pool composition)</td>
+          </tr>
+          <tr>
+            <td>Amortizing Collateral?</td>
+            <td>Yes (mortgages)</td>
+            <td>Both (bank loans amortize but manager replaces)</td>
+            <td>Yes (mortgages fully amortize)</td>
+            <td>CC: Non-amortizing (revolving); Solar: Amortizing</td>
+          </tr>
+          <tr>
+            <td>Key Risk</td>
+            <td>Issuer insolvency + LTV deterioration</td>
+            <td>Credit + active manager skill + correlated loan defaults</td>
+            <td>Prepayment (contraction/extension) + credit</td>
+            <td>CC: Default + rapid amortization trigger; Solar: limited track record</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Three Internal Credit Enhancements — Side by Side</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Enhancement</th><th>Mechanism</th><th>Formula / Example</th><th>Protects Against</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Overcollateralization</td>
+            <td>Collateral value > ABS face value. Buffer absorbs defaults before investors are impacted.</td>
+            <td>OC Ratio = Pool Value ÷ ABS Face Value. CLT: EUR1,200m / EUR1,000m = 1.20×; SolarCity: $143.9m / $54.4m = 2.66×</td>
+            <td>Principal losses from defaults in the pool</td>
+          </tr>
+          <tr>
+            <td>Excess Spread</td>
+            <td>Pool earns more than it pays out. Difference absorbed as income before touching OC buffer or tranches.</td>
+            <td>ES = Pool Yield − ABS Coupon. CLT: 8% − 6% = 2% per year on EUR1,000m = EUR20m/yr of built-in protection</td>
+            <td>Ongoing small losses; collateral shortfalls</td>
+          </tr>
+          <tr>
+            <td>Subordination (Tranching)</td>
+            <td>Junior tranches absorb losses first. Creates a loss waterfall from bottom (equity) to top (senior).</td>
+            <td>CLT: D (EUR25m) → C (EUR50m) → B (EUR100m) protect A. Senior A only losses if total defaults > EUR175m (17.5% of pool)</td>
+            <td>Large credit losses; distributes risk by investor risk appetite</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 9: EXAM CHECKLIST & QUICK REFERENCE   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist &amp; Quick Reference Summary</h2>
+    </div>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>✅ <strong>Covered bonds:</strong> Senior debt issued by financial institutions, backed by a ringfenced cover pool that stays on the issuer's balance sheet. Dual recourse: first on the cover pool, second on unencumbered bank assets. ONE bond class per pool. NOT true securitization.</li>
+        <li>✅ <strong>Covered bond risk mitigants:</strong> (1) Overcollateralization — collateral > bond face value; (2) LTV cut-off — only qualifying mortgages in pool; (3) Dynamic cover pool — issuer must replace prepaid/non-performing assets; (4) Third-party asset monitor; (5) Redemption regimes.</li>
+        <li>✅ <strong>Redemption regimes:</strong> Hard bullet = immediate default + acceleration. Soft bullet = grace period up to 1 year before default declared (most common). Conditional pass-through = converts to pass-through ABS at original maturity if not fully paid.</li>
+        <li>✅ <strong>Covered bond vs. ABS key contrast:</strong> Covered bonds = cheaper bank funding + no capital relief (loans stay on B/S). ABS = capital relief + risk transfer (loans leave B/S). ABS increases system lending capacity; covered bonds do not. ABS: floating rate, passes prepayments. Covered bonds: fixed rate, fixed maturity date.</li>
+        <li>✅ <strong>Three internal credit enhancements:</strong> (1) Overcollateralization — pool value exceeds ABS face value; (2) Excess spread — pool yield minus ABS coupon; (3) Subordination/credit tranching — junior tranches absorb losses before senior tranches (waterfall).</li>
+        <li>✅ <strong>Waterfall structure:</strong> Loss absorption goes BOTTOM-UP (D → C → B → A). Principal payments go TOP-DOWN (A first, then B, then C, then D). Two separate waterfalls, opposite directions.</li>
+        <li>✅ <strong>CLT four-tranche example:</strong> A (EUR825m, MRR+0.50%) — B (EUR100m, MRR+1.50%) — C (EUR50m, MRR+2.50%) — D (EUR25m, variable). Senior A only loses if total losses exceed EUR175m (17.5% of pool). Know loss scenarios: EUR70m → D wiped out, C partially repaid (EUR5m); B and A fully repaid.</li>
+        <li>✅ <strong>Tranche ratings:</strong> Each tranche rated on: (1) collateral quality AND (2) seniority of the class. Senior tranches can be rated higher than the originating company — SPE isolation + junior tranche subordination protects them. D/equity is unrated.</li>
+        <li>✅ <strong>Amortizing collateral (auto loans, mortgages):</strong> Principal + interest paid periodically. Pool shrinks over time. Prepayment and default risk from inception. No revolving period.</li>
+        <li>✅ <strong>Non-amortizing collateral (credit cards):</strong> Interest/fees only during revolving/lockout period. Principal repaid is reinvested to replenish pool. No prepayment risk during revolving period. After lockout: amortization period begins, principal flows to investors.</li>
+        <li>✅ <strong>Rapid/early amortization provision:</strong> Ends the revolving period early and triggers immediate principal payback if pool quality deteriorates or repayments can't replenish the pool. Protects investors by returning capital early when conditions worsen.</li>
+        <li>✅ <strong>Credit card ABS cash flows:</strong> Revolving period → investors receive only finance charges + fees. Amortization period → investors receive finance charges + fees + principal repayments. CFP example: 3-year revolving + 6-year amortization = 9-year ABS.</li>
+        <li>✅ <strong>Solar ABS:</strong> Amortizing collateral (home improvement loans). Backed by solar energy system cash flows. Borrowers are prime (FICO > 700). Low default risk because solar payments displace utility bills (economic incentive not to default). OC + subordination + excess spread + reserve accounts as CEs. May qualify as green bonds. Pre-funding period allows trust to acquire additional loans post-close.</li>
+        <li>✅ <strong>CDO:</strong> Generic ABS backed by diversified pool of non-mortgage debt. Tranches redistribute cash flows. Pool is NOT static — actively managed by a collateral manager who buys/sells debt. CDO proceeds: interest + maturities + asset sales. Economics: return on pool > aggregate cost of bond classes.</li>
+        <li>✅ <strong>CLO (most common CDO today):</strong> Backed by senior secured leveraged bank loans (100–225 issuers). Tranches: AAA → AA → A → BBB → BB → Equity. AAA has highest claim; equity has first loss + residual excess cash flow. Cash Flow CLO (most common), Market Value CLO, Synthetic CLO.</li>
+        <li>✅ <strong>CLO lifecycle:</strong> Ramp-up (post-close) → active reinvestment/management period → amortization/wind-down as loans mature.</li>
+        <li>✅ <strong>CLO performance tests:</strong> OC test (pool principal ÷ tranche principal ≥ threshold; if failed → cash diverted from junior/equity to senior or used to buy more collateral); diversification tests (industry, single obligor limits); CCC debt limit.</li>
+        <li>✅ <strong>CLO equity tranche:</strong> Unrated, no fixed coupon — earns all excess cash flows after debt obligations. Equity-like return with equity-like risk. Competitive equity returns are essential for CLO viability.</li>
+        <li>✅ <strong>Post-GFC CDO landscape:</strong> Modern CLOs are simpler — backed directly by senior secured bank loans (not other CDOs). Structured finance CDOs and synthetic CLOs less common. Greater scrutiny on underlying collateral quality. Collateral manager skill is the key active risk in CLOs.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ COVERED BOND ESSENTIALS ═══<br>
+        Assets ON balance sheet (ringfenced cover pool) | Dual recourse | One bond class<br>
+        Mitigants: Overcollateralization + LTV limits + Dynamic pool replacement + 3rd party monitor<br>
+        Hard bullet: immediate default. Soft bullet: up to 1yr grace. Conditional PT: converts to pass-through.<br>
+        Lower yield + lower risk than ABS. Fixed rate. Fixed maturity. No capital relief.<br><br>
+
+        ═══ THREE INTERNAL CREDIT ENHANCEMENTS ═══<br>
+        ① Overcollateralization:  Pool Value > ABS Face Value  →  OC ratio = Pool ÷ ABS<br>
+        ② Excess Spread:          Pool Yield − ABS Coupon  →  absorbs ongoing losses first<br>
+        ③ Subordination:          Junior tranches absorb losses before senior (BOTTOM-UP loss waterfall)<br>
+        External: Financial guarantees | Letters of credit | Cash collateral accounts<br><br>
+
+        ═══ CLT WATERFALL (4 TRANCHES) ═══<br>
+        A(EUR825m, MRR+0.50%) → B(EUR100m, MRR+1.50%) → C(EUR50m, MRR+2.50%) → D(EUR25m, variable)<br>
+        Loss order: D first (25m) → C next (50m) → B next (100m) → A last (only if &gt;175m total losses)<br>
+        Principal: A paid first, then B, then C, then D<br><br>
+
+        ═══ AMORTIZING VS. NON-AMORTIZING ABS ═══<br>
+        Amortizing (auto, mortgage): Principal+interest from inception. Pool shrinks. Prepay+default risk throughout.<br>
+        Non-amortizing (credit card): Revolving period first (interest+fees only; principal reinvested).<br>
+        After lockout: Amortization period (principal flows to investors).<br>
+        Rapid amortization: Early end to revolving period if pool deteriorates → principal returned early.<br><br>
+
+        ═══ CDO / CLO ESSENTIALS ═══<br>
+        CDO = ABS backed by diversified debt pool; actively managed collateral pool<br>
+        CLO = CDO backed by leveraged bank loans (100–225 issuers) — most common CDO today<br>
+        CLO tranches: AAA→AA→A→BBB→BB→Equity (unrated, residual cash flow, first loss)<br>
+        CDO economics: Pool return &gt; aggregate bond class cost → excess to equity tranche<br>
+        CLO tests: OC test, diversification, single obligor, CCC limit → failing redirects cash to senior<br>
+        Lifecycle: Ramp-up → Active management → Amortization/wind-down<br><br>
+
+        ═══ MASTER COMPARISON: COLLATERAL POOL STABILITY ═══<br>
+        Static (stable) pool:    MBS (mortgage pool fixed at close)<br>
+        Unstable (managed) pool: Covered bonds (replace non-performing); CDO/CLO (active manager);<br>
+                                 Credit card ABS (revolving; solar has pre-funding period)
+      </div>
+      <div class="note">
+        <strong>Key exam traps:</strong><br>
+        (1) Covered bond = assets stay on B/S. ABS = assets leave B/S. Never confuse.<br>
+        (2) Soft bullet covered bond ≠ default — it delays the default declaration by up to 1 year.<br>
+        (3) In a non-amortizing ABS revolving period: NO prepayment risk (prepaid principal is reinvested, not passed through).<br>
+        (4) CLO equity tranche: NO fixed coupon — earns residual. Rated: unrated. Risk: highest.<br>
+        (5) OC test failure in CLO: cash diverted from junior/equity → either buys more loans OR repays senior → deleverages CLO.<br>
+        (6) Credit card ABS outperformed through GFC (less than 2% downgraded) — supported by structural protections and rapid amortization provisions.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 18: ABS Instrument and Market Features · Exam Prep Notes
+</footer>
+
+</body>
+</html>

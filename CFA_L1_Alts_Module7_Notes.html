@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Alternative Investments | Module 7: Digital Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d14; --surface: #11141c; --card: #171b26; --border: #222638;
+    --accent: #c9a84c; --accent2: #7c6dfa; --accent3: #4cb8c9; --danger: #c94c6d;
+    --green: #4cc98a;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #131a27; --tip-border: #4cb8c9;
+    --warn-bg: #221418; --warn-border: #c94c6d;
+    --formula-bg: #0e1020; --formula-border: #c9a84c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0b0d14 0%, #0d0b18 45%, #0b0d14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(124,109,250,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .page-header::after { content: ''; position: absolute; bottom: -60px; left: 30%; width: 220px; height: 220px; background: radial-gradient(circle, rgba(76,184,201,0.05) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(124,109,250,0.12); color: var(--accent2); border: 1px solid rgba(124,109,250,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 780px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent2); border-color: var(--accent2); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); background: rgba(124,109,250,0.1); border: 1px solid rgba(124,109,250,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .formula-box .f { font-family: 'JetBrains Mono', monospace; color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 1.9; }
+  .formula-box .note { color: var(--muted); font-size: 12px; margin-top: 8px; font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c0d8df; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8ce; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 860px) { .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #181c2c; }
+  thead th { padding: 12px 14px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 14px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { font-weight: 600; color: var(--accent3); }
+
+  strong { color: #f0f2f8; }
+  em { color: var(--accent2); font-style: normal; font-weight: 600; }
+
+  /* Protocol comparison boxes */
+  .proto-box { display: flex; gap: 14px; margin: 16px 0; }
+  .proto { flex: 1; border-radius: 6px; padding: 18px; border: 1px solid var(--border); }
+  .proto-pow { background: #16111c; border-color: #c9a84c44; }
+  .proto-pos { background: #101820; border-color: #4cb8c944; }
+  .proto-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.07em; margin-bottom: 10px; }
+  .proto-pow .proto-title { color: #c9a84c; }
+  .proto-pos .proto-title { color: #4cb8c9; }
+  .proto ul { padding-left: 16px; }
+  .proto li { font-size: 13px; margin-bottom: 5px; color: var(--text); }
+
+  /* Token grid */
+  .token-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 860px) { .token-grid { grid-template-columns: 1fr; } }
+  .token-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .token-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .token-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .t-btc .token-name { color: #f7931a; }
+  .t-alt .token-name { color: #627eea; }
+  .t-stable .token-name { color: #4cc98a; }
+  .t-meme .token-name { color: #fa6d6d; }
+  .t-nft .token-name { color: #c97aff; }
+  .t-sec .token-name { color: #4cb8c9; }
+  .t-util .token-name { color: #c9a84c; }
+  .t-gov .token-name { color: #8892a4; }
+  .t-cbdc .token-name { color: #e8eaf0; }
+
+  footer { background: var(--surface); border-top: 1px solid var(--border); text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ALTERNATIVE INVESTMENTS · MODULE 7</div>
+  <h1>Introduction to <span>Digital Assets</span></h1>
+  <p>Exam-ready notes · DLT, blockchain, consensus protocols, crypto types, investment forms, risk/return, and diversification · No need to re-read the LES</p>
+</div>
+
+<nav class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Overview</a>
+  <a class="toc-item" href="#s2">02 · DLT &amp; Blockchain</a>
+  <a class="toc-item" href="#s3">03 · PoW vs. PoS</a>
+  <a class="toc-item" href="#s4">04 · Network Types</a>
+  <a class="toc-item" href="#s5">05 · Digital Asset Types</a>
+  <a class="toc-item" href="#s6">06 · vs. Traditional Assets</a>
+  <a class="toc-item" href="#s7">07 · Investment Forms</a>
+  <a class="toc-item" href="#s8">08 · Exchanges</a>
+  <a class="toc-item" href="#s9">09 · DeFi &amp; Asset-Backed Tokens</a>
+  <a class="toc-item" href="#s10">10 · Risk, Return &amp; Diversification</a>
+  <a class="toc-item" href="#s11">★ Exam Checklist</a>
+</nav>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Overview — Digital Assets</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Digital assets</strong> = assets that can be created, stored, and transmitted electronically and have associated ownership or use rights. Includes cryptocurrencies, tokens, and digital collectibles. Built on <strong>distributed ledger technology (DLT)</strong> / blockchain, which uses advanced encryption to assure authenticity.</p>
+      <p style="margin-top:10px;"><strong>Bitcoin</strong> (2009) was the first cryptocurrency. By early 2022, close to <strong>10,000 different cryptocurrencies</strong> existed (up from ~70 in 2013). Bitcoin + Ether together make up <strong>&gt;80%</strong> of total cryptocurrency market value (as of July 2022).</p>
+    </div>
+
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">Investment Appeal</div>
+        <ul>
+          <li>Higher expected returns than traditional assets</li>
+          <li>Potential diversification benefits (low correlation)</li>
+          <li>Growing institutional acceptance</li>
+          <li>24/7 trading availability</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Key Risks</div>
+        <ul>
+          <li>Very high volatility</li>
+          <li>No underlying cash flows or fundamentals</li>
+          <li>Regulatory uncertainty / potential ban</li>
+          <li>Fraud, manipulation, theft</li>
+          <li>Lost wallet keys → irretrievable assets</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Key Distinctions</div>
+        <ul>
+          <li>Cryptocurrencies have their own blockchains</li>
+          <li>Crypto-tokens are built on an existing blockchain</li>
+          <li>No central bank or government backing</li>
+          <li>Decentralized ledger vs. private central ledger</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Distributed Ledger Technology (DLT) &amp; Blockchain</h2>
+    </div>
+
+    <h3>What Is a Distributed Ledger?</h3>
+    <div class="card">
+      <p>A <strong>distributed ledger</strong> is a type of database that can be shared among potentially infinite numbers of entities in a network. Each participating entity has a <em>matching copy</em> of the digital database — making every copy a verified record of all current and past transactions.</p>
+      <p style="margin-top:10px;">Three basic elements of a DLT network:</p>
+      <ol style="padding-left:20px; margin-top:6px;">
+        <li><strong>Digital ledger</strong> — the shared database itself</li>
+        <li><strong>Consensus mechanism</strong> — process by which nodes agree on a common state of the ledger</li>
+        <li><strong>Participant network</strong> — the nodes connected to and maintaining the ledger</li>
+      </ol>
+    </div>
+
+    <h3>Key DLT Features</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Benefits of DLT</div>
+        <ul>
+          <li><strong>Greater accuracy</strong> in record keeping</li>
+          <li><strong>Transparency</strong> — accessible to network participants near-real-time</li>
+          <li><strong>Security</strong> via cryptography (data encrypted; unusable if intercepted)</li>
+          <li><strong>Faster transfer</strong> of ownership</li>
+          <li><strong>Immutability</strong> — records cannot be changed once added</li>
+          <li><strong>P2P interactions</strong> — no central intermediary required</li>
+          <li>Supports <strong>smart contracts</strong></li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Limitations of DLT</div>
+        <ul>
+          <li>Not fully secure — breaches in privacy/data protection are possible</li>
+          <li><strong>Massive energy consumption</strong> required for computational verification (especially PoW)</li>
+          <li>Slower and less cost-effective at scale (permissionless networks)</li>
+          <li>No regulatory oversight in most jurisdictions</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Blockchain — How It Works</h3>
+    <div class="card">
+      <p><strong>Blockchain</strong> = a type of DLT where information (e.g., ownership changes) is recorded sequentially within <em>blocks</em> that are then linked ("chained") together and secured using cryptographic methods.</p>
+      <ul style="margin-top:10px;">
+        <li>Each block contains: a <strong>grouping of transactions</strong> + a <strong>secure hash link</strong> to the previous block</li>
+        <li>New transactions are inserted <em>only after validation</em> via the consensus mechanism</li>
+        <li>All authorized members must agree on the transaction AND the preceding order (history) of transactions</li>
+        <li>Once added → <strong>immutable</strong> (cannot be altered without controlling most of the network)</li>
+        <li>Result: a permanent, tamper-resistant, transparent transaction history</li>
+      </ul>
+    </div>
+
+    <h3>Smart Contracts</h3>
+    <div class="card">
+      <p><strong>Smart contracts</strong> = computer programs that <em>self-execute</em> on the basis of pre-specified terms and conditions agreed to by the parties. Built into the blockchain code — execution is automatic, trackable, and irreversible.</p>
+      <p style="margin-top:8px;"><strong>Examples of smart contract use:</strong></p>
+      <ul>
+        <li>Automatic execution of contingent claims for derivatives</li>
+        <li>Instantaneous transfer of collateral in the event of default</li>
+        <li>DeFi applications (lending, trading, settlement, payment, transfer)</li>
+        <li>NFT authenticity verification</li>
+        <li>Governance voting on permissionless networks</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 DLT vs. Blockchain</div>
+      <p><strong>All blockchains are DLT, but not all DLT is blockchain.</strong> Blockchain = a specific <em>type</em> of distributed ledger where data is organized in sequentially linked, cryptographically secured blocks. DLT is the broader category — other structures (e.g., DAGs) also qualify as DLT without being blockchains.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Consensus Protocols — Proof of Work vs. Proof of Stake</h2>
+    </div>
+
+    <div class="card">
+      <p>A <strong>consensus protocol</strong> = a set of rules governing how blocks are cryptographically chained together to verify the complete and immutable history of transactions. It determines who gets to add the next block and how manipulation is resisted.</p>
+      <p style="margin-top:8px;">Consensus involves two steps: (1) <strong>transaction validation</strong> and (2) <strong>agreement on ledger update</strong> by network parties.</p>
+      <p style="margin-top:8px;">Both protocols reward successful validators with newly created digital assets (<strong>mining rewards</strong>). The rate of mining and validation speed control how much new digital asset can be created on a specific network.</p>
+    </div>
+
+    <div class="proto-box">
+      <div class="proto proto-pow">
+        <div class="proto-title">⛏ PROOF OF WORK (PoW)</div>
+        <ul>
+          <li>Determines which block to add via a <strong>computationally costly lottery</strong></li>
+          <li><strong>Miners</strong> use powerful computers to solve complex cryptographic puzzles</li>
+          <li>Significant amounts of energy consumed</li>
+          <li>Successfully solving the puzzle → miner earns cryptocurrency reward</li>
+          <li>Security: to manipulate history, attacker must control <strong>&gt;51% of network's computational power</strong> (the "51% attack threshold")</li>
+          <li>Network agrees: the <strong>longest chain</strong> = truthful representation of all previous transactions</li>
+          <li>Very difficult to amass &gt;51% computing power on major blockchains (Bitcoin, Ethereum)</li>
+          <li>Even if 51% is temporarily controlled, only limited history can be altered</li>
+          <li><strong>Most widely used consensus protocol</strong> for digital assets historically</li>
+          <li>Used by: Bitcoin</li>
+        </ul>
+      </div>
+      <div class="proto proto-pos">
+        <div class="proto-title">🔐 PROOF OF STAKE (PoS)</div>
+        <ul>
+          <li>Selected participants (<strong>validators</strong>) pledge / stake capital to vouch for a block's validity</li>
+          <li>Staking signals the validator is available to verify and propose a block</li>
+          <li>A <strong>majority of other validators</strong> (who also staked) must attest to proposed block's validity</li>
+          <li>Validators earn rewards for both <em>proposing</em> AND <em>attesting</em> to validity of blocks</li>
+          <li>Security: boundary built on group of stakers and their pledged stake controlling computational power</li>
+          <li>Less energy intensive than PoW</li>
+          <li>Used by: Ethereum (after "The Merge" in 2022)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Proof of Work (PoW)</th><th>Proof of Stake (PoS)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mechanism</td><td>Computational puzzle solving (miners)</td><td>Capital pledging (validators)</td></tr>
+          <tr><td>Energy use</td><td>Very high</td><td>Lower</td></tr>
+          <tr><td>Security threshold</td><td>51% of computing power needed to attack</td><td>Majority of staked capital needed to attack</td></tr>
+          <tr><td>Validator role</td><td>Miners solve puzzles; earn newly minted crypto</td><td>Validators stake + attest; earn rewards</td></tr>
+          <tr><td>Key example</td><td>Bitcoin</td><td>Ethereum (post-2022)</td></tr>
+          <tr><td>History</td><td>Most widely used historically</td><td>Growing adoption</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Mnemonic — PoW vs. PoS</div>
+      <p><strong>PoW = "Work it out"</strong> → computers do the hard computational work. <strong>PoS = "Put your money where your mouth is"</strong> → validators stake (risk) their own capital to vouch for validity. Both reward successful validators with new digital assets (mining). Both resist manipulation, but through different mechanisms.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Permissioned vs. Permissionless Networks</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Permissioned Blockchain</th><th>Permissionless Blockchain</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Access</td><td>Limited — membership restricted</td><td>Unlimited — open to any user</td></tr>
+          <tr><td>Speed</td><td>Faster — fewer members validate transactions</td><td>Slower — large number of members must reach consensus; reduces scalability</td></tr>
+          <tr><td>Cost</td><td>Cost-effective — few validators needed</td><td>Not cost-effective — many validators required</td></tr>
+          <tr><td>Decentralization</td><td>Partially decentralized — limited members</td><td>Fully decentralized — all members can access</td></tr>
+          <tr><td>Governance</td><td>Centralized organization determines governance</td><td>Decentralized — maintained by all members</td></tr>
+          <tr><td>Trust requirement</td><td>Trust between members needed (known participants)</td><td>No trust between parties required</td></tr>
+          <tr><td>Single point of failure</td><td>Exists (if centralized authority fails)</td><td>None — all nodes store a copy</td></tr>
+          <tr><td>Example</td><td>Enterprise/regulatory blockchains</td><td>Bitcoin, Ethereum</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>Permissionless networks</strong> (like Bitcoin) do not depend on a centralized authority for validation — consensus mechanism handles it. No single point of failure. All transactions are permanent and immutable once recorded. Trust between transacting parties is NOT required.</p>
+      <p style="margin-top:10px;"><strong>Permissioned networks</strong> allow varying levels of access: adding transactions (participant), viewing only (regulator), or viewing selective details. Governance determined by centralized organization. More efficient but partially centralized.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Financial Applications of DLT</div>
+      <p>DLT is being developed for: <strong>post-trade clearing and settlement</strong> (faster, eliminates reconciliation), <strong>compliance automation</strong>, <strong>smart contracts</strong> (auto-execute contingent claims, collateral transfers), <strong>identity verification</strong>, <strong>tokenization</strong> of ownership rights, and <strong>record keeping</strong>. Permissioned networks are favored by financial institutions because of speed, cost efficiency, and controlled access (e.g., regulators can view but not alter).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Types of Digital Assets</h2>
+    </div>
+
+    <div class="token-grid">
+      <div class="token-card t-btc">
+        <div class="token-name">₿ BITCOIN (BTC / XBT)</div>
+        <p>Launched 2009. First &amp; most widely traded cryptocurrency. Designed as medium of exchange + store of value. Supply <strong>hard-capped at 21 million BTC</strong>. Permissionless network. Uses PoW. Viewed as "digital gold." Influences all subsequent crypto development.</p>
+      </div>
+      <div class="token-card t-alt">
+        <div class="token-name">Ξ ALTCOINS (incl. Ether)</div>
+        <p>All cryptocurrencies other than Bitcoin. Most prominent = <strong>Ether</strong> (Ethereum, 2015). Ethereum has a <em>programmable blockchain</em> supporting smart contracts and dApps — not just a store of value. "Smart coins" = programmable altcoins with self-executing contracts.</p>
+      </div>
+      <div class="token-card t-stable">
+        <div class="token-name">💲 STABLECOINS</div>
+        <p>Designed to maintain <strong>stable value</strong> by linking to another asset. Collateralized by basket of assets (legal tender, precious metals, or other crypto). Protect holders from price volatility. <em>Cannot be exchanged for fiat money</em>. No legal or regulatory backing. Algorithmic stablecoins control supply via algorithms.</p>
+      </div>
+      <div class="token-card t-meme">
+        <div class="token-name">🐸 MEME COINS</div>
+        <p>Often inspired by a joke; launched for entertainment. Gain popularity rapidly in short periods. Allow early purchasers to sell at considerable profit. Highly speculative; no fundamental value basis.</p>
+      </div>
+      <div class="token-card t-nft">
+        <div class="token-name">🎨 NFTs (Non-Fungible Tokens)</div>
+        <p>Link digital assets to <strong>certificates of authenticity</strong> using blockchain. Each NFT is <em>unique</em> (non-fungible) — unlike cryptocurrencies which are interchangeable (fungible). Represent unique digital or physical assets. Most common use: <strong>digital artwork trading</strong>.</p>
+      </div>
+      <div class="token-card t-sec">
+        <div class="token-name">📜 SECURITY TOKENS</div>
+        <p>Digitize <strong>ownership rights of publicly traded securities</strong>. Stored on blockchain → increases efficiency of post-trade processing, settlement, record keeping, custody. Eliminates reconciliation need. Example: <strong>ICOs</strong> (Initial Coin Offerings) — unregulated; investors receive tokens for future products/services. No voting rights typically.</p>
+      </div>
+      <div class="token-card t-util">
+        <div class="token-name">⚙️ UTILITY TOKENS</div>
+        <p>Provide <strong>services within a network</strong> (pay for services, network fees). Unlike security tokens, utility tokens only compensate for <em>activities on the network</em> — they do NOT pay dividends.</p>
+      </div>
+      <div class="token-card t-gov">
+        <div class="token-name">🗳 GOVERNANCE TOKENS</div>
+        <p>Serve as <strong>votes to determine how permissionless networks are run</strong>. When technical problems arise, governance token holders vote on solutions or major network changes. Important for maintaining stability and integrity of permissionless blockchains.</p>
+      </div>
+      <div class="token-card t-cbdc">
+        <div class="token-name">🏦 CBDCs (Central Bank Digital Currencies)</div>
+        <p>Tokenized version of fiat currency issued by a <strong>central bank</strong> — essentially a digital bank note or coin. Government backed (unlike all other cryptocurrencies). Being explored by central banks worldwide as alternative to physical currency.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Security Token vs. Utility Token vs. Governance Token — Exam Distinction</div>
+      <p><strong>Security tokens:</strong> represent ownership rights (like equity); may pay dividends; regulated as securities. <strong>Utility tokens:</strong> access to network services only; no dividends; not securities. <strong>Governance tokens:</strong> voting rights on network decisions only. The key exam test: does the token give you an economic ownership claim? → Security token. Does it only give you network access/services? → Utility token. Does it only give you votes? → Governance token.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 ICO vs. IPO</div>
+      <p><strong>ICO</strong> = unregulated, crypto-tokens sold for money or other cryptocurrency, used to buy future products/services, lower issuance costs, shorter time frame, typically NO voting rights, fraud risk is high. <strong>IPO</strong> = regulated, shares sold for cash, represent actual equity ownership with voting rights, full regulatory disclosure. Both raise capital — but ICO is the unregulated, riskier alternative.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Digital Assets vs. Traditional Financial Assets</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Dimension</th><th>Digital Assets</th><th>Traditional Financial Assets</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Inherent value</td><td>NO fundamental value; no underlying cash flows (no earnings, interest, or dividends). Price driven by scarcity, network features, and expected appreciation.</td><td>Value determined by future cash flows (dividends, interest, earnings). Fundamental analysis applicable.</td></tr>
+          <tr><td>Transaction validation</td><td>Recorded on decentralized digital ledgers using cryptography. Permissionless or permissioned blockchain networks.</td><td>Recorded in private ledgers maintained by central intermediaries (brokers, custodians, exchanges).</td></tr>
+          <tr><td>Medium of exchange</td><td>Very limited acceptance. Not legal tender in most jurisdictions. Cannot legally settle/extinguish debt like fiat. Banned outright in some countries (e.g., China 2021). Used in niche Web3 ecosystem.</td><td>Not used directly as medium of exchange but readily convertible into fiat currencies which are universally accepted.</td></tr>
+          <tr><td>Legal &amp; regulatory protection</td><td>Ambiguous, evolving, often contradictory. Exchanges largely unregulated. Fraud and manipulation not necessarily prohibited. No comprehensive legal recognition.</td><td>Well-established, tested, clear, predictable, well-defined standards. Comparable across most jurisdictions. Full investor protection.</td></tr>
+          <tr><td>Valuation</td><td>No consensus on how to value. Highly speculative. Driven by supply/demand, speculation, market adoption, network effects, regulatory news.</td><td>Established valuation frameworks (DCF, comparables, factor models).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p><strong>Key similarity with traditional assets:</strong> Both have indirect investment vehicles — ETFs, hedge funds — allowing exposure without direct ownership.</p>
+      <p style="margin-top:10px;"><strong>US regulatory classification:</strong> US regulators consider certain digital currencies as <em>commodities</em>. Other regulators classify them as non-financial assets. No global consensus on classification exists.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ No Fundamental Value — Critical Exam Point</div>
+      <p>Digital assets derive their price from: (1) <strong>perceived scarcity</strong> (supply limitations via algorithms) and (2) <strong>potential to transfer value</strong> in the future (unique blockchain features). There are NO earnings, dividends, or cash flows to discount. This means standard fundamental valuation models do NOT apply. Price is entirely expectation-driven.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Digital Asset Investment Forms &amp; Vehicles</h2>
+    </div>
+
+    <h3>Direct Investment</h3>
+    <div class="card">
+      <p>Direct ownership of Bitcoin/cryptocurrencies involves using a <strong>cryptocurrency wallet</strong> — stores public and private digital codes required to access the asset (on a website or mobile app). Available 24/7 on cryptocurrency exchanges.</p>
+      <p style="margin-top:8px;"><strong>Key risks of direct investment:</strong></p>
+      <ul>
+        <li><strong>Fraud:</strong> Scam ICOs, pump-and-dump schemes, market manipulation, theft, credential hacking</li>
+        <li><strong>Lost wallet access:</strong> If passkey is lost → holdings are <strong>irretrievable</strong>. Around <strong>20% of all Bitcoins</strong> are reportedly in lost or deserted wallets</li>
+        <li><strong>"Whales":</strong> Small number of large holders can manipulate price. Jargon for individuals/entities holding enough of a cryptocurrency to move its price</li>
+      </ul>
+    </div>
+
+    <h3>Indirect Investment Vehicles</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Vehicle</th><th>Structure</th><th>Key Features</th><th>Watch Out For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Coin Trusts</td><td>Closed-end fund structure; OTC traded; holds large pools of a specific cryptocurrency</td><td>No wallet/encryption keys needed. Some transparency. No digital exchange account required.</td><td>Substantial fees (&gt;2% in some cases). May trade at premium OR discount to NAV.</td></tr>
+          <tr><td>Cryptocurrency Futures</td><td>Agreement to buy/sell specific quantity at fixed price on future date. CME-traded (e.g., Bitcoin futures use CME CF Bitcoin Reference Rate).</td><td>Typically cash-settled (no actual crypto changes hands). Inherently leveraged. Tracks spot price indirectly.</td><td>Less developed, potentially less liquid, more volatile than established futures markets.</td></tr>
+          <tr><td>Cryptocurrency ETFs</td><td>Exchange-traded products. Typically do NOT hold crypto directly — use cash + crypto derivatives (futures).</td><td>Convenient, accessible via brokerage account. No exchange account or wallet needed.</td><td>Expense ratios (e.g., 1.50% of NAV). Non-diversified (concentrated counterparty risk). Value can decline to zero.</td></tr>
+          <tr><td>Crypto Stocks</td><td>Equity in companies with crypto exposure: exchanges, payment providers accepting crypto, miners, blockchain hardware makers.</td><td>Indirect exposure. Regulated equity markets. Familiar investment framework.</td><td>Correlation with crypto returns may be imperfect — company-specific risks add noise.</td></tr>
+          <tr><td>Crypto Hedge Funds</td><td>Use discretionary long, long/short, quantitative, multi-strategy approaches. May directly mine Bitcoin.</td><td>Invest directly in multiple cryptocurrencies. Can take short positions. May lend/borrow crypto.</td><td>Limited regulation. Hedge fund risks (illiquidity, high fees, leverage). Concentrated crypto exposure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">🧠 Crypto ETF Key Fact</div>
+      <p>Most crypto ETFs do <strong>NOT</strong> invest directly in cryptocurrencies — they gain exposure via <strong>cryptocurrency futures contracts</strong> and money market instruments (short-term government debt, repo agreements). This means the ETF may not track spot cryptocurrency prices perfectly due to roll costs and basis risk (similar to commodity ETFs in contango).</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Cryptocurrency Exchanges — Centralized vs. Decentralized</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title">Centralized Exchanges (CEX)</div>
+        <ul>
+          <li><strong>Most popular type</strong> of crypto exchange</li>
+          <li>Privately held; provide trading platforms</li>
+          <li>Offer volume, liquidity, price transparency</li>
+          <li>Electronic and direct — no broker/dealer intermediary</li>
+          <li>Hosted on <strong>private servers</strong> → security vulnerability</li>
+          <li>If servers compromised → entire system may be paralyzed; cryptographic keys exposed</li>
+          <li>Some are regulated (as financial exchanges or financial intermediaries, depending on jurisdiction)</li>
+          <li>Incompatible with Bitcoin's decentralized ideology — yet very popular</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Decentralized Exchanges (DEX)</div>
+        <ul>
+          <li>Emulate blockchain's decentralized protocol</li>
+          <li>No centralized control mechanism; operates on distributed platform</li>
+          <li>If one computer is attacked → exchange remains operational (other computers continue)</li>
+          <li>Attacking DEX is <strong>substantially more difficult</strong> — attacks almost certain to fail</li>
+          <li>Very <strong>difficult to regulate</strong> — no single controller</li>
+          <li>Users generally free to transact without regulatory scrutiny → enables potentially illegal activity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Both Exchange Types Share Key Risk</div>
+      <p>Both centralized AND decentralized exchanges may face <strong>fraud, manipulation, and investor protection concerns</strong> because they are not subject to rigorous oversight. Unlike traditional equity/futures exchanges, cryptocurrency venues are <strong>largely unregulated</strong>. Individuals or groups may engage in fraud, market manipulation, and social media pump-and-dump schemes — and this is NOT necessarily illegal on crypto exchanges.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Asset-Backed Tokens, Tokenization &amp; DeFi</h2>
+    </div>
+
+    <h3>Asset-Backed Tokens</h3>
+    <div class="card">
+      <p><strong>Asset-backed tokens</strong> = digital claims on physical assets, financial assets, or financial instruments that are <em>collateralized</em> by the underlying asset and derive their value directly from it. A digital representation of ownership.</p>
+      <p style="margin-top:10px;"><strong>Examples of tokenized assets:</strong> gold, crude oil, real estate, equities, art, precious metals, precious stones.</p>
+      <p style="margin-top:10px;"><strong>Key benefits:</strong></p>
+      <ul>
+        <li><strong>Fractional ownership:</strong> Allows multiple investors to possess a fractional interest in a high-priced asset (e.g., a house, artwork) → increases liquidity and accessibility</li>
+        <li><strong>Immutable ownership record:</strong> Blockchain stores transparent, permanent record of ownership and all transfers</li>
+        <li><strong>Reduces costs:</strong> Lowers transaction, intermediation, and record-keeping costs</li>
+        <li><strong>Regulatory classification:</strong> Financial regulators typically classify asset-backed tokens as <em>securities</em> (entitle holder to ownership interest in underlying asset)</li>
+      </ul>
+    </div>
+
+    <h3>Tokenization Process</h3>
+    <div class="card">
+      <p><strong>Tokenization</strong> = process of representing ownership rights to physical assets on a blockchain or distributed ledger. Creates a <em>single digital record</em> of ownership to verify title and authenticity, including complete historical activity. Eliminates need for repeated ownership verification and examination at each transfer.</p>
+      <p style="margin-top:8px;">Asset-backed tokens are typically issued on the <strong>Ethereum network</strong> or other smart contract platforms, enabling P2P interaction via interoperable, transparent smart contracts (dApps — decentralized applications).</p>
+    </div>
+
+    <h3>Decentralized Finance (DeFi)</h3>
+    <div class="card">
+      <p><strong>DeFi</strong> = movement to design, combine, and develop decentralized financial applications (dApps) as building blocks for sophisticated financial products and services. Built on open-source code and smart contracts.</p>
+      <p style="margin-top:10px;"><strong>What DeFi can do (theoretically):</strong></p>
+      <ul>
+        <li>Medium of exchange</li>
+        <li>Storage of value</li>
+        <li>Tokenization of underlying assets</li>
+        <li>Immutable record keeping of ownership and transfer</li>
+        <li>Lending, trading, investment, settlement, payment, and transfer — all decentralized, authenticated, and instantaneous</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>Current state:</strong> Nascent — not fully developed. <em>Most dApps to date have centered around extending leverage to investment and speculation in digital assets</em>. Some advocates claim DeFi has technical advantages over traditional finance (time saving, risk reduction in settlement). But the vision remains largely unrealized.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Web3 Context</div>
+      <p><strong>Web3</strong> = the third iteration of the internet, built on blockchain technologies, decentralization, and token-based economies. Cryptocurrencies (especially Bitcoin) are used as direct substitutes for fiat currencies within the Web3 ecosystem — especially for online transactions. This is the primary "medium of exchange" use case for crypto today.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Risk, Return &amp; Diversification</h2>
+    </div>
+
+    <h3>Bitcoin Performance Data (Jan 2011 – Jan 2022, Monthly Log-Returns)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Bitcoin (USD)</th><th>S&P 500 Total Return</th><th>MSCI World</th><th>Bloomberg Global Agg (Bonds)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Average monthly return</td><td><strong>8.84%</strong> (highest)</td><td>1.13%</td><td>0.66%</td><td>0.16%</td></tr>
+          <tr><td>Standard deviation</td><td><strong>0.32</strong> (highest)</td><td>0.04</td><td>0.04</td><td>0.01</td></tr>
+          <tr><td>Coefficient of variation</td><td>3.66</td><td>3.43</td><td>6.09</td><td>8.16</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p>Key observations:</p>
+      <ul>
+        <li>Bitcoin shows <strong>highest average return</strong> AND <strong>highest volatility</strong> — by a very wide margin (std dev = 0.32 vs. 0.04 for stocks)</li>
+        <li>Bitcoin CoV (3.66) is actually comparable to S&P 500 (3.43) — risk-adjusted returns are not obviously worse than stocks despite the narrative</li>
+        <li>Bitcoin price: rose from <strong>USD 0.05</strong> at inception (2009) to peak of <strong>USD 68,789</strong> (Nov 2021) → then crashed to ~<strong>USD 17,709</strong> (June 2022)</li>
+        <li>Although Bitcoin volatility has declined over time, it remains <strong>much higher than traditional financial assets</strong></li>
+        <li>Similar high-volatility patterns observed in other cryptocurrencies (altcoins)</li>
+      </ul>
+    </div>
+
+    <h3>Bitcoin Correlation with Traditional Assets (Jan 2011 – Jan 2022)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>Bitcoin</th><th>S&P 500</th><th>MSCI World</th><th>Global Agg Bonds</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bitcoin</td><td>1.00</td><td>0.21</td><td>0.22</td><td>0.14</td></tr>
+          <tr><td>S&P 500</td><td>0.21</td><td>1.00</td><td>0.97</td><td>0.25</td></tr>
+          <tr><td>MSCI World</td><td>0.22</td><td>0.97</td><td>1.00</td><td>0.33</td></tr>
+          <tr><td>Global Agg Bonds</td><td>0.14</td><td>0.25</td><td>0.33</td><td>1.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <p>Key correlation insights:</p>
+      <ul>
+        <li>Bitcoin vs. S&P 500 = <strong>0.21</strong>; vs. MSCI World = <strong>0.22</strong>; vs. Global Bonds = <strong>0.14</strong> → all low</li>
+        <li>Low correlations suggest <strong>potential diversification benefit</strong> when added to a traditional portfolio</li>
+        <li>Price drivers of crypto are distinct: <strong>market adoption, network effects, technological advancement, regulatory development, speculation, and general risk appetite</strong> — some unique to this asset class</li>
+        <li><strong>IMPORTANT CAVEAT:</strong> Correlations have been observed to <strong>increase</strong>, especially during periods of high market uncertainty. The diversification benefit may weaken precisely when it is most needed</li>
+      </ul>
+    </div>
+
+    <h3>Digital Asset Price Drivers</h3>
+    <div class="card">
+      <ul>
+        <li><strong>No underlying cash flows</strong> — price is based solely on <em>expected asset appreciation</em></li>
+        <li><strong>Limited supply:</strong> Bitcoin hard-capped at 21 million → scarcity value (like gold)</li>
+        <li><strong>Market demand</strong> for limited supply = significant price driver</li>
+        <li>Market adoption and network effects (more users → more useful → higher value)</li>
+        <li>Technological advancement (new use cases, upgrades)</li>
+        <li>Regulatory developments (bans reduce value; recognition increases value)</li>
+        <li>Speculation and general market risk appetite</li>
+        <li>Social media influence — pump-and-dump schemes are possible on unregulated exchanges</li>
+      </ul>
+    </div>
+
+    <h3>Unique Risks of Digital Asset Investments</h3>
+    <div class="card">
+      <ul>
+        <li><strong>Extreme price volatility:</strong> Bitcoin lost ~74% from peak to trough in a single year</li>
+        <li><strong>No fundamental value floor:</strong> Value can theoretically decline to zero</li>
+        <li><strong>Regulatory risk:</strong> Countries can and do ban outright (China 2021). Regulatory changes can instantly affect prices. Evolving rules create uncertainty.</li>
+        <li><strong>Fraud and criminal activity:</strong> Scam ICOs, pump-and-dump, market manipulation, social media promotions, theft of wallet credentials — all rampant</li>
+        <li><strong>Lost wallet passkey:</strong> ~20% of all Bitcoins are in lost/inaccessible wallets. Permanent, irrecoverable loss.</li>
+        <li><strong>Whale manipulation:</strong> Small number of large holders can move prices</li>
+        <li><strong>Exchange vulnerability:</strong> Centralized exchanges can be hacked; decentralized exchanges enable illegal activity</li>
+        <li><strong>Brief track record:</strong> Bitcoin only since 2009; limited data for robust statistical inference</li>
+        <li><strong>Rising correlations:</strong> As crypto becomes more mainstream, correlations with traditional assets may increase → diversification benefit erodes</li>
+      </ul>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Diversification Caveat — Critical for Exam</div>
+      <p>Digital assets have shown <strong>historically low correlations</strong> with traditional assets, suggesting diversification potential. However, these correlations have been observed to <strong>increase during periods of high market uncertainty</strong> — exactly when diversification is most needed. The long-term diversification benefit of cryptocurrencies remains uncertain and should not be taken as guaranteed.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num" style="background:rgba(201,168,76,0.1); border-color:rgba(201,168,76,0.3); color:var(--accent);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.2;">
+        <li>✅ <strong>Digital assets definition:</strong> Assets created, stored, transmitted electronically with associated ownership/use rights. Includes cryptocurrencies, tokens, digital collectibles. Built on DLT/blockchain using advanced encryption.</li>
+        <li>✅ <strong>Cryptocurrencies vs. crypto-tokens:</strong> Cryptocurrencies have their OWN blockchains (e.g., Bitcoin). Crypto-tokens are built ON AN EXISTING blockchain (e.g., ERC-20 tokens on Ethereum).</li>
+        <li>✅ <strong>DLT basics:</strong> Distributed ledger = database shared among potentially infinite entities; each node has a matching copy. Three elements: digital ledger + consensus mechanism + participant network. Records are immutable and accessible near-real-time.</li>
+        <li>✅ <strong>Blockchain:</strong> Type of DLT where data is in sequentially linked, cryptographically secured blocks. Each block = grouping of transactions + hash link to previous block. New block added only after consensus validation. Once added = immutable.</li>
+        <li>✅ <strong>Smart contracts:</strong> Self-executing computer programs on pre-specified terms and conditions. Trackable, irreversible execution on blockchain. Used for derivatives contingent claims, collateral transfers in default, DeFi applications.</li>
+        <li>✅ <strong>DLT benefits:</strong> Accuracy, transparency, security (cryptography), faster ownership transfer, P2P (no intermediary), immutability. DLT limitations: not fully secure; massive energy consumption (especially PoW); less cost-effective at scale.</li>
+        <li>✅ <strong>PoW (Proof of Work):</strong> Computationally costly lottery. Miners solve cryptographic puzzles using powerful computers + massive energy. Longest chain = truth. Security boundary = 51% attack threshold (attacker needs &gt;51% of network computing power). Used by Bitcoin. Most widely used historically.</li>
+        <li>✅ <strong>PoS (Proof of Stake):</strong> Validators pledge/stake capital to vouch for block validity. Majority of other validators must attest. Less energy intensive. Security boundary = majority staked capital control. Both PoW and PoS reward validators with new digital assets (mining).</li>
+        <li>✅ <strong>Permissioned vs. permissionless:</strong> Permissioned = faster, cheaper, partially decentralized, limited access, centralized governance, trust required. Permissionless = slower, costly, fully decentralized, unlimited access, decentralized governance, no trust required, no single point of failure. Bitcoin = permissionless.</li>
+        <li>✅ <strong>Bitcoin:</strong> Launched 2009. Supply hard-capped at 21 million BTC. Medium of exchange + store of value. Permissionless. PoW. "Digital gold." Peak price = USD 68,789 (Nov 2021). ~20% of Bitcoins in lost/inaccessible wallets.</li>
+        <li>✅ <strong>Altcoins:</strong> All crypto except Bitcoin. Most prominent = Ether (Ethereum, 2015) — programmable blockchain with smart contracts, not just store of value. Bitcoin + Ether = &gt;80% of total crypto market cap (July 2022).</li>
+        <li>✅ <strong>Stablecoins:</strong> Maintain stable value by linking to another asset (legal tender, metals, other crypto). Collateralized by a basket. Protect from volatility. CANNOT be exchanged for fiat. NO legal/regulatory backing. Algorithmic stablecoins use algorithms to control supply.</li>
+        <li>✅ <strong>Meme coins:</strong> Joke-inspired; entertainment-driven; rapidly gain popularity; allow early buyers to profit. No fundamental basis.</li>
+        <li>✅ <strong>NFTs:</strong> Non-fungible — each is unique (unlike fungible cryptocurrencies which are interchangeable). Link digital assets to certificates of authenticity. Most common use = digital artwork trading.</li>
+        <li>✅ <strong>Security tokens:</strong> Digitize ownership rights of publicly traded securities. May pay dividends. Stored on blockchain for efficient post-trade processing. ICOs = unregulated security token issuances; lower cost, shorter timeframe than IPO; typically no voting rights; high fraud risk.</li>
+        <li>✅ <strong>Utility tokens:</strong> Provide services/access within a network only. NO dividends — only compensate for activities on network. NOT securities.</li>
+        <li>✅ <strong>Governance tokens:</strong> Votes on how permissionless networks are run. Vote on solutions to technical problems or major network changes.</li>
+        <li>✅ <strong>CBDCs:</strong> Central Bank Digital Currencies = tokenized version of fiat currency issued by central bank. Government-backed. Being explored globally as alternative to physical currency. ONLY digital asset with government backing.</li>
+        <li>✅ <strong>Digital assets vs. traditional assets — 4 key differences:</strong> (1) No inherent value/cash flows. (2) Decentralized ledger vs. central private ledger. (3) Very limited medium of exchange acceptance; not legal tender. (4) Ambiguous, evolving regulatory/legal framework vs. well-established protection.</li>
+        <li>✅ <strong>Direct investment risks:</strong> Fraud (scams, pump-and-dump, manipulation, theft). Lost passkey = irretrievable holdings (~20% of BTC lost). Whale manipulation risk. 24/7 trading but no regulatory protection.</li>
+        <li>✅ <strong>Coin trusts:</strong> Closed-end fund; OTC traded; holds pools of crypto; no wallet needed; substantial fees (&gt;2%); can trade at premium or discount to NAV.</li>
+        <li>✅ <strong>Crypto ETFs:</strong> Do NOT directly hold crypto; use futures + money market instruments. ~1.5% expense ratio. Non-diversified (concentrated counterparty risk). Value can go to zero.</li>
+        <li>✅ <strong>Crypto futures:</strong> Cash-settled (no actual crypto changes hands). Inherently leveraged. CME-traded (Bitcoin). Less developed/liquid than traditional futures markets.</li>
+        <li>✅ <strong>Centralized exchanges (CEX):</strong> Most popular. Provide liquidity/transparency. Hosted on private servers → hack risk. Some regulated. Cryptographic key leak risk.</li>
+        <li>✅ <strong>Decentralized exchanges (DEX):</strong> No central control. Very hard to hack. Very hard to regulate. Potentially enables illegal activity freely.</li>
+        <li>✅ <strong>Asset-backed tokens:</strong> Digital claims on physical/financial assets, collateralized by underlying asset. Enable fractional ownership. Immutable ownership record. Regulated as securities. Reduce transaction costs.</li>
+        <li>✅ <strong>DeFi:</strong> Decentralized Finance — marketplace of dApps using open-source smart contracts. Can handle lending, trading, settlement, payment in decentralized, authenticated, instantaneous manner. Nascent — currently mostly used for leverage/speculation in digital assets.</li>
+        <li>✅ <strong>Bitcoin performance data (Jan 2011–Jan 2022):</strong> Avg monthly return = 8.84% (vs. S&P 500 = 1.13%). Std dev = 0.32 (vs. S&P 500 = 0.04). CoV = 3.66 (comparable to S&P 500's 3.43).</li>
+        <li>✅ <strong>Bitcoin correlations (Jan 2011–Jan 2022):</strong> vs. S&P 500 = 0.21; vs. MSCI World = 0.22; vs. Global Bonds = 0.14. All low → potential diversification benefit. BUT correlations have been RISING during periods of high market uncertainty.</li>
+        <li>✅ <strong>Crypto price drivers:</strong> No cash flows → price driven by: scarcity (supply limits), market adoption, network effects, technological advancement, regulatory developments, speculation, risk appetite. No consensus valuation framework exists.</li>
+        <li>✅ <strong>Crypto growth stats:</strong> ~70 cryptocurrencies in 2013 → ~10,000 by early 2022. Bitcoin + Ether = &gt;80% of crypto market cap. Bitcoin supply capped at 21 million.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">All Key Facts &amp; Numbers — Quick Reference</div>
+      <div class="f">
+        Bitcoin launch: 2009 | Supply cap: 21 million BTC | Peak: USD 68,789 (Nov 10, 2021)<br>
+        Subsequent low: USD 17,709 (Jun 18, 2022) | Starting price: USD 0.05<br>
+        Lost/inaccessible Bitcoins: ~20% of all BTC<br><br>
+        Cryptocurrencies: ~70 (2013) → ~10,000 (early 2022)<br>
+        Bitcoin + Ether market cap share: &gt;80% (July 2022)<br><br>
+        Bitcoin monthly performance (Jan 2011 – Jan 2022):<br>
+        &nbsp;&nbsp;Avg return = 8.84% | Std dev = 0.32 | CoV = 3.66<br>
+        S&P 500: Avg = 1.13% | Std dev = 0.04 | CoV = 3.43<br>
+        MSCI World: Avg = 0.66% | Std dev = 0.04 | CoV = 6.09<br>
+        Global Bonds: Avg = 0.16% | Std dev = 0.01 | CoV = 8.16<br><br>
+        Bitcoin correlations: vs. S&P 500 = 0.21 | vs. MSCI World = 0.22 | vs. Bonds = 0.14<br><br>
+        Coin trust fees: can exceed 2% | Crypto ETF fees: ~1.50% of NAV<br>
+        PoW security threshold: &gt;51% of network computing power (51% attack)<br>
+        PoS security threshold: majority of staked capital controlling the network<br><br>
+        REIT required distribution: 90–100% | No equivalent for crypto (no income generated)<br>
+        US regulatory classification of crypto: COMMODITY (not a security)<br>
+        China: BANNED crypto (2021)
+      </div>
+      <div class="note">
+        Key token distinctions: Security token = ownership rights + possible dividends + regulated as security. Utility token = network services only + no dividends. Governance token = voting rights only.<br>
+        ICO vs. IPO: ICO = unregulated, no voting rights typically, lower cost, shorter timeframe, high fraud risk. IPO = regulated, voting rights, full disclosure.<br>
+        CEX vs. DEX: CEX = server hack risk + some regulation. DEX = hack-resistant + unregulatable + potentially enables illegal activity.<br>
+        All consensus protocols: Both PoW and PoS reward successful validators with new digital assets (mining). Rate of mining controls new supply creation.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Alternative Investments · Module 7: Introduction to Digital Assets · Exam Prep Notes
+</footer>
+
+</body>
+</html>

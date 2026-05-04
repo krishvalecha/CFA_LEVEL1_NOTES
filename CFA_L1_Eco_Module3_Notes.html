@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Economics | Module 3: Fiscal Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --purple: #9a7fdc; --orange: #d4824a;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:15.5px; line-height:1.75; }
+
+  .page-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #15120d 40%, #0d0f18 100%);
+    border-bottom:1px solid var(--border); padding:48px 48px 36px; position:relative; overflow:hidden;
+  }
+  .page-header::before {
+    content:''; position:absolute; top:-80px; right:-80px; width:320px; height:320px;
+    background:radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); border-radius:50%;
+  }
+  .badge { display:inline-block; background:rgba(201,168,76,0.12); color:var(--accent); border:1px solid rgba(201,168,76,0.28); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.1em; padding:4px 12px; border-radius:2px; margin-bottom:16px; }
+  .page-header h1 { font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:900; line-height:1.1; color:#fff; margin-bottom:12px; }
+  .page-header h1 span { color:var(--accent); }
+  .page-header p { color:var(--muted); font-size:14px; max-width:640px; }
+
+  .toc-strip { background:var(--surface); border-bottom:1px solid var(--border); padding:0 48px; display:flex; gap:0; overflow-x:auto; scrollbar-width:none; }
+  .toc-strip::-webkit-scrollbar { display:none; }
+  .toc-item { font-size:12px; font-weight:600; font-family:'JetBrains Mono',monospace; color:var(--muted); padding:14px 18px; border-bottom:2px solid transparent; white-space:nowrap; text-decoration:none; transition:color 0.2s,border-color 0.2s; }
+  .toc-item:hover { color:var(--accent); border-color:var(--accent); }
+
+  .container { max-width:1020px; margin:0 auto; padding:48px 48px 80px; }
+  .section { margin-bottom:56px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .section-num { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--accent); background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.25); padding:4px 10px; border-radius:2px; letter-spacing:0.08em; white-space:nowrap; }
+  .section-header h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:#fff; }
+  h3 { font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:1rem; color:var(--accent2); text-transform:uppercase; letter-spacing:0.07em; margin:24px 0 12px; }
+
+  .card { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:20px 24px; margin-bottom:16px; }
+  .card p, .card li { color:var(--text); font-size:15px; }
+  .card ul, .card ol { padding-left:20px; }
+  .card ul li, .card ol li { margin-bottom:6px; }
+
+  .formula-box { background:var(--formula-bg); border-left:3px solid var(--formula-border); border-radius:0 6px 6px 0; padding:16px 20px; margin:16px 0; font-family:'JetBrains Mono',monospace; }
+  .formula-box .label { font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:6px; }
+  .formula-box .f { color:#e8c97a; font-size:15px; font-weight:600; }
+  .formula-box .note { color:var(--muted); font-size:12.5px; margin-top:6px; font-family:'Source Sans 3',sans-serif; line-height:1.65; }
+
+  .tip { background:var(--tip-bg); border-left:3px solid var(--tip-border); border-radius:0 6px 6px 0; padding:14px 18px; margin:14px 0; font-size:14px; }
+  .tip .tip-label { font-weight:700; color:var(--accent3); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px; }
+  .tip p { color:#c8e8d4; }
+
+  .warn { background:var(--warn-bg); border-left:3px solid var(--danger); border-radius:0 6px 6px 0; padding:14px 18px; margin:14px 0; font-size:14px; }
+  .warn .warn-label { font-weight:700; color:var(--danger); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px; }
+  .warn p { color:#e8c8c8; }
+
+  .mnemonic { background:#1a1628; border:1px solid #3d2f6e; border-radius:6px; padding:16px 20px; margin:14px 0; }
+  .mnemonic .m-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#a98adc; margin-bottom:6px; }
+  .mnemonic p { color:#d8ccf0; font-size:14px; margin:0; }
+
+  .table-wrap { overflow-x:auto; margin:16px 0; }
+  table { width:100%; border-collapse:collapse; font-size:14px; min-width:500px; }
+  thead th { background:rgba(201,168,76,0.1); color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:10px 14px; text-align:left; border-bottom:1px solid var(--accent); }
+  tbody tr { border-bottom:1px solid var(--border); }
+  tbody tr:hover { background:rgba(255,255,255,0.02); }
+  tbody td { padding:10px 14px; color:var(--text); vertical-align:top; }
+  tbody td:first-child { font-weight:700; color:var(--accent2); }
+
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:3px; font-family:'JetBrains Mono',monospace; }
+  .tag-green { background:rgba(76,201,138,0.15); color:var(--accent3); }
+  .tag-yellow { background:rgba(201,168,76,0.15); color:var(--accent); }
+  .tag-red { background:rgba(201,76,76,0.15); color:var(--danger); }
+  .tag-blue { background:rgba(76,139,201,0.15); color:var(--accent2); }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+  @media (max-width:680px) { .two-col { grid-template-columns:1fr; } }
+  .mini-card { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:16px 18px; }
+  .mini-card .mc-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .mini-card ul { padding-left:18px; }
+  .mini-card ul li { font-size:14px; margin-bottom:5px; color:var(--text); }
+
+  /* Comparison box */
+  .vs-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; margin:16px 0; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  .vs-col { padding:18px 20px; }
+  .vs-col:first-child { background:rgba(76,139,201,0.06); border-right:1px solid var(--border); }
+  .vs-col:last-child { background:rgba(201,168,76,0.06); }
+  .vs-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .vs-col:first-child .vs-title { color:var(--accent2); }
+  .vs-col:last-child .vs-title { color:var(--accent); }
+  .vs-col ul { padding-left:18px; }
+  .vs-col ul li { font-size:14px; margin-bottom:6px; color:var(--text); }
+
+  /* Lag flow */
+  .lag-flow { display:flex; gap:0; align-items:stretch; margin:16px 0; flex-wrap:wrap; }
+  .lag-box { flex:1; min-width:150px; background:var(--card); border:1px solid var(--border); padding:14px 16px; text-align:center; }
+  .lag-box:first-child { border-radius:6px 0 0 6px; }
+  .lag-box:last-child { border-radius:0 6px 6px 0; }
+  .lag-box .lb-num { font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:var(--accent); display:block; }
+  .lag-box .lb-name { font-weight:700; font-size:13px; color:#fff; margin:4px 0; }
+  .lag-box .lb-desc { font-size:12px; color:var(--muted); }
+  .lag-arrow { display:flex; align-items:center; padding:0 6px; color:var(--muted); font-size:22px; }
+  @media (max-width:600px) { .lag-flow { flex-direction:column; } .lag-box { border-radius:0; } .lag-box:first-child { border-radius:6px 6px 0 0; } .lag-box:last-child { border-radius:0 0 6px 6px; } }
+
+  /* Multiplier worked example */
+  .worked { background:#121820; border:1px solid #1e2a40; border-radius:6px; padding:18px 22px; margin:14px 0; }
+  .worked .w-title { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; }
+  .worked p { font-size:14px; color:var(--text); margin-bottom:8px; }
+  .worked .result { color:var(--accent3); font-weight:700; font-size:15px; }
+
+  .divider { border:none; border-top:1px solid var(--border); margin:32px 0; }
+  p { margin-bottom:12px; }
+  strong { color:#fff; font-weight:700; }
+  em { color:var(--accent2); font-style:normal; font-weight:600; }
+
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:24px 48px; font-size:12px; color:var(--muted); text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · ECONOMICS</div>
+  <h1>Module 3: <span>Fiscal Policy</span></h1>
+  <p>Exam-ready notes covering fiscal vs. monetary policy, roles and objectives, tools and their pros/cons, the fiscal multiplier, and implementation difficulties.</p>
+</div>
+
+<div class="toc-strip">
+  <a href="#s1" class="toc-item">01 · Fiscal vs. Monetary</a>
+  <a href="#s2" class="toc-item">02 · Roles & Objectives</a>
+  <a href="#s3" class="toc-item">03 · National Debt</a>
+  <a href="#s4" class="toc-item">04 · Fiscal Tools</a>
+  <a href="#s5" class="toc-item">05 · Tax Policy</a>
+  <a href="#s6" class="toc-item">06 · Fiscal Multiplier</a>
+  <a href="#s7" class="toc-item">07 · Implementation</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 1: FISCAL VS MONETARY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Fiscal Policy vs. Monetary Policy</h2>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-col">
+        <div class="vs-title">Fiscal Policy</div>
+        <ul>
+          <li>Government's decisions on <strong>taxation and spending</strong></li>
+          <li>Implemented by: <strong>Government / Legislature</strong></li>
+          <li>Tools: spending, taxes, transfers</li>
+          <li>Can also redistribute income & wealth</li>
+          <li>Subject to political process → slower to implement</li>
+          <li>Action lag and impact lag are significant</li>
+        </ul>
+      </div>
+      <div class="vs-col">
+        <div class="vs-title">Monetary Policy</div>
+        <ul>
+          <li>Central bank activities influencing <strong>money and credit</strong></li>
+          <li>Implemented by: <strong>Central Bank</strong></li>
+          <li>Tools: interest rates, reserve requirements, open market operations</li>
+          <li>Can operate independently of government</li>
+          <li>Faster to implement than fiscal policy</li>
+          <li>Monetarists prefer this over fiscal tools</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Shared Overarching Goal</div>
+      <div class="f">Stable and positive economic growth + Stable and low inflation</div>
+      <div class="note">Both policies aim to avoid booms (overheating) followed by extended periods of low/negative growth and high unemployment. The challenge: economies are frequently hit by unpredictable shocks.</div>
+    </div>
+
+    <h3>Keynesian vs. Monetarist View</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Keynesian View</div>
+        <ul>
+          <li>Fiscal policy has <strong>powerful effects</strong> on aggregate demand, output, and employment</li>
+          <li>Especially effective when there is <strong>substantial spare capacity</strong></li>
+          <li>Government spending can break deflationary spirals</li>
+          <li>Support active fiscal intervention (stimulus)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Monetarist View</div>
+        <ul>
+          <li>Fiscal changes have only a <strong>temporary effect</strong> on aggregate demand</li>
+          <li>Monetary policy is more effective for controlling inflation</li>
+          <li>Do NOT advocate using fiscal policy for countercyclical adjustment</li>
+          <li>Concern: crowding out and long-run distortions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap</div>
+      <p>Monetarists believe monetary policy is more effective — but they do <strong>NOT</strong> advocate using monetary policy for countercyclical adjustment either. Their preference is for <em>rules-based</em> policy (e.g., inflation targeting) rather than discretionary intervention. Know the nuance!</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 2: ROLES & OBJECTIVES -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Roles & Objectives of Fiscal Policy</h2>
+    </div>
+
+    <h3>Three Core Objectives</h3>
+    <div class="card">
+      <ol style="padding-left:20px; font-size:15px;">
+        <li style="margin-bottom:8px;"><strong>Influence overall aggregate demand and economic activity</strong> (real GDP)</li>
+        <li style="margin-bottom:8px;"><strong>Redistribute income and wealth</strong> among different population segments</li>
+        <li style="margin-bottom:8px;"><strong>Allocate resources</strong> between different sectors and economic agents</li>
+      </ol>
+    </div>
+
+    <h3>Expansionary vs. Contractionary Fiscal Policy</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Policy Type</th><th>When Used</th><th>Mechanism</th><th>Budget Impact</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-green">Expansionary</span></td>
+            <td>Recession / high unemployment</td>
+            <td>↑ Government spending OR ↓ Taxes → ↑ Aggregate Demand</td>
+            <td>Budget deficit increases (or surplus decreases)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-red">Contractionary</span></td>
+            <td>Boom / overheating economy</td>
+            <td>↓ Government spending OR ↑ Taxes → ↓ Aggregate Demand</td>
+            <td>Budget surplus increases (or deficit decreases)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Quick Rule</div>
+      <p><strong>Rising deficit = Expansionary</strong> policy signal. <strong>Rising surplus = Contractionary</strong> policy signal. BUT: deficit can also rise automatically during recession (automatic stabilizers) without any active policy change — this is why analysts use the <em>structural budget deficit</em> instead.</p>
+    </div>
+
+    <h3>Automatic Stabilizers vs. Discretionary Policy</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent3);">Automatic Stabilizers</div>
+        <ul>
+          <li>Built-in mechanisms that work without active policy decisions</li>
+          <li><strong>Recession:</strong> Tax revenues fall, unemployment benefits rise → automatic stimulus</li>
+          <li><strong>Boom:</strong> Progressive income taxes rise → automatic dampening</li>
+          <li>Advantage: No recognition or action lag — respond immediately</li>
+          <li>Reduce output fluctuations by dampening the multiplier effect</li>
+          <li>Examples: income tax, VAT, unemployment benefits</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Discretionary Fiscal Policy</div>
+        <ul>
+          <li>Active, deliberate changes in spending and/or tax rates</li>
+          <li>Requires identification of shock and policy response</li>
+          <li>Subject to recognition, action, and impact lags</li>
+          <li>Risk: stimulus kicks in after economy already recovering</li>
+          <li>Examples: infrastructure stimulus packages, tax cuts, welfare program changes</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Budget Terminology</h3>
+    <div class="formula-box">
+      <div class="label">Budget Balance</div>
+      <div class="f">Budget Surplus/Deficit = Government Revenue – Government Expenditure</div>
+      <div class="note">Revenue = tax revenues net of transfer payments | Expenditure = includes interest payments on government debt<br>
+      Balanced budget: Revenue = Expenditure (rare in practice)<br>
+      <strong>Structural (Cyclically Adjusted) Budget Deficit</strong> = deficit that would exist if economy were at <em>full employment</em> — the true fiscal stance indicator, removing cyclical noise.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Why Actual Deficit ≠ True Fiscal Stance</div>
+      <p>Two reasons the actual deficit misrepresents fiscal stance: (1) Automatic stabilizers change the deficit without any policy action — a recession widens the deficit even with no new spending. (2) The distinction between <strong>real vs. nominal interest rates</strong> — cash interest payments overstate the true burden when inflation is eroding the real value of outstanding debt. Analysts use the <em>structural deficit</em> to strip out both distortions.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 3: NATIONAL DEBT -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>National Debt — Does the Size Relative to GDP Matter?</h2>
+    </div>
+
+    <h3>Key Definitions</h3>
+    <div class="card">
+      <p><strong>Government Deficit:</strong> Revenue minus expenditure in a single period (e.g., one year). Can be positive (surplus) or negative (deficit).</p>
+      <p><strong>National/Government Debt:</strong> The <em>accumulation over time</em> of annual deficits. Financed by borrowing from private sector (bonds, pension funds, etc.).</p>
+      <p><strong>Debt-to-GDP Ratio:</strong> The primary metric for assessing debt sustainability. If real GDP growth &gt; real interest rate on debt → ratio improves. If real interest rate &gt; real GDP growth → debt burden grows faster than economy.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Debt Sustainability Condition</div>
+      <div class="f">Real GDP growth &gt; Real interest rate on debt → Debt/GDP ratio improves</div>
+      <div class="f" style="margin-top:6px; color:#e87a7a;">Real interest rate &gt; Real GDP growth → Debt/GDP worsens even if economy grows</div>
+      <div class="note">Inflation also reduces the real value of outstanding debt → nominal GDP rises even if real GDP is flat → debt/GDP ratio falls. Deflation has the opposite effect.</div>
+    </div>
+
+    <h3>Arguments Against Worrying About National Debt</h3>
+    <div class="card" style="border-left:3px solid var(--accent3);">
+      <ul style="padding-left:20px; font-size:14.5px;">
+        <li style="margin-bottom:8px;"><strong>Internal debt:</strong> Debt owed to own citizens (e.g., Japan 93%, Canada 90%) — less dangerous than externally held debt (it's "we owe it to ourselves")</li>
+        <li style="margin-bottom:8px;"><strong>Productive investment:</strong> If borrowed money funds capital projects or education → raises future output and tax revenues</li>
+        <li style="margin-bottom:8px;"><strong>Reduces tax distortions:</strong> Large deficits can allow reducing existing tax inefficiencies</li>
+        <li style="margin-bottom:8px;"><strong>Ricardian Equivalence:</strong> Private sector may offset fiscal deficits by saving more in anticipation of future taxes → no net impact on aggregate demand</li>
+        <li style="margin-bottom:8px;"><strong>Unemployment context:</strong> If resources are idle, debt doesn't divert productive activity — it can actually create employment</li>
+      </ul>
+    </div>
+
+    <h3>Arguments For Worrying About National Debt</h3>
+    <div class="card" style="border-left:3px solid var(--danger);">
+      <ul style="padding-left:20px; font-size:14.5px;">
+        <li style="margin-bottom:8px;"><strong>Higher future taxes:</strong> Large debt/GDP → higher marginal tax rates needed → disincentive to work, save, invest → lower long-run growth</li>
+        <li style="margin-bottom:8px;"><strong>Loss of market confidence:</strong> Central bank may be forced to print money to finance deficits → inflation (historical examples: Germany 1920s, Zimbabwe)</li>
+        <li style="margin-bottom:8px;"><strong>Crowding out:</strong> Government borrowing from a limited savings pool → higher interest rates → private sector investment falls</li>
+        <li style="margin-bottom:8px;"><strong>Solvency risk:</strong> Above an unknown threshold, solvency comes into question. Interest rate/GDP ratio is a key solvency metric.</li>
+      </ul>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "RIPUR" for Against Worrying | "HCCS" for Worrying</div>
+      <p><strong>Against:</strong> <strong>R</strong>icardian equivalence, <strong>I</strong>nternal debt, <strong>P</strong>roductive investment, <strong>U</strong>nemployment context, <strong>R</strong>educe distortions<br>
+      <strong>For worrying:</strong> <strong>H</strong>igher taxes, <strong>C</strong>rowding out, <strong>C</strong>onfidence loss (money printing), <strong>S</strong>olvency risk</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Ricardian Equivalence — Key Concept</div>
+      <p>If households are fully rational and forward-looking, a government deficit today means higher taxes tomorrow. Rational consumers will save today to pay for those future taxes. Result: government spending increase is fully offset by private savings increase → <strong>no net impact on aggregate demand</strong>. In practice, this is rarely observed perfectly, but it weakens the fiscal multiplier.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 4: FISCAL TOOLS -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Tools of Fiscal Policy</h2>
+    </div>
+
+    <h3>Government Spending Tools</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Description</th><th>Examples</th><th>GDP Impact</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Transfer Payments</td>
+            <td>Welfare payments through social security. Redistribute income. <strong>NOT included in GDP</strong> (no factor production reward).</td>
+            <td>Pensions, housing benefits, unemployment benefits, child benefits</td>
+            <td>Indirect (boosts disposable income of recipients)</td>
+          </tr>
+          <tr>
+            <td>Current Government Spending</td>
+            <td>Regular, recurring spending on goods and services. Impacts skill levels and labor productivity.</td>
+            <td>Health, education, defense</td>
+            <td>Direct (part of G in GDP)</td>
+          </tr>
+          <tr>
+            <td>Capital Expenditure (Capex)</td>
+            <td>Investment spending on infrastructure. Adds to national capital stock and productive potential. Longest to implement.</td>
+            <td>Roads, hospitals, schools, prisons</td>
+            <td>Direct + multiplier effect; improves long-run supply</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Transfer Payments NOT in GDP</div>
+      <p>Transfer payments (welfare, pensions, unemployment benefits) are <strong>NOT included in GDP</strong> because they are not payment for current productive activity. They are a redistribution of existing income, not a reward to a factor of production. This is a frequently tested distinction.</p>
+    </div>
+
+    <h3>Government Revenue Tools</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent2);">Direct Taxes</div>
+        <ul>
+          <li>Levied on <strong>income, wealth, and corporate profits</strong></li>
+          <li>Income tax (personal and corporate)</li>
+          <li>Capital gains tax</li>
+          <li>National insurance / labor taxes</li>
+          <li>Property tax (local)</li>
+          <li>Inheritance tax (revenue + redistribution)</li>
+          <li><strong>Harder and slower to change</strong> (payroll systems need updating — months of notice)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:var(--accent);">Indirect Taxes</div>
+        <ul>
+          <li>Levied on <strong>spending on goods and services</strong></li>
+          <li>VAT / sales tax</li>
+          <li>Excise duties (fuel, alcohol, tobacco)</li>
+          <li>Gambling taxes (social deterrence)</li>
+          <li>Fuel duties (environmental purpose)</li>
+          <li><strong>Can be adjusted almost immediately</strong> after announcement</li>
+          <li>Generate revenue at little/no cost to government</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Advantages & Disadvantages Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Speed of Implementation</th><th>Key Advantage</th><th>Key Disadvantage</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Indirect Taxes</td>
+            <td><span class="tag tag-green">Immediate</span></td>
+            <td>Instant behavior change; low cost to implement</td>
+            <td>Can be regressive; may not target spending effectively</td>
+          </tr>
+          <tr>
+            <td>Direct Taxes</td>
+            <td><span class="tag tag-yellow">Months</span></td>
+            <td>Powerful announcement effect on behavior</td>
+            <td>Payroll systems require significant lead time</td>
+          </tr>
+          <tr>
+            <td>Transfer Payments</td>
+            <td><span class="tag tag-yellow">Months</span></td>
+            <td>Targeted redistribution; strong effect if directed at low-income households</td>
+            <td>Administrative burden; subject to eligibility rules</td>
+          </tr>
+          <tr>
+            <td>Capital Expenditure</td>
+            <td><span class="tag tag-red">Years</span></td>
+            <td>Adds to productive capacity; permanent supply-side benefit</td>
+            <td>Longest lag of all tools; economy may have recovered before impact</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Potency Ranking of Fiscal Tools</div>
+      <p><strong>Direct government spending</strong> has the biggest impact on aggregate demand (1:1 direct addition to AD). Tax cuts and transfer increases have smaller multiplier effects because some income is saved. However, transfers directed at the <em>poorest</em> households (who spend nearly all income, MPC close to 1) can approach the effectiveness of direct spending.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 5: TAX POLICY -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Desirable Attributes of Tax Policy</h2>
+    </div>
+
+    <div class="card">
+      <p>Economists identify four desirable attributes of a tax system:</p>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>Attribute</th><th>Meaning</th><th>Key Nuance</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Simplicity</td>
+              <td>Easy for taxpayers to comply; easy for authorities to enforce. Final liability should be certain and not easily manipulated.</td>
+              <td>Complex tax codes increase compliance costs and avoidance opportunities</td>
+            </tr>
+            <tr>
+              <td>Efficiency</td>
+              <td>Should interfere as little as possible with individual marketplace choices. Should not discourage work and investment.</td>
+              <td>Debate: should taxes deliberately favor "good" activities (savings) and discourage "bad" (tobacco)? Risk of unintended side effects.</td>
+            </tr>
+            <tr>
+              <td>Fairness</td>
+              <td><strong>Horizontal equity:</strong> Similar people pay similar taxes. <strong>Vertical equity:</strong> Richer people pay more.</td>
+              <td>Progressive rates (income tax) are standard. Flat tax (same % for all) is an alternative advocated by some. Subjective concept.</td>
+            </tr>
+            <tr>
+              <td>Revenue Sufficiency</td>
+              <td>Tax system must raise enough revenue for government spending needs.</td>
+              <td>May conflict with efficiency — high rates to close deficits can reduce labor effort (Laffer curve logic)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "SERF" for Tax Policy Attributes</div>
+      <p><strong>S</strong>implicity · <strong>E</strong>fficiency · <strong>R</strong>evenue sufficiency · <strong>F</strong>airness</p>
+    </div>
+
+    <h3>The Laffer Curve (Supply-Side Economics)</h3>
+    <div class="card">
+      <p>Associated with US economist <strong>Arthur Laffer</strong>. The idea: very high marginal tax rates reduce the incentive to work, save, and invest, and may actually <em>reduce</em> total tax revenue. At a certain tax rate, cutting taxes could increase revenues by expanding the tax base.</p>
+      <p>This is the theoretical basis for supply-side tax cuts (e.g., US tax reforms since 1981). Controversial in practice — evidence on labor effort, savings, and investment effects is mixed.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 6: FISCAL MULTIPLIER -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>The Fiscal Multiplier</h2>
+    </div>
+
+    <h3>Key Variables</h3>
+    <div class="two-col">
+      <div class="formula-box" style="margin:0;">
+        <div class="label">Core Definitions</div>
+        <div class="f">MPC (c) = Marginal Propensity to Consume</div>
+        <div class="f" style="margin-top:4px;">MPS (s) = Marginal Propensity to Save</div>
+        <div class="f" style="margin-top:4px;">c + s = 1 &nbsp; → &nbsp; s = 1 – c</div>
+        <div class="note">MPC = fraction of each additional dollar of disposable income that is spent. MPS = fraction saved. These drive the multiplier chain.</div>
+      </div>
+      <div class="formula-box" style="margin:0; border-color:var(--accent2);">
+        <div class="label">Disposable Income</div>
+        <div class="f">YD = Y – NT = (1 – t) × Y</div>
+        <div class="note">t = net tax rate. Every $1 rise in national income → disposable income rises by $(1 – t). Net taxes reduce the proportion of income available to spend.</div>
+      </div>
+    </div>
+
+    <h3>Simple Multiplier (No Taxes)</h3>
+    <div class="formula-box">
+      <div class="label">Simple Multiplier (ignoring taxes)</div>
+      <div class="f">Multiplier = 1 / (1 – c) = 1 / s</div>
+      <div class="note">If c = 0.9 → Multiplier = 1/(1–0.9) = 1/0.1 = 10. Every $1 of new spending generates $10 of total output (chain reaction of spending rounds). This is the maximum possible — taxes reduce it.</div>
+    </div>
+
+    <h3>Fiscal Multiplier (With Taxes)</h3>
+    <div class="formula-box">
+      <div class="label">Fiscal Multiplier (with tax rate t)</div>
+      <div class="f">Fiscal Multiplier = 1 / [1 – c(1 – t)]</div>
+      <div class="note">The effective MPC in the presence of taxes is c(1–t), not c alone. Taxes "leak" out of the spending chain, reducing the multiplier. Higher tax rates → lower multiplier.</div>
+    </div>
+
+    <div class="worked">
+      <div class="w-title">Worked Example — Fiscal Multiplier</div>
+      <p><strong>Given:</strong> MPC (c) = 0.9, Tax rate (t) = 0.2, Government increases spending by $1 billion</p>
+      <p><strong>Step 1:</strong> Effective MPC with tax = c(1–t) = 0.9 × (1–0.2) = 0.9 × 0.8 = 0.72</p>
+      <p><strong>Step 2:</strong> Fiscal Multiplier = 1 / (1 – 0.72) = 1 / 0.28 = <strong>3.57</strong></p>
+      <p class="result">→ $1 billion increase in G raises total income/spending by $3.57 billion</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 What Reduces the Multiplier?</div>
+      <p>Any "leakage" from the spending chain reduces the multiplier: <strong>(1) Taxes</strong> — reduce disposable income at each round. <strong>(2) Saving</strong> — income saved doesn't circulate further. <strong>(3) Imports</strong> — spending on imports leaves the domestic economy. <strong>(4) Ricardian Equivalence</strong> — if households save in anticipation of future taxes, the multiplier approaches zero. <strong>Higher MPC = higher multiplier; higher tax rate = lower multiplier.</strong></p>
+    </div>
+
+    <h3>Balanced Budget Multiplier</h3>
+    <div class="card">
+      <p><strong>Key result:</strong> If government increases spending (G) and taxes (T) by the <em>same amount</em>, aggregate output still <strong>rises</strong> (not stays the same).</p>
+      <p><strong>Why?</strong> A $1 tax rise reduces spending by only $c (because MPC &lt; 1 — some is saved). But the $1 of spending directly adds $1 to AD. Net impact on AD = $1 − $c = $(1 − c) &gt; 0. This ripples through the multiplier.</p>
+      <p><strong>Balanced Budget Multiplier = 1</strong> (always takes the value of 1). A $1 balanced budget expansion raises output by $1.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">Summary of Multiplier Values</div>
+      <div class="f">Simple multiplier (no taxes): &nbsp; 1 / (1 – c)</div>
+      <div class="f" style="margin-top:6px;">Fiscal multiplier (with taxes): &nbsp; 1 / [1 – c(1 – t)]</div>
+      <div class="f" style="margin-top:6px;">Balanced budget multiplier: &nbsp; always = 1</div>
+      <div class="note">The fiscal multiplier is always smaller than the simple multiplier (taxes reduce it). The balanced budget multiplier is always 1 regardless of MPC or tax rate.</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠ Exam Trap — Balanced Budget Multiplier</div>
+      <p>Students often assume a balanced increase in G and T has zero effect. It does NOT — output rises by the amount of the spending increase ($ΔG). The balanced budget multiplier equals <strong>exactly 1</strong>. This is a classic CFA question.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SECTION 7: IMPLEMENTATION -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Fiscal Policy Implementation & Difficulties</h2>
+    </div>
+
+    <h3>The Three Policy Lags</h3>
+    <div class="lag-flow">
+      <div class="lag-box">
+        <span class="lb-num">1</span>
+        <div class="lb-name">Recognition Lag</div>
+        <div class="lb-desc">Takes months to identify that the economy is slowing. Data released with delay and subject to revision. Like "driving looking in the rearview mirror."</div>
+      </div>
+      <div class="lag-arrow">→</div>
+      <div class="lag-box">
+        <span class="lb-num">2</span>
+        <div class="lb-name">Action Lag</div>
+        <div class="lb-desc">Once identified, policy changes take many months to decide on and implement — especially capital spending (planning, legal permissions). Political debate adds further delay.</div>
+      </div>
+      <div class="lag-arrow">→</div>
+      <div class="lag-box">
+        <span class="lb-num">3</span>
+        <div class="lb-name">Impact Lag</div>
+        <div class="lb-desc">After implementation, takes additional time for policy to affect real economic activity. By then, economy may have already turned on its own. Risk of pro-cyclical effect.</div>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="m-label">🧠 Mnemonic — "RAI" = Recognize → Act → Impact</div>
+      <p>Recognition → Action → Impact. These lags apply to both <strong>fiscal</strong> and <strong>discretionary monetary</strong> policy. However, fiscal policy typically has the longest action lag due to the political process and planning requirements for capital projects.</p>
+    </div>
+
+    <h3>Why Fiscal Policy Cannot Fully Stabilize Aggregate Demand</h3>
+    <div class="card">
+      <ol style="padding-left:20px; font-size:14.5px;">
+        <li style="margin-bottom:10px;"><strong>Incomplete information + Lags (RAI):</strong> By the time policy is designed and implemented, the economic situation may have already changed.</li>
+        <li style="margin-bottom:10px;"><strong>Forecast uncertainty:</strong> Macroeconomic models have poor track records. Private sector behavior may change unpredictably — consumption or investment may surge or collapse independently.</li>
+        <li style="margin-bottom:10px;"><strong>Unemployment-inflation trade-off:</strong> Raising AD toward full employment may also tighten the labor market and push up wages and inflation. Policy maker may hesitate to over-stimulate.</li>
+        <li style="margin-bottom:10px;"><strong>Large existing deficit:</strong> If budget deficit is already large, financial markets may react negatively to further borrowing → higher sovereign bond yields → offsetting tightening.</li>
+        <li style="margin-bottom:10px;"><strong>Unknown level of full employment:</strong> Productive capacity and willingness to work change over time → difficult to know whether the economy is actually below full employment.</li>
+        <li style="margin-bottom:10px;"><strong>Supply vs. demand diagnosis:</strong> If unemployment reflects low <em>supply</em> of labor (not low demand), then demand stimulus will not help and may only cause inflation.</li>
+        <li style="margin-bottom:10px;"><strong>Crowding out:</strong> Government borrowing from a limited savings pool raises interest rates → private investment falls → partial or full offset of fiscal expansion.</li>
+      </ol>
+    </div>
+
+    <h3>Crowding Out — Explained</h3>
+    <div class="card">
+      <p>When government borrows heavily, it competes with private firms for a limited pool of savings. This drives up interest rates, making borrowing more expensive for private businesses and potentially canceling profitable investment projects. The result: government spending partially or fully displaces private spending.</p>
+      <p><strong>Short run:</strong> Crowding out may be limited (especially if spare savings exist, as in a recession). <strong>Long run:</strong> Persistent crowding out damages capital accumulation and long-run growth potential. Similarly, tax distortions compound over time even if small in the short run.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Crowding Out is Weakest in a Recession</div>
+      <p>In a deep recession with high unemployment, the private sector is NOT competing aggressively for savings (investment is depressed). So crowding out is minimal — this is when expansionary fiscal policy is most effective. Crowding out is most damaging at or near full employment when private investment demand is high.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section-header" style="margin-top:0;">
+      <span class="section-num" style="background:rgba(76,139,201,0.1); border-color:rgba(76,139,201,0.3); color:var(--accent2);">★</span>
+      <h2>Last-Minute Exam Checklist</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:20px; font-size:15px; line-height:2.1;">
+        <li>✅ Fiscal policy = taxation & spending (government). Monetary policy = money & credit (central bank).</li>
+        <li>✅ Goal of both: stable positive growth + stable low inflation.</li>
+        <li>✅ Keynesians: fiscal policy powerful; Monetarists: only temporary — prefer monetary tools (rules-based, not discretionary).</li>
+        <li>✅ Expansionary fiscal policy: ↑G or ↓T → rising deficit. Contractionary: ↓G or ↑T → rising surplus.</li>
+        <li>✅ Automatic stabilizers: built-in, no policy decision needed. Discretionary: active changes, subject to all 3 lags.</li>
+        <li>✅ Structural (cyclically adjusted) deficit = deficit at full employment = true fiscal stance indicator.</li>
+        <li>✅ Transfer payments are NOT in GDP (no productive activity reward).</li>
+        <li>✅ Capital expenditure has the longest implementation lag but adds to productive capacity (unlike tax cuts).</li>
+        <li>✅ Indirect taxes can be changed almost immediately; direct taxes require months of notice.</li>
+        <li>✅ 4 tax attributes: <strong>Simplicity, Efficiency, Revenue Sufficiency, Fairness (SERF)</strong>.</li>
+        <li>✅ Fiscal Multiplier = 1 / [1 – c(1 – t)]. Higher MPC → higher multiplier. Higher tax rate → lower multiplier.</li>
+        <li>✅ Balanced Budget Multiplier = <strong>1</strong> always (equal ↑G and ↑T still raises output by ΔG).</li>
+        <li>✅ Ricardian Equivalence: private saving offsets fiscal deficit → no net AD impact (theory, rarely holds perfectly).</li>
+        <li>✅ 3 lags: Recognition → Action → Impact (RAI).</li>
+        <li>✅ Crowding out is weakest in recession; most damaging near full employment.</li>
+        <li>✅ Debt sustainability: if real GDP growth &gt; real interest rate → debt/GDP improves; if &lt;, worsens.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Economics · Module 3: Fiscal Policy · Exam Prep Notes
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L1 | Fixed Income | Module 3: Fixed-Income Issuance and Trading</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --card: #1a1e28; --border: #252a38;
+    --accent: #c9a84c; --accent2: #4c8bc9; --accent3: #4cc98a; --danger: #c94c4c;
+    --text: #e8eaf0; --muted: #8892a4;
+    --tip-bg: #1a2218; --tip-border: #4cc98a;
+    --warn-bg: #221a18; --warn-border: #c94c4c;
+    --formula-bg: #12151f; --formula-border: #c9a84c;
+    --ig-bg: #111a16; --ig-border: #4cc98a;
+    --hy-bg: #1a1510; --hy-border: #c9a84c;
+    --def-bg: #1a1111; --def-border: #c94c4c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; font-size: 15.5px; line-height: 1.75; }
+
+  .page-header { background: linear-gradient(135deg, #0d0f14 0%, #0d110f 40%, #0d0f14 100%); border-bottom: 1px solid var(--border); padding: 48px 48px 36px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(76,139,201,0.07) 0%, transparent 70%); border-radius: 50%; }
+  .badge { display: inline-block; background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+  .page-header h1 span { color: var(--accent2); }
+  .page-header p { color: var(--muted); font-size: 14px; max-width: 820px; }
+
+  .toc-strip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .toc-strip::-webkit-scrollbar { display: none; }
+  .toc-item { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 14px 18px; border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+
+  h3 { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 12px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card p, .card li { color: var(--text); font-size: 15px; }
+  .card p + p { margin-top: 10px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 6px; }
+
+  .formula-box { background: var(--formula-bg); border-left: 3px solid var(--formula-border); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 16px 0; }
+  .formula-box .label { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .formula-box .f { color: #e8c97a; font-size: 14px; font-weight: 600; line-height: 2.0; font-family: 'JetBrains Mono', monospace; }
+  .formula-box .note { color: var(--muted); font-size: 12.5px; margin-top: 10px; font-family: 'Source Sans 3', sans-serif; line-height: 1.7; }
+
+  .tip { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .tip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); margin-bottom: 6px; }
+  .tip p { font-size: 14px; color: #c8dfd0; }
+
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin: 16px 0; }
+  .warn-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--danger); margin-bottom: 6px; }
+  .warn p { font-size: 14px; color: #dfc8c8; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 750px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+  .mc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+  .mini-card p { font-size: 13.5px; color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 6px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { background: #1e2330; }
+  thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody td { padding: 11px 16px; color: var(--text); vertical-align: top; }
+  tbody td:first-child { color: var(--accent); font-weight: 600; font-size: 13px; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tag-green { background: rgba(76,201,138,0.15); color: var(--accent3); border: 1px solid rgba(76,201,138,0.3); }
+  .tag-red { background: rgba(201,76,76,0.15); color: var(--danger); border: 1px solid rgba(201,76,76,0.3); }
+  .tag-yellow { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-blue { background: rgba(76,139,201,0.15); color: var(--accent2); border: 1px solid rgba(76,139,201,0.3); }
+
+  /* Credit rating bands */
+  .ig-band { background: var(--ig-bg); border-left: 3px solid var(--ig-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+  .hy-band { background: var(--hy-bg); border-left: 3px solid var(--hy-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+  .def-band { background: var(--def-bg); border-left: 3px solid var(--def-border); border-radius: 0 6px 6px 0; padding: 14px 20px; margin-bottom: 10px; }
+
+  .rating-row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 8px; }
+  .rating-badge { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; min-width: 52px; padding: 3px 0; }
+  .rating-desc { font-size: 13.5px; color: var(--text); }
+
+  /* Timeline */
+  .timeline { background: #111620; border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin: 16px 0; }
+  .tl-row { display: flex; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); min-width: 90px; font-weight: 700; padding-top: 2px; }
+  .tl-event { font-size: 13.5px; color: var(--text); }
+
+  .def-block { background: #171b26; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0 0 6px 6px; padding: 14px 20px; margin: 12px 0; }
+  .def-block .def-term { font-weight: 700; color: var(--accent); font-size: 14px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .def-block .def-body { font-size: 14px; color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .highlight2 { color: var(--accent2); font-weight: 600; }
+  .highlight3 { color: var(--accent3); font-weight: 600; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">CFA LEVEL 1 · FIXED INCOME · MODULE 3</div>
+  <h1>Fixed-Income Issuance <span>&amp; Trading</span></h1>
+  <p>Exam-ready notes: fixed-income market segments (issuer types, credit quality, maturity), S&P and Moody's credit rating scales, issuers and investors across the credit-maturity spectrum, fixed-income indexes (types, characteristics, key differences from equity indexes), primary markets (public offerings vs. private placements, underwritten vs. best-efforts), and secondary market characteristics (OTC, liquidity, bid-offer spreads, distressed debt).</p>
+</div>
+
+<div class="toc-strip">
+  <a class="toc-item" href="#s1">01 · Market Segments</a>
+  <a class="toc-item" href="#s2">02 · Credit Ratings</a>
+  <a class="toc-item" href="#s3">03 · Issuers by Segment</a>
+  <a class="toc-item" href="#s4">04 · Investors by Segment</a>
+  <a class="toc-item" href="#s5">05 · Fixed-Income Indexes</a>
+  <a class="toc-item" href="#s6">06 · Index Examples</a>
+  <a class="toc-item" href="#s7">07 · Primary Markets</a>
+  <a class="toc-item" href="#s8">08 · IG Bond Issuance Timeline</a>
+  <a class="toc-item" href="#s9">09 · Secondary Markets</a>
+  <a class="toc-item" href="#s10">10 · Liquidity &amp; Distressed Debt</a>
+  <a class="toc-item" href="#s11">11 · Master Tables</a>
+  <a class="toc-item" href="#s12">★ Exam Checklist</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 1: MARKET SEGMENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Fixed-Income Market Segments — Three Dimensions</h2>
+    </div>
+
+    <div class="card">
+      <p>Fixed-income instruments and markets are typically categorized along <strong>three primary dimensions</strong>:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Issuer type (sector):</strong> government, corporate, securitized, etc.</li>
+        <li><strong>Credit quality:</strong> investment grade vs. high yield vs. default-risk-free</li>
+        <li><strong>Time to maturity:</strong> short-term (&lt;1yr), intermediate (1–10yr), long-term (&gt;10yr)</li>
+      </ol>
+      <p style="margin-top:10px;">Sometimes additionally classified by: <strong>geography, currency, ESG characteristics</strong>.</p>
+      <p style="margin-top:8px;">Key contrast with equities: <strong>corporate issuers typically have only 1–2 equity instruments but many fixed-income instruments outstanding.</strong> Example: Apple Inc. had over 80 fixed-income instruments vs. 1 equity instrument (common stock) at end of 2021.</p>
+    </div>
+
+    <h3>Maturity Classification</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Short-Term (&lt;1 year)</div>
+        <p>Also called <strong>money market</strong> securities. Meet near-term obligations and serve as liquid cash alternatives. Examples: T-bills, commercial paper, repos, ABCP.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Intermediate-Term (1–10 years)</div>
+        <p>Capital market securities. Balance between yield and duration risk. Examples: Treasury notes, unsecured corporate bonds, ABS, secured corporate bonds.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Long-Term (&gt;10 years)</div>
+        <p>Highest interest rate risk; highest expected return. Match long-dated liabilities (pensions, insurance). Examples: Treasury bonds, long-duration corporate bonds, MBS.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: CREDIT RATINGS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Credit Ratings — S&amp;P and Moody's Scales</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Credit ratings</strong> are letter-grade, qualitative measures of an issuer's ability to meet debt obligations, based on <strong>both</strong> the probability of default AND the expected loss under a default scenario. Provided by credit rating agencies (S&amp;P, Moody's, Fitch). Given for both short-term and long-term debt, and for both issuers AND specific bond issues.</p>
+    </div>
+
+    <h3>Investment Grade (IG) — BBB- / Baa3 and Above</h3>
+    <div class="ig-band">
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#4cc98a;">AAA / Aaa</div>
+        <div class="rating-desc">Extremely strong capacity to meet financial commitments — <strong>highest rating</strong>. Sovereign DM issuers often at this level — considered "default risk free."</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#4cc98a;">AA / Aa</div>
+        <div class="rating-desc">Very strong capacity to meet financial commitments</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#6db88a;">A / A</div>
+        <div class="rating-desc">Strong capacity but somewhat susceptible to adverse economic conditions and changes in circumstances</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#c9a84c;">BBB / Baa</div>
+        <div class="rating-desc">Adequate capacity but more subject to adverse economic conditions</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#c9a84c;">BBB- / Baa3</div>
+        <div class="rating-desc"><strong>Lowest investment grade</strong> — the critical boundary. Below this = speculative/junk.</div>
+      </div>
+    </div>
+
+    <h3>Speculative Grade / High Yield — BB+ / Ba1 and Below</h3>
+    <div class="hy-band">
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#f5a623;">BB+ / Ba1</div>
+        <div class="rating-desc"><strong>Highest speculative grade</strong> — "fallen angel" zone entry point or new high-yield issuers</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#f5a623;">BB / Ba</div>
+        <div class="rating-desc">Less vulnerable near-term but faces major ongoing uncertainties to adverse business, financial, and economic conditions</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#e08030;">B / B</div>
+        <div class="rating-desc">More vulnerable to adverse conditions but currently has capacity to meet financial commitments</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#c94c4c;">CCC / Caa</div>
+        <div class="rating-desc">Currently vulnerable — dependent on favorable conditions to meet commitments</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#c94c4c;">CC / Ca</div>
+        <div class="rating-desc">Highly vulnerable; default has not yet occurred but is expected to be a virtual certainty</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#c94c4c;">C / C</div>
+        <div class="rating-desc">Highly vulnerable to non-payment; expected recovery lower than higher-rated obligations</div>
+      </div>
+    </div>
+
+    <h3>Default</h3>
+    <div class="def-band">
+      <div class="rating-row">
+        <div class="rating-badge" style="color:#f57c7c;">D</div>
+        <div class="rating-desc">Payment default on a financial commitment or breach of an imputed promise; also used when a bankruptcy petition has been filed or similar action taken. (Moody's uses "Ca" and "C" for distressed but doesn't use "D" the same way.)</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ Key Credit Rating Boundaries — Must Memorize</div>
+      <div class="f">
+        Investment Grade (IG):   BBB- (S&P) / Baa3 (Moody's) and ABOVE<br>
+        High Yield / Junk:       BB+ (S&P) / Ba1 (Moody's) and BELOW<br><br>
+        Fallen Angels = formerly investment-grade issuers downgraded below BBB- / Baa3<br>
+        Rising Stars  = formerly high-yield issuers upgraded to BBB- / Baa3 or above
+      </div>
+      <div class="note">
+        S&amp;P uses +/− modifiers (e.g., AA+, AA, AA−). Moody's uses 1/2/3 (e.g., Aa1, Aa2, Aa3).<br>
+        Credit ratings measure BOTH probability of default AND expected loss severity under default.<br>
+        Ratings apply to both the ISSUER (overall creditworthiness) and specific BOND ISSUES (can differ for the same issuer).<br>
+        Many investors are constrained to IG instruments with only a small percentage allowed in unrated or HY bonds.
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Fallen Angels vs. Rising Stars</div>
+      <p><strong>Fallen angels:</strong> formerly IG issuers whose credit quality deteriorated — downgraded to HY. Often face forced selling because many IG-only mandated investors must sell below BBB−.<br><br>
+      <strong>Rising stars:</strong> formerly HY issuers upgraded to IG status. Often face increased demand as IG-mandated investors can now buy them.<br><br>
+      <strong>High-yield issuers</strong> include both new issuers with less stable cash flows AND fallen angels. New HY issuers are more likely to require collateral (secured bonds) due to less stable operating cash flows.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: ISSUERS BY SEGMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Issuers Across the Credit &amp; Maturity Spectrum</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Credit Tier</th><th>Short-Term (&lt;1yr)</th><th>Intermediate (1–10yr)</th><th>Long-Term (&gt;10yr)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-green">Default Risk-Free</span><br>Sovereign (DM)</td>
+            <td>Treasury Bills (T-bills)</td>
+            <td>Treasury Notes</td>
+            <td>Treasury Bonds</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Investment Grade</span></td>
+            <td>Repo, Commercial Paper, Asset-Backed Commercial Paper (ABCP)</td>
+            <td>Unsecured Corporate Bonds, Asset-Backed Securities (ABS)</td>
+            <td>Unsecured Corporate Bonds, Mortgage-Backed Securities (MBS)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">High Yield</span></td>
+            <td>—</td>
+            <td>Secured Corporate Bonds, Leveraged Loans</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Commercial Paper — Key Details</div>
+      <p>Commercial paper (CP) is a type of <strong>short-term bond used by corporations to finance working capital needs</strong>. Key features: (1) typically &lt;270 days; (2) can be collateralized by specific assets (Asset-Backed Commercial Paper — ABCP); (3) usually issued at a discount; (4) common among investment-grade issuers who can access this cheap short-term funding. NOT available to high-yield issuers who lack the credit quality to attract CP investors.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 4: INVESTORS BY SEGMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Investors Across the Credit &amp; Maturity Spectrum</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Investor Type</th><th>Typical Credit Segment</th><th>Typical Maturity</th><th>Investment Rationale</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Central Banks</td>
+            <td>Default risk-free (sovereign)</td>
+            <td>Short to intermediate</td>
+            <td>Reserve management; monetary policy implementation; liquidity</td>
+          </tr>
+          <tr>
+            <td>Financial Intermediaries (Banks)</td>
+            <td>Default risk-free to investment grade</td>
+            <td>Short to intermediate</td>
+            <td>Match floating-rate deposit liabilities; liquidity management; regulatory capital</td>
+          </tr>
+          <tr>
+            <td>Money Market Funds</td>
+            <td>Default risk-free to IG (money market)</td>
+            <td>Short-term only (&lt;1yr)</td>
+            <td>Provide liquid cash-equivalent investment for institutions and individuals</td>
+          </tr>
+          <tr>
+            <td>Pension Funds</td>
+            <td>Investment grade; some IG to HY spectrum</td>
+            <td>Long-term</td>
+            <td>Match long-duration liabilities (future pension obligations); fixed predictable cash flows</td>
+          </tr>
+          <tr>
+            <td>Insurance Companies</td>
+            <td>Investment grade</td>
+            <td>Long-term</td>
+            <td>Match long-term liability profile (claims); prefer fixed, predictable cash flows</td>
+          </tr>
+          <tr>
+            <td>Bond Funds and ETFs</td>
+            <td>Varies by mandate (IG to HY)</td>
+            <td>Varies by mandate</td>
+            <td>Track benchmark index or active selection; provide retail investor access to bond markets</td>
+          </tr>
+          <tr>
+            <td>Corporate Issuers</td>
+            <td>Investment grade (mostly)</td>
+            <td>Short-term (working capital management)</td>
+            <td>Invest excess cash in short-term IG instruments (commercial paper, T-bills)</td>
+          </tr>
+          <tr>
+            <td>Asset Managers</td>
+            <td>Investment grade to high yield</td>
+            <td>Intermediate to long-term</td>
+            <td>Meet client mandates; active return generation; benchmark tracking</td>
+          </tr>
+          <tr>
+            <td>Hedge Funds</td>
+            <td>High yield; distressed debt</td>
+            <td>Any (often intermediate)</td>
+            <td>Opportunistic returns; equity-like returns from distressed bonds; arbitrage strategies</td>
+          </tr>
+          <tr>
+            <td>Distressed Debt Funds</td>
+            <td>Distressed (CCC and below)</td>
+            <td>Any (until resolution)</td>
+            <td>Buy bonds well below par; profit from restructuring or bankruptcy recovery</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Pension Funds &amp; Insurance Companies — Long Duration Preference</div>
+      <p>Pension funds and insurance companies have <strong>long investment time horizons</strong> and known long-dated future obligations (pension payments, insurance claims). They favor long-duration fixed-income instruments because: (1) fixed periodic coupon cash flows provide predictable income; (2) the maturity profile of their bond portfolios matches their long-term liabilities (asset-liability matching / immunization strategy). They are therefore the natural buyers of long-dated sovereign and investment-grade corporate bonds.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 5: FIXED-INCOME INDEXES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Fixed-Income Indexes — Purpose, Types &amp; Differences from Equity</h2>
+    </div>
+
+    <div class="card">
+      <p>Fixed-income indexes track the returns of groups of securities meeting inclusion criteria. They serve three main functions:</p>
+      <ol style="padding-left:20px; margin-top:8px;">
+        <li><strong>Evaluate market performance</strong> — measure how the overall bond market (or a segment) performed</li>
+        <li><strong>Benchmark investment managers</strong> — compare a fund's or manager's returns against a relevant index</li>
+        <li><strong>Basis for indexed investment strategies</strong> — passive bond funds/ETFs that replicate index returns</li>
+      </ol>
+      <p style="margin-top:10px;"><strong>Index choice must match the investment strategy</strong>: a short-term IG bond fund should be benchmarked against a short-term IG bond index, NOT a broad aggregate index.</p>
+    </div>
+
+    <h3>Three Key Differences from Equity Indexes</h3>
+
+    <div class="formula-box">
+      <div class="label">★ Fixed-Income vs. Equity Indexes — Key Differences</div>
+      <div class="f">
+        Difference 1 — NUMBER OF CONSTITUENTS:<br>
+        A single issuer can have MANY bond issues (vs. 1-2 equity instruments)<br>
+        → All eligible bonds included → fixed-income indexes far larger than equity indexes<br>
+        → Some have 10,000+ constituents<br><br>
+
+        Difference 2 — TURNOVER (REBALANCING FREQUENCY):<br>
+        Finite bond maturities + higher new issuance frequency → much higher turnover<br>
+        → Bond indexes usually rebalanced MONTHLY (not annually like some equity indexes)<br>
+        → Each month: new issues added, bonds below minimum maturity removed<br><br>
+
+        Difference 3 — WEIGHTING METHODOLOGY:<br>
+        Bond indexes weighted by MARKET VALUE OF DEBT OUTSTANDING<br>
+        (analogous to equity market-cap weighting)<br>
+        → Large government issuers → high government debt weights in broad indexes<br>
+        → Composition changes over time as new debt is issued or retired
+      </div>
+      <div class="note">
+        Key implication of high constituent count: bond funds tracking an index typically hold a REPRESENTATIVE SAMPLE (not all constituents) because it is impossible to purchase every bond in large indexes.<br>
+        Monthly rebalancing: bonds failing to meet maturity, rating, or size criteria are removed; new issues meeting criteria are added.
+      </div>
+    </div>
+
+    <h3>Types of Fixed-Income Indexes</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Broad Aggregate Indexes</div>
+        <ul>
+          <li>Very large number of constituents (thousands)</li>
+          <li>Cover many sectors, maturities, currencies</li>
+          <li>Usually investment grade only</li>
+          <li>Example: Bloomberg Barclays Global Aggregate Index</li>
+          <li>Suitable benchmark for diversified IG bond funds</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Narrow / Specialized Indexes</div>
+        <ul>
+          <li>Filter by one or more specific criteria</li>
+          <li>Sector (corporate, government, securitized)</li>
+          <li>Credit quality (IG only, HY only, EM sovereign)</li>
+          <li>Geography/currency (US only, euro only)</li>
+          <li>Maturity (short-term, long-term)</li>
+          <li>ESG (sustainable, SRI bond indexes)</li>
+          <li>Example: J.P. Morgan EMBI+, Bloomberg MSCI SRI Index</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Government Bias in Broad Indexes</div>
+      <p>Because government issuers are among the largest bond issuers in the world, <strong>broad bond indexes typically have high weights in government debt</strong>. An investor seeking primarily corporate bond exposure would need a narrower, sector-specific index rather than a broad aggregate index as their benchmark.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 6: INDEX EXAMPLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Index Examples — Three Case Studies</h2>
+    </div>
+
+    <h3>① Bloomberg Barclays Global Aggregate Index — Broad Aggregate</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Criterion</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Issuers</td><td>Fixed-rate bonds from sovereign, government, corporate, and securitized issuers in DM and EM markets</td></tr>
+          <tr><td>Currencies</td><td>28 eligible currencies across Americas, EMEA, Asia Pacific</td></tr>
+          <tr><td>Credit Quality</td><td>Investment-grade or equivalent ONLY (excludes HY and unrated)</td></tr>
+          <tr><td>Coupon Types</td><td>Fixed rate, zero coupon, step-up (if step-up dates are predetermined)</td></tr>
+          <tr><td>Min. Size</td><td>Varies by currency (e.g., USD 300m, EUR 300m, CNY 5bn)</td></tr>
+          <tr><td>Min. Maturity</td><td>At least 1 year to final maturity or average weighted maturity</td></tr>
+          <tr><td>Rebalancing</td><td>Monthly — remove bonds below criteria; add new eligible issues</td></tr>
+          <tr><td>Taxability</td><td>Fully taxable issues only</td></tr>
+          <tr><td>Seniority</td><td>Both senior AND subordinated issues eligible</td></tr>
+          <tr><td>Cash flow reinvestment</td><td>Intra-month interest/principal reinvested at next rebalancing date</td></tr>
+          <tr><td>Best used for</td><td>Comprehensive IG multi-sector funds (e.g., Baywhite's Core Bond Fund)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>② J.P. Morgan EMBI+ — Emerging Market Sovereign</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Criterion</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Issuers</td><td>Emerging market SOVEREIGN issuers of US dollar debt only</td></tr>
+          <tr><td>Currency</td><td>US dollar ONLY — bonds linked to exchange rates excluded</td></tr>
+          <tr><td>Credit Quality</td><td>Sovereign rating of Baa1/BBB+/BBB+ OR BELOW — includes HY sovereigns</td></tr>
+          <tr><td>Min. Size</td><td>USD 500 million current face amount outstanding</td></tr>
+          <tr><td>Min. Maturity</td><td>At least 2.5 years to maturity; bonds falling below 12 months during the next month excluded</td></tr>
+          <tr><td>Return calculation</td><td>Weighted average of bond returns using bid side prices</td></tr>
+          <tr><td>Rebalancing</td><td>Final US business day of each month</td></tr>
+          <tr><td>Purpose</td><td>Higher USD-based return than DM sovereign bonds by targeting EM credit risk</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>③ Bloomberg Barclays MSCI Euro Corporate Sustainable SRI — ESG Index</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Criterion</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Issuers</td><td>Corporate only (industrial, utility, financial institution)</td></tr>
+          <tr><td>Currency</td><td>Euro-denominated ONLY</td></tr>
+          <tr><td>Credit Quality</td><td>Baa3/BBB−/BBB− or above — investment grade only</td></tr>
+          <tr><td>Min. Size</td><td>EUR 300 million minimum par outstanding</td></tr>
+          <tr><td>Min. Maturity</td><td>At least 1 year; perpetual bonds excluded 1 year before floating conversion; fixed-rate perpetuals excluded</td></tr>
+          <tr><td>ESG Rules</td><td>Must have MSCI ESG rating of BBB or higher; excludes Red MSCI Controversies scores</td></tr>
+          <tr><td>Excluded sectors</td><td>Alcohol, tobacco, gambling, adult entertainment, GMOs, nuclear power, civilian firearms, military weapons, thermal coal, coal generation, oil sands</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Index Hedged vs. Unhedged Returns</div>
+      <p>For international bond indexes, returns can be calculated in two ways:<br>
+      <strong>Unhedged returns:</strong> include currency gains/losses from exchange rate fluctuations (investor bears FX risk).<br>
+      <strong>Hedged returns:</strong> offset currency changes using currency forward contracts on rebalancing dates (FX risk eliminated; only local bond market returns captured).<br><br>
+      Choice depends on the investor's currency exposure strategy. Most global institutional investors can choose either format.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 7: PRIMARY MARKETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Primary Fixed-Income Markets</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Primary bond markets</strong>: markets in which issuers sell NEW bonds to investors to raise financing.</p>
+      <p style="margin-top:10px;"><strong>Secondary bond markets</strong>: markets in which EXISTING bonds are traded among investors.</p>
+      <p style="margin-top:10px;">A <strong>debut issuer</strong> (first time in the bond market) is analogous to an IPO — the first opportunity for investors to buy that issuer's bonds. Often replaces private debt (e.g., bank loan) with publicly traded bonds.</p>
+    </div>
+
+    <h3>Types of Debut Issuers</h3>
+    <div class="card">
+      <ul style="padding-left:20px;">
+        <li><strong>New corporate legal entities</strong> formed after a merger, acquisition, or divestiture — refinance all existing debt</li>
+        <li><strong>Mature companies</strong> that reach a stage with more predictable cash flows and begin issuing bonds (replacing bank loans)</li>
+        <li><strong>Sovereign governments</strong> raising external foreign currency debt for the first time</li>
+      </ul>
+      <p style="margin-top:10px;">For debut issuers: underwriters conduct <strong>roadshows and information sessions for several weeks</strong> prior to issuance to familiarize investors with the new entity.</p>
+    </div>
+
+    <h3>Public Offering vs. Private Placement</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Public Offering</div>
+        <ul>
+          <li>Any member of the public may buy</li>
+          <li>Full registration and disclosure required</li>
+          <li>Larger, more standardized issues</li>
+          <li>More liquid in secondary market</li>
+          <li>Underwritten offering (common for IG) or best-efforts (common for HY)</li>
+          <li>Sovereign debt: usually public auction</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Private Placement</div>
+        <ul>
+          <li>Only selected investor(s) may buy</li>
+          <li>Fewer registration requirements</li>
+          <li>Smaller, more customized terms</li>
+          <li>Less liquid in secondary market</li>
+          <li>Used when: bond size is small, issuer less well known, or terms are customized</li>
+          <li>Example: Eurobonds available to US investors via Rule 144A (qualified institutional buyers only)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Underwritten vs. Best-Efforts Offering</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4c8bc9;">Underwritten Offering</div>
+        <ul>
+          <li>Underwriter <strong>guarantees the sale</strong> at a negotiated offering price</li>
+          <li>Underwriter bears risk if bonds are unsold</li>
+          <li>Typical for investment-grade corporate bonds</li>
+          <li>Issuers have ready market access; choose timing opportunistically</li>
+          <li>Shelf registration used by frequent issuers (broad offering circular updated regularly)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#f5a623;">Best-Efforts Offering</div>
+        <ul>
+          <li>Financial intermediary acts as <strong>broker only on a commission basis</strong></li>
+          <li>Does NOT guarantee the sale</li>
+          <li>Tries to sell at negotiated price only if it can do so</li>
+          <li>Typical for lower credit quality issuers (high yield, secured bonds)</li>
+          <li>Issuer bears the risk if bonds are undersubscribed</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Repeat Issuers vs. Debut Issuers</h3>
+    <div class="card">
+      <p>For repeat issuers, the bond issuance process is <strong>far more abbreviated</strong> than for debut issuers (and far quicker than follow-on equity offerings):</p>
+      <ul style="padding-left:20px; margin-top:8px;">
+        <li>Frequent IG corporate bond issuances can be completed <strong>within a single business day</strong> (few hours)</li>
+        <li>Repeat issuers usually issue a <strong>new security priced at or close to par</strong></li>
+        <li>Less common: <strong>reopening</strong> = increasing the size of an existing bond (used when the existing bond trades significantly above/below par — creates a bond with a price different from par)</li>
+        <li><strong>Shelf registration</strong> (or broad offering circular): pre-approved filing updated regularly, allowing rapid issuance without a full registration each time</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 8: IG BOND ISSUANCE TIMELINE -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Investment-Grade Corporate Bond Issuance Timeline</h2>
+    </div>
+
+    <div class="card">
+      <p>Unsecured IG corporate bond issuance typically takes place within a <strong>single business day</strong> — usually a few hours. This is dramatically faster than equity follow-on offerings or debut bond issuances (which take weeks).</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-time">9:00 AM</div>
+        <div class="tl-event">Underwriters and issuer agree to <strong>launch the transaction</strong></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">9:15 AM</div>
+        <div class="tl-event"><strong>Transaction announced</strong> to market — size, spread, and maturities "TBD" (to be determined). Electronic roadshow released. <strong>Order book opens</strong> to investors.</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">10:30 AM</div>
+        <div class="tl-event"><strong>Investor conference call</strong> with issuer and underwriters — Q&amp;A, clarification of terms</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">12:00 PM</div>
+        <div class="tl-event"><strong>Price guidance</strong> announced — indicative spread and size (still subject to change). <strong>Order book closed</strong> to new investor orders.</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">1:00 PM</div>
+        <div class="tl-event"><strong>Transaction launched</strong> with final size, pricing, and maturities. Underwriters <strong>allocate</strong> the bonds to investors (1:00–3:00 PM).</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">3:00 PM</div>
+        <div class="tl-event"><strong>Transaction priced</strong> — government benchmark and coupon set (finalized)</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">4:00 PM</div>
+        <div class="tl-event"><strong>Final term sheet delivered.</strong> Bonds free to trade same day or next day in secondary market.</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Why IG Issuance Is So Fast</div>
+      <p>IG corporate bond issuance is fast because: (1) investors are already very familiar with the issuer's financial statements and bond indenture; (2) frequent issuers use shelf registrations (pre-approved documentation); (3) underwriters target large institutional investors who can evaluate and commit quickly; (4) underwriters manage the order book efficiently to ensure wide distribution at the lowest spread across maturities. The same process for a high-yield or debut issuer takes significantly longer due to more complex covenants and the need for investor education.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 9: SECONDARY MARKETS -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Secondary Fixed-Income Markets</h2>
+    </div>
+
+    <div class="card">
+      <p>Secondary bond markets are where <strong>existing bonds are traded among investors</strong> (vs. primary markets where new bonds are issued). Key characteristics that differ from equity secondary markets:</p>
+    </div>
+
+    <h3>OTC vs. Exchange Trading</h3>
+    <div class="two-col">
+      <div class="mini-card">
+        <div class="mc-title" style="color:#c9a84c;">Most Bond Markets — OTC (Over-the-Counter)</div>
+        <ul>
+          <li><strong>Quote-driven</strong> (dealer markets): dealers quote bid and offer prices</li>
+          <li>Electronic platforms: MarketAxess, Tradeweb</li>
+          <li>Institutional investors trade bilaterally with dealers</li>
+          <li>Less transparent than exchange markets</li>
+          <li>Wide variation in liquidity across segments</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title" style="color:#4cc98a;">Some Bond Markets — Exchange Traded</div>
+        <ul>
+          <li>Less common for bonds than for equities</li>
+          <li>Example: Australian domestic sovereign bonds trade on an exchange</li>
+          <li>Bond ETFs trade on exchanges (but underlying bonds trade OTC)</li>
+          <li>Greater price transparency</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Major Secondary Market Participants</h3>
+    <div class="three-col">
+      <div class="mini-card">
+        <div class="mc-title">Institutional Investors</div>
+        <p>Pension funds, insurance companies, bond funds, ETFs, asset managers. Largest buyers and sellers of secondary market bonds.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Financial Intermediaries (Dealers)</div>
+        <p>Banks and broker-dealers. Make markets by quoting bid-offer spreads. Hold trading inventory. Primary dealers make active markets in sovereign bonds.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mc-title">Central Banks</div>
+        <p>Buy and sell government bonds in open market operations (monetary policy). Major force in sovereign bond secondary markets.</p>
+      </div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Bid-Offer Spread</div>
+      <div class="def-body">The difference between the price at which a dealer will BUY (bid) from a customer and the price at which a dealer will SELL (offer/ask) to a customer. A key measure of market liquidity. Smaller spread = more liquid. Expressed in basis points in fixed-income markets. Investor always buys at the higher offer price and sells at the lower bid price.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 10: LIQUIDITY & DISTRESSED DEBT -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Liquidity Spectrum &amp; Distressed Debt</h2>
+    </div>
+
+    <h3>Liquidity Spectrum — Highest to Lowest</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bond Type</th><th>Bid-Offer Spread</th><th>Why Most/Least Liquid</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>On-the-run DM sovereign bonds (most recently issued)</td>
+            <td style="color:var(--accent3);">Fraction of 1 bps</td>
+            <td>Primary dealers actively make markets; highest demand; largest issuance size; benchmark for all other bonds</td>
+          </tr>
+          <tr>
+            <td>Recently issued IG corporate bonds (frequent issuers)</td>
+            <td style="color:var(--accent3);">Few bps</td>
+            <td>Underwriters hold recent inventory; widely known issuers; investor familiarity high</td>
+          </tr>
+          <tr>
+            <td>Seasoned IG bonds (same frequent issuer, older)</td>
+            <td style="color:var(--accent);">10–20+ bps</td>
+            <td>Dealers less likely to hold inventory; investors have moved to newer on-the-run issues; rarely traded</td>
+          </tr>
+          <tr>
+            <td>Less frequent issuer bonds</td>
+            <td style="color:var(--accent);">10–20+ bps (even for small sizes)</td>
+            <td>Fewer natural buyers/sellers; lower investor familiarity; dealers reluctant to hold inventory</td>
+          </tr>
+          <tr>
+            <td>Distressed debt (CCC or in default)</td>
+            <td style="color:var(--danger);">Very wide; trades on price (cents per dollar of par), not spread</td>
+            <td>Forced selling by IG-constrained investors; uncertainty about recovery value; few specialized buyers</td>
+          </tr>
+          <tr>
+            <td>Illiquid bonds (small issues, rare issuers)</td>
+            <td style="color:var(--danger);">Not regularly traded; estimated prices from comparable bonds</td>
+            <td>No natural dealer market; prices are matrix-priced from liquid comparables</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">On-the-Run vs. Off-the-Run</div>
+      <div class="def-body"><strong>On-the-run:</strong> the most recently issued bond of a particular maturity — highest liquidity, tightest spreads, used as benchmark. <strong>Off-the-run:</strong> older bonds of the same maturity that have been superseded by newer issues — less liquid, wider spreads.</div>
+    </div>
+
+    <div class="def-block">
+      <div class="def-term">Distressed Debt</div>
+      <div class="def-body">Bonds of issuers very close to or in bankruptcy, typically trading well below par (e.g., &lt;50% of par, sometimes under 10%). Bondholders unlikely to receive all promised payments. Trades until either: (1) issuer liquidates assets, or (2) outstanding bonds are restructured. Key trading dynamic: IG-mandated investors FORCED TO SELL; hedge funds and distressed debt investors who seek equity-like returns are the BUYERS.</div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Distressed Debt vs. Delisted Equity — Key Distinction</div>
+      <p><strong>Distressed debt continues to trade</strong> in secondary markets even as an issuer enters bankruptcy (until resolution). Bonds of Hertz, for example, fell to under 10% of par during COVID-19 but then rose back to pre-pandemic prices when the company exited bankruptcy.<br><br>
+      <strong>Equity securities</strong> are removed (delisted) from exchange trading if they fail listing requirements (minimum share price, net worth, free float). By the time an issuer's bonds are distressed, its equity has <strong>almost certainly already been delisted</strong>.</p>
+    </div>
+
+    <div class="tip">
+      <div class="tip-label">💡 Credit Quality Deterioration Can Increase Trading Volume</div>
+      <p>An exception to the normal pattern of low trading frequency for seasoned bonds: <strong>a significant deterioration in credit quality can dramatically increase trading volume</strong> — even for older issues. Forced sellers (IG-constrained investors) must sell, while opportunistic buyers (distressed investors) are attracted. This can briefly make a previously illiquid bond one of the most actively traded in its segment.</p>
+    </div>
+
+    <div class="warn">
+      <div class="warn-label">⚠️ Illiquid Bond Pricing — Matrix Pricing</div>
+      <p>Many bond issues do not trade regularly. Price quotes for illiquid bonds on platforms like Bloomberg often rely on <strong>estimates derived from more liquid bonds of similar credit quality and maturity</strong> — a process called matrix pricing or comparable pricing. This means the "price" shown for an illiquid bond is an estimate, not an actual transaction price. This introduces pricing uncertainty and is covered in detail in later modules.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 11: MASTER TABLES -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Master Reference Tables</h2>
+    </div>
+
+    <h3>Fixed-Income Indexes vs. Equity Indexes — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Fixed-Income Indexes</th><th>Equity Indexes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Number of constituents</td><td>Much larger — one issuer can have many bonds; some FI indexes have 10,000+ constituents</td><td>Smaller — one issuer = one or two equity instruments</td></tr>
+          <tr><td>Constituent turnover</td><td>Very high — monthly rebalancing; bonds mature and new ones are issued frequently</td><td>Lower — equities don't mature; rebalancing less frequent</td></tr>
+          <tr><td>Rebalancing frequency</td><td>Usually monthly (add new issues; remove below-minimum maturity/rating bonds)</td><td>Quarterly or annually typical</td></tr>
+          <tr><td>Weighting method</td><td>Market value of debt outstanding (analogous to market cap weighting)</td><td>Market capitalization</td></tr>
+          <tr><td>Government bias</td><td>Yes — large government issuers create high government bond weights in broad indexes</td><td>No equivalent government bias</td></tr>
+          <tr><td>Fund replication</td><td>Representative sampling required — impossible to buy all constituents in a 10,000+ bond index</td><td>Full replication more feasible for smaller indexes</td></tr>
+          <tr><td>Sub-index availability</td><td>Yes — by sector, credit quality, maturity, geography, ESG, currency</td><td>Yes — by sector, size, geography, style (growth/value)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Primary Market — Offering Types Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Who Can Buy</th><th>Intermediary Role</th><th>Typical Issuers</th><th>Registration</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Underwritten Public Offering</td><td>Any investor</td><td>Guarantees sale at negotiated price; bears risk of unsold bonds</td><td>IG corporates, frequent issuers</td><td>Full registration required</td></tr>
+          <tr><td>Best-Efforts Public Offering</td><td>Any investor</td><td>Broker only — commission basis; no guarantee of sale</td><td>HY corporates, lower credit quality</td><td>Full registration required</td></tr>
+          <tr><td>Private Placement</td><td>Selected investors only</td><td>Minimal or no intermediary</td><td>Small, customized, or less well-known issuers</td><td>Fewer requirements (Rule 144A in US)</td></tr>
+          <tr><td>Sovereign Auction</td><td>Authorized dealers / public</td><td>Treasury/Finance Ministry conducts auction</td><td>Sovereign governments</td><td>N/A — government issuance</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 12: EXAM CHECKLIST -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Exam Checklist — Must-Know Points</h2>
+    </div>
+
+    <div class="card">
+      <ul style="padding-left:18px; line-height:2.2;">
+        <li>✅ <strong>Three dimensions of FI market classification:</strong> (1) issuer type/sector, (2) credit quality, (3) time to maturity. Additional: geography, currency, ESG.</li>
+        <li>✅ <strong>Corporate issuers have MANY FI instruments (e.g., Apple had 80+) but typically only 1-2 equity instruments.</strong> Apple example is a key exam illustration.</li>
+        <li>✅ <strong>Maturity tiers:</strong> &lt;1yr = money market / short-term. 1–10yr = intermediate-term / capital market. &gt;10yr = long-term.</li>
+        <li>✅ <strong>Credit ratings measure BOTH probability of default AND expected loss under default.</strong> Given for issuers AND specific bond issues (can differ for same issuer).</li>
+        <li>✅ <strong>Investment grade boundary: BBB− (S&amp;P) / Baa3 (Moody's) and above.</strong> High yield boundary: BB+ (S&amp;P) / Ba1 (Moody's) and below.</li>
+        <li>✅ <strong>BBB− = lowest investment grade. BB+ = highest speculative grade.</strong> These are the critical boundary ratings for portfolio eligibility.</li>
+        <li>✅ <strong>Fallen angels:</strong> formerly IG issuers downgraded to HY. Rising stars: formerly HY upgraded to IG.</li>
+        <li>✅ <strong>DM sovereign bonds = "default risk free" / highest credit quality in each region.</strong> Often carry AAA rating. Benchmark for all other bond yield comparisons.</li>
+        <li>✅ <strong>Pension funds and insurance companies:</strong> prefer long-duration IG bonds to match long-dated liabilities. Favor fixed, predictable cash flows.</li>
+        <li>✅ <strong>Money market funds:</strong> short-term only; near-term obligations; liquid cash equivalent.</li>
+        <li>✅ <strong>Hedge funds and distressed debt funds:</strong> buy HY and distressed bonds for equity-like returns.</li>
+        <li>✅ <strong>Three key differences between FI indexes and equity indexes:</strong> (1) more constituents (one issuer = many bonds); (2) higher turnover/monthly rebalancing; (3) weighted by market value of debt outstanding (government bias).</li>
+        <li>✅ <strong>Bond index funds use representative sampling</strong> (not full replication) because of the vast number of constituents.</li>
+        <li>✅ <strong>Bond indexes rebalanced MONTHLY:</strong> remove bonds that fall below minimum maturity/rating/size; add new eligible issues.</li>
+        <li>✅ <strong>Index choice must match investment strategy</strong> — short-term IG fund benchmarked against short-term IG index, not a broad aggregate.</li>
+        <li>✅ <strong>Bloomberg Barclays Global Aggregate:</strong> broad aggregate; IG only; 28 currencies; monthly rebalancing; government-biased weights. Suitable for comprehensive IG funds.</li>
+        <li>✅ <strong>J.P. Morgan EMBI+:</strong> EM sovereign; USD only; Baa1/BBB+ and BELOW (includes HY sovereigns); USD 500m minimum; targets higher return via EM credit risk.</li>
+        <li>✅ <strong>ESG indexes</strong> screen for minimum ESG ratings and exclude specific industries (alcohol, tobacco, gambling, coal, firearms, etc.).</li>
+        <li>✅ <strong>Primary market = new bond issuance. Secondary market = trading of existing bonds.</strong> Analogous to IPO vs. stock exchange.</li>
+        <li>✅ <strong>Debut issuer</strong> = first time in bond market; requires weeks of roadshows. Repeat IG issuer = can issue in a few hours via shelf registration.</li>
+        <li>✅ <strong>Underwritten offering:</strong> intermediary GUARANTEES sale at negotiated price — common for IG. Best-efforts: intermediary acts as broker ONLY — common for HY.</li>
+        <li>✅ <strong>Shelf registration:</strong> pre-approved broad offering circular allowing rapid repeat issuance without full registration each time.</li>
+        <li>✅ <strong>Reopening:</strong> increasing the size of an existing bond (less common; creates bonds priced away from par).</li>
+        <li>✅ <strong>Sovereign bond issuance:</strong> public auction led by national treasury/finance ministry (not underwritten).</li>
+        <li>✅ <strong>Secondary FI markets are mostly OTC (quote-driven / dealer markets).</strong> Electronic platforms: MarketAxess, Tradeweb. Some exceptions: Australian sovereign bonds trade on exchange.</li>
+        <li>✅ <strong>Bid-offer spread = key liquidity measure.</strong> Tightest (fraction of 1 bps): on-the-run DM sovereign bonds. Widest: distressed debt, illiquid bonds (&gt;20 bps or more).</li>
+        <li>✅ <strong>On-the-run = most recently issued bond of a given maturity</strong> → most liquid. Off-the-run = older, superseded → less liquid.</li>
+        <li>✅ <strong>Distressed debt:</strong> bonds of near-default or defaulted issuers; trade well below par. IG-constrained investors FORCED TO SELL; distressed/hedge funds BUYERS. Continues trading until liquidation or restructuring.</li>
+        <li>✅ <strong>Distressed debt trades; equity is delisted.</strong> By the time bonds are distressed, equity has almost certainly already been delisted.</li>
+        <li>✅ <strong>Illiquid bond prices estimated via matrix pricing</strong> (comparable liquid bonds of similar credit quality and maturity) — not actual transaction prices.</li>
+        <li>✅ <strong>Credit rating deterioration can temporarily increase trading volume</strong> on a normally illiquid seasoned bond (forced sellers meet opportunistic buyers).</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">★ COMPLETE QUICK REFERENCE SUMMARY ★</div>
+      <div class="f">
+        ═══ THREE DIMENSIONS OF FI MARKETS ═══<br>
+        (1) Issuer type/sector | (2) Credit quality | (3) Time to maturity<br>
+        Additional: geography, currency, ESG<br><br>
+
+        ═══ CREDIT RATING BOUNDARIES ═══<br>
+        Investment Grade: BBB− (S&P) / Baa3 (Moody's) and ABOVE<br>
+        High Yield / Junk: BB+ (S&P) / Ba1 (Moody's) and BELOW<br>
+        BBB− = lowest IG | BB+ = highest speculative grade<br>
+        Fallen angels: IG → HY | Rising stars: HY → IG<br><br>
+
+        ═══ S&P RATING SCALE (IG to Default) ═══<br>
+        AAA → AA → A → BBB (IG) || BB → B → CCC → CC → C → D (speculative/default)<br><br>
+
+        ═══ ISSUERS BY SEGMENT ═══<br>
+        Risk-free short: T-bills | Mid: T-notes | Long: T-bonds<br>
+        IG short: Repo, CP, ABCP | Mid: Unsecured corps, ABS | Long: Unsecured corps, MBS<br>
+        HY mid: Secured corporate bonds, leveraged loans<br><br>
+
+        ═══ KEY INVESTORS ═══<br>
+        Short-term: money market funds, central banks, financial intermediaries<br>
+        Long-term IG: pension funds, insurance companies (liability matching)<br>
+        HY/distressed: hedge funds, distressed debt funds<br>
+        Broad IG: bond funds, ETFs, asset managers<br><br>
+
+        ═══ FIXED-INCOME INDEXES vs. EQUITY INDEXES ═══<br>
+        More constituents (one issuer = many bonds)<br>
+        Higher turnover → monthly rebalancing<br>
+        Weighted by market value of debt outstanding (government bias in broad indexes)<br>
+        Representative sampling required (can't buy all 10,000+ bonds)<br><br>
+
+        ═══ PRIMARY MARKETS ═══<br>
+        Underwritten: intermediary guarantees sale → IG corporates<br>
+        Best-efforts: broker only, no guarantee → HY corporates<br>
+        Private placement: selected investors only → small/customized issues<br>
+        Sovereign: public auction by national treasury<br>
+        Shelf registration: pre-approved; rapid repeat issuance<br>
+        Debut: weeks of roadshows | Repeat IG: few hours<br><br>
+
+        ═══ SECONDARY MARKETS ═══<br>
+        Mostly OTC / quote-driven dealer markets (MarketAxess, Tradeweb)<br>
+        Bid-offer spread = key liquidity measure (bps)<br>
+        On-the-run sovereign: fraction of 1 bps (most liquid)<br>
+        Recent IG corps: few bps | Seasoned/infrequent: 10-20+ bps<br>
+        Distressed debt: very wide; trades well below par<br>
+        Illiquid bonds: matrix-priced from comparable liquid bonds<br>
+        Distressed bonds: IG investors forced to sell; hedge funds buy
+      </div>
+      <div class="note">
+        <strong>Key distinction:</strong> Distressed bonds CONTINUE TO TRADE until liquidation or restructuring. Equity securities are DELISTED when they fail listing requirements — well before bonds become distressed.<br>
+        <strong>Credit quality deterioration</strong> can temporarily INCREASE trading volume of a normally illiquid seasoned bond — exception to the normal liquidity pattern.<br>
+        <strong>Government bias in broad indexes:</strong> government issuers are the largest bond issuers globally → broad IG indexes are heavily weighted toward government bonds.<br>
+        <strong>Benchmark matching:</strong> the index used to evaluate a bond fund must correspond to the fund's investment strategy (maturity, credit quality, sector, currency).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CFA Level 1 · Fixed Income · Module 3: Fixed-Income Issuance and Trading · Exam Prep Notes
+</footer>
+
+</body>
+</html>
